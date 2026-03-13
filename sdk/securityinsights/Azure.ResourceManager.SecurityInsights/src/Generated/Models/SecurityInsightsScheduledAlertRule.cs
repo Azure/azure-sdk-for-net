@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,156 +17,384 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsScheduledAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
-        public SecurityInsightsScheduledAlertRule()
+        public SecurityInsightsScheduledAlertRule() : base(AlertRuleKind.Scheduled)
         {
-            CustomDetails = new ChangeTrackingDictionary<string, string>();
-            EntityMappings = new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
-            SentinelEntitiesMappings = new ChangeTrackingList<SentinelEntityMapping>();
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
-            SubTechniques = new ChangeTrackingList<string>();
-            Kind = AlertRuleKind.Scheduled;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="query"> The query that creates alerts for this rule. </param>
-        /// <param name="queryFrequency"> The frequency (in ISO 8601 duration format) for this alert rule to run. </param>
-        /// <param name="queryPeriod"> The period (in ISO 8601 duration format) that this alert rule looks at. </param>
-        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        /// <param name="triggerOperator"> The operation against the threshold that triggers alert rule. </param>
-        /// <param name="triggerThreshold"> The threshold triggers this alert rule. </param>
-        /// <param name="eventGroupingSettings"> The event grouping settings. </param>
-        /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
-        /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
-        /// <param name="alertDetailsOverride"> The alert details override settings. </param>
-        /// <param name="sentinelEntitiesMappings"> Array of the sentinel entity mappings of the alert rule. </param>
-        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
-        /// <param name="templateVersion"> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </param>
-        /// <param name="description"> The description of the alert rule. </param>
-        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
-        /// <param name="suppressionDuration"> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </param>
-        /// <param name="isSuppressionEnabled"> Determines whether the suppression for this alert rule is enabled or disabled. </param>
-        /// <param name="tactics"> The tactics of the alert rule. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
-        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
-        /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
-        internal SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, IList<SentinelEntityMapping> sentinelEntitiesMappings, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, TimeSpan? suppressionDuration, bool? isSuppressionEnabled, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IList<string> subTechniques, SecurityInsightsIncidentConfiguration incidentConfiguration) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Scheduled alert rule properties. </param>
+        internal SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleKind kind, string eTag, ScheduledAlertRuleProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            Query = query;
-            QueryFrequency = queryFrequency;
-            QueryPeriod = queryPeriod;
-            Severity = severity;
-            TriggerOperator = triggerOperator;
-            TriggerThreshold = triggerThreshold;
-            EventGroupingSettings = eventGroupingSettings;
-            CustomDetails = customDetails;
-            EntityMappings = entityMappings;
-            AlertDetailsOverride = alertDetailsOverride;
-            SentinelEntitiesMappings = sentinelEntitiesMappings;
-            AlertRuleTemplateName = alertRuleTemplateName;
-            TemplateVersion = templateVersion;
-            Description = description;
-            DisplayName = displayName;
-            IsEnabled = isEnabled;
-            LastModifiedOn = lastModifiedOn;
-            SuppressionDuration = suppressionDuration;
-            IsSuppressionEnabled = isSuppressionEnabled;
-            Tactics = tactics;
-            Techniques = techniques;
-            SubTechniques = subTechniques;
-            IncidentConfiguration = incidentConfiguration;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Scheduled alert rule properties. </summary>
+        internal ScheduledAlertRuleProperties Properties { get; set; }
+
         /// <summary> The query that creates alerts for this rule. </summary>
-        [WirePath("properties.query")]
-        public string Query { get; set; }
-        /// <summary> The frequency (in ISO 8601 duration format) for this alert rule to run. </summary>
-        [WirePath("properties.queryFrequency")]
-        public TimeSpan? QueryFrequency { get; set; }
-        /// <summary> The period (in ISO 8601 duration format) that this alert rule looks at. </summary>
-        [WirePath("properties.queryPeriod")]
-        public TimeSpan? QueryPeriod { get; set; }
-        /// <summary> The severity for alerts created by this alert rule. </summary>
-        [WirePath("properties.severity")]
-        public SecurityInsightsAlertSeverity? Severity { get; set; }
-        /// <summary> The operation against the threshold that triggers alert rule. </summary>
-        [WirePath("properties.triggerOperator")]
-        public SecurityInsightsAlertRuleTriggerOperator? TriggerOperator { get; set; }
-        /// <summary> The threshold triggers this alert rule. </summary>
-        [WirePath("properties.triggerThreshold")]
-        public int? TriggerThreshold { get; set; }
-        /// <summary> The event grouping settings. </summary>
-        internal EventGroupingSettings EventGroupingSettings { get; set; }
-        /// <summary> The event grouping aggregation kinds. </summary>
-        [WirePath("properties.eventGroupingSettings.aggregationKind")]
-        public EventGroupingAggregationKind? EventGroupingAggregationKind
+        public string Query
         {
-            get => EventGroupingSettings is null ? default : EventGroupingSettings.AggregationKind;
+            get
+            {
+                return Properties is null ? default : Properties.Query;
+            }
             set
             {
-                if (EventGroupingSettings is null)
-                    EventGroupingSettings = new EventGroupingSettings();
-                EventGroupingSettings.AggregationKind = value;
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.Query = value;
+            }
+        }
+
+        /// <summary> The frequency (in ISO 8601 duration format) for this alert rule to run. </summary>
+        public TimeSpan? QueryFrequency
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueryFrequency;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.QueryFrequency = value.Value;
+            }
+        }
+
+        /// <summary> The period (in ISO 8601 duration format) that this alert rule looks at. </summary>
+        public TimeSpan? QueryPeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueryPeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.QueryPeriod = value.Value;
+            }
+        }
+
+        /// <summary> The severity for alerts created by this alert rule. </summary>
+        public SecurityInsightsAlertSeverity? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.Severity = value.Value;
+            }
+        }
+
+        /// <summary> The operation against the threshold that triggers alert rule. </summary>
+        public SecurityInsightsAlertRuleTriggerOperator? TriggerOperator
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TriggerOperator;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.TriggerOperator = value.Value;
+            }
+        }
+
+        /// <summary> The threshold triggers this alert rule. </summary>
+        public int? TriggerThreshold
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TriggerThreshold;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.TriggerThreshold = value.Value;
             }
         }
 
         /// <summary> Dictionary of string key-value pairs of columns to be attached to the alert. </summary>
-        [WirePath("properties.customDetails")]
-        public IDictionary<string, string> CustomDetails { get; }
+        public IDictionary<string, string> CustomDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                return Properties.CustomDetails;
+            }
+        }
+
         /// <summary> Array of the entity mappings of the alert rule. </summary>
-        [WirePath("properties.entityMappings")]
-        public IList<SecurityInsightsAlertRuleEntityMapping> EntityMappings { get; }
+        public IList<SecurityInsightsAlertRuleEntityMapping> EntityMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                return Properties.EntityMappings;
+            }
+        }
+
         /// <summary> The alert details override settings. </summary>
-        [WirePath("properties.alertDetailsOverride")]
-        public SecurityInsightsAlertDetailsOverride AlertDetailsOverride { get; set; }
+        public SecurityInsightsAlertDetailsOverride AlertDetailsOverride
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlertDetailsOverride;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.AlertDetailsOverride = value;
+            }
+        }
+
         /// <summary> Array of the sentinel entity mappings of the alert rule. </summary>
-        [WirePath("properties.sentinelEntitiesMappings")]
-        public IList<SentinelEntityMapping> SentinelEntitiesMappings { get; }
+        public IList<SentinelEntityMapping> SentinelEntitiesMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                return Properties.SentinelEntitiesMappings;
+            }
+        }
+
+        /// <summary> The event grouping aggregation kinds. </summary>
+        public EventGroupingAggregationKind? EventGroupingAggregationKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventGroupingAggregationKind;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.EventGroupingAggregationKind = value.Value;
+            }
+        }
+
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
-        [WirePath("properties.alertRuleTemplateName")]
-        public string AlertRuleTemplateName { get; set; }
+        public string AlertRuleTemplateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlertRuleTemplateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.AlertRuleTemplateName = value;
+            }
+        }
+
         /// <summary> The version of the alert rule template used to create this rule - in format &lt;a.b.c&gt;, where all are numbers, for example 0 &lt;1.0.2&gt;. </summary>
-        [WirePath("properties.templateVersion")]
-        public string TemplateVersion { get; set; }
+        public string TemplateVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TemplateVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.TemplateVersion = value;
+            }
+        }
+
         /// <summary> The description of the alert rule. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The display name for alerts created by this alert rule. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
-        [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
         /// <summary> The last time that this alert rule has been modified. </summary>
-        [WirePath("properties.lastModifiedUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedUtc;
+            }
+        }
+
         /// <summary> The suppression (in ISO 8601 duration format) to wait since last time this alert rule been triggered. </summary>
-        [WirePath("properties.suppressionDuration")]
-        public TimeSpan? SuppressionDuration { get; set; }
+        public TimeSpan SuppressionDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuppressionDuration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.SuppressionDuration = value;
+            }
+        }
+
         /// <summary> Determines whether the suppression for this alert rule is enabled or disabled. </summary>
-        [WirePath("properties.suppressionEnabled")]
-        public bool? IsSuppressionEnabled { get; set; }
+        public bool SuppressionEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuppressionEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.SuppressionEnabled = value;
+            }
+        }
+
         /// <summary> The tactics of the alert rule. </summary>
-        [WirePath("properties.tactics")]
-        public IList<SecurityInsightsAttackTactic> Tactics { get; }
+        public IList<SecurityInsightsAttackTactic> Tactics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                return Properties.Tactics;
+            }
+        }
+
         /// <summary> The techniques of the alert rule. </summary>
-        [WirePath("properties.techniques")]
-        public IList<string> Techniques { get; }
+        public IList<string> Techniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                return Properties.Techniques;
+            }
+        }
+
         /// <summary> The sub-techniques of the alert rule. </summary>
-        [WirePath("properties.subTechniques")]
-        public IList<string> SubTechniques { get; }
+        public IList<string> SubTechniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                return Properties.SubTechniques;
+            }
+        }
+
         /// <summary> The settings of the incidents that created from alerts triggered by this analytics rule. </summary>
-        [WirePath("properties.incidentConfiguration")]
-        public SecurityInsightsIncidentConfiguration IncidentConfiguration { get; set; }
+        public SecurityInsightsIncidentConfiguration IncidentConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncidentConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledAlertRuleProperties();
+                }
+                Properties.IncidentConfiguration = value;
+            }
+        }
     }
 }

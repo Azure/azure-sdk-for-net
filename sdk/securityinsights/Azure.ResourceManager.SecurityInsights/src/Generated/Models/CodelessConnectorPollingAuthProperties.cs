@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describe the authentication properties needed to successfully authenticate with the server. </summary>
     public partial class CodelessConnectorPollingAuthProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingAuthProperties"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
@@ -69,8 +42,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tokenEndpointQueryParameters"> The query parameters used in token request, used in Oauth 2.0 flow. </param>
         /// <param name="isClientSecretInHeader"> Marks if we should send the client secret in header or payload, used in Oauth 2.0 flow. </param>
         /// <param name="scope"> The OAuth token scope. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodelessConnectorPollingAuthProperties(string authType, string apiKeyName, string apiKeyIdentifier, string isApiKeyInPostPayload, string flowName, string tokenEndpoint, string authorizationEndpoint, BinaryData authorizationEndpointQueryParameters, string redirectionEndpoint, BinaryData tokenEndpointHeaders, BinaryData tokenEndpointQueryParameters, bool? isClientSecretInHeader, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CodelessConnectorPollingAuthProperties(string authType, string apiKeyName, string apiKeyIdentifier, string isApiKeyInPostPayload, string flowName, string tokenEndpoint, string authorizationEndpoint, BinaryData authorizationEndpointQueryParameters, string redirectionEndpoint, BinaryData tokenEndpointHeaders, BinaryData tokenEndpointQueryParameters, bool? isClientSecretInHeader, string scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthType = authType;
             ApiKeyName = apiKeyName;
@@ -85,139 +58,121 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             TokenEndpointQueryParameters = tokenEndpointQueryParameters;
             IsClientSecretInHeader = isClientSecretInHeader;
             Scope = scope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingAuthProperties"/> for deserialization. </summary>
-        internal CodelessConnectorPollingAuthProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The authentication type. </summary>
-        [WirePath("authType")]
         public string AuthType { get; set; }
+
         /// <summary> The header name which the token is sent with. </summary>
-        [WirePath("apiKeyName")]
         public string ApiKeyName { get; set; }
+
         /// <summary> A prefix send in the header before the actual token. </summary>
-        [WirePath("apiKeyIdentifier")]
         public string ApiKeyIdentifier { get; set; }
+
         /// <summary> Marks if the key should sent in header. </summary>
-        [WirePath("isApiKeyInPostPayload")]
         public string IsApiKeyInPostPayload { get; set; }
+
         /// <summary> Describes the flow name, for example 'AuthCode' for Oauth 2.0. </summary>
-        [WirePath("flowName")]
         public string FlowName { get; set; }
+
         /// <summary> The endpoint used to issue a token, used in Oauth 2.0 flow. </summary>
-        [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
+
         /// <summary> The endpoint used to authorize the user, used in Oauth 2.0 flow. </summary>
-        [WirePath("authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
+
         /// <summary>
         /// The query parameters used in authorization request, used in Oauth 2.0 flow
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("authorizationEndpointQueryParameters")]
         public BinaryData AuthorizationEndpointQueryParameters { get; set; }
+
         /// <summary> The redirect endpoint where we will get the authorization code, used in Oauth 2.0 flow. </summary>
-        [WirePath("redirectionEndpoint")]
         public string RedirectionEndpoint { get; set; }
+
         /// <summary>
         /// The query headers used in token request, used in Oauth 2.0 flow
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("tokenEndpointHeaders")]
         public BinaryData TokenEndpointHeaders { get; set; }
+
         /// <summary>
         /// The query parameters used in token request, used in Oauth 2.0 flow
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("tokenEndpointQueryParameters")]
         public BinaryData TokenEndpointQueryParameters { get; set; }
+
         /// <summary> Marks if we should send the client secret in header or payload, used in Oauth 2.0 flow. </summary>
-        [WirePath("isClientSecretInHeader")]
         public bool? IsClientSecretInHeader { get; set; }
+
         /// <summary> The OAuth token scope. </summary>
-        [WirePath("scope")]
         public string Scope { get; set; }
     }
 }

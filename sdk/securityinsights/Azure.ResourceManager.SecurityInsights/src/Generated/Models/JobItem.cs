@@ -7,49 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> An entity describing the publish status of a content item. </summary>
     public partial class JobItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JobItem"/>. </summary>
-        public JobItem()
+        internal JobItem()
         {
-            Errors = new ChangeTrackingList<PublicationFailedError>();
+            Errors = new ChangeTrackingList<Error>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JobItem"/>. </summary>
@@ -57,27 +28,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="status"> Status of the item publication. </param>
         /// <param name="executionOn"> The time the item publishing was completed. </param>
         /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobItem(ResourceIdentifier resourceId, PublicationStatus? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JobItem(string resourceId, Status? status, DateTimeOffset? executionOn, IList<Error> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Status = status;
             ExecutionOn = executionOn;
             Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource id of the content item. </summary>
-        [WirePath("resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public string ResourceId { get; }
+
         /// <summary> Status of the item publication. </summary>
-        [WirePath("status")]
-        public PublicationStatus? Status { get; }
+        public Status? Status { get; }
+
         /// <summary> The time the item publishing was completed. </summary>
-        [WirePath("executionTime")]
         public DateTimeOffset? ExecutionOn { get; }
+
         /// <summary> The list of error descriptions if the item publication fails. </summary>
-        [WirePath("errors")]
-        public IList<PublicationFailedError> Errors { get; }
+        public IList<Error> Errors { get; }
     }
 }

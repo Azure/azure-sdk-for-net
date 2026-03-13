@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,30 +15,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class GenericBlobSbsAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="GenericBlobSbsAuthModel"/>. </summary>
-        public GenericBlobSbsAuthModel()
+        public GenericBlobSbsAuthModel() : base(CcpAuthType.ServiceBus)
         {
             CredentialsConfig = new ChangeTrackingDictionary<string, string>();
             StorageAccountCredentialsConfig = new ChangeTrackingDictionary<string, string>();
-            AuthType = CcpAuthType.ServiceBus;
         }
 
         /// <summary> Initializes a new instance of <see cref="GenericBlobSbsAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentialsConfig"> Credentials for service bus namespace, keyvault uri for access key. </param>
         /// <param name="storageAccountCredentialsConfig"> Credentials for storage account, keyvault uri for access key. </param>
-        internal GenericBlobSbsAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> credentialsConfig, IDictionary<string, string> storageAccountCredentialsConfig) : base(authType, serializedAdditionalRawData)
+        internal GenericBlobSbsAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> credentialsConfig, IDictionary<string, string> storageAccountCredentialsConfig) : base(@type, additionalBinaryDataProperties)
         {
             CredentialsConfig = credentialsConfig;
             StorageAccountCredentialsConfig = storageAccountCredentialsConfig;
-            AuthType = authType;
         }
 
         /// <summary> Credentials for service bus namespace, keyvault uri for access key. </summary>
-        [WirePath("credentialsConfig")]
         public IDictionary<string, string> CredentialsConfig { get; }
+
         /// <summary> Credentials for storage account, keyvault uri for access key. </summary>
-        [WirePath("storageAccountCredentialsConfig")]
         public IDictionary<string, string> StorageAccountCredentialsConfig { get; }
     }
 }

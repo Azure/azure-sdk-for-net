@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsIncidentCommentCollection : ArmCollection, IEnumerable<SecurityInsightsIncidentCommentResource>, IAsyncEnumerable<SecurityInsightsIncidentCommentResource>
     {
-        private readonly ClientDiagnostics _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics;
-        private readonly IncidentCommentsRestOperations _securityInsightsIncidentCommentIncidentCommentsRestClient;
+        private readonly ClientDiagnostics _incidentCommentsClientDiagnostics;
+        private readonly IncidentComments _incidentCommentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentCommentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsIncidentCommentCollection for mocking. </summary>
         protected SecurityInsightsIncidentCommentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentCommentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentCommentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsIncidentCommentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsIncidentCommentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsIncidentCommentResource.ResourceType, out string securityInsightsIncidentCommentIncidentCommentsApiVersion);
-            _securityInsightsIncidentCommentIncidentCommentsRestClient = new IncidentCommentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsIncidentCommentIncidentCommentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsIncidentCommentResource.ResourceType, out string securityInsightsIncidentCommentApiVersion);
+            _incidentCommentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsIncidentCommentResource.ResourceType.Namespace, Diagnostics);
+            _incidentCommentsRestClient = new IncidentComments(_incidentCommentsClientDiagnostics, Pipeline, Endpoint, securityInsightsIncidentCommentApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SecurityInsightsIncidentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsIncidentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsIncidentResource.ResourceType), id);
+            }
         }
 
         /// <summary>
-        /// Creates or updates the incident comment.
+        /// Creates or updates a comment for a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="data"> The incident comment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsIncidentCommentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string incidentCommentId, SecurityInsightsIncidentCommentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, SecurityInsightsIncidentCommentData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsIncidentCommentData> response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource> operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,23 +110,19 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the incident comment.
+        /// Creates or updates a comment for a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="data"> The incident comment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityInsightsIncidentCommentResource> CreateOrUpdate(WaitUntil waitUntil, string incidentCommentId, SecurityInsightsIncidentCommentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, data, cancellationToken);
-                var uri = _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, SecurityInsightsIncidentCommentData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsIncidentCommentData> response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource> operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentCommentResource>(Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets an incident comment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsIncidentCommentResource>> GetAsync(string incidentCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Get");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsIncidentCommentData> response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets an incident comment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsIncidentCommentResource> Get(string incidentCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Get");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsIncidentCommentData> response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,107 +263,137 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets all incident comments.
+        /// Gets all comments for a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsIncidentCommentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsIncidentCommentResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all incident comments.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsIncidentCommentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsIncidentCommentResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsIncidentCommentResource> GetAllAsync(string filter = default, string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsIncidentCommentData, SecurityInsightsIncidentCommentResource>(new IncidentCommentsGetAllAsyncCollectionResultOfT(
+                _incidentCommentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                @orderby,
+                top,
+                skipToken,
+                context), data => new SecurityInsightsIncidentCommentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all comments for a given incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityInsightsIncidentCommentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsIncidentCommentResource> GetAll(string filter = default, string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsIncidentCommentData, SecurityInsightsIncidentCommentResource>(new IncidentCommentsGetAllCollectionResultOfT(
+                _incidentCommentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                @orderby,
+                top,
+                skipToken,
+                context), data => new SecurityInsightsIncidentCommentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string incidentCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Exists");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsIncidentCommentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsIncidentCommentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -358,36 +407,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string incidentCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Exists");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsIncidentCommentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsIncidentCommentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -401,38 +464,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsIncidentCommentResource>> GetIfExistsAsync(string incidentCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetIfExists");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsIncidentCommentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsIncidentCommentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsIncidentCommentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -446,38 +525,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IncidentComments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsIncidentCommentResource> GetIfExists(string incidentCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetIfExists");
+            using DiagnosticScope scope = _incidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentCommentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, incidentCommentId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsIncidentCommentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsIncidentCommentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsIncidentCommentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsIncidentCommentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsIncidentCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +592,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsIncidentCommentResource> IAsyncEnumerable<SecurityInsightsIncidentCommentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

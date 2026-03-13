@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    // Added due to api compat check in 2024-01-01-preview version
+    // Added due to api compat check in 2024-01-01-preview version.
     /// <summary> The source of the watchlist. </summary>
     public readonly partial struct Source : IEquatable<Source>
     {
@@ -34,6 +34,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Source left, Source right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="Source"/>. </summary>
         public static implicit operator Source(string value) => new Source(value);
+
+        internal static Source FromWatchlistSourceType(WatchlistSourceType value) =>
+            value == WatchlistSourceType.AzureStorage ? RemoteStorage :
+            value == WatchlistSourceType.Local ? LocalFile :
+            new Source(value.ToString());
+
+        internal WatchlistSourceType ToWatchlistSourceType() =>
+            this == RemoteStorage ? WatchlistSourceType.AzureStorage :
+            this == LocalFile ? WatchlistSourceType.Local :
+            new WatchlistSourceType(_value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

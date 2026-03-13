@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Unknown version of EntityTimelineItem. </summary>
     internal partial class UnknownEntityTimelineItem : EntityTimelineItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEntityTimelineItem"/>. </summary>
         /// <param name="kind"> The entity query kind type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEntityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEntityTimelineItem"/> for deserialization. </summary>
-        internal UnknownEntityTimelineItem()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEntityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

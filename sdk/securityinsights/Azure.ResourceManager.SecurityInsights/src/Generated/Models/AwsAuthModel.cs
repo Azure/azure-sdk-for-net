@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,36 +17,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="AwsAuthModel"/>. </summary>
         /// <param name="roleArn"> AWS STS assume role ARN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleArn"/> is null. </exception>
-        public AwsAuthModel(string roleArn)
+        public AwsAuthModel(string roleArn) : base(CcpAuthType.AWS)
         {
             Argument.AssertNotNull(roleArn, nameof(roleArn));
 
             RoleArn = roleArn;
-            AuthType = CcpAuthType.AWS;
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="roleArn"> AWS STS assume role ARN. </param>
         /// <param name="externalId"> AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'. </param>
-        internal AwsAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string roleArn, string externalId) : base(authType, serializedAdditionalRawData)
+        internal AwsAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string roleArn, string externalId) : base(@type, additionalBinaryDataProperties)
         {
             RoleArn = roleArn;
             ExternalId = externalId;
-            AuthType = authType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AwsAuthModel"/> for deserialization. </summary>
-        internal AwsAuthModel()
-        {
         }
 
         /// <summary> AWS STS assume role ARN. </summary>
-        [WirePath("roleArn")]
         public string RoleArn { get; set; }
+
         /// <summary> AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'. </summary>
-        [WirePath("externalId")]
         public string ExternalId { get; set; }
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a condition used to query for TI objects. </summary>
     public partial class ThreatIntelligenceQueryCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryCondition"/>. </summary>
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
@@ -60,28 +32,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="stixObjectType"> The STIX type for the objects returned by this query. </param>
         /// <param name="clauses"> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </param>
         /// <param name="conditionConnective"> The top level connective operator for this condition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceQueryCondition(string stixObjectType, IList<ThreatIntelligenceQueryConditionClause> clauses, ThreatIntelligenceQueryConnective? conditionConnective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceQueryCondition(string stixObjectType, IList<ThreatIntelligenceQueryConditionClause> clauses, ThreatIntelligenceQueryConnective? conditionConnective, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StixObjectType = stixObjectType;
             Clauses = clauses;
             ConditionConnective = conditionConnective;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryCondition"/> for deserialization. </summary>
-        internal ThreatIntelligenceQueryCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The STIX type for the objects returned by this query. </summary>
-        [WirePath("stixObjectType")]
         public string StixObjectType { get; set; }
+
         /// <summary> The list of clauses to be evaluated in disjunction or conjunction base on the specified top level connective operator. </summary>
-        [WirePath("clauses")]
         public IList<ThreatIntelligenceQueryConditionClause> Clauses { get; }
+
         /// <summary> The top level connective operator for this condition. </summary>
-        [WirePath("conditionConnective")]
         public ThreatIntelligenceQueryConnective? ConditionConnective { get; set; }
     }
 }

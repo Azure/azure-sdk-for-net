@@ -8,18 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlert : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlert>
+    /// <summary> Represents a security alert entity. </summary>
+    public partial class SecurityInsightsAlert : SecurityInsights.SecurityInsightsEntity, IJsonModel<SecurityInsightsAlert>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlert>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsAlert(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsAlert>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsAlert IPersistableModel<SecurityInsightsAlert>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityInsightsAlert)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsAlert>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsAlert>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,1259 +72,112 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("additionalData"u8);
-                writer.WriteStartObject();
-                foreach (var item in AdditionalData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
-            {
-                writer.WritePropertyName("alertDisplayName"u8);
-                writer.WriteStringValue(AlertDisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AlertType))
-            {
-                writer.WritePropertyName("alertType"u8);
-                writer.WriteStringValue(AlertType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CompromisedEntity))
-            {
-                writer.WritePropertyName("compromisedEntity"u8);
-                writer.WriteStringValue(CompromisedEntity);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceLevel))
-            {
-                writer.WritePropertyName("confidenceLevel"u8);
-                writer.WriteStringValue(ConfidenceLevel.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfidenceReasons))
-            {
-                writer.WritePropertyName("confidenceReasons"u8);
-                writer.WriteStartArray();
-                foreach (var item in ConfidenceReasons)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceScore))
-            {
-                writer.WritePropertyName("confidenceScore"u8);
-                writer.WriteNumberValue(ConfidenceScore.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceScoreStatus))
-            {
-                writer.WritePropertyName("confidenceScoreStatus"u8);
-                writer.WriteStringValue(ConfidenceScoreStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
-            {
-                writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Intent))
-            {
-                writer.WritePropertyName("intent"u8);
-                writer.WriteStringValue(Intent.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProviderAlertId))
-            {
-                writer.WritePropertyName("providerAlertId"u8);
-                writer.WriteStringValue(ProviderAlertId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProcessingEndOn))
-            {
-                writer.WritePropertyName("processingEndTime"u8);
-                writer.WriteStringValue(ProcessingEndOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProductComponentName))
-            {
-                writer.WritePropertyName("productComponentName"u8);
-                writer.WriteStringValue(ProductComponentName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProductName))
-            {
-                writer.WritePropertyName("productName"u8);
-                writer.WriteStringValue(ProductName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProductVersion))
-            {
-                writer.WritePropertyName("productVersion"u8);
-                writer.WriteStringValue(ProductVersion);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RemediationSteps))
-            {
-                writer.WritePropertyName("remediationSteps"u8);
-                writer.WriteStartArray();
-                foreach (var item in RemediationSteps)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Severity))
-            {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemAlertId))
-            {
-                writer.WritePropertyName("systemAlertId"u8);
-                writer.WriteStringValue(SystemAlertId);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
-            {
-                writer.WritePropertyName("tactics"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tactics)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(AlertGeneratedOn))
-            {
-                writer.WritePropertyName("timeGenerated"u8);
-                writer.WriteStringValue(AlertGeneratedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(VendorName))
-            {
-                writer.WritePropertyName("vendorName"u8);
-                writer.WriteStringValue(VendorName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AlertLink))
-            {
-                writer.WritePropertyName("alertLink"u8);
-                writer.WriteStringValue(AlertLink);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
-            {
-                writer.WritePropertyName("resourceIdentifiers"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceIdentifiers)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        SecurityInsightsAlert IJsonModel<SecurityInsightsAlert>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsAlert IJsonModel<SecurityInsightsAlert>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityInsightsAlert)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsAlert(document.RootElement, options);
         }
 
-        internal static SecurityInsightsAlert DeserializeSecurityInsightsAlert(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsAlert DeserializeSecurityInsightsAlert(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            string friendlyName = default;
-            string alertDisplayName = default;
-            string alertType = default;
-            string compromisedEntity = default;
-            SecurityInsightsAlertConfidenceLevel? confidenceLevel = default;
-            IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons = default;
-            double? confidenceScore = default;
-            SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus = default;
-            string description = default;
-            DateTimeOffset? endTimeUtc = default;
-            SecurityInsightsKillChainIntent? intent = default;
-            string providerAlertId = default;
-            DateTimeOffset? processingEndTime = default;
-            string productComponentName = default;
-            string productName = default;
-            string productVersion = default;
-            IReadOnlyList<string> remediationSteps = default;
-            SecurityInsightsAlertSeverity? severity = default;
-            DateTimeOffset? startTimeUtc = default;
-            SecurityInsightsAlertStatus? status = default;
-            string systemAlertId = default;
-            IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
-            DateTimeOffset? timeGenerated = default;
-            string vendorName = default;
-            string alertLink = default;
-            IReadOnlyList<BinaryData> resourceIdentifiers = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SecurityInsightsEntityKind kind = default;
+            SecurityAlertProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = new SecurityInsightsEntityKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("additionalData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            additionalData = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("alertDisplayName"u8))
-                        {
-                            alertDisplayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("alertType"u8))
-                        {
-                            alertType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("compromisedEntity"u8))
-                        {
-                            compromisedEntity = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("confidenceLevel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            confidenceLevel = new SecurityInsightsAlertConfidenceLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("confidenceReasons"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SecurityInsightsAlertConfidenceReason> array = new List<SecurityInsightsAlertConfidenceReason>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SecurityInsightsAlertConfidenceReason.DeserializeSecurityInsightsAlertConfidenceReason(item, options));
-                            }
-                            confidenceReasons = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("confidenceScore"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            confidenceScore = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("confidenceScoreStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            confidenceScoreStatus = new SecurityInsightsAlertConfidenceScoreStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("endTimeUtc"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("intent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            intent = new SecurityInsightsKillChainIntent(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("providerAlertId"u8))
-                        {
-                            providerAlertId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("processingEndTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            processingEndTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("productComponentName"u8))
-                        {
-                            productComponentName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("productName"u8))
-                        {
-                            productName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("productVersion"u8))
-                        {
-                            productVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("remediationSteps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            remediationSteps = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("severity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            severity = new SecurityInsightsAlertSeverity(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("startTimeUtc"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startTimeUtc = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = new SecurityInsightsAlertStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("systemAlertId"u8))
-                        {
-                            systemAlertId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("tactics"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SecurityInsightsAttackTactic> array = new List<SecurityInsightsAttackTactic>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new SecurityInsightsAttackTactic(item.GetString()));
-                            }
-                            tactics = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("timeGenerated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeGenerated = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("vendorName"u8))
-                        {
-                            vendorName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("alertLink"u8))
-                        {
-                            alertLink = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceIdentifiers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<BinaryData> array = new List<BinaryData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(BinaryData.FromString(item.GetRawText()));
-                                }
-                            }
-                            resourceIdentifiers = array;
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new SecurityInsightsEntityKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SecurityAlertProperties.DeserializeSecurityAlertProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties0.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsAlert(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
-                serializedAdditionalRawData,
-                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName,
-                alertDisplayName,
-                alertType,
-                compromisedEntity,
-                confidenceLevel,
-                confidenceReasons ?? new ChangeTrackingList<SecurityInsightsAlertConfidenceReason>(),
-                confidenceScore,
-                confidenceScoreStatus,
-                description,
-                endTimeUtc,
-                intent,
-                providerAlertId,
-                processingEndTime,
-                productComponentName,
-                productName,
-                productVersion,
-                remediationSteps ?? new ChangeTrackingList<string>(),
-                severity,
-                startTimeUtc,
-                status,
-                systemAlertId,
-                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
-                timeGenerated,
-                vendorName,
-                alertLink,
-                resourceIdentifiers ?? new ChangeTrackingList<BinaryData>());
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    additionalData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AdditionalData))
-                {
-                    if (AdditionalData.Any())
-                    {
-                        builder.Append("    additionalData: ");
-                        builder.AppendLine("{");
-                        foreach (var item in AdditionalData)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    friendlyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FriendlyName))
-                {
-                    builder.Append("    friendlyName: ");
-                    if (FriendlyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FriendlyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FriendlyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    alertDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AlertDisplayName))
-                {
-                    builder.Append("    alertDisplayName: ");
-                    if (AlertDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AlertDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AlertDisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    alertType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AlertType))
-                {
-                    builder.Append("    alertType: ");
-                    if (AlertType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AlertType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AlertType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompromisedEntity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    compromisedEntity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CompromisedEntity))
-                {
-                    builder.Append("    compromisedEntity: ");
-                    if (CompromisedEntity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CompromisedEntity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CompromisedEntity}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfidenceLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    confidenceLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfidenceLevel))
-                {
-                    builder.Append("    confidenceLevel: ");
-                    builder.AppendLine($"'{ConfidenceLevel.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfidenceReasons), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    confidenceReasons: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ConfidenceReasons))
-                {
-                    if (ConfidenceReasons.Any())
-                    {
-                        builder.Append("    confidenceReasons: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ConfidenceReasons)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    confidenceReasons: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfidenceScore), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    confidenceScore: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfidenceScore))
-                {
-                    builder.Append("    confidenceScore: ");
-                    builder.AppendLine($"'{ConfidenceScore.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfidenceScoreStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    confidenceScoreStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfidenceScoreStatus))
-                {
-                    builder.Append("    confidenceScoreStatus: ");
-                    builder.AppendLine($"'{ConfidenceScoreStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("    description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndOn))
-                {
-                    builder.Append("    endTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Intent), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    intent: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Intent))
-                {
-                    builder.Append("    intent: ");
-                    builder.AppendLine($"'{Intent.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAlertId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    providerAlertId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProviderAlertId))
-                {
-                    builder.Append("    providerAlertId: ");
-                    if (ProviderAlertId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProviderAlertId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProviderAlertId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProcessingEndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    processingEndTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProcessingEndOn))
-                {
-                    builder.Append("    processingEndTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ProcessingEndOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductComponentName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    productComponentName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProductComponentName))
-                {
-                    builder.Append("    productComponentName: ");
-                    if (ProductComponentName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProductComponentName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProductComponentName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    productName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProductName))
-                {
-                    builder.Append("    productName: ");
-                    if (ProductName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProductName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProductName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    productVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProductVersion))
-                {
-                    builder.Append("    productVersion: ");
-                    if (ProductVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProductVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProductVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemediationSteps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    remediationSteps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RemediationSteps))
-                {
-                    if (RemediationSteps.Any())
-                    {
-                        builder.Append("    remediationSteps: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RemediationSteps)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    severity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Severity))
-                {
-                    builder.Append("    severity: ");
-                    builder.AppendLine($"'{Severity.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    startTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("    startTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("    status: ");
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemAlertId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    systemAlertId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemAlertId))
-                {
-                    builder.Append("    systemAlertId: ");
-                    if (SystemAlertId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SystemAlertId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SystemAlertId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tactics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tactics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tactics))
-                {
-                    if (Tactics.Any())
-                    {
-                        builder.Append("    tactics: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Tactics)
-                        {
-                            builder.AppendLine($"      '{item.ToString()}'");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertGeneratedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    timeGenerated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AlertGeneratedOn))
-                {
-                    builder.Append("    timeGenerated: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(AlertGeneratedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VendorName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vendorName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VendorName))
-                {
-                    builder.Append("    vendorName: ");
-                    if (VendorName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VendorName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VendorName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlertLink), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    alertLink: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AlertLink))
-                {
-                    builder.Append("    alertLink: ");
-                    if (AlertLink.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AlertLink}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AlertLink}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceIdentifiers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceIdentifiers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ResourceIdentifiers))
-                {
-                    if (ResourceIdentifiers.Any())
-                    {
-                        builder.Append("    resourceIdentifiers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ResourceIdentifiers)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"      '{item.ToString()}'");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsAlert>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsAlert IPersistableModel<SecurityInsightsAlert>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsAlert(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsAlert>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

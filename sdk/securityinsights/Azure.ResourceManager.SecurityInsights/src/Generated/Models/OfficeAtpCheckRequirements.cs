@@ -14,23 +14,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class OfficeAtpCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="OfficeAtpCheckRequirements"/>. </summary>
-        public OfficeAtpCheckRequirements()
+        public OfficeAtpCheckRequirements() : base(DataConnectorKind.OfficeATP)
         {
-            Kind = DataConnectorKind.OfficeATP;
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficeAtpCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal OfficeAtpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> OfficeATP (Office 365 Advanced Threat Protection) requirements check properties. </param>
+        internal OfficeAtpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeATPCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> OfficeATP (Office 365 Advanced Threat Protection) requirements check properties. </summary>
+        internal OfficeATPCheckRequirementsProperties Properties { get; set; }
+
         /// <summary> The tenant id to connect to, and get the data from. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfficeATPCheckRequirementsProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }

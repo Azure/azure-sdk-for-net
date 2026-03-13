@@ -6,48 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsIncident along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsIncidentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsIncidentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsIncident method.
+    /// A class representing a SecurityInsightsIncident along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsIncidentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityInsightsIncidents method.
     /// </summary>
     public partial class SecurityInsightsIncidentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsIncidentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="incidentId"> The incidentId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsIncidentIncidentsClientDiagnostics;
-        private readonly IncidentsRestOperations _securityInsightsIncidentIncidentsRestClient;
+        private readonly ClientDiagnostics _incidentsClientDiagnostics;
+        private readonly Incidents _incidentsRestClient;
         private readonly SecurityInsightsIncidentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/incidents";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsIncidentResource for mocking. </summary>
         protected SecurityInsightsIncidentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsIncidentResource(ArmClient client, SecurityInsightsIncidentData data) : this(client, data.Id)
@@ -56,278 +45,93 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsIncidentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsIncidentIncidentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsIncidentIncidentsApiVersion);
-            _securityInsightsIncidentIncidentsRestClient = new IncidentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsIncidentIncidentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsIncidentApiVersion);
+            _incidentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _incidentsRestClient = new Incidents(_incidentsClientDiagnostics, Pipeline, Endpoint, securityInsightsIncidentApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsIncidentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="incidentId"> The incidentId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsIncidentRelationResources in the SecurityInsightsIncident. </summary>
-        /// <returns> An object representing collection of SecurityInsightsIncidentRelationResources and their operations over a SecurityInsightsIncidentRelationResource. </returns>
-        public virtual SecurityInsightsIncidentRelationCollection GetSecurityInsightsIncidentRelations()
-        {
-            return GetCachedClient(client => new SecurityInsightsIncidentRelationCollection(client, Id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
-        /// Gets an incident relation.
+        /// Gets a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentRelations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentRelationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsIncidentRelationResource>> GetSecurityInsightsIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an incident relation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentRelations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentRelationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsIncidentRelationResource> GetSecurityInsightsIncidentRelation(string relationName, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsIncidentRelations().Get(relationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsIncidentCommentResources in the SecurityInsightsIncident. </summary>
-        /// <returns> An object representing collection of SecurityInsightsIncidentCommentResources and their operations over a SecurityInsightsIncidentCommentResource. </returns>
-        public virtual SecurityInsightsIncidentCommentCollection GetSecurityInsightsIncidentComments()
-        {
-            return GetCachedClient(client => new SecurityInsightsIncidentCommentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an incident comment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="incidentCommentId"> Incident comment ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsIncidentCommentResource>> GetSecurityInsightsIncidentCommentAsync(string incidentCommentId, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsIncidentComments().GetAsync(incidentCommentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an incident comment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentComments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentCommentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="incidentCommentId"> Incident comment ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsIncidentCommentResource> GetSecurityInsightsIncidentComment(string incidentCommentId, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsIncidentComments().Get(incidentCommentId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsIncidentTaskResources in the SecurityInsightsIncident. </summary>
-        /// <returns> An object representing collection of SecurityInsightsIncidentTaskResources and their operations over a SecurityInsightsIncidentTaskResource. </returns>
-        public virtual SecurityInsightsIncidentTaskCollection GetSecurityInsightsIncidentTasks()
-        {
-            return GetCachedClient(client => new SecurityInsightsIncidentTaskCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an incident task.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/tasks/{incidentTaskId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentTasks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentTaskResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="incidentTaskId"> Incident task ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsIncidentTaskResource>> GetSecurityInsightsIncidentTaskAsync(string incidentTaskId, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsIncidentTasks().GetAsync(incidentTaskId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an incident task.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/tasks/{incidentTaskId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IncidentTasks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentTaskResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="incidentTaskId"> Incident task ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsIncidentTaskResource> GetSecurityInsightsIncidentTask(string incidentTaskId, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsIncidentTasks().Get(incidentTaskId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an incident.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsIncidentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Get");
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentIncidentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsIncidentData> response = Response.FromValue(SecurityInsightsIncidentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsIncidentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,36 +142,44 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets an incident.
+        /// Gets a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsIncidentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Get");
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentIncidentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsIncidentData> response = Response.FromValue(SecurityInsightsIncidentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsIncidentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -378,23 +190,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Delete the incident.
+        /// Deletes a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,16 +214,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Delete");
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentIncidentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsIncidentIncidentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -422,23 +241,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Delete the incident.
+        /// Deletes a given incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,16 +265,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Delete");
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentIncidentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsIncidentIncidentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -466,23 +292,409 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the incident.
+        /// Gets all alerts for an incident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/alerts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_ListAlerts. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IncidentAlertList>> GetAlertsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetAlerts");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetAlertsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IncidentAlertList> response = Response.FromValue(IncidentAlertList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all alerts for an incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/alerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_ListAlerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IncidentAlertList> GetAlerts(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetAlerts");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetAlertsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IncidentAlertList> response = Response.FromValue(IncidentAlertList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all bookmarks for an incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/bookmarks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_ListBookmarks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<IncidentBookmarkList>> GetBookmarksAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetBookmarks");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetBookmarksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IncidentBookmarkList> response = Response.FromValue(IncidentBookmarkList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all bookmarks for an incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/bookmarks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_ListBookmarks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<IncidentBookmarkList> GetBookmarks(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetBookmarks");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetBookmarksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IncidentBookmarkList> response = Response.FromValue(IncidentBookmarkList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all entities for an incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/entities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_ListEntities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SecurityInsightsIncidentEntitiesResult>> GetEntitiesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetEntities");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetEntitiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsIncidentEntitiesResult> response = Response.FromValue(SecurityInsightsIncidentEntitiesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all entities for an incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/entities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_ListEntities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SecurityInsightsIncidentEntitiesResult> GetEntities(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetEntities");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateGetEntitiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsIncidentEntitiesResult> response = Response.FromValue(SecurityInsightsIncidentEntitiesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers playbook on a specific incident
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentIdentifier}/runPlaybook. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_RunPlaybook. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestBody"> Describes the request body for triggering a playbook on an incident. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BinaryData>> RunPlaybookAsync(ManualTriggerRequestBody requestBody = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.RunPlaybook");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateRunPlaybookRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManualTriggerRequestBody.ToRequestContent(requestBody), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BinaryData> response = Response.FromValue(BinaryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Triggers playbook on a specific incident
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentIdentifier}/runPlaybook. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_RunPlaybook. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestBody"> Describes the request body for triggering a playbook on an incident. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BinaryData> RunPlaybook(ManualTriggerRequestBody requestBody = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.RunPlaybook");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateRunPlaybookRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManualTriggerRequestBody.ToRequestContent(requestBody), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BinaryData> response = Response.FromValue(BinaryData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a SecurityInsightsIncident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,16 +706,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Update");
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsIncidentIncidentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsIncidentIncidentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsIncidentData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsIncidentData> response = Response.FromValue(SecurityInsightsIncidentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsIncidentResource> operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -514,23 +734,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the incident.
+        /// Update a SecurityInsightsIncident.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsIncidentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -542,16 +762,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Update");
+            using DiagnosticScope scope = _incidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsIncidentIncidentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsIncidentIncidentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _incidentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsIncidentData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsIncidentData> response = Response.FromValue(SecurityInsightsIncidentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsIncidentResource> operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentResource>(Response.FromValue(new SecurityInsightsIncidentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -561,358 +789,103 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary>
-        /// Triggers playbook on a specific incident
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentIdentifier}/runPlaybook</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_RunPlaybook</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="requestBody"> The <see cref="ManualTriggerRequestBody"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryData>> RunPlaybookAsync(ManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of SecurityInsightsIncidentComments in the <see cref="SecurityInsightsIncidentResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityInsightsIncidentComments and their operations over a SecurityInsightsIncidentCommentResource. </returns>
+        public virtual SecurityInsightsIncidentCommentCollection GetSecurityInsightsIncidentComments()
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.RunPlaybook");
-            scope.Start();
-            try
-            {
-                var response = await _securityInsightsIncidentIncidentsRestClient.RunPlaybookAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, requestBody, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new SecurityInsightsIncidentCommentCollection(client, Id));
         }
 
-        /// <summary>
-        /// Triggers playbook on a specific incident
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentIdentifier}/runPlaybook</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_RunPlaybook</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="requestBody"> The <see cref="ManualTriggerRequestBody"/> to use. </param>
+        /// <summary> Gets an incident comment. </summary>
+        /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryData> RunPlaybook(ManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsIncidentCommentResource>> GetSecurityInsightsIncidentCommentAsync(string incidentCommentId, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.RunPlaybook");
-            scope.Start();
-            try
-            {
-                var response = _securityInsightsIncidentIncidentsRestClient.RunPlaybook(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, requestBody, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
+
+            return await GetSecurityInsightsIncidentComments().GetAsync(incidentCommentId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Creates a Microsoft team to investigate the incident by sharing information and insights between participants.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/createTeam</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_CreateTeam</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="teamProperties"> Team properties. </param>
+        /// <summary> Gets an incident comment. </summary>
+        /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="teamProperties"/> is null. </exception>
-        public virtual async Task<Response<TeamInformation>> CreateTeamAsync(TeamInformation teamProperties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsIncidentCommentResource> GetSecurityInsightsIncidentComment(string incidentCommentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(teamProperties, nameof(teamProperties));
+            Argument.AssertNotNullOrEmpty(incidentCommentId, nameof(incidentCommentId));
 
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.CreateTeam");
-            scope.Start();
-            try
-            {
-                var response = await _securityInsightsIncidentIncidentsRestClient.CreateTeamAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, teamProperties, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetSecurityInsightsIncidentComments().Get(incidentCommentId, cancellationToken);
         }
 
-        /// <summary>
-        /// Creates a Microsoft team to investigate the incident by sharing information and insights between participants.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/createTeam</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_CreateTeam</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="teamProperties"> Team properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="teamProperties"/> is null. </exception>
-        public virtual Response<TeamInformation> CreateTeam(TeamInformation teamProperties, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of SecurityInsightsIncidentTasks in the <see cref="SecurityInsightsIncidentResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityInsightsIncidentTasks and their operations over a SecurityInsightsIncidentTaskResource. </returns>
+        public virtual SecurityInsightsIncidentTaskCollection GetSecurityInsightsIncidentTasks()
         {
-            Argument.AssertNotNull(teamProperties, nameof(teamProperties));
-
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.CreateTeam");
-            scope.Start();
-            try
-            {
-                var response = _securityInsightsIncidentIncidentsRestClient.CreateTeam(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, teamProperties, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new SecurityInsightsIncidentTaskCollection(client, Id));
         }
 
-        /// <summary>
-        /// Gets all incident alerts.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/alerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_ListAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets an incident task. </summary>
+        /// <param name="incidentTaskId"> Incident task ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsAlert"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsAlert> GetAlertsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsIncidentTaskResource>> GetSecurityInsightsIncidentTaskAsync(string incidentTaskId, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListAlertsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SecurityInsightsAlert.DeserializeSecurityInsightsAlert(e), _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetAlerts", "value", null, cancellationToken);
+            Argument.AssertNotNullOrEmpty(incidentTaskId, nameof(incidentTaskId));
+
+            return await GetSecurityInsightsIncidentTasks().GetAsync(incidentTaskId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets all incident alerts.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/alerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_ListAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets an incident task. </summary>
+        /// <param name="incidentTaskId"> Incident task ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsAlert"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsAlert> GetAlerts(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentTaskId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentTaskId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsIncidentTaskResource> GetSecurityInsightsIncidentTask(string incidentTaskId, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListAlertsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SecurityInsightsAlert.DeserializeSecurityInsightsAlert(e), _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetAlerts", "value", null, cancellationToken);
+            Argument.AssertNotNullOrEmpty(incidentTaskId, nameof(incidentTaskId));
+
+            return GetSecurityInsightsIncidentTasks().Get(incidentTaskId, cancellationToken);
         }
 
-        /// <summary>
-        /// Gets all incident bookmarks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/bookmarks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_ListBookmarks</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsHuntingBookmark"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsHuntingBookmark> GetBookmarksAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of IncidentRelations in the <see cref="SecurityInsightsIncidentResource"/>. </summary>
+        /// <returns> An object representing collection of IncidentRelations and their operations over a IncidentRelationResource. </returns>
+        public virtual IncidentRelationCollection GetIncidentRelations()
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListBookmarksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(e), _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetBookmarks", "value", null, cancellationToken);
+            return GetCachedClient(client => new IncidentRelationCollection(client, Id));
         }
 
-        /// <summary>
-        /// Gets all incident bookmarks.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/bookmarks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_ListBookmarks</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a relation for a given incident. </summary>
+        /// <param name="relationName"> Relation Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsHuntingBookmark"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsHuntingBookmark> GetBookmarks(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IncidentRelationResource>> GetIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentIncidentsRestClient.CreateListBookmarksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(e), _securityInsightsIncidentIncidentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentResource.GetBookmarks", "value", null, cancellationToken);
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
+
+            return await GetIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets all incident related entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/entities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_ListEntities</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a relation for a given incident. </summary>
+        /// <param name="relationName"> Relation Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityInsightsIncidentEntitiesResult>> GetEntitiesResultAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IncidentRelationResource> GetIncidentRelation(string relationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetEntitiesResult");
-            scope.Start();
-            try
-            {
-                var response = await _securityInsightsIncidentIncidentsRestClient.ListEntitiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-        /// <summary>
-        /// Gets all incident related entities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/entities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Incidents_ListEntities</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsIncidentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityInsightsIncidentEntitiesResult> GetEntitiesResult(CancellationToken cancellationToken = default)
-        {
-            using var scope = _securityInsightsIncidentIncidentsClientDiagnostics.CreateScope("SecurityInsightsIncidentResource.GetEntitiesResult");
-            scope.Start();
-            try
-            {
-                var response = _securityInsightsIncidentIncidentsRestClient.ListEntities(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetIncidentRelations().Get(relationName, cancellationToken);
         }
     }
 }

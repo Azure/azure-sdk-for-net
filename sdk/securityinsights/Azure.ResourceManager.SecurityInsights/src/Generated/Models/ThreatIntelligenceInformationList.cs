@@ -8,85 +8,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List of all the threat intelligence information objects. </summary>
     internal partial class ThreatIntelligenceInformationList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceInformationList"/>. </summary>
-        /// <param name="value">
-        /// Array of threat intelligence information objects.
-        /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The ThreatIntelligenceInformation items on this page. </param>
         internal ThreatIntelligenceInformationList(IEnumerable<SecurityInsightsThreatIntelligenceIndicatorBaseData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceInformationList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of information objects. </param>
-        /// <param name="value">
-        /// Array of threat intelligence information objects.
-        /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceInformationList(string nextLink, IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The ThreatIntelligenceInformation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceInformationList(IList<SecurityInsightsThreatIntelligenceIndicatorBaseData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceInformationList"/> for deserialization. </summary>
-        internal ThreatIntelligenceInformationList()
-        {
-        }
+        /// <summary> The ThreatIntelligenceInformation items on this page. </summary>
+        public IList<SecurityInsightsThreatIntelligenceIndicatorBaseData> Value { get; }
 
-        /// <summary> URL to fetch the next set of information objects. </summary>
-        public string NextLink { get; }
-        /// <summary>
-        /// Array of threat intelligence information objects.
-        /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
-        /// </summary>
-        public IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

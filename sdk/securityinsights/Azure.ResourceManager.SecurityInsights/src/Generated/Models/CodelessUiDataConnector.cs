@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,28 +17,42 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class CodelessUiDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="CodelessUiDataConnector"/>. </summary>
-        public CodelessUiDataConnector()
+        public CodelessUiDataConnector() : base(DataConnectorKind.GenericUI)
         {
-            Kind = DataConnectorKind.GenericUI;
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessUiDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorUiConfig"> Config to describe the instructions blade. </param>
-        internal CodelessUiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, CodelessUiConnectorConfigProperties connectorUiConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Codeless UI data connector properties. </param>
+        internal CodelessUiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorKind kind, string eTag, CodelessParameters properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            ConnectorUiConfig = connectorUiConfig;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Codeless UI data connector properties. </summary>
+        internal CodelessParameters Properties { get; set; }
+
         /// <summary> Config to describe the instructions blade. </summary>
-        [WirePath("properties.connectorUiConfig")]
-        public CodelessUiConnectorConfigProperties ConnectorUiConfig { get; set; }
+        public CodelessUiConnectorConfigProperties ConnectorUiConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectorUiConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CodelessParameters();
+                }
+                Properties.ConnectorUiConfig = value;
+            }
+        }
     }
 }

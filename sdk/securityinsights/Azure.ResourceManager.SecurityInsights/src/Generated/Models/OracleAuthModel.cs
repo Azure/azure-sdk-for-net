@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -18,9 +19,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="userId"> Oracle user ID. </param>
         /// <param name="publicFingerprint"> Public Fingerprint. </param>
         /// <param name="pemFile"> Content of the PRM file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/>, <paramref name="publicFingerprint"/> or <paramref name="pemFile"/> is null. </exception>
-        public OracleAuthModel(Guid tenantId, string userId, string publicFingerprint, string pemFile)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/>, <paramref name="userId"/>, <paramref name="publicFingerprint"/> or <paramref name="pemFile"/> is null. </exception>
+        public OracleAuthModel(string tenantId, string userId, string publicFingerprint, string pemFile) : base(CcpAuthType.Oracle)
         {
+            Argument.AssertNotNull(tenantId, nameof(tenantId));
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(publicFingerprint, nameof(publicFingerprint));
             Argument.AssertNotNull(pemFile, nameof(pemFile));
@@ -29,41 +31,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             UserId = userId;
             PublicFingerprint = publicFingerprint;
             PemFile = pemFile;
-            AuthType = CcpAuthType.Oracle;
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tenantId"> Oracle tenant ID. </param>
         /// <param name="userId"> Oracle user ID. </param>
         /// <param name="publicFingerprint"> Public Fingerprint. </param>
         /// <param name="pemFile"> Content of the PRM file. </param>
-        internal OracleAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid tenantId, string userId, string publicFingerprint, string pemFile) : base(authType, serializedAdditionalRawData)
+        internal OracleAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string tenantId, string userId, string publicFingerprint, string pemFile) : base(@type, additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             UserId = userId;
             PublicFingerprint = publicFingerprint;
             PemFile = pemFile;
-            AuthType = authType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OracleAuthModel"/> for deserialization. </summary>
-        internal OracleAuthModel()
-        {
         }
 
         /// <summary> Oracle tenant ID. </summary>
-        [WirePath("tenantId")]
-        public Guid TenantId { get; set; }
+        public string TenantId { get; set; }
+
         /// <summary> Oracle user ID. </summary>
-        [WirePath("userId")]
         public string UserId { get; set; }
+
         /// <summary> Public Fingerprint. </summary>
-        [WirePath("publicFingerprint")]
         public string PublicFingerprint { get; set; }
+
         /// <summary> Content of the PRM file. </summary>
-        [WirePath("pemFile")]
         public string PemFile { get; set; }
     }
 }

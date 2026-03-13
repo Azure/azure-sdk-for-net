@@ -7,57 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> What suggestions should be taken to complete the recommendation. </summary>
     public partial class RecommendedSuggestion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendedSuggestion"/>. </summary>
         /// <param name="suggestionTypeId"> Id of the suggestion type. </param>
         /// <param name="title"> Title of the suggestion. </param>
         /// <param name="description"> Description of the suggestion. </param>
         /// <param name="action"> Action of the suggestion. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestionTypeId"/>, <paramref name="title"/>, <paramref name="description"/> or <paramref name="action"/> is null. </exception>
-        public RecommendedSuggestion(string suggestionTypeId, string title, string description, string action)
+        internal RecommendedSuggestion(string suggestionTypeId, string title, string description, string action)
         {
-            Argument.AssertNotNull(suggestionTypeId, nameof(suggestionTypeId));
-            Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(action, nameof(action));
-
             SuggestionTypeId = suggestionTypeId;
             Title = title;
             Description = description;
@@ -71,36 +37,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="description"> Description of the suggestion. </param>
         /// <param name="action"> Action of the suggestion. </param>
         /// <param name="additionalProperties"> Collection of additional properties for the suggestion. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedSuggestion(string suggestionTypeId, string title, string description, string action, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedSuggestion(string suggestionTypeId, string title, string description, string action, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SuggestionTypeId = suggestionTypeId;
             Title = title;
             Description = description;
             Action = action;
             AdditionalProperties = additionalProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecommendedSuggestion"/> for deserialization. </summary>
-        internal RecommendedSuggestion()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the suggestion type. </summary>
-        [WirePath("suggestionTypeId")]
-        public string SuggestionTypeId { get; set; }
+        public string SuggestionTypeId { get; }
+
         /// <summary> Title of the suggestion. </summary>
-        [WirePath("title")]
-        public string Title { get; set; }
+        public string Title { get; }
+
         /// <summary> Description of the suggestion. </summary>
-        [WirePath("description")]
-        public string Description { get; set; }
+        public string Description { get; }
+
         /// <summary> Action of the suggestion. </summary>
-        [WirePath("action")]
-        public string Action { get; set; }
+        public string Action { get; }
+
         /// <summary> Collection of additional properties for the suggestion. </summary>
-        [WirePath("additionalProperties")]
-        public IDictionary<string, string> AdditionalProperties { get; set; }
+        public IDictionary<string, string> AdditionalProperties { get; }
     }
 }

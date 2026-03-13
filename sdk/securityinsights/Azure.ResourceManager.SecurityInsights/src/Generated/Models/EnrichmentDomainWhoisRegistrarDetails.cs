@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The registrar associated with this domain. </summary>
     public partial class EnrichmentDomainWhoisRegistrarDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisRegistrarDetails"/>. </summary>
         internal EnrichmentDomainWhoisRegistrarDetails()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ianaId"> This registrar's Internet Assigned Numbers Authority id. </param>
         /// <param name="uri"> This registrar's URL. </param>
         /// <param name="whoisServer"> The hostname of this registrar's whois server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentDomainWhoisRegistrarDetails(string name, string abuseContactEmail, string abuseContactPhone, string ianaId, Uri uri, string whoisServer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EnrichmentDomainWhoisRegistrarDetails(string name, string abuseContactEmail, string abuseContactPhone, string ianaId, string uri, string whoisServer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AbuseContactEmail = abuseContactEmail;
@@ -66,26 +37,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IanaId = ianaId;
             Uri = uri;
             WhoisServer = whoisServer;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of this registrar. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> This registrar's abuse contact email. </summary>
-        [WirePath("abuseContactEmail")]
         public string AbuseContactEmail { get; }
+
         /// <summary> This registrar's abuse contact phone number. </summary>
-        [WirePath("abuseContactPhone")]
         public string AbuseContactPhone { get; }
+
         /// <summary> This registrar's Internet Assigned Numbers Authority id. </summary>
-        [WirePath("ianaId")]
         public string IanaId { get; }
+
         /// <summary> This registrar's URL. </summary>
-        [WirePath("url")]
-        public Uri Uri { get; }
+        public string Uri { get; }
+
         /// <summary> The hostname of this registrar's whois server. </summary>
-        [WirePath("whoisServer")]
         public string WhoisServer { get; }
     }
 }

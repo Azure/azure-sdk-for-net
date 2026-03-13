@@ -8,86 +8,98 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsEntityQueryTemplateResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsEntityQueryTemplateResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsEntityQueryTemplateCollection"/> instance call the GetSecurityInsightsEntityQueryTemplates method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsEntityQueryTemplateResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityInsightsEntityQueryTemplateCollection"/> instance call the GetSecurityInsightsEntityQueryTemplates method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SecurityInsightsEntityQueryTemplateCollection : ArmCollection, IEnumerable<SecurityInsightsEntityQueryTemplateResource>, IAsyncEnumerable<SecurityInsightsEntityQueryTemplateResource>
     {
-        private readonly ClientDiagnostics _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics;
-        private readonly EntityQueryTemplatesRestOperations _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient;
+        private readonly ClientDiagnostics _entityQueryTemplatesClientDiagnostics;
+        private readonly EntityQueryTemplates _entityQueryTemplatesRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityQueryTemplateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsEntityQueryTemplateCollection for mocking. </summary>
         protected SecurityInsightsEntityQueryTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityQueryTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntityQueryTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsEntityQueryTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal SecurityInsightsEntityQueryTemplateCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityQueryTemplateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsEntityQueryTemplateResource.ResourceType, out string securityInsightsEntityQueryTemplateEntityQueryTemplatesApiVersion);
-            _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient = new EntityQueryTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsEntityQueryTemplateEntityQueryTemplatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsEntityQueryTemplateResource.ResourceType, out string securityInsightsEntityQueryTemplateApiVersion);
+            _workspaceName = workspaceName;
+            _entityQueryTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityQueryTemplateResource.ResourceType.Namespace, Diagnostics);
+            _entityQueryTemplatesRestClient = new EntityQueryTemplates(_entityQueryTemplatesClientDiagnostics, Pipeline, Endpoint, securityInsightsEntityQueryTemplateApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets an entity query.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityQueryTemplateId"> entity query template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsEntityQueryTemplateResource>> GetAsync(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
 
-            using var scope = _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Get");
+            using DiagnosticScope scope = _entityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityQueryTemplateId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entityQueryTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityQueryTemplateId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsEntityQueryTemplateData> response = Response.FromValue(SecurityInsightsEntityQueryTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityQueryTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +113,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets an entity query.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityQueryTemplateId"> entity query template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsEntityQueryTemplateResource> Get(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
 
-            using var scope = _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Get");
+            using DiagnosticScope scope = _entityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityQueryTemplateId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entityQueryTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityQueryTemplateId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsEntityQueryTemplateData> response = Response.FromValue(SecurityInsightsEntityQueryTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityQueryTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,98 +162,120 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all entity query templates.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="kind"> The entity template query kind we want to fetch. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsEntityQueryTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsEntityQueryTemplateResource> GetAllAsync(EntityTemplateQueryKind? kind = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsEntityQueryTemplateResource(Client, SecurityInsightsEntityQueryTemplateData.DeserializeSecurityInsightsEntityQueryTemplateData(e)), _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics, Pipeline, "SecurityInsightsEntityQueryTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all entity query templates.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kind"> The entity template query kind we want to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsEntityQueryTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsEntityQueryTemplateResource> GetAll(EntityTemplateQueryKind? kind = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsEntityQueryTemplateResource> GetAllAsync(EntityQueryTemplateKind? kind = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsEntityQueryTemplateResource(Client, SecurityInsightsEntityQueryTemplateData.DeserializeSecurityInsightsEntityQueryTemplateData(e)), _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics, Pipeline, "SecurityInsightsEntityQueryTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsEntityQueryTemplateData, SecurityInsightsEntityQueryTemplateResource>(new EntityQueryTemplatesGetAllAsyncCollectionResultOfT(
+                _entityQueryTemplatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _workspaceName,
+                kind?.ToString(),
+                context), data => new SecurityInsightsEntityQueryTemplateResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all entity query templates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kind"> The entity template query kind we want to fetch. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityInsightsEntityQueryTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsEntityQueryTemplateResource> GetAll(EntityQueryTemplateKind? kind = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsEntityQueryTemplateData, SecurityInsightsEntityQueryTemplateResource>(new EntityQueryTemplatesGetAllCollectionResultOfT(
+                _entityQueryTemplatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _workspaceName,
+                kind?.ToString(),
+                context), data => new SecurityInsightsEntityQueryTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityQueryTemplateId"> entity query template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
 
-            using var scope = _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Exists");
+            using DiagnosticScope scope = _entityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityQueryTemplateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entityQueryTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityQueryTemplateId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityQueryTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityQueryTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityQueryTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,36 +289,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityQueryTemplateId"> entity query template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
 
-            using var scope = _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Exists");
+            using DiagnosticScope scope = _entityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityQueryTemplateId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entityQueryTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityQueryTemplateId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityQueryTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityQueryTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityQueryTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,38 +346,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityQueryTemplateId"> entity query template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsEntityQueryTemplateResource>> GetIfExistsAsync(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
 
-            using var scope = _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _entityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityQueryTemplateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entityQueryTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityQueryTemplateId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityQueryTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityQueryTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityQueryTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsEntityQueryTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityQueryTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,38 +407,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EntityQueryTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityQueryTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityQueryTemplateId"> entity query template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsEntityQueryTemplateResource> GetIfExists(string entityQueryTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
 
-            using var scope = _securityInsightsEntityQueryTemplateEntityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _entityQueryTemplatesClientDiagnostics.CreateScope("SecurityInsightsEntityQueryTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsEntityQueryTemplateEntityQueryTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityQueryTemplateId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entityQueryTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityQueryTemplateId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityQueryTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityQueryTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityQueryTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsEntityQueryTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityQueryTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,6 +474,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsEntityQueryTemplateResource> IAsyncEnumerable<SecurityInsightsEntityQueryTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

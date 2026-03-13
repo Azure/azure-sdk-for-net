@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> An individual contact associated with this domain. </summary>
     public partial class EnrichmentDomainWhoisContact
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisContact"/>. </summary>
         internal EnrichmentDomainWhoisContact()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="phone"> The phone number for this contact. </param>
         /// <param name="fax"> The fax number for this contact. </param>
         /// <param name="email"> The email address for this contact. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentDomainWhoisContact(string name, string org, IReadOnlyList<string> street, string city, string state, string postal, string country, string phone, string fax, string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EnrichmentDomainWhoisContact(string name, string org, IList<string> street, string city, string state, string postal, string country, string phone, string fax, string email, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Org = org;
@@ -75,38 +47,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Phone = phone;
             Fax = fax;
             Email = email;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of this contact. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The organization for this contact. </summary>
-        [WirePath("org")]
         public string Org { get; }
+
         /// <summary> A list describing the street address for this contact. </summary>
-        [WirePath("street")]
-        public IReadOnlyList<string> Street { get; }
+        public IList<string> Street { get; }
+
         /// <summary> The city for this contact. </summary>
-        [WirePath("city")]
         public string City { get; }
+
         /// <summary> The state for this contact. </summary>
-        [WirePath("state")]
         public string State { get; }
+
         /// <summary> The postal code for this contact. </summary>
-        [WirePath("postal")]
         public string Postal { get; }
+
         /// <summary> The country for this contact. </summary>
-        [WirePath("country")]
         public string Country { get; }
+
         /// <summary> The phone number for this contact. </summary>
-        [WirePath("phone")]
         public string Phone { get; }
+
         /// <summary> The fax number for this contact. </summary>
-        [WirePath("fax")]
         public string Fax { get; }
+
         /// <summary> The email address for this contact. </summary>
-        [WirePath("email")]
         public string Email { get; }
     }
 }

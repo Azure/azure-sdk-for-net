@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ConnectorHttpMethodVerb : IEquatable<ConnectorHttpMethodVerb>
     {
         private readonly string _value;
+        /// <summary> GET. </summary>
+        private const string GETValue = "GET";
+        /// <summary> POST. </summary>
+        private const string POSTValue = "POST";
+        /// <summary> PUT. </summary>
+        private const string PUTValue = "PUT";
+        /// <summary> DELETE. </summary>
+        private const string DELETEValue = "DELETE";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorHttpMethodVerb"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectorHttpMethodVerb(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string GetValue = "GET";
-        private const string PostValue = "POST";
-        private const string PutValue = "PUT";
-        private const string DeleteValue = "DELETE";
-
         /// <summary> GET. </summary>
-        public static ConnectorHttpMethodVerb Get { get; } = new ConnectorHttpMethodVerb(GetValue);
+        public static ConnectorHttpMethodVerb GET { get; } = new ConnectorHttpMethodVerb(GETValue);
+
         /// <summary> POST. </summary>
-        public static ConnectorHttpMethodVerb Post { get; } = new ConnectorHttpMethodVerb(PostValue);
+        public static ConnectorHttpMethodVerb POST { get; } = new ConnectorHttpMethodVerb(POSTValue);
+
         /// <summary> PUT. </summary>
-        public static ConnectorHttpMethodVerb Put { get; } = new ConnectorHttpMethodVerb(PutValue);
+        public static ConnectorHttpMethodVerb PUT { get; } = new ConnectorHttpMethodVerb(PUTValue);
+
         /// <summary> DELETE. </summary>
-        public static ConnectorHttpMethodVerb Delete { get; } = new ConnectorHttpMethodVerb(DeleteValue);
+        public static ConnectorHttpMethodVerb DELETE { get; } = new ConnectorHttpMethodVerb(DELETEValue);
+
         /// <summary> Determines if two <see cref="ConnectorHttpMethodVerb"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectorHttpMethodVerb left, ConnectorHttpMethodVerb right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectorHttpMethodVerb"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectorHttpMethodVerb left, ConnectorHttpMethodVerb right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectorHttpMethodVerb"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectorHttpMethodVerb"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectorHttpMethodVerb(string value) => new ConnectorHttpMethodVerb(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectorHttpMethodVerb"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectorHttpMethodVerb?(string value) => value == null ? null : new ConnectorHttpMethodVerb(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectorHttpMethodVerb other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectorHttpMethodVerb other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct MicrosoftSecurityProductName : IEquatable<MicrosoftSecurityProductName>
     {
         private readonly string _value;
+        /// <summary> Microsoft Cloud App Security. </summary>
+        private const string MicrosoftCloudAppSecurityValue = "Microsoft Cloud App Security";
+        /// <summary> Azure Security Center. </summary>
+        private const string AzureSecurityCenterValue = "Azure Security Center";
+        /// <summary> Azure Advanced Threat Protection. </summary>
+        private const string AzureAdvancedThreatProtectionValue = "Azure Advanced Threat Protection";
+        /// <summary> Azure Active Directory Identity Protection. </summary>
+        private const string AzureActiveDirectoryIdentityProtectionValue = "Azure Active Directory Identity Protection";
+        /// <summary> Azure Security Center for IoT. </summary>
+        private const string AzureSecurityCenterForIoTValue = "Azure Security Center for IoT";
+        /// <summary> Office 365 Advanced Threat Protection. </summary>
+        private const string Office365AdvancedThreatProtectionValue = "Office 365 Advanced Threat Protection";
+        /// <summary> Microsoft Defender Advanced Threat Protection. </summary>
+        private const string MicrosoftDefenderAdvancedThreatProtectionValue = "Microsoft Defender Advanced Threat Protection";
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityProductName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MicrosoftSecurityProductName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftCloudAppSecurityValue = "Microsoft Cloud App Security";
-        private const string AzureSecurityCenterValue = "Azure Security Center";
-        private const string AzureAdvancedThreatProtectionValue = "Azure Advanced Threat Protection";
-        private const string AzureActiveDirectoryIdentityProtectionValue = "Azure Active Directory Identity Protection";
-        private const string AzureSecurityCenterForIotValue = "Azure Security Center for IoT";
-        private const string Office365AdvancedThreatProtectionValue = "Office 365 Advanced Threat Protection";
-        private const string MicrosoftDefenderAdvancedThreatProtectionValue = "Microsoft Defender Advanced Threat Protection";
+            _value = value;
+        }
 
         /// <summary> Microsoft Cloud App Security. </summary>
         public static MicrosoftSecurityProductName MicrosoftCloudAppSecurity { get; } = new MicrosoftSecurityProductName(MicrosoftCloudAppSecurityValue);
+
         /// <summary> Azure Security Center. </summary>
         public static MicrosoftSecurityProductName AzureSecurityCenter { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterValue);
+
         /// <summary> Azure Advanced Threat Protection. </summary>
         public static MicrosoftSecurityProductName AzureAdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(AzureAdvancedThreatProtectionValue);
+
         /// <summary> Azure Active Directory Identity Protection. </summary>
         public static MicrosoftSecurityProductName AzureActiveDirectoryIdentityProtection { get; } = new MicrosoftSecurityProductName(AzureActiveDirectoryIdentityProtectionValue);
+
         /// <summary> Azure Security Center for IoT. </summary>
-        public static MicrosoftSecurityProductName AzureSecurityCenterForIot { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterForIotValue);
+        public static MicrosoftSecurityProductName AzureSecurityCenterForIoT { get; } = new MicrosoftSecurityProductName(AzureSecurityCenterForIoTValue);
+
         /// <summary> Office 365 Advanced Threat Protection. </summary>
         public static MicrosoftSecurityProductName Office365AdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(Office365AdvancedThreatProtectionValue);
+
         /// <summary> Microsoft Defender Advanced Threat Protection. </summary>
         public static MicrosoftSecurityProductName MicrosoftDefenderAdvancedThreatProtection { get; } = new MicrosoftSecurityProductName(MicrosoftDefenderAdvancedThreatProtectionValue);
+
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MicrosoftSecurityProductName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MicrosoftSecurityProductName left, MicrosoftSecurityProductName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MicrosoftSecurityProductName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MicrosoftSecurityProductName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MicrosoftSecurityProductName(string value) => new MicrosoftSecurityProductName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MicrosoftSecurityProductName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MicrosoftSecurityProductName?(string value) => value == null ? null : new MicrosoftSecurityProductName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MicrosoftSecurityProductName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MicrosoftSecurityProductName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

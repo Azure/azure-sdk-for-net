@@ -8,90 +8,101 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="TriggeredAnalyticsRuleRunResource"/> and their operations.
-    /// Each <see cref="TriggeredAnalyticsRuleRunResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="TriggeredAnalyticsRuleRunCollection"/> instance call the GetTriggeredAnalyticsRuleRuns method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="TriggeredAnalyticsRuleRunResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TriggeredAnalyticsRuleRunCollection"/> instance call the GetTriggeredAnalyticsRuleRuns method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TriggeredAnalyticsRuleRunCollection : ArmCollection, IEnumerable<TriggeredAnalyticsRuleRunResource>, IAsyncEnumerable<TriggeredAnalyticsRuleRunResource>
     {
-        private readonly ClientDiagnostics _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics;
-        private readonly TriggeredAnalyticsRuleRunRestOperations _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient;
-        private readonly ClientDiagnostics _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsClientDiagnostics;
-        private readonly GetTriggeredAnalyticsRuleRunsRestOperations _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsRestClient;
+        private readonly ClientDiagnostics _triggeredAnalyticsRuleRunClientDiagnostics;
+        private readonly TriggeredAnalyticsRuleRun _triggeredAnalyticsRuleRunRestClient;
+        private readonly ClientDiagnostics _getTriggeredAnalyticsRuleRunsClientDiagnostics;
+        private readonly GetTriggeredAnalyticsRuleRuns _getTriggeredAnalyticsRuleRunsRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="TriggeredAnalyticsRuleRunCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TriggeredAnalyticsRuleRunCollection for mocking. </summary>
         protected TriggeredAnalyticsRuleRunCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TriggeredAnalyticsRuleRunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredAnalyticsRuleRunCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal TriggeredAnalyticsRuleRunCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal TriggeredAnalyticsRuleRunCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", TriggeredAnalyticsRuleRunResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TriggeredAnalyticsRuleRunResource.ResourceType, out string triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunApiVersion);
-            _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient = new TriggeredAnalyticsRuleRunRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunApiVersion);
-            _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", TriggeredAnalyticsRuleRunResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TriggeredAnalyticsRuleRunResource.ResourceType, out string triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsApiVersion);
-            _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsRestClient = new GetTriggeredAnalyticsRuleRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(TriggeredAnalyticsRuleRunResource.ResourceType, out string triggeredAnalyticsRuleRunApiVersion);
+            _workspaceName = workspaceName;
+            _triggeredAnalyticsRuleRunClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", TriggeredAnalyticsRuleRunResource.ResourceType.Namespace, Diagnostics);
+            _triggeredAnalyticsRuleRunRestClient = new TriggeredAnalyticsRuleRun(_triggeredAnalyticsRuleRunClientDiagnostics, Pipeline, Endpoint, triggeredAnalyticsRuleRunApiVersion ?? "2025-07-01-preview");
+            _getTriggeredAnalyticsRuleRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", TriggeredAnalyticsRuleRunResource.ResourceType.Namespace, Diagnostics);
+            _getTriggeredAnalyticsRuleRunsRestClient = new GetTriggeredAnalyticsRuleRuns(_getTriggeredAnalyticsRuleRunsClientDiagnostics, Pipeline, Endpoint, triggeredAnalyticsRuleRunApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the triggered analytics rule run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>triggeredAnalyticsRuleRun_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleRunId"> the triggered rule id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<TriggeredAnalyticsRuleRunResource>> GetAsync(string ruleRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
 
-            using var scope = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Get");
+            using DiagnosticScope scope = _triggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Get");
             scope.Start();
             try
             {
-                var response = await _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleRunId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggeredAnalyticsRuleRunRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, ruleRunId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TriggeredAnalyticsRuleRunData> response = Response.FromValue(TriggeredAnalyticsRuleRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TriggeredAnalyticsRuleRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,38 +116,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets the triggered analytics rule run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>triggeredAnalyticsRuleRun_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleRunId"> the triggered rule id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<TriggeredAnalyticsRuleRunResource> Get(string ruleRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
 
-            using var scope = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Get");
+            using DiagnosticScope scope = _triggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Get");
             scope.Start();
             try
             {
-                var response = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleRunId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggeredAnalyticsRuleRunRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, ruleRunId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TriggeredAnalyticsRuleRunData> response = Response.FromValue(TriggeredAnalyticsRuleRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TriggeredAnalyticsRuleRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,50 +165,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets the triggered analytics rule runs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>getTriggeredAnalyticsRuleRuns_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TriggeredAnalyticsRuleRunResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TriggeredAnalyticsRuleRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TriggeredAnalyticsRuleRunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TriggeredAnalyticsRuleRunResource(Client, TriggeredAnalyticsRuleRunData.DeserializeTriggeredAnalyticsRuleRunData(e)), _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsClientDiagnostics, Pipeline, "TriggeredAnalyticsRuleRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TriggeredAnalyticsRuleRunData, TriggeredAnalyticsRuleRunResource>(new GetTriggeredAnalyticsRuleRunsGetAllAsyncCollectionResultOfT(_getTriggeredAnalyticsRuleRunsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new TriggeredAnalyticsRuleRunResource(Client, data));
         }
 
         /// <summary>
         /// Gets the triggered analytics rule runs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>getTriggeredAnalyticsRuleRuns_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,45 +210,61 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="TriggeredAnalyticsRuleRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TriggeredAnalyticsRuleRunResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TriggeredAnalyticsRuleRunResource(Client, TriggeredAnalyticsRuleRunData.DeserializeTriggeredAnalyticsRuleRunData(e)), _triggeredAnalyticsRuleRungetTriggeredAnalyticsRuleRunsClientDiagnostics, Pipeline, "TriggeredAnalyticsRuleRunCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TriggeredAnalyticsRuleRunData, TriggeredAnalyticsRuleRunResource>(new GetTriggeredAnalyticsRuleRunsGetAllCollectionResultOfT(_getTriggeredAnalyticsRuleRunsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new TriggeredAnalyticsRuleRunResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>triggeredAnalyticsRuleRun_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleRunId"> the triggered rule id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
 
-            using var scope = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Exists");
+            using DiagnosticScope scope = _triggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleRunId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggeredAnalyticsRuleRunRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, ruleRunId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TriggeredAnalyticsRuleRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TriggeredAnalyticsRuleRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TriggeredAnalyticsRuleRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -253,36 +278,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>triggeredAnalyticsRuleRun_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleRunId"> the triggered rule id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ruleRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
 
-            using var scope = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Exists");
+            using DiagnosticScope scope = _triggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.Exists");
             scope.Start();
             try
             {
-                var response = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleRunId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggeredAnalyticsRuleRunRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, ruleRunId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TriggeredAnalyticsRuleRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TriggeredAnalyticsRuleRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TriggeredAnalyticsRuleRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,38 +335,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>triggeredAnalyticsRuleRun_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleRunId"> the triggered rule id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<TriggeredAnalyticsRuleRunResource>> GetIfExistsAsync(string ruleRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
 
-            using var scope = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.GetIfExists");
+            using DiagnosticScope scope = _triggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleRunId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggeredAnalyticsRuleRunRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, ruleRunId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<TriggeredAnalyticsRuleRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TriggeredAnalyticsRuleRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TriggeredAnalyticsRuleRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TriggeredAnalyticsRuleRunResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TriggeredAnalyticsRuleRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,38 +396,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>triggeredAnalyticsRuleRun_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TriggeredAnalyticsRuleRunResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleRunId"> the triggered rule id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<TriggeredAnalyticsRuleRunResource> GetIfExists(string ruleRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
 
-            using var scope = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.GetIfExists");
+            using DiagnosticScope scope = _triggeredAnalyticsRuleRunClientDiagnostics.CreateScope("TriggeredAnalyticsRuleRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _triggeredAnalyticsRuleRuntriggeredAnalyticsRuleRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleRunId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _triggeredAnalyticsRuleRunRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, ruleRunId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<TriggeredAnalyticsRuleRunData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(TriggeredAnalyticsRuleRunData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((TriggeredAnalyticsRuleRunData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<TriggeredAnalyticsRuleRunResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new TriggeredAnalyticsRuleRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,6 +463,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<TriggeredAnalyticsRuleRunResource> IAsyncEnumerable<TriggeredAnalyticsRuleRunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

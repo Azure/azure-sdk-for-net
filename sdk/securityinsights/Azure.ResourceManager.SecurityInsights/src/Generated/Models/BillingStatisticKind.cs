@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal readonly partial struct BillingStatisticKind : IEquatable<BillingStatisticKind>
     {
         private readonly string _value;
+        /// <summary> SapSolutionUsage. </summary>
+        private const string SapSolutionUsageValue = "SapSolutionUsage";
 
         /// <summary> Initializes a new instance of <see cref="BillingStatisticKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingStatisticKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SapSolutionUsageValue = "SapSolutionUsage";
+            _value = value;
+        }
 
         /// <summary> SapSolutionUsage. </summary>
         public static BillingStatisticKind SapSolutionUsage { get; } = new BillingStatisticKind(SapSolutionUsageValue);
+
         /// <summary> Determines if two <see cref="BillingStatisticKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingStatisticKind left, BillingStatisticKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingStatisticKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingStatisticKind left, BillingStatisticKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingStatisticKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingStatisticKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingStatisticKind(string value) => new BillingStatisticKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingStatisticKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingStatisticKind?(string value) => value == null ? null : new BillingStatisticKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingStatisticKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingStatisticKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

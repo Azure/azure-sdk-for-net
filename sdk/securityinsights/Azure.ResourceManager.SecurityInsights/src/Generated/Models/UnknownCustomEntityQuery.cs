@@ -12,24 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Unknown version of CustomEntityQuery. </summary>
-    internal partial class UnknownCustomEntityQuery : SecurityInsightsEntityQueryCreateOrUpdateContent
+    internal partial class UnknownCustomEntityQuery : CustomEntityQuery
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomEntityQuery"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
         /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCustomEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomEntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCustomEntityQuery"/> for deserialization. </summary>
-        internal UnknownCustomEntityQuery()
+        internal UnknownCustomEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eTag, CustomEntityQueryKind kind) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, eTag, kind != default ? kind : "unknown")
         {
         }
     }

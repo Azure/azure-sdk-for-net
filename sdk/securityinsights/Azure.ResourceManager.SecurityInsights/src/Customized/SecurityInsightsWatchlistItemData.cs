@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -42,7 +43,24 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </para>
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BinaryData ItemsKeyValue { get; set; }
+        public BinaryData ItemsKeyValue
+        {
+            get => Properties?.ItemsKeyValue;
+            set
+            {
+                if (value is null)
+                {
+                    if (Properties != null)
+                    {
+                        Properties.ItemsKeyValue = null;
+                    }
+                    return;
+                }
+
+                Properties ??= new WatchlistItemProperties();
+                Properties.ItemsKeyValue = value;
+            }
+        }
         /// <summary>
         /// key-value pairs for a watchlist item entity mapping
         /// <para>
@@ -74,6 +92,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </para>
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BinaryData EntityMapping { get; set; }
+        public BinaryData EntityMapping
+        {
+            get => Properties?.EntityMapping;
+            set
+            {
+                if (value is null)
+                {
+                    if (Properties != null)
+                    {
+                        Properties.EntityMapping = null;
+                    }
+                    return;
+                }
+
+                Properties ??= new WatchlistItemProperties();
+                Properties.EntityMapping = value;
+            }
+        }
     }
 }

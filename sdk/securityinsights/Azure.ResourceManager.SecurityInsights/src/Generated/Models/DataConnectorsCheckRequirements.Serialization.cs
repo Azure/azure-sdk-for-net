@@ -9,14 +9,76 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
+    /// <summary>
+    /// Data connector requirements properties.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AADCheckRequirements"/>, <see cref="AATPCheckRequirements"/>, <see cref="AscCheckRequirements"/>, <see cref="AwsCloudTrailCheckRequirements"/>, <see cref="AwsS3CheckRequirements"/>, <see cref="Dynamics365CheckRequirements"/>, <see cref="MCASCheckRequirements"/>, <see cref="MDATPCheckRequirements"/>, <see cref="MSTICheckRequirements"/>, <see cref="MtpCheckRequirements"/>, <see cref="OfficeAtpCheckRequirements"/>, <see cref="OfficeIrmCheckRequirements"/>, <see cref="MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="Office365ProjectCheckRequirements"/>, <see cref="OfficePowerBICheckRequirements"/>, <see cref="PurviewAuditCheckRequirements"/>, <see cref="ThreatIntelligenceCheckRequirements"/>, <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>, and <see cref="IoTCheckRequirements"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownDataConnectorsCheckRequirements))]
-    public partial class DataConnectorsCheckRequirements : IUtf8JsonSerializable, IJsonModel<DataConnectorsCheckRequirements>
+    public abstract partial class DataConnectorsCheckRequirements : IJsonModel<DataConnectorsCheckRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorsCheckRequirements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataConnectorsCheckRequirements"/> for deserialization. </summary>
+        internal DataConnectorsCheckRequirements()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataConnectorsCheckRequirements PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataConnectorsCheckRequirements(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataConnectorsCheckRequirements)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataConnectorsCheckRequirements)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataConnectorsCheckRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataConnectorsCheckRequirements IPersistableModel<DataConnectorsCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataConnectorsCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataConnectorsCheckRequirements"> The <see cref="DataConnectorsCheckRequirements"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataConnectorsCheckRequirements dataConnectorsCheckRequirements)
+        {
+            if (dataConnectorsCheckRequirements == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dataConnectorsCheckRequirements, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataConnectorsCheckRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +90,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataConnectorsCheckRequirements)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,82 +114,76 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        DataConnectorsCheckRequirements IJsonModel<DataConnectorsCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataConnectorsCheckRequirements IJsonModel<DataConnectorsCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataConnectorsCheckRequirements JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataConnectorsCheckRequirements)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataConnectorsCheckRequirements(document.RootElement, options);
         }
 
-        internal static DataConnectorsCheckRequirements DeserializeDataConnectorsCheckRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataConnectorsCheckRequirements DeserializeDataConnectorsCheckRequirements(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonWebServicesCloudTrail": return AwsCloudTrailCheckRequirements.DeserializeAwsCloudTrailCheckRequirements(element, options);
-                    case "AmazonWebServicesS3": return AwsS3CheckRequirements.DeserializeAwsS3CheckRequirements(element, options);
-                    case "AzureActiveDirectory": return AadCheckRequirements.DeserializeAadCheckRequirements(element, options);
-                    case "AzureAdvancedThreatProtection": return AatpCheckRequirements.DeserializeAatpCheckRequirements(element, options);
-                    case "AzureSecurityCenter": return AscCheckRequirements.DeserializeAscCheckRequirements(element, options);
-                    case "Dynamics365": return Dynamics365CheckRequirements.DeserializeDynamics365CheckRequirements(element, options);
-                    case "IOT": return IotCheckRequirements.DeserializeIotCheckRequirements(element, options);
-                    case "MicrosoftCloudAppSecurity": return McasCheckRequirements.DeserializeMcasCheckRequirements(element, options);
-                    case "MicrosoftDefenderAdvancedThreatProtection": return MdatpCheckRequirements.DeserializeMdatpCheckRequirements(element, options);
-                    case "MicrosoftPurviewInformationProtection": return MicrosoftPurviewInformationProtectionCheckRequirements.DeserializeMicrosoftPurviewInformationProtectionCheckRequirements(element, options);
-                    case "MicrosoftThreatIntelligence": return MstiCheckRequirements.DeserializeMstiCheckRequirements(element, options);
-                    case "MicrosoftThreatProtection": return MtpCheckRequirements.DeserializeMtpCheckRequirements(element, options);
-                    case "Office365Project": return Office365ProjectCheckRequirements.DeserializeOffice365ProjectCheckRequirements(element, options);
-                    case "OfficeATP": return OfficeAtpCheckRequirements.DeserializeOfficeAtpCheckRequirements(element, options);
-                    case "OfficeIRM": return OfficeIrmCheckRequirements.DeserializeOfficeIrmCheckRequirements(element, options);
-                    case "OfficePowerBI": return OfficePowerBICheckRequirements.DeserializeOfficePowerBICheckRequirements(element, options);
-                    case "ThreatIntelligence": return ThreatIntelligenceCheckRequirements.DeserializeThreatIntelligenceCheckRequirements(element, options);
-                    case "ThreatIntelligenceTaxii": return ThreatIntelligenceTaxiiCheckRequirements.DeserializeThreatIntelligenceTaxiiCheckRequirements(element, options);
+                    case "AzureActiveDirectory":
+                        return AADCheckRequirements.DeserializeAADCheckRequirements(element, options);
+                    case "AzureAdvancedThreatProtection":
+                        return AATPCheckRequirements.DeserializeAATPCheckRequirements(element, options);
+                    case "AzureSecurityCenter":
+                        return AscCheckRequirements.DeserializeAscCheckRequirements(element, options);
+                    case "AmazonWebServicesCloudTrail":
+                        return AwsCloudTrailCheckRequirements.DeserializeAwsCloudTrailCheckRequirements(element, options);
+                    case "AmazonWebServicesS3":
+                        return AwsS3CheckRequirements.DeserializeAwsS3CheckRequirements(element, options);
+                    case "Dynamics365":
+                        return Dynamics365CheckRequirements.DeserializeDynamics365CheckRequirements(element, options);
+                    case "MicrosoftCloudAppSecurity":
+                        return MCASCheckRequirements.DeserializeMCASCheckRequirements(element, options);
+                    case "MicrosoftDefenderAdvancedThreatProtection":
+                        return MDATPCheckRequirements.DeserializeMDATPCheckRequirements(element, options);
+                    case "MicrosoftThreatIntelligence":
+                        return MSTICheckRequirements.DeserializeMSTICheckRequirements(element, options);
+                    case "MicrosoftThreatProtection":
+                        return MtpCheckRequirements.DeserializeMtpCheckRequirements(element, options);
+                    case "OfficeATP":
+                        return OfficeAtpCheckRequirements.DeserializeOfficeAtpCheckRequirements(element, options);
+                    case "OfficeIRM":
+                        return OfficeIrmCheckRequirements.DeserializeOfficeIrmCheckRequirements(element, options);
+                    case "MicrosoftPurviewInformationProtection":
+                        return MicrosoftPurviewInformationProtectionCheckRequirements.DeserializeMicrosoftPurviewInformationProtectionCheckRequirements(element, options);
+                    case "Office365Project":
+                        return Office365ProjectCheckRequirements.DeserializeOffice365ProjectCheckRequirements(element, options);
+                    case "OfficePowerBI":
+                        return OfficePowerBICheckRequirements.DeserializeOfficePowerBICheckRequirements(element, options);
+                    case "PurviewAudit":
+                        return PurviewAuditCheckRequirements.DeserializePurviewAuditCheckRequirements(element, options);
+                    case "ThreatIntelligence":
+                        return ThreatIntelligenceCheckRequirements.DeserializeThreatIntelligenceCheckRequirements(element, options);
+                    case "ThreatIntelligenceTaxii":
+                        return ThreatIntelligenceTaxiiCheckRequirements.DeserializeThreatIntelligenceTaxiiCheckRequirements(element, options);
+                    case "IOT":
+                        return IoTCheckRequirements.DeserializeIoTCheckRequirements(element, options);
                 }
             }
             return UnknownDataConnectorsCheckRequirements.DeserializeUnknownDataConnectorsCheckRequirements(element, options);
         }
-
-        BinaryData IPersistableModel<DataConnectorsCheckRequirements>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataConnectorsCheckRequirements)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataConnectorsCheckRequirements IPersistableModel<DataConnectorsCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorsCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataConnectorsCheckRequirements(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataConnectorsCheckRequirements)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataConnectorsCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

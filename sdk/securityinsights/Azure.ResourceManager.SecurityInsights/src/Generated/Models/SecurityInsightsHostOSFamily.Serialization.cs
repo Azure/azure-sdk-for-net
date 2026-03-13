@@ -11,23 +11,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal static partial class SecurityInsightsHostOSFamilyExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityInsightsHostOSFamily value) => value switch
         {
-            SecurityInsightsHostOSFamily.Unknown => "Unknown",
             SecurityInsightsHostOSFamily.Linux => "Linux",
             SecurityInsightsHostOSFamily.Windows => "Windows",
             SecurityInsightsHostOSFamily.Android => "Android",
-            SecurityInsightsHostOSFamily.Ios => "IOS",
+            SecurityInsightsHostOSFamily.IOS => "IOS",
+            SecurityInsightsHostOSFamily.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsHostOSFamily value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityInsightsHostOSFamily ToSecurityInsightsHostOSFamily(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return SecurityInsightsHostOSFamily.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return SecurityInsightsHostOSFamily.Linux;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return SecurityInsightsHostOSFamily.Windows;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Android")) return SecurityInsightsHostOSFamily.Android;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IOS")) return SecurityInsightsHostOSFamily.Ios;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux"))
+            {
+                return SecurityInsightsHostOSFamily.Linux;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
+            {
+                return SecurityInsightsHostOSFamily.Windows;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Android"))
+            {
+                return SecurityInsightsHostOSFamily.Android;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IOS"))
+            {
+                return SecurityInsightsHostOSFamily.IOS;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return SecurityInsightsHostOSFamily.Unknown;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsHostOSFamily value.");
         }
     }

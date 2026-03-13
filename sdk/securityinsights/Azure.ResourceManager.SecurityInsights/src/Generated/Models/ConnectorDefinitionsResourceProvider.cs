@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,37 +17,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     public partial class ConnectorDefinitionsResourceProvider
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsResourceProvider"/>. </summary>
         /// <param name="provider"> Gets or sets the provider name. </param>
@@ -55,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="scope"> The scope on which the user should have permissions, in order to be able to create connections. </param>
         /// <param name="requiredPermissions">
         /// Required permissions for the connector resource provider that define in ResourceProviders.
-        /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
+        /// For more information about the permissions see <see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format">here</see>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="permissionsDisplayText"/>, <paramref name="providerDisplayName"/> or <paramref name="requiredPermissions"/> is null. </exception>
         public ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ConnectorResourceProviderRequiredPermissions requiredPermissions)
@@ -79,41 +51,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="scope"> The scope on which the user should have permissions, in order to be able to create connections. </param>
         /// <param name="requiredPermissions">
         /// Required permissions for the connector resource provider that define in ResourceProviders.
-        /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
+        /// For more information about the permissions see <see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format">here</see>.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ConnectorResourceProviderRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorDefinitionsResourceProvider(string provider, string permissionsDisplayText, string providerDisplayName, ProviderPermissionsScope scope, ConnectorResourceProviderRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             PermissionsDisplayText = permissionsDisplayText;
             ProviderDisplayName = providerDisplayName;
             Scope = scope;
             RequiredPermissions = requiredPermissions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsResourceProvider"/> for deserialization. </summary>
-        internal ConnectorDefinitionsResourceProvider()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the provider name. </summary>
-        [WirePath("provider")]
         public string Provider { get; set; }
+
         /// <summary> Gets or sets the permissions description text. </summary>
-        [WirePath("permissionsDisplayText")]
         public string PermissionsDisplayText { get; set; }
+
         /// <summary> Gets or sets the permissions provider display name. </summary>
-        [WirePath("providerDisplayName")]
         public string ProviderDisplayName { get; set; }
+
         /// <summary> The scope on which the user should have permissions, in order to be able to create connections. </summary>
-        [WirePath("scope")]
         public ProviderPermissionsScope Scope { get; set; }
+
         /// <summary>
         /// Required permissions for the connector resource provider that define in ResourceProviders.
-        /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
+        /// For more information about the permissions see <see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format">here</see>.
         /// </summary>
-        [WirePath("requiredPermissions")]
         public ConnectorResourceProviderRequiredPermissions RequiredPermissions { get; set; }
     }
 }

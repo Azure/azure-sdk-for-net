@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -17,92 +17,80 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/>. </summary>
         /// <param name="azureResourceId"> The anomaly azure resource id. </param>
         /// <param name="displayName"> The anomaly name. </param>
-        /// <param name="endOn"> The anomaly end time. </param>
-        /// <param name="startOn"> The anomaly start time. </param>
-        /// <param name="generatedOn"> The anomaly generated time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> or <paramref name="displayName"/> is null. </exception>
-        internal AnomalyTimelineItem(ResourceIdentifier azureResourceId, string displayName, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn)
+        /// <param name="endTimeUtc"> The anomaly end time. </param>
+        /// <param name="startTimeUtc"> The anomaly start time. </param>
+        /// <param name="timeGenerated"> The anomaly generated time. </param>
+        internal AnomalyTimelineItem(string azureResourceId, string displayName, DateTimeOffset endTimeUtc, DateTimeOffset startTimeUtc, DateTimeOffset timeGenerated) : base(EntityTimelineKind.Anomaly)
         {
-            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
-            Argument.AssertNotNull(displayName, nameof(displayName));
-
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
-            EndOn = endOn;
-            StartOn = startOn;
-            GeneratedOn = generatedOn;
+            EndTimeUtc = endTimeUtc;
+            StartTimeUtc = startTimeUtc;
+            TimeGenerated = timeGenerated;
             Techniques = new ChangeTrackingList<string>();
             Reasons = new ChangeTrackingList<string>();
-            Kind = EntityTimelineKind.Anomaly;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/>. </summary>
         /// <param name="kind"> The entity query kind type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureResourceId"> The anomaly azure resource id. </param>
         /// <param name="productName"> The anomaly product name. </param>
         /// <param name="description"> The anomaly description. </param>
         /// <param name="displayName"> The anomaly name. </param>
-        /// <param name="endOn"> The anomaly end time. </param>
-        /// <param name="startOn"> The anomaly start time. </param>
-        /// <param name="generatedOn"> The anomaly generated time. </param>
+        /// <param name="endTimeUtc"> The anomaly end time. </param>
+        /// <param name="startTimeUtc"> The anomaly start time. </param>
+        /// <param name="timeGenerated"> The anomaly generated time. </param>
         /// <param name="vendor"> The name of the anomaly vendor. </param>
         /// <param name="intent"> The intent of the anomaly. </param>
         /// <param name="techniques"> The techniques of the anomaly. </param>
         /// <param name="reasons"> The reasons that cause the anomaly. </param>
-        internal AnomalyTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId, string productName, string description, string displayName, DateTimeOffset endOn, DateTimeOffset startOn, DateTimeOffset generatedOn, string vendor, string intent, IReadOnlyList<string> techniques, IReadOnlyList<string> reasons) : base(kind, serializedAdditionalRawData)
+        internal AnomalyTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string azureResourceId, string productName, string description, string displayName, DateTimeOffset endTimeUtc, DateTimeOffset startTimeUtc, DateTimeOffset timeGenerated, string vendor, string intent, IList<string> techniques, IList<string> reasons) : base(kind, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             ProductName = productName;
             Description = description;
             DisplayName = displayName;
-            EndOn = endOn;
-            StartOn = startOn;
-            GeneratedOn = generatedOn;
+            EndTimeUtc = endTimeUtc;
+            StartTimeUtc = startTimeUtc;
+            TimeGenerated = timeGenerated;
             Vendor = vendor;
             Intent = intent;
             Techniques = techniques;
             Reasons = reasons;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/> for deserialization. </summary>
-        internal AnomalyTimelineItem()
-        {
         }
 
         /// <summary> The anomaly azure resource id. </summary>
-        [WirePath("azureResourceId")]
-        public ResourceIdentifier AzureResourceId { get; }
+        public string AzureResourceId { get; }
+
         /// <summary> The anomaly product name. </summary>
-        [WirePath("productName")]
         public string ProductName { get; }
+
         /// <summary> The anomaly description. </summary>
-        [WirePath("description")]
         public string Description { get; }
+
         /// <summary> The anomaly name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The anomaly end time. </summary>
-        [WirePath("endTimeUtc")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndTimeUtc { get; }
+
         /// <summary> The anomaly start time. </summary>
-        [WirePath("startTimeUtc")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartTimeUtc { get; }
+
         /// <summary> The anomaly generated time. </summary>
-        [WirePath("timeGenerated")]
-        public DateTimeOffset GeneratedOn { get; }
+        public DateTimeOffset TimeGenerated { get; }
+
         /// <summary> The name of the anomaly vendor. </summary>
-        [WirePath("vendor")]
         public string Vendor { get; }
+
         /// <summary> The intent of the anomaly. </summary>
-        [WirePath("intent")]
         public string Intent { get; }
+
         /// <summary> The techniques of the anomaly. </summary>
-        [WirePath("techniques")]
-        public IReadOnlyList<string> Techniques { get; }
+        public IList<string> Techniques { get; }
+
         /// <summary> The reasons that cause the anomaly. </summary>
-        [WirePath("reasons")]
-        public IReadOnlyList<string> Reasons { get; }
+        public IList<string> Reasons { get; }
     }
 }

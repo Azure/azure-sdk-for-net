@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public static partial class ArmSecurityInsightsModelFactory
     {
+        // TODO: Update backward-compat overload for new constructor signature
+        /*
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -35,8 +37,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 logicAppResourceId,
                 workflowId,
                 etag,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
+        */
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsClientInfo"/>. </summary>
         /// <param name="email"> The email of the client. </param>
@@ -47,9 +50,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecurityInsightsClientInfo SecurityInsightsClientInfo(string email = null, string name = null, Guid? objectId = null, string userPrincipalName = null)
         {
-            return new SecurityInsightsClientInfo(email, name, objectId, userPrincipalName, serializedAdditionalRawData: null);
+            return new SecurityInsightsClientInfo(email, name, objectId, userPrincipalName, additionalBinaryDataProperties: null);
         }
 
+        // TODO: Update backward-compat overload for new constructor signature
+        /*
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -74,8 +79,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 lastModifiedOn,
                 author,
                 etag,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
+        */
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
         /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
@@ -84,9 +90,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(int count = default, SecurityInsightsEntityKind entityKind = default)
         {
-            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, serializedAdditionalRawData: null);
+            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, additionalBinaryDataProperties: null);
         }
 
+        // TODO: Update backward-compat overload for new constructor signature
+        /*
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsUriEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -106,13 +114,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                SecurityInsightsEntityKind.Uri,
-                serializedAdditionalRawData: null,
+                SecurityInsightsEntityKind.Url,
+                additionalBinaryDataProperties: null,
                 additionalData,
                 friendlyName,
                 uri?.AbsoluteUri);
         }
+        */
 
+        // TODO: Update backward-compat overload for new constructor signature
+        /*
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -176,9 +187,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 contentType,
                 uploadStatus,
                 etag,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
+        */
 
+        // TODO: Update backward-compat overload for new constructor signature
+        /*
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -215,7 +229,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 null,
                 null,
                 etag,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
+        */
     }
 }

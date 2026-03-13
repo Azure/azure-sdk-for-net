@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> A full URL the entity points to. </summary>
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
-        [ObsoleteAttribute("This property has been replaced by UriString", false)]
-        public Uri Uri => string.IsNullOrEmpty(UriString) ? null : new Uri(UriString);
+        [ObsoleteAttribute("This property has been replaced by Properties.Uri", false)]
+        public Uri Uri => string.IsNullOrEmpty(Properties?.Uri) ? null : new Uri(Properties.Uri);
     }
 }

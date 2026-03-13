@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Unknown version of CcpAuthConfig. </summary>
     internal partial class UnknownCcpAuthConfig : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCcpAuthConfig"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCcpAuthConfig(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
-        {
-            AuthType = authType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCcpAuthConfig"/> for deserialization. </summary>
-        internal UnknownCcpAuthConfig()
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCcpAuthConfig(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

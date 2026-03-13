@@ -8,23 +8,32 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsDataConnectorDefinitionResource : IJsonModel<SecurityInsightsDataConnectorDefinitionData>
     {
-        private static UnknownDataConnectorDefinition s_dataDeserializationInstance;
-        private static UnknownDataConnectorDefinition DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsDataConnectorDefinitionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsDataConnectorDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsights.SecurityInsightsDataConnectorDefinitionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorDefinitionData>)Data).Write(writer, options);
 
-        SecurityInsightsDataConnectorDefinitionData IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsDataConnectorDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsDataConnectorDefinitionData IJsonModel<SecurityInsightsDataConnectorDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsDataConnectorDefinitionData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsDataConnectorDefinitionData IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsDataConnectorDefinitionData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsDataConnectorDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsDataConnectorDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRuleBooleanConditionSupportedOperator. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationRuleBooleanConditionSupportedOperator : IEquatable<AutomationRuleBooleanConditionSupportedOperator>
     {
         private readonly string _value;
+        /// <summary> Evaluates as true if all the item conditions are evaluated as true. </summary>
+        private const string AndValue = "And";
+        /// <summary> Evaluates as true if at least one of the item conditions are evaluated as true. </summary>
+        private const string OrValue = "Or";
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleBooleanConditionSupportedOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationRuleBooleanConditionSupportedOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AndValue = "And";
-        private const string OrValue = "Or";
+            _value = value;
+        }
 
         /// <summary> Evaluates as true if all the item conditions are evaluated as true. </summary>
         public static AutomationRuleBooleanConditionSupportedOperator And { get; } = new AutomationRuleBooleanConditionSupportedOperator(AndValue);
+
         /// <summary> Evaluates as true if at least one of the item conditions are evaluated as true. </summary>
         public static AutomationRuleBooleanConditionSupportedOperator Or { get; } = new AutomationRuleBooleanConditionSupportedOperator(OrValue);
+
         /// <summary> Determines if two <see cref="AutomationRuleBooleanConditionSupportedOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationRuleBooleanConditionSupportedOperator left, AutomationRuleBooleanConditionSupportedOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationRuleBooleanConditionSupportedOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationRuleBooleanConditionSupportedOperator left, AutomationRuleBooleanConditionSupportedOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRuleBooleanConditionSupportedOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationRuleBooleanConditionSupportedOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationRuleBooleanConditionSupportedOperator(string value) => new AutomationRuleBooleanConditionSupportedOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationRuleBooleanConditionSupportedOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationRuleBooleanConditionSupportedOperator?(string value) => value == null ? null : new AutomationRuleBooleanConditionSupportedOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationRuleBooleanConditionSupportedOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationRuleBooleanConditionSupportedOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

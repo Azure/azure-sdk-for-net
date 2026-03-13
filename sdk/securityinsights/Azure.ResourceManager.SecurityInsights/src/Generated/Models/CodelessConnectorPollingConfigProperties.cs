@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Config to describe the polling config for API poller connector. </summary>
     public partial class CodelessConnectorPollingConfigProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingConfigProperties"/>. </summary>
         /// <param name="auth"> Describe the authentication type of the poller. </param>
@@ -64,36 +36,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="request"> Describe the poll request config parameters of the poller. </param>
         /// <param name="paging"> Describe the poll request paging config of the poller. </param>
         /// <param name="response"> Describe the response config parameters of the poller. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodelessConnectorPollingConfigProperties(bool? isActive, CodelessConnectorPollingAuthProperties auth, CodelessConnectorPollingRequestProperties request, CodelessConnectorPollingPagingProperties paging, CodelessConnectorPollingResponseProperties response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CodelessConnectorPollingConfigProperties(bool? isActive, CodelessConnectorPollingAuthProperties auth, CodelessConnectorPollingRequestProperties request, CodelessConnectorPollingPagingProperties paging, CodelessConnectorPollingResponseProperties response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsActive = isActive;
             Auth = auth;
             Request = request;
             Paging = paging;
             Response = response;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingConfigProperties"/> for deserialization. </summary>
-        internal CodelessConnectorPollingConfigProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The poller active status. </summary>
-        [WirePath("isActive")]
         public bool? IsActive { get; set; }
+
         /// <summary> Describe the authentication type of the poller. </summary>
-        [WirePath("auth")]
         public CodelessConnectorPollingAuthProperties Auth { get; set; }
+
         /// <summary> Describe the poll request config parameters of the poller. </summary>
-        [WirePath("request")]
         public CodelessConnectorPollingRequestProperties Request { get; set; }
+
         /// <summary> Describe the poll request paging config of the poller. </summary>
-        [WirePath("paging")]
         public CodelessConnectorPollingPagingProperties Paging { get; set; }
+
         /// <summary> Describe the response config parameters of the poller. </summary>
-        [WirePath("response")]
         public CodelessConnectorPollingResponseProperties Response { get; set; }
     }
 }

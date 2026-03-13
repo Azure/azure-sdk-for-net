@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsRegistryHive : IEquatable<SecurityInsightsRegistryHive>
     {
         private readonly string _value;
+        /// <summary> HKEY_LOCAL_MACHINE. </summary>
+        private const string HKEYLOCALMACHINEValue = "HKEY_LOCAL_MACHINE";
+        /// <summary> HKEY_CLASSES_ROOT. </summary>
+        private const string HKEYCLASSESROOTValue = "HKEY_CLASSES_ROOT";
+        /// <summary> HKEY_CURRENT_CONFIG. </summary>
+        private const string HKEYCURRENTCONFIGValue = "HKEY_CURRENT_CONFIG";
+        /// <summary> HKEY_USERS. </summary>
+        private const string HKEYUSERSValue = "HKEY_USERS";
+        /// <summary> HKEY_CURRENT_USER_LOCAL_SETTINGS. </summary>
+        private const string HKEYCURRENTUSERLOCALSETTINGSValue = "HKEY_CURRENT_USER_LOCAL_SETTINGS";
+        /// <summary> HKEY_PERFORMANCE_DATA. </summary>
+        private const string HKEYPERFORMANCEDATAValue = "HKEY_PERFORMANCE_DATA";
+        /// <summary> HKEY_PERFORMANCE_NLSTEXT. </summary>
+        private const string HKEYPERFORMANCENLSTEXTValue = "HKEY_PERFORMANCE_NLSTEXT";
+        /// <summary> HKEY_PERFORMANCE_TEXT. </summary>
+        private const string HKEYPERFORMANCETEXTValue = "HKEY_PERFORMANCE_TEXT";
+        /// <summary> HKEY_A. </summary>
+        private const string HKEYAValue = "HKEY_A";
+        /// <summary> HKEY_CURRENT_USER. </summary>
+        private const string HKEYCURRENTUSERValue = "HKEY_CURRENT_USER";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryHive"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsRegistryHive(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string HkeyLocalMachineValue = "HKEY_LOCAL_MACHINE";
-        private const string HkeyClassesRootValue = "HKEY_CLASSES_ROOT";
-        private const string HkeyCurrentConfigValue = "HKEY_CURRENT_CONFIG";
-        private const string HkeyUsersValue = "HKEY_USERS";
-        private const string HkeyCurrentUserLocalSettingsValue = "HKEY_CURRENT_USER_LOCAL_SETTINGS";
-        private const string HkeyPerformanceDataValue = "HKEY_PERFORMANCE_DATA";
-        private const string HkeyPerformanceNlstextValue = "HKEY_PERFORMANCE_NLSTEXT";
-        private const string HkeyPerformanceTextValue = "HKEY_PERFORMANCE_TEXT";
-        private const string HkeyAValue = "HKEY_A";
-        private const string HkeyCurrentUserValue = "HKEY_CURRENT_USER";
-
         /// <summary> HKEY_LOCAL_MACHINE. </summary>
-        public static SecurityInsightsRegistryHive HkeyLocalMachine { get; } = new SecurityInsightsRegistryHive(HkeyLocalMachineValue);
+        public static SecurityInsightsRegistryHive HKEYLOCALMACHINE { get; } = new SecurityInsightsRegistryHive(HKEYLOCALMACHINEValue);
+
         /// <summary> HKEY_CLASSES_ROOT. </summary>
-        public static SecurityInsightsRegistryHive HkeyClassesRoot { get; } = new SecurityInsightsRegistryHive(HkeyClassesRootValue);
+        public static SecurityInsightsRegistryHive HKEYCLASSESROOT { get; } = new SecurityInsightsRegistryHive(HKEYCLASSESROOTValue);
+
         /// <summary> HKEY_CURRENT_CONFIG. </summary>
-        public static SecurityInsightsRegistryHive HkeyCurrentConfig { get; } = new SecurityInsightsRegistryHive(HkeyCurrentConfigValue);
+        public static SecurityInsightsRegistryHive HKEYCURRENTCONFIG { get; } = new SecurityInsightsRegistryHive(HKEYCURRENTCONFIGValue);
+
         /// <summary> HKEY_USERS. </summary>
-        public static SecurityInsightsRegistryHive HkeyUsers { get; } = new SecurityInsightsRegistryHive(HkeyUsersValue);
+        public static SecurityInsightsRegistryHive HKEYUSERS { get; } = new SecurityInsightsRegistryHive(HKEYUSERSValue);
+
         /// <summary> HKEY_CURRENT_USER_LOCAL_SETTINGS. </summary>
-        public static SecurityInsightsRegistryHive HkeyCurrentUserLocalSettings { get; } = new SecurityInsightsRegistryHive(HkeyCurrentUserLocalSettingsValue);
+        public static SecurityInsightsRegistryHive HKEYCURRENTUSERLOCALSETTINGS { get; } = new SecurityInsightsRegistryHive(HKEYCURRENTUSERLOCALSETTINGSValue);
+
         /// <summary> HKEY_PERFORMANCE_DATA. </summary>
-        public static SecurityInsightsRegistryHive HkeyPerformanceData { get; } = new SecurityInsightsRegistryHive(HkeyPerformanceDataValue);
+        public static SecurityInsightsRegistryHive HKEYPERFORMANCEDATA { get; } = new SecurityInsightsRegistryHive(HKEYPERFORMANCEDATAValue);
+
         /// <summary> HKEY_PERFORMANCE_NLSTEXT. </summary>
-        public static SecurityInsightsRegistryHive HkeyPerformanceNlstext { get; } = new SecurityInsightsRegistryHive(HkeyPerformanceNlstextValue);
+        public static SecurityInsightsRegistryHive HKEYPERFORMANCENLSTEXT { get; } = new SecurityInsightsRegistryHive(HKEYPERFORMANCENLSTEXTValue);
+
         /// <summary> HKEY_PERFORMANCE_TEXT. </summary>
-        public static SecurityInsightsRegistryHive HkeyPerformanceText { get; } = new SecurityInsightsRegistryHive(HkeyPerformanceTextValue);
+        public static SecurityInsightsRegistryHive HKEYPERFORMANCETEXT { get; } = new SecurityInsightsRegistryHive(HKEYPERFORMANCETEXTValue);
+
         /// <summary> HKEY_A. </summary>
-        public static SecurityInsightsRegistryHive HkeyA { get; } = new SecurityInsightsRegistryHive(HkeyAValue);
+        public static SecurityInsightsRegistryHive HKEYA { get; } = new SecurityInsightsRegistryHive(HKEYAValue);
+
         /// <summary> HKEY_CURRENT_USER. </summary>
-        public static SecurityInsightsRegistryHive HkeyCurrentUser { get; } = new SecurityInsightsRegistryHive(HkeyCurrentUserValue);
+        public static SecurityInsightsRegistryHive HKEYCURRENTUSER { get; } = new SecurityInsightsRegistryHive(HKEYCURRENTUSERValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryHive"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsRegistryHive left, SecurityInsightsRegistryHive right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryHive"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsRegistryHive left, SecurityInsightsRegistryHive right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsRegistryHive"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsRegistryHive"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsRegistryHive(string value) => new SecurityInsightsRegistryHive(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsRegistryHive"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsRegistryHive?(string value) => value == null ? null : new SecurityInsightsRegistryHive(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsRegistryHive other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsRegistryHive other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

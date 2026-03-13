@@ -9,93 +9,92 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsHuntRelation data model.
-    /// Represents a Hunt Relation in Azure Security Insights.
-    /// </summary>
+    /// <summary> Represents a Hunt Relation in Azure Security Insights. </summary>
     public partial class SecurityInsightsHuntRelationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntRelationData"/>. </summary>
         public SecurityInsightsHuntRelationData()
         {
-            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntRelationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="relatedResourceId"> The id of the related resource. </param>
-        /// <param name="relatedResourceName"> The name of the related resource. </param>
-        /// <param name="relationType"> The type of the hunt relation. </param>
-        /// <param name="relatedResourceKind"> The resource that the relation is related to. </param>
-        /// <param name="labels"> List of labels relevant to this hunt. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsHuntRelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier relatedResourceId, string relatedResourceName, string relationType, string relatedResourceKind, IList<string> labels, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Hunt Relation properties. </param>
+        internal SecurityInsightsHuntRelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HuntRelationProperties properties) : base(id, name, resourceType, systemData)
         {
-            RelatedResourceId = relatedResourceId;
-            RelatedResourceName = relatedResourceName;
-            RelationType = relationType;
-            RelatedResourceKind = relatedResourceKind;
-            Labels = labels;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Hunt Relation properties. </summary>
+        internal HuntRelationProperties Properties { get; set; }
+
         /// <summary> The id of the related resource. </summary>
-        [WirePath("properties.relatedResourceId")]
-        public ResourceIdentifier RelatedResourceId { get; set; }
+        public string RelatedResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelatedResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntRelationProperties();
+                }
+                Properties.RelatedResourceId = value;
+            }
+        }
+
         /// <summary> The name of the related resource. </summary>
-        [WirePath("properties.relatedResourceName")]
-        public string RelatedResourceName { get; }
+        public string RelatedResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelatedResourceName;
+            }
+        }
+
         /// <summary> The type of the hunt relation. </summary>
-        [WirePath("properties.relationType")]
-        public string RelationType { get; }
+        public string RelationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelationType;
+            }
+        }
+
         /// <summary> The resource that the relation is related to. </summary>
-        [WirePath("properties.relatedResourceKind")]
-        public string RelatedResourceKind { get; }
+        public string RelatedResourceKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RelatedResourceKind;
+            }
+        }
+
         /// <summary> List of labels relevant to this hunt. </summary>
-        [WirePath("properties.labels")]
-        public IList<string> Labels { get; }
-        /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public IList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new HuntRelationProperties();
+                }
+                return Properties.Labels;
+            }
+        }
     }
 }

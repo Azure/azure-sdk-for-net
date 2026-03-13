@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CodelessConnectorPollingConfigProperties : IUtf8JsonSerializable, IJsonModel<CodelessConnectorPollingConfigProperties>
+    /// <summary> Config to describe the polling config for API poller connector. </summary>
+    public partial class CodelessConnectorPollingConfigProperties : IJsonModel<CodelessConnectorPollingConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodelessConnectorPollingConfigProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingConfigProperties"/> for deserialization. </summary>
+        internal CodelessConnectorPollingConfigProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingConfigProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCodelessConnectorPollingConfigProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CodelessConnectorPollingConfigProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingConfigProperties IPersistableModel<CodelessConnectorPollingConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CodelessConnectorPollingConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CodelessConnectorPollingConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
@@ -54,15 +98,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +115,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        CodelessConnectorPollingConfigProperties IJsonModel<CodelessConnectorPollingConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodelessConnectorPollingConfigProperties IJsonModel<CodelessConnectorPollingConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodelessConnectorPollingConfigProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCodelessConnectorPollingConfigProperties(document.RootElement, options);
         }
 
-        internal static CodelessConnectorPollingConfigProperties DeserializeCodelessConnectorPollingConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CodelessConnectorPollingConfigProperties DeserializeCodelessConnectorPollingConfigProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,184 +145,58 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             CodelessConnectorPollingRequestProperties request = default;
             CodelessConnectorPollingPagingProperties paging = default;
             CodelessConnectorPollingResponseProperties response = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("isActive"u8))
+                if (prop.NameEquals("isActive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isActive = property.Value.GetBoolean();
+                    isActive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("auth"u8))
+                if (prop.NameEquals("auth"u8))
                 {
-                    auth = CodelessConnectorPollingAuthProperties.DeserializeCodelessConnectorPollingAuthProperties(property.Value, options);
+                    auth = CodelessConnectorPollingAuthProperties.DeserializeCodelessConnectorPollingAuthProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("request"u8))
+                if (prop.NameEquals("request"u8))
                 {
-                    request = CodelessConnectorPollingRequestProperties.DeserializeCodelessConnectorPollingRequestProperties(property.Value, options);
+                    request = CodelessConnectorPollingRequestProperties.DeserializeCodelessConnectorPollingRequestProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("paging"u8))
+                if (prop.NameEquals("paging"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    paging = CodelessConnectorPollingPagingProperties.DeserializeCodelessConnectorPollingPagingProperties(property.Value, options);
+                    paging = CodelessConnectorPollingPagingProperties.DeserializeCodelessConnectorPollingPagingProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("response"u8))
+                if (prop.NameEquals("response"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    response = CodelessConnectorPollingResponseProperties.DeserializeCodelessConnectorPollingResponseProperties(property.Value, options);
+                    response = CodelessConnectorPollingResponseProperties.DeserializeCodelessConnectorPollingResponseProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CodelessConnectorPollingConfigProperties(
                 isActive,
                 auth,
                 request,
                 paging,
                 response,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsActive), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isActive: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsActive))
-                {
-                    builder.Append("  isActive: ");
-                    var boolValue = IsActive.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  auth: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Auth))
-                {
-                    builder.Append("  auth: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Request), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  request: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Request))
-                {
-                    builder.Append("  request: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Request, options, 2, false, "  request: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Paging), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  paging: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Paging))
-                {
-                    builder.Append("  paging: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Paging, options, 2, false, "  paging: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Response), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  response: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Response))
-                {
-                    builder.Append("  response: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Response, options, 2, false, "  response: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CodelessConnectorPollingConfigProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CodelessConnectorPollingConfigProperties IPersistableModel<CodelessConnectorPollingConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CodelessConnectorPollingConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCodelessConnectorPollingConfigProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CodelessConnectorPollingConfigProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CodelessConnectorPollingConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

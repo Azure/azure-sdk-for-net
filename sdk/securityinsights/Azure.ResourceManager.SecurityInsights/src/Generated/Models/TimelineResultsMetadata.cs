@@ -8,52 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Expansion result metadata. </summary>
-    internal partial class TimelineResultsMetadata
+    public partial class TimelineResultsMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TimelineResultsMetadata"/>. </summary>
         /// <param name="totalCount"> the total items found for the timeline request. </param>
         /// <param name="aggregations"> timeline aggregation per kind. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aggregations"/> is null. </exception>
         internal TimelineResultsMetadata(int totalCount, IEnumerable<TimelineAggregation> aggregations)
         {
-            Argument.AssertNotNull(aggregations, nameof(aggregations));
-
             TotalCount = totalCount;
             Aggregations = aggregations.ToList();
             Errors = new ChangeTrackingList<TimelineError>();
@@ -63,28 +32,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="totalCount"> the total items found for the timeline request. </param>
         /// <param name="aggregations"> timeline aggregation per kind. </param>
         /// <param name="errors"> information about the failure queries. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TimelineResultsMetadata(int totalCount, IReadOnlyList<TimelineAggregation> aggregations, IReadOnlyList<TimelineError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TimelineResultsMetadata(int totalCount, IList<TimelineAggregation> aggregations, IList<TimelineError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalCount = totalCount;
             Aggregations = aggregations;
             Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TimelineResultsMetadata"/> for deserialization. </summary>
-        internal TimelineResultsMetadata()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the total items found for the timeline request. </summary>
-        [WirePath("totalCount")]
         public int TotalCount { get; }
+
         /// <summary> timeline aggregation per kind. </summary>
-        [WirePath("aggregations")]
-        public IReadOnlyList<TimelineAggregation> Aggregations { get; }
+        public IList<TimelineAggregation> Aggregations { get; }
+
         /// <summary> information about the failure queries. </summary>
-        [WirePath("errors")]
-        public IReadOnlyList<TimelineError> Errors { get; }
+        public IList<TimelineError> Errors { get; }
     }
 }

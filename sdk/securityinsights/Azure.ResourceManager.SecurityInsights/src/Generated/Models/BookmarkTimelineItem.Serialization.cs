@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class BookmarkTimelineItem : IUtf8JsonSerializable, IJsonModel<BookmarkTimelineItem>
+    /// <summary> Represents bookmark timeline item. </summary>
+    public partial class BookmarkTimelineItem : EntityTimelineItem, IJsonModel<BookmarkTimelineItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BookmarkTimelineItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BookmarkTimelineItem"/> for deserialization. </summary>
+        internal BookmarkTimelineItem()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EntityTimelineItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBookmarkTimelineItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BookmarkTimelineItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BookmarkTimelineItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BookmarkTimelineItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BookmarkTimelineItem IPersistableModel<BookmarkTimelineItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (BookmarkTimelineItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BookmarkTimelineItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BookmarkTimelineItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BookmarkTimelineItem)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azureResourceId"u8);
             writer.WriteStringValue(AzureResourceId);
@@ -49,15 +92,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
             if (Optional.IsDefined(EventOn))
             {
@@ -73,354 +116,149 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (var item in Labels)
+                foreach (string item in Labels)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
         }
 
-        BookmarkTimelineItem IJsonModel<BookmarkTimelineItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BookmarkTimelineItem IJsonModel<BookmarkTimelineItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BookmarkTimelineItem)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EntityTimelineItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BookmarkTimelineItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBookmarkTimelineItem(document.RootElement, options);
         }
 
-        internal static BookmarkTimelineItem DeserializeBookmarkTimelineItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BookmarkTimelineItem DeserializeBookmarkTimelineItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier azureResourceId = default;
+            EntityTimelineKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string azureResourceId = default;
             string displayName = default;
             string notes = default;
             DateTimeOffset? endTimeUtc = default;
             DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? eventTime = default;
+            DateTimeOffset? eventOn = default;
             SecurityInsightsUserInfo createdBy = default;
-            IReadOnlyList<string> labels = default;
-            EntityTimelineKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<string> labels = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("azureResourceId"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
+                    kind = new EntityTimelineKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("azureResourceId"u8))
                 {
-                    displayName = property.Value.GetString();
+                    azureResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("notes"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    notes = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"u8))
+                if (prop.NameEquals("notes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    notes = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("endTimeUtc"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endTimeUtc = property.Value.GetDateTimeOffset("O");
+                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"u8))
+                if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startTimeUtc = property.Value.GetDateTimeOffset("O");
+                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("eventTime"u8))
+                if (prop.NameEquals("eventTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventTime = property.Value.GetDateTimeOffset("O");
+                    eventOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdBy"u8))
+                if (prop.NameEquals("createdBy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property.Value, options);
+                    createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("labels"u8))
+                if (prop.NameEquals("labels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     labels = array;
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new EntityTimelineKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BookmarkTimelineItem(
                 kind,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 azureResourceId,
                 displayName,
                 notes,
                 endTimeUtc,
                 startTimeUtc,
-                eventTime,
+                eventOn,
                 createdBy,
                 labels ?? new ChangeTrackingList<string>());
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  azureResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AzureResourceId))
-                {
-                    builder.Append("  azureResourceId: ");
-                    builder.AppendLine($"'{AzureResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  displayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayName))
-                {
-                    builder.Append("  displayName: ");
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Notes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Notes))
-                {
-                    builder.Append("  notes: ");
-                    if (Notes.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Notes}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Notes}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndOn))
-                {
-                    builder.Append("  endTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("  startTimeUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eventTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EventOn))
-                {
-                    builder.Append("  eventTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EventOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedBy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdBy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedBy))
-                {
-                    builder.Append("  createdBy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CreatedBy, options, 2, false, "  createdBy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Labels), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  labels: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Labels))
-                {
-                    if (Labels.Any())
-                    {
-                        builder.Append("  labels: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Labels)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BookmarkTimelineItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BookmarkTimelineItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BookmarkTimelineItem IPersistableModel<BookmarkTimelineItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BookmarkTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBookmarkTimelineItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BookmarkTimelineItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BookmarkTimelineItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

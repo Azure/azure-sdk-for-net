@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describe the properties needed to make a pagination call. </summary>
     public partial class CodelessConnectorPollingPagingProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingPagingProperties"/>. </summary>
         /// <param name="pagingType"> Describes the type. could be 'None', 'PageToken', 'PageCount', 'TimeStamp'. </param>
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="searchTheLatestTimeStampFromEventsList"> Determines whether to search for the latest time stamp in the events list. </param>
         /// <param name="pageSizeParaName"> Defines the name of the page size parameter. </param>
         /// <param name="pageSize"> Defines the paging size. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodelessConnectorPollingPagingProperties(string pagingType, string nextPageParaName, string nextPageTokenJsonPath, string pageCountAttributePath, string pageTotalCountAttributePath, string pageTimeStampAttributePath, string searchTheLatestTimeStampFromEventsList, string pageSizeParaName, int? pageSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CodelessConnectorPollingPagingProperties(string pagingType, string nextPageParaName, string nextPageTokenJsonPath, string pageCountAttributePath, string pageTotalCountAttributePath, string pageTimeStampAttributePath, string searchTheLatestTimeStampFromEventsList, string pageSizeParaName, int? pageSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PagingType = pagingType;
             NextPageParaName = nextPageParaName;
@@ -77,40 +49,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SearchTheLatestTimeStampFromEventsList = searchTheLatestTimeStampFromEventsList;
             PageSizeParaName = pageSizeParaName;
             PageSize = pageSize;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingPagingProperties"/> for deserialization. </summary>
-        internal CodelessConnectorPollingPagingProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the type. could be 'None', 'PageToken', 'PageCount', 'TimeStamp'. </summary>
-        [WirePath("pagingType")]
         public string PagingType { get; set; }
+
         /// <summary> Defines the name of a next page attribute. </summary>
-        [WirePath("nextPageParaName")]
         public string NextPageParaName { get; set; }
+
         /// <summary> Defines the path to a next page token JSON. </summary>
-        [WirePath("nextPageTokenJsonPath")]
         public string NextPageTokenJsonPath { get; set; }
+
         /// <summary> Defines the path to a page count attribute. </summary>
-        [WirePath("pageCountAttributePath")]
         public string PageCountAttributePath { get; set; }
+
         /// <summary> Defines the path to a page total count attribute. </summary>
-        [WirePath("pageTotalCountAttributePath")]
         public string PageTotalCountAttributePath { get; set; }
+
         /// <summary> Defines the path to a paging time stamp attribute. </summary>
-        [WirePath("pageTimeStampAttributePath")]
         public string PageTimeStampAttributePath { get; set; }
+
         /// <summary> Determines whether to search for the latest time stamp in the events list. </summary>
-        [WirePath("searchTheLatestTimeStampFromEventsList")]
         public string SearchTheLatestTimeStampFromEventsList { get; set; }
+
         /// <summary> Defines the name of the page size parameter. </summary>
-        [WirePath("pageSizeParaName")]
         public string PageSizeParaName { get; set; }
+
         /// <summary> Defines the paging size. </summary>
-        [WirePath("pageSize")]
         public int? PageSize { get; set; }
     }
 }

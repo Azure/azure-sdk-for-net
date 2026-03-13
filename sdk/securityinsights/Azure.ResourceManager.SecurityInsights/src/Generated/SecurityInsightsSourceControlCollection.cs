@@ -8,67 +8,71 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsSourceControlResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsSourceControlResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsSourceControlCollection"/> instance call the GetSecurityInsightsSourceControls method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsSourceControlResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityInsightsSourceControlCollection"/> instance call the GetSecurityInsightsSourceControls method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SecurityInsightsSourceControlCollection : ArmCollection, IEnumerable<SecurityInsightsSourceControlResource>, IAsyncEnumerable<SecurityInsightsSourceControlResource>
     {
-        private readonly ClientDiagnostics _securityInsightsSourceControlSourceControlsClientDiagnostics;
-        private readonly SourceControlsRestOperations _securityInsightsSourceControlSourceControlsRestClient;
+        private readonly ClientDiagnostics _sourceControlsClientDiagnostics;
+        private readonly SourceControls _sourceControlsRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSourceControlCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsSourceControlCollection for mocking. </summary>
         protected SecurityInsightsSourceControlCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSourceControlCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSourceControlCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsSourceControlCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal SecurityInsightsSourceControlCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _securityInsightsSourceControlSourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsSourceControlResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsSourceControlResource.ResourceType, out string securityInsightsSourceControlSourceControlsApiVersion);
-            _securityInsightsSourceControlSourceControlsRestClient = new SourceControlsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsSourceControlSourceControlsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsSourceControlResource.ResourceType, out string securityInsightsSourceControlApiVersion);
+            _workspaceName = workspaceName;
+            _sourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsSourceControlResource.ResourceType.Namespace, Diagnostics);
+            _sourceControlsRestClient = new SourceControls(_sourceControlsClientDiagnostics, Pipeline, Endpoint, securityInsightsSourceControlApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a source control.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +80,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="data"> The SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlId, SecurityInsightsSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSourceControlSourceControlsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsSourceControlSourceControlsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsSourceControlResource>(Response.FromValue(new SecurityInsightsSourceControlResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, SecurityInsightsSourceControlData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsSourceControlResource> operation = new SecurityInsightsArmOperation<SecurityInsightsSourceControlResource>(Response.FromValue(new SecurityInsightsSourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +118,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Creates a source control.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +135,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="data"> The SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityInsightsSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlId, SecurityInsightsSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityInsightsSourceControlSourceControlsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, data, cancellationToken);
-                var uri = _securityInsightsSourceControlSourceControlsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsSourceControlResource>(Response.FromValue(new SecurityInsightsSourceControlResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, SecurityInsightsSourceControlData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsSourceControlResource> operation = new SecurityInsightsArmOperation<SecurityInsightsSourceControlResource>(Response.FromValue(new SecurityInsightsSourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +173,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a source control byt its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsSourceControlResource>> GetAsync(string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Get");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSourceControlSourceControlsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +222,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a source control byt its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsSourceControlResource> Get(string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Get");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsSourceControlSourceControlsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +271,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all source controls, without source control items.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsSourceControlResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsSourceControlResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsSourceControlResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSourceControlSourceControlsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsSourceControlSourceControlsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsSourceControlResource(Client, SecurityInsightsSourceControlData.DeserializeSecurityInsightsSourceControlData(e)), _securityInsightsSourceControlSourceControlsClientDiagnostics, Pipeline, "SecurityInsightsSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsSourceControlData, SecurityInsightsSourceControlResource>(new SourceControlsGetAllAsyncCollectionResultOfT(_sourceControlsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new SecurityInsightsSourceControlResource(Client, data));
         }
 
         /// <summary>
         /// Gets all source controls, without source control items.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +316,61 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsSourceControlResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsSourceControlResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSourceControlSourceControlsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsSourceControlSourceControlsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsSourceControlResource(Client, SecurityInsightsSourceControlData.DeserializeSecurityInsightsSourceControlData(e)), _securityInsightsSourceControlSourceControlsClientDiagnostics, Pipeline, "SecurityInsightsSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsSourceControlData, SecurityInsightsSourceControlResource>(new SourceControlsGetAllCollectionResultOfT(_sourceControlsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new SecurityInsightsSourceControlResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Exists");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSourceControlSourceControlsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsSourceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsSourceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +384,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Exists");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsSourceControlSourceControlsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsSourceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsSourceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +441,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsSourceControlResource>> GetIfExistsAsync(string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.GetIfExists");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsSourceControlSourceControlsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsSourceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsSourceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsSourceControlResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +502,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlId"> Source control Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsSourceControlResource> GetIfExists(string sourceControlId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
 
-            using var scope = _securityInsightsSourceControlSourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.GetIfExists");
+            using DiagnosticScope scope = _sourceControlsClientDiagnostics.CreateScope("SecurityInsightsSourceControlCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsSourceControlSourceControlsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceControlId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, sourceControlId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsSourceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsSourceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsSourceControlResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +569,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsSourceControlResource> IAsyncEnumerable<SecurityInsightsSourceControlResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

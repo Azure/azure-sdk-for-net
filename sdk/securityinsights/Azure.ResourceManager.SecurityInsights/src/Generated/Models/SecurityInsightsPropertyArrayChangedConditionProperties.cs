@@ -14,23 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsPropertyArrayChangedConditionProperties : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>. </summary>
-        public SecurityInsightsPropertyArrayChangedConditionProperties()
+        public SecurityInsightsPropertyArrayChangedConditionProperties() : base(ConditionType.PropertyArrayChanged)
         {
-            ConditionType = ConditionType.PropertyArrayChanged;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conditionProperties"></param>
-        internal SecurityInsightsPropertyArrayChangedConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRulePropertyArrayChangedValuesCondition conditionProperties) : base(conditionType, serializedAdditionalRawData)
+        internal SecurityInsightsPropertyArrayChangedConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationRulePropertyArrayChangedValuesCondition conditionProperties) : base(conditionType, additionalBinaryDataProperties)
         {
             ConditionProperties = conditionProperties;
-            ConditionType = conditionType;
         }
 
-        /// <summary> Gets or sets the condition properties. </summary>
-        [WirePath("conditionProperties")]
+        /// <summary> Gets or sets the ConditionProperties. </summary>
         public AutomationRulePropertyArrayChangedValuesCondition ConditionProperties { get; set; }
     }
 }

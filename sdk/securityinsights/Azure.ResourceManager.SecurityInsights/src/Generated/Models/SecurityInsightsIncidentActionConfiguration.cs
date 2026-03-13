@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The SecurityInsightsIncidentActionConfiguration. </summary>
     public partial class SecurityInsightsIncidentActionConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentActionConfiguration"/>. </summary>
         public SecurityInsightsIncidentActionConfiguration()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
         /// <param name="owner"> Information on the user an incident is assigned to. </param>
         /// <param name="labels"> List of labels to add to the incident. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentActionConfiguration(SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, SecurityInsightsIncidentClassification? classification, SecurityInsightsIncidentClassificationReason? classificationReason, string classificationComment, SecurityInsightsIncidentOwnerInfo owner, IList<SecurityInsightsIncidentLabel> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentActionConfiguration(SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, SecurityInsightsIncidentClassification? classification, SecurityInsightsIncidentClassificationReason? classificationReason, string classificationComment, SecurityInsightsIncidentOwnerInfo owner, IList<SecurityInsightsIncidentLabel> labels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
             Status = status;
@@ -69,29 +41,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ClassificationComment = classificationComment;
             Owner = owner;
             Labels = labels;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The severity of the incident. </summary>
-        [WirePath("severity")]
         public SecurityInsightsIncidentSeverity? Severity { get; set; }
+
         /// <summary> The status of the incident. </summary>
-        [WirePath("status")]
         public SecurityInsightsIncidentStatus? Status { get; set; }
+
         /// <summary> The reason the incident was closed. </summary>
-        [WirePath("classification")]
         public SecurityInsightsIncidentClassification? Classification { get; set; }
+
         /// <summary> The classification reason the incident was closed with. </summary>
-        [WirePath("classificationReason")]
         public SecurityInsightsIncidentClassificationReason? ClassificationReason { get; set; }
+
         /// <summary> Describes the reason the incident was closed. </summary>
-        [WirePath("classificationComment")]
         public string ClassificationComment { get; set; }
+
         /// <summary> Information on the user an incident is assigned to. </summary>
-        [WirePath("owner")]
         public SecurityInsightsIncidentOwnerInfo Owner { get; set; }
+
         /// <summary> List of labels to add to the incident. </summary>
-        [WirePath("labels")]
         public IList<SecurityInsightsIncidentLabel> Labels { get; }
     }
 }

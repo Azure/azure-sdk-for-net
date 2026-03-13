@@ -10,8 +10,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The operating system type. </summary>
     public enum SecurityInsightsHostOSFamily
     {
-        /// <summary> Host with Unknown operating system. </summary>
-        Unknown,
         /// <summary> Host with Linux operating system. </summary>
         Linux,
         /// <summary> Host with Windows operating system. </summary>
@@ -19,6 +17,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Host with Android operating system. </summary>
         Android,
         /// <summary> Host with IOS operating system. </summary>
-        Ios
+        IOS,
+        /// <summary> Host with Unknown operating system. </summary>
+        Unknown
     }
 }

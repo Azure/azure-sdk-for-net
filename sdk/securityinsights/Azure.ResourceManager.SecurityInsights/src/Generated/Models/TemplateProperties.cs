@@ -7,15 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Template property bag. </summary>
-    public partial class TemplateProperties : TemplateBaseProperties
+    public partial class TemplateProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TemplateProperties"/>. </summary>
-        internal TemplateProperties()
+        public TemplateProperties()
         {
+            Providers = new ChangeTrackingList<string>();
+            ThreatAnalysisTactics = new ChangeTrackingList<string>();
+            ThreatAnalysisTechniques = new ChangeTrackingList<string>();
+            PreviewImages = new ChangeTrackingList<string>();
+            PreviewImagesDark = new ChangeTrackingList<string>();
             DependantTemplates = new ChangeTrackingList<TemplateProperties>();
         }
 
@@ -45,49 +55,145 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="packageKind"> the packageKind of the package contains this template. </param>
         /// <param name="packageName"> the name of the package contains this template. </param>
         /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
         /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
-        internal TemplateProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, SecurityInsightsMetadataSource source, SecurityInsightsMetadataAuthor author, SecurityInsightsMetadataSupport support, SecurityInsightsMetadataDependencies dependencies, SecurityInsightsMetadataCategories categories, IReadOnlyList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IReadOnlyList<string> threatAnalysisTactics, IReadOnlyList<string> threatAnalysisTechniques, IReadOnlyList<string> previewImages, IReadOnlyList<string> previewImagesDark, string packageId, SecurityInsightsMetadataPackageKind? packageKind, string packageName, SecurityInsightsMetadataFlag? isDeprecated, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData mainTemplate, IReadOnlyList<TemplateProperties> dependantTemplates) : base(contentId, contentProductId, packageVersion, version, displayName, contentKind, source, author, support, dependencies, categories, providers, firstPublishOn, lastPublishOn, customVersion, contentSchemaVersion, icon, threatAnalysisTactics, threatAnalysisTechniques, previewImages, previewImagesDark, packageId, packageKind, packageName, isDeprecated, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, MetadataCategories categories, IList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IList<string> threatAnalysisTactics, IList<string> threatAnalysisTechniques, IList<string> previewImages, IList<string> previewImagesDark, string packageId, SecurityInsightsMetadataPackageKind? packageKind, string packageName, SecurityInsightsMetadataFlag? isDeprecated, BinaryData mainTemplate, IReadOnlyList<TemplateProperties> dependantTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            ContentId = contentId;
+            ContentProductId = contentProductId;
+            PackageVersion = packageVersion;
+            Version = version;
+            DisplayName = displayName;
+            ContentKind = contentKind;
+            Source = source;
+            Author = author;
+            Support = support;
+            Dependencies = dependencies;
+            Categories = categories;
+            Providers = providers;
+            FirstPublishOn = firstPublishOn;
+            LastPublishOn = lastPublishOn;
+            CustomVersion = customVersion;
+            ContentSchemaVersion = contentSchemaVersion;
+            Icon = icon;
+            ThreatAnalysisTactics = threatAnalysisTactics;
+            ThreatAnalysisTechniques = threatAnalysisTechniques;
+            PreviewImages = previewImages;
+            PreviewImagesDark = previewImagesDark;
+            PackageId = packageId;
+            PackageKind = packageKind;
+            PackageName = packageName;
+            IsDeprecated = isDeprecated;
             MainTemplate = mainTemplate;
             DependantTemplates = dependantTemplates;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </summary>
+        public string ContentId { get; set; }
+
+        /// <summary> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </summary>
+        public string ContentProductId { get; set; }
+
+        /// <summary> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </summary>
+        public string PackageVersion { get; set; }
+
+        /// <summary> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </summary>
+        public string Version { get; set; }
+
+        /// <summary> The display name of the template. </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary> The kind of content the template is for. </summary>
+        public SecurityInsightsKind? ContentKind { get; set; }
+
+        /// <summary> Source of the content.  This is where/how it was created. </summary>
+        public MetadataSource Source { get; set; }
+
+        /// <summary> The creator of the content item. </summary>
+        public MetadataAuthor Author { get; set; }
+
+        /// <summary> Support information for the template - type, name, contact information. </summary>
+        public MetadataSupport Support { get; set; }
+
+        /// <summary> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </summary>
+        public MetadataDependencies Dependencies { get; set; }
+
+        /// <summary> Categories for the item. </summary>
+        public MetadataCategories Categories { get; set; }
+
+        /// <summary> Providers for the content item. </summary>
+        public IList<string> Providers { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> first publish date content item. </summary>
+        public DateTimeOffset? FirstPublishOn { get; set; }
+
+        /// <summary> last publish date for the content item. </summary>
+        public DateTimeOffset? LastPublishOn { get; set; }
+
+        /// <summary> The custom version of the content. A optional free text. </summary>
+        public string CustomVersion { get; set; }
+
+        /// <summary> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </summary>
+        public string ContentSchemaVersion { get; set; }
+
+        /// <summary> the icon identifier. this id can later be fetched from the content metadata. </summary>
+        public string Icon { get; set; }
+
+        /// <summary> the tactics the resource covers. </summary>
+        public IList<string> ThreatAnalysisTactics { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> the techniques the resource covers, these have to be aligned with the tactics being used. </summary>
+        public IList<string> ThreatAnalysisTechniques { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> preview image file names. These will be taken from the solution artifacts. </summary>
+        public IList<string> PreviewImages { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </summary>
+        public IList<string> PreviewImagesDark { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> the package Id contains this template. </summary>
+        public string PackageId { get; set; }
+
+        /// <summary> the packageKind of the package contains this template. </summary>
+        public SecurityInsightsMetadataPackageKind? PackageKind { get; set; }
+
+        /// <summary> the name of the package contains this template. </summary>
+        public string PackageName { get; set; }
+
+        /// <summary> Flag indicates if this template is deprecated. </summary>
+        public SecurityInsightsMetadataFlag? IsDeprecated { get; }
 
         /// <summary>
         /// The JSON of the ARM template to deploy active content. Expandable.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("mainTemplate")]
-        public BinaryData MainTemplate { get; }
+        public BinaryData MainTemplate { get; set; }
+
         /// <summary> Dependant templates. Expandable. </summary>
-        [WirePath("dependantTemplates")]
-        public IReadOnlyList<TemplateProperties> DependantTemplates { get; }
+        public IReadOnlyList<TemplateProperties> DependantTemplates { get; } = new ChangeTrackingList<TemplateProperties>();
     }
 }

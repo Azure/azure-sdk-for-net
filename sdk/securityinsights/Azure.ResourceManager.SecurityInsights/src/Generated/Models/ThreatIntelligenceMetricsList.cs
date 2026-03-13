@@ -12,66 +12,28 @@ using System.Linq;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List of all the threat intelligence metric fields (type/threat type/source). </summary>
-    internal partial class ThreatIntelligenceMetricsList
+    public partial class ThreatIntelligenceMetricsList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/>. </summary>
         /// <param name="value"> Array of threat intelligence metric fields (type/threat type/source). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ThreatIntelligenceMetricsList(IEnumerable<ThreatIntelligenceMetrics> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/>. </summary>
         /// <param name="value"> Array of threat intelligence metric fields (type/threat type/source). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceMetricsList(IReadOnlyList<ThreatIntelligenceMetrics> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceMetricsList(IList<ThreatIntelligenceMetrics> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/> for deserialization. </summary>
-        internal ThreatIntelligenceMetricsList()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of threat intelligence metric fields (type/threat type/source). </summary>
-        [WirePath("value")]
-        public IReadOnlyList<ThreatIntelligenceMetrics> Value { get; }
+        public IList<ThreatIntelligenceMetrics> Value { get; }
     }
 }

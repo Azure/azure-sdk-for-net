@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The kind of the threat intelligence entity. </summary>
-    internal readonly partial struct ThreatIntelligenceResourceInnerKind : IEquatable<ThreatIntelligenceResourceInnerKind>
+    public readonly partial struct ThreatIntelligenceResourceInnerKind : IEquatable<ThreatIntelligenceResourceInnerKind>
     {
         private readonly string _value;
+        /// <summary> Entity represents threat intelligence indicator in the system. </summary>
+        private const string IndicatorValue = "indicator";
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceResourceInnerKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ThreatIntelligenceResourceInnerKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IndicatorValue = "indicator";
+            _value = value;
+        }
 
         /// <summary> Entity represents threat intelligence indicator in the system. </summary>
         public static ThreatIntelligenceResourceInnerKind Indicator { get; } = new ThreatIntelligenceResourceInnerKind(IndicatorValue);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceResourceInnerKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThreatIntelligenceResourceInnerKind left, ThreatIntelligenceResourceInnerKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceResourceInnerKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThreatIntelligenceResourceInnerKind left, ThreatIntelligenceResourceInnerKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatIntelligenceResourceInnerKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceResourceInnerKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ThreatIntelligenceResourceInnerKind(string value) => new ThreatIntelligenceResourceInnerKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceResourceInnerKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ThreatIntelligenceResourceInnerKind?(string value) => value == null ? null : new ThreatIntelligenceResourceInnerKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThreatIntelligenceResourceInnerKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ThreatIntelligenceResourceInnerKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

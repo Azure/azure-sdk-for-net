@@ -13,108 +13,145 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsIncidentTask data model. </summary>
+    /// <summary> Describes incident task properties. </summary>
     public partial class SecurityInsightsIncidentTaskData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentTaskData"/>. </summary>
         /// <param name="title"> The title of the task. </param>
-        /// <param name="status"></param>
+        /// <param name="status"> The status of the task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>
         public SecurityInsightsIncidentTaskData(string title, IncidentTaskStatus status)
         {
             Argument.AssertNotNull(title, nameof(title));
 
-            Title = title;
-            Status = status;
+            Properties = new IncidentTaskProperties(title, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentTaskData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="title"> The title of the task. </param>
-        /// <param name="description"> The description of the task. </param>
-        /// <param name="status"></param>
-        /// <param name="createdOn"> The time the task was created. </param>
-        /// <param name="lastModifiedOn"> The last time the task was updated. </param>
-        /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, IncidentTaskStatus status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, SecurityInsightsClientInfo createdBy, SecurityInsightsClientInfo lastModifiedBy, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes the properties of an incident task. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        internal SecurityInsightsIncidentTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IncidentTaskProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            Title = title;
-            Description = description;
-            Status = status;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            CreatedBy = createdBy;
-            LastModifiedBy = lastModifiedBy;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentTaskData"/> for deserialization. </summary>
-        internal SecurityInsightsIncidentTaskData()
-        {
-        }
+        /// <summary> Describes the properties of an incident task. </summary>
+        internal IncidentTaskProperties Properties { get; set; }
+
+        /// <summary> Etag of the azure resource. </summary>
+        public string ETag { get; set; }
 
         /// <summary> The title of the task. </summary>
-        [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Title;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IncidentTaskProperties();
+                }
+                Properties.Title = value;
+            }
+        }
+
         /// <summary> The description of the task. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> Gets or sets the status. </summary>
-        [WirePath("properties.status")]
-        public IncidentTaskStatus Status { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IncidentTaskProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The status of the task. </summary>
+        public IncidentTaskStatus Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IncidentTaskProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> The time the task was created. </summary>
-        [WirePath("properties.createdTimeUtc")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTimeUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedTimeUtc;
+            }
+        }
+
         /// <summary> The last time the task was updated. </summary>
-        [WirePath("properties.lastModifiedTimeUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedTimeUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedTimeUtc;
+            }
+        }
+
         /// <summary> Information on the client (user or application) that made some action. </summary>
-        [WirePath("properties.createdBy")]
-        public SecurityInsightsClientInfo CreatedBy { get; set; }
+        public SecurityInsightsClientInfo CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IncidentTaskProperties();
+                }
+                Properties.CreatedBy = value;
+            }
+        }
+
         /// <summary> Information on the client (user or application) that made some action. </summary>
-        [WirePath("properties.lastModifiedBy")]
-        public SecurityInsightsClientInfo LastModifiedBy { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public SecurityInsightsClientInfo LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IncidentTaskProperties();
+                }
+                Properties.LastModifiedBy = value;
+            }
+        }
     }
 }

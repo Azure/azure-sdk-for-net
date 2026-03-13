@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The TriggersWhen. </summary>
+    /// <summary></summary>
     public readonly partial struct TriggersWhen : IEquatable<TriggersWhen>
     {
         private readonly string _value;
+        /// <summary> Trigger on created objects. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> Trigger on updated objects. </summary>
+        private const string UpdatedValue = "Updated";
 
         /// <summary> Initializes a new instance of <see cref="TriggersWhen"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TriggersWhen(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedValue = "Created";
-        private const string UpdatedValue = "Updated";
+            _value = value;
+        }
 
         /// <summary> Trigger on created objects. </summary>
         public static TriggersWhen Created { get; } = new TriggersWhen(CreatedValue);
+
         /// <summary> Trigger on updated objects. </summary>
         public static TriggersWhen Updated { get; } = new TriggersWhen(UpdatedValue);
+
         /// <summary> Determines if two <see cref="TriggersWhen"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TriggersWhen left, TriggersWhen right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TriggersWhen"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TriggersWhen left, TriggersWhen right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TriggersWhen"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TriggersWhen"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TriggersWhen(string value) => new TriggersWhen(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TriggersWhen"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TriggersWhen?(string value) => value == null ? null : new TriggersWhen(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TriggersWhen other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TriggersWhen other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

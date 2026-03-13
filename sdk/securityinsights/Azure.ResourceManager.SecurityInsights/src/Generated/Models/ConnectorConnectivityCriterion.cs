@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,70 +17,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// </summary>
     public partial class ConnectorConnectivityCriterion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorConnectivityCriterion"/>. </summary>
-        /// <param name="connectivityCriterionType"> Gets or sets the type of connectivity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectivityCriterionType"/> is null. </exception>
-        public ConnectorConnectivityCriterion(string connectivityCriterionType)
+        /// <param name="type"> Gets or sets the type of connectivity. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        public ConnectorConnectivityCriterion(string @type)
         {
-            Argument.AssertNotNull(connectivityCriterionType, nameof(connectivityCriterionType));
+            Argument.AssertNotNull(@type, nameof(@type));
 
-            ConnectivityCriterionType = connectivityCriterionType;
+            Type = @type;
             Value = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorConnectivityCriterion"/>. </summary>
-        /// <param name="connectivityCriterionType"> Gets or sets the type of connectivity. </param>
+        /// <param name="type"> Gets or sets the type of connectivity. </param>
         /// <param name="value"> Gets or sets the queries for checking connectivity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorConnectivityCriterion(string connectivityCriterionType, IList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorConnectivityCriterion(string @type, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ConnectivityCriterionType = connectivityCriterionType;
+            Type = @type;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectorConnectivityCriterion"/> for deserialization. </summary>
-        internal ConnectorConnectivityCriterion()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the type of connectivity. </summary>
-        [WirePath("type")]
-        public string ConnectivityCriterionType { get; set; }
+        public string Type { get; set; }
+
         /// <summary> Gets or sets the queries for checking connectivity. </summary>
-        [WirePath("value")]
         public IList<string> Value { get; }
     }
 }

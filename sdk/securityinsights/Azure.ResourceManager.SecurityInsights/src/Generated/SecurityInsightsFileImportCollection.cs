@@ -8,67 +8,71 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsFileImportResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsFileImportResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsFileImportCollection"/> instance call the GetSecurityInsightsFileImports method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsFileImportResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityInsightsFileImportCollection"/> instance call the GetSecurityInsightsFileImports method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SecurityInsightsFileImportCollection : ArmCollection, IEnumerable<SecurityInsightsFileImportResource>, IAsyncEnumerable<SecurityInsightsFileImportResource>
     {
-        private readonly ClientDiagnostics _securityInsightsFileImportFileImportsClientDiagnostics;
-        private readonly FileImportsRestOperations _securityInsightsFileImportFileImportsRestClient;
+        private readonly ClientDiagnostics _fileImportsClientDiagnostics;
+        private readonly FileImports _fileImportsRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsFileImportCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsFileImportCollection for mocking. </summary>
         protected SecurityInsightsFileImportCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsFileImportCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsFileImportCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal SecurityInsightsFileImportCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _securityInsightsFileImportFileImportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsFileImportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsFileImportResource.ResourceType, out string securityInsightsFileImportFileImportsApiVersion);
-            _securityInsightsFileImportFileImportsRestClient = new FileImportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsFileImportFileImportsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsFileImportResource.ResourceType, out string securityInsightsFileImportApiVersion);
+            _workspaceName = workspaceName;
+            _fileImportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsFileImportResource.ResourceType.Namespace, Diagnostics);
+            _fileImportsRestClient = new FileImports(_fileImportsClientDiagnostics, Pipeline, Endpoint, securityInsightsFileImportApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates the file import.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +80,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="data"> The file import. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsFileImportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileImportId, SecurityInsightsFileImportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityInsightsFileImportFileImportsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsFileImportFileImportsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsFileImportResource>(Response.FromValue(new SecurityInsightsFileImportResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, SecurityInsightsFileImportData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsFileImportData> response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsFileImportResource> operation = new SecurityInsightsArmOperation<SecurityInsightsFileImportResource>(Response.FromValue(new SecurityInsightsFileImportResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +118,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Creates the file import.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +135,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="data"> The file import. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityInsightsFileImportResource> CreateOrUpdate(WaitUntil waitUntil, string fileImportId, SecurityInsightsFileImportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityInsightsFileImportFileImportsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, data, cancellationToken);
-                var uri = _securityInsightsFileImportFileImportsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsFileImportResource>(Response.FromValue(new SecurityInsightsFileImportResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, SecurityInsightsFileImportData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsFileImportData> response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsFileImportResource> operation = new SecurityInsightsArmOperation<SecurityInsightsFileImportResource>(Response.FromValue(new SecurityInsightsFileImportResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +173,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a file import.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsFileImportResource>> GetAsync(string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Get");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsFileImportFileImportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsFileImportData> response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsFileImportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +222,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a file import.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsFileImportResource> Get(string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Get");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsFileImportFileImportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsFileImportData> response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsFileImportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,104 +271,132 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all file imports.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsFileImportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsFileImportResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsFileImportFileImportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsFileImportFileImportsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsFileImportResource(Client, SecurityInsightsFileImportData.DeserializeSecurityInsightsFileImportData(e)), _securityInsightsFileImportFileImportsClientDiagnostics, Pipeline, "SecurityInsightsFileImportCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all file imports.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsFileImportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsFileImportResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsFileImportResource> GetAllAsync(string filter = default, string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsFileImportFileImportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsFileImportFileImportsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsFileImportResource(Client, SecurityInsightsFileImportData.DeserializeSecurityInsightsFileImportData(e)), _securityInsightsFileImportFileImportsClientDiagnostics, Pipeline, "SecurityInsightsFileImportCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsFileImportData, SecurityInsightsFileImportResource>(new FileImportsGetAllAsyncCollectionResultOfT(
+                _fileImportsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _workspaceName,
+                filter,
+                @orderby,
+                top,
+                skipToken,
+                context), data => new SecurityInsightsFileImportResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all file imports.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityInsightsFileImportResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsFileImportResource> GetAll(string filter = default, string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsFileImportData, SecurityInsightsFileImportResource>(new FileImportsGetAllCollectionResultOfT(
+                _fileImportsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _workspaceName,
+                filter,
+                @orderby,
+                top,
+                skipToken,
+                context), data => new SecurityInsightsFileImportResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Exists");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsFileImportFileImportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsFileImportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsFileImportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -358,36 +410,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Exists");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsFileImportFileImportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsFileImportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsFileImportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -401,38 +467,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsFileImportResource>> GetIfExistsAsync(string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.GetIfExists");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsFileImportFileImportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsFileImportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsFileImportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsFileImportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsFileImportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -446,38 +528,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileImports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsFileImportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileImportId"> File import ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsFileImportResource> GetIfExists(string fileImportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
 
-            using var scope = _securityInsightsFileImportFileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.GetIfExists");
+            using DiagnosticScope scope = _fileImportsClientDiagnostics.CreateScope("SecurityInsightsFileImportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsFileImportFileImportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fileImportId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _fileImportsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, fileImportId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsFileImportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsFileImportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsFileImportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsFileImportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsFileImportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +595,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsFileImportResource> IAsyncEnumerable<SecurityInsightsFileImportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

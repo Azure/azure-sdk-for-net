@@ -13,136 +13,83 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the TriggeredAnalyticsRuleRun data model.
-    /// The triggered analytics rule run
-    /// </summary>
+    /// <summary> The triggered analytics rule run. </summary>
     public partial class TriggeredAnalyticsRuleRunData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredAnalyticsRuleRunData"/>. </summary>
-        /// <param name="executeOn"></param>
-        /// <param name="ruleId"></param>
-        /// <param name="triggeredAnalyticsRuleRunId"></param>
-        /// <param name="provisioningState"> The triggered analytics rule run provisioning state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> or <paramref name="triggeredAnalyticsRuleRunId"/> is null. </exception>
-        public TriggeredAnalyticsRuleRunData(DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, TriggeredAnalyticsRuleRunProvisioningState provisioningState)
+        /// <param name="properties"> The triggered analytics rule run Properties. </param>
+        internal TriggeredAnalyticsRuleRunData(TriggeredAnalyticsRuleRunProperties properties)
         {
-            Argument.AssertNotNull(ruleId, nameof(ruleId));
-            Argument.AssertNotNull(triggeredAnalyticsRuleRunId, nameof(triggeredAnalyticsRuleRunId));
-
-            ExecuteOn = executeOn;
-            RuleId = ruleId;
-            TriggeredAnalyticsRuleRunId = triggeredAnalyticsRuleRunId;
-            ProvisioningState = provisioningState;
-            RuleRunAdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggeredAnalyticsRuleRunData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="executeOn"></param>
-        /// <param name="ruleId"></param>
-        /// <param name="triggeredAnalyticsRuleRunId"></param>
-        /// <param name="provisioningState"> The triggered analytics rule run provisioning state. </param>
-        /// <param name="ruleRunAdditionalData"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredAnalyticsRuleRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset executeOn, string ruleId, string triggeredAnalyticsRuleRunId, TriggeredAnalyticsRuleRunProvisioningState provisioningState, IDictionary<string, BinaryData> ruleRunAdditionalData, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The triggered analytics rule run Properties. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        internal TriggeredAnalyticsRuleRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TriggeredAnalyticsRuleRunProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            ExecuteOn = executeOn;
-            RuleId = ruleId;
-            TriggeredAnalyticsRuleRunId = triggeredAnalyticsRuleRunId;
-            ProvisioningState = provisioningState;
-            RuleRunAdditionalData = ruleRunAdditionalData;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggeredAnalyticsRuleRunData"/> for deserialization. </summary>
-        internal TriggeredAnalyticsRuleRunData()
-        {
-        }
+        /// <summary> The triggered analytics rule run Properties. </summary>
+        internal TriggeredAnalyticsRuleRunProperties Properties { get; }
 
-        /// <summary> Gets or sets the execute on. </summary>
-        [WirePath("properties.executionTimeUtc")]
-        public DateTimeOffset ExecuteOn { get; set; }
-        /// <summary> Gets or sets the rule id. </summary>
-        [WirePath("properties.ruleId")]
-        public string RuleId { get; set; }
-        /// <summary> Gets or sets the triggered analytics rule run id. </summary>
-        [WirePath("properties.triggeredAnalyticsRuleRunId")]
-        public string TriggeredAnalyticsRuleRunId { get; set; }
-        /// <summary> The triggered analytics rule run provisioning state. </summary>
-        [WirePath("properties.provisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState ProvisioningState { get; set; }
-        /// <summary>
-        /// Dictionary of &lt;any&gt;
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.ruleRunAdditionalData")]
-        public IDictionary<string, BinaryData> RuleRunAdditionalData { get; }
         /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; }
+
+        /// <summary> Gets the ExecutionTimeUtc. </summary>
+        public DateTimeOffset ExecutionTimeUtc
+        {
+            get
+            {
+                return Properties.ExecutionTimeUtc;
+            }
+        }
+
+        /// <summary> Gets the RuleId. </summary>
+        public string RuleId
+        {
+            get
+            {
+                return Properties.RuleId;
+            }
+        }
+
+        /// <summary> Gets the TriggeredAnalyticsRuleRunId. </summary>
+        public string TriggeredAnalyticsRuleRunId
+        {
+            get
+            {
+                return Properties.TriggeredAnalyticsRuleRunId;
+            }
+        }
+
+        /// <summary> The triggered analytics rule run provisioning state. </summary>
+        public TriggeredAnalyticsRuleRunProvisioningState ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Dictionary of &lt;any&gt;. </summary>
+        public IDictionary<string, BinaryData> RuleRunAdditionalData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleRunAdditionalData;
+            }
+        }
     }
 }

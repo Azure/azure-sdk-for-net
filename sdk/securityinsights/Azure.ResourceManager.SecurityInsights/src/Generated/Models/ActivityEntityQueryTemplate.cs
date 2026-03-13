@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,65 +17,96 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ActivityEntityQueryTemplate : SecurityInsightsEntityQueryTemplateData
     {
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQueryTemplate"/>. </summary>
-        public ActivityEntityQueryTemplate()
+        internal ActivityEntityQueryTemplate() : base(EntityQueryTemplateKind.Activity)
         {
-            DataTypes = new ChangeTrackingList<DataTypeDefinitions>();
-            RequiredInputFieldsSets = new ChangeTrackingList<IList<string>>();
-            EntitiesFilter = new ChangeTrackingDictionary<string, IList<string>>();
-            Kind = EntityQueryTemplateKind.Activity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQueryTemplate"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query template kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="title"> The entity query title. </param>
-        /// <param name="content"> The entity query content to display in timeline. </param>
-        /// <param name="description"> The entity query description. </param>
-        /// <param name="queryDefinitions"> The Activity query definitions. </param>
-        /// <param name="dataTypes"> List of required data types for the given entity query template. </param>
-        /// <param name="inputEntityType"> The type of the query's source entity. </param>
-        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
-        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
-        internal ActivityEntityQueryTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryTemplateKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueryDefinition queryDefinitions, IList<DataTypeDefinitions> dataTypes, SecurityInsightsEntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> The kind of the entity query template. </param>
+        /// <param name="properties"> Activity entity query properties. </param>
+        internal ActivityEntityQueryTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityQueryTemplateKind kind, ActivityEntityQueryTemplateProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            Title = title;
-            Content = content;
-            Description = description;
-            QueryDefinitions = queryDefinitions;
-            DataTypes = dataTypes;
-            InputEntityType = inputEntityType;
-            RequiredInputFieldsSets = requiredInputFieldsSets;
-            EntitiesFilter = entitiesFilter;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Activity entity query properties. </summary>
+        internal ActivityEntityQueryTemplateProperties Properties { get; }
+
         /// <summary> The entity query title. </summary>
-        [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties.Title;
+            }
+        }
+
         /// <summary> The entity query content to display in timeline. </summary>
-        [WirePath("properties.content")]
-        public string Content { get; set; }
+        public string Content
+        {
+            get
+            {
+                return Properties.Content;
+            }
+        }
+
         /// <summary> The entity query description. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The Activity query definitions. </summary>
-        [WirePath("properties.queryDefinitions")]
-        public ActivityEntityQueryDefinition QueryDefinitions { get; set; }
+        public ActivityEntityQueryDefinition QueryDefinitions
+        {
+            get
+            {
+                return Properties.QueryDefinitions;
+            }
+        }
+
         /// <summary> List of required data types for the given entity query template. </summary>
-        [WirePath("properties.dataTypes")]
-        public IList<DataTypeDefinitions> DataTypes { get; }
+        public IList<DataTypeDefinitions> DataTypes
+        {
+            get
+            {
+                return Properties.DataTypes;
+            }
+        }
+
         /// <summary> The type of the query's source entity. </summary>
-        [WirePath("properties.inputEntityType")]
-        public SecurityInsightsEntityType? InputEntityType { get; set; }
+        public SecurityInsightsEntityType? InputEntityType
+        {
+            get
+            {
+                return Properties.InputEntityType;
+            }
+        }
+
         /// <summary> List of the fields of the source entity that are required to run the query. </summary>
-        [WirePath("properties.requiredInputFieldsSets")]
-        public IList<IList<string>> RequiredInputFieldsSets { get; }
+        public IList<IList<string>> RequiredInputFieldsSets
+        {
+            get
+            {
+                return Properties.RequiredInputFieldsSets;
+            }
+        }
+
         /// <summary> The query applied only to entities matching to all filters. </summary>
-        [WirePath("properties.entitiesFilter")]
-        public IDictionary<string, IList<string>> EntitiesFilter { get; }
+        public IDictionary<string, IList<string>> EntitiesFilter
+        {
+            get
+            {
+                return Properties.EntitiesFilter;
+            }
+        }
     }
 }

@@ -12,13 +12,55 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceTaxiiDataConnector : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceTaxiiDataConnector>
+    /// <summary> Data connector to pull Threat intelligence data from TAXII 2.0/2.1 server. </summary>
+    public partial class ThreatIntelligenceTaxiiDataConnector : SecurityInsightsDataConnectorData, IJsonModel<ThreatIntelligenceTaxiiDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceTaxiiDataConnector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeThreatIntelligenceTaxiiDataConnector(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiDataConnector)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiDataConnector)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThreatIntelligenceTaxiiDataConnector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreatIntelligenceTaxiiDataConnector IPersistableModel<ThreatIntelligenceTaxiiDataConnector>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThreatIntelligenceTaxiiDataConnector)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ThreatIntelligenceTaxiiDataConnector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThreatIntelligenceTaxiiDataConnector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,617 +72,119 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiDataConnector)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(WorkspaceId))
-            {
-                writer.WritePropertyName("workspaceId"u8);
-                writer.WriteStringValue(WorkspaceId);
-            }
-            if (Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(TaxiiServer))
-            {
-                writer.WritePropertyName("taxiiServer"u8);
-                writer.WriteStringValue(TaxiiServer);
-            }
-            if (Optional.IsDefined(CollectionId))
-            {
-                writer.WritePropertyName("collectionId"u8);
-                writer.WriteStringValue(CollectionId);
-            }
-            if (Optional.IsDefined(UserName))
-            {
-                writer.WritePropertyName("userName"u8);
-                writer.WriteStringValue(UserName);
-            }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
-            if (Optional.IsDefined(TaxiiLookbackPeriod))
-            {
-                if (TaxiiLookbackPeriod != null)
-                {
-                    writer.WritePropertyName("taxiiLookbackPeriod"u8);
-                    writer.WriteStringValue(TaxiiLookbackPeriod.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("taxiiLookbackPeriod");
-                }
-            }
-            if (Optional.IsDefined(PollingFrequency))
-            {
-                if (PollingFrequency != null)
-                {
-                    writer.WritePropertyName("pollingFrequency"u8);
-                    writer.WriteStringValue(PollingFrequency.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("pollingFrequency");
-                }
-            }
-            writer.WritePropertyName("dataTypes"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TaxiiClient))
-            {
-                writer.WritePropertyName("taxiiClient"u8);
-                writer.WriteObjectValue(TaxiiClient, options);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        ThreatIntelligenceTaxiiDataConnector IJsonModel<ThreatIntelligenceTaxiiDataConnector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreatIntelligenceTaxiiDataConnector IJsonModel<ThreatIntelligenceTaxiiDataConnector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThreatIntelligenceTaxiiDataConnector)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiDataConnector)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeThreatIntelligenceTaxiiDataConnector(document.RootElement, options);
         }
 
-        internal static ThreatIntelligenceTaxiiDataConnector DeserializeThreatIntelligenceTaxiiDataConnector(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ThreatIntelligenceTaxiiDataConnector DeserializeThreatIntelligenceTaxiiDataConnector(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataConnectorKind kind = default;
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            Guid? tenantId = default;
-            string workspaceId = default;
-            string friendlyName = default;
-            string taxiiServer = default;
-            string collectionId = default;
-            string userName = default;
-            string password = default;
-            DateTimeOffset? taxiiLookbackPeriod = default;
-            PollingFrequency? pollingFrequency = default;
-            DataConnectorDataTypeCommon taxiiClient = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataConnectorKind kind = default;
+            string eTag = default;
+            TiTaxiiDataConnectorProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = new DataConnectorKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new DataConnectorKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("tenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("workspaceId"u8))
-                        {
-                            workspaceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("taxiiServer"u8))
-                        {
-                            taxiiServer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("collectionId"u8))
-                        {
-                            collectionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("userName"u8))
-                        {
-                            userName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("password"u8))
-                        {
-                            password = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("taxiiLookbackPeriod"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                taxiiLookbackPeriod = null;
-                                continue;
-                            }
-                            taxiiLookbackPeriod = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("pollingFrequency"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                pollingFrequency = null;
-                                continue;
-                            }
-                            pollingFrequency = new PollingFrequency(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dataTypes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("taxiiClient"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    taxiiClient = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value, options);
-                                    continue;
-                                }
-                            }
-                            continue;
-                        }
+                        continue;
                     }
+                    properties = TiTaxiiDataConnectorProperties.DeserializeTiTaxiiDataConnectorProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties0.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ThreatIntelligenceTaxiiDataConnector(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
-                etag,
-                serializedAdditionalRawData,
-                tenantId,
-                workspaceId,
-                friendlyName,
-                taxiiServer,
-                collectionId,
-                userName,
-                password,
-                taxiiLookbackPeriod,
-                pollingFrequency,
-                taxiiClient);
+                eTag,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TenantId))
-                {
-                    builder.Append("    tenantId: ");
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    workspaceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WorkspaceId))
-                {
-                    builder.Append("    workspaceId: ");
-                    if (WorkspaceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkspaceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{WorkspaceId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    friendlyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FriendlyName))
-                {
-                    builder.Append("    friendlyName: ");
-                    if (FriendlyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FriendlyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FriendlyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaxiiServer), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    taxiiServer: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TaxiiServer))
-                {
-                    builder.Append("    taxiiServer: ");
-                    if (TaxiiServer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TaxiiServer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TaxiiServer}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CollectionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    collectionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CollectionId))
-                {
-                    builder.Append("    collectionId: ");
-                    if (CollectionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CollectionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CollectionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    userName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserName))
-                {
-                    builder.Append("    userName: ");
-                    if (UserName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    password: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Password))
-                {
-                    builder.Append("    password: ");
-                    if (Password.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Password}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Password}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaxiiLookbackPeriod), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    taxiiLookbackPeriod: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TaxiiLookbackPeriod))
-                {
-                    builder.Append("    taxiiLookbackPeriod: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(TaxiiLookbackPeriod.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PollingFrequency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    pollingFrequency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PollingFrequency))
-                {
-                    builder.Append("    pollingFrequency: ");
-                    builder.AppendLine($"'{PollingFrequency.Value.ToString()}'");
-                }
-            }
-
-            builder.Append("    dataTypes:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TaxiiClientState", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("      taxiiClient: ");
-                builder.AppendLine("{");
-                builder.AppendLine("        taxiiClient: {");
-                builder.Append("          state: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("        }");
-                builder.AppendLine("      }");
-            }
-            else
-            {
-                if (Optional.IsDefined(TaxiiClient))
-                {
-                    builder.Append("      taxiiClient: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TaxiiClient, options, 6, false, "      taxiiClient: ");
-                }
-            }
-
-            builder.AppendLine("    }");
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ThreatIntelligenceTaxiiDataConnector>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiDataConnector)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ThreatIntelligenceTaxiiDataConnector IPersistableModel<ThreatIntelligenceTaxiiDataConnector>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiDataConnector>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeThreatIntelligenceTaxiiDataConnector(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiDataConnector)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ThreatIntelligenceTaxiiDataConnector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

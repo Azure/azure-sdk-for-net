@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsIncidentClassification : IEquatable<SecurityInsightsIncidentClassification>
     {
         private readonly string _value;
+        /// <summary> Incident classification was undetermined. </summary>
+        private const string UndeterminedValue = "Undetermined";
+        /// <summary> Incident was true positive. </summary>
+        private const string TruePositiveValue = "TruePositive";
+        /// <summary> Incident was benign positive. </summary>
+        private const string BenignPositiveValue = "BenignPositive";
+        /// <summary> Incident was false positive. </summary>
+        private const string FalsePositiveValue = "FalsePositive";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsIncidentClassification(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UndeterminedValue = "Undetermined";
-        private const string TruePositiveValue = "TruePositive";
-        private const string BenignPositiveValue = "BenignPositive";
-        private const string FalsePositiveValue = "FalsePositive";
+            _value = value;
+        }
 
         /// <summary> Incident classification was undetermined. </summary>
         public static SecurityInsightsIncidentClassification Undetermined { get; } = new SecurityInsightsIncidentClassification(UndeterminedValue);
+
         /// <summary> Incident was true positive. </summary>
         public static SecurityInsightsIncidentClassification TruePositive { get; } = new SecurityInsightsIncidentClassification(TruePositiveValue);
+
         /// <summary> Incident was benign positive. </summary>
         public static SecurityInsightsIncidentClassification BenignPositive { get; } = new SecurityInsightsIncidentClassification(BenignPositiveValue);
+
         /// <summary> Incident was false positive. </summary>
         public static SecurityInsightsIncidentClassification FalsePositive { get; } = new SecurityInsightsIncidentClassification(FalsePositiveValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsIncidentClassification left, SecurityInsightsIncidentClassification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsIncidentClassification left, SecurityInsightsIncidentClassification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsIncidentClassification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsIncidentClassification(string value) => new SecurityInsightsIncidentClassification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsIncidentClassification?(string value) => value == null ? null : new SecurityInsightsIncidentClassification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsIncidentClassification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsIncidentClassification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

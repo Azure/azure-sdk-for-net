@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for indicators connection. </summary>
-    internal partial class TIDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
+    public partial class TIDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
@@ -21,13 +21,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypesIndicators"/> for deserialization. </summary>
-        internal TIDataConnectorDataTypesIndicators()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(state, additionalBinaryDataProperties)
         {
         }
     }

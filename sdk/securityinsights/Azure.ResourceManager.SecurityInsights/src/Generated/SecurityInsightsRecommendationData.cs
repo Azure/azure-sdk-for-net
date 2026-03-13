@@ -13,116 +13,126 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsRecommendation data model.
-    /// Recommendation object.
-    /// </summary>
+    /// <summary> Recommendation object. </summary>
     public partial class SecurityInsightsRecommendationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationData"/>. </summary>
-        public SecurityInsightsRecommendationData()
+        internal SecurityInsightsRecommendationData()
         {
-            Suggestions = new ChangeTrackingList<RecommendedSuggestion>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="recommendationTypeId"> Id of the recommendation type. </param>
-        /// <param name="state"> State of the recommendation. </param>
-        /// <param name="title"> Title of the recommendation. </param>
-        /// <param name="description"> Description of the recommendation. </param>
-        /// <param name="createdOn"> The time stamp (UTC) when the recommendation was created. </param>
-        /// <param name="lastEvaluatedOn"> The time stamp (UTC) when the recommendation was last evaluated. </param>
-        /// <param name="lastModifiedOn"> The time stamp (UTC) when the recommendation was last modified. </param>
-        /// <param name="suggestions"> List of suggestions to take for this recommendation. </param>
-        /// <param name="resourceId"> Id of the resource this recommendation refers to. </param>
-        /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationTypeId, RecommendationState? state, string title, string description, DateTimeOffset? createdOn, DateTimeOffset? lastEvaluatedOn, DateTimeOffset? lastModifiedOn, IList<RecommendedSuggestion> suggestions, string resourceId, IDictionary<string, string> additionalProperties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Recommendation properties object. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        internal SecurityInsightsRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecommendationProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            RecommendationTypeId = recommendationTypeId;
-            State = state;
-            Title = title;
-            Description = description;
-            CreatedOn = createdOn;
-            LastEvaluatedOn = lastEvaluatedOn;
-            LastModifiedOn = lastModifiedOn;
-            Suggestions = suggestions;
-            ResourceId = resourceId;
-            AdditionalProperties = additionalProperties;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Recommendation properties object. </summary>
+        internal RecommendationProperties Properties { get; }
+
+        /// <summary> Etag of the azure resource. </summary>
+        public string ETag { get; }
 
         /// <summary> Id of the recommendation type. </summary>
-        [WirePath("properties.recommendationTypeId")]
-        public string RecommendationTypeId { get; set; }
+        public string RecommendationTypeId
+        {
+            get
+            {
+                return Properties.RecommendationTypeId;
+            }
+        }
+
         /// <summary> State of the recommendation. </summary>
-        [WirePath("properties.state")]
-        public RecommendationState? State { get; set; }
+        public RecommendationState State
+        {
+            get
+            {
+                return Properties.State;
+            }
+        }
+
         /// <summary> Title of the recommendation. </summary>
-        [WirePath("properties.title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                return Properties.Title;
+            }
+        }
+
         /// <summary> Description of the recommendation. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The time stamp (UTC) when the recommendation was created. </summary>
-        [WirePath("properties.creationTimeUtc")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset CreationTimeUtc
+        {
+            get
+            {
+                return Properties.CreationTimeUtc;
+            }
+        }
+
         /// <summary> The time stamp (UTC) when the recommendation was last evaluated. </summary>
-        [WirePath("properties.lastEvaluatedTimeUtc")]
-        public DateTimeOffset? LastEvaluatedOn { get; set; }
+        public DateTimeOffset LastEvaluatedTimeUtc
+        {
+            get
+            {
+                return Properties.LastEvaluatedTimeUtc;
+            }
+        }
+
         /// <summary> The time stamp (UTC) when the recommendation was last modified. </summary>
-        [WirePath("properties.lastModifiedTimeUtc")]
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset LastModifiedTimeUtc
+        {
+            get
+            {
+                return Properties.LastModifiedTimeUtc;
+            }
+        }
+
         /// <summary> List of suggestions to take for this recommendation. </summary>
-        [WirePath("properties.suggestions")]
-        public IList<RecommendedSuggestion> Suggestions { get; }
+        public IList<RecommendedSuggestion> Suggestions
+        {
+            get
+            {
+                return Properties.Suggestions;
+            }
+        }
+
         /// <summary> Id of the resource this recommendation refers to. </summary>
-        [WirePath("properties.resourceId")]
-        public string ResourceId { get; set; }
+        public string ResourceId
+        {
+            get
+            {
+                return Properties.ResourceId;
+            }
+        }
+
         /// <summary> Collection of additional properties for the recommendation. </summary>
-        [WirePath("properties.additionalProperties")]
-        public IDictionary<string, string> AdditionalProperties { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public IDictionary<string, string> AdditionalProperties
+        {
+            get
+            {
+                return Properties.AdditionalProperties;
+            }
+        }
     }
 }

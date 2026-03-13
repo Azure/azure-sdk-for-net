@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AnomalyTimelineItem : IUtf8JsonSerializable, IJsonModel<AnomalyTimelineItem>
+    /// <summary> Represents anomaly timeline item. </summary>
+    public partial class AnomalyTimelineItem : EntityTimelineItem, IJsonModel<AnomalyTimelineItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalyTimelineItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AnomalyTimelineItem"/> for deserialization. </summary>
+        internal AnomalyTimelineItem()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EntityTimelineItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAnomalyTimelineItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnomalyTimelineItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnomalyTimelineItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnomalyTimelineItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnomalyTimelineItem IPersistableModel<AnomalyTimelineItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (AnomalyTimelineItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnomalyTimelineItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnomalyTimelineItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnomalyTimelineItem)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azureResourceId"u8);
             writer.WriteStringValue(AzureResourceId);
@@ -52,11 +95,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("endTimeUtc"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndTimeUtc, "O");
             writer.WritePropertyName("startTimeUtc"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartTimeUtc, "O");
             writer.WritePropertyName("timeGenerated"u8);
-            writer.WriteStringValue(GeneratedOn, "O");
+            writer.WriteStringValue(TimeGenerated, "O");
             if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
@@ -71,8 +114,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
-                foreach (var item in Techniques)
+                foreach (string item in Techniques)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -81,35 +129,47 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("reasons"u8);
                 writer.WriteStartArray();
-                foreach (var item in Reasons)
+                foreach (string item in Reasons)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
         }
 
-        AnomalyTimelineItem IJsonModel<AnomalyTimelineItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnomalyTimelineItem IJsonModel<AnomalyTimelineItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AnomalyTimelineItem)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EntityTimelineItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnomalyTimelineItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAnomalyTimelineItem(document.RootElement, options);
         }
 
-        internal static AnomalyTimelineItem DeserializeAnomalyTimelineItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AnomalyTimelineItem DeserializeAnomalyTimelineItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier azureResourceId = default;
+            EntityTimelineKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string azureResourceId = default;
             string productName = default;
             string description = default;
             string displayName = default;
@@ -118,100 +178,110 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DateTimeOffset timeGenerated = default;
             string vendor = default;
             string intent = default;
-            IReadOnlyList<string> techniques = default;
-            IReadOnlyList<string> reasons = default;
-            EntityTimelineKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<string> techniques = default;
+            IList<string> reasons = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("azureResourceId"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
+                    kind = new EntityTimelineKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("productName"u8))
+                if (prop.NameEquals("azureResourceId"u8))
                 {
-                    productName = property.Value.GetString();
+                    azureResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("productName"u8))
                 {
-                    description = property.Value.GetString();
+                    productName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    displayName = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    endTimeUtc = property.Value.GetDateTimeOffset("O");
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"u8))
+                if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    startTimeUtc = property.Value.GetDateTimeOffset("O");
+                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeGenerated"u8))
+                if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    timeGenerated = property.Value.GetDateTimeOffset("O");
+                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("vendor"u8))
+                if (prop.NameEquals("timeGenerated"u8))
                 {
-                    vendor = property.Value.GetString();
+                    timeGenerated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("intent"u8))
+                if (prop.NameEquals("vendor"u8))
                 {
-                    intent = property.Value.GetString();
+                    vendor = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("techniques"u8))
+                if (prop.NameEquals("intent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    intent = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("techniques"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     techniques = array;
                     continue;
                 }
-                if (property.NameEquals("reasons"u8))
+                if (prop.NameEquals("reasons"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     reasons = array;
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new EntityTimelineKind(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AnomalyTimelineItem(
                 kind,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 azureResourceId,
                 productName,
                 description,
@@ -224,306 +294,5 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 techniques ?? new ChangeTrackingList<string>(),
                 reasons ?? new ChangeTrackingList<string>());
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  azureResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AzureResourceId))
-                {
-                    builder.Append("  azureResourceId: ");
-                    builder.AppendLine($"'{AzureResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  productName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProductName))
-                {
-                    builder.Append("  productName: ");
-                    if (ProductName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProductName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProductName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  displayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayName))
-                {
-                    builder.Append("  displayName: ");
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  endTimeUtc: ");
-                var formattedDateTimeString = TypeFormatters.ToString(EndOn, "o");
-                builder.AppendLine($"'{formattedDateTimeString}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  startTimeUtc: ");
-                var formattedDateTimeString = TypeFormatters.ToString(StartOn, "o");
-                builder.AppendLine($"'{formattedDateTimeString}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeneratedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timeGenerated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  timeGenerated: ");
-                var formattedDateTimeString = TypeFormatters.ToString(GeneratedOn, "o");
-                builder.AppendLine($"'{formattedDateTimeString}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Vendor), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vendor: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Vendor))
-                {
-                    builder.Append("  vendor: ");
-                    if (Vendor.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Vendor}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Vendor}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Intent), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  intent: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Intent))
-                {
-                    builder.Append("  intent: ");
-                    if (Intent.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Intent}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Intent}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Techniques), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  techniques: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Techniques))
-                {
-                    if (Techniques.Any())
-                    {
-                        builder.Append("  techniques: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Techniques)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reasons), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reasons: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Reasons))
-                {
-                    if (Reasons.Any())
-                    {
-                        builder.Append("  reasons: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Reasons)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AnomalyTimelineItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AnomalyTimelineItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AnomalyTimelineItem IPersistableModel<AnomalyTimelineItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnomalyTimelineItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAnomalyTimelineItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AnomalyTimelineItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AnomalyTimelineItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

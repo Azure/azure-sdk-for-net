@@ -15,6 +15,20 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsWatchlistData
     {
         /// <summary> The source of the watchlist. </summary>
-        public Source? Source { get; set; }
+        public Source? Source
+        {
+            get => SourceType.HasValue ? Azure.ResourceManager.SecurityInsights.Models.Source.FromWatchlistSourceType(SourceType.Value) : null;
+            set
+            {
+                if (value.HasValue)
+                {
+                    SourceType = value.Value.ToWatchlistSourceType();
+                }
+                else if (Properties != null)
+                {
+                    Properties.SourceType = null;
+                }
+            }
+        }
     }
 }

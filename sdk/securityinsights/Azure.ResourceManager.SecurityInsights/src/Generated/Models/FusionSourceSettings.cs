@@ -7,83 +7,49 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a supported source signal configuration in Fusion detection. </summary>
     public partial class FusionSourceSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FusionSourceSettings"/>. </summary>
-        /// <param name="isEnabled"> Determines whether this source signal is enabled or disabled in Fusion detection. </param>
+        /// <param name="enabled"> Determines whether this source signal is enabled or disabled in Fusion detection. </param>
         /// <param name="sourceName"> Name of the Fusion source signal. Refer to Fusion alert rule template for supported values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        public FusionSourceSettings(bool isEnabled, string sourceName)
+        public FusionSourceSettings(bool enabled, string sourceName)
         {
             Argument.AssertNotNull(sourceName, nameof(sourceName));
 
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             SourceName = sourceName;
             SourceSubTypes = new ChangeTrackingList<FusionSourceSubTypeSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionSourceSettings"/>. </summary>
-        /// <param name="isEnabled"> Determines whether this source signal is enabled or disabled in Fusion detection. </param>
+        /// <param name="enabled"> Determines whether this source signal is enabled or disabled in Fusion detection. </param>
         /// <param name="sourceName"> Name of the Fusion source signal. Refer to Fusion alert rule template for supported values. </param>
         /// <param name="sourceSubTypes"> Configuration for all source subtypes under this source signal consumed in fusion detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionSourceSettings(bool isEnabled, string sourceName, IList<FusionSourceSubTypeSetting> sourceSubTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FusionSourceSettings(bool enabled, string sourceName, IList<FusionSourceSubTypeSetting> sourceSubTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             SourceName = sourceName;
             SourceSubTypes = sourceSubTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FusionSourceSettings"/> for deserialization. </summary>
-        internal FusionSourceSettings()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Determines whether this source signal is enabled or disabled in Fusion detection. </summary>
-        [WirePath("enabled")]
-        public bool IsEnabled { get; set; }
+        public bool Enabled { get; set; }
+
         /// <summary> Name of the Fusion source signal. Refer to Fusion alert rule template for supported values. </summary>
-        [WirePath("sourceName")]
         public string SourceName { get; set; }
+
         /// <summary> Configuration for all source subtypes under this source signal consumed in fusion detection. </summary>
-        [WirePath("sourceSubTypes")]
         public IList<FusionSourceSubTypeSetting> SourceSubTypes { get; }
     }
 }

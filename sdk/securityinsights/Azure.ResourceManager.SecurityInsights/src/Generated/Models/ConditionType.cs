@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The ConditionType. </summary>
+    /// <summary></summary>
     internal readonly partial struct ConditionType : IEquatable<ConditionType>
     {
         private readonly string _value;
+        /// <summary> Evaluate an object property value. </summary>
+        private const string PropertyValue = "Property";
+        /// <summary> Evaluate an object array property value. </summary>
+        private const string PropertyArrayValue = "PropertyArray";
+        /// <summary> Evaluate an object property changed value. </summary>
+        private const string PropertyChangedValue = "PropertyChanged";
+        /// <summary> Evaluate an object array property changed value. </summary>
+        private const string PropertyArrayChangedValue = "PropertyArrayChanged";
+        /// <summary> Apply a boolean operator (e.g AND, OR) to conditions. </summary>
+        private const string BooleanValue = "Boolean";
 
         /// <summary> Initializes a new instance of <see cref="ConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConditionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PropertyValue = "Property";
-        private const string PropertyArrayValue = "PropertyArray";
-        private const string PropertyChangedValue = "PropertyChanged";
-        private const string PropertyArrayChangedValue = "PropertyArrayChanged";
-        private const string BooleanValue = "Boolean";
+            _value = value;
+        }
 
         /// <summary> Evaluate an object property value. </summary>
         public static ConditionType Property { get; } = new ConditionType(PropertyValue);
+
         /// <summary> Evaluate an object array property value. </summary>
         public static ConditionType PropertyArray { get; } = new ConditionType(PropertyArrayValue);
+
         /// <summary> Evaluate an object property changed value. </summary>
         public static ConditionType PropertyChanged { get; } = new ConditionType(PropertyChangedValue);
+
         /// <summary> Evaluate an object array property changed value. </summary>
         public static ConditionType PropertyArrayChanged { get; } = new ConditionType(PropertyArrayChangedValue);
+
         /// <summary> Apply a boolean operator (e.g AND, OR) to conditions. </summary>
         public static ConditionType Boolean { get; } = new ConditionType(BooleanValue);
+
         /// <summary> Determines if two <see cref="ConditionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConditionType left, ConditionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConditionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConditionType left, ConditionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConditionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConditionType(string value) => new ConditionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConditionType?(string value) => value == null ? null : new ConditionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConditionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConditionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

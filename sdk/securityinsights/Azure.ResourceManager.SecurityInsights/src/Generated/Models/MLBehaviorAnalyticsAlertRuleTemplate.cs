@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,75 +17,114 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class MLBehaviorAnalyticsAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
         /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>. </summary>
-        public MLBehaviorAnalyticsAlertRuleTemplate()
+        internal MLBehaviorAnalyticsAlertRuleTemplate() : base(AlertRuleKind.MLBehaviorAnalytics)
         {
-            RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
-            Kind = AlertRuleKind.MLBehaviorAnalytics;
         }
 
         /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
-        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
-        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
-        /// <param name="description"> The description of the alert rule template. </param>
-        /// <param name="displayName"> The display name for alert rule template. </param>
-        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
-        /// <param name="status"> The alert rule template status. </param>
-        /// <param name="tactics"> The tactics of the alert rule. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
-        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        internal MLBehaviorAnalyticsAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int? alertRulesCreatedByTemplateCount, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, SecurityInsightsAlertSeverity? severity) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="properties"> MLBehaviorAnalytics alert rule template properties. </param>
+        internal MLBehaviorAnalyticsAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleKind kind, MLBehaviorAnalyticsAlertRuleTemplateProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
-            LastUpdatedOn = lastUpdatedOn;
-            CreatedOn = createdOn;
-            Description = description;
-            DisplayName = displayName;
-            RequiredDataConnectors = requiredDataConnectors;
-            Status = status;
-            Tactics = tactics;
-            Techniques = techniques;
-            Severity = severity;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary> the number of alert rules that were created by this template. </summary>
-        [WirePath("properties.alertRulesCreatedByTemplateCount")]
-        public int? AlertRulesCreatedByTemplateCount { get; set; }
+        /// <summary> MLBehaviorAnalytics alert rule template properties. </summary>
+        internal MLBehaviorAnalyticsAlertRuleTemplateProperties Properties { get; }
+
+        /// <summary> The number of alert rules that were created by this template. </summary>
+        public int? AlertRulesCreatedByTemplateCount
+        {
+            get
+            {
+                return Properties.AlertRulesCreatedByTemplateCount;
+            }
+        }
+
         /// <summary> The last time that this alert rule template has been updated. </summary>
-        [WirePath("properties.lastUpdatedDateUTC")]
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset? LastUpdatedDateUTC
+        {
+            get
+            {
+                return Properties.LastUpdatedDateUTC;
+            }
+        }
+
         /// <summary> The time that this alert rule template has been added. </summary>
-        [WirePath("properties.createdDateUTC")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedDateUTC
+        {
+            get
+            {
+                return Properties.CreatedDateUTC;
+            }
+        }
+
         /// <summary> The description of the alert rule template. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The display name for alert rule template. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> The required data sources for this template. </summary>
-        [WirePath("properties.requiredDataConnectors")]
-        public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
+        public IList<AlertRuleTemplateDataSource> RequiredDataConnectors
+        {
+            get
+            {
+                return Properties.RequiredDataConnectors;
+            }
+        }
+
         /// <summary> The alert rule template status. </summary>
-        [WirePath("properties.status")]
-        public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
+        public SecurityInsightsAlertRuleTemplateStatus? Status
+        {
+            get
+            {
+                return Properties.Status;
+            }
+        }
+
         /// <summary> The tactics of the alert rule. </summary>
-        [WirePath("properties.tactics")]
-        public IList<SecurityInsightsAttackTactic> Tactics { get; }
+        public IList<SecurityInsightsAttackTactic> Tactics
+        {
+            get
+            {
+                return Properties.Tactics;
+            }
+        }
+
         /// <summary> The techniques of the alert rule. </summary>
-        [WirePath("properties.techniques")]
-        public IList<string> Techniques { get; }
+        public IList<string> Techniques
+        {
+            get
+            {
+                return Properties.Techniques;
+            }
+        }
+
         /// <summary> The severity for alerts created by this alert rule. </summary>
-        [WirePath("properties.severity")]
-        public SecurityInsightsAlertSeverity? Severity { get; set; }
+        public SecurityInsightsAlertSeverity Severity
+        {
+            get
+            {
+                return Properties.Severity;
+            }
+        }
     }
 }

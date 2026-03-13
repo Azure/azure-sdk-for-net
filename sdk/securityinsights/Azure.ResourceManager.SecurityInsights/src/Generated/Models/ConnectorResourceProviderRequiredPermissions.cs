@@ -12,41 +12,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Required permissions for the connector resource provider that define in ResourceProviders.
-    /// For more information about the permissions see &lt;see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format"&gt;here&lt;/see&gt;.
+    /// For more information about the permissions see <see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions#actions-format">here</see>.
     /// </summary>
     public partial class ConnectorResourceProviderRequiredPermissions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorResourceProviderRequiredPermissions"/>. </summary>
         public ConnectorResourceProviderRequiredPermissions()
@@ -54,31 +25,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorResourceProviderRequiredPermissions"/>. </summary>
-        /// <param name="isReadAction"> Gets or sets a value indicating whether the permission is read action (GET). </param>
-        /// <param name="isWriteAction"> Gets or sets a value indicating whether the permission is write action (PUT or PATCH). </param>
-        /// <param name="isDeleteAction"> Gets or sets a value indicating whether the permission is delete action (DELETE). </param>
-        /// <param name="isCustomAction"> Gets or sets a value indicating whether the permission is custom actions (POST). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorResourceProviderRequiredPermissions(bool? isReadAction, bool? isWriteAction, bool? isDeleteAction, bool? isCustomAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="read"> Gets or sets a value indicating whether the permission is read action (GET). </param>
+        /// <param name="write"> Gets or sets a value indicating whether the permission is write action (PUT or PATCH). </param>
+        /// <param name="delete"> Gets or sets a value indicating whether the permission is delete action (DELETE). </param>
+        /// <param name="action"> Gets or sets a value indicating whether the permission is custom actions (POST). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorResourceProviderRequiredPermissions(bool? read, bool? write, bool? delete, bool? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsReadAction = isReadAction;
-            IsWriteAction = isWriteAction;
-            IsDeleteAction = isDeleteAction;
-            IsCustomAction = isCustomAction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Read = read;
+            Write = write;
+            Delete = delete;
+            Action = action;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets a value indicating whether the permission is read action (GET). </summary>
-        [WirePath("read")]
-        public bool? IsReadAction { get; set; }
+        public bool? Read { get; set; }
+
         /// <summary> Gets or sets a value indicating whether the permission is write action (PUT or PATCH). </summary>
-        [WirePath("write")]
-        public bool? IsWriteAction { get; set; }
+        public bool? Write { get; set; }
+
         /// <summary> Gets or sets a value indicating whether the permission is delete action (DELETE). </summary>
-        [WirePath("delete")]
-        public bool? IsDeleteAction { get; set; }
+        public bool? Delete { get; set; }
+
         /// <summary> Gets or sets a value indicating whether the permission is custom actions (POST). </summary>
-        [WirePath("action")]
-        public bool? IsCustomAction { get; set; }
+        public bool? Action { get; set; }
     }
 }

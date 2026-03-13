@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ConnectorDefinitionsResourceProvider : IUtf8JsonSerializable, IJsonModel<ConnectorDefinitionsResourceProvider>
+    /// <summary>
+    /// The resource provider details include the required permissions for the user to create connections.
+    /// The user should have the required permissions(Read\Write, ..) in the specified scope ProviderPermissionsScope against the specified resource provider.
+    /// </summary>
+    public partial class ConnectorDefinitionsResourceProvider : IJsonModel<ConnectorDefinitionsResourceProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorDefinitionsResourceProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsResourceProvider"/> for deserialization. </summary>
+        internal ConnectorDefinitionsResourceProvider()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectorDefinitionsResourceProvider PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConnectorDefinitionsResourceProvider(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectorDefinitionsResourceProvider)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectorDefinitionsResourceProvider)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectorDefinitionsResourceProvider>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectorDefinitionsResourceProvider IPersistableModel<ConnectorDefinitionsResourceProvider>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectorDefinitionsResourceProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectorDefinitionsResourceProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +77,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectorDefinitionsResourceProvider)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider);
             writer.WritePropertyName("permissionsDisplayText"u8);
@@ -45,15 +92,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(Scope.ToString());
             writer.WritePropertyName("requiredPermissions"u8);
             writer.WriteObjectValue(RequiredPermissions, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,22 +109,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        ConnectorDefinitionsResourceProvider IJsonModel<ConnectorDefinitionsResourceProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectorDefinitionsResourceProvider IJsonModel<ConnectorDefinitionsResourceProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConnectorDefinitionsResourceProvider JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectorDefinitionsResourceProvider)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectorDefinitionsResourceProvider(document.RootElement, options);
         }
 
-        internal static ConnectorDefinitionsResourceProvider DeserializeConnectorDefinitionsResourceProvider(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConnectorDefinitionsResourceProvider DeserializeConnectorDefinitionsResourceProvider(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,192 +139,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string providerDisplayName = default;
             ProviderPermissionsScope scope = default;
             ConnectorResourceProviderRequiredPermissions requiredPermissions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provider"u8))
+                if (prop.NameEquals("provider"u8))
                 {
-                    provider = property.Value.GetString();
+                    provider = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("permissionsDisplayText"u8))
+                if (prop.NameEquals("permissionsDisplayText"u8))
                 {
-                    permissionsDisplayText = property.Value.GetString();
+                    permissionsDisplayText = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerDisplayName"u8))
+                if (prop.NameEquals("providerDisplayName"u8))
                 {
-                    providerDisplayName = property.Value.GetString();
+                    providerDisplayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scope"u8))
+                if (prop.NameEquals("scope"u8))
                 {
-                    scope = new ProviderPermissionsScope(property.Value.GetString());
+                    scope = new ProviderPermissionsScope(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requiredPermissions"u8))
+                if (prop.NameEquals("requiredPermissions"u8))
                 {
-                    requiredPermissions = ConnectorResourceProviderRequiredPermissions.DeserializeConnectorResourceProviderRequiredPermissions(property.Value, options);
+                    requiredPermissions = ConnectorResourceProviderRequiredPermissions.DeserializeConnectorResourceProviderRequiredPermissions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectorDefinitionsResourceProvider(
                 provider,
                 permissionsDisplayText,
                 providerDisplayName,
                 scope,
                 requiredPermissions,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Provider), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provider: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Provider))
-                {
-                    builder.Append("  provider: ");
-                    if (Provider.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Provider}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Provider}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PermissionsDisplayText), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  permissionsDisplayText: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PermissionsDisplayText))
-                {
-                    builder.Append("  permissionsDisplayText: ");
-                    if (PermissionsDisplayText.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PermissionsDisplayText}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PermissionsDisplayText}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  providerDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProviderDisplayName))
-                {
-                    builder.Append("  providerDisplayName: ");
-                    if (ProviderDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProviderDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProviderDisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  scope: ");
-                builder.AppendLine($"'{Scope.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredPermissions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requiredPermissions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequiredPermissions))
-                {
-                    builder.Append("  requiredPermissions: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RequiredPermissions, options, 2, false, "  requiredPermissions: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ConnectorDefinitionsResourceProvider>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectorDefinitionsResourceProvider)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConnectorDefinitionsResourceProvider IPersistableModel<ConnectorDefinitionsResourceProvider>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectorDefinitionsResourceProvider>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectorDefinitionsResourceProvider(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectorDefinitionsResourceProvider)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConnectorDefinitionsResourceProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

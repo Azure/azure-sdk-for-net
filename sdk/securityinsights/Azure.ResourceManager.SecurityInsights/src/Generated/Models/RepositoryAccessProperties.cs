@@ -13,86 +13,81 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Credentials to access repository. </summary>
     public partial class RepositoryAccessProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RepositoryAccessProperties"/>. </summary>
         /// <param name="kind"> The kind of repository access credentials. </param>
         public RepositoryAccessProperties(RepositoryAccessKind kind)
         {
-            Kind = kind;
+
+            Properties = new RepositoryAccessObject(kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="RepositoryAccessProperties"/>. </summary>
-        /// <param name="kind"> The kind of repository access credentials. </param>
-        /// <param name="code"> OAuth Code. Required when `kind` is `OAuth`. </param>
-        /// <param name="state"> OAuth State. Required when `kind` is `OAuth`. </param>
-        /// <param name="clientId"> OAuth ClientId. Required when `kind` is `OAuth`. </param>
-        /// <param name="token"> Personal Access Token. Required when `kind` is `PAT`. </param>
-        /// <param name="installationId"> Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RepositoryAccessProperties(RepositoryAccessKind kind, string code, string state, string clientId, string token, string installationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> RepositoryAccess properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RepositoryAccessProperties(RepositoryAccessObject properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Kind = kind;
-            Code = code;
-            State = state;
-            ClientId = clientId;
-            Token = token;
-            InstallationId = installationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RepositoryAccessProperties"/> for deserialization. </summary>
-        internal RepositoryAccessProperties()
-        {
-        }
+        /// <summary> RepositoryAccess properties. </summary>
+        internal RepositoryAccessObject Properties { get; }
 
         /// <summary> The kind of repository access credentials. </summary>
-        [WirePath("properties.kind")]
-        public RepositoryAccessKind Kind { get; }
+        public RepositoryAccessKind Kind
+        {
+            get
+            {
+                return Properties.Kind;
+            }
+        }
+
         /// <summary> OAuth Code. Required when `kind` is `OAuth`. </summary>
-        [WirePath("properties.code")]
-        public string Code { get; set; }
+        public string Code
+        {
+            get
+            {
+                return Properties.Code;
+            }
+        }
+
         /// <summary> OAuth State. Required when `kind` is `OAuth`. </summary>
-        [WirePath("properties.state")]
-        public string State { get; set; }
+        public string State
+        {
+            get
+            {
+                return Properties.State;
+            }
+        }
+
         /// <summary> OAuth ClientId. Required when `kind` is `OAuth`. </summary>
-        [WirePath("properties.clientId")]
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties.ClientId;
+            }
+        }
+
         /// <summary> Personal Access Token. Required when `kind` is `PAT`. </summary>
-        [WirePath("properties.token")]
-        public string Token { get; set; }
+        public string Token
+        {
+            get
+            {
+                return Properties.Token;
+            }
+        }
+
         /// <summary> Application installation ID. Required when `kind` is `App`. Supported by `GitHub` only. </summary>
-        [WirePath("properties.installationId")]
-        public string InstallationId { get; set; }
+        public string InstallationId
+        {
+            get
+            {
+                return Properties.InstallationId;
+            }
+        }
     }
 }

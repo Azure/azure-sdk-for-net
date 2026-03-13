@@ -13,47 +13,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a source subtype under a source signal consumed in Fusion detection. </summary>
     public partial class FusionTemplateSourceSubType
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSubType"/>. </summary>
         /// <param name="sourceSubTypeName"> The name of source subtype under a source signal consumed in Fusion detection. </param>
         /// <param name="severityFilter"> Severity configuration available for a source subtype consumed in fusion detection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceSubTypeName"/> or <paramref name="severityFilter"/> is null. </exception>
-        public FusionTemplateSourceSubType(string sourceSubTypeName, FusionTemplateSubTypeSeverityFilter severityFilter)
+        internal FusionTemplateSourceSubType(string sourceSubTypeName, FusionTemplateSubTypeSeverityFilter severityFilter)
         {
-            Argument.AssertNotNull(sourceSubTypeName, nameof(sourceSubTypeName));
-            Argument.AssertNotNull(severityFilter, nameof(severityFilter));
-
             SourceSubTypeName = sourceSubTypeName;
             SeverityFilter = severityFilter;
         }
@@ -62,28 +29,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="sourceSubTypeName"> The name of source subtype under a source signal consumed in Fusion detection. </param>
         /// <param name="sourceSubTypeDisplayName"> The display name of source subtype under a source signal consumed in Fusion detection. </param>
         /// <param name="severityFilter"> Severity configuration available for a source subtype consumed in fusion detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionTemplateSourceSubType(string sourceSubTypeName, string sourceSubTypeDisplayName, FusionTemplateSubTypeSeverityFilter severityFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FusionTemplateSourceSubType(string sourceSubTypeName, string sourceSubTypeDisplayName, FusionTemplateSubTypeSeverityFilter severityFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceSubTypeName = sourceSubTypeName;
             SourceSubTypeDisplayName = sourceSubTypeDisplayName;
             SeverityFilter = severityFilter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSubType"/> for deserialization. </summary>
-        internal FusionTemplateSourceSubType()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of source subtype under a source signal consumed in Fusion detection. </summary>
-        [WirePath("sourceSubTypeName")]
-        public string SourceSubTypeName { get; set; }
+        public string SourceSubTypeName { get; }
+
         /// <summary> The display name of source subtype under a source signal consumed in Fusion detection. </summary>
-        [WirePath("sourceSubTypeDisplayName")]
         public string SourceSubTypeDisplayName { get; }
+
         /// <summary> Severity configuration available for a source subtype consumed in fusion detection. </summary>
-        [WirePath("severityFilter")]
-        public FusionTemplateSubTypeSeverityFilter SeverityFilter { get; set; }
+        public FusionTemplateSubTypeSeverityFilter SeverityFilter { get; }
     }
 }

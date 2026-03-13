@@ -13,85 +13,84 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the WorkspaceManagerAssignment data model.
-    /// The workspace manager assignment
-    /// </summary>
+    /// <summary> The workspace manager assignment. </summary>
     public partial class WorkspaceManagerAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentData"/>. </summary>
         public WorkspaceManagerAssignmentData()
         {
-            Items = new ChangeTrackingList<WorkspaceManagerAssignmentItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetResourceName"> The resource name of the workspace manager group targeted by the workspace manager assignment. </param>
-        /// <param name="lastJobEndOn"> The time the last job associated to this assignment ended at. </param>
-        /// <param name="lastJobProvisioningState"> State of the last job associated to this assignment. </param>
-        /// <param name="items"> List of resources included in this workspace manager assignment. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceName, DateTimeOffset? lastJobEndOn, TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The workspace manager assignment object. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkspaceManagerAssignmentProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            TargetResourceName = targetResourceName;
-            LastJobEndOn = lastJobEndOn;
-            LastJobProvisioningState = lastJobProvisioningState;
-            Items = items;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> The resource name of the workspace manager group targeted by the workspace manager assignment. </summary>
-        [WirePath("properties.targetResourceName")]
-        public string TargetResourceName { get; set; }
-        /// <summary> The time the last job associated to this assignment ended at. </summary>
-        [WirePath("properties.lastJobEndTime")]
-        public DateTimeOffset? LastJobEndOn { get; }
-        /// <summary> State of the last job associated to this assignment. </summary>
-        [WirePath("properties.lastJobProvisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? LastJobProvisioningState { get; }
-        /// <summary> List of resources included in this workspace manager assignment. </summary>
-        [WirePath("properties.items")]
-        public IList<WorkspaceManagerAssignmentItem> Items { get; }
+        /// <summary> The workspace manager assignment object. </summary>
+        internal WorkspaceManagerAssignmentProperties Properties { get; set; }
+
         /// <summary> Resource Etag. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
+        /// <summary> The resource name of the workspace manager group targeted by the workspace manager assignment. </summary>
+        public string TargetResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceManagerAssignmentProperties();
+                }
+                Properties.TargetResourceName = value;
+            }
+        }
+
+        /// <summary> The time the last job associated to this assignment ended at. </summary>
+        public DateTimeOffset? LastJobEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastJobEndOn;
+            }
+        }
+
+        /// <summary> State of the last job associated to this assignment. </summary>
+        public TriggeredAnalyticsRuleRunProvisioningState? LastJobProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastJobProvisioningState;
+            }
+        }
+
+        /// <summary> List of resources included in this workspace manager assignment. </summary>
+        public IList<AssignmentItem> Items
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceManagerAssignmentProperties();
+                }
+                return Properties.Items;
+            }
+        }
     }
 }

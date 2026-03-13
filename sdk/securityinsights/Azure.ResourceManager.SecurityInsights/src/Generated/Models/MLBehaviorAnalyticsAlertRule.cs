@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,71 +17,134 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class MLBehaviorAnalyticsAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRule"/>. </summary>
-        public MLBehaviorAnalyticsAlertRule()
+        public MLBehaviorAnalyticsAlertRule() : base(AlertRuleKind.MLBehaviorAnalytics)
         {
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
-            SubTechniques = new ChangeTrackingList<string>();
-            Kind = AlertRuleKind.MLBehaviorAnalytics;
         }
 
         /// <summary> Initializes a new instance of <see cref="MLBehaviorAnalyticsAlertRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
-        /// <param name="description"> The description of the alert rule. </param>
-        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this alert rule has been modified. </param>
-        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
-        /// <param name="tactics"> The tactics of the alert rule. </param>
-        /// <param name="techniques"> The techniques of the alert rule. </param>
-        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
-        internal MLBehaviorAnalyticsAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> MLBehaviorAnalytics alert rule properties. </param>
+        internal MLBehaviorAnalyticsAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleKind kind, string eTag, MLBehaviorAnalyticsAlertRuleProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            AlertRuleTemplateName = alertRuleTemplateName;
-            Description = description;
-            DisplayName = displayName;
-            IsEnabled = isEnabled;
-            LastModifiedOn = lastModifiedOn;
-            Severity = severity;
-            Tactics = tactics;
-            Techniques = techniques;
-            SubTechniques = subTechniques;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> MLBehaviorAnalytics alert rule properties. </summary>
+        internal MLBehaviorAnalyticsAlertRuleProperties Properties { get; set; }
+
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
-        [WirePath("properties.alertRuleTemplateName")]
-        public string AlertRuleTemplateName { get; set; }
+        public string AlertRuleTemplateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlertRuleTemplateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MLBehaviorAnalyticsAlertRuleProperties();
+                }
+                Properties.AlertRuleTemplateName = value;
+            }
+        }
+
         /// <summary> The description of the alert rule. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> The display name for alerts created by this alert rule. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
-        [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MLBehaviorAnalyticsAlertRuleProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
         /// <summary> The last time that this alert rule has been modified. </summary>
-        [WirePath("properties.lastModifiedUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedUtc;
+            }
+        }
+
         /// <summary> The severity for alerts created by this alert rule. </summary>
-        [WirePath("properties.severity")]
-        public SecurityInsightsAlertSeverity? Severity { get; }
+        public SecurityInsightsAlertSeverity? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+        }
+
         /// <summary> The tactics of the alert rule. </summary>
-        [WirePath("properties.tactics")]
-        public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
+        public IReadOnlyList<SecurityInsightsAttackTactic> Tactics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MLBehaviorAnalyticsAlertRuleProperties();
+                }
+                return Properties.Tactics;
+            }
+        }
+
         /// <summary> The techniques of the alert rule. </summary>
-        [WirePath("properties.techniques")]
-        public IReadOnlyList<string> Techniques { get; }
+        public IReadOnlyList<string> Techniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MLBehaviorAnalyticsAlertRuleProperties();
+                }
+                return Properties.Techniques;
+            }
+        }
+
         /// <summary> The sub-techniques of the alert rule. </summary>
-        [WirePath("properties.subTechniques")]
-        public IReadOnlyList<string> SubTechniques { get; }
+        public IReadOnlyList<string> SubTechniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MLBehaviorAnalyticsAlertRuleProperties();
+                }
+                return Properties.SubTechniques;
+            }
+        }
     }
 }

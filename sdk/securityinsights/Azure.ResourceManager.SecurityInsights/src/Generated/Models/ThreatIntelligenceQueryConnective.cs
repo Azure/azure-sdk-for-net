@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ThreatIntelligenceQueryConnective : IEquatable<ThreatIntelligenceQueryConnective>
     {
         private readonly string _value;
+        /// <summary> 'And' connective. </summary>
+        private const string AndValue = "And";
+        /// <summary> 'Or' connective. </summary>
+        private const string OrValue = "Or";
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQueryConnective"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ThreatIntelligenceQueryConnective(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AndValue = "And";
-        private const string OrValue = "Or";
+            _value = value;
+        }
 
         /// <summary> 'And' connective. </summary>
         public static ThreatIntelligenceQueryConnective And { get; } = new ThreatIntelligenceQueryConnective(AndValue);
+
         /// <summary> 'Or' connective. </summary>
         public static ThreatIntelligenceQueryConnective Or { get; } = new ThreatIntelligenceQueryConnective(OrValue);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceQueryConnective"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThreatIntelligenceQueryConnective left, ThreatIntelligenceQueryConnective right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ThreatIntelligenceQueryConnective"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThreatIntelligenceQueryConnective left, ThreatIntelligenceQueryConnective right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatIntelligenceQueryConnective"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceQueryConnective"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ThreatIntelligenceQueryConnective(string value) => new ThreatIntelligenceQueryConnective(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ThreatIntelligenceQueryConnective"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ThreatIntelligenceQueryConnective?(string value) => value == null ? null : new ThreatIntelligenceQueryConnective(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThreatIntelligenceQueryConnective other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ThreatIntelligenceQueryConnective other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

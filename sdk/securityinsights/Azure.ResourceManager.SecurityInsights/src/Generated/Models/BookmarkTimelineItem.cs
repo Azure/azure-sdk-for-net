@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,68 +16,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="BookmarkTimelineItem"/>. </summary>
         /// <param name="azureResourceId"> The bookmark azure resource id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> is null. </exception>
-        internal BookmarkTimelineItem(ResourceIdentifier azureResourceId)
+        internal BookmarkTimelineItem(string azureResourceId) : base(EntityTimelineKind.Bookmark)
         {
-            Argument.AssertNotNull(azureResourceId, nameof(azureResourceId));
-
             AzureResourceId = azureResourceId;
             Labels = new ChangeTrackingList<string>();
-            Kind = EntityTimelineKind.Bookmark;
         }
 
         /// <summary> Initializes a new instance of <see cref="BookmarkTimelineItem"/>. </summary>
         /// <param name="kind"> The entity query kind type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureResourceId"> The bookmark azure resource id. </param>
         /// <param name="displayName"> The bookmark display name. </param>
         /// <param name="notes"> The notes of the bookmark. </param>
-        /// <param name="endOn"> The bookmark end time. </param>
-        /// <param name="startOn"> The bookmark start time. </param>
+        /// <param name="endTimeUtc"> The bookmark end time. </param>
+        /// <param name="startTimeUtc"> The bookmark start time. </param>
         /// <param name="eventOn"> The bookmark event time. </param>
         /// <param name="createdBy"> Describes a user that created the bookmark. </param>
         /// <param name="labels"> List of labels relevant to this bookmark. </param>
-        internal BookmarkTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId, string displayName, string notes, DateTimeOffset? endOn, DateTimeOffset? startOn, DateTimeOffset? eventOn, SecurityInsightsUserInfo createdBy, IReadOnlyList<string> labels) : base(kind, serializedAdditionalRawData)
+        internal BookmarkTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string azureResourceId, string displayName, string notes, DateTimeOffset? endTimeUtc, DateTimeOffset? startTimeUtc, DateTimeOffset? eventOn, SecurityInsightsUserInfo createdBy, IList<string> labels) : base(kind, additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
             Notes = notes;
-            EndOn = endOn;
-            StartOn = startOn;
+            EndTimeUtc = endTimeUtc;
+            StartTimeUtc = startTimeUtc;
             EventOn = eventOn;
             CreatedBy = createdBy;
             Labels = labels;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BookmarkTimelineItem"/> for deserialization. </summary>
-        internal BookmarkTimelineItem()
-        {
         }
 
         /// <summary> The bookmark azure resource id. </summary>
-        [WirePath("azureResourceId")]
-        public ResourceIdentifier AzureResourceId { get; }
+        public string AzureResourceId { get; }
+
         /// <summary> The bookmark display name. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; }
+
         /// <summary> The notes of the bookmark. </summary>
-        [WirePath("notes")]
         public string Notes { get; }
+
         /// <summary> The bookmark end time. </summary>
-        [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndTimeUtc { get; }
+
         /// <summary> The bookmark start time. </summary>
-        [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartTimeUtc { get; }
+
         /// <summary> The bookmark event time. </summary>
-        [WirePath("eventTime")]
         public DateTimeOffset? EventOn { get; }
+
         /// <summary> Describes a user that created the bookmark. </summary>
-        [WirePath("createdBy")]
         public SecurityInsightsUserInfo CreatedBy { get; }
+
         /// <summary> List of labels relevant to this bookmark. </summary>
-        [WirePath("labels")]
-        public IReadOnlyList<string> Labels { get; }
+        public IList<string> Labels { get; }
     }
 }

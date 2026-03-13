@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlDeploymentFetchStatus : IEquatable<SourceControlDeploymentFetchStatus>
     {
         private readonly string _value;
+        /// <summary> Success. </summary>
+        private const string SuccessValue = "Success";
+        /// <summary> Unauthorized. </summary>
+        private const string UnauthorizedValue = "Unauthorized";
+        /// <summary> NotFound. </summary>
+        private const string NotFoundValue = "NotFound";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlDeploymentFetchStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlDeploymentFetchStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuccessValue = "Success";
-        private const string UnauthorizedValue = "Unauthorized";
-        private const string NotFoundValue = "NotFound";
+            _value = value;
+        }
 
         /// <summary> Success. </summary>
         public static SourceControlDeploymentFetchStatus Success { get; } = new SourceControlDeploymentFetchStatus(SuccessValue);
+
         /// <summary> Unauthorized. </summary>
         public static SourceControlDeploymentFetchStatus Unauthorized { get; } = new SourceControlDeploymentFetchStatus(UnauthorizedValue);
+
         /// <summary> NotFound. </summary>
         public static SourceControlDeploymentFetchStatus NotFound { get; } = new SourceControlDeploymentFetchStatus(NotFoundValue);
+
         /// <summary> Determines if two <see cref="SourceControlDeploymentFetchStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlDeploymentFetchStatus left, SourceControlDeploymentFetchStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlDeploymentFetchStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlDeploymentFetchStatus left, SourceControlDeploymentFetchStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlDeploymentFetchStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlDeploymentFetchStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlDeploymentFetchStatus(string value) => new SourceControlDeploymentFetchStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlDeploymentFetchStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlDeploymentFetchStatus?(string value) => value == null ? null : new SourceControlDeploymentFetchStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlDeploymentFetchStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlDeploymentFetchStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

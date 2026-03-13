@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsHunt along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsHuntResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsHuntResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsHunt method.
+    /// A class representing a SecurityInsightsHunt along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsHuntResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityInsightsHunts method.
     /// </summary>
     public partial class SecurityInsightsHuntResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsHuntResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="huntId"> The huntId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string huntId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsHuntHuntsClientDiagnostics;
-        private readonly HuntsRestOperations _securityInsightsHuntHuntsRestClient;
+        private readonly ClientDiagnostics _huntsClientDiagnostics;
+        private readonly Hunts _huntsRestClient;
         private readonly SecurityInsightsHuntData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/hunts";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsHuntResource for mocking. </summary>
         protected SecurityInsightsHuntResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsHuntResource(ArmClient client, SecurityInsightsHuntData data) : this(client, data.Id)
@@ -54,209 +44,93 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsHuntResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsHuntHuntsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsHuntHuntsApiVersion);
-            _securityInsightsHuntHuntsRestClient = new HuntsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsHuntHuntsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsHuntApiVersion);
+            _huntsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _huntsRestClient = new Hunts(_huntsClientDiagnostics, Pipeline, Endpoint, securityInsightsHuntApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsHuntData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="huntId"> The huntId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string huntId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsHuntRelationResources in the SecurityInsightsHunt. </summary>
-        /// <returns> An object representing collection of SecurityInsightsHuntRelationResources and their operations over a SecurityInsightsHuntRelationResource. </returns>
-        public virtual SecurityInsightsHuntRelationCollection GetSecurityInsightsHuntRelations()
-        {
-            return GetCachedClient(client => new SecurityInsightsHuntRelationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a hunt relation
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/relations/{huntRelationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HuntRelations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="huntRelationId"> The hunt relation id (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsHuntRelationResource>> GetSecurityInsightsHuntRelationAsync(string huntRelationId, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsHuntRelations().GetAsync(huntRelationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a hunt relation
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/relations/{huntRelationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HuntRelations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntRelationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="huntRelationId"> The hunt relation id (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsHuntRelationResource> GetSecurityInsightsHuntRelation(string huntRelationId, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsHuntRelations().Get(huntRelationId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsHuntCommentResources in the SecurityInsightsHunt. </summary>
-        /// <returns> An object representing collection of SecurityInsightsHuntCommentResources and their operations over a SecurityInsightsHuntCommentResource. </returns>
-        public virtual SecurityInsightsHuntCommentCollection GetSecurityInsightsHuntComments()
-        {
-            return GetCachedClient(client => new SecurityInsightsHuntCommentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a hunt comment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/comments/{huntCommentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HuntComments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="huntCommentId"> The hunt comment id (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsHuntCommentResource>> GetSecurityInsightsHuntCommentAsync(string huntCommentId, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsHuntComments().GetAsync(huntCommentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a hunt comment
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}/comments/{huntCommentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HuntComments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="huntCommentId"> The hunt comment id (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsHuntCommentResource> GetSecurityInsightsHuntComment(string huntCommentId, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsHuntComments().Get(huntCommentId, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a hunt, without relations and comments.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hunts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsHuntResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsHuntResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsHuntHuntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Get");
+            using DiagnosticScope scope = _huntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsHuntHuntsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _huntsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsHuntData> response = Response.FromValue(SecurityInsightsHuntData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsHuntResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,33 +144,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a hunt, without relations and comments.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hunts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsHuntResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsHuntResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsHuntHuntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Get");
+            using DiagnosticScope scope = _huntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsHuntHuntsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _huntsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsHuntData> response = Response.FromValue(SecurityInsightsHuntData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsHuntResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,20 +192,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete a hunt.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hunts_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsHuntResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,16 +213,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsHuntHuntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Delete");
+            using DiagnosticScope scope = _huntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsHuntHuntsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsHuntHuntsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _huntsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -354,20 +243,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete a hunt.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hunts_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsHuntResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,16 +264,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsHuntHuntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Delete");
+            using DiagnosticScope scope = _huntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsHuntHuntsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsHuntHuntsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _huntsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -395,23 +291,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a hunt
+        /// Update a SecurityInsightsHunt.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hunts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsHuntResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,16 +319,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsHuntHuntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Update");
+            using DiagnosticScope scope = _huntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsHuntHuntsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsHuntHuntsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsHuntResource>(Response.FromValue(new SecurityInsightsHuntResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _huntsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsHuntData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsHuntData> response = Response.FromValue(SecurityInsightsHuntData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsHuntResource> operation = new SecurityInsightsArmOperation<SecurityInsightsHuntResource>(Response.FromValue(new SecurityInsightsHuntResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -443,23 +347,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a hunt
+        /// Update a SecurityInsightsHunt.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Hunts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsHuntResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsHuntResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,16 +375,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsHuntHuntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Update");
+            using DiagnosticScope scope = _huntsClientDiagnostics.CreateScope("SecurityInsightsHuntResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsHuntHuntsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsHuntHuntsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsHuntResource>(Response.FromValue(new SecurityInsightsHuntResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _huntsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsHuntData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsHuntData> response = Response.FromValue(SecurityInsightsHuntData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsHuntResource> operation = new SecurityInsightsArmOperation<SecurityInsightsHuntResource>(Response.FromValue(new SecurityInsightsHuntResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -488,6 +400,72 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsHuntComments in the <see cref="SecurityInsightsHuntResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityInsightsHuntComments and their operations over a SecurityInsightsHuntCommentResource. </returns>
+        public virtual SecurityInsightsHuntCommentCollection GetSecurityInsightsHuntComments()
+        {
+            return GetCachedClient(client => new SecurityInsightsHuntCommentCollection(client, Id));
+        }
+
+        /// <summary> Gets a hunt comment. </summary>
+        /// <param name="huntCommentId"> The hunt comment id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsHuntCommentResource>> GetSecurityInsightsHuntCommentAsync(string huntCommentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
+
+            return await GetSecurityInsightsHuntComments().GetAsync(huntCommentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a hunt comment. </summary>
+        /// <param name="huntCommentId"> The hunt comment id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsHuntCommentResource> GetSecurityInsightsHuntComment(string huntCommentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
+
+            return GetSecurityInsightsHuntComments().Get(huntCommentId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsHuntRelations in the <see cref="SecurityInsightsHuntResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityInsightsHuntRelations and their operations over a SecurityInsightsHuntRelationResource. </returns>
+        public virtual SecurityInsightsHuntRelationCollection GetSecurityInsightsHuntRelations()
+        {
+            return GetCachedClient(client => new SecurityInsightsHuntRelationCollection(client, Id));
+        }
+
+        /// <summary> Gets a hunt relation. </summary>
+        /// <param name="huntRelationId"> The hunt relation id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsHuntRelationResource>> GetSecurityInsightsHuntRelationAsync(string huntRelationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(huntRelationId, nameof(huntRelationId));
+
+            return await GetSecurityInsightsHuntRelations().GetAsync(huntRelationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a hunt relation. </summary>
+        /// <param name="huntRelationId"> The hunt relation id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsHuntRelationResource> GetSecurityInsightsHuntRelation(string huntRelationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(huntRelationId, nameof(huntRelationId));
+
+            return GetSecurityInsightsHuntRelations().Get(huntRelationId, cancellationToken);
         }
     }
 }

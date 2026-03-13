@@ -13,68 +13,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a Severity filter setting for a given source subtype consumed in Fusion detection. </summary>
     public partial class FusionSubTypeSeverityFiltersItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FusionSubTypeSeverityFiltersItem"/>. </summary>
         /// <param name="severity"> The Severity for a given source subtype consumed in Fusion detection. </param>
-        /// <param name="isEnabled"> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </param>
-        public FusionSubTypeSeverityFiltersItem(SecurityInsightsAlertSeverity severity, bool isEnabled)
+        /// <param name="enabled"> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </param>
+        public FusionSubTypeSeverityFiltersItem(SecurityInsightsAlertSeverity severity, bool enabled)
         {
             Severity = severity;
-            IsEnabled = isEnabled;
+            Enabled = enabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionSubTypeSeverityFiltersItem"/>. </summary>
         /// <param name="severity"> The Severity for a given source subtype consumed in Fusion detection. </param>
-        /// <param name="isEnabled"> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionSubTypeSeverityFiltersItem(SecurityInsightsAlertSeverity severity, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="enabled"> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FusionSubTypeSeverityFiltersItem(SecurityInsightsAlertSeverity severity, bool enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
-            IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FusionSubTypeSeverityFiltersItem"/> for deserialization. </summary>
-        internal FusionSubTypeSeverityFiltersItem()
-        {
+            Enabled = enabled;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Severity for a given source subtype consumed in Fusion detection. </summary>
-        [WirePath("severity")]
         public SecurityInsightsAlertSeverity Severity { get; set; }
+
         /// <summary> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </summary>
-        [WirePath("enabled")]
-        public bool IsEnabled { get; set; }
+        public bool Enabled { get; set; }
     }
 }

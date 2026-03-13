@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The kind of security ML analytics settings. </summary>
-    internal readonly partial struct SecurityMLAnalyticsSettingsKind : IEquatable<SecurityMLAnalyticsSettingsKind>
+    public readonly partial struct SecurityMLAnalyticsSettingsKind : IEquatable<SecurityMLAnalyticsSettingsKind>
     {
         private readonly string _value;
+        /// <summary> Anomaly. </summary>
+        private const string AnomalyValue = "Anomaly";
 
         /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityMLAnalyticsSettingsKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnomalyValue = "Anomaly";
+            _value = value;
+        }
 
         /// <summary> Anomaly. </summary>
         public static SecurityMLAnalyticsSettingsKind Anomaly { get; } = new SecurityMLAnalyticsSettingsKind(AnomalyValue);
+
         /// <summary> Determines if two <see cref="SecurityMLAnalyticsSettingsKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityMLAnalyticsSettingsKind left, SecurityMLAnalyticsSettingsKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityMLAnalyticsSettingsKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityMLAnalyticsSettingsKind left, SecurityMLAnalyticsSettingsKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityMLAnalyticsSettingsKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityMLAnalyticsSettingsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityMLAnalyticsSettingsKind(string value) => new SecurityMLAnalyticsSettingsKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityMLAnalyticsSettingsKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityMLAnalyticsSettingsKind?(string value) => value == null ? null : new SecurityMLAnalyticsSettingsKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityMLAnalyticsSettingsKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityMLAnalyticsSettingsKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

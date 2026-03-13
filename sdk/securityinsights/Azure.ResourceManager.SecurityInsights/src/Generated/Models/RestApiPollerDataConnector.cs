@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,77 +17,174 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class RestApiPollerDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="RestApiPollerDataConnector"/>. </summary>
-        public RestApiPollerDataConnector()
+        public RestApiPollerDataConnector() : base(DataConnectorKind.RestApiPoller)
         {
-            AddOnAttributes = new ChangeTrackingDictionary<string, string>();
-            Kind = DataConnectorKind.RestApiPoller;
         }
 
         /// <summary> Initializes a new instance of <see cref="RestApiPollerDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorDefinitionName"> The connector definition name (the dataConnectorDefinition resource id). </param>
-        /// <param name="auth">
-        /// The a authentication model.
-        /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GcpAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
-        /// </param>
-        /// <param name="request"> The request configuration. </param>
-        /// <param name="dcrConfig"> The DCR related properties. </param>
-        /// <param name="isActive"> Indicates whether the connector is active or not. </param>
-        /// <param name="dataType"> The Log Analytics table destination. </param>
-        /// <param name="response"> The response configuration. </param>
-        /// <param name="paging"> The paging configuration. </param>
-        /// <param name="addOnAttributes"> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </param>
-        internal RestApiPollerDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, CcpAuthConfig auth, RestApiPollerRequestConfig request, DcrConfiguration dcrConfig, bool? isActive, string dataType, CcpResponseConfig response, RestApiPollerRequestPagingConfig paging, IDictionary<string, string> addOnAttributes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Rest Api Poller data connector properties. </param>
+        internal RestApiPollerDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorKind kind, string eTag, RestApiPollerDataConnectorProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            ConnectorDefinitionName = connectorDefinitionName;
-            Auth = auth;
-            Request = request;
-            DcrConfig = dcrConfig;
-            IsActive = isActive;
-            DataType = dataType;
-            Response = response;
-            Paging = paging;
-            AddOnAttributes = addOnAttributes;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Rest Api Poller data connector properties. </summary>
+        internal RestApiPollerDataConnectorProperties Properties { get; set; }
+
         /// <summary> The connector definition name (the dataConnectorDefinition resource id). </summary>
-        [WirePath("properties.connectorDefinitionName")]
-        public string ConnectorDefinitionName { get; set; }
-        /// <summary>
-        /// The a authentication model.
-        /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsApiKeyAuthModel"/>, <see cref="AwsAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GcpAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
-        /// </summary>
-        [WirePath("properties.auth")]
-        public CcpAuthConfig Auth { get; set; }
+        public string ConnectorDefinitionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectorDefinitionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.ConnectorDefinitionName = value;
+            }
+        }
+
+        /// <summary> The a authentication model. </summary>
+        public CcpAuthConfig Auth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Auth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.Auth = value;
+            }
+        }
+
         /// <summary> The request configuration. </summary>
-        [WirePath("properties.request")]
-        public RestApiPollerRequestConfig Request { get; set; }
+        public RestApiPollerRequestConfig Request
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Request;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.Request = value;
+            }
+        }
+
         /// <summary> The DCR related properties. </summary>
-        [WirePath("properties.dcrConfig")]
-        public DcrConfiguration DcrConfig { get; set; }
+        public DcrConfiguration DcrConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DcrConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.DcrConfig = value;
+            }
+        }
+
         /// <summary> Indicates whether the connector is active or not. </summary>
-        [WirePath("properties.isActive")]
-        public bool? IsActive { get; set; }
+        public bool? IsActive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsActive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.IsActive = value.Value;
+            }
+        }
+
         /// <summary> The Log Analytics table destination. </summary>
-        [WirePath("properties.dataType")]
-        public string DataType { get; set; }
+        public string DataType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.DataType = value;
+            }
+        }
+
         /// <summary> The response configuration. </summary>
-        [WirePath("properties.response")]
-        public CcpResponseConfig Response { get; set; }
+        public CcpResponseConfig Response
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Response;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.Response = value;
+            }
+        }
+
         /// <summary> The paging configuration. </summary>
-        [WirePath("properties.paging")]
-        public RestApiPollerRequestPagingConfig Paging { get; set; }
+        public RestApiPollerRequestPagingConfig Paging
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Paging;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                Properties.Paging = value;
+            }
+        }
+
         /// <summary> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </summary>
-        [WirePath("properties.addOnAttributes")]
-        public IDictionary<string, string> AddOnAttributes { get; }
+        public IDictionary<string, string> AddOnAttributes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestApiPollerDataConnectorProperties();
+                }
+                return Properties.AddOnAttributes;
+            }
+        }
     }
 }
