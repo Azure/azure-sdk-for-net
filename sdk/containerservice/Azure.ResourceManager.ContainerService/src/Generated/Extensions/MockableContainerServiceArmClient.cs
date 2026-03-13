@@ -6,110 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableContainerServiceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableContainerServiceArmClient for mocking. </summary>
         protected MockableContainerServiceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableContainerServiceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableContainerServiceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableContainerServiceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableContainerServiceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
-        public virtual ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(ResourceIdentifier id)
-        {
-            ManagedClusterUpgradeProfileResource.ValidateResourceId(id);
-            return new ManagedClusterUpgradeProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceManagedClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceManagedClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource"/> object. </returns>
-        public virtual ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(ResourceIdentifier id)
-        {
-            ContainerServiceManagedClusterResource.ValidateResourceId(id);
-            return new ContainerServiceManagedClusterResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MeshRevisionProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MeshRevisionProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshRevisionProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
-        public virtual MeshRevisionProfileResource GetMeshRevisionProfileResource(ResourceIdentifier id)
-        {
-            MeshRevisionProfileResource.ValidateResourceId(id);
-            return new MeshRevisionProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MeshUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MeshUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="MeshUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MeshUpgradeProfileResource"/> object. </returns>
-        public virtual MeshUpgradeProfileResource GetMeshUpgradeProfileResource(ResourceIdentifier id)
-        {
-            MeshUpgradeProfileResource.ValidateResourceId(id);
-            return new MeshUpgradeProfileResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceMaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMaintenanceConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
-        public virtual ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier id)
-        {
-            ContainerServiceMaintenanceConfigurationResource.ValidateResourceId(id);
-            return new ContainerServiceMaintenanceConfigurationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterNamespaceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterNamespaceResource"/> object. </returns>
-        public virtual ManagedClusterNamespaceResource GetManagedClusterNamespaceResource(ResourceIdentifier id)
-        {
-            ManagedClusterNamespaceResource.ValidateResourceId(id);
-            return new ManagedClusterNamespaceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceAgentPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceAgentPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource"/> object. </returns>
         public virtual ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(ResourceIdentifier id)
@@ -118,10 +35,79 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ContainerServiceAgentPoolResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AgentPoolUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentPoolUpgradeProfileResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceManagedClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource"/> object. </returns>
+        public virtual ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(ResourceIdentifier id)
+        {
+            ContainerServiceManagedClusterResource.ValidateResourceId(id);
+            return new ContainerServiceManagedClusterResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedClusterUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
+        public virtual ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(ResourceIdentifier id)
+        {
+            ManagedClusterUpgradeProfileResource.ValidateResourceId(id);
+            return new ManagedClusterUpgradeProfileResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuardrailsAvailableVersionResource"/> object. </returns>
+        public virtual GuardrailsAvailableVersionResource GetGuardrailsAvailableVersionResource(ResourceIdentifier id)
+        {
+            GuardrailsAvailableVersionResource.ValidateResourceId(id);
+            return new GuardrailsAvailableVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SafeguardsAvailableVersionResource"/> object. </returns>
+        public virtual SafeguardsAvailableVersionResource GetSafeguardsAvailableVersionResource(ResourceIdentifier id)
+        {
+            SafeguardsAvailableVersionResource.ValidateResourceId(id);
+            return new SafeguardsAvailableVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MeshRevisionProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
+        public virtual MeshRevisionProfileResource GetMeshRevisionProfileResource(ResourceIdentifier id)
+        {
+            MeshRevisionProfileResource.ValidateResourceId(id);
+            return new MeshRevisionProfileResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MeshUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MeshUpgradeProfileResource"/> object. </returns>
+        public virtual MeshUpgradeProfileResource GetMeshUpgradeProfileResource(ResourceIdentifier id)
+        {
+            MeshUpgradeProfileResource.ValidateResourceId(id);
+            return new MeshUpgradeProfileResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerServiceMaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
+        public virtual ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier id)
+        {
+            ContainerServiceMaintenanceConfigurationResource.ValidateResourceId(id);
+            return new ContainerServiceMaintenanceConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedClusterNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedClusterNamespaceResource"/> object. </returns>
+        public virtual ManagedClusterNamespaceResource GetManagedClusterNamespaceResource(ResourceIdentifier id)
+        {
+            ManagedClusterNamespaceResource.ValidateResourceId(id);
+            return new ManagedClusterNamespaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AgentPoolUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public virtual AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(ResourceIdentifier id)
@@ -130,10 +116,16 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new AgentPoolUpgradeProfileResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServicePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceMachineResource"/> object. </returns>
+        public virtual ContainerServiceMachineResource GetContainerServiceMachineResource(ResourceIdentifier id)
+        {
+            ContainerServiceMachineResource.ValidateResourceId(id);
+            return new ContainerServiceMachineResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServicePrivateEndpointConnectionResource"/> object. </returns>
         public virtual ContainerServicePrivateEndpointConnectionResource GetContainerServicePrivateEndpointConnectionResource(ResourceIdentifier id)
@@ -142,10 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ContainerServicePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AgentPoolSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentPoolSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AgentPoolSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AgentPoolSnapshotResource"/> object. </returns>
         public virtual AgentPoolSnapshotResource GetAgentPoolSnapshotResource(ResourceIdentifier id)
@@ -154,10 +143,16 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new AgentPoolSnapshotResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceTrustedAccessRoleBindingResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedClusterSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedClusterSnapshotResource"/> object. </returns>
+        public virtual ManagedClusterSnapshotResource GetManagedClusterSnapshotResource(ResourceIdentifier id)
+        {
+            ManagedClusterSnapshotResource.ValidateResourceId(id);
+            return new ManagedClusterSnapshotResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> object. </returns>
         public virtual ContainerServiceTrustedAccessRoleBindingResource GetContainerServiceTrustedAccessRoleBindingResource(ResourceIdentifier id)
@@ -166,16 +161,40 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ContainerServiceTrustedAccessRoleBindingResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceMachineResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerServiceMachineResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ManagedClusterLoadBalancerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerServiceMachineResource"/> object. </returns>
-        public virtual ContainerServiceMachineResource GetContainerServiceMachineResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedClusterLoadBalancerResource"/> object. </returns>
+        public virtual ManagedClusterLoadBalancerResource GetManagedClusterLoadBalancerResource(ResourceIdentifier id)
         {
-            ContainerServiceMachineResource.ValidateResourceId(id);
-            return new ContainerServiceMachineResource(Client, id);
+            ManagedClusterLoadBalancerResource.ValidateResourceId(id);
+            return new ManagedClusterLoadBalancerResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedClusterIdentityBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedClusterIdentityBindingResource"/> object. </returns>
+        public virtual ManagedClusterIdentityBindingResource GetManagedClusterIdentityBindingResource(ResourceIdentifier id)
+        {
+            ManagedClusterIdentityBindingResource.ValidateResourceId(id);
+            return new ManagedClusterIdentityBindingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedClusterJwtAuthenticatorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedClusterJwtAuthenticatorResource"/> object. </returns>
+        public virtual ManagedClusterJwtAuthenticatorResource GetManagedClusterJwtAuthenticatorResource(ResourceIdentifier id)
+        {
+            ManagedClusterJwtAuthenticatorResource.ValidateResourceId(id);
+            return new ManagedClusterJwtAuthenticatorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ManagedClusterMeshMembershipResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedClusterMeshMembershipResource"/> object. </returns>
+        public virtual ManagedClusterMeshMembershipResource GetManagedClusterMeshMembershipResource(ResourceIdentifier id)
+        {
+            ManagedClusterMeshMembershipResource.ValidateResourceId(id);
+            return new ManagedClusterMeshMembershipResource(Client, id);
         }
     }
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary>
-    /// A class representing the ContainerServiceMachine data model.
-    /// A machine. Contains details about the underlying virtual machine. A machine may be visible here but not in kubectl get nodes; if so it may be because the machine has not been registered with the Kubernetes API Server yet.
-    /// </summary>
+    /// <summary> A machine. Contains details about the underlying virtual machine. A machine may be visible here but not in kubectl get nodes; if so it may be because the machine has not been registered with the Kubernetes API Server yet. </summary>
     public partial class ContainerServiceMachineData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineData"/>. </summary>
         public ContainerServiceMachineData()
@@ -58,25 +26,22 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="zones"> The Availability zone in which machine is located. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the machine. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> zones, ContainerServiceMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="zones"> The Availability zone in which machine is located. </param>
+        internal ContainerServiceMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerServiceMachineProperties properties, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
         {
-            Zones = zones;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Zones = zones;
         }
 
         /// <summary> The Availability zone in which machine is located. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
-        /// <summary> The properties of the machine. </summary>
-        [WirePath("properties")]
-        public ContainerServiceMachineProperties Properties { get; }
     }
 }

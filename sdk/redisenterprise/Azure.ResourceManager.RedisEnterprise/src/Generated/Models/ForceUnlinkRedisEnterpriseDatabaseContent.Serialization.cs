@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(forceUnlinkRedisEnterpriseDatabaseContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(forceUnlinkRedisEnterpriseDatabaseContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

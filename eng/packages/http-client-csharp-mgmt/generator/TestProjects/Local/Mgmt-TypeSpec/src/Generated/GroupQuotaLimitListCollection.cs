@@ -78,7 +78,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaLimitListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
@@ -138,7 +138,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GroupQuotaLimitListResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaLimitListResource> CreateOrUpdate(WaitUntil waitUntil, string groupQuotaName, string resourceProviderName, AzureLocation location, GroupQuotaLimitListData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));

@@ -67,6 +67,11 @@ parameters:
   type: boolean
   default: false
 
+# Optional filter pattern for directory names (e.g., 'Azure.ResourceManager*' to only regenerate management SDKs)
+- name: DirectoryFilterPattern
+  type: string
+  default: ''
+
 # Paths to sparse checkout
 - name: SparseCheckoutPaths
   type: object
@@ -352,6 +357,7 @@ extends:
                 -JobCount ${{ parameters.RegenerationJobCount }}
                 -MinimumPerJob ${{ parameters.MinimumPerJob }}
                 -OnlyTypespec ${{ parameters.OnlyGenerateTypespec }}
+                -DirectoryFilterPattern '${{ parameters.DirectoryFilterPattern }}'
               workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml

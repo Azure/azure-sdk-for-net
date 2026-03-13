@@ -75,9 +75,7 @@ namespace Azure.ResourceManager.LargeInstance
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(largeStorageInstanceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(largeStorageInstanceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LargeStorageInstanceData"/> from. </param>
