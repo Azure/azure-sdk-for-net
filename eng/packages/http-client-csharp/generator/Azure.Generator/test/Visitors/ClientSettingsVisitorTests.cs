@@ -154,7 +154,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void InternalConstructorDoesNotHaveAuthenticationPolicyParam()
+        public void InternalAuthenticationPolicyConstructorIsRemoved()
         {
             var endpointParam = InputFactory.EndpointParameter(
                 "endpoint",
@@ -173,13 +173,14 @@ namespace Azure.Generator.Tests.Visitors
                 .OfType<ClientProvider>().FirstOrDefault();
             Assert.IsNotNull(clientProvider);
 
-            // No internal constructor should have an AuthenticationPolicy parameter —
-            // the visitor changes it to HttpPipelinePolicy for Azure.Core compatibility.
-            var authPolicyCtor = clientProvider!.Constructors.FirstOrDefault(c =>
-                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                c.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)));
-            Assert.IsNull(authPolicyCtor,
-                "Internal constructor should not have an AuthenticationPolicy parameter");
+            // The internal AuthenticationPolicy constructor should be completely removed.
+            // Azure clients use credential types directly instead of the base library's
+            // AuthenticationPolicy abstraction. The "with options" constructors have the
+            // body inlined.
+            var internalCtors = clientProvider!.Constructors.Where(c =>
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal)).ToList();
+            Assert.IsEmpty(internalCtors,
+                "No internal constructors should exist — the AuthenticationPolicy constructor should be removed");
         }
 
         [Test]
