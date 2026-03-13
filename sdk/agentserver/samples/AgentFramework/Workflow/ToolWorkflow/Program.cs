@@ -30,6 +30,7 @@ public class Program
 
         // Check if API Key is provided, otherwise use DefaultAzureCredential
         var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
+        var credential = new DefaultAzureCredential();
         AzureOpenAIClient azureClient;
 
         if (!string.IsNullOrEmpty(apiKey))
@@ -40,7 +41,7 @@ public class Program
         else
         {
             // Use DefaultAzureCredential (Azure CLI, Managed Identity, etc.)
-            azureClient = new AzureOpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+            azureClient = new AzureOpenAIClient(new Uri(endpoint), credential);
         }
 
         var chatClient = azureClient
@@ -48,7 +49,7 @@ public class Program
             .AsIChatClient()
             .AsBuilder()
             //   .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
-            .UseFoundryTools(new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
+            .UseFoundryTools(credential, new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
             .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
             .Build();
 

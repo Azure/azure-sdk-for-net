@@ -28,7 +28,7 @@ var chatClient = new AzureOpenAIClient(
     .AsIChatClient()
     .AsBuilder()
     // .UseFoundryTools(FoundryConnectedTool.Mcp(toolConnectionId))
-    .UseFoundryTools(new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
+    .UseFoundryTools(credential, new { type = "mcp", project_connection_id = toolConnectionId }, new { type = "code_interpreter" })
     //   .UseFoundryTools(FoundryHostedMcpTool.Create("web_search_preview"))
     .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
     .Build();
