@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(healthBotPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(healthBotPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

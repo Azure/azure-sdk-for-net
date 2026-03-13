@@ -13,7 +13,8 @@ namespace Azure.Identity
     [Experimental("SCME0002")]
     internal class ConfigurableCredential : TokenCredential
     {
-        private DefaultAzureCredential _tokenCredential;
+        private TokenCredential _tokenCredential;
+        private CredentialPipeline _pipeline;
         private AccessToken _apiKeyToken;
 
         public ConfigurableCredential()
@@ -32,9 +33,19 @@ namespace Azure.Identity
             {
                 _apiKeyToken = new AccessToken(options.ApiKey, DateTimeOffset.MaxValue);
             }
+            else if (options.CredentialSource == Constants.ChainedTokenCredential)
+            {
+                // ChainedTokenCredential source — build chain directly from Sources array.
+                // Use the singleton pipeline since it's only needed for diagnostics (StartGetTokenScope).
+                // Each credential in the chain creates its own pipeline from its source options.
+                _pipeline = CredentialPipeline.GetInstance(null);
+                _tokenCredential = new ChainedTokenCredential(ChainedTokenCredentialFactory.CreateCredentialChain(options));
+            }
             else
             {
-                _tokenCredential = new DefaultAzureCredential(options);
+                var dac = new DefaultAzureCredential(options);
+                _pipeline = dac.Pipeline;
+                _tokenCredential = dac;
             }
         }
 
@@ -46,7 +57,7 @@ namespace Azure.Identity
                 return _apiKeyToken;
             }
 
-            using CredentialDiagnosticScope scope = _tokenCredential.Pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
 
             try
             {
@@ -66,7 +77,7 @@ namespace Azure.Identity
                 return _apiKeyToken;
             }
 
-            using CredentialDiagnosticScope scope = _tokenCredential.Pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
 
             try
             {

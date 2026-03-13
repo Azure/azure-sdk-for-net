@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(accessPolicyAssignmentData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(accessPolicyAssignmentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AccessPolicyAssignmentData"/> from. </param>

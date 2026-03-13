@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iotOperationsInstancePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(iotOperationsInstancePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

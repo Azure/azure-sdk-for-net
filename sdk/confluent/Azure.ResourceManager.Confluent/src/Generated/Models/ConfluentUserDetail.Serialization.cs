@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentUserDetail : IUtf8JsonSerializable, IJsonModel<ConfluentUserDetail>
+    /// <summary> Subscriber detail. </summary>
+    public partial class ConfluentUserDetail : IJsonModel<ConfluentUserDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentUserDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ConfluentUserDetail"/> for deserialization. </summary>
+        internal ConfluentUserDetail()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConfluentUserDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConfluentUserDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConfluentUserDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfluentUserDetail IPersistableModel<ConfluentUserDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfluentUserDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfluentUserDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
@@ -56,15 +101,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("aadEmail"u8);
                 writer.WriteStringValue(AadEmail);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,22 +118,27 @@ namespace Azure.ResourceManager.Confluent.Models
             }
         }
 
-        ConfluentUserDetail IJsonModel<ConfluentUserDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfluentUserDetail IJsonModel<ConfluentUserDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConfluentUserDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConfluentUserDetail(document.RootElement, options);
         }
 
-        internal static ConfluentUserDetail DeserializeConfluentUserDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConfluentUserDetail DeserializeConfluentUserDetail(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,79 +148,46 @@ namespace Azure.ResourceManager.Confluent.Models
             string emailAddress = default;
             string userPrincipalName = default;
             string aadEmail = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("firstName"u8))
+                if (prop.NameEquals("firstName"u8))
                 {
-                    firstName = property.Value.GetString();
+                    firstName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastName"u8))
+                if (prop.NameEquals("lastName"u8))
                 {
-                    lastName = property.Value.GetString();
+                    lastName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailAddress"u8))
+                if (prop.NameEquals("emailAddress"u8))
                 {
-                    emailAddress = property.Value.GetString();
+                    emailAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userPrincipalName"u8))
+                if (prop.NameEquals("userPrincipalName"u8))
                 {
-                    userPrincipalName = property.Value.GetString();
+                    userPrincipalName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadEmail"u8))
+                if (prop.NameEquals("aadEmail"u8))
                 {
-                    aadEmail = property.Value.GetString();
+                    aadEmail = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConfluentUserDetail(
                 firstName,
                 lastName,
                 emailAddress,
                 userPrincipalName,
                 aadEmail,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ConfluentUserDetail>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConfluentUserDetail IPersistableModel<ConfluentUserDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfluentUserDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConfluentUserDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConfluentUserDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConfluentUserDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

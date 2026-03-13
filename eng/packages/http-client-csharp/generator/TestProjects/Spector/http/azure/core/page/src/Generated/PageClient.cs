@@ -53,6 +53,14 @@ namespace Specs.Azure.Core.Page
 
         public virtual AsyncPageable<User> WithParameterizedNextLinkAsync(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
 
+        public virtual Pageable<BinaryData> WithRelativeNextLink(RequestContext context) => throw null;
+
+        public virtual AsyncPageable<BinaryData> WithRelativeNextLinkAsync(RequestContext context) => throw null;
+
+        public virtual Pageable<User> WithRelativeNextLink(CancellationToken cancellationToken = default) => throw null;
+
+        public virtual AsyncPageable<User> WithRelativeNextLinkAsync(CancellationToken cancellationToken = default) => throw null;
+
         public virtual TwoModelsAsPageItem GetTwoModelsAsPageItemClient() => throw null;
     }
 }
