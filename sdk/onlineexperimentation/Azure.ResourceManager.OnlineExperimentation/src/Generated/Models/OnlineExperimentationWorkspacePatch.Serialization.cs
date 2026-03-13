@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(onlineExperimentationWorkspacePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(onlineExperimentationWorkspacePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

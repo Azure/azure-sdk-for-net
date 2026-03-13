@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NginxCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, NginxCertificateData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, NginxCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NginxCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, NginxCertificateData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, NginxCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 

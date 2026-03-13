@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DurableTask.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(durableTaskPrivateEndpointConnectionPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(durableTaskPrivateEndpointConnectionPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

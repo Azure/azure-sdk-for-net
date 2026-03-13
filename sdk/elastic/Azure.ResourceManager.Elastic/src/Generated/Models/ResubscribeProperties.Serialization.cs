@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resubscribeProperties, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(resubscribeProperties, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

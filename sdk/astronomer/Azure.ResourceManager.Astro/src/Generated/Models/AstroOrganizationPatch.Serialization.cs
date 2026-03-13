@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.Astro.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(astroOrganizationPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(astroOrganizationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

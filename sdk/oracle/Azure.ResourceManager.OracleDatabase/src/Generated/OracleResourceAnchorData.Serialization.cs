@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(oracleResourceAnchorData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(oracleResourceAnchorData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OracleResourceAnchorData"/> from. </param>
