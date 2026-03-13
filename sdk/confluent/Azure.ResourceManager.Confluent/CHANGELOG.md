@@ -4,7 +4,14 @@
 
 ### Features Added
 
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation.
+- Upgraded API version from `2024-02-13` to `2025-08-18-preview`.
+- Added new resource types: `SCEnvironmentRecordResource`, `SCClusterRecordResource`, `ConfluentConnectorResource`, and `TopicRecordResource`.
+- Environment and cluster records are now modeled as ARM resources with full CRUD support.
+
 ### Breaking Changes
+
+- Deprecated flat organization-level methods (`GetEnvironments`, `GetClusters`, `GetSchemaRegistryClusters`, `CreateApiKey`, `GetCluster`, `GetSchemaRegistryCluster`) in favor of the new resource hierarchy pattern (organization → environment → cluster).
 
 ### Bugs Fixed
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct LocalDnsMode : IEquatable<LocalDnsMode>
     {
         private readonly string _value;
+        /// <summary> If the current orchestrator version supports this feature, prefer enabling localDNS. </summary>
+        private const string PreferredValue = "Preferred";
+        /// <summary> Enable localDNS. </summary>
+        private const string RequiredValue = "Required";
+        /// <summary> Disable localDNS. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="LocalDnsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LocalDnsMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PreferredValue = "Preferred";
-        private const string RequiredValue = "Required";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> If the current orchestrator version supports this feature, prefer enabling localDNS. </summary>
         public static LocalDnsMode Preferred { get; } = new LocalDnsMode(PreferredValue);
+
         /// <summary> Enable localDNS. </summary>
         public static LocalDnsMode Required { get; } = new LocalDnsMode(RequiredValue);
+
         /// <summary> Disable localDNS. </summary>
         public static LocalDnsMode Disabled { get; } = new LocalDnsMode(DisabledValue);
+
         /// <summary> Determines if two <see cref="LocalDnsMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LocalDnsMode left, LocalDnsMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LocalDnsMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LocalDnsMode left, LocalDnsMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalDnsMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LocalDnsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LocalDnsMode(string value) => new LocalDnsMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LocalDnsMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LocalDnsMode?(string value) => value == null ? null : new LocalDnsMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LocalDnsMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LocalDnsMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

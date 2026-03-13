@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(signalRData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(signalRData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SignalRData"/> from. </param>
