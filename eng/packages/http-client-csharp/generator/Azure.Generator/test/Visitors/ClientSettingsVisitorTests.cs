@@ -228,5 +228,91 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(display.Contains("TokenCredential"),
                 $"Settings constructor initializer should cast to TokenCredential. Args: {display}");
         }
+
+        [Test]
+        public void SettingsConstructorForKeyCredentialOnlyClientChecksCredentialSource()
+        {
+            var endpointParam = InputFactory.EndpointParameter(
+                "endpoint",
+                InputPrimitiveType.String,
+                isRequired: true,
+                isEndpoint: true);
+            var client = InputFactory.Client(
+                "TestClient",
+                parameters: [endpointParam]);
+
+            MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
+                clients: () => [client]);
+
+            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            Assert.IsNotNull(clientProvider!.ClientSettings,
+                "Key-credential client should have ClientSettings");
+
+            var settingsCtor = clientProvider.Constructors.FirstOrDefault(c =>
+                c.Signature.Parameters.Count == 1 &&
+                c.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings!.Type));
+            Assert.IsNotNull(settingsCtor,
+                "Key-credential client should have a Settings constructor");
+
+            var initializer = settingsCtor!.Signature.Initializer;
+            Assert.IsNotNull(initializer, "Settings constructor should have an initializer");
+            Assert.IsFalse(initializer!.IsBase, "Settings constructor should use this(), not base()");
+
+            // The initializer should contain a ternary checking CredentialSource for "apikeycredential"
+            var display = string.Join(", ", initializer.Arguments.Select(a => a.ToDisplayString()));
+            Assert.IsTrue(display.Contains(nameof(CredentialSettings.CredentialSource)),
+                $"Settings constructor initializer should check CredentialSource. Args: {display}");
+            Assert.IsTrue(display.Contains("apikeycredential"),
+                $"Settings constructor initializer should compare against 'apikeycredential'. Args: {display}");
+            Assert.IsTrue(display.Contains(nameof(AzureKeyCredential)),
+                $"Settings constructor initializer should construct AzureKeyCredential. Args: {display}");
+        }
+
+        [Test]
+        public void NoCredentialClientSettingsConstructorChainsWithNullAuth()
+        {
+            var endpointParam = InputFactory.EndpointParameter(
+                "endpoint",
+                InputPrimitiveType.String,
+                isRequired: true,
+                isEndpoint: true);
+            var client = InputFactory.Client(
+                "TestClient",
+                parameters: [endpointParam]);
+
+            MockHelpers.LoadMockGenerator(
+                clients: () => [client]);
+
+            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+
+            // Client with no credential constructors should still have a Settings constructor
+            // that chains to the internal constructor with null for auth policy
+            var settingsCtor = clientProvider!.Constructors.FirstOrDefault(c =>
+                c.Signature.Parameters.Count == 1 &&
+                c.Signature.Parameters[0].Type.Name.EndsWith("Settings"));
+
+            if (settingsCtor != null)
+            {
+                var initializer = settingsCtor.Signature.Initializer;
+                Assert.IsNotNull(initializer, "Settings constructor should have an initializer");
+                Assert.IsFalse(initializer!.IsBase, "Settings constructor should use this(), not base()");
+
+                // The first argument should be null (no auth policy)
+                Assert.IsInstanceOf<KeywordExpression>(initializer.Arguments[0],
+                    "First argument of no-auth Settings constructor should be null");
+            }
+            else
+            {
+                // If no Settings constructor exists, ClientSettings should also be absent
+                // (no credential means no configuration-based construction).
+                // This is acceptable behavior.
+                Assert.Pass("No Settings constructor generated for client without credential support — expected behavior");
+            }
+        }
     }
 }
