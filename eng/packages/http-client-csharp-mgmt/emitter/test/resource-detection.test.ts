@@ -2834,4 +2834,227 @@ interface TenantTranscripts {
       "Legacy detection should produce 4 resources (2 per scope)"
     );
   });
+
+  it("name constraints with all decorators via NamePattern and direct decorators", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** An Employee resource with name constraints via NamePattern */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<
+    Resource = Employee,
+    KeyName = "employeeName",
+    SegmentName = "employees",
+    NamePattern = "^[a-zA-Z0-9-]{3,24}$"
+  >;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const employeeResource = armProviderSchema.resources[0];
+    ok(employeeResource);
+    const constraints = employeeResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9-]{3,24}$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.nameConstraints,
+      constraints
+    );
+  });
+
+  it("name constraints with minLength and maxLength decorators", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with direct name decorators */
+model Widget is TrackedResource<WidgetProperties> {
+  @doc("The widget name.")
+  @key("widgetName")
+  @segment("widgets")
+  @path
+  @minLength(3)
+  @maxLength(63)
+  @pattern("^[a-z][a-z0-9]*$")
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    const constraints = widgetResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, "^[a-z][a-z0-9]*$");
+    strictEqual(constraints.minLength, 3);
+    strictEqual(constraints.maxLength, 63);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.nameConstraints,
+      constraints
+    );
+  });
+
+  it("name constraints are empty when no decorators are applied", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource with no name constraints */
+model Gadget is TrackedResource<GadgetProperties> {
+  @doc("The gadget name.")
+  @key("gadgetName")
+  @segment("gadgets")
+  @path
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    const constraints = gadgetResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, undefined);
+    strictEqual(constraints.minLength, undefined);
+    strictEqual(constraints.maxLength, undefined);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.nameConstraints,
+      constraints
+    );
+  });
+
+  it("name constraints with only pattern via NamePattern", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Item properties */
+model ItemProperties {
+  /** Description */
+  description?: string;
+}
+
+/** An Item resource with only a pattern constraint */
+model Item is TrackedResource<ItemProperties> {
+  ...ResourceNameParameter<
+    Resource = Item,
+    KeyName = "itemName",
+    SegmentName = "items",
+    NamePattern = "^[a-zA-Z0-9]+$"
+  >;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Items {
+  get is ArmResourceRead<Item>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Item>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const itemResource = armProviderSchema.resources[0];
+    ok(itemResource);
+    const constraints = itemResource.metadata.nameConstraints;
+    ok(constraints);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9]+$");
+    strictEqual(constraints.minLength, undefined);
+    strictEqual(constraints.maxLength, undefined);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(
+      resolvedResource.metadata.nameConstraints,
+      constraints
+    );
+  });
 });
