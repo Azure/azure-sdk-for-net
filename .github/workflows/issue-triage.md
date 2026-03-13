@@ -19,6 +19,7 @@ safe-outputs:
   add-labels:
     max: 7
   add-comment:
+    max: 2
 
 tools:
   web-fetch:
