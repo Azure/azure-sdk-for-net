@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -23,6 +25,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
         private NetworkProviderActions _networkProviderActionsRestClient;
+        private ClientDiagnostics _fooConfigurationsClientDiagnostics;
+        private FooConfigurations _fooConfigurationsRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsTenantResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsTenantResource()
@@ -39,6 +43,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics FooConfigurationsClientDiagnostics => _fooConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FooConfigurations FooConfigurationsRestClient => _fooConfigurationsRestClient ??= new FooConfigurations(FooConfigurationsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of BestPractices in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of BestPractices and their operations over a BestPracticeResource. </returns>
@@ -209,6 +217,308 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific configuration for the Foo resource.
+        /// Tests
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /configurations/{configurationName}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FooConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<IDictionary<string, string>>> GetAsync(string resourceGroupName, string configurationName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using DiagnosticScope scope = FooConfigurationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooConfigurationsRestClient.CreateGetRequest(subscriptionId, resourceGroupName, configurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IDictionary<string, string>> response = Response.FromValue(ModelReaderWriter.Read<IDictionary<string, string>>(result.Content), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a specific configuration for the Foo resource.
+        /// Tests
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /configurations/{configurationName}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FooConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<IDictionary<string, string>> Get(string resourceGroupName, string configurationName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using DiagnosticScope scope = FooConfigurationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooConfigurationsRestClient.CreateGetRequest(subscriptionId, resourceGroupName, configurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IDictionary<string, string>> response = Response.FromValue(ModelReaderWriter.Read<IDictionary<string, string>>(result.Content), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a configuration with a dictionary body.
+        /// Tests primitive body type (Record&lt;string&gt; = IDictionary&lt;string,string&gt;) serialization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /configurations/{configurationName}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FooConfigurations_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="parameters"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configurationName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> UpdateAsync(string resourceGroupName, string configurationName, Guid subscriptionId, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using DiagnosticScope scope = FooConfigurationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooConfigurationsRestClient.CreateUpdateRequest(subscriptionId, resourceGroupName, configurationName, RequestContent.Create(BinaryData.FromObjectAsJson(parameters)), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a configuration with a dictionary body.
+        /// Tests primitive body type (Record&lt;string&gt; = IDictionary&lt;string,string&gt;) serialization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /configurations/{configurationName}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{configurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FooConfigurations_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="parameters"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="configurationName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Update(string resourceGroupName, string configurationName, Guid subscriptionId, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using DiagnosticScope scope = FooConfigurationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooConfigurationsRestClient.CreateUpdateRequest(subscriptionId, resourceGroupName, configurationName, RequestContent.Create(BinaryData.FromObjectAsJson(parameters)), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restarts hosts with a string array body.
+        /// Tests primitive body type (string[]) serialization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /restartHosts/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FooConfigurations_RestartHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="hosts"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="hosts"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> RestartHostsAsync(string resourceGroupName, Guid subscriptionId, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(hosts, nameof(hosts));
+
+            using DiagnosticScope scope = FooConfigurationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.RestartHosts");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooConfigurationsRestClient.CreateRestartHostsRequest(subscriptionId, resourceGroupName, RequestContent.Create(BinaryData.FromObjectAsJson(hosts)), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restarts hosts with a string array body.
+        /// Tests primitive body type (string[]) serialization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /restartHosts/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FooConfigurations_RestartHosts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="hosts"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="hosts"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response RestartHosts(string resourceGroupName, Guid subscriptionId, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(hosts, nameof(hosts));
+
+            using DiagnosticScope scope = FooConfigurationsClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.RestartHosts");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = FooConfigurationsRestClient.CreateRestartHostsRequest(subscriptionId, resourceGroupName, RequestContent.Create(BinaryData.FromObjectAsJson(hosts)), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {

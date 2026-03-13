@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -2830,6 +2831,134 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).QueryNetworkSiblingSet(waitUntil, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a specific configuration for the Foo resource.
+        /// Tests
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetAsync(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<IDictionary<string, string>>> GetAsync(this TenantResource tenantResource, string resourceGroupName, string configurationName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetAsync(resourceGroupName, configurationName, subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific configuration for the Foo resource.
+        /// Tests
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Get(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<IDictionary<string, string>> Get(this TenantResource tenantResource, string resourceGroupName, string configurationName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).Get(resourceGroupName, configurationName, subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a configuration with a dictionary body.
+        /// Tests primitive body type (Record&lt;string&gt; = IDictionary&lt;string,string&gt;) serialization.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.UpdateAsync(string, string, Guid, IDictionary, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="parameters"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response> UpdateAsync(this TenantResource tenantResource, string resourceGroupName, string configurationName, Guid subscriptionId, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).UpdateAsync(resourceGroupName, configurationName, subscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Updates a configuration with a dictionary body.
+        /// Tests primitive body type (Record&lt;string&gt; = IDictionary&lt;string,string&gt;) serialization.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.Update(string, string, Guid, IDictionary, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="parameters"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response Update(this TenantResource tenantResource, string resourceGroupName, string configurationName, Guid subscriptionId, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).Update(resourceGroupName, configurationName, subscriptionId, parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Restarts hosts with a string array body.
+        /// Tests primitive body type (string[]) serialization.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.RestartHostsAsync(string, Guid, IEnumerable, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="hosts"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response> RestartHostsAsync(this TenantResource tenantResource, string resourceGroupName, Guid subscriptionId, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).RestartHostsAsync(resourceGroupName, subscriptionId, hosts, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Restarts hosts with a string array body.
+        /// Tests primitive body type (string[]) serialization.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.RestartHosts(string, Guid, IEnumerable, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="hosts"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response RestartHosts(this TenantResource tenantResource, string resourceGroupName, Guid subscriptionId, IEnumerable<string> hosts, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).RestartHosts(resourceGroupName, subscriptionId, hosts, cancellationToken);
         }
 
         /// <summary>
