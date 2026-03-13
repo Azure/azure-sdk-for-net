@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class HealthProbeRequestTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthProbeRequestType value) => value switch
         {
             HealthProbeRequestType.NotSet => "NotSet",
-            HealthProbeRequestType.Get => "GET",
-            HealthProbeRequestType.Head => "HEAD",
+            HealthProbeRequestType.GET => "GET",
+            HealthProbeRequestType.HEAD => "HEAD",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeRequestType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HealthProbeRequestType ToHealthProbeRequestType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet")) return HealthProbeRequestType.NotSet;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET")) return HealthProbeRequestType.Get;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD")) return HealthProbeRequestType.Head;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet"))
+            {
+                return HealthProbeRequestType.NotSet;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET"))
+            {
+                return HealthProbeRequestType.GET;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD"))
+            {
+                return HealthProbeRequestType.HEAD;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeRequestType value.");
         }
     }

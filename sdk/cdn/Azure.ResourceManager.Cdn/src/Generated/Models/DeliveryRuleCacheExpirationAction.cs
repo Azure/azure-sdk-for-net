@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,33 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleCacheExpirationAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheExpirationAction"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleCacheExpirationAction(CacheExpirationActionProperties properties)
+        /// <param name="parameters"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public DeliveryRuleCacheExpirationAction(CacheExpirationActionParameters parameters) : base(DeliveryRuleActionName.CacheExpiration)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            Properties = properties;
-            Name = DeliveryRuleActionType.CacheExpiration;
+            Parameters = parameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheExpirationAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the action. </param>
-        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheExpirationActionProperties properties) : base(name, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="parameters"> Defines the parameters for the action. </param>
+        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, CacheExpirationActionParameters parameters) : base(name, additionalBinaryDataProperties)
         {
-            Properties = properties;
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheExpirationAction"/> for deserialization. </summary>
-        internal DeliveryRuleCacheExpirationAction()
-        {
+            Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        [WirePath("parameters")]
-        public CacheExpirationActionProperties Properties { get; set; }
+        public CacheExpirationActionParameters Parameters { get; set; }
     }
 }

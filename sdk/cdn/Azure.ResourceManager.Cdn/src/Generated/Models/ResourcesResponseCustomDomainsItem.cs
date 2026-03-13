@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ResourcesResponseCustomDomainsItem. </summary>
     public partial class ResourcesResponseCustomDomainsItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponseCustomDomainsItem"/>. </summary>
         internal ResourcesResponseCustomDomainsItem()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"></param>
         /// <param name="endpointId"></param>
         /// <param name="history"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponseCustomDomainsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             EndpointId = endpointId;
             History = history;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the id. </summary>
-        [WirePath("id")]
+        /// <summary> Gets the Id. </summary>
         public string Id { get; }
-        /// <summary> Gets the name. </summary>
-        [WirePath("name")]
+
+        /// <summary> Gets the Name. </summary>
         public string Name { get; }
-        /// <summary> Gets the endpoint id. </summary>
-        [WirePath("endpointId")]
+
+        /// <summary> Gets the EndpointId. </summary>
         public string EndpointId { get; }
-        /// <summary> Gets the history. </summary>
-        [WirePath("history")]
+
+        /// <summary> Gets the History. </summary>
         public bool? History { get; }
     }
 }

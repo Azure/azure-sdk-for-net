@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The name of the condition for the delivery rule. </summary>
-    internal readonly partial struct MatchVariable : IEquatable<MatchVariable>
+    /// <summary> Request variable to compare with. </summary>
+    public readonly partial struct MatchVariable : IEquatable<MatchVariable>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MatchVariable"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MatchVariable(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RemoteAddressValue = "RemoteAddress";
         private const string RequestMethodValue = "RequestMethod";
         private const string QueryStringValue = "QueryString";
@@ -30,9 +23,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RequestHeaderValue = "RequestHeader";
         private const string RequestBodyValue = "RequestBody";
         private const string RequestSchemeValue = "RequestScheme";
-        private const string UriPathValue = "UrlPath";
-        private const string UriFileExtensionValue = "UrlFileExtension";
-        private const string UriFileNameValue = "UrlFileName";
+        private const string UrlPathValue = "UrlPath";
+        private const string UrlFileExtensionValue = "UrlFileExtension";
+        private const string UrlFileNameValue = "UrlFileName";
         private const string HttpVersionValue = "HttpVersion";
         private const string CookiesValue = "Cookies";
         private const string IsDeviceValue = "IsDevice";
@@ -42,61 +35,103 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HostNameValue = "HostName";
         private const string SslProtocolValue = "SslProtocol";
 
-        /// <summary> RemoteAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MatchVariable(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RemoteAddress. </summary>
         public static MatchVariable RemoteAddress { get; } = new MatchVariable(RemoteAddressValue);
-        /// <summary> RequestMethod. </summary>
+
+        /// <summary> Gets the RequestMethod. </summary>
         public static MatchVariable RequestMethod { get; } = new MatchVariable(RequestMethodValue);
-        /// <summary> QueryString. </summary>
+
+        /// <summary> Gets the QueryString. </summary>
         public static MatchVariable QueryString { get; } = new MatchVariable(QueryStringValue);
-        /// <summary> PostArgs. </summary>
+
+        /// <summary> Gets the PostArgs. </summary>
         public static MatchVariable PostArgs { get; } = new MatchVariable(PostArgsValue);
-        /// <summary> RequestUri. </summary>
+
+        /// <summary> Gets the RequestUri. </summary>
         public static MatchVariable RequestUri { get; } = new MatchVariable(RequestUriValue);
-        /// <summary> RequestHeader. </summary>
+
+        /// <summary> Gets the RequestHeader. </summary>
         public static MatchVariable RequestHeader { get; } = new MatchVariable(RequestHeaderValue);
-        /// <summary> RequestBody. </summary>
+
+        /// <summary> Gets the RequestBody. </summary>
         public static MatchVariable RequestBody { get; } = new MatchVariable(RequestBodyValue);
-        /// <summary> RequestScheme. </summary>
+
+        /// <summary> Gets the RequestScheme. </summary>
         public static MatchVariable RequestScheme { get; } = new MatchVariable(RequestSchemeValue);
-        /// <summary> UrlPath. </summary>
-        public static MatchVariable UriPath { get; } = new MatchVariable(UriPathValue);
-        /// <summary> UrlFileExtension. </summary>
-        public static MatchVariable UriFileExtension { get; } = new MatchVariable(UriFileExtensionValue);
-        /// <summary> UrlFileName. </summary>
-        public static MatchVariable UriFileName { get; } = new MatchVariable(UriFileNameValue);
-        /// <summary> HttpVersion. </summary>
+
+        /// <summary> Gets the UrlPath. </summary>
+        public static MatchVariable UrlPath { get; } = new MatchVariable(UrlPathValue);
+
+        /// <summary> Gets the UrlFileExtension. </summary>
+        public static MatchVariable UrlFileExtension { get; } = new MatchVariable(UrlFileExtensionValue);
+
+        /// <summary> Gets the UrlFileName. </summary>
+        public static MatchVariable UrlFileName { get; } = new MatchVariable(UrlFileNameValue);
+
+        /// <summary> Gets the HttpVersion. </summary>
         public static MatchVariable HttpVersion { get; } = new MatchVariable(HttpVersionValue);
-        /// <summary> Cookies. </summary>
+
+        /// <summary> Gets the Cookies. </summary>
         public static MatchVariable Cookies { get; } = new MatchVariable(CookiesValue);
-        /// <summary> IsDevice. </summary>
+
+        /// <summary> Gets the IsDevice. </summary>
         public static MatchVariable IsDevice { get; } = new MatchVariable(IsDeviceValue);
-        /// <summary> SocketAddr. </summary>
+
+        /// <summary> Gets the SocketAddr. </summary>
         public static MatchVariable SocketAddr { get; } = new MatchVariable(SocketAddrValue);
-        /// <summary> ClientPort. </summary>
+
+        /// <summary> Gets the ClientPort. </summary>
         public static MatchVariable ClientPort { get; } = new MatchVariable(ClientPortValue);
-        /// <summary> ServerPort. </summary>
+
+        /// <summary> Gets the ServerPort. </summary>
         public static MatchVariable ServerPort { get; } = new MatchVariable(ServerPortValue);
-        /// <summary> HostName. </summary>
+
+        /// <summary> Gets the HostName. </summary>
         public static MatchVariable HostName { get; } = new MatchVariable(HostNameValue);
-        /// <summary> SslProtocol. </summary>
+
+        /// <summary> Gets the SslProtocol. </summary>
         public static MatchVariable SslProtocol { get; } = new MatchVariable(SslProtocolValue);
+
         /// <summary> Determines if two <see cref="MatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MatchVariable left, MatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MatchVariable left, MatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MatchVariable(string value) => new MatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MatchVariable?(string value) => value == null ? null : new MatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

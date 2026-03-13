@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class FrontDoorMinimumTlsVersionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FrontDoorMinimumTlsVersion value) => value switch
         {
-            FrontDoorMinimumTlsVersion.Tls1_0 => "TLS10",
-            FrontDoorMinimumTlsVersion.Tls1_2 => "TLS12",
-            FrontDoorMinimumTlsVersion.Tls1_3 => "TLS13",
+            FrontDoorMinimumTlsVersion.TLS10 => "TLS10",
+            FrontDoorMinimumTlsVersion.TLS12 => "TLS12",
+            FrontDoorMinimumTlsVersion.TLS13 => "TLS13",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorMinimumTlsVersion value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FrontDoorMinimumTlsVersion ToFrontDoorMinimumTlsVersion(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10")) return FrontDoorMinimumTlsVersion.Tls1_0;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12")) return FrontDoorMinimumTlsVersion.Tls1_2;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS13")) return FrontDoorMinimumTlsVersion.Tls1_3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10"))
+            {
+                return FrontDoorMinimumTlsVersion.TLS10;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12"))
+            {
+                return FrontDoorMinimumTlsVersion.TLS12;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS13"))
+            {
+                return FrontDoorMinimumTlsVersion.TLS13;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontDoorMinimumTlsVersion value.");
         }
     }

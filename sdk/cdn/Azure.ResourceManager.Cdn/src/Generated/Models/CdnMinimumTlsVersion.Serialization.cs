@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class CdnMinimumTlsVersionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CdnMinimumTlsVersion value) => value switch
         {
             CdnMinimumTlsVersion.None => "None",
-            CdnMinimumTlsVersion.Tls1_0 => "TLS10",
-            CdnMinimumTlsVersion.Tls1_2 => "TLS12",
+            CdnMinimumTlsVersion.TLS10 => "TLS10",
+            CdnMinimumTlsVersion.TLS12 => "TLS12",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CdnMinimumTlsVersion value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CdnMinimumTlsVersion ToCdnMinimumTlsVersion(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return CdnMinimumTlsVersion.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10")) return CdnMinimumTlsVersion.Tls1_0;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12")) return CdnMinimumTlsVersion.Tls1_2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return CdnMinimumTlsVersion.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS10"))
+            {
+                return CdnMinimumTlsVersion.TLS10;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLS12"))
+            {
+                return CdnMinimumTlsVersion.TLS12;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CdnMinimumTlsVersion value.");
         }
     }

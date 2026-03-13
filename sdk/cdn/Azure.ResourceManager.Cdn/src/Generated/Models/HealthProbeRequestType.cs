@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> NotSet. </summary>
         NotSet,
         /// <summary> GET. </summary>
-        Get,
+        GET,
         /// <summary> HEAD. </summary>
-        Head
+        HEAD
     }
 }

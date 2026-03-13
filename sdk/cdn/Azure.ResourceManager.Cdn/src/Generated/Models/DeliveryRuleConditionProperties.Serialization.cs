@@ -7,18 +7,65 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    [PersistableModelProxy(typeof(UnknownDeliveryRuleConditionParameters))]
-    public partial class DeliveryRuleConditionProperties : IUtf8JsonSerializable, IJsonModel<DeliveryRuleConditionProperties>
+    /// <summary>
+    /// Defines the parameters for delivery rule match conditions
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchConditionParameters"/>, <see cref="RequestMethodMatchConditionParameters"/>, <see cref="QueryStringMatchConditionParameters"/>, <see cref="PostArgsMatchConditionParameters"/>, <see cref="RequestUriMatchConditionParameters"/>, <see cref="RequestHeaderMatchConditionParameters"/>, <see cref="RequestBodyMatchConditionParameters"/>, <see cref="RequestSchemeMatchConditionParameters"/>, <see cref="UrlPathMatchConditionParameters"/>, <see cref="UrlFileExtensionMatchConditionParameters"/>, <see cref="UrlFileNameMatchConditionParameters"/>, <see cref="HttpVersionMatchConditionParameters"/>, <see cref="CookiesMatchConditionParameters"/>, <see cref="IsDeviceMatchConditionParameters"/>, <see cref="SocketAddrMatchConditionParameters"/>, <see cref="ClientPortMatchConditionParameters"/>, <see cref="ServerPortMatchConditionParameters"/>, <see cref="HostNameMatchConditionParameters"/>, and <see cref="SslProtocolMatchConditionParameters"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownDeliveryRuleConditionProperties))]
+    public abstract partial class DeliveryRuleConditionProperties : IJsonModel<DeliveryRuleConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleConditionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleConditionProperties"/> for deserialization. </summary>
+        internal DeliveryRuleConditionProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeliveryRuleConditionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeliveryRuleConditionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeliveryRuleConditionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeliveryRuleConditionProperties IPersistableModel<DeliveryRuleConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeliveryRuleConditionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeliveryRuleConditionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,23 +77,22 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(TypeName.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,112 +101,76 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        DeliveryRuleConditionProperties IJsonModel<DeliveryRuleConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeliveryRuleConditionProperties IJsonModel<DeliveryRuleConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeliveryRuleConditionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeliveryRuleConditionProperties(document.RootElement, options);
         }
 
-        internal static DeliveryRuleConditionProperties DeserializeDeliveryRuleConditionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeliveryRuleConditionProperties DeserializeDeliveryRuleConditionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("typeName", out JsonElement discriminator))
+            if (element.TryGetProperty("typeName"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "DeliveryRuleClientPortConditionParameters": return ClientPortMatchCondition.DeserializeClientPortMatchCondition(element, options);
-                    case "DeliveryRuleCookiesConditionParameters": return CookiesMatchCondition.DeserializeCookiesMatchCondition(element, options);
-                    case "DeliveryRuleHostNameConditionParameters": return HostNameMatchCondition.DeserializeHostNameMatchCondition(element, options);
-                    case "DeliveryRuleHttpVersionConditionParameters": return HttpVersionMatchCondition.DeserializeHttpVersionMatchCondition(element, options);
-                    case "DeliveryRuleIsDeviceConditionParameters": return IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(element, options);
-                    case "DeliveryRulePostArgsConditionParameters": return PostArgsMatchCondition.DeserializePostArgsMatchCondition(element, options);
-                    case "DeliveryRuleQueryStringConditionParameters": return QueryStringMatchCondition.DeserializeQueryStringMatchCondition(element, options);
-                    case "DeliveryRuleRemoteAddressConditionParameters": return RemoteAddressMatchCondition.DeserializeRemoteAddressMatchCondition(element, options);
-                    case "DeliveryRuleRequestBodyConditionParameters": return RequestBodyMatchCondition.DeserializeRequestBodyMatchCondition(element, options);
-                    case "DeliveryRuleRequestHeaderConditionParameters": return RequestHeaderMatchCondition.DeserializeRequestHeaderMatchCondition(element, options);
-                    case "DeliveryRuleRequestMethodConditionParameters": return RequestMethodMatchCondition.DeserializeRequestMethodMatchCondition(element, options);
-                    case "DeliveryRuleRequestSchemeConditionParameters": return RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(element, options);
-                    case "DeliveryRuleRequestUriConditionParameters": return RequestUriMatchCondition.DeserializeRequestUriMatchCondition(element, options);
-                    case "DeliveryRuleServerPortConditionParameters": return ServerPortMatchCondition.DeserializeServerPortMatchCondition(element, options);
-                    case "DeliveryRuleSocketAddrConditionParameters": return SocketAddressMatchCondition.DeserializeSocketAddressMatchCondition(element, options);
-                    case "DeliveryRuleSslProtocolConditionParameters": return DeliveryRuleSslProtocolMatchCondition.DeserializeDeliveryRuleSslProtocolMatchCondition(element, options);
-                    case "DeliveryRuleUrlFileExtensionMatchConditionParameters": return UriFileExtensionMatchCondition.DeserializeUriFileExtensionMatchCondition(element, options);
-                    case "DeliveryRuleUrlFilenameConditionParameters": return UriFileNameMatchCondition.DeserializeUriFileNameMatchCondition(element, options);
-                    case "DeliveryRuleUrlPathMatchConditionParameters": return UriPathMatchCondition.DeserializeUriPathMatchCondition(element, options);
+                    case "DeliveryRuleRemoteAddressConditionParameters":
+                        return RemoteAddressMatchConditionParameters.DeserializeRemoteAddressMatchConditionParameters(element, options);
+                    case "DeliveryRuleRequestMethodConditionParameters":
+                        return RequestMethodMatchConditionParameters.DeserializeRequestMethodMatchConditionParameters(element, options);
+                    case "DeliveryRuleQueryStringConditionParameters":
+                        return QueryStringMatchConditionParameters.DeserializeQueryStringMatchConditionParameters(element, options);
+                    case "DeliveryRulePostArgsConditionParameters":
+                        return PostArgsMatchConditionParameters.DeserializePostArgsMatchConditionParameters(element, options);
+                    case "DeliveryRuleRequestUriConditionParameters":
+                        return RequestUriMatchConditionParameters.DeserializeRequestUriMatchConditionParameters(element, options);
+                    case "DeliveryRuleRequestHeaderConditionParameters":
+                        return RequestHeaderMatchConditionParameters.DeserializeRequestHeaderMatchConditionParameters(element, options);
+                    case "DeliveryRuleRequestBodyConditionParameters":
+                        return RequestBodyMatchConditionParameters.DeserializeRequestBodyMatchConditionParameters(element, options);
+                    case "DeliveryRuleRequestSchemeConditionParameters":
+                        return RequestSchemeMatchConditionParameters.DeserializeRequestSchemeMatchConditionParameters(element, options);
+                    case "DeliveryRuleUrlPathMatchConditionParameters":
+                        return UrlPathMatchConditionParameters.DeserializeUrlPathMatchConditionParameters(element, options);
+                    case "DeliveryRuleUrlFileExtensionMatchConditionParameters":
+                        return UrlFileExtensionMatchConditionParameters.DeserializeUrlFileExtensionMatchConditionParameters(element, options);
+                    case "DeliveryRuleUrlFilenameConditionParameters":
+                        return UrlFileNameMatchConditionParameters.DeserializeUrlFileNameMatchConditionParameters(element, options);
+                    case "DeliveryRuleHttpVersionConditionParameters":
+                        return HttpVersionMatchConditionParameters.DeserializeHttpVersionMatchConditionParameters(element, options);
+                    case "DeliveryRuleCookiesConditionParameters":
+                        return CookiesMatchConditionParameters.DeserializeCookiesMatchConditionParameters(element, options);
+                    case "DeliveryRuleIsDeviceConditionParameters":
+                        return IsDeviceMatchConditionParameters.DeserializeIsDeviceMatchConditionParameters(element, options);
+                    case "DeliveryRuleSocketAddrConditionParameters":
+                        return SocketAddrMatchConditionParameters.DeserializeSocketAddrMatchConditionParameters(element, options);
+                    case "DeliveryRuleClientPortConditionParameters":
+                        return ClientPortMatchConditionParameters.DeserializeClientPortMatchConditionParameters(element, options);
+                    case "DeliveryRuleServerPortConditionParameters":
+                        return ServerPortMatchConditionParameters.DeserializeServerPortMatchConditionParameters(element, options);
+                    case "DeliveryRuleHostNameConditionParameters":
+                        return HostNameMatchConditionParameters.DeserializeHostNameMatchConditionParameters(element, options);
+                    case "DeliveryRuleSslProtocolConditionParameters":
+                        return SslProtocolMatchConditionParameters.DeserializeSslProtocolMatchConditionParameters(element, options);
                 }
             }
-            return UnknownDeliveryRuleConditionParameters.DeserializeUnknownDeliveryRuleConditionParameters(element, options);
+            return UnknownDeliveryRuleConditionProperties.DeserializeUnknownDeliveryRuleConditionProperties(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine($"'{TypeName.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeliveryRuleConditionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeliveryRuleConditionProperties IPersistableModel<DeliveryRuleConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeliveryRuleConditionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleConditionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeliveryRuleConditionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

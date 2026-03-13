@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,33 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleServerPortCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleServerPortCondition"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleServerPortCondition(ServerPortMatchCondition properties)
+        /// <param name="parameters"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public DeliveryRuleServerPortCondition(ServerPortMatchConditionParameters parameters) : base(MatchVariable.ServerPort)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            Properties = properties;
-            Name = MatchVariable.ServerPort;
+            Parameters = parameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleServerPortCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleServerPortCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, ServerPortMatchCondition properties) : base(name, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="parameters"> Defines the parameters for the condition. </param>
+        internal DeliveryRuleServerPortCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerPortMatchConditionParameters parameters) : base(name, additionalBinaryDataProperties)
         {
-            Properties = properties;
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleServerPortCondition"/> for deserialization. </summary>
-        internal DeliveryRuleServerPortCondition()
-        {
+            Parameters = parameters;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        [WirePath("parameters")]
-        public ServerPortMatchCondition Properties { get; set; }
+        public ServerPortMatchConditionParameters Parameters { get; set; }
     }
 }

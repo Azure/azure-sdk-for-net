@@ -186,8 +186,6 @@ namespace Azure.ResourceManager.Cdn
         public static Azure.ResourceManager.Cdn.FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorSecretResource GetFrontDoorSecretResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.ProfileResource> GetProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileResource>> GetProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Cdn.ProfileResource GetProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1054,8 +1052,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         protected MockableCdnSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1178,9 +1174,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUsage FrontDoorUsage(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit unit = default(Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit), long currentValue = (long)0, long limit = (long)0, Azure.ResourceManager.Cdn.Models.FrontDoorUsageResourceName name = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUsageResourceName FrontDoorUsageResourceName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ManagedCertificateProperties ManagedCertificateProperties(string subject = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition> rules = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition ManagedRuleSetDefinition(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), string provisioningState = null, string ruleSetType = null, string ruleSetVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition> ruleGroups = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MetricsResponse MetricsResponse(System.DateTimeOffset? dateTimeBegin = default(System.DateTimeOffset?), System.DateTimeOffset? dateTimeEnd = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.MetricsResponseGranularity? granularity = default(Azure.ResourceManager.Cdn.Models.MetricsResponseGranularity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItem> series = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItem MetricsResponseSeriesItem(string metric = null, Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItemUnit? unit = default(Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItemUnit?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesPropertiesItemsItem> groups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesPropertiesItemsItem MetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null) { throw null; }
@@ -3444,30 +3437,15 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedCertificateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedCertificateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedRuleDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>
     {
-        internal ManagedRuleDefinition() { }
         public string Description { get { throw null; } }
         public string RuleId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedRuleGroupDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>
     {
-        internal ManagedRuleGroupDefinition() { }
         public string Description { get { throw null; } }
         public string RuleGroupName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition> Rules { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedRuleGroupOverrideSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>
     {
@@ -3494,20 +3472,12 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedRuleSetDefinition : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>
     {
-        public ManagedRuleSetDefinition() { }
         public string ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
         public string RuleSetType { get { throw null; } }
         public string RuleSetVersion { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.CdnSkuName? SkuName { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedRuleSetupState : System.IEquatable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState>

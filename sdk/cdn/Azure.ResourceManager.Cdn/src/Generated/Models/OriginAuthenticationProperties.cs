@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin authentication settings. </summary>
     public partial class OriginAuthenticationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OriginAuthenticationProperties"/>. </summary>
         public OriginAuthenticationProperties()
@@ -53,38 +22,42 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginAuthenticationProperties"/>. </summary>
-        /// <param name="authenticationType"> The type of the authentication for the origin. </param>
+        /// <param name="type"> The type of the authentication for the origin. </param>
         /// <param name="userAssignedIdentity"> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </param>
         /// <param name="scope"> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, WritableSubResource userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OriginAuthenticationProperties(OriginAuthenticationType? @type, ResourceReference userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AuthenticationType = authenticationType;
+            Type = @type;
             UserAssignedIdentity = userAssignedIdentity;
             Scope = scope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the authentication for the origin. </summary>
-        [WirePath("type")]
-        public OriginAuthenticationType? AuthenticationType { get; set; }
+        public OriginAuthenticationType? Type { get; set; }
+
         /// <summary> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </summary>
-        internal WritableSubResource UserAssignedIdentity { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("userAssignedIdentity.id")]
-        public ResourceIdentifier UserAssignedIdentityId
+        internal ResourceReference UserAssignedIdentity { get; set; }
+
+        /// <summary> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </summary>
+        public Uri Scope { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        public string UserAssignedIdentityId
         {
-            get => UserAssignedIdentity is null ? default : UserAssignedIdentity.Id;
+            get
+            {
+                return UserAssignedIdentity is null ? default : UserAssignedIdentity.Id;
+            }
             set
             {
                 if (UserAssignedIdentity is null)
-                    UserAssignedIdentity = new WritableSubResource();
+                {
+                    UserAssignedIdentity = new ResourceReference();
+                }
                 UserAssignedIdentity.Id = value;
             }
         }
-
-        /// <summary> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </summary>
-        [WirePath("scope")]
-        public Uri Scope { get; set; }
     }
 }
