@@ -76,12 +76,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// <summary>
         /// Initializes a new instance of the <see cref="SchemaRegistryAvroSerializer"/> class.
         /// </summary>
-        /// <param name="fullyQualifiedDomainNamespace">The fully qualified domain namespace of the Azure service.</param>
+        /// <param name="catalogClient">The <see cref="MessagingCatalogClient"/> instance to use for schema operations.</param>
         /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
         /// <param name="options">The set of options to customize the <see cref="SchemaRegistryAvroSerializer"/>.</param>
-        public SchemaRegistryAvroSerializer(String fullyQualifiedDomainNamespace, string groupName, SchemaRegistryAvroSerializerOptions options)
+        public SchemaRegistryAvroSerializer(MessagingCatalogClient catalogClient, string groupName, SchemaRegistryAvroSerializerOptions options)
         {
-            _catalogClient = new Catalog(fullyQualifiedDomainNamespace, groupName);
+            _catalogClient = new Catalog(catalogClient ?? throw new ArgumentNullException(nameof(catalogClient)), groupName);
             _groupName = groupName;
             _options = options?.Clone() ?? new SchemaRegistryAvroSerializerOptions();
             _isCatalogEnabled = true;

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.MessagingCatalog;
-using Azure.Identity;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
@@ -16,9 +15,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private readonly MessagingCatalogClient _client;
         private readonly string _schemaGroup;
 
-        public Catalog(string endpoint, string schemaGroup)
+        public Catalog(MessagingCatalogClient client, string schemaGroup)
         {
-            _client = new MessagingCatalogClient(new Uri(endpoint), new DefaultAzureCredential());
+            _client = client ?? throw new ArgumentNullException(nameof(client));
             _schemaGroup = schemaGroup;
         }
 
