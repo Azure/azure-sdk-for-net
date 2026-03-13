@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             PrivateEndpoint privateEndpoint = default;
-            ContainerRegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ContainerRegistryPrivateLinkServiceConnectionState connectionState = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = ContainerRegistryPrivateLinkServiceConnectionState.DeserializeContainerRegistryPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = ContainerRegistryPrivateLinkServiceConnectionState.DeserializeContainerRegistryPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

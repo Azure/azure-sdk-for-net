@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string credentialSetResourceId = default;
+            ResourceIdentifier credentialSetResourceId = default;
             string sourceRepository = default;
             string targetRepository = default;
             DateTimeOffset? createdOn = default;
@@ -151,7 +152,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("credentialSetResourceId"u8))
                 {
-                    credentialSetResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credentialSetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceRepository"u8))

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventSource"/>. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
-        /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
+        /// <param name="instanceId"> The running instance of an application. Changes after each restart. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventSource(string addr, string instanceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEventSource(string addr, string instanceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Addr = addr;
-            InstanceID = instanceID;
+            InstanceId = instanceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Addr { get; }
 
         /// <summary> The running instance of an application. Changes after each restart. </summary>
-        public string InstanceID { get; }
+        public string InstanceId { get; }
     }
 }

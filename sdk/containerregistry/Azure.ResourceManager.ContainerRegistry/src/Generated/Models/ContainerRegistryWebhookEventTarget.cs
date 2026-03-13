@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventTarget(string mediaType, long? size, string digest, long? length, string repository, string uri, string tag, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEventTarget(string mediaType, long? size, string digest, long? length, string repository, Uri uri, string tag, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MediaType = mediaType;
             Size = size;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Repository { get; }
 
         /// <summary> The direct URL to the content. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
 
         /// <summary> The tag name. </summary>
         public string Tag { get; }

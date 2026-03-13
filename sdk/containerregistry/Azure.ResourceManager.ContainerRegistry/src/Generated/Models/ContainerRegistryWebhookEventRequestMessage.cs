@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="requestUri"> The URI used to send the event request message. </param>
         /// <param name="version"> The HTTP message version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content, IReadOnlyDictionary<string, string> headers, string @method, string requestUri, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content, IReadOnlyDictionary<string, string> headers, string @method, Uri requestUri, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Headers = headers;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Method { get; }
 
         /// <summary> The URI used to send the event request message. </summary>
-        public string RequestUri { get; }
+        public Uri RequestUri { get; }
 
         /// <summary> The HTTP message version. </summary>
         public string Version { get; }

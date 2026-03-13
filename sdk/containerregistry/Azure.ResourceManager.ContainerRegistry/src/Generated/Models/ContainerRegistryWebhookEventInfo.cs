@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventInfo"/>. </summary>
-        /// <param name="eventInfoId"> The event ID. </param>
+        /// <param name="id"> The event ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventInfo(string eventInfoId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEventInfo(Guid? id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EventInfoId = eventInfoId;
+            Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The event ID. </summary>
-        public string EventInfoId { get; }
+        public Guid? Id { get; }
     }
 }

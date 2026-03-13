@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventRequestContent"/>. </summary>
-        /// <param name="requestId"> The ID of the request that initiated the event. </param>
+        /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
         /// <param name="method"> The request method that generated the event. </param>
-        /// <param name="useragent"> The user agent header of the request. </param>
+        /// <param name="userAgent"> The user agent header of the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventRequestContent(string requestId, string addr, string host, string @method, string useragent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEventRequestContent(Guid? id, string addr, string host, string @method, string userAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RequestId = requestId;
+            Id = id;
             Addr = addr;
             Host = host;
             Method = @method;
-            Useragent = useragent;
+            UserAgent = userAgent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the request that initiated the event. </summary>
-        public string RequestId { get; }
+        public Guid? Id { get; }
 
         /// <summary> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </summary>
         public string Addr { get; }
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Method { get; }
 
         /// <summary> The user agent header of the request. </summary>
-        public string Useragent { get; }
+        public string UserAgent { get; }
     }
 }

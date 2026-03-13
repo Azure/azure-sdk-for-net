@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -23,22 +24,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryGenerateCredentialsContent"/>. </summary>
         /// <param name="tokenId"> The resource ID of the token for which credentials have to be generated. </param>
-        /// <param name="expiry"> The expiry date of the generated credentials after which the credentials become invalid. </param>
+        /// <param name="expireOn"> The expiry date of the generated credentials after which the credentials become invalid. </param>
         /// <param name="name"> Specifies name of the password which should be regenerated if any -- password1 or password2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryGenerateCredentialsContent(string tokenId, DateTimeOffset? expiry, ContainerRegistryTokenPasswordName? name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryGenerateCredentialsContent(ResourceIdentifier tokenId, DateTimeOffset? expireOn, ContainerRegistryTokenPasswordName? name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenId = tokenId;
-            Expiry = expiry;
+            ExpireOn = expireOn;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of the token for which credentials have to be generated. </summary>
-        public string TokenId { get; set; }
+        public ResourceIdentifier TokenId { get; set; }
 
         /// <summary> The expiry date of the generated credentials after which the credentials become invalid. </summary>
-        public DateTimeOffset? Expiry { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> Specifies name of the password which should be regenerated if any -- password1 or password2. </summary>
         public ContainerRegistryTokenPasswordName? Name { get; set; }

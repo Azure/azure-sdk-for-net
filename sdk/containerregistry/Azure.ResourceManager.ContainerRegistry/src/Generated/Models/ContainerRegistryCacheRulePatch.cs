@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public IdentityProperties Identity { get; set; }
 
         /// <summary> The ARM resource ID of the credential store which is associated with the Cache rule. </summary>
-        public string CredentialSetResourceId
+        public ResourceIdentifier CredentialSetResourceId
         {
             get
             {

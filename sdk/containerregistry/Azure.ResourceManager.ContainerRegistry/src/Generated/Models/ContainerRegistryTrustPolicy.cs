@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTrustPolicy"/>. </summary>
-        /// <param name="type"> The type of trust policy. </param>
+        /// <param name="policyType"> The type of trust policy. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? @type, ContainerRegistryPolicyStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTrustPolicy(ContainerRegistryTrustPolicyType? policyType, ContainerRegistryPolicyStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            PolicyType = policyType;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of trust policy. </summary>
-        public ContainerRegistryTrustPolicyType? Type { get; set; }
+        public ContainerRegistryTrustPolicyType? PolicyType { get; set; }
 
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
         public ContainerRegistryPolicyStatus? Status { get; set; }

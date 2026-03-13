@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction)
         {
             DefaultAction = defaultAction;
-            IpRules = new ChangeTrackingList<ContainerRegistryIPRule>();
+            IPRules = new ChangeTrackingList<ContainerRegistryIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<ContainerRegistryIPRule> ipRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
-            IpRules = ipRules;
+            IPRules = ipRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryNetworkRuleDefaultAction DefaultAction { get; set; }
 
         /// <summary> The IP ACL rules. </summary>
-        public IList<ContainerRegistryIPRule> IpRules { get; }
+        public IList<ContainerRegistryIPRule> IPRules { get; }
     }
 }

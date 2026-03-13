@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="CacheRuleUpdateProperties"/>. </summary>
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the Cache rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRuleUpdateProperties(string credentialSetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheRuleUpdateProperties(ResourceIdentifier credentialSetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CredentialSetResourceId = credentialSetResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource ID of the credential store which is associated with the Cache rule. </summary>
-        public string CredentialSetResourceId { get; set; }
+        public ResourceIdentifier CredentialSetResourceId { get; set; }
     }
 }

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string eventInfoId = default;
+            Guid? id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ContainerRegistryWebhookEventRequestMessage eventRequestMessage = default;
             ContainerRegistryWebhookEventResponseMessage eventResponseMessage = default;
@@ -120,7 +120,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    eventInfoId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventRequestMessage"u8))
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryWebhookEvent(eventInfoId, additionalBinaryDataProperties, eventRequestMessage, eventResponseMessage);
+            return new ContainerRegistryWebhookEvent(id, additionalBinaryDataProperties, eventRequestMessage, eventResponseMessage);
         }
     }
 }

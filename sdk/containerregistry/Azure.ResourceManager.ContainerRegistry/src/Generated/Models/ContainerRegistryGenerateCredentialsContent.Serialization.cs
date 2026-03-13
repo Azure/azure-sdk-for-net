@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("tokenId"u8);
                 writer.WriteStringValue(TokenId);
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Name))
             {
@@ -144,15 +144,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string tokenId = default;
-            DateTimeOffset? expiry = default;
+            ResourceIdentifier tokenId = default;
+            DateTimeOffset? expireOn = default;
             ContainerRegistryTokenPasswordName? name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tokenId"u8))
                 {
-                    tokenId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("expiry"u8))
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    expiry = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -178,7 +182,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryGenerateCredentialsContent(tokenId, expiry, name, additionalBinaryDataProperties);
+            return new ContainerRegistryGenerateCredentialsContent(tokenId, expireOn, name, additionalBinaryDataProperties);
         }
     }
 }

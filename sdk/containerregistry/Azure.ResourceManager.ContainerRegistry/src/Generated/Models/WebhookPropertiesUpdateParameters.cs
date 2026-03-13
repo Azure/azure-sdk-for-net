@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
         /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookPropertiesUpdateParameters(string serviceUri, IDictionary<string, string> customHeaders, ContainerRegistryWebhookStatus? status, string scope, IList<ContainerRegistryWebhookAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebhookPropertiesUpdateParameters(Uri serviceUri, IDictionary<string, string> customHeaders, ContainerRegistryWebhookStatus? status, string scope, IList<ContainerRegistryWebhookAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             CustomHeaders = customHeaders;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        public string ServiceUri { get; set; }
+        public Uri ServiceUri { get; set; }
 
         /// <summary> Custom headers that will be added to the webhook notifications. </summary>
         public IDictionary<string, string> CustomHeaders { get; } = new ChangeTrackingDictionary<string, string>();

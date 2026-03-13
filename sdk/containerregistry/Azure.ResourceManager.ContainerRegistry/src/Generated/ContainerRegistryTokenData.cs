@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
-        public string ScopeMapId
+        public ResourceIdentifier ScopeMapId
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal TokenUpdateProperties Properties { get; set; }
 
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
-        public string ScopeMapId
+        public ResourceIdentifier ScopeMapId
         {
             get
             {

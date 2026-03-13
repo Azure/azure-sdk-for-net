@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCallbackConfig"/>. </summary>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
-        internal ContainerRegistryWebhookCallbackConfig(string serviceUri)
+        internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri)
         {
             ServiceUri = serviceUri;
             CustomHeaders = new ChangeTrackingDictionary<string, string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookCallbackConfig(string serviceUri, IReadOnlyDictionary<string, string> customHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri, IReadOnlyDictionary<string, string> customHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             CustomHeaders = customHeaders;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        public string ServiceUri { get; }
+        public Uri ServiceUri { get; }
 
         /// <summary> Custom headers that will be added to the webhook notifications. </summary>
         public IReadOnlyDictionary<string, string> CustomHeaders { get; }

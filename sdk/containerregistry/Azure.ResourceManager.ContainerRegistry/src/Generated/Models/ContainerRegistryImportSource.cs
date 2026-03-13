@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryImportSource(string resourceId, Uri registryUri, ContainerRegistryImportSourceCredentials credentials, string sourceImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryImportSource(ResourceIdentifier resourceId, Uri registryUri, ContainerRegistryImportSourceCredentials credentials, string sourceImage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             RegistryUri = registryUri;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource identifier of the source Azure Container Registry. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Credentials used when importing from a registry uri. </summary>
         public ContainerRegistryImportSourceCredentials Credentials { get; set; }

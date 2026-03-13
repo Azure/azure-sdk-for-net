@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public IdentityProperties Identity { get; set; }
 
         /// <summary> The ARM resource ID of the credential store which is associated with the cache rule. </summary>
-        public string CredentialSetResourceId
+        public ResourceIdentifier CredentialSetResourceId
         {
             get
             {

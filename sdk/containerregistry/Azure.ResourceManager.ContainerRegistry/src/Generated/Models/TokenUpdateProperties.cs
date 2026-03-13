@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> The status of the token example enabled or disabled. </param>
         /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TokenUpdateProperties(string scopeMapId, ContainerRegistryTokenStatus? status, ContainerRegistryTokenCredentials credentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TokenUpdateProperties(ResourceIdentifier scopeMapId, ContainerRegistryTokenStatus? status, ContainerRegistryTokenCredentials credentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScopeMapId = scopeMapId;
             Status = status;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
-        public string ScopeMapId { get; set; }
+        public ResourceIdentifier ScopeMapId { get; set; }
 
         /// <summary> The status of the token example enabled or disabled. </summary>
         public ContainerRegistryTokenStatus? Status { get; set; }

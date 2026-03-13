@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryTrustPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(PolicyType.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            ContainerRegistryTrustPolicyType? @type = default;
+            ContainerRegistryTrustPolicyType? policyType = default;
             ContainerRegistryPolicyStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    @type = new ContainerRegistryTrustPolicyType(prop.Value.GetString());
+                    policyType = new ContainerRegistryTrustPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTrustPolicy(@type, status, additionalBinaryDataProperties);
+            return new ContainerRegistryTrustPolicy(policyType, status, additionalBinaryDataProperties);
         }
     }
 }

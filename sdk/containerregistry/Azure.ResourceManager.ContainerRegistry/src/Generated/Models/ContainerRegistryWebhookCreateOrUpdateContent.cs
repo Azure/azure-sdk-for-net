@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -19,11 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ContainerRegistryWebhookCreateOrUpdateContent(string location)
+        public ContainerRegistryWebhookCreateOrUpdateContent(AzureLocation location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
@@ -33,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
         /// <param name="properties"> The properties that the webhook will be created with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags, string location, WebhookPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags, AzureLocation location, WebhookPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Location = location;
@@ -45,13 +43,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The location of the webhook. This cannot be changed after the resource is created. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> The properties that the webhook will be created with. </summary>
         internal WebhookPropertiesCreateParameters Properties { get; set; }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        public string ServiceUri
+        public Uri ServiceUri
         {
             get
             {

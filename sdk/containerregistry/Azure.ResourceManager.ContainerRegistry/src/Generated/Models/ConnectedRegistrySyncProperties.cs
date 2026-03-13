@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tokenId"/> is null. </exception>
-        public ConnectedRegistrySyncProperties(string tokenId, TimeSpan messageTtl)
+        public ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, TimeSpan messageTtl)
         {
             Argument.AssertNotNull(tokenId, nameof(tokenId));
 
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
         /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistrySyncProperties(string tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenId = tokenId;
             Schedule = schedule;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </summary>
-        public string TokenId { get; set; }
+        public ResourceIdentifier TokenId { get; set; }
 
         /// <summary> The cron expression indicating the schedule that the connected registry will sync with its parent. </summary>
         public string Schedule { get; set; }

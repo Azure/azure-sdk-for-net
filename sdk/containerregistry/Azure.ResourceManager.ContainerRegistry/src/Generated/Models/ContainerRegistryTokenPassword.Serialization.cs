@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Name))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? expiry = default;
+            DateTimeOffset? expireOn = default;
             ContainerRegistryTokenPasswordName? name = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    expiry = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTokenPassword(createdOn, expiry, name, value, additionalBinaryDataProperties);
+            return new ContainerRegistryTokenPassword(createdOn, expireOn, name, value, additionalBinaryDataProperties);
         }
     }
 }

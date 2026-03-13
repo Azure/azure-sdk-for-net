@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ContainerRegistryNameAvailableResult>> CheckNameAvailabilityAsync(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistrySubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistrySubscriptionResource.CheckContainerRegistryNameAvailability");
             scope.Start();
             try
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = RegistriesRestClient.CreateCheckContainerRegistryNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryNameAvailableResult> response = Response.FromValue(ContainerRegistryNameAvailableResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ContainerRegistryNameAvailableResult> CheckNameAvailability(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistrySubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = RegistriesClientDiagnostics.CreateScope("MockableContainerRegistrySubscriptionResource.CheckContainerRegistryNameAvailability");
             scope.Start();
             try
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = RegistriesRestClient.CreateCheckContainerRegistryNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryNameAvailableResult> response = Response.FromValue(ContainerRegistryNameAvailableResult.FromResponse(result), result);
                 if (response.Value == null)

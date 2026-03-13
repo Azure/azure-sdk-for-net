@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventRequestContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RequestId))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(RequestId);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(Addr))
             {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(Useragent))
+            if (Optional.IsDefined(UserAgent))
             {
                 writer.WritePropertyName("useragent"u8);
-                writer.WriteStringValue(Useragent);
+                writer.WriteStringValue(UserAgent);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,17 +141,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string requestId = default;
+            Guid? id = default;
             string addr = default;
             string host = default;
             string @method = default;
-            string useragent = default;
+            string userAgent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    requestId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("addr"u8))
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("useragent"u8))
                 {
-                    useragent = prop.Value.GetString();
+                    userAgent = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,11 +184,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             return new ContainerRegistryWebhookEventRequestContent(
-                requestId,
+                id,
                 addr,
                 host,
                 @method,
-                useragent,
+                userAgent,
                 additionalBinaryDataProperties);
         }
     }

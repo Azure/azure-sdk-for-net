@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal WebhookPropertiesUpdateParameters Properties { get; set; }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        public string ServiceUri
+        public Uri ServiceUri
         {
             get
             {

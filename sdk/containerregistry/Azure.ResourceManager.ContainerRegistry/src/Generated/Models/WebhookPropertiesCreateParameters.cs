@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceUri"/> or <paramref name="actions"/> is null. </exception>
-        public WebhookPropertiesCreateParameters(string serviceUri, IEnumerable<ContainerRegistryWebhookAction> actions)
+        public WebhookPropertiesCreateParameters(Uri serviceUri, IEnumerable<ContainerRegistryWebhookAction> actions)
         {
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             Argument.AssertNotNull(actions, nameof(actions));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
         /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookPropertiesCreateParameters(string serviceUri, IDictionary<string, string> customHeaders, ContainerRegistryWebhookStatus? status, string scope, IList<ContainerRegistryWebhookAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebhookPropertiesCreateParameters(Uri serviceUri, IDictionary<string, string> customHeaders, ContainerRegistryWebhookStatus? status, string scope, IList<ContainerRegistryWebhookAction> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             CustomHeaders = customHeaders;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        public string ServiceUri { get; }
+        public Uri ServiceUri { get; }
 
         /// <summary> Custom headers that will be added to the webhook notifications. </summary>
         public IDictionary<string, string> CustomHeaders { get; } = new ChangeTrackingDictionary<string, string>();

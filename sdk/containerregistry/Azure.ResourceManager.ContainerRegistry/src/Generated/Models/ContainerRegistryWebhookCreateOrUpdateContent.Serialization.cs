@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             WebhookPropertiesCreateParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

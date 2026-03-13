@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryTlsCertificateProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(CertificateType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(CertificateType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(CertificateLocation))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            ContainerRegistryCertificateType? @type = default;
+            ContainerRegistryCertificateType? certificateType = default;
             string certificateLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    @type = new ContainerRegistryCertificateType(prop.Value.GetString());
+                    certificateType = new ContainerRegistryCertificateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTlsCertificateProperties(@type, certificateLocation, additionalBinaryDataProperties);
+            return new ContainerRegistryTlsCertificateProperties(certificateType, certificateLocation, additionalBinaryDataProperties);
         }
     }
 }

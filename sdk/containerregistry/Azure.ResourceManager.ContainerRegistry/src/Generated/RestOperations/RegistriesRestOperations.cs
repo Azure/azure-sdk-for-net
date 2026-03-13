@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckContainerRegistryNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

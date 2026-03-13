@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("addr"u8);
                 writer.WriteStringValue(Addr);
             }
-            if (Optional.IsDefined(InstanceID))
+            if (Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceID"u8);
-                writer.WriteStringValue(InstanceID);
+                writer.WriteStringValue(InstanceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string addr = default;
-            string instanceID = default;
+            string instanceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("instanceID"u8))
                 {
-                    instanceID = prop.Value.GetString();
+                    instanceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryWebhookEventSource(addr, instanceID, additionalBinaryDataProperties);
+            return new ContainerRegistryWebhookEventSource(addr, instanceId, additionalBinaryDataProperties);
         }
     }
 }

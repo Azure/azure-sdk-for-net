@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToString());
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (ContainerRegistryIPRule item in IpRules)
+                foreach (ContainerRegistryIPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

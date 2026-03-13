@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="expiry"> The expiry datetime of the certificate. </param>
+        /// <param name="expireOn"> The expiry datetime of the certificate. </param>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
         /// <param name="encodedPemCertificate"> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expiry, string thumbprint, string encodedPemCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expireOn, string thumbprint, string encodedPemCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Expiry = expiry;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             EncodedPemCertificate = encodedPemCertificate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryTokenCertificateName? Name { get; set; }
 
         /// <summary> The expiry datetime of the certificate. </summary>
-        public DateTimeOffset? Expiry { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> The thumbprint of the certificate. </summary>
         public string Thumbprint { get; set; }

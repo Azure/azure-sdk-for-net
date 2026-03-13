@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public ContainerRegistryPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public ContainerRegistryPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> This is private endpoint resource created with Microsoft.Network resource provider. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

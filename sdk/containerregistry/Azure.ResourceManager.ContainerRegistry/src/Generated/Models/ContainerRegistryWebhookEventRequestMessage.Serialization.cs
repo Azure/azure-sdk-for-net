@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(RequestUri))
             {
                 writer.WritePropertyName("requestUri"u8);
-                writer.WriteStringValue(RequestUri);
+                writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Version))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryWebhookEventContent content = default;
             IReadOnlyDictionary<string, string> headers = default;
             string @method = default;
-            string requestUri = default;
+            Uri requestUri = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("requestUri"u8))
                 {
-                    requestUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("version"u8))

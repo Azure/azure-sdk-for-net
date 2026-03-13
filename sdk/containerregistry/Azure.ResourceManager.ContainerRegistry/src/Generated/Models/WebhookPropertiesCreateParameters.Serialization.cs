@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 throw new FormatException($"The model {nameof(WebhookPropertiesCreateParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("serviceUri"u8);
-            writer.WriteStringValue(ServiceUri);
+            writer.WriteStringValue(ServiceUri.AbsoluteUri);
             if (Optional.IsCollectionDefined(CustomHeaders))
             {
                 writer.WritePropertyName("customHeaders"u8);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string serviceUri = default;
+            Uri serviceUri = default;
             IDictionary<string, string> customHeaders = default;
             ContainerRegistryWebhookStatus? status = default;
             string scope = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("serviceUri"u8))
                 {
-                    serviceUri = prop.Value.GetString();
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("customHeaders"u8))

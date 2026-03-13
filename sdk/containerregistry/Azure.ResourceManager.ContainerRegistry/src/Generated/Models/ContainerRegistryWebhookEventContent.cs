@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventContent"/>. </summary>
-        /// <param name="eventContentId"> The event ID. </param>
+        /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
         /// <param name="target"> The target of the event. </param>
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="actor"> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </param>
         /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventContent(string eventContentId, DateTimeOffset? timestamp, string action, ContainerRegistryWebhookEventTarget target, ContainerRegistryWebhookEventRequestContent request, Actor actor, ContainerRegistryWebhookEventSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryWebhookEventContent(Guid? id, DateTimeOffset? timestamp, string action, ContainerRegistryWebhookEventTarget target, ContainerRegistryWebhookEventRequestContent request, Actor actor, ContainerRegistryWebhookEventSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EventContentId = eventContentId;
+            Id = id;
             Timestamp = timestamp;
             Action = action;
             Target = target;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The event ID. </summary>
-        public string EventContentId { get; }
+        public Guid? Id { get; }
 
         /// <summary> The time at which the event occurred. </summary>
         public DateTimeOffset? Timestamp { get; }

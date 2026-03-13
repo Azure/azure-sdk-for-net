@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             DateTimeOffset? createdOn = default;
             ContainerRegistryProvisioningState? provisioningState = default;
-            string scopeMapId = default;
+            ResourceIdentifier scopeMapId = default;
             ContainerRegistryTokenCredentials credentials = default;
             ContainerRegistryTokenStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -169,7 +170,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (prop.NameEquals("scopeMapId"u8))
                 {
-                    scopeMapId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scopeMapId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("credentials"u8))

@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> This is private endpoint resource created with Microsoft.Network resource provider. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ContainerRegistryProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryPrivateLinkServiceConnectionState connectionState = default, ContainerRegistryProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new ContainerRegistryPrivateEndpointConnectionData(
                 id,
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
+                connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null));
         }
 
         /// <summary> The SKU of a container registry. </summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </param>
         /// <returns> A new <see cref="Models.ContainerRegistryImportSource"/> instance for mocking. </returns>
-        public static ContainerRegistryImportSource ContainerRegistryImportSource(string resourceId = default, Uri registryUri = default, ContainerRegistryImportSourceCredentials credentials = default, string sourceImage = default)
+        public static ContainerRegistryImportSource ContainerRegistryImportSource(ResourceIdentifier resourceId = default, Uri registryUri = default, ContainerRegistryImportSourceCredentials credentials = default, string sourceImage = default)
         {
             return new ContainerRegistryImportSource(resourceId, registryUri, credentials, sourceImage, additionalBinaryDataProperties: null);
         }
@@ -343,13 +343,13 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> The password that will be used for authenticating the token of a container registry. </summary>
         /// <param name="createdOn"> The creation datetime of the password. </param>
-        /// <param name="expiry"> The expiry datetime of the password. </param>
+        /// <param name="expireOn"> The expiry datetime of the password. </param>
         /// <param name="name"> The password name "password1" or "password2". </param>
         /// <param name="value"> The password value. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTokenPassword"/> instance for mocking. </returns>
-        public static ContainerRegistryTokenPassword ContainerRegistryTokenPassword(DateTimeOffset? createdOn = default, DateTimeOffset? expiry = default, ContainerRegistryTokenPasswordName? name = default, string value = default)
+        public static ContainerRegistryTokenPassword ContainerRegistryTokenPassword(DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, ContainerRegistryTokenPasswordName? name = default, string value = default)
         {
-            return new ContainerRegistryTokenPassword(createdOn, expiry, name, value, additionalBinaryDataProperties: null);
+            return new ContainerRegistryTokenPassword(createdOn, expireOn, name, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A request to check whether a container registry name is available. </summary>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="identity"> The identity of the cache rule. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/> instance for mocking. </returns>
-        public static ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string credentialSetResourceId = default, string sourceRepository = default, string targetRepository = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default, IdentityProperties identity = default)
+        public static ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier credentialSetResourceId = default, string sourceRepository = default, string targetRepository = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default, IdentityProperties identity = default)
         {
             return new ContainerRegistryCacheRuleData(
                 id,
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
         /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistrySyncProperties"/> instance for mocking. </returns>
-        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(string tokenId = default, string schedule = default, TimeSpan? syncWindow = default, TimeSpan messageTtl = default, DateTimeOffset? lastSyncOn = default, string gatewayEndpoint = default)
+        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId = default, string schedule = default, TimeSpan? syncWindow = default, TimeSpan messageTtl = default, DateTimeOffset? lastSyncOn = default, string gatewayEndpoint = default)
         {
             return new ConnectedRegistrySyncProperties(
                 tokenId,
@@ -612,12 +612,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The TLS certificate properties of the connected registry login server. </summary>
-        /// <param name="type"> The type of certificate location. </param>
+        /// <param name="certificateType"> The type of certificate location. </param>
         /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTlsCertificateProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTlsCertificateProperties ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? @type = default, string certificateLocation = default)
+        public static ContainerRegistryTlsCertificateProperties ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? certificateType = default, string certificateLocation = default)
         {
-            return new ContainerRegistryTlsCertificateProperties(@type, certificateLocation, additionalBinaryDataProperties: null);
+            return new ContainerRegistryTlsCertificateProperties(certificateType, certificateLocation, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The status detail properties of the connected registry. </summary>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
         /// <param name="status"> The status of the token example enabled or disabled. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryTokenData"/> instance for mocking. </returns>
-        public static ContainerRegistryTokenData ContainerRegistryTokenData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default, string scopeMapId = default, ContainerRegistryTokenCredentials credentials = default, ContainerRegistryTokenStatus? status = default)
+        public static ContainerRegistryTokenData ContainerRegistryTokenData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, ContainerRegistryProvisioningState? provisioningState = default, ResourceIdentifier scopeMapId = default, ContainerRegistryTokenCredentials credentials = default, ContainerRegistryTokenStatus? status = default)
         {
             return new ContainerRegistryTokenData(
                 id,
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
         /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookCreateOrUpdateContent ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags = default, string location = default, string serviceUri = default, IDictionary<string, string> customHeaders = default, ContainerRegistryWebhookStatus? status = default, string scope = default, IEnumerable<ContainerRegistryWebhookAction> actions = default)
+        public static ContainerRegistryWebhookCreateOrUpdateContent ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, IDictionary<string, string> customHeaders = default, ContainerRegistryWebhookStatus? status = default, string scope = default, IEnumerable<ContainerRegistryWebhookAction> actions = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
         /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookPatch"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookPatch ContainerRegistryWebhookPatch(IDictionary<string, string> tags = default, string serviceUri = default, IDictionary<string, string> customHeaders = default, ContainerRegistryWebhookStatus? status = default, string scope = default, IEnumerable<ContainerRegistryWebhookAction> actions = default)
+        public static ContainerRegistryWebhookPatch ContainerRegistryWebhookPatch(IDictionary<string, string> tags = default, Uri serviceUri = default, IDictionary<string, string> customHeaders = default, ContainerRegistryWebhookStatus? status = default, string scope = default, IEnumerable<ContainerRegistryWebhookAction> actions = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -951,21 +951,21 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The basic information of an event. </summary>
-        /// <param name="eventInfoId"> The event ID. </param>
+        /// <param name="id"> The event ID. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventInfo"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventInfo ContainerRegistryWebhookEventInfo(string eventInfoId = default)
+        public static ContainerRegistryWebhookEventInfo ContainerRegistryWebhookEventInfo(Guid? id = default)
         {
-            return new ContainerRegistryWebhookEventInfo(eventInfoId, additionalBinaryDataProperties: null);
+            return new ContainerRegistryWebhookEventInfo(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The event for a webhook. </summary>
-        /// <param name="eventInfoId"> The event ID. </param>
+        /// <param name="id"> The event ID. </param>
         /// <param name="eventRequestMessage"> The event request message sent to the service URI. </param>
         /// <param name="eventResponseMessage"> The event response message received from the service URI. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEvent"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEvent ContainerRegistryWebhookEvent(string eventInfoId = default, ContainerRegistryWebhookEventRequestMessage eventRequestMessage = default, ContainerRegistryWebhookEventResponseMessage eventResponseMessage = default)
+        public static ContainerRegistryWebhookEvent ContainerRegistryWebhookEvent(Guid? id = default, ContainerRegistryWebhookEventRequestMessage eventRequestMessage = default, ContainerRegistryWebhookEventResponseMessage eventResponseMessage = default)
         {
-            return new ContainerRegistryWebhookEvent(eventInfoId, additionalBinaryDataProperties: null, eventRequestMessage, eventResponseMessage);
+            return new ContainerRegistryWebhookEvent(id, additionalBinaryDataProperties: null, eventRequestMessage, eventResponseMessage);
         }
 
         /// <summary> The event request message sent to the service URI. </summary>
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="requestUri"> The URI used to send the event request message. </param>
         /// <param name="version"> The HTTP message version. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventRequestMessage"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventRequestMessage ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content = default, IReadOnlyDictionary<string, string> headers = default, string @method = default, string requestUri = default, string version = default)
+        public static ContainerRegistryWebhookEventRequestMessage ContainerRegistryWebhookEventRequestMessage(ContainerRegistryWebhookEventContent content = default, IReadOnlyDictionary<string, string> headers = default, string @method = default, Uri requestUri = default, string version = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
 
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="eventContentId"> The event ID. </param>
+        /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>
         /// <param name="target"> The target of the event. </param>
@@ -996,10 +996,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="actorName"> The subject or username associated with the request context that generated the event. </param>
         /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventContent"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventContent ContainerRegistryWebhookEventContent(string eventContentId = default, DateTimeOffset? timestamp = default, string action = default, ContainerRegistryWebhookEventTarget target = default, ContainerRegistryWebhookEventRequestContent request = default, string actorName = default, ContainerRegistryWebhookEventSource source = default)
+        public static ContainerRegistryWebhookEventContent ContainerRegistryWebhookEventContent(Guid? id = default, DateTimeOffset? timestamp = default, string action = default, ContainerRegistryWebhookEventTarget target = default, ContainerRegistryWebhookEventRequestContent request = default, string actorName = default, ContainerRegistryWebhookEventSource source = default)
         {
             return new ContainerRegistryWebhookEventContent(
-                eventContentId,
+                id,
                 timestamp,
                 action,
                 target,
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventTarget"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventTarget ContainerRegistryWebhookEventTarget(string mediaType = default, long? size = default, string digest = default, long? length = default, string repository = default, string uri = default, string tag = default, string name = default, string version = default)
+        public static ContainerRegistryWebhookEventTarget ContainerRegistryWebhookEventTarget(string mediaType = default, long? size = default, string digest = default, long? length = default, string repository = default, Uri uri = default, string tag = default, string name = default, string version = default)
         {
             return new ContainerRegistryWebhookEventTarget(
                 mediaType,
@@ -1036,30 +1036,30 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The request that generated the event. </summary>
-        /// <param name="requestId"> The ID of the request that initiated the event. </param>
+        /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
         /// <param name="method"> The request method that generated the event. </param>
-        /// <param name="useragent"> The user agent header of the request. </param>
+        /// <param name="userAgent"> The user agent header of the request. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventRequestContent"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventRequestContent ContainerRegistryWebhookEventRequestContent(string requestId = default, string addr = default, string host = default, string @method = default, string useragent = default)
+        public static ContainerRegistryWebhookEventRequestContent ContainerRegistryWebhookEventRequestContent(Guid? id = default, string addr = default, string host = default, string @method = default, string userAgent = default)
         {
             return new ContainerRegistryWebhookEventRequestContent(
-                requestId,
+                id,
                 addr,
                 host,
                 @method,
-                useragent,
+                userAgent,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
-        /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
+        /// <param name="instanceId"> The running instance of an application. Changes after each restart. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventSource"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookEventSource ContainerRegistryWebhookEventSource(string addr = default, string instanceID = default)
+        public static ContainerRegistryWebhookEventSource ContainerRegistryWebhookEventSource(string addr = default, string instanceId = default)
         {
-            return new ContainerRegistryWebhookEventSource(addr, instanceID, additionalBinaryDataProperties: null);
+            return new ContainerRegistryWebhookEventSource(addr, instanceId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The event response message received from the service URI. </summary>
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookCallbackConfig"/> instance for mocking. </returns>
-        public static ContainerRegistryWebhookCallbackConfig ContainerRegistryWebhookCallbackConfig(string serviceUri = default, IReadOnlyDictionary<string, string> customHeaders = default)
+        public static ContainerRegistryWebhookCallbackConfig ContainerRegistryWebhookCallbackConfig(Uri serviceUri = default, IReadOnlyDictionary<string, string> customHeaders = default)
         {
             customHeaders ??= new ChangeTrackingDictionary<string, string>();
 

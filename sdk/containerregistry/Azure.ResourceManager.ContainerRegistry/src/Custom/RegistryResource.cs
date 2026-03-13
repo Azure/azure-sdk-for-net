@@ -4,9 +4,12 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Customizations;
 

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
-                writer.WriteStringValue(ServiceUri);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(CustomHeaders))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string serviceUri = default;
+            Uri serviceUri = default;
             IDictionary<string, string> customHeaders = default;
             ContainerRegistryWebhookStatus? status = default;
             string scope = default;
@@ -167,7 +167,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("serviceUri"u8))
                 {
-                    serviceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("customHeaders"u8))

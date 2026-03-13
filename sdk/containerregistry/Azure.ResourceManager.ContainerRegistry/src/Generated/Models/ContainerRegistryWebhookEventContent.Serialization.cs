@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EventContentId))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(EventContentId);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(Timestamp))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string eventContentId = default;
+            Guid? id = default;
             DateTimeOffset? timestamp = default;
             string action = default;
             ContainerRegistryWebhookEventTarget target = default;
@@ -163,7 +163,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    eventContentId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timestamp"u8))
@@ -222,7 +226,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             return new ContainerRegistryWebhookEventContent(
-                eventContentId,
+                id,
                 timestamp,
                 action,
                 target,

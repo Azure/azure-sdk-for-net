@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsCertificateProperties"/>. </summary>
-        /// <param name="type"> The type of certificate location. </param>
+        /// <param name="certificateType"> The type of certificate location. </param>
         /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? @type, string certificateLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? certificateType, string certificateLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            CertificateType = certificateType;
             CertificateLocation = certificateLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of certificate location. </summary>
-        public ContainerRegistryCertificateType? Type { get; }
+        public ContainerRegistryCertificateType? CertificateType { get; }
 
         /// <summary> Indicates the location of the certificates. </summary>
         public string CertificateLocation { get; }

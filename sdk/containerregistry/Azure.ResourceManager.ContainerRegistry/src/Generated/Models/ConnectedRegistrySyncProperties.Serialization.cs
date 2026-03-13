@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            string tokenId = default;
+            ResourceIdentifier tokenId = default;
             string schedule = default;
             TimeSpan? syncWindow = default;
             TimeSpan messageTtl = default;
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 if (prop.NameEquals("tokenId"u8))
                 {
-                    tokenId = prop.Value.GetString();
+                    tokenId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("schedule"u8))
