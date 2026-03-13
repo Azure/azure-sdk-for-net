@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApiCenter
             return message;
         }
 
-        internal HttpMessage CreateImportSpecificationRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string versionName, string definitionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateImportSpecificationWithResultRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string versionName, string definitionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterApiImportSuccess))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiResource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiVersionData))]
