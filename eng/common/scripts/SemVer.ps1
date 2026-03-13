@@ -40,9 +40,9 @@ class AzureEngSemanticVersion : IComparable {
   static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?"  
 
   # Python PEP 440 post-release extension: SEMVER_REGEX + optional post-release suffix.
-  # Handles all PEP 440 alternate formats: .postN, -postN, _postN, postN, .post.N (case-insensitive)
+  # Handles all PEP 440 alternate formats: .postN, -postN, _postN, postN, .post.N, .post (implicit 0) (case-insensitive)
   # Validation: https://regex101.com/r/rAdOg0/1
-  static [string] $PYTHON_SEMVER_REGEX = [AzureEngSemanticVersion]::SEMVER_REGEX + "(?:(?<postsep>[.\-_]?)(?i:post)\.?(?<postnum>\d+))?"
+  static [string] $PYTHON_SEMVER_REGEX = [AzureEngSemanticVersion]::SEMVER_REGEX + "(?:(?<postsep>[.\-_]?)(?<postword>(?i:post))\.?(?<postnum>\d+)?)?"
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
   {
@@ -94,9 +94,9 @@ class AzureEngSemanticVersion : IComparable {
       $skipPrelabel = $false
       if ($parseLanguage -eq "python") {
         $this.SetupPythonConventions()
-        if ($matches['postnum']) {
+        if ($matches['postword']) {
           $this.IsPostRelease = $true
-          $this.PostReleaseNumber = [int]$matches['postnum']
+          $this.PostReleaseNumber = if ($matches['postnum']) { [int]$matches['postnum'] } else { 0 }
           $this.PostReleaseSeparator = ".post"
         }
         elseif ($matches['prelabel'] -and $matches['prelabel'] -ieq 'post') {
