@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Peering
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(peeringRegisteredPrefixData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(peeringRegisteredPrefixData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PeeringRegisteredPrefixData"/> from. </param>

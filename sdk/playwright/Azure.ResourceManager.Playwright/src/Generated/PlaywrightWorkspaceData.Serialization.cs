@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Playwright
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playwrightWorkspaceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(playwrightWorkspaceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceData"/> from. </param>
