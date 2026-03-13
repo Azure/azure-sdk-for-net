@@ -8,10 +8,6 @@
           "type": "string",
           "description": "The credential type to use for authentication.",
           "enum": ["ApiKeyCredential"]
-        },
-        "AdditionalProperties": {
-          "type": "object",
-          "description": "Additional credential properties."
         }
       },
       "required": ["CredentialSource"],
@@ -71,9 +67,30 @@
           "type": "integer",
           "description": "Maximum size of logged message content in bytes.",
           "minimum": 0
+        },
+        "AdditionalAllowedHeaderNames": {
+          "type": "array",
+          "description": "Additional header names to log (appended to defaults). ⚠️ Avoid adding headers that may contain secrets (e.g., Authorization, Cookie, X-Api-Key) — these could leak sensitive data in logs.",
+          "not": {
+            "contains": {
+              "enum": ["Authorization", "Proxy-Authorization", "Cookie", "Set-Cookie", "X-Api-Key"]
+            }
+          },
+          "items": {
+            "type": "string",
+            "not": {
+              "enum": ["Authorization", "Proxy-Authorization", "Cookie", "Set-Cookie", "X-Api-Key"]
+            }
+          }
+        },
+        "AdditionalAllowedQueryParameters":{
+          "type": "array",
+          "description": "Additional query parameter names to log (appended to defaults: api-version).",
+          "items": {
+            "type": "string"
+          }
         }
-      },
-      "additionalProperties": false
+      }
     }
   },
   "type": "object",
