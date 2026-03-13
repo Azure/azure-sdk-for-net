@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary>
-    /// A class representing the CommunicationSmtpUsername data model.
-    /// The object describing the smtp username resource.
-    /// </summary>
+    /// <summary> The object describing the smtp username resource. </summary>
     public partial class CommunicationSmtpUsernameData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommunicationSmtpUsernameData"/>. </summary>
         public CommunicationSmtpUsernameData()
@@ -56,30 +25,56 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationSmtpUsernameData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="username"> The SMTP username. Could be free form or in the email address format. </param>
-        /// <param name="entraApplicationId"> The application Id for the linked Entra Application. </param>
-        /// <param name="tenantId"> The tenant of the linked Entra Application. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationSmtpUsernameData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string username, string entraApplicationId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a SmtpUsername resource. </param>
+        internal CommunicationSmtpUsernameData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SmtpUsernameProperties properties) : base(id, name, resourceType, systemData)
         {
-            Username = username;
-            EntraApplicationId = entraApplicationId;
-            TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of a SmtpUsername resource. </summary>
+        [WirePath("properties")]
+        internal SmtpUsernameProperties Properties { get; set; }
 
         /// <summary> The SMTP username. Could be free form or in the email address format. </summary>
         [WirePath("properties.username")]
-        public string Username { get; set; }
+        public string Username
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Username;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SmtpUsernameProperties();
+                }
+                Properties.Username = value;
+            }
+        }
+
         /// <summary> The application Id for the linked Entra Application. </summary>
         [WirePath("properties.entraApplicationId")]
-        public string EntraApplicationId { get; set; }
-        /// <summary> The tenant of the linked Entra Application. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string EntraApplicationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraApplicationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SmtpUsernameProperties();
+                }
+                Properties.EntraApplicationId = value;
+            }
+        }
     }
 }
