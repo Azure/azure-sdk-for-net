@@ -5,7 +5,6 @@
 ### Features Added
 
 - Upgraded API version to `2024-03-15-preview` and `2024-06-01-preview`.
-- Added `ImportSpecificationWithResult` and `ImportSpecificationWithResultAsync` methods to `ApiCenterApiDefinitionResource` that return `ArmOperation<ApiCenterApiImportSuccess>`.
 - Added `ApiSourceResource`, `ApiSourceCollection`, and `ApiSourceData` for managing API sources.
 - Added `DeletedServiceResource`, `DeletedServiceCollection`, and `DeletedServiceData` for managing deleted services.
 - Added HEAD operations on parent resources: `HeadApi`, `HeadApiSource`, `HeadEnvironment` on `ApiCenterWorkspaceResource`; `HeadApiVersion`, `HeadDeployment` on `ApiCenterApiResource`; `Head` (for API definitions) on `ApiCenterApiVersionResource`; `HeadMetadataSchema`, `HeadWorkspace` on `ApiCenterServiceResource`.
