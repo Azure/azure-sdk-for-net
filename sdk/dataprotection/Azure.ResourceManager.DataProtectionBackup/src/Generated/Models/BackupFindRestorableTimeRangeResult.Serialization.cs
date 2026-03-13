@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            ResourceType resourceType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BackupFindRestorableTimeRangeResultProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -142,11 +147,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         continue;
                     }
                     resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new BackupFindRestorableTimeRangeResult(
                 id,
-                resourceType,
-                additionalBinaryDataProperties,
                 name,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 properties);
         }
     }

@@ -920,6 +920,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> List Restore Ranges Response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> AzureBackupFindRestorableTimeRangesResponseResource properties. </param>
+        /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResult"/> instance for mocking. </returns>
+        public static BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupFindRestorableTimeRangeResultProperties properties = default)
+        {
+            return new BackupFindRestorableTimeRangeResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> List Restore Ranges Response. </summary>
         /// <param name="restorableTimeRanges"> Returns the Restore Ranges available on the Backup Instance. </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResultProperties"/> instance for mocking. </returns>
@@ -1567,24 +1585,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 identityDetails,
                 objectType,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BackupFindRestorableTimeRangeResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> AzureBackupFindRestorableTimeRangesResponseResource properties. </param>
-        /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResult"/> instance for mocking. </returns>
-        public static BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupFindRestorableTimeRangeResultProperties properties = default)
-        {
-            return new BackupFindRestorableTimeRangeResult(
-                id,
-                resourceType,
-                additionalBinaryDataProperties: null,
-                name,
-                systemData,
-                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupJobProperties"/>. </summary>
