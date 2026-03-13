@@ -118,6 +118,7 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         public override OpenAI.Models.OpenAIModelClient GetOpenAIModelClient() { throw null; }
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.Responses.ResponsesClient GetResponsesClient() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
