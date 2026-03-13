@@ -283,10 +283,16 @@ public partial class AzureOpenAIClient : OpenAIClient
         throw new InvalidOperationException($"{nameof(RealtimeClient)} is not supported via the Azure.AI.OpenAI library. Please use the OpenAI library directly with v1 endpoints, instead.");
     }
 
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI001")]
     public override ResponsesClient GetResponsesClient()
-    {
-        return new AzureResponsesClient(Pipeline, deploymentName: null, _endpoint, _options);
-    }
+#if !AZURE_OPENAI_GA
+        => new AzureResponsesClient(Pipeline, deploymentName: null, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"ResponsesClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
+#endif
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override ConversationClient GetConversationClient()
