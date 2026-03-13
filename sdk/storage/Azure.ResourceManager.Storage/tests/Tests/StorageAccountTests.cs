@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(accountData.NetworkRuleSet.IpRules);
             Assert.IsNotEmpty(accountData.NetworkRuleSet.IpRules);
             Assert.AreEqual("23.45.67.89", accountData.NetworkRuleSet.IpRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountIPRuleAction.Allow, accountData.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, accountData.NetworkRuleSet.IpRules[0].Action);
 
             //update network rule
             StorageAccountPatch updateParameters = new StorageAccountPatch()
@@ -722,9 +722,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(accountData.NetworkRuleSet.IpRules);
             Assert.IsNotEmpty(accountData.NetworkRuleSet.IpRules);
             Assert.AreEqual("23.45.67.90", accountData.NetworkRuleSet.IpRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountIPRuleAction.Allow, accountData.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, accountData.NetworkRuleSet.IpRules[0].Action);
             Assert.AreEqual("23.45.67.91", accountData.NetworkRuleSet.IpRules[1].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountIPRuleAction.Allow, accountData.NetworkRuleSet.IpRules[1].Action);
+            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, accountData.NetworkRuleSet.IpRules[1].Action);
 
             //update network rule to allow
             updateParameters = new StorageAccountPatch()
@@ -1768,7 +1768,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardLRS));
             parameters.NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Deny) { Bypass = @"Logging,AzureServices" };
-            parameters.NetworkRuleSet.IpRules.Add(new StorageAccountIPRule("23.45.67.90") { Action = StorageAccountIPRuleAction.Allow });
+            parameters.NetworkRuleSet.IpRules.Add(new StorageAccountIPRule("23.45.67.90") { Action = StorageAccountNetworkRuleAction.Allow });
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
 
             //validate
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.NetworkRuleSet.IpRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.IpRules);
             Assert.AreEqual("23.45.67.90", account.Data.NetworkRuleSet.IpRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountIPRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[0].Action);
 
             //update vnet
             StorageAccountPatch updateParameters = new StorageAccountPatch
@@ -1789,8 +1789,8 @@ namespace Azure.ResourceManager.Storage.Tests
                 {
                     Bypass = @"Logging, Metrics",
                     IpRules = {
-                        new StorageAccountIPRule("23.45.67.91") { Action = StorageAccountIPRuleAction.Allow },
-                        new StorageAccountIPRule("23.45.67.92") { Action = StorageAccountIPRuleAction.Allow }
+                        new StorageAccountIPRule("23.45.67.91") { Action = StorageAccountNetworkRuleAction.Allow },
+                        new StorageAccountIPRule("23.45.67.92") { Action = StorageAccountNetworkRuleAction.Allow }
                     },
                     ResourceAccessRules =
                     {
@@ -1818,9 +1818,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(account.Data.NetworkRuleSet.IpRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.IpRules);
             Assert.AreEqual("23.45.67.91", account.Data.NetworkRuleSet.IpRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountIPRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[0].Action);
             Assert.AreEqual("23.45.67.92", account.Data.NetworkRuleSet.IpRules[1].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountIPRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[1].Action);
+            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[1].Action);
             Assert.NotNull(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[0].TenantId.ToString());
@@ -2497,13 +2497,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
-            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+            Assert.AreEqual(Guid.Parse(domainId), account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
             Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
-            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+            Assert.AreEqual(Guid.Parse(domainId), account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
             // Update storage account to None
             var updateParameters = new StorageAccountPatch
@@ -2533,13 +2533,13 @@ namespace Azure.ResourceManager.Storage.Tests
             account = (await account.UpdateAsync(updateParameters)).Value;
             Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
-            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+            Assert.AreEqual(Guid.Parse(domainId), account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
             Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
-            Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
+            Assert.AreEqual(Guid.Parse(domainId), account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
         }
 
         [Test]

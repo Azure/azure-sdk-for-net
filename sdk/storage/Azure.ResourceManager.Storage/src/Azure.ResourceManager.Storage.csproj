@@ -30,5 +30,8 @@
     <Compile Remove="Generated/Models/StorageAccountNameAvailabilityContent.cs" />
     <!-- Add setter to Rules property for backward compat -->
     <Compile Remove="Generated/StorageAccountManagementPolicyData.cs" />
+    <!-- Replace Action property type from StorageAccountIPRuleAction/StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction for backward compat -->
+    <Compile Remove="Generated/Models/StorageAccountIPRule.cs" />
+    <Compile Remove="Generated/Models/StorageAccountVirtualNetworkRule.cs" />
   </ItemGroup>
 </Project>

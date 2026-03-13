@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compatible constructor. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location) : this(sku, kind, location, default, default, default, default, default, default, default)
+        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location) : this(sku, kind, location, default, new ChangeTrackingList<string>(), default, new ChangeTrackingDictionary<string, string>(), default, default, default)
         {
         }
     }
