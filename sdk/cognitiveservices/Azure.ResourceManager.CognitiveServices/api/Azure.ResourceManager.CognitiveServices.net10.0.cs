@@ -1,37 +1,280 @@
 namespace Azure.ResourceManager.CognitiveServices
 {
+    public partial class AccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AccountResource>, System.Collections.IEnumerable
+    {
+        protected AccountCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AccountResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AccountResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.AccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.AccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AccountResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AccountConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>, System.Collections.IEnumerable
+    {
+        protected AccountConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> Get(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> GetAll(string target = null, string category = null, bool? includeAll = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> GetAllAsync(string target = null, string category = null, bool? includeAll = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> GetIfExists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>> GetIfExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AccountConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AccountConnectionResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string connectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> Update(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>> UpdateAsync(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AccountResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> CreateOrUpdate(string safetyProviderName, Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> CreateOrUpdateAsync(string safetyProviderName, Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource> GetAccountConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountConnectionResource>> GetAccountConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AccountConnectionCollection GetAccountConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> GetCognitiveServicesAccountDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> GetCognitiveServicesAccountDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentCollection GetCognitiveServicesAccountDeployments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> GetCognitiveServicesCapabilityHost(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>> GetCognitiveServicesCapabilityHostAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostCollection GetCognitiveServicesCapabilityHosts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperation(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> GetCognitiveServicesCommitmentPlanOperationAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationCollection GetCognitiveServicesCommitmentPlanOperations() { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeResource> GetCognitiveServicesEncryptionScope(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeResource>> GetCognitiveServicesEncryptionScopeAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeCollection GetCognitiveServicesEncryptionScopes() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> GetCognitiveServicesPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>> GetCognitiveServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionCollection GetCognitiveServicesPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource> GetCognitiveServicesProject(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource>> GetCognitiveServicesProjectAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCollection GetCognitiveServicesProjects() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource> GetDefenderForAISetting(string defenderForAISettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource>> GetDefenderForAISettingAsync(string defenderForAISettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.DefenderForAISettingCollection GetDefenderForAISettings() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> GetManagedNetworkSettingsPropertiesBasicResource(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>> GetManagedNetworkSettingsPropertiesBasicResourceAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceCollection GetManagedNetworkSettingsPropertiesBasicResources() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel> GetModels(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel> GetModelsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string nspConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string nspConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource> GetRaiBlocklist(string raiBlocklistName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>> GetRaiBlocklistAsync(string raiBlocklistName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiBlocklistCollection GetRaiBlocklists() { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiPolicyCollection GetRaiPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiPolicyResource> GetRaiPolicy(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiPolicyResource>> GetRaiPolicyAsync(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> GetRaiToolLabel(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> GetRaiToolLabelAsync(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiToolLabelCollection GetRaiToolLabels() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource> GetRaiTopic(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> GetRaiTopicAsync(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiTopicCollection GetRaiTopics() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyCollection GetSubscriptionRaiPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> GetSubscriptionRaiPolicy(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> GetSubscriptionRaiPolicyAsync(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.UsageListResult> GetUsages(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>> GetUsagesAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus> ProvisionManagedNetwork(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>> ProvisionManagedNetworkAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys> RegenerateKey(Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>> RegenerateKeyAsync(Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AgentApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>, System.Collections.IEnumerable
+    {
+        protected AgentApplicationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.CognitiveServices.AgentApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.CognitiveServices.AgentApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> GetAll(int? count = default(int?), int? skip = default(int?), string skipToken = null, System.Collections.Generic.IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> GetAllAsync(int? count = default(int?), int? skip = default(int?), string skipToken = null, System.Collections.Generic.IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AgentApplicationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>
+    {
+        public AgentApplicationData(Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties properties) { }
+        public Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.AgentApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.AgentApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentApplicationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AgentApplicationResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.AgentApplicationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string projectName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Disable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DisableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Enable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> EnableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> GetAgentDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>> GetAgentDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AgentDeploymentCollection GetAgentDeployments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult> GetAgents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>> GetAgentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.AgentApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.AgentApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.AgentApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.AgentApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class AgentDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>, System.Collections.IEnumerable
+    {
+        protected AgentDeploymentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.CognitiveServices.AgentDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.CognitiveServices.AgentDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> Get(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> GetAll(int? count = default(int?), string skipToken = null, System.Collections.Generic.IEnumerable<string> names = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> GetAllAsync(int? count = default(int?), string skipToken = null, System.Collections.Generic.IEnumerable<string> names = null, string orderBy = null, bool? orderByAsc = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AgentDeploymentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>
+    {
+        public AgentDeploymentData(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties properties) { }
+        public Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.AgentDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.AgentDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentDeploymentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AgentDeploymentResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.AgentDeploymentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string projectName, string appName, string deploymentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Start(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StartAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Stop(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StopAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.AgentDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.AgentDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.AgentDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.AgentDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.AgentDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.AgentDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class AzureResourceManagerCognitiveServicesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerCognitiveServicesContext() { }
         public static Azure.ResourceManager.CognitiveServices.AzureResourceManagerCognitiveServicesContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class CognitiveServicesAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>, System.Collections.IEnumerable
+    public partial class CognitiveServicesAccountData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>
     {
-        protected CognitiveServicesAccountCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string accountName, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class CognitiveServicesAccountData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>
-    {
-        public CognitiveServicesAccountData(Azure.Core.AzureLocation location) { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public CognitiveServicesAccountData() { }
+        public string ETag { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.Identity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -58,11 +301,14 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CognitiveServicesAccountDeploymentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>
     {
         public CognitiveServicesAccountDeploymentData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -84,8 +330,12 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> Pause(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> PauseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> Resume(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> ResumeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -98,77 +348,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku deployment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CognitiveServicesAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected CognitiveServicesAccountResource() { }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource> GetCognitiveServicesAccountDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource>> GetCognitiveServicesAccountDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentCollection GetCognitiveServicesAccountDeployments() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> GetCognitiveServicesCapabilityHost(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>> GetCognitiveServicesCapabilityHostAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostCollection GetCognitiveServicesCapabilityHosts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> GetCognitiveServicesConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>> GetCognitiveServicesConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionCollection GetCognitiveServicesConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeResource> GetCognitiveServicesEncryptionScope(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeResource>> GetCognitiveServicesEncryptionScopeAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeCollection GetCognitiveServicesEncryptionScopes() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> GetCognitiveServicesPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>> GetCognitiveServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionCollection GetCognitiveServicesPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource> GetCognitiveServicesProject(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource>> GetCognitiveServicesProjectAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCollection GetCognitiveServicesProjects() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> GetCommitmentPlan(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> GetCommitmentPlanAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanCollection GetCommitmentPlans() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource> GetDefenderForAISetting(string defenderForAISettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource>> GetDefenderForAISettingAsync(string defenderForAISettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.DefenderForAISettingCollection GetDefenderForAISettings() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel> GetModels(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel> GetModelsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string nspConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string nspConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource> GetRaiBlocklist(string raiBlocklistName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>> GetRaiBlocklistAsync(string raiBlocklistName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.RaiBlocklistCollection GetRaiBlocklists() { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.RaiPolicyCollection GetRaiPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiPolicyResource> GetRaiPolicy(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiPolicyResource>> GetRaiPolicyAsync(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetUsages(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetUsagesAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys> RegenerateKey(Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>> RegenerateKeyAsync(Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CognitiveServicesCapabilityHostCollection : Azure.ResourceManager.ArmCollection
+    public partial class CognitiveServicesCapabilityHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>, System.Collections.IEnumerable
     {
         protected CognitiveServicesCapabilityHostCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string capabilityHostName, Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -176,15 +356,23 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.Response<bool> Exists(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> Get(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>> GetAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> GetIfExists(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>> GetIfExistsAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class CognitiveServicesCapabilityHostData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>
     {
         public CognitiveServicesCapabilityHostData(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties properties) { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -227,6 +415,46 @@ namespace Azure.ResourceManager.CognitiveServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public partial class CognitiveServicesCommitmentPlanOperationCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected CognitiveServicesCommitmentPlanOperationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string commitmentPlanName, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string commitmentPlanName, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> Get(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> GetAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetIfExists(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> GetIfExistsAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CognitiveServicesCommitmentPlanOperationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CognitiveServicesCommitmentPlanOperationResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource> GetCommitmentPlanAccountAssociation(string commitmentPlanAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource>> GetCommitmentPlanAccountAssociationAsync(string commitmentPlanAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationCollection GetCommitmentPlanAccountAssociations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku commitmentPlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku commitmentPlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class CognitiveServicesCommitmentPlanResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -235,14 +463,11 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string commitmentPlanName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource> GetCommitmentPlanAccountAssociation(string commitmentPlanAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource>> GetCommitmentPlanAccountAssociationAsync(string commitmentPlanAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationCollection GetCommitmentPlanAccountAssociations() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -252,67 +477,34 @@ namespace Azure.ResourceManager.CognitiveServices
         Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku commitmentPlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku commitmentPlan, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CognitiveServicesConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>, System.Collections.IEnumerable
-    {
-        protected CognitiveServicesConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectionName, Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> Get(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> GetAll(string target = null, string category = null, bool? includeAll = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> GetAllAsync(string target = null, string category = null, bool? includeAll = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>> GetAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> GetIfExists(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>> GetIfExistsAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class CognitiveServicesConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>
     {
         public CognitiveServicesConnectionData(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties properties) { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CognitiveServicesConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected CognitiveServicesConnectionResource() { }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string connectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource> Update(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource>> UpdateAsync(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CognitiveServicesDeletedAccountCollection : Azure.ResourceManager.ArmCollection
     {
         protected CognitiveServicesDeletedAccountCollection() { }
-        public virtual Azure.Response<bool> Exists(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> Get(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetAsync(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetIfExists(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetIfExistsAsync(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> Get(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetAsync(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetIfExists(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetIfExistsAsync(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CognitiveServicesDeletedAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData>
     {
@@ -324,7 +516,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string resourceGroupName, string accountName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string resourceGroupName, string accountName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -363,10 +555,13 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CognitiveServicesEncryptionScopeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData>
     {
         public CognitiveServicesEncryptionScopeData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -404,66 +599,82 @@ namespace Azure.ResourceManager.CognitiveServices
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult>> CalculateModelCapacityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetCognitiveServicesAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult> CheckSkuAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>> CheckSkuAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> GetAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> GetAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AccountConnectionResource GetAccountConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AccountResource GetAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AccountCollection GetAccounts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AgentApplicationResource GetAgentApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AgentDeploymentResource GetAgentDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAllAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource GetCognitiveServicesAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountCollection GetCognitiveServicesAccounts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource GetCognitiveServicesCapabilityHostResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource GetCognitiveServicesCommitmentPlanOperationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperationsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource GetCognitiveServicesConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeResource GetCognitiveServicesEncryptionScopeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource GetCognitiveServicesPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource GetCognitiveServicesProjectCapabilityHostResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionResource GetCognitiveServicesProjectConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource GetCognitiveServicesProjectResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanResource GetCommitmentPlanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource GetDefenderForAISettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetDeletedAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetLocationBasedModelCapacities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetLocationBasedModelCapacitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetModelCapacities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetModelCapacitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModels(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModelsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource GetManagedNetworkSettingsPropertiesBasicResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModels(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModelsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource GetOutboundRuleBasicResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource GetProjectCapabilityHostResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource> GetQuotaTier(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> GetQuotaTierAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.QuotaTierResource GetQuotaTierResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.QuotaTierCollection GetQuotaTiers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.RaiBlocklistItemResource GetRaiBlocklistItemResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.RaiBlocklistResource GetRaiBlocklistResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CognitiveServices.RaiContentFilterResource> GetRaiContentFilter(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiContentFilterResource>> GetRaiContentFilterAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.RaiContentFilterResource GetRaiContentFilterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.RaiContentFilterCollection GetRaiContentFilters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> GetRaiExternalSafetyProviderSchema(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> GetRaiExternalSafetyProviderSchemaAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource GetRaiExternalSafetyProviderSchemaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaCollection GetRaiExternalSafetyProviderSchemas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.RaiPolicyResource GetRaiPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiToolLabelResource GetRaiToolLabelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiTopicResource GetRaiTopicResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku> GetResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku> GetResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource GetSubscriptionRaiPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class CognitiveServicesPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected CognitiveServicesPrivateEndpointConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -474,13 +685,13 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CognitiveServicesPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>
     {
         public CognitiveServicesPrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        public string ETag { get { throw null; } }
+        public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -503,37 +714,8 @@ namespace Azure.ResourceManager.CognitiveServices
         Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CognitiveServicesProjectCapabilityHostCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected CognitiveServicesProjectCapabilityHostCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string capabilityHostName, Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string capabilityHostName, Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource> Get(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource>> GetAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource> GetIfExists(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource>> GetIfExistsAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class CognitiveServicesProjectCapabilityHostResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected CognitiveServicesProjectCapabilityHostResource() { }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string projectName, string capabilityHostName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CognitiveServicesProjectCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource>, System.Collections.IEnumerable
     {
@@ -588,13 +770,18 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionResource> Update(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionResource>> UpdateAsync(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CognitiveServicesProjectData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>
+    public partial class CognitiveServicesProjectData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>
     {
-        public CognitiveServicesProjectData(Azure.Core.AzureLocation location) { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public CognitiveServicesProjectData() { }
+        public string ETag { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.Identity Identity { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -613,13 +800,16 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AgentApplicationResource> GetAgentApplication(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AgentApplicationResource>> GetAgentApplicationAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AgentApplicationCollection GetAgentApplications() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource> GetCognitiveServicesProjectCapabilityHost(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource>> GetCognitiveServicesProjectCapabilityHostAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostCollection GetCognitiveServicesProjectCapabilityHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionResource> GetCognitiveServicesProjectConnection(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionResource>> GetCognitiveServicesProjectConnectionAsync(string connectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionCollection GetCognitiveServicesProjectConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> GetProjectCapabilityHost(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>> GetProjectCapabilityHostAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostCollection GetProjectCapabilityHosts() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -653,9 +843,12 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         public CommitmentPlanAccountAssociationData() { }
         public string AccountId { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -687,63 +880,24 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CommitmentPlanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>, System.Collections.IEnumerable
-    {
-        protected CommitmentPlanCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string commitmentPlanName, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string commitmentPlanName, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> Get(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> GetAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> GetIfExists(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> GetIfExistsAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
     public partial class CommitmentPlanData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>
     {
         public CommitmentPlanData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public string Kind { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CommitmentPlanResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected CommitmentPlanResource() { }
-        public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string commitmentPlanName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CognitiveServices.CommitmentPlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.CommitmentPlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.CommitmentPlanResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.CommitmentPlanData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DefenderForAISettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource>, System.Collections.IEnumerable
     {
@@ -765,10 +919,13 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class DefenderForAISettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.DefenderForAISettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.DefenderForAISettingData>
     {
         public DefenderForAISettingData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState? State { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.DefenderForAISettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.DefenderForAISettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.DefenderForAISettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.DefenderForAISettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.DefenderForAISettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -798,6 +955,59 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource> Update(Azure.ResourceManager.CognitiveServices.DefenderForAISettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource>> UpdateAsync(Azure.ResourceManager.CognitiveServices.DefenderForAISettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ManagedNetworkSettingsPropertiesBasicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ManagedNetworkSettingsPropertiesBasicResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string managedNetworkName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> GetOutboundRuleBasicResource(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>> GetOutboundRuleBasicResourceAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceCollection GetOutboundRuleBasicResources() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult> Post(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>> PostAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ManagedNetworkSettingsPropertiesBasicResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>, System.Collections.IEnumerable
+    {
+        protected ManagedNetworkSettingsPropertiesBasicResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string managedNetworkName, Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string managedNetworkName, Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> Get(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>> GetAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> GetIfExists(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>> GetIfExistsAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ManagedNetworkSettingsPropertiesBasicResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>
+    {
+        public ManagedNetworkSettingsPropertiesBasicResourceData() { }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetworkSecurityPerimeterConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource>, System.Collections.IEnumerable
     {
         protected NetworkSecurityPerimeterConfigurationCollection() { }
@@ -815,9 +1025,12 @@ namespace Azure.ResourceManager.CognitiveServices
     }
     public partial class NetworkSecurityPerimeterConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>
     {
-        public NetworkSecurityPerimeterConfigurationData() { }
-        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } set { } }
+        internal NetworkSecurityPerimeterConfigurationData() { }
+        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -841,6 +1054,154 @@ namespace Azure.ResourceManager.CognitiveServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OutboundRuleBasicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected OutboundRuleBasicResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string managedNetworkName, string ruleName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class OutboundRuleBasicResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>, System.Collections.IEnumerable
+    {
+        protected OutboundRuleBasicResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> Get(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>> GetAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> GetIfExists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>> GetIfExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class OutboundRuleBasicResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>
+    {
+        public OutboundRuleBasicResourceData(Azure.ResourceManager.CognitiveServices.Models.OutboundRule properties) { }
+        public Azure.ResourceManager.CognitiveServices.Models.OutboundRule Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProjectCapabilityHostCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>, System.Collections.IEnumerable
+    {
+        protected ProjectCapabilityHostCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string capabilityHostName, Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string capabilityHostName, Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> Get(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>> GetAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> GetIfExists(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>> GetIfExistsAsync(string capabilityHostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ProjectCapabilityHostData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>
+    {
+        public ProjectCapabilityHostData(Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties properties) { }
+        public Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProjectCapabilityHostResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ProjectCapabilityHostResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string projectName, string capabilityHostName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class QuotaTierCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.QuotaTierResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.QuotaTierResource>, System.Collections.IEnumerable
+    {
+        protected QuotaTierCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.QuotaTierResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string @default, Azure.ResourceManager.CognitiveServices.QuotaTierData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string @default, Azure.ResourceManager.CognitiveServices.QuotaTierData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource> Get(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.QuotaTierResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.QuotaTierResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> GetAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.QuotaTierResource> GetIfExists(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> GetIfExistsAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.QuotaTierResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.QuotaTierResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.QuotaTierResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.QuotaTierResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class QuotaTierData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>
+    {
+        public QuotaTierData() { }
+        public Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.QuotaTierData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.QuotaTierData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class QuotaTierResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected QuotaTierResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.QuotaTierData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string @default) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.QuotaTierData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.QuotaTierData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.QuotaTierData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource> Update(Azure.ResourceManager.CognitiveServices.QuotaTierData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> UpdateAsync(Azure.ResourceManager.CognitiveServices.QuotaTierData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class RaiBlocklistCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>, System.Collections.IEnumerable
     {
         protected RaiBlocklistCollection() { }
@@ -861,10 +1222,13 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class RaiBlocklistData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistData>
     {
         public RaiBlocklistData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public string RaiBlocklistDescription { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.RaiBlocklistData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.RaiBlocklistData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -891,10 +1255,13 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class RaiBlocklistItemData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData>
     {
         public RaiBlocklistItemData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -934,10 +1301,10 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource> BatchAddRaiBlocklistItem(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>> BatchAddRaiBlocklistItemAsync(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent> content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response BatchDeleteRaiBlocklistItem(System.BinaryData raiBlocklistItemsNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> BatchDeleteRaiBlocklistItemAsync(System.BinaryData raiBlocklistItemsNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource> BatchAdd(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent> raiBlocklistItems, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiBlocklistResource>> BatchAddAsync(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent> raiBlocklistItems, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response BatchDelete(System.Collections.Generic.IEnumerable<string> raiBlocklistItemsNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> BatchDeleteAsync(System.Collections.Generic.IEnumerable<string> raiBlocklistItemsNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -975,9 +1342,12 @@ namespace Azure.ResourceManager.CognitiveServices
     }
     public partial class RaiContentFilterData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>
     {
-        public RaiContentFilterData() { }
-        public Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties Properties { get { throw null; } set { } }
+        internal RaiContentFilterData() { }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.RaiContentFilterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.RaiContentFilterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -999,6 +1369,64 @@ namespace Azure.ResourceManager.CognitiveServices
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiContentFilterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RaiExternalSafetyProviderSchemaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>, System.Collections.IEnumerable
+    {
+        protected RaiExternalSafetyProviderSchemaCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string safetyProviderName, Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string safetyProviderName, Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> Get(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> GetAsync(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> GetIfExists(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> GetIfExistsAsync(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RaiExternalSafetyProviderSchemaData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>
+    {
+        public RaiExternalSafetyProviderSchemaData() { }
+        public string ETag { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiExternalSafetyProviderSchemaResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RaiExternalSafetyProviderSchemaResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string safetyProviderName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class RaiPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiPolicyResource>, System.Collections.IEnumerable
     {
         protected RaiPolicyCollection() { }
@@ -1019,10 +1447,13 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class RaiPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>
     {
         public RaiPolicyData() { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public string ETag { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.RaiPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.RaiPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1054,41 +1485,202 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class RaiToolLabelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>, System.Collections.IEnumerable
+    {
+        protected RaiToolLabelCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string raiToolConnectionName, Azure.ResourceManager.CognitiveServices.RaiToolLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string raiToolConnectionName, Azure.ResourceManager.CognitiveServices.RaiToolLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> Get(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> GetAsync(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> GetIfExists(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> GetIfExistsAsync(string raiToolConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RaiToolLabelData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>
+    {
+        public RaiToolLabelData() { }
+        public string ETag { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiToolLabelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiToolLabelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiToolLabelResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RaiToolLabelResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiToolLabelData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string raiToolConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiToolLabelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiToolLabelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiToolLabelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiToolLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiToolLabelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiToolLabelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RaiTopicCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiTopicResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiTopicResource>, System.Collections.IEnumerable
+    {
+        protected RaiTopicCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiTopicResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string raiTopicName, Azure.ResourceManager.CognitiveServices.RaiTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string raiTopicName, Azure.ResourceManager.CognitiveServices.RaiTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource> Get(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.RaiTopicResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.RaiTopicResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> GetAsync(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.RaiTopicResource> GetIfExists(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> GetIfExistsAsync(string raiTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CognitiveServices.RaiTopicResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CognitiveServices.RaiTopicResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.CognitiveServices.RaiTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.RaiTopicResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RaiTopicData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>
+    {
+        public RaiTopicData() { }
+        public string ETag { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiTopicResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RaiTopicResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiTopicData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string raiTopicName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiTopicData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiTopicData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiTopicData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiTopicResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.RaiTopicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionRaiPolicyCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected SubscriptionRaiPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string raiPolicyName, Azure.ResourceManager.CognitiveServices.RaiPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string raiPolicyName, Azure.ResourceManager.CognitiveServices.RaiPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> Get(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> GetAsync(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> GetIfExists(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> GetIfExistsAsync(string raiPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionRaiPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SubscriptionRaiPolicyResource() { }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string raiPolicyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.CognitiveServices.RaiPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.RaiPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.RaiPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CognitiveServices.RaiPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.CognitiveServices.Mocking
 {
     public partial class MockableCognitiveServicesArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableCognitiveServicesArmClient() { }
+        public virtual Azure.ResourceManager.CognitiveServices.AccountConnectionResource GetAccountConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AccountResource GetAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AgentApplicationResource GetAgentApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AgentDeploymentResource GetAgentDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource GetCognitiveServicesAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostResource GetCognitiveServicesCapabilityHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource GetCognitiveServicesCommitmentPlanOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionResource GetCognitiveServicesConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeResource GetCognitiveServicesEncryptionScopeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionResource GetCognitiveServicesPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectCapabilityHostResource GetCognitiveServicesProjectCapabilityHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectConnectionResource GetCognitiveServicesProjectConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectResource GetCognitiveServicesProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CommitmentPlanResource GetCommitmentPlanResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.DefenderForAISettingResource GetDefenderForAISettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResource GetManagedNetworkSettingsPropertiesBasicResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResource GetOutboundRuleBasicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostResource GetProjectCapabilityHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.QuotaTierResource GetQuotaTierResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.RaiBlocklistItemResource GetRaiBlocklistItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.RaiBlocklistResource GetRaiBlocklistResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.RaiContentFilterResource GetRaiContentFilterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource GetRaiExternalSafetyProviderSchemaResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.RaiPolicyResource GetRaiPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiToolLabelResource GetRaiToolLabelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiTopicResource GetRaiTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.SubscriptionRaiPolicyResource GetSubscriptionRaiPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableCognitiveServicesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableCognitiveServicesResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetCognitiveServicesAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountCollection GetCognitiveServicesAccounts() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(string commitmentPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource> GetAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.AccountResource>> GetAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.AccountCollection GetAccounts() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableCognitiveServicesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -1097,32 +1689,38 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult>> CalculateModelCapacityAsync(Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetCognitiveServicesAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(Azure.Core.AzureLocation location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult> CheckSkuAvailability(string location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>> CheckSkuAvailabilityAsync(string location, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAll(string location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAll(string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetAll(string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAllAsync(string location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetAllAsync(string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetAllAsync(string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.AccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesCommitmentPlanOperationResource> GetCognitiveServicesCommitmentPlanOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(string location, string resourceGroupName, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiers(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiersAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetDeletedAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetLocationBasedModelCapacities(Azure.Core.AzureLocation location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetLocationBasedModelCapacitiesAsync(Azure.Core.AzureLocation location, string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetModelCapacities(string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem> GetModelCapacitiesAsync(string modelFormat, string modelName, string modelVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModels(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModelsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiers(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier> GetCommitmentTiersAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModels(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel> GetModelsAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource> GetQuotaTier(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.QuotaTierResource>> GetQuotaTierAsync(string @default, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.QuotaTierCollection GetQuotaTiers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiContentFilterResource> GetRaiContentFilter(Azure.Core.AzureLocation location, string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiContentFilterResource>> GetRaiContentFilterAsync(Azure.Core.AzureLocation location, string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CognitiveServices.RaiContentFilterCollection GetRaiContentFilters(Azure.Core.AzureLocation location) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource> GetRaiExternalSafetyProviderSchema(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaResource>> GetRaiExternalSafetyProviderSchemaAsync(string safetyProviderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaCollection GetRaiExternalSafetyProviderSchemas() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku> GetResourceSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku> GetResourceSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetUsages(Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> GetUsagesAsync(Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -1130,7 +1728,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class AadAuthTypeConnectionProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties>
     {
         public AadAuthTypeConnectionProperties() { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AadAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1143,7 +1744,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction? Action { get { throw null; } }
         public System.DateTimeOffset? Expiration { get { throw null; } }
         public float? RateLimitPercentage { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AbusePenalty JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AbusePenalty PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.AbusePenalty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AbusePenalty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AbusePenalty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.AbusePenalty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AbusePenalty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1163,6 +1767,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction left, Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction left, Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1170,7 +1775,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public AccessKeyAuthTypeConnectionProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey Credentials { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1181,12 +1789,212 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public AccountKeyAuthTypeConnectionProperties() { }
         public string CredentialsKey { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AccountSkuListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>
+    {
+        internal AccountSkuListResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class AgentDeploymentProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>
+    {
+        internal AgentDeploymentProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference> Agents { get { throw null; } set { } }
+        public string DeploymentId { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion> Protocols { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState? State { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentDeploymentProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentDeploymentProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentDeploymentState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentDeploymentState(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Failed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Running { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Starting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Stopped { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Stopping { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState left, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState left, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgenticApplicationProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>
+    {
+        public AgenticApplicationProperties() { }
+        public Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity AgentIdentityBlueprint { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties> Agents { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy AuthorizationPolicy { get { throw null; } set { } }
+        public string BaseUri { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity DefaultInstanceIdentity { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy TrafficRoutingPolicy { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgenticApplicationProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgenticApplicationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentProtocol : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.AgentProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentProtocol A2A { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentProtocol Agent { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentProtocol Responses { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.AgentProtocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AgentProtocol left, Azure.ResourceManager.CognitiveServices.Models.AgentProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgentProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AgentProtocol? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.AgentProtocol left, Azure.ResourceManager.CognitiveServices.Models.AgentProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AgentProtocolVersion : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>
+    {
+        public AgentProtocolVersion() { }
+        public Azure.ResourceManager.CognitiveServices.Models.AgentProtocol? Protocol { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentReference : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>
+    {
+        internal AgentReference() { }
+        public Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AgentReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AgentReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentReferenceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>
+    {
+        public AgentReferenceProperties() { }
+        public string AgentId { get { throw null; } set { } }
+        public string AgentName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AgentReferenceResourceArmPaginatedResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>
+    {
+        internal AgentReferenceResourceArmPaginatedResult() { }
+        public string NextLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.AgentReference> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AIFoundryNetworkInjection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection>
     {
@@ -1194,7 +2002,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType? Scenario { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetArmId { get { throw null; } set { } }
         public bool? UseMicrosoftManagedNetwork { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1214,6 +2025,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType left, Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType left, Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjectionScenarioType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1221,12 +2033,43 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public ApiKeyAuthConnectionProperties() { }
         public string CredentialsKey { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class ApplicationAuthorizationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>
+    {
+        internal ApplicationAuthorizationPolicy() { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApplicationTrafficRoutingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>
+    {
+        public ApplicationTrafficRoutingPolicy() { }
+        public Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol? Protocol { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule> Rules { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmCognitiveServicesModelFactory
     {
@@ -1234,82 +2077,179 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.AbusePenalty AbusePenalty(Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction? action = default(Azure.ResourceManager.CognitiveServices.Models.AbusePenaltyAction?), float? rateLimitPercentage = default(float?), System.DateTimeOffset? expiration = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.AccessKeyAuthTypeConnectionProperties AccessKeyAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey credentials = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.AccountKeyAuthTypeConnectionProperties AccountKeyAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), string credentialsKey = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AccountSkuListResult AccountSkuListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku> value = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AgentApplicationData AgentApplicationData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.AgentDeploymentData AgentDeploymentData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties AgentDeploymentProperties(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string displayName = null, string deploymentId = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState? state = default(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion> protocols = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference> agents = null, string deploymentType = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProperties AgenticApplicationProperties(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string displayName = null, string baseUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties> agents = null, Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity agentIdentityBlueprint = null, Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity defaultInstanceIdentity = null, Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy authorizationPolicy = null, Azure.ResourceManager.CognitiveServices.Models.ApplicationTrafficRoutingPolicy trafficRoutingPolicy = null, Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.AgenticApplicationProvisioningState?), bool? isEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentReference AgentReference(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AgentReferenceResourceArmPaginatedResult AgentReferenceResourceArmPaginatedResult(string nextLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AgentReference> value = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ApiKeyAuthConnectionProperties ApiKeyAuthConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), string credentialsKey = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity AssignedIdentity(Azure.ResourceManager.CognitiveServices.Models.IdentityKind kind = default(Azure.ResourceManager.CognitiveServices.Models.IdentityKind), Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType type = default(Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType), string clientId = null, string principalId = null, string tenantId = null, string subject = null, Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku AvailableCognitiveServicesSku(string resourceType = null, string name = null, string tier = null, string kind = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions> restrictions = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo BillingMeterInfo(string name = null, string meterId = null, string unit = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent CalculateModelCapacityContent(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, string skuName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload> workloads = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult CalculateModelCapacityResult(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, string skuName = null, Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity estimatedCapacity = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity CalculateModelCapacityResultEstimatedCapacity(int? value = default(int?), int? deployableValue = default(int?)) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData CognitiveServicesAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData CognitiveServicesAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string kind, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties properties, Azure.ETag? etag) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountData CognitiveServicesAccountData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, string etag = null, string kind = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, Azure.ResourceManager.CognitiveServices.Models.Identity identity = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku, Azure.ETag? etag, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties properties) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties properties) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties properties = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, Azure.Core.ResourceIdentifier sourceAccount = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings capacitySettings, string parentDeploymentName) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings = null, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities = null, string raiPolicyName = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits = null, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption = default(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption?), bool? isDynamicThrottlingEnabled = default(bool?), int? currentCapacity = default(int?), Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings capacitySettings = null, string parentDeploymentName = null, string spilloverDeploymentName = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings scaleSettings = null, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities = null, string raiPolicyName = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rateLimits = null, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? versionUpgradeOption = default(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption?), bool? dynamicThrottlingEnabled = default(bool?), int? currentCapacity = default(int?), Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings capacitySettings = null, string parentDeploymentName = null, string spilloverDeploymentName = null, Azure.ResourceManager.CognitiveServices.Models.ServiceTier? serviceTier = default(Azure.ResourceManager.CognitiveServices.Models.ServiceTier?), Azure.ResourceManager.CognitiveServices.Models.DeploymentState? deploymentState = default(Azure.ResourceManager.CognitiveServices.Models.DeploymentState?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings CognitiveServicesAccountDeploymentScaleSettings(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType? scaleType = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType?), int? capacity = default(int?), int? activeCapacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel CognitiveServicesAccountModel(string format, string name, string version, string source, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> skus, int? maxCapacity, System.Collections.Generic.IDictionary<string, string> capabilities, System.Collections.Generic.IDictionary<string, string> finetuneCapabilities, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo deprecation, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? lifecycleStatus, Azure.ResourceManager.Models.SystemData systemData) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, Azure.Core.ResourceIdentifier sourceAccount = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> skus = null, int? maxCapacity = default(int?), System.Collections.Generic.IDictionary<string, string> capabilities = null, System.Collections.Generic.IDictionary<string, string> finetuneCapabilities = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo deprecation = null, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? lifecycleStatus = default(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus?), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, Azure.Core.ResourceIdentifier sourceAccount = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> skus = null, int? maxCapacity = default(int?), System.Collections.Generic.IDictionary<string, string> capabilities = null, System.Collections.Generic.IDictionary<string, string> finetuneCapabilities = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo deprecation = null, Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig replacementConfig = null, string modelCatalogAssetId = null, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? lifecycleStatus = default(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus?), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher, string format, string name, string version, string source, Azure.Core.ResourceIdentifier sourceAccount, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> skus, int? maxCapacity, System.Collections.Generic.IDictionary<string, string> capabilities, System.Collections.Generic.IDictionary<string, string> finetuneCapabilities, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo deprecation, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? lifecycleStatus, Azure.ResourceManager.Models.SystemData systemData) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState, string endpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties, System.DateTimeOffset? createdOn, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints, bool? restore, System.DateTimeOffset? deletedOn, string scheduledPurgeDate, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = default(bool?), string migrationToken = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage = null, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = default(bool?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints = null, bool? restore = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string scheduledPurgeDate = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations = null, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty = null, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig = null, Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection aiFoundryNetworkInjection = null, bool? allowProjectManagement = default(bool?), string defaultProject = null, System.Collections.Generic.IEnumerable<string> associatedProjects = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState?), string endpoint = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = default(bool?), string migrationToken = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage = null, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = default(bool?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints = null, bool? restore = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string scheduledPurgeDate = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations = null, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty = null, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection> aiFoundryNetworkInjections = null, bool? allowProjectManagement = default(bool?), string defaultProject = null, System.Collections.Generic.IEnumerable<string> associatedProjects = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState, string endpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties, System.DateTimeOffset? createdOn, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints, bool? restore, System.DateTimeOffset? deletedOn, string scheduledPurgeDate, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, System.Collections.Generic.IEnumerable<string> associatedProjects) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState, string endpoint, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties, System.DateTimeOffset? createdOn, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints, bool? restore, System.DateTimeOffset? deletedOn, string scheduledPurgeDate, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku CognitiveServicesAccountSku(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> aiServicesConnections = null, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind? capabilityHostKind = default(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind?), string customerSubnet = null, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState?), System.Collections.Generic.IEnumerable<string> storageConnections = null, System.Collections.Generic.IEnumerable<string> threadStorageConnections = null, System.Collections.Generic.IEnumerable<string> vectorStoreConnections = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData CognitiveServicesConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties CognitiveServicesAccountProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState?), string endpoint = null, string internalId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = default(bool?), string migrationToken = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet networkAcls = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> userOwnedStorage = null, Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace amlWorkspace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties apiProperties = null, string dateCreated = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit callRateLimit = null, bool? dynamicThrottlingEnabled = default(bool?), bool? storedCompletionsDisabled = default(bool?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints = null, bool? restore = default(bool?), string deletionDate = null, string scheduledPurgeDate = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> commitmentPlanAssociations = null, Azure.ResourceManager.CognitiveServices.Models.AbusePenalty abusePenalty = null, Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig raiMonitorConfig = null, Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection networkInjections = null, bool? allowProjectManagement = default(bool?), string defaultProject = null, System.Collections.Generic.IEnumerable<string> associatedProjects = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku CognitiveServicesAccountSku(string resourceType = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description, System.Collections.Generic.IDictionary<string, string> tags, System.Collections.Generic.IEnumerable<string> aiServicesConnections, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind? capabilityHostKind, string customerSubnet, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<string> storageConnections, System.Collections.Generic.IEnumerable<string> threadStorageConnections, System.Collections.Generic.IEnumerable<string> vectorStoreConnections) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> aiServicesConnections = null, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind? capabilityHostKind = default(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind?), string customerSubnet = null, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState?), System.Collections.Generic.IEnumerable<string> storageConnections = null, System.Collections.Generic.IEnumerable<string> threadStorageConnections = null, System.Collections.Generic.IEnumerable<string> vectorStoreConnections = null, bool? enablePublicHostingEnvironment = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig CognitiveServicesCapacityConfig(int? minimum = default(int?), int? maximum = default(int?), int? step = default(int?), int? @default = default(int?), System.Collections.Generic.IEnumerable<int> allowedValues = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesConnectionData CognitiveServicesConnectionData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties CognitiveServicesConnectionProperties(string authType = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), string kind = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable = default(bool?), string reason = null, string subdomainName = null, string domainAvailabilityType = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName, Azure.Core.ResourceType resourceType, string kind) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName = null, string type = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable = default(bool?), string reason = null, string subdomainName = null, string type = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties properties) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties properties = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties keyVaultProperties = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource? keySource = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource?), Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState?), Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState? state = default(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel CognitiveServicesModel(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel model, string kind, string skuName) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel CognitiveServicesModel(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel model = null, string kind = null, string skuName = null, string description = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku CognitiveServicesModelSku(string name, string usageName, System.DateTimeOffset? deprecationOn, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig capacity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit> rateLimits) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku CognitiveServicesModelSku(string name = null, string usageName = null, System.DateTimeOffset? deprecationOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig capacity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit> rateLimits = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo> cost = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource CognitiveServicesPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings CognitiveServicesMultiRegionSettings(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod? routingMethod = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting> regions = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet CognitiveServicesNetworkRuleSet(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction? defaultAction = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction?), Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection? bypass = default(Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule> ipRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule> virtualNetworkRules = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter CognitiveServicesNetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id = null, string perimeterGuid = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags CognitiveServicesPatchResourceTags(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.AzureLocation? location, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<string> groupIds, Azure.ETag? etag) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties properties = null, string etag = null, string location = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult CognitiveServicesPrivateEndpointConnectionListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> value = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource CognitiveServicesPrivateLinkResource(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult CognitiveServicesPrivateLinkResourceListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource> value = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties CognitiveServicesPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null, string displayName = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData CognitiveServicesProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData CognitiveServicesProjectData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties properties, Azure.ETag? etag) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CognitiveServicesProjectData CognitiveServicesProjectData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, string etag = null, Azure.ResourceManager.CognitiveServices.Models.Identity identity = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties CognitiveServicesProjectProperties(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState?), string displayName = null, string description = null, System.Collections.Generic.IReadOnlyDictionary<string, string> endpoints = null, bool? isDefault = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku CognitiveServicesResourceSku(string resourceType = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig capacity = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList CognitiveServicesSkuAvailabilityList(string kind = null, string skuAvailabilityType = null, string skuName = null, bool? isSkuAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent CognitiveServicesSkuAvailabilityContent(System.Collections.Generic.IEnumerable<string> skus = null, string kind = null, string type = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList CognitiveServicesSkuAvailabilityList(string kind = null, string type = null, string skuName = null, bool? skuAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability CognitiveServicesSkuCapability(string name = null, string value = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades = default(float?), float? countOfUpgradesAfterDowngrades = default(float?), System.DateTimeOffset? lastChangedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades, float? countOfUpgradesAfterDowngrades, System.DateTimeOffset? lastChangedOn) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades = default(float?), float? countOfUpgradesAfterDowngrades = default(float?), string lastChangeDate = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo CognitiveServicesSkuRestrictionInfo(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions CognitiveServicesSkuRestrictions(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionsType? restrictionsType = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionsType?), System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo restrictionInfo = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode? reasonCode = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions CognitiveServicesSkuRestrictions(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionsType? type = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionsType?), System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo restrictionInfo = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode? reasonCode = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentCost CommitmentCost(string commitmentMeterId = null, string overageMeterId = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod CommitmentPeriod(string tier = null, int? count = default(int?), Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota quota = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, string accountId = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod CommitmentPeriod(string tier, int? count, Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota quota, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod CommitmentPeriod(string tier = null, int? count = default(int?), Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota quota = null, string startDate = null, string endDate = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, string accountId) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string accountId) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation CommitmentPlanAssociation(Azure.Core.ResourceIdentifier commitmentPlanId = null, string commitmentPlanLocation = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanData CommitmentPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string kind = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties CommitmentPlanProperties(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState?), System.Guid? commitmentPlanGuid = default(System.Guid?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel? hostingModel = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel?), string planType = null, Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod current = null, bool? autoRenew = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod next = null, Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod last = null, System.Collections.Generic.IEnumerable<string> provisioningIssues = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string accountId = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation CommitmentPlanAssociation(string commitmentPlanId = null, string commitmentPlanLocation = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanData CommitmentPlanData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string kind, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation? location, Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties properties) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.CommitmentPlanData CommitmentPlanData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null, string location = null, string kind = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties CommitmentPlanProperties(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState?), string commitmentPlanGuid = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel? hostingModel = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel?), string planType = null, Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod current = null, bool? autoRenew = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod next = null, Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod last = null, System.Collections.Generic.IEnumerable<string> provisioningIssues = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota CommitmentQuota(long? quantity = default(long?), string unit = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CommitmentTier CommitmentTier(string kind = null, string skuName = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel? hostingModel = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel?), string planType = null, string tier = null, int? maxCount = default(int?), Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota quota = null, Azure.ResourceManager.CognitiveServices.Models.CommitmentCost cost = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties CustomKeysConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), System.Collections.Generic.IDictionary<string, string> credentialsKeys = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.DefenderForAISettingData DefenderForAISettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState? state = default(Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.DefenderForAISettingData DefenderForAISettingData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState? state) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.DefenderForAISettingData DefenderForAISettingData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState? state = default(Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState?), string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule FqdnOutboundRule(Azure.ResourceManager.CognitiveServices.Models.RuleCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.RuleCategory?), Azure.ResourceManager.CognitiveServices.Models.RuleStatus? status = default(Azure.ResourceManager.CognitiveServices.Models.RuleStatus?), string errorInformation = null, System.Collections.Generic.IEnumerable<string> parentRuleNames = null, string destination = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment HostedAgentDeployment(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string displayName = null, string deploymentId = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState? state = default(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion> protocols = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference> agents = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState?), int? minReplicas = default(int?), int? maxReplicas = default(int?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.Identity Identity(Azure.ResourceManager.CognitiveServices.Models.ResourceIdentityType? type = default(Azure.ResourceManager.CognitiveServices.Models.ResourceIdentityType?), string tenantId = null, string principalId = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment ManagedAgentDeployment(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string displayName = null, string deploymentId = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState? state = default(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.AgentProtocolVersion> protocols = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference> agents = null, Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties ManagedIdentityAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity credentials = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem ModelCapacityListResultValueItem(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings ManagedNetworkSettings(Azure.ResourceManager.CognitiveServices.Models.IsolationMode? isolationMode = default(Azure.ResourceManager.CognitiveServices.Models.IsolationMode?), string networkId = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CognitiveServices.Models.OutboundRule> outboundRules = null, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus? status = default(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus?), Azure.ResourceManager.CognitiveServices.Models.FirewallSku? firewallSku = default(Azure.ResourceManager.CognitiveServices.Models.FirewallSku?), Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind? managedNetworkKind = default(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind?), string egressIpAddress = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource ManagedNetworkSettingsBasicResource(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx ManagedNetworkSettingsEx(Azure.ResourceManager.CognitiveServices.Models.IsolationMode? isolationMode = default(Azure.ResourceManager.CognitiveServices.Models.IsolationMode?), string networkId = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CognitiveServices.Models.OutboundRule> outboundRules = null, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus? status = default(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus?), Azure.ResourceManager.CognitiveServices.Models.FirewallSku? firewallSku = default(Azure.ResourceManager.CognitiveServices.Models.FirewallSku?), Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind? managedNetworkKind = default(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind?), string egressIpAddress = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.IsolationMode> changeableIsolationModes = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties ManagedNetworkSettingsProperties(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx managedNetwork = null, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData ManagedNetworkSettingsPropertiesBasicResourceData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem ModelCapacityListResultValueItem(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string location = null, Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties ModelSkuCapacityProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel model = null, string skuName = null, float? availableCapacity = default(float?), float? availableFinetuneCapacity = default(float?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule NetworkSecurityPerimeterAccessRule(string name = null, Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties NetworkSecurityPerimeterAccessRuleProperties(Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection? direction = default(Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo NetworkSecurityPerimeterConfigurationAssociationInfo(string name = null, string accessMode = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation = null, Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo profile = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo NetworkSecurityPerimeterProfileInfo(string name = null, long? accessRulesVersion = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule> accessRules = null, long? diagnosticSettingsVersion = default(long?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue NetworkSecurityPerimeterProvisioningIssue(string name = null, Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties NetworkSecurityPerimeterProvisioningIssueProperties(string issueType = null, string severity = null, string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties NoneAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties OAuth2AuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2 credentials = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.OutboundRule OutboundRule(Azure.ResourceManager.CognitiveServices.Models.RuleCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.RuleCategory?), Azure.ResourceManager.CognitiveServices.Models.RuleStatus? status = default(Azure.ResourceManager.CognitiveServices.Models.RuleStatus?), string type = null, string errorInformation = null, System.Collections.Generic.IEnumerable<string> parentRuleNames = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData OutboundRuleBasicResourceData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.OutboundRule properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult OutboundRuleListResult(string nextLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData> value = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties PatAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), string credentialsPat = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.RaiBlocklistData RaiBlocklistData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, string raiBlocklistDescription = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData RaiBlocklistItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.RaiContentFilterData RaiContentFilterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.RaiPolicyData RaiPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties RaiPolicyProperties(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType? policyType = default(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType?), Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode? mode = default(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode?), string basePolicyName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter> contentFilters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig> customBlocklists = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku PatchResourceTagsAndSku(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku sku = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(string privateEndpointId = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState?), System.Collections.Generic.IEnumerable<string> groupIds = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.ProjectCapabilityHostData ProjectCapabilityHostData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties ProjectCapabilityHostProperties(System.Collections.Generic.IEnumerable<string> aiServicesConnections = null, System.Collections.Generic.IEnumerable<string> vectorStoreConnections = null, System.Collections.Generic.IEnumerable<string> storageConnections = null, System.Collections.Generic.IEnumerable<string> threadStorageConnections = null, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? provisioningState = default(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.QuotaTierData QuotaTierData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties QuotaTierProperties(string currentTierName = null, Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy? tierUpgradePolicy = default(Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy?), System.DateTimeOffset? assignmentOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo tierUpgradeEligibilityInfo = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo QuotaTierUpgradeEligibilityInfo(string nextTierName = null, Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus? upgradeAvailabilityStatus = default(Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus?), System.DateTimeOffset? upgradeApplicableOn = default(System.DateTimeOffset?), string upgradeUnavailabilityReason = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiBlocklistData RaiBlocklistData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, string raiBlocklistDescription) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiBlocklistData RaiBlocklistData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string raiBlocklistDescription = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData RaiBlocklistItemData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties properties) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiBlocklistItemData RaiBlocklistItemData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties properties = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiContentFilterData RaiContentFilterData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties RaiContentFilterProperties(string name = null, bool? isMultiLevelFilter = default(bool?), Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? source = default(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiExternalSafetyProviderSchemaData RaiExternalSafetyProviderSchemaData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties properties = null, string etag = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties RaiExternalSafetyProviderSchemaProperties(string providerId = null, string providerName = null, string mode = null, System.Uri uri = null, string secretName = null, string managedIdentity = null, System.Uri keyVaultUri = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiPolicyData RaiPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties properties) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiPolicyData RaiPolicyData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties properties = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties RaiPolicyProperties(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType? policyType, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode? mode, string basePolicyName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter> contentFilters, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig> customBlocklists) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties RaiPolicyProperties(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType? type = default(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType?), Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode? mode = default(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode?), string basePolicyName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter> contentFilters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig> customBlocklists = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig> customTopics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig> safetyProviders = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiToolLabelData RaiToolLabelData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties properties = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties RaiToolLabelProperties(string toolConnectionName = null, System.Collections.Generic.IDictionary<string, string> accountScopeLabelValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem> projectScopes = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem RaiToolLabelPropertiesProjectScopesItem(string project = null, System.Collections.Generic.IDictionary<string, string> labelValues = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.RaiTopicData RaiTopicData(string id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties properties = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent RegenerateServiceAccountKeyContent(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountKeyName keyName = Azure.ResourceManager.CognitiveServices.Models.ServiceAccountKeyName.Key1) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig ReplacementConfig(string targetModelName = null, string targetModelVersion = null, System.DateTimeOffset? autoUpgradeStartOn = default(System.DateTimeOffset?), int? upgradeOnExpiryLeadTimeDays = default(int?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties SASAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), string credentialsSas = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys ServiceAccountApiKeys(string key1 = null, string key2 = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties ServiceAccountApiProperties(string qnaRuntimeEndpoint = null, string qnaAzureSearchEndpointKey = null, string qnaAzureSearchEndpointId = null, bool? statisticsEnabled = default(bool?), string eventHubConnectionString = null, string storageAccountConnectionString = null, string aadClientId = null, string aadTenantId = null, string superUser = null, string websiteName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit ServiceAccountCallRateLimit(float? count = default(float?), float? renewalPeriod = default(float?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rules = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo ServiceAccountModelDeprecationInfo(string fineTune = null, string inference = null, Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus? deprecationStatus = default(Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit ServiceAccountQuotaLimit(float? count = default(float?), float? renewalPeriod = default(float?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> rules = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern ServiceAccountThrottlingMatchPattern(string path = null, string method = null) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule ServiceAccountThrottlingRule(string key = null, float? renewalPeriod = default(float?), float? count = default(float?), float? minCount = default(float?), bool? isDynamicThrottlingEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern> matchPatterns = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule ServiceAccountThrottlingRule(string key = null, float? renewalPeriod = default(float?), float? count = default(float?), float? minCount = default(float?), bool? dynamicThrottlingEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern> matchPatterns = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage ServiceAccountUsage(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType? unit = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType?), Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName name = null, string quotaPeriod = null, double? limit = default(double?), double? currentValue = default(double?), string nextResetTime = null, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus? status = default(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus?)) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName ServiceAccountUsageMetricName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties ServicePrincipalAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal credentials = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult SkuAvailabilityListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList> value = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.UsageListResult UsageListResult(string nextLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> value = null) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity UserAssignedIdentity(string principalId = null, string clientId = null) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties UsernamePasswordAuthTypeConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? category = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory?), Azure.Core.ResourceIdentifier createdByWorkspaceArmId = null, string error = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? group = default(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup?), bool? isSharedToAll = default(bool?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? peRequirement = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement?), Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? peStatus = default(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus?), System.Collections.Generic.IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = default(bool?), Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword credentials = null) { throw null; }
+    }
+    public partial class AssignedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>
+    {
+        public AssignedIdentity(Azure.ResourceManager.CognitiveServices.Models.IdentityKind kind, Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType type, string clientId, string principalId, string tenantId) { }
+        public string ClientId { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.IdentityKind Kind { get { throw null; } set { } }
+        public string PrincipalId { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState? ProvisioningState { get { throw null; } }
+        public string Subject { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AvailableCognitiveServicesSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku>
     {
@@ -1320,7 +2260,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions> Restrictions { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.AvailableCognitiveServicesSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1329,11 +2272,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class BillingMeterInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo>
     {
-        public BillingMeterInfo() { }
-        public string MeterId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Unit { get { throw null; } set { } }
+        internal BillingMeterInfo() { }
+        public string MeterId { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1346,7 +2292,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Model { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload> Workloads { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1359,7 +2308,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity EstimatedCapacity { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Model { get { throw null; } }
         public string SkuName { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1371,7 +2323,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CalculateModelCapacityResultEstimatedCapacity() { }
         public int? DeployableValue { get { throw null; } }
         public int? Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CalculateModelCapacityResultEstimatedCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1390,6 +2345,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind left, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind left, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1410,8 +2366,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ChannelsBuiltInAuthorizationPolicy : Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>
+    {
+        public ChannelsBuiltInAuthorizationPolicy() { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ChannelsBuiltInAuthorizationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CognitiveServicesAccountDeploymentModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>
     {
@@ -1423,7 +2393,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Source { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceAccount { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1437,16 +2410,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Capabilities { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings CapacitySettings { get { throw null; } set { } }
         public int? CurrentCapacity { get { throw null; } set { } }
-        public bool? IsDynamicThrottlingEnabled { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.DeploymentState? DeploymentState { get { throw null; } set { } }
+        public bool? DynamicThrottlingEnabled { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Model { get { throw null; } set { } }
         public string ParentDeploymentName { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? ProvisioningState { get { throw null; } }
         public string RaiPolicyName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> RateLimits { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.ServiceTier? ServiceTier { get { throw null; } set { } }
         public string SpilloverDeploymentName { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1472,6 +2450,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1481,7 +2460,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public int? ActiveCapacity { get { throw null; } }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType? ScaleType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1501,22 +2483,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CognitiveServicesAccountModel : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel>
     {
-        public CognitiveServicesAccountModel() { }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel BaseModel { get { throw null; } set { } }
+        internal CognitiveServicesAccountModel() { }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel BaseModel { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Capabilities { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo Deprecation { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo Deprecation { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> FinetuneCapabilities { get { throw null; } }
-        public bool? IsDefaultVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? LifecycleStatus { get { throw null; } set { } }
-        public int? MaxCapacity { get { throw null; } set { } }
+        public bool? IsDefaultVersion { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? LifecycleStatus { get { throw null; } }
+        public int? MaxCapacity { get { throw null; } }
+        public string ModelCatalogAssetId { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig ReplacementConfig { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku> Skus { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1527,7 +2515,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CognitiveServicesAccountProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.AbusePenalty AbusePenalty { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection> AIFoundryNetworkInjections { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedFqdnList { get { throw null; } }
         public bool? AllowProjectManagement { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace AmlWorkspace { get { throw null; } set { } }
@@ -1536,20 +2523,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit CallRateLimit { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation> CommitmentPlanAssociations { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string CustomSubDomainName { get { throw null; } set { } }
+        public string DateCreated { get { throw null; } }
         public string DefaultProject { get { throw null; } set { } }
-        public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public string DeletionDate { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
-        public bool? EnableDynamicThrottling { get { throw null; } set { } }
+        public bool? DynamicThrottlingEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties Encryption { get { throw null; } set { } }
         public string Endpoint { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Endpoints { get { throw null; } }
+        public string InternalId { get { throw null; } }
         public bool? IsMigrated { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings Locations { get { throw null; } set { } }
         public string MigrationToken { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet NetworkAcls { get { throw null; } set { } }
-        [System.ObsoleteAttribute("Please use `AIFoundryNetworkInjections` instead.")]
         public Azure.ResourceManager.CognitiveServices.Models.AIFoundryNetworkInjection NetworkInjections { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? ProvisioningState { get { throw null; } }
@@ -1560,8 +2547,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public bool? RestrictOutboundNetworkAccess { get { throw null; } set { } }
         public string ScheduledPurgeDate { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo SkuChangeInfo { get { throw null; } }
+        public bool? StoredCompletionsDisabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage> UserOwnedStorage { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1571,9 +2562,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesAccountSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku>
     {
         internal CognitiveServicesAccountSku() { }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1586,11 +2580,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IList<string> AiServicesConnections { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CapabilityHostKind? CapabilityHostKind { get { throw null; } set { } }
         public string CustomerSubnet { get { throw null; } set { } }
+        public bool? EnablePublicHostingEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<string> StorageConnections { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ThreadStorageConnections { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VectorStoreConnections { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapabilityHostProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1599,35 +2597,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class CognitiveServicesCapacityConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>
     {
-        public CognitiveServicesCapacityConfig() { }
+        internal CognitiveServicesCapacityConfig() { }
         public System.Collections.Generic.IList<int> AllowedValues { get { throw null; } }
-        public int? Default { get { throw null; } set { } }
-        public int? Maximum { get { throw null; } set { } }
-        public int? Minimum { get { throw null; } set { } }
-        public int? Step { get { throw null; } set { } }
+        public int? Default { get { throw null; } }
+        public int? Maximum { get { throw null; } }
+        public int? Minimum { get { throw null; } }
+        public int? Step { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CognitiveServicesCommitmentPlanPatch : Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>
+    public partial class CognitiveServicesCommitmentPlanPatch : Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku
     {
         public CognitiveServicesCommitmentPlanPatch() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCommitmentPlanPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CognitiveServicesConnectionAccessKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey>
     {
         public CognitiveServicesConnectionAccessKey() { }
         public string AccessKeyId { get { throw null; } set { } }
         public string SecretAccessKey { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionAccessKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1640,7 +2638,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CognitiveServicesConnectionCategory(string value) { throw null; }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AdlsGen2 { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ADLSGen2 { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AIServices { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AmazonMws { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AmazonRdsForOracle { get { throw null; } }
@@ -1648,16 +2646,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AmazonRedshift { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AmazonS3Compatible { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ApiKey { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ApiManagement { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AppConfig { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AppInsights { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureBlob { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureContainerAppEnvironment { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureDatabricksDeltaLake { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureDataExplorer { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureMariaDB { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureMySqlDB { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureKeyVault { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureMariaDb { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureMySqlDb { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureOneLake { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureOpenAI { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzurePostgresDB { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureSqlDB { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureSqlMI { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzurePostgresDb { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureSqlDb { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureSqlMi { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureStorageAccount { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureSynapseAnalytics { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory AzureTableStorage { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory BingLLMSearch { get { throw null; } }
@@ -1666,10 +2670,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory CognitiveService { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Concur { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ContainerRegistry { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory CosmosDB { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory CosmosDBMongoDBApi { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory CosmosDb { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory CosmosDbMongoDbApi { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Couchbase { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory CustomKeys { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Databricks { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Db2 { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Drill { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Dynamics { get { throw null; } }
@@ -1687,6 +2692,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory GoogleBigQuery { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory GoogleCloudStorage { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Greenplum { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory GroundingWithBingSearch { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory GroundingWithCustomSearch { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Hbase { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Hdfs { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Hive { get { throw null; } }
@@ -1696,11 +2703,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Jira { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Magento { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ManagedOnlineEndpoint { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MariaDB { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MariaDb { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Marketo { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MicrosoftAccess { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MongoDBAtlas { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MongoDBV2 { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MicrosoftFabric { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ModelGateway { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MongoDbAtlas { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MongoDbV2 { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory MySql { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Netezza { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ODataRest { get { throw null; } }
@@ -1714,10 +2723,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Phoenix { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Pinecone { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory PostgreSql { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory PowerPlatformEnvironment { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Presto { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory PythonFeed { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory QuickBooks { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Redis { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory RemoteA2A { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory RemoteTool { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Responsys { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory S3 { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Salesforce { get { throw null; } }
@@ -1733,6 +2745,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Serverless { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory ServiceNow { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Sftp { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Sharepoint { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory SharePointOnlineList { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Shopify { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory Snowflake { get { throw null; } }
@@ -1750,6 +2763,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1771,6 +2785,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionGroup right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1779,7 +2794,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesConnectionManagedIdentity() { }
         public string ClientId { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1795,9 +2813,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string DeveloperToken { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string RefreshToken { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2 PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1808,7 +2829,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CognitiveServicesConnectionPatch() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1817,7 +2841,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public abstract partial class CognitiveServicesConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties>
     {
-        protected CognitiveServicesConnectionProperties() { }
+        internal CognitiveServicesConnectionProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionCategory? Category { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier CreatedByWorkspaceArmId { get { throw null; } }
         public string Error { get { throw null; } set { } }
@@ -1830,7 +2854,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IList<string> SharedUserList { get { throw null; } }
         public string Target { get { throw null; } set { } }
         public bool? UseWorkspaceManagedIdentity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1842,8 +2869,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesConnectionServicePrincipal() { }
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1856,7 +2886,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Password { get { throw null; } set { } }
         public string SecurityToken { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1865,11 +2898,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class CognitiveServicesDomainAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent>
     {
-        public CognitiveServicesDomainAvailabilityContent(string subdomainName, Azure.Core.ResourceType resourceType) { }
+        public CognitiveServicesDomainAvailabilityContent(string subdomainName, string type) { }
         public string Kind { get { throw null; } set { } }
-        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public string SubdomainName { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1879,12 +2915,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesDomainAvailabilityList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>
     {
         internal CognitiveServicesDomainAvailabilityList() { }
-        public string DomainAvailabilityType { get { throw null; } }
         public bool? IsSubdomainAvailable { get { throw null; } }
         public string Kind { get { throw null; } }
         public string Reason { get { throw null; } }
         public string SubdomainName { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesDomainAvailabilityList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1896,7 +2935,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesEncryptionScopeProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState? State { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesEncryptionScopeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1907,7 +2949,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CognitiveServicesIPRule(string value) { }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1917,11 +2962,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>
     {
         public CognitiveServicesKeyVaultProperties() { }
-        public System.Guid? IdentityClientId { get { throw null; } set { } }
+        public string IdentityClientId { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
-        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1935,7 +2983,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Kind { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel Model { get { throw null; } }
         public string SkuName { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1944,14 +2995,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class CognitiveServicesModelSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku>
     {
-        public CognitiveServicesModelSku() { }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig Capacity { get { throw null; } set { } }
+        internal CognitiveServicesModelSku() { }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig Capacity { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.BillingMeterInfo> Cost { get { throw null; } }
-        public System.DateTimeOffset? DeprecationOn { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        public System.DateTimeOffset? DeprecationOn { get { throw null; } }
+        public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit> RateLimits { get { throw null; } }
-        public string UsageName { get { throw null; } set { } }
+        public string UsageName { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1963,7 +3017,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesMultiRegionSettings() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting> Regions { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod? RoutingMethod { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesMultiRegionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1983,6 +3040,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1991,9 +3049,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesNetworkRuleSet() { }
         public Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule> IPRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesIPRule> IpRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkRuleSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2002,11 +3063,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class CognitiveServicesNetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter>
     {
-        public CognitiveServicesNetworkSecurityPerimeter() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public System.Guid? PerimeterGuid { get { throw null; } set { } }
+        internal CognitiveServicesNetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public string Location { get { throw null; } }
+        public string PerimeterGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2017,12 +3081,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CognitiveServicesPatchResourceTags() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CognitiveServicesPrivateEndpointConnectionListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>
+    {
+        internal CognitiveServicesPrivateEndpointConnectionListResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.CognitiveServicesPrivateEndpointConnectionData> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CognitiveServicesPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState>
@@ -2039,6 +3120,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2056,28 +3138,49 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CognitiveServicesPrivateLinkResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>
     {
-        public CognitiveServicesPrivateLinkResource() { }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        internal CognitiveServicesPrivateLinkResource() { }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CognitiveServicesPrivateLinkResourceListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>
+    {
+        internal CognitiveServicesPrivateLinkResourceListResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResource> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CognitiveServicesPrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties>
     {
-        public CognitiveServicesPrivateLinkResourceProperties() { }
+        internal CognitiveServicesPrivateLinkResourceProperties() { }
         public string DisplayName { get { throw null; } }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2090,7 +3193,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2105,7 +3211,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Endpoints { get { throw null; } }
         public bool? IsDefault { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesProjectProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2118,7 +3227,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Customsubdomain { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public float? Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRegionSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2130,7 +3242,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public CognitiveServicesResourceBase() { }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2143,7 +3258,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesCapacityConfig Capacity { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2164,6 +3282,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesRoutingMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2175,7 +3294,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier? Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2184,11 +3306,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class CognitiveServicesSkuAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent>
     {
-        public CognitiveServicesSkuAvailabilityContent(System.Collections.Generic.IEnumerable<string> skus, string kind, Azure.Core.ResourceType resourceType) { }
+        public CognitiveServicesSkuAvailabilityContent(System.Collections.Generic.IEnumerable<string> skus, string kind, string type) { }
         public string Kind { get { throw null; } }
-        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         public System.Collections.Generic.IList<string> Skus { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2198,13 +3323,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesSkuAvailabilityList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList>
     {
         internal CognitiveServicesSkuAvailabilityList() { }
-        public bool? IsSkuAvailable { get { throw null; } }
         public string Kind { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
-        public string SkuAvailabilityType { get { throw null; } }
+        public bool? SkuAvailable { get { throw null; } }
         public string SkuName { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2216,7 +3344,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CognitiveServicesSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2228,8 +3359,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CognitiveServicesSkuChangeInfo() { }
         public float? CountOfDowngrades { get { throw null; } }
         public float? CountOfUpgradesAfterDowngrades { get { throw null; } }
-        public System.DateTimeOffset? LastChangedOn { get { throw null; } }
+        public string LastChangeDate { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuChangeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2241,7 +3375,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CognitiveServicesSkuRestrictionInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2261,6 +3398,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2269,9 +3407,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CognitiveServicesSkuRestrictions() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionInfo RestrictionInfo { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionsType? RestrictionsType { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictionsType? Type { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuRestrictions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2299,16 +3440,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier left, Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CognitiveServicesVirtualNetworkRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>
     {
-        public CognitiveServicesVirtualNetworkRule(Azure.Core.ResourceIdentifier id) { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public CognitiveServicesVirtualNetworkRule(string id) { }
+        public string Id { get { throw null; } set { } }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesVirtualNetworkRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2320,7 +3465,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CommitmentCost() { }
         public string CommitmentMeterId { get { throw null; } }
         public string OverageMeterId { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentCost JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentCost PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2331,11 +3479,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CommitmentPeriod() { }
         public int? Count { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string EndDate { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota Quota { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string StartDate { get { throw null; } }
         public string Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2345,9 +3496,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CommitmentPlanAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation>
     {
         internal CommitmentPlanAssociation() { }
-        public Azure.Core.ResourceIdentifier CommitmentPlanId { get { throw null; } }
+        public string CommitmentPlanId { get { throw null; } }
         public string CommitmentPlanLocation { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2358,7 +3512,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CommitmentPlanProperties() { }
         public bool? AutoRenew { get { throw null; } set { } }
-        public System.Guid? CommitmentPlanGuid { get { throw null; } set { } }
+        public string CommitmentPlanGuid { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod Current { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel? HostingModel { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPeriod Last { get { throw null; } }
@@ -2366,7 +3520,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string PlanType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2391,6 +3548,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.CommitmentPlanProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2399,7 +3557,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal CommitmentQuota() { }
         public long? Quantity { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2417,7 +3578,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.CommitmentQuota Quota { get { throw null; } }
         public string SkuName { get { throw null; } }
         public string Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentTier JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.CommitmentTier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentTier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CommitmentTier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CommitmentTier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2428,7 +3592,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CustomBlocklistConfig() { }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2439,12 +3606,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public CustomKeysConnectionProperties() { }
         public System.Collections.Generic.IDictionary<string, string> CredentialsKeys { get { throw null; } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomKeysConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomTopicConfig : Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>
+    {
+        public CustomTopicConfig() { }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DefenderForAISettingState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState>
@@ -2459,6 +3643,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState left, Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState left, Azure.ResourceManager.CognitiveServices.Models.DefenderForAISettingState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2467,7 +3652,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public DeploymentCapacitySettings() { }
         public int? DesignatedCapacity { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.DeploymentCapacitySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2488,7 +3676,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption left, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption left, Azure.ResourceManager.CognitiveServices.Models.DeploymentModelVersionUpgradeOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeploymentState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.DeploymentState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeploymentState(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.DeploymentState Paused { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.DeploymentState Running { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.DeploymentState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.DeploymentState left, Azure.ResourceManager.CognitiveServices.Models.DeploymentState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeploymentState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeploymentState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.DeploymentState left, Azure.ResourceManager.CognitiveServices.Models.DeploymentState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeprecationStatus : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeprecationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus Planned { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus Tentative { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus left, Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus left, Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2509,6 +3732,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2525,19 +3749,321 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState left, Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState left, Azure.ResourceManager.CognitiveServices.Models.EncryptionScopeState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FirewallSku : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.FirewallSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FirewallSku(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.FirewallSku Basic { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.FirewallSku Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.FirewallSku other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.FirewallSku left, Azure.ResourceManager.CognitiveServices.Models.FirewallSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.FirewallSku (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.FirewallSku? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.FirewallSku left, Azure.ResourceManager.CognitiveServices.Models.FirewallSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FqdnOutboundRule : Azure.ResourceManager.CognitiveServices.Models.OutboundRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>
+    {
+        public FqdnOutboundRule() { }
+        public string Destination { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.OutboundRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.OutboundRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.FqdnOutboundRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HostedAgentDeployment : Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>
+    {
+        public HostedAgentDeployment() { }
+        public int? MaxReplicas { get { throw null; } set { } }
+        public int? MinReplicas { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.HostedAgentDeployment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Identity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.Identity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.Identity>
+    {
+        public Identity() { }
+        public string PrincipalId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.ResourceIdentityType? Type { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.Identity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.Identity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.Identity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.Identity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.Identity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.Identity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.Identity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.Identity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.Identity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityKind : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.IdentityKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityKind(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityKind AgentBlueprint { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityKind AgenticUser { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityKind AgentInstance { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityKind Managed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityKind None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.IdentityKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.IdentityKind left, Azure.ResourceManager.CognitiveServices.Models.IdentityKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IdentityKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IdentityKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.IdentityKind left, Azure.ResourceManager.CognitiveServices.Models.IdentityKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityManagementType : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityManagementType(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType None { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType System { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType left, Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType left, Azure.ResourceManager.CognitiveServices.Models.IdentityManagementType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IdentityProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IdentityProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.IdentityProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IsolationMode : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.IsolationMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IsolationMode(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.IsolationMode AllowInternetOutbound { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IsolationMode AllowOnlyApprovedOutbound { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.IsolationMode Disabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.IsolationMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.IsolationMode left, Azure.ResourceManager.CognitiveServices.Models.IsolationMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IsolationMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.IsolationMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.IsolationMode left, Azure.ResourceManager.CognitiveServices.Models.IsolationMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ManagedAgentDeployment : Azure.ResourceManager.CognitiveServices.Models.AgentDeploymentProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>
+    {
+        public ManagedAgentDeployment() { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesResourceBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedAgentDeployment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedIdentityAuthTypeConnectionProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>
     {
         public ManagedIdentityAuthTypeConnectionProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionManagedIdentity Credentials { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedIdentityAuthTypeConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedNetworkKind : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedNetworkKind(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind V1 { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind V2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind left, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind left, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedNetworkProvisioningState : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedNetworkProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState Deferred { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ManagedNetworkProvisionOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>
+    {
+        public ManagedNetworkProvisionOptions() { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedNetworkProvisionStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>
+    {
+        public ManagedNetworkProvisionStatus() { }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisionStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedNetworkSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>
+    {
+        public ManagedNetworkSettings() { }
+        public string EgressIpAddress { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.FirewallSku? FirewallSku { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.IsolationMode? IsolationMode { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkKind? ManagedNetworkKind { get { throw null; } set { } }
+        public string NetworkId { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CognitiveServices.Models.OutboundRule> OutboundRules { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedNetworkSettingsBasicResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>
+    {
+        public ManagedNetworkSettingsBasicResource() { }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsBasicResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedNetworkSettingsEx : Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>
+    {
+        public ManagedNetworkSettingsEx() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.IsolationMode> ChangeableIsolationModes { get { throw null; } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedNetworkSettingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>
+    {
+        public ManagedNetworkSettingsProperties() { }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsEx ManagedNetwork { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkSettingsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedNetworkStatus : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedNetworkStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus Inactive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus left, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus left, Azure.ResourceManager.CognitiveServices.Models.ManagedNetworkStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedPERequirement : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement>
@@ -2553,6 +4079,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement left, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement left, Azure.ResourceManager.CognitiveServices.Models.ManagedPERequirement right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2570,6 +4097,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus left, Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus left, Azure.ResourceManager.CognitiveServices.Models.ManagedPEStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2578,7 +4106,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public ModelCapacityCalculatorWorkload() { }
         public Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam RequestParameters { get { throw null; } set { } }
         public long? RequestPerMinute { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2590,7 +4121,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public ModelCapacityCalculatorWorkloadRequestParam() { }
         public long? AvgGeneratedTokens { get { throw null; } set { } }
         public long? AvgPromptTokens { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityCalculatorWorkloadRequestParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2599,10 +4133,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class ModelCapacityListResultValueItem : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem>
     {
-        public ModelCapacityListResultValueItem() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties Properties { get { throw null; } set { } }
+        internal ModelCapacityListResultValueItem() { }
+        public string Location { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ModelCapacityListResultValueItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2618,6 +4155,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Deprecated { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Deprecating { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus GenerallyAvailable { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Legacy { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Preview { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus Stable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus other) { throw null; }
@@ -2625,17 +4163,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus left, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus left, Azure.ResourceManager.CognitiveServices.Models.ModelLifecycleStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ModelSkuCapacityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties>
     {
-        public ModelSkuCapacityProperties() { }
-        public float? AvailableCapacity { get { throw null; } set { } }
-        public float? AvailableFinetuneCapacity { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Model { get { throw null; } set { } }
-        public string SkuName { get { throw null; } set { } }
+        internal ModelSkuCapacityProperties() { }
+        public float? AvailableCapacity { get { throw null; } }
+        public float? AvailableFinetuneCapacity { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel Model { get { throw null; } }
+        public string SkuName { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ModelSkuCapacityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2644,10 +4186,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule>
     {
-        public NetworkSecurityPerimeterAccessRule() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } set { } }
+        internal NetworkSecurityPerimeterAccessRule() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2656,13 +4201,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties>
     {
-        public NetworkSecurityPerimeterAccessRuleProperties() { }
+        internal NetworkSecurityPerimeterAccessRuleProperties() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection? Direction { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection? Direction { get { throw null; } }
         public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subscriptions { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2671,10 +4219,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterConfigurationAssociationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo>
     {
-        public NetworkSecurityPerimeterConfigurationAssociationInfo() { }
-        public string AccessMode { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
+        internal NetworkSecurityPerimeterConfigurationAssociationInfo() { }
+        public string AccessMode { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2683,13 +4234,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties>
     {
-        public NetworkSecurityPerimeterConfigurationProperties() { }
-        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo Profile { get { throw null; } set { } }
+        internal NetworkSecurityPerimeterConfigurationProperties() { }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo Profile { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationAssociationInfo ResourceAssociation { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2698,13 +4252,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterProfileInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo>
     {
-        public NetworkSecurityPerimeterProfileInfo() { }
+        internal NetworkSecurityPerimeterProfileInfo() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule> AccessRules { get { throw null; } }
-        public long? AccessRulesVersion { get { throw null; } set { } }
-        public long? DiagnosticSettingsVersion { get { throw null; } set { } }
+        public long? AccessRulesVersion { get { throw null; } }
+        public long? DiagnosticSettingsVersion { get { throw null; } }
         public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
-        public string Name { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProfileInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2713,10 +4270,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue>
     {
-        public NetworkSecurityPerimeterProvisioningIssue() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } set { } }
+        internal NetworkSecurityPerimeterProvisioningIssue() { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2725,13 +4285,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class NetworkSecurityPerimeterProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties>
     {
-        public NetworkSecurityPerimeterProvisioningIssueProperties() { }
-        public string Description { get { throw null; } set { } }
-        public string IssueType { get { throw null; } set { } }
-        public string Severity { get { throw null; } set { } }
+        internal NetworkSecurityPerimeterProvisioningIssueProperties() { }
+        public string Description { get { throw null; } }
+        public string IssueType { get { throw null; } }
+        public string Severity { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2741,7 +4304,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class NoneAuthTypeConnectionProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties>
     {
         public NoneAuthTypeConnectionProperties() { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.NoneAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2761,6 +4327,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection left, Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection left, Azure.ResourceManager.CognitiveServices.Models.NspAccessRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2768,18 +4335,69 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public OAuth2AuthTypeConnectionProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionOAuth2 Credentials { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OAuth2AuthTypeConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class OrganizationSharedBuiltInAuthorizationPolicy : Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>
+    {
+        public OrganizationSharedBuiltInAuthorizationPolicy() { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OrganizationSharedBuiltInAuthorizationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class OutboundRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>
+    {
+        internal OutboundRule() { }
+        public Azure.ResourceManager.CognitiveServices.Models.RuleCategory? Category { get { throw null; } set { } }
+        public string ErrorInformation { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ParentRuleNames { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.RuleStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.OutboundRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.OutboundRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.OutboundRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.OutboundRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OutboundRuleListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>
+    {
+        internal OutboundRuleListResult() { }
+        public string NextLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.OutboundRuleBasicResourceData> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.OutboundRuleListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PatAuthTypeConnectionProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties>
     {
         public PatAuthTypeConnectionProperties() { }
         public string CredentialsPat { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PatAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2790,19 +4408,114 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public PatchResourceTagsAndSku() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSku Sku { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPatchResourceTags PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PatchResourceTagsAndSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class PrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>
+    {
+        public PrivateEndpointConnectionProperties(Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState) { }
+        public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
+        public string PrivateEndpointId { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.PrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProjectCapabilityHostProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>
+    {
+        public ProjectCapabilityHostProperties() { }
+        public System.Collections.Generic.IList<string> AiServicesConnections { get { throw null; } set { } }
+        public Azure.ResourceManager.CognitiveServices.Models.CapabilityHostProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<string> StorageConnections { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ThreadStorageConnections { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VectorStoreConnections { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ProjectCapabilityHostProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class QuotaTierProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>
+    {
+        public QuotaTierProperties() { }
+        public System.DateTimeOffset? AssignmentOn { get { throw null; } }
+        public string CurrentTierName { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo TierUpgradeEligibilityInfo { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy? TierUpgradePolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class QuotaTierUpgradeEligibilityInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>
+    {
+        internal QuotaTierUpgradeEligibilityInfo() { }
+        public string NextTierName { get { throw null; } }
+        public System.DateTimeOffset? UpgradeApplicableOn { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus? UpgradeAvailabilityStatus { get { throw null; } }
+        public string UpgradeUnavailabilityReason { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.QuotaTierUpgradeEligibilityInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RaiActionType : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.RaiActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RaiActionType(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiActionType ANNOTATING { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiActionType BLOCKING { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiActionType HITL { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiActionType None { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiActionType RETRY { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RaiActionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiActionType left, Azure.ResourceManager.CognitiveServices.Models.RaiActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiActionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiActionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RaiActionType left, Azure.ResourceManager.CognitiveServices.Models.RaiActionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RaiBlocklistConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig>
     {
         public RaiBlocklistConfig() { }
         public bool? Blocking { get { throw null; } set { } }
         public string BlocklistName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2814,7 +4527,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public RaiBlocklistItemBulkContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemBulkContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2826,7 +4542,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public RaiBlocklistItemProperties() { }
         public bool? IsRegex { get { throw null; } set { } }
         public string Pattern { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistItemProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2835,23 +4554,51 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class RaiContentFilterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>
     {
-        public RaiContentFilterProperties() { }
-        public bool? IsMultiLevelFilter { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } set { } }
+        internal RaiContentFilterProperties() { }
+        public bool? IsMultiLevelFilter { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiContentFilterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RaiExternalSafetyProviderSchemaProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>
+    {
+        public RaiExternalSafetyProviderSchemaProperties() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public string ManagedIdentity { get { throw null; } set { } }
+        public string Mode { get { throw null; } set { } }
+        public string ProviderId { get { throw null; } set { } }
+        public string ProviderName { get { throw null; } set { } }
+        public string SecretName { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RaiMonitorConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig>
     {
         public RaiMonitorConfig() { }
-        public Azure.Core.ResourceIdentifier AdxStorageResourceId { get { throw null; } set { } }
-        public System.Guid? IdentityClientId { get { throw null; } set { } }
+        public string AdxStorageResourceId { get { throw null; } set { } }
+        public string IdentityClientId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiMonitorConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2861,12 +4608,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class RaiPolicyContentFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter>
     {
         public RaiPolicyContentFilter() { }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiActionType? Action { get { throw null; } set { } }
         public bool? Blocking { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel? SeverityThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2887,6 +4638,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2897,12 +4649,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private readonly int _dummyPrimitive;
         public RaiPolicyContentSource(string value) { throw null; }
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource Completion { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource PostRun { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource PostToolCall { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource PreRun { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource PreToolCall { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource Prompt { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2921,6 +4678,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2930,9 +4688,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string BasePolicyName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentFilter> ContentFilters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CustomBlocklistConfig> CustomBlocklists { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CustomTopicConfig> CustomTopics { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyMode? Mode { get { throw null; } set { } }
-        public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType? PolicyType { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig> SafetyProviders { get { throw null; } }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType? Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2952,25 +4715,204 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType left, Azure.ResourceManager.CognitiveServices.Models.RaiPolicyType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RaiSafetyProviderConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>
+    {
+        public RaiSafetyProviderConfig() { }
+        public bool? Blocking { get { throw null; } set { } }
+        public string SafetyProviderName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiToolLabelProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>
+    {
+        public RaiToolLabelProperties(string toolConnectionName) { }
+        public System.Collections.Generic.IDictionary<string, string> AccountScopeLabelValues { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem> ProjectScopes { get { throw null; } }
+        public string ToolConnectionName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiToolLabelPropertiesProjectScopesItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>
+    {
+        public RaiToolLabelPropertiesProjectScopesItem(string project, System.Collections.Generic.IDictionary<string, string> labelValues) { }
+        public System.Collections.Generic.IDictionary<string, string> LabelValues { get { throw null; } }
+        public string Project { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiToolLabelPropertiesProjectScopesItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiTopicConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>
+    {
+        public RaiTopicConfig() { }
+        public bool? Blocking { get { throw null; } set { } }
+        public string TopicName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RaiTopicProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>
+    {
+        public RaiTopicProperties() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string FailedReason { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
+        public string SampleBlobUri { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+        public string TopicId { get { throw null; } set { } }
+        public string TopicName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RegenerateServiceAccountKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>
     {
         public RegenerateServiceAccountKeyContent(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountKeyName keyName) { }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountKeyName KeyName { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RegenerateServiceAccountKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ReplacementConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>
+    {
+        internal ReplacementConfig() { }
+        public System.DateTimeOffset? AutoUpgradeStartOn { get { throw null; } }
+        public string TargetModelName { get { throw null; } }
+        public string TargetModelVersion { get { throw null; } }
+        public int? UpgradeOnExpiryLeadTimeDays { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ReplacementConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ResourceIdentityType
+    {
+        None = 0,
+        SystemAssigned = 1,
+        UserAssigned = 2,
+        SystemAssignedUserAssigned = 3,
+    }
+    public partial class RoleBasedBuiltInAuthorizationPolicy : Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>
+    {
+        public RoleBasedBuiltInAuthorizationPolicy() { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.ApplicationAuthorizationPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RoleBasedBuiltInAuthorizationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuleCategory : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.RuleCategory>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuleCategory(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleCategory Dependency { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleCategory Recommended { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleCategory Required { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleCategory UserDefined { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RuleCategory other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RuleCategory left, Azure.ResourceManager.CognitiveServices.Models.RuleCategory right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RuleCategory (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RuleCategory? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RuleCategory left, Azure.ResourceManager.CognitiveServices.Models.RuleCategory right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuleStatus : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.RuleStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuleStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleStatus Deleting { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleStatus Inactive { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.RuleStatus Provisioning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.RuleStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.RuleStatus left, Azure.ResourceManager.CognitiveServices.Models.RuleStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RuleStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.RuleStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.RuleStatus left, Azure.ResourceManager.CognitiveServices.Models.RuleStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SafetyProviderConfig : Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>
+    {
+        public SafetyProviderConfig() { }
+        public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SafetyProviderConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SASAuthTypeConnectionProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties>
     {
         public SASAuthTypeConnectionProperties() { }
         public string CredentialsSas { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SASAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2982,7 +4924,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal ServiceAccountApiKeys() { }
         public string Key1 { get { throw null; } }
         public string Key2 { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2992,18 +4937,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class ServiceAccountApiProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>
     {
         public ServiceAccountApiProperties() { }
-        public System.Guid? AadClientId { get { throw null; } set { } }
-        public System.Guid? AadTenantId { get { throw null; } set { } }
+        public string AadClientId { get { throw null; } set { } }
+        public string AadTenantId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public bool? EnableStatistics { get { throw null; } set { } }
         public string EventHubConnectionString { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier QnaAzureSearchEndpointId { get { throw null; } set { } }
+        public string QnaAzureSearchEndpointId { get { throw null; } set { } }
         public string QnaAzureSearchEndpointKey { get { throw null; } set { } }
         public string QnaRuntimeEndpoint { get { throw null; } set { } }
+        public bool? StatisticsEnabled { get { throw null; } set { } }
         public string StorageAccountConnectionString { get { throw null; } set { } }
         public string SuperUser { get { throw null; } set { } }
         public string WebsiteName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountApiProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3016,7 +4964,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public float? Count { get { throw null; } }
         public float? RenewalPeriod { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> Rules { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountCallRateLimit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3036,6 +4987,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionKeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3052,7 +5004,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public string KeyVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountEncryptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3074,6 +5029,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountHostingModel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3084,10 +5040,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     }
     public partial class ServiceAccountModelDeprecationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo>
     {
-        public ServiceAccountModelDeprecationInfo() { }
-        public System.DateTimeOffset? FineTuneOn { get { throw null; } set { } }
-        public System.DateTimeOffset? InferenceOn { get { throw null; } set { } }
+        internal ServiceAccountModelDeprecationInfo() { }
+        public Azure.ResourceManager.CognitiveServices.Models.DeprecationStatus? DeprecationStatus { get { throw null; } }
+        public string FineTune { get { throw null; } }
+        public string Inference { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountModelDeprecationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3106,13 +5066,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState Deleting { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState Moving { get { throw null; } }
-        public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState ResolvingDns { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState ResolvingDNS { get { throw null; } }
         public static Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3129,6 +5090,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3138,7 +5100,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public float? Count { get { throw null; } }
         public float? RenewalPeriod { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule> Rules { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaLimit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3160,6 +5125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3168,7 +5134,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal ServiceAccountThrottlingMatchPattern() { }
         public string Method { get { throw null; } }
         public string Path { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3179,12 +5148,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         internal ServiceAccountThrottlingRule() { }
         public float? Count { get { throw null; } }
-        public bool? IsDynamicThrottlingEnabled { get { throw null; } }
+        public bool? DynamicThrottlingEnabled { get { throw null; } }
         public string Key { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingMatchPattern> MatchPatterns { get { throw null; } }
         public float? MinCount { get { throw null; } }
         public float? RenewalPeriod { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountThrottlingRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3201,7 +5173,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public string QuotaPeriod { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountQuotaUsageStatus? Status { get { throw null; } }
         public Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType? Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3213,7 +5188,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         internal ServiceAccountUsageMetricName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageMetricName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3238,15 +5216,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType left, Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsageUnitType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ServiceAccountUserOwnedStorage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>
     {
         public ServiceAccountUserOwnedStorage() { }
-        public System.Guid? IdentityClientId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public string IdentityClientId { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUserOwnedStorage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3257,12 +5239,96 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         public ServicePrincipalAuthTypeConnectionProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionServicePrincipal Credentials { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.ServicePrincipalAuthTypeConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceTier : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.ServiceTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceTier(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.ServiceTier Default { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.ServiceTier Priority { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.ServiceTier other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.ServiceTier left, Azure.ResourceManager.CognitiveServices.Models.ServiceTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.ServiceTier? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.ServiceTier left, Azure.ResourceManager.CognitiveServices.Models.ServiceTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SkuAvailabilityListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>
+    {
+        internal SkuAvailabilityListResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesSkuAvailabilityList> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.SkuAvailabilityListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TierUpgradePolicy : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TierUpgradePolicy(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy NoAutoUpgrade { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy OnceUpgradeIsAvailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy left, Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy left, Azure.ResourceManager.CognitiveServices.Models.TierUpgradePolicy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TrafficRoutingProtocol : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TrafficRoutingProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol FixedRatio { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol left, Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol left, Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TrafficRoutingRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>
+    {
+        public TrafficRoutingRule() { }
+        public string DeploymentId { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string RuleId { get { throw null; } set { } }
+        public int? TrafficPercentage { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.TrafficRoutingRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrustedServicesByPassSelection : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection>
@@ -3277,14 +5343,65 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection left, Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection right) { throw null; }
         public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection left, Azure.ResourceManager.CognitiveServices.Models.TrustedServicesByPassSelection right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UpgradeAvailabilityStatus : System.IEquatable<Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UpgradeAvailabilityStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus Available { get { throw null; } }
+        public static Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus NotAvailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus left, Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus left, Azure.ResourceManager.CognitiveServices.Models.UpgradeAvailabilityStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class UsageListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>
+    {
+        internal UsageListResult() { }
+        public string NextLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CognitiveServices.Models.ServiceAccountUsage> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.UsageListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.UsageListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.UsageListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.UsageListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UsageListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UserAssignedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>
+    {
+        public UserAssignedIdentity() { }
+        public string ClientId { get { throw null; } }
+        public string PrincipalId { get { throw null; } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserAssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UsernamePasswordAuthTypeConnectionProperties : Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties>
     {
         public UsernamePasswordAuthTypeConnectionProperties() { }
         public Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionUsernamePassword Credentials { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesConnectionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UsernamePasswordAuthTypeConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3294,13 +5411,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class UserOwnedAmlWorkspace : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>
     {
         public UserOwnedAmlWorkspace() { }
-        public System.Guid? IdentityClientId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public string IdentityClientId { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.UserOwnedAmlWorkspace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VersionedAgentReference : Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>
+    {
+        public VersionedAgentReference() { }
+        public string AgentVersion { get { throw null; } set { } }
+        protected override Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.CognitiveServices.Models.AgentReferenceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.VersionedAgentReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

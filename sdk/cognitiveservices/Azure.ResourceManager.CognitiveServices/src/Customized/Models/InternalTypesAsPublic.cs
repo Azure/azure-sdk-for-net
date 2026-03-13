@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SA1402
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -50,3 +51,4 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     [CodeGenType("UserOwnedAmlWorkspace")]
     public partial class UserOwnedAmlWorkspace { }
 }
+#pragma warning restore SA1402

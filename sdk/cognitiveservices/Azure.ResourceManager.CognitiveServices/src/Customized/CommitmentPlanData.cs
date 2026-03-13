@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.CognitiveServices
             Sku = sku;
         }
 
+        internal CommitmentPlanData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommitmentPlanProperties properties, IDictionary<string, string> tags, string location, string kind, CognitiveServicesSku sku)
+            : this(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, tags, location, default, kind, sku)
+        {
+        }
+
         /// <summary> Properties of Cognitive Services account commitment plan. </summary>
         public CommitmentPlanProperties Properties { get; set; }
 
