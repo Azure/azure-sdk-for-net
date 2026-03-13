@@ -11,9 +11,11 @@ namespace Payload.Xml
 {
     [ModelReaderWriterBuildable(typeof(ModelWithArrayOfModel))]
     [ModelReaderWriterBuildable(typeof(ModelWithAttributes))]
+    [ModelReaderWriterBuildable(typeof(ModelWithDatetime))]
     [ModelReaderWriterBuildable(typeof(ModelWithDictionary))]
     [ModelReaderWriterBuildable(typeof(ModelWithEmptyArray))]
     [ModelReaderWriterBuildable(typeof(ModelWithEncodedNames))]
+    [ModelReaderWriterBuildable(typeof(ModelWithEnum))]
     [ModelReaderWriterBuildable(typeof(ModelWithOptionalField))]
     [ModelReaderWriterBuildable(typeof(ModelWithRenamedArrays))]
     [ModelReaderWriterBuildable(typeof(ModelWithRenamedFields))]

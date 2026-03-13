@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(guestConfigurationAssignmentData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(guestConfigurationAssignmentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GuestConfigurationAssignmentData"/> from. </param>
