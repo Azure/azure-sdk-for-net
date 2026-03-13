@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {

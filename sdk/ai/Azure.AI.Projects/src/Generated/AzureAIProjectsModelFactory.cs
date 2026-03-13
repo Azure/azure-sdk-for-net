@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
-using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
@@ -1389,16 +1388,16 @@ namespace Azure.AI.Projects
         /// <param name="fileId"></param>
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
-        /// <param name="fileUrl"></param>
+        /// <param name="fileUri"></param>
         /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default)
         {
             return new InputFileContentParam(
                 "input_file",
                 fileId,
                 filename,
                 fileData,
-                fileUrl,
+                fileUri,
                 additionalBinaryDataProperties: null);
         }
 
