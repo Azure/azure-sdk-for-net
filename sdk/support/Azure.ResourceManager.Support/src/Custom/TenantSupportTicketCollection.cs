@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Support
     /*
      * Custom code reason:
      *
+     * Codegen bug: https://github.com/Azure/azure-sdk-for-net/issues/57073
+     * The MPG generator incorrectly assigns resourceScope "Subscription" instead of "Tenant" for
+     * TenantSupportTicket in tspCodeModel.json, even though all its operations are tenant-scoped.
+     * This causes incorrect generated code that requires the workarounds below.
+     *
      * 1. ValidateResourceId override (dual-scope support):
      *    In the TypeSpec spec (SupportTicketDetails.tsp), SupportTicketDetails is marked @subscriptionResource,
      *    so the generator places it under SubscriptionResource scope and the generated ValidateResourceId
