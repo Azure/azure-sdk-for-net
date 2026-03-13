@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct CorsRuleAllowedMethod : IEquatable<CorsRuleAllowedMethod>
     {
         private readonly string _value;
-        private const string DELETEValue = "DELETE";
-        private const string GETValue = "GET";
-        private const string HEADValue = "HEAD";
-        private const string MERGEValue = "MERGE";
-        private const string POSTValue = "POST";
-        private const string OPTIONSValue = "OPTIONS";
-        private const string PUTValue = "PUT";
-        private const string PATCHValue = "PATCH";
-        private const string CONNECTValue = "CONNECT";
-        private const string TRACEValue = "TRACE";
+        private const string DeleteValue = "DELETE";
+        private const string GetValue = "GET";
+        private const string HeadValue = "HEAD";
+        private const string MergeValue = "MERGE";
+        private const string PostValue = "POST";
+        private const string OptionsValue = "OPTIONS";
+        private const string PutValue = "PUT";
+        private const string PatchValue = "PATCH";
+        private const string ConnectValue = "CONNECT";
+        private const string TraceValue = "TRACE";
 
         /// <summary> Initializes a new instance of <see cref="CorsRuleAllowedMethod"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,35 +36,35 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the DELETE. </summary>
-        public static CorsRuleAllowedMethod DELETE { get; } = new CorsRuleAllowedMethod(DELETEValue);
+        /// <summary> Gets the Delete. </summary>
+        public static CorsRuleAllowedMethod Delete { get; } = new CorsRuleAllowedMethod(DeleteValue);
 
-        /// <summary> Gets the GET. </summary>
-        public static CorsRuleAllowedMethod GET { get; } = new CorsRuleAllowedMethod(GETValue);
+        /// <summary> Gets the Get. </summary>
+        public static CorsRuleAllowedMethod Get { get; } = new CorsRuleAllowedMethod(GetValue);
 
-        /// <summary> Gets the HEAD. </summary>
-        public static CorsRuleAllowedMethod HEAD { get; } = new CorsRuleAllowedMethod(HEADValue);
+        /// <summary> Gets the Head. </summary>
+        public static CorsRuleAllowedMethod Head { get; } = new CorsRuleAllowedMethod(HeadValue);
 
-        /// <summary> Gets the MERGE. </summary>
-        public static CorsRuleAllowedMethod MERGE { get; } = new CorsRuleAllowedMethod(MERGEValue);
+        /// <summary> Gets the Merge. </summary>
+        public static CorsRuleAllowedMethod Merge { get; } = new CorsRuleAllowedMethod(MergeValue);
 
-        /// <summary> Gets the POST. </summary>
-        public static CorsRuleAllowedMethod POST { get; } = new CorsRuleAllowedMethod(POSTValue);
+        /// <summary> Gets the Post. </summary>
+        public static CorsRuleAllowedMethod Post { get; } = new CorsRuleAllowedMethod(PostValue);
 
-        /// <summary> Gets the OPTIONS. </summary>
-        public static CorsRuleAllowedMethod OPTIONS { get; } = new CorsRuleAllowedMethod(OPTIONSValue);
+        /// <summary> Gets the Options. </summary>
+        public static CorsRuleAllowedMethod Options { get; } = new CorsRuleAllowedMethod(OptionsValue);
 
-        /// <summary> Gets the PUT. </summary>
-        public static CorsRuleAllowedMethod PUT { get; } = new CorsRuleAllowedMethod(PUTValue);
+        /// <summary> Gets the Put. </summary>
+        public static CorsRuleAllowedMethod Put { get; } = new CorsRuleAllowedMethod(PutValue);
 
-        /// <summary> Gets the PATCH. </summary>
-        public static CorsRuleAllowedMethod PATCH { get; } = new CorsRuleAllowedMethod(PATCHValue);
+        /// <summary> Gets the Patch. </summary>
+        public static CorsRuleAllowedMethod Patch { get; } = new CorsRuleAllowedMethod(PatchValue);
 
-        /// <summary> Gets the CONNECT. </summary>
-        public static CorsRuleAllowedMethod CONNECT { get; } = new CorsRuleAllowedMethod(CONNECTValue);
+        /// <summary> Gets the Connect. </summary>
+        public static CorsRuleAllowedMethod Connect { get; } = new CorsRuleAllowedMethod(ConnectValue);
 
-        /// <summary> Gets the TRACE. </summary>
-        public static CorsRuleAllowedMethod TRACE { get; } = new CorsRuleAllowedMethod(TRACEValue);
+        /// <summary> Gets the Trace. </summary>
+        public static CorsRuleAllowedMethod Trace { get; } = new CorsRuleAllowedMethod(TraceValue);
 
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct ServiceSasSignedResourceType : IEquatable<ServiceSasSignedResourceType>
     {
         private readonly string _value;
-        private const string BValue = "b";
-        private const string CValue = "c";
-        private const string FValue = "f";
-        private const string SValue = "s";
+        private const string BlobValue = "b";
+        private const string ContainerValue = "c";
+        private const string FileValue = "f";
+        private const string ShareValue = "s";
 
         /// <summary> Initializes a new instance of <see cref="ServiceSasSignedResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the B. </summary>
-        public static ServiceSasSignedResourceType B { get; } = new ServiceSasSignedResourceType(BValue);
+        /// <summary> Gets the Blob. </summary>
+        public static ServiceSasSignedResourceType Blob { get; } = new ServiceSasSignedResourceType(BlobValue);
 
-        /// <summary> Gets the C. </summary>
-        public static ServiceSasSignedResourceType C { get; } = new ServiceSasSignedResourceType(CValue);
+        /// <summary> Gets the Container. </summary>
+        public static ServiceSasSignedResourceType Container { get; } = new ServiceSasSignedResourceType(ContainerValue);
 
-        /// <summary> Gets the F. </summary>
-        public static ServiceSasSignedResourceType F { get; } = new ServiceSasSignedResourceType(FValue);
+        /// <summary> Gets the File. </summary>
+        public static ServiceSasSignedResourceType File { get; } = new ServiceSasSignedResourceType(FileValue);
 
-        /// <summary> Gets the S. </summary>
-        public static ServiceSasSignedResourceType S { get; } = new ServiceSasSignedResourceType(SValue);
+        /// <summary> Gets the Share. </summary>
+        public static ServiceSasSignedResourceType Share { get; } = new ServiceSasSignedResourceType(ShareValue);
 
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

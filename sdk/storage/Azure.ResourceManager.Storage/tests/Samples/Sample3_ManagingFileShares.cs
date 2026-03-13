@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroupResource resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
-            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGrs);
             StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
             StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, locationStr);

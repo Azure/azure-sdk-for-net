@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct PostFailoverRedundancy : IEquatable<PostFailoverRedundancy>
     {
         private readonly string _value;
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardZRSValue = "Standard_ZRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string StandardZrsValue = "Standard_ZRS";
 
         /// <summary> Initializes a new instance of <see cref="PostFailoverRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the StandardLRS. </summary>
-        public static PostFailoverRedundancy StandardLRS { get; } = new PostFailoverRedundancy(StandardLRSValue);
+        /// <summary> Gets the StandardLrs. </summary>
+        public static PostFailoverRedundancy StandardLrs { get; } = new PostFailoverRedundancy(StandardLrsValue);
 
-        /// <summary> Gets the StandardZRS. </summary>
-        public static PostFailoverRedundancy StandardZRS { get; } = new PostFailoverRedundancy(StandardZRSValue);
+        /// <summary> Gets the StandardZrs. </summary>
+        public static PostFailoverRedundancy StandardZrs { get; } = new PostFailoverRedundancy(StandardZrsValue);
 
         /// <summary> Determines if two <see cref="PostFailoverRedundancy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

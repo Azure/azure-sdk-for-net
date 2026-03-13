@@ -414,6 +414,63 @@ namespace Azure.ResourceManager.Storage.Models
                 zonePlacementPolicy is null ? default : new Placement(zonePlacementPolicy, null));
         }
 
+        /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object. </summary>
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="queueUri"> Gets the queue endpoint. </param>
+        /// <param name="tableUri"> Gets the table endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
+        /// <param name="microsoftEndpoints"> Gets the microsoft routing storage endpoints. </param>
+        /// <param name="internetEndpoints"> Gets the internet routing storage endpoints. </param>
+        /// <param name="iPv6Endpoints"> Gets the IPv6 storage endpoints. </param>
+        /// <returns> A new <see cref="Models.StorageAccountEndpoints"/> instance for mocking. </returns>
+        public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri = default, Uri queueUri = default, Uri tableUri = default, Uri fileUri = default, Uri webUri = default, Uri dfsUri = default, StorageAccountMicrosoftEndpoints microsoftEndpoints = default, StorageAccountInternetEndpoints internetEndpoints = default, StorageAccountIPv6Endpoints iPv6Endpoints = default)
+        {
+            return new StorageAccountEndpoints(
+                blobUri,
+                queueUri,
+                tableUri,
+                fileUri,
+                webUri,
+                dfsUri,
+                microsoftEndpoints,
+                internetEndpoints,
+                iPv6Endpoints,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object via a microsoft routing endpoint. </summary>
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="queueUri"> Gets the queue endpoint. </param>
+        /// <param name="tableUri"> Gets the table endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
+        /// <returns> A new <see cref="Models.StorageAccountMicrosoftEndpoints"/> instance for mocking. </returns>
+        public static StorageAccountMicrosoftEndpoints StorageAccountMicrosoftEndpoints(Uri blobUri = default, Uri queueUri = default, Uri tableUri = default, Uri fileUri = default, Uri webUri = default, Uri dfsUri = default)
+        {
+            return new StorageAccountMicrosoftEndpoints(
+                blobUri,
+                queueUri,
+                tableUri,
+                fileUri,
+                webUri,
+                dfsUri,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The URIs that are used to perform a retrieval of a public blob, file, web or dfs object via a internet routing endpoint. </summary>
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
+        /// <returns> A new <see cref="Models.StorageAccountInternetEndpoints"/> instance for mocking. </returns>
+        public static StorageAccountInternetEndpoints StorageAccountInternetEndpoints(Uri blobUri = default, Uri fileUri = default, Uri webUri = default, Uri dfsUri = default)
+        {
+            return new StorageAccountInternetEndpoints(blobUri, fileUri, webUri, dfsUri, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object via an IPv6 endpoint. </summary>
         /// <param name="blob"> Gets the blob endpoint. </param>
         /// <param name="queue"> Gets the queue endpoint. </param>
@@ -1921,66 +1978,6 @@ namespace Azure.ResourceManager.Storage.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountEndpoints"/>. </summary>
-        /// <param name="blobUri"> Gets the blob endpoint. </param>
-        /// <param name="queueUri"> Gets the queue endpoint. </param>
-        /// <param name="tableUri"> Gets the table endpoint. </param>
-        /// <param name="fileUri"> Gets the file endpoint. </param>
-        /// <param name="webUri"> Gets the web endpoint. </param>
-        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
-        /// <param name="microsoftEndpoints"> Gets the microsoft routing storage endpoints. </param>
-        /// <param name="internetEndpoints"> Gets the internet routing storage endpoints. </param>
-        /// <param name="ipv6Endpoints"> Gets the IPv6 storage endpoints. </param>
-        /// <returns> A new <see cref="Models.StorageAccountEndpoints"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints, StorageAccountIPv6Endpoints ipv6Endpoints)
-        {
-            return new StorageAccountEndpoints(
-                blobUri,
-                queueUri,
-                tableUri,
-                fileUri,
-                webUri,
-                dfsUri,
-                microsoftEndpoints,
-                internetEndpoints,
-                default,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountMicrosoftEndpoints"/>. </summary>
-        /// <param name="blobUri"> Gets the blob endpoint. </param>
-        /// <param name="queueUri"> Gets the queue endpoint. </param>
-        /// <param name="tableUri"> Gets the table endpoint. </param>
-        /// <param name="fileUri"> Gets the file endpoint. </param>
-        /// <param name="webUri"> Gets the web endpoint. </param>
-        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
-        /// <returns> A new <see cref="Models.StorageAccountMicrosoftEndpoints"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageAccountMicrosoftEndpoints StorageAccountMicrosoftEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri)
-        {
-            return new StorageAccountMicrosoftEndpoints(
-                blobUri,
-                queueUri,
-                tableUri,
-                fileUri,
-                webUri,
-                dfsUri,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountInternetEndpoints"/>. </summary>
-        /// <param name="blobUri"> Gets the blob endpoint. </param>
-        /// <param name="fileUri"> Gets the file endpoint. </param>
-        /// <param name="webUri"> Gets the web endpoint. </param>
-        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
-        /// <returns> A new <see cref="Models.StorageAccountInternetEndpoints"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageAccountInternetEndpoints StorageAccountInternetEndpoints(Uri blobUri, Uri fileUri, Uri webUri, Uri dfsUri)
-        {
-            return new StorageAccountInternetEndpoints(blobUri, fileUri, webUri, dfsUri, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountKeyCreationTime"/>. </summary>
         /// <param name="key1"></param>
         /// <param name="key2"></param>
@@ -2493,17 +2490,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints)
         {
-            return new StorageAccountEndpoints(
-                blobUri,
-                queueUri,
-                tableUri,
-                fileUri,
-                webUri,
-                dfsUri,
-                microsoftEndpoints,
-                internetEndpoints,
-                default,
-                additionalBinaryDataProperties: null);
+            return StorageAccountEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri, microsoftEndpoints, internetEndpoints, iPv6Endpoints: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -2534,7 +2521,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IEnumerable<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag)
         {
-            return FileShareData(id, name, resourceType, systemData, lastModifiedOn, metadata, shareQuota, provisionedIops: default, provisionedBandwidthMibps: default, includedBurstIops: default, maxBurstCreditsForIops: default, nextAllowedQuotaDowngradeOn: default, nextAllowedProvisionedIopsDowngradeOn: default, nextAllowedProvisionedBandwidthDowngradeOn: default, enabledProtocol, rootSquash: default, version, isDeleted, deletedOn, remainingRetentionDays, accessTier: default, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus: default, leaseState: default, leaseDuration: default, signedIdentifiers: default, snapshotOn, fileSharePaidBursting: default, etag);
+            return FileShareData(id, name, resourceType, systemData, lastModifiedOn, metadata, shareQuota, provisionedIops: default, provisionedBandwidthMibps: default, includedBurstIops: default, maxBurstCreditsForIops: default, nextAllowedQuotaDowngradeOn: default, nextAllowedProvisionedIopsDowngradeOn: default, nextAllowedProvisionedBandwidthDowngradeOn: default, enabledProtocol: default, rootSquash: default, version, isDeleted, deletedOn, remainingRetentionDays, accessTier: default, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus: default, leaseState: default, leaseDuration: default, signedIdentifiers: default, snapshotOn, fileSharePaidBursting: default, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.ObjectReplicationPolicyData"/>. </summary>

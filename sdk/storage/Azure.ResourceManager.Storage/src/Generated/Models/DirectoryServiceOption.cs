@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
         private const string NoneValue = "None";
-        private const string AADDSValue = "AADDS";
+        private const string AaddsValue = "AADDS";
         private const string ADValue = "AD";
-        private const string AADKERBValue = "AADKERB";
+        private const string AadkerbValue = "AADKERB";
 
         /// <summary> Initializes a new instance of <see cref="DirectoryServiceOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets the None. </summary>
         public static DirectoryServiceOption None { get; } = new DirectoryServiceOption(NoneValue);
 
-        /// <summary> Gets the AADDS. </summary>
-        public static DirectoryServiceOption AADDS { get; } = new DirectoryServiceOption(AADDSValue);
+        /// <summary> Gets the Aadds. </summary>
+        public static DirectoryServiceOption Aadds { get; } = new DirectoryServiceOption(AaddsValue);
 
         /// <summary> Gets the AD. </summary>
         public static DirectoryServiceOption AD { get; } = new DirectoryServiceOption(ADValue);
 
-        /// <summary> Gets the AADKERB. </summary>
-        public static DirectoryServiceOption AADKERB { get; } = new DirectoryServiceOption(AADKERBValue);
+        /// <summary> Gets the Aadkerb. </summary>
+        public static DirectoryServiceOption Aadkerb { get; } = new DirectoryServiceOption(AadkerbValue);
 
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

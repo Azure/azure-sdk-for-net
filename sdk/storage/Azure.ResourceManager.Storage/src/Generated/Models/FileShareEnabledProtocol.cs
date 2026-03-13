@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct FileShareEnabledProtocol : IEquatable<FileShareEnabledProtocol>
     {
         private readonly string _value;
-        private const string SMBValue = "SMB";
-        private const string NFSValue = "NFS";
+        private const string SmbValue = "SMB";
+        private const string NfsValue = "NFS";
 
         /// <summary> Initializes a new instance of <see cref="FileShareEnabledProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the SMB. </summary>
-        public static FileShareEnabledProtocol SMB { get; } = new FileShareEnabledProtocol(SMBValue);
+        /// <summary> Gets the Smb. </summary>
+        public static FileShareEnabledProtocol Smb { get; } = new FileShareEnabledProtocol(SmbValue);
 
-        /// <summary> Gets the NFS. </summary>
-        public static FileShareEnabledProtocol NFS { get; } = new FileShareEnabledProtocol(NFSValue);
+        /// <summary> Gets the Nfs. </summary>
+        public static FileShareEnabledProtocol Nfs { get; } = new FileShareEnabledProtocol(NfsValue);
 
         /// <summary> Determines if two <see cref="FileShareEnabledProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

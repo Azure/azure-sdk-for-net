@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
         private const string NoneValue = "None";
-        private const string StorageFileDataSmbShareReaderValue = "StorageFileDataSmbShareReader";
-        private const string StorageFileDataSmbShareContributorValue = "StorageFileDataSmbShareContributor";
-        private const string StorageFileDataSmbShareElevatedContributorValue = "StorageFileDataSmbShareElevatedContributor";
+        private const string ReaderValue = "StorageFileDataSmbShareReader";
+        private const string ContributorValue = "StorageFileDataSmbShareContributor";
+        private const string ElevatedContributorValue = "StorageFileDataSmbShareElevatedContributor";
 
         /// <summary> Initializes a new instance of <see cref="DefaultSharePermission"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets the None. </summary>
         public static DefaultSharePermission None { get; } = new DefaultSharePermission(NoneValue);
 
-        /// <summary> Gets the StorageFileDataSmbShareReader. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareReader { get; } = new DefaultSharePermission(StorageFileDataSmbShareReaderValue);
+        /// <summary> Gets the Reader. </summary>
+        public static DefaultSharePermission Reader { get; } = new DefaultSharePermission(ReaderValue);
 
-        /// <summary> Gets the StorageFileDataSmbShareContributor. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareContributor { get; } = new DefaultSharePermission(StorageFileDataSmbShareContributorValue);
+        /// <summary> Gets the Contributor. </summary>
+        public static DefaultSharePermission Contributor { get; } = new DefaultSharePermission(ContributorValue);
 
-        /// <summary> Gets the StorageFileDataSmbShareElevatedContributor. </summary>
-        public static DefaultSharePermission StorageFileDataSmbShareElevatedContributor { get; } = new DefaultSharePermission(StorageFileDataSmbShareElevatedContributorValue);
+        /// <summary> Gets the ElevatedContributor. </summary>
+        public static DefaultSharePermission ElevatedContributor { get; } = new DefaultSharePermission(ElevatedContributorValue);
 
         /// <summary> Determines if two <see cref="DefaultSharePermission"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

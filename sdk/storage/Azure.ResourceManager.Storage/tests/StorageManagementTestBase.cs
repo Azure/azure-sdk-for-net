@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGRS);
+        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGrs);
         public static StorageKind DefaultKindStorage = StorageKind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {

@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageSkuName : IEquatable<StorageSkuName>
     {
         private readonly string _value;
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardGRSValue = "Standard_GRS";
-        private const string StandardRAGRSValue = "Standard_RAGRS";
-        private const string StandardZRSValue = "Standard_ZRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardGZRSValue = "Standard_GZRS";
-        private const string StandardRAGZRSValue = "Standard_RAGZRS";
-        private const string StandardV2LRSValue = "StandardV2_LRS";
-        private const string StandardV2GRSValue = "StandardV2_GRS";
-        private const string StandardV2ZRSValue = "StandardV2_ZRS";
-        private const string StandardV2GZRSValue = "StandardV2_GZRS";
-        private const string PremiumV2LRSValue = "PremiumV2_LRS";
-        private const string PremiumV2ZRSValue = "PremiumV2_ZRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string StandardGrsValue = "Standard_GRS";
+        private const string StandardRagrsValue = "Standard_RAGRS";
+        private const string StandardZrsValue = "Standard_ZRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string PremiumZrsValue = "Premium_ZRS";
+        private const string StandardGzrsValue = "Standard_GZRS";
+        private const string StandardRagzrsValue = "Standard_RAGZRS";
+        private const string StandardV2LrsValue = "StandardV2_LRS";
+        private const string StandardV2GrsValue = "StandardV2_GRS";
+        private const string StandardV2ZrsValue = "StandardV2_ZRS";
+        private const string StandardV2GzrsValue = "StandardV2_GZRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
+        private const string PremiumV2ZrsValue = "PremiumV2_ZRS";
 
         /// <summary> Initializes a new instance of <see cref="StorageSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,47 +40,47 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the StandardLRS. </summary>
-        public static StorageSkuName StandardLRS { get; } = new StorageSkuName(StandardLRSValue);
+        /// <summary> Gets the StandardLrs. </summary>
+        public static StorageSkuName StandardLrs { get; } = new StorageSkuName(StandardLrsValue);
 
-        /// <summary> Gets the StandardGRS. </summary>
-        public static StorageSkuName StandardGRS { get; } = new StorageSkuName(StandardGRSValue);
+        /// <summary> Gets the StandardGrs. </summary>
+        public static StorageSkuName StandardGrs { get; } = new StorageSkuName(StandardGrsValue);
 
-        /// <summary> Gets the StandardRAGRS. </summary>
-        public static StorageSkuName StandardRAGRS { get; } = new StorageSkuName(StandardRAGRSValue);
+        /// <summary> Gets the StandardRagrs. </summary>
+        public static StorageSkuName StandardRagrs { get; } = new StorageSkuName(StandardRagrsValue);
 
-        /// <summary> Gets the StandardZRS. </summary>
-        public static StorageSkuName StandardZRS { get; } = new StorageSkuName(StandardZRSValue);
+        /// <summary> Gets the StandardZrs. </summary>
+        public static StorageSkuName StandardZrs { get; } = new StorageSkuName(StandardZrsValue);
 
-        /// <summary> Gets the PremiumLRS. </summary>
-        public static StorageSkuName PremiumLRS { get; } = new StorageSkuName(PremiumLRSValue);
+        /// <summary> Gets the PremiumLrs. </summary>
+        public static StorageSkuName PremiumLrs { get; } = new StorageSkuName(PremiumLrsValue);
 
-        /// <summary> Gets the PremiumZRS. </summary>
-        public static StorageSkuName PremiumZRS { get; } = new StorageSkuName(PremiumZRSValue);
+        /// <summary> Gets the PremiumZrs. </summary>
+        public static StorageSkuName PremiumZrs { get; } = new StorageSkuName(PremiumZrsValue);
 
-        /// <summary> Gets the StandardGZRS. </summary>
-        public static StorageSkuName StandardGZRS { get; } = new StorageSkuName(StandardGZRSValue);
+        /// <summary> Gets the StandardGzrs. </summary>
+        public static StorageSkuName StandardGzrs { get; } = new StorageSkuName(StandardGzrsValue);
 
-        /// <summary> Gets the StandardRAGZRS. </summary>
-        public static StorageSkuName StandardRAGZRS { get; } = new StorageSkuName(StandardRAGZRSValue);
+        /// <summary> Gets the StandardRagzrs. </summary>
+        public static StorageSkuName StandardRagzrs { get; } = new StorageSkuName(StandardRagzrsValue);
 
-        /// <summary> Gets the StandardV2LRS. </summary>
-        public static StorageSkuName StandardV2LRS { get; } = new StorageSkuName(StandardV2LRSValue);
+        /// <summary> Gets the StandardV2Lrs. </summary>
+        public static StorageSkuName StandardV2Lrs { get; } = new StorageSkuName(StandardV2LrsValue);
 
-        /// <summary> Gets the StandardV2GRS. </summary>
-        public static StorageSkuName StandardV2GRS { get; } = new StorageSkuName(StandardV2GRSValue);
+        /// <summary> Gets the StandardV2Grs. </summary>
+        public static StorageSkuName StandardV2Grs { get; } = new StorageSkuName(StandardV2GrsValue);
 
-        /// <summary> Gets the StandardV2ZRS. </summary>
-        public static StorageSkuName StandardV2ZRS { get; } = new StorageSkuName(StandardV2ZRSValue);
+        /// <summary> Gets the StandardV2Zrs. </summary>
+        public static StorageSkuName StandardV2Zrs { get; } = new StorageSkuName(StandardV2ZrsValue);
 
-        /// <summary> Gets the StandardV2GZRS. </summary>
-        public static StorageSkuName StandardV2GZRS { get; } = new StorageSkuName(StandardV2GZRSValue);
+        /// <summary> Gets the StandardV2Gzrs. </summary>
+        public static StorageSkuName StandardV2Gzrs { get; } = new StorageSkuName(StandardV2GzrsValue);
 
-        /// <summary> Gets the PremiumV2LRS. </summary>
-        public static StorageSkuName PremiumV2LRS { get; } = new StorageSkuName(PremiumV2LRSValue);
+        /// <summary> Gets the PremiumV2Lrs. </summary>
+        public static StorageSkuName PremiumV2Lrs { get; } = new StorageSkuName(PremiumV2LrsValue);
 
-        /// <summary> Gets the PremiumV2ZRS. </summary>
-        public static StorageSkuName PremiumV2ZRS { get; } = new StorageSkuName(PremiumV2ZRSValue);
+        /// <summary> Gets the PremiumV2Zrs. </summary>
+        public static StorageSkuName PremiumV2Zrs { get; } = new StorageSkuName(PremiumV2ZrsValue);
 
         /// <summary> Determines if two <see cref="StorageSkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

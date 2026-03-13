@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task UpdateBlobService()
         {
             string accountName = Recording.GenerateAssetName("account");
-            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.StorageV2, AzureLocation.EastUS2);
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.StorageV2, AzureLocation.EastUS2);
             var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
             _blobService = await account.GetBlobService().GetAsync();
             //validate current file service properties
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsNull(_blobService.Data.DeleteRetentionPolicy.Days);
             Assert.IsNull(_blobService.Data.DefaultServiceVersion);
             Assert.AreEqual(0, _blobService.Data.CorsRules.Count);
-            Assert.AreEqual(_blobService.Data.Sku.Name, StorageSkuName.StandardGRS);
+            Assert.AreEqual(_blobService.Data.Sku.Name, StorageSkuName.StandardGrs);
 
             //update delete retention policy
             BlobServiceData serviceData = _blobService.Data;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create 2 storage accounts
             string accountName1 = await CreateValidAccountNameAsync("teststoragemgmt");
             string accountName2 = await CreateValidAccountNameAsync("teststoragemgmt");
-            StorageAccountCreateOrUpdateContent createContent = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLRS), StorageKind.StorageV2, "centralusEUAP");
+            StorageAccountCreateOrUpdateContent createContent = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.StorageV2, "centralusEUAP");
             StorageAccountResource sourceAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName1, createContent)).Value;
             StorageAccountResource destAccount = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createContent)).Value;
 
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 CorsRules =
                 {
                     new StorageCorsRule(new[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                        new[] { CorsRuleAllowedMethod.GET, CorsRuleAllowedMethod.PUT },
+                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
                         100,
                         new[] { "x-ms-meta-*" },
                         new[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" })
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string scopeName2 = "testscope2";
             EncryptionScopeData data = new EncryptionScopeData()
             {
-                Source = EncryptionScopeSource.MicrosoftStorage,
+                Source = EncryptionScopeSource.Storage,
                 State = EncryptionScopeState.Enabled
             };
             await _storageAccount.GetEncryptionScopes().CreateOrUpdateAsync(WaitUntil.Completed, scopeName1, data);

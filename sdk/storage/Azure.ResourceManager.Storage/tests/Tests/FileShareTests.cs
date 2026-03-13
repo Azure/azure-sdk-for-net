@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create file share
             string accountName = Recording.GenerateAssetName("account");
-            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.StorageV2, AzureLocation.EastUS2);
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.StorageV2, AzureLocation.EastUS2);
             var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
 
             _fileShareCollection = (await account.GetFileService().GetAsync()).Value.GetFileShares();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             //create file share
             string accountName = Recording.GenerateAssetName("account");
-            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLRS), StorageKind.FileStorage, AzureLocation.EastUS2);
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLrs), StorageKind.FileStorage, AzureLocation.EastUS2);
             var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
             _fileService = account.GetFileService();
 
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Storage.Tests
             FileServiceData properties2 = new FileServiceData();
             properties2.CorsRules.Add(
                 new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                    new[] { CorsRuleAllowedMethod.GET, CorsRuleAllowedMethod.PUT },
+                    new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
                     100,
                     new string[] { "x-ms-meta-*" },
                     new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }));
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed,
                 accountName,
                 GetDefaultStorageAccountParameters(
-                    sku: new StorageSku(StorageSkuName.StandardV2LRS),
+                    sku: new StorageSku(StorageSkuName.StandardV2Lrs),
                     StorageKind.FileStorage,
                     AzureLocation.WestUS2)))
                 //"eastus2euap")))
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Storage.Tests
         {
             // Create account
             string accountName = Recording.GenerateAssetName("account");
-            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLRS), StorageKind.FileStorage, "eastus2euap");
+            var content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLrs), StorageKind.FileStorage, "eastus2euap");
             var account = (await _resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, content)).Value;
 
             //create file share

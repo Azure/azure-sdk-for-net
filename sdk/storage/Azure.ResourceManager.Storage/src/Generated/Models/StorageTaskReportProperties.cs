@@ -66,6 +66,14 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("storageAccountId")]
         public ResourceIdentifier StorageAccountId { get; }
 
+        /// <summary> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("startTime")]
+        public DateTimeOffset? StartedOn { get; }
+
+        /// <summary> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("finishTime")]
+        public DateTimeOffset? FinishedOn { get; }
+
         /// <summary> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("objectsTargetedCount")]
         public string ObjectsTargetedCount { get; }

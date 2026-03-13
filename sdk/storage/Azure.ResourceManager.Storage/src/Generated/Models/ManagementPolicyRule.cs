@@ -47,9 +47,17 @@ namespace Azure.ResourceManager.Storage.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Rule is enabled if set to true. </summary>
+        [WirePath("enabled")]
+        public bool? IsEnabled { get; set; }
+
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
+        /// <summary> The valid value is Lifecycle. </summary>
+        [WirePath("type")]
+        public ManagementPolicyRuleType RuleType { get; set; }
 
         /// <summary> An object that defines the Lifecycle rule. </summary>
         [WirePath("definition")]

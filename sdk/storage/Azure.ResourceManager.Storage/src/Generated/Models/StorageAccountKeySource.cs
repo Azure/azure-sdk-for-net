@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountKeySource : IEquatable<StorageAccountKeySource>
     {
         private readonly string _value;
-        private const string MicrosoftStorageValue = "Microsoft.Storage";
-        private const string MicrosoftKeyvaultValue = "Microsoft.Keyvault";
+        private const string StorageValue = "Microsoft.Storage";
+        private const string KeyVaultValue = "Microsoft.Keyvault";
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountKeySource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the MicrosoftStorage. </summary>
-        public static StorageAccountKeySource MicrosoftStorage { get; } = new StorageAccountKeySource(MicrosoftStorageValue);
+        /// <summary> Gets the Storage. </summary>
+        public static StorageAccountKeySource Storage { get; } = new StorageAccountKeySource(StorageValue);
 
-        /// <summary> Gets the MicrosoftKeyvault. </summary>
-        public static StorageAccountKeySource MicrosoftKeyvault { get; } = new StorageAccountKeySource(MicrosoftKeyvaultValue);
+        /// <summary> Gets the KeyVault. </summary>
+        public static StorageAccountKeySource KeyVault { get; } = new StorageAccountKeySource(KeyVaultValue);
 
         /// <summary> Determines if two <see cref="StorageAccountKeySource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

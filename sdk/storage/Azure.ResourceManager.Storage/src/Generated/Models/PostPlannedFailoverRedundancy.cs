@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct PostPlannedFailoverRedundancy : IEquatable<PostPlannedFailoverRedundancy>
     {
         private readonly string _value;
-        private const string StandardGRSValue = "Standard_GRS";
-        private const string StandardGZRSValue = "Standard_GZRS";
-        private const string StandardRAGRSValue = "Standard_RAGRS";
-        private const string StandardRAGZRSValue = "Standard_RAGZRS";
+        private const string StandardGrsValue = "Standard_GRS";
+        private const string StandardGzrsValue = "Standard_GZRS";
+        private const string StandardRagrsValue = "Standard_RAGRS";
+        private const string StandardRagzrsValue = "Standard_RAGZRS";
 
         /// <summary> Initializes a new instance of <see cref="PostPlannedFailoverRedundancy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the StandardGRS. </summary>
-        public static PostPlannedFailoverRedundancy StandardGRS { get; } = new PostPlannedFailoverRedundancy(StandardGRSValue);
+        /// <summary> Gets the StandardGrs. </summary>
+        public static PostPlannedFailoverRedundancy StandardGrs { get; } = new PostPlannedFailoverRedundancy(StandardGrsValue);
 
-        /// <summary> Gets the StandardGZRS. </summary>
-        public static PostPlannedFailoverRedundancy StandardGZRS { get; } = new PostPlannedFailoverRedundancy(StandardGZRSValue);
+        /// <summary> Gets the StandardGzrs. </summary>
+        public static PostPlannedFailoverRedundancy StandardGzrs { get; } = new PostPlannedFailoverRedundancy(StandardGzrsValue);
 
-        /// <summary> Gets the StandardRAGRS. </summary>
-        public static PostPlannedFailoverRedundancy StandardRAGRS { get; } = new PostPlannedFailoverRedundancy(StandardRAGRSValue);
+        /// <summary> Gets the StandardRagrs. </summary>
+        public static PostPlannedFailoverRedundancy StandardRagrs { get; } = new PostPlannedFailoverRedundancy(StandardRagrsValue);
 
-        /// <summary> Gets the StandardRAGZRS. </summary>
-        public static PostPlannedFailoverRedundancy StandardRAGZRS { get; } = new PostPlannedFailoverRedundancy(StandardRAGZRSValue);
+        /// <summary> Gets the StandardRagzrs. </summary>
+        public static PostPlannedFailoverRedundancy StandardRagzrs { get; } = new PostPlannedFailoverRedundancy(StandardRagzrsValue);
 
         /// <summary> Determines if two <see cref="PostPlannedFailoverRedundancy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct EncryptionScopeSource : IEquatable<EncryptionScopeSource>
     {
         private readonly string _value;
-        private const string MicrosoftStorageValue = "Microsoft.Storage";
-        private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
+        private const string StorageValue = "Microsoft.Storage";
+        private const string KeyVaultValue = "Microsoft.KeyVault";
 
         /// <summary> Initializes a new instance of <see cref="EncryptionScopeSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value;
         }
 
-        /// <summary> Gets the MicrosoftStorage. </summary>
-        public static EncryptionScopeSource MicrosoftStorage { get; } = new EncryptionScopeSource(MicrosoftStorageValue);
+        /// <summary> Gets the Storage. </summary>
+        public static EncryptionScopeSource Storage { get; } = new EncryptionScopeSource(StorageValue);
 
-        /// <summary> Gets the MicrosoftKeyVault. </summary>
-        public static EncryptionScopeSource MicrosoftKeyVault { get; } = new EncryptionScopeSource(MicrosoftKeyVaultValue);
+        /// <summary> Gets the KeyVault. </summary>
+        public static EncryptionScopeSource KeyVault { get; } = new EncryptionScopeSource(KeyVaultValue);
 
         /// <summary> Determines if two <see cref="EncryptionScopeSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
