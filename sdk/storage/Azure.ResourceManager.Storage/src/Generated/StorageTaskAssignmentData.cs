@@ -7,31 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> The storage task assignment. </summary>
-    public partial class StorageTaskAssignmentData : Resource
+    public partial class StorageTaskAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/>. </summary>
-        /// <param name="properties"> Properties of the storage task assignment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public StorageTaskAssignmentData(StorageTaskAssignmentProperties properties)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-            Properties = properties;
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/>. </summary>
+        public StorageTaskAssignmentData()
+        {
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the storage task assignment. </param>
-        internal StorageTaskAssignmentData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageTaskAssignmentProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal StorageTaskAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageTaskAssignmentProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

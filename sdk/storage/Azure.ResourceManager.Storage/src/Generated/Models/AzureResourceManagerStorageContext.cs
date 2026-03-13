@@ -157,7 +157,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(QueueServiceData))]
     [ModelReaderWriterBuildable(typeof(QueueServicePropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(QueueServiceResource))]
-    [ModelReaderWriterBuildable(typeof(Resource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceSasContent))]

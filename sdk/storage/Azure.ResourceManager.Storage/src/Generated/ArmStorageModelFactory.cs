@@ -1358,12 +1358,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The storage task assignment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the storage task assignment. </param>
         /// <returns> A new <see cref="Storage.StorageTaskAssignmentData"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentData StorageTaskAssignmentData(string id = default, string name = default, string @type = default, StorageTaskAssignmentProperties properties = default)
+        public static StorageTaskAssignmentData StorageTaskAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageTaskAssignmentProperties properties = default)
         {
-            return new StorageTaskAssignmentData(id, name, @type, additionalBinaryDataProperties: null, properties);
+            return new StorageTaskAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <summary> Target helps provide filter parameters for the objects in the storage account and forms the execution context for the storage task. </summary>
@@ -1376,16 +1383,6 @@ namespace Azure.ResourceManager.Storage.Models
             excludePrefix ??= new ChangeTrackingList<string>();
 
             return new ExecutionTarget(prefix.ToList(), excludePrefix.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = default, string name = default, string @type = default)
-        {
-            return new Resource(id, name, @type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
@@ -2129,19 +2126,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled, bool? isPriorityReplicationEnabled)
         {
             return ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules, isMetricsEnabled, isPriorityReplicationEnabled, tagsReplicationEnabled: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Storage.StorageTaskAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the storage task assignment. </param>
-        /// <returns> A new <see cref="Storage.StorageTaskAssignmentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageTaskAssignmentData StorageTaskAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTaskAssignmentProperties properties)
-        {
-            return new StorageTaskAssignmentData(id, name, default, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentProperties"/>. </summary>

@@ -8,24 +8,21 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> The storage task assignment. </summary>
-    public partial class StorageTaskAssignmentData : Resource, IJsonModel<StorageTaskAssignmentData>
+    public partial class StorageTaskAssignmentData : ResourceData, IJsonModel<StorageTaskAssignmentData>
     {
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentData"/> for deserialization. </summary>
-        internal StorageTaskAssignmentData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StorageTaskAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -41,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StorageTaskAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,8 +96,11 @@ namespace Azure.ResourceManager.Storage
                 throw new FormatException($"The model {nameof(StorageTaskAssignmentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StorageTaskAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,16 +128,21 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             StorageTaskAssignmentProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -147,11 +152,28 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     properties = StorageTaskAssignmentProperties.DeserializeStorageTaskAssignmentProperties(prop.Value, options);
                     continue;
                 }
@@ -160,7 +182,13 @@ namespace Azure.ResourceManager.Storage
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageTaskAssignmentData(id, name, @type, additionalBinaryDataProperties, properties);
+            return new StorageTaskAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }
