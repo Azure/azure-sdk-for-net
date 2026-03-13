@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchApplicationPackageData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchApplicationPackageData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchApplicationPackageData"/> from. </param>

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BatchApplicationPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, BatchApplicationPackageData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchApplicationPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, BatchApplicationPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BatchApplicationPackageResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, BatchApplicationPackageData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchApplicationPackageResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, BatchApplicationPackageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 

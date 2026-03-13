@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BatchApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, BatchApplicationData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, BatchApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BatchApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, BatchApplicationData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, BatchApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 

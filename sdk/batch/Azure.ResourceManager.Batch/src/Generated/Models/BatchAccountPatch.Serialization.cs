@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchAccountPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchAccountPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
