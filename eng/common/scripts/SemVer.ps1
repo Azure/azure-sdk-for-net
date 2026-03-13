@@ -490,6 +490,64 @@ class AzureEngSemanticVersion : IComparable {
       Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
     }
 
+    # Python post-release parsing tests
+    $postVerString = "1.0.0.post1"
+    $postVer = [AzureEngSemanticVersion]::ParsePythonVersionString($postVerString)
+    if ($postVer.Major -ne 1 -or $postVer.Minor -ne 0 -or $postVer.Patch -ne 0 -or `
+        !$postVer.IsPostRelease -or $postVer.PostReleaseNumber -ne 1 -or $postVer.IsPrerelease) {
+      Write-Host "Error: Didn't correctly parse python post-release string $postVerString"
+    }
+    if ($postVerString -ne $postVer.ToString()) {
+      Write-Host "Error: post-release string did not correctly round trip with ToString. Expected: $($postVerString), Actual: $($postVer)"
+    }
+
+    # Implicit post-release number (PEP 440: 1.0.0.post == 1.0.0.post0)
+    $implicitPostVerString = "1.0.0.post"
+    $implicitPostVer = [AzureEngSemanticVersion]::ParsePythonVersionString($implicitPostVerString)
+    if ($null -eq $implicitPostVer -or !$implicitPostVer.IsSemVerFormat) {
+      Write-Host "Error: Failed to parse implicit post-release string $implicitPostVerString"
+    }
+    elseif ($implicitPostVer.Major -ne 1 -or $implicitPostVer.Minor -ne 0 -or $implicitPostVer.Patch -ne 0 -or `
+            !$implicitPostVer.IsPostRelease -or $implicitPostVer.PostReleaseNumber -ne 0) {
+      Write-Host "Error: Didn't correctly parse implicit post-release string $implicitPostVerString"
+    }
+    $expected = "1.0.0.post0"
+    if ($expected -ne $implicitPostVer.ToString()) {
+      Write-Host "Error: implicit post-release did not normalize. Expected: $expected, Actual: $($implicitPostVer)"
+    }
+
+    # Prerelease + post-release
+    $preBetaPostString = "1.0.0b2.post1"
+    $preBetaPost = [AzureEngSemanticVersion]::ParsePythonVersionString($preBetaPostString)
+    if ($preBetaPost.Major -ne 1 -or $preBetaPost.Minor -ne 0 -or $preBetaPost.Patch -ne 0 -or `
+        $preBetaPost.PrereleaseLabel -ne "b" -or $preBetaPost.PrereleaseNumber -ne 2 -or `
+        !$preBetaPost.IsPostRelease -or $preBetaPost.PostReleaseNumber -ne 1) {
+      Write-Host "Error: Didn't correctly parse python prerelease post-release string $preBetaPostString"
+    }
+    if ($preBetaPostString -ne $preBetaPost.ToString()) {
+      Write-Host "Error: prerelease post-release string did not correctly round trip with ToString. Expected: $($preBetaPostString), Actual: $($preBetaPost)"
+    }
+
+    # Post-release alternate separators normalize to canonical form
+    $expectedNormalized = "1.0.0.post1"
+    foreach ($altVerString in @("1.0.0-post1", "1.0.0_post1", "1.0.0post1")) {
+      $parsed = [AzureEngSemanticVersion]::ParsePythonVersionString($altVerString)
+      if ($null -eq $parsed -or !$parsed.IsPostRelease -or $parsed.PostReleaseNumber -ne 1) {
+        Write-Host "Error: Failed to parse alternate post-release format $altVerString"
+      }
+      if ($expectedNormalized -ne $parsed.ToString()) {
+        Write-Host "Error: Alternate post-release '$altVerString' did not normalize. Expected: $expectedNormalized, Actual: $($parsed)"
+      }
+    }
+
+    # Post-release increment clears post state
+    $postIncVer = [AzureEngSemanticVersion]::ParsePythonVersionString("1.0.0.post1")
+    $postIncVer.IncrementAndSetToPrerelease()
+    $expected = "1.1.0b1"
+    if ($expected -ne $postIncVer.ToString()) {
+      Write-Host "Error: post-release increment did not produce expected result. Expected: $expected, Actual: $($postIncVer)"
+    }
+
     Write-Host "QuickTests done"
   }
 }
