@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="ssh"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)
+        public ContainerServiceLinuxProfile(string adminUsername, ContainerServiceSshConfiguration ssh)     // Add this constructor for backward compatibility, as previous versions of the SDK had a constructor with these parameters.
         {
             Argument.AssertNotNull(adminUsername, nameof(adminUsername));
             Argument.AssertNotNull(ssh, nameof(ssh));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
         /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="sshPublicKeys"/> is null. </exception>
-        public ContainerServiceLinuxProfile(string adminUsername, IList<ContainerServiceSshPublicKey> sshPublicKeys)
+        public ContainerServiceLinuxProfile(string adminUsername, IList<ContainerServiceSshPublicKey> sshPublicKeys)    // Add this constructor for a MTG bug https://github.com/microsoft/typespec/issues/9331, will be removed in the future after the bug is fixed.
         {
             Argument.AssertNotNull(adminUsername, nameof(adminUsername));
             Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
