@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.ApiCenter
      *     ArmOperation<ApiCenterApiImportSuccess> due to the TypeSpec defining a typed response model.
      *
      * These custom methods preserve the 1.0.0 GA public API surface for backward compatibility.
+     * issue link: https://github.com/Azure/azure-sdk-for-net/issues/56996
      */
     public partial class ApiCenterApiDefinitionResource
     {

@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.ApiCenter
      * These custom methods preserve the parameterless self-check Head/HeadAsync with Response<bool>
      * return type for 1.0.0 GA backward compatibility. They coexist with the generated
      * Head(string definitionName) overload as different method signatures.
+     * issue link: https://github.com/Azure/azure-sdk-for-net/issues/56996
      */
     public partial class ApiCenterApiVersionResource
     {
