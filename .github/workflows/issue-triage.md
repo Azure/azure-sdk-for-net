@@ -74,7 +74,7 @@ The following accounts are treated as customer-reported regardless of organizati
 - `copilot-swe-agent[bot]`
 - `microsoft-github-policy-service[bot]`
 
-If the author matches the allowlist, add "customer-reported" and "question" labels, set `is_customer = true`, and continue to Step 3
+If the author matches the bot allowlist, add "customer-reported" and "question" labels, set `is_customer = true`, and continue to Step 3
 
 ### Organization and Permission Checks
 
