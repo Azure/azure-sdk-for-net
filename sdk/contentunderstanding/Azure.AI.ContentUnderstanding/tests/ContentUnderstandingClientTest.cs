@@ -832,6 +832,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(range0to5Segments.Count > 0, "0-5s range should return segments");
             Assert.IsTrue(range0to5Segments.All(s => s.EndTime > s.StartTime), "0-5s segments should have EndTime > StartTime");
             Assert.IsTrue(range0to5Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "0-5s segments should have markdown");
+            Assert.IsTrue(range0to5Segments.All(s => s.StartTime >= TimeSpan.Zero),
+                $"Range(0-5s) all segments should start at >= 0 ms, but found segment starting at {range0to5Segments.Min(s => s.StartTime).TotalMilliseconds} ms");
+            Assert.IsTrue(range0to5Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(5)),
+                $"Range(0-5s) all segments should end at <= 5000 ms, but found segment ending at {range0to5Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
 
             // ContentRange.TimeRange(10s, 20s) — middle of the video
             Operation<AnalysisResult> range10to20Operation = await client.AnalyzeAsync(
@@ -843,6 +847,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(range10to20Segments.Count > 0, "10-20s range should return segments");
             Assert.IsTrue(range10to20Segments.All(s => s.EndTime > s.StartTime), "10-20s segments should have EndTime > StartTime");
             Assert.IsTrue(range10to20Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "10-20s segments should have markdown");
+            Assert.IsTrue(range10to20Segments.All(s => s.StartTime >= TimeSpan.FromSeconds(10)),
+                $"Range(10-20s) all segments should start at >= 10000 ms, but found segment starting at {range10to20Segments.Min(s => s.StartTime).TotalMilliseconds} ms");
+            Assert.IsTrue(range10to20Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(20)),
+                $"Range(10-20s) all segments should end at <= 20000 ms, but found segment ending at {range10to20Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
         }
 
         /// <summary>
@@ -877,6 +885,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(range0to10Audio.EndTime > range0to10Audio.StartTime, "0-10s range should have EndTime > StartTime");
             Assert.IsNotNull(range0to10Audio.Markdown, "0-10s range should have markdown");
             Assert.IsTrue(range0to10Audio.Markdown!.Length > 0, "0-10s range markdown should not be empty");
+            Assert.IsTrue(range0to10Audio.StartTime >= TimeSpan.Zero,
+                $"Range(0-10s) audio StartTime ({range0to10Audio.StartTime.TotalMilliseconds} ms) should be >= 0 ms");
+            Assert.IsTrue(range0to10Audio.EndTime <= TimeSpan.FromSeconds(10),
+                $"Range(0-10s) audio EndTime ({range0to10Audio.EndTime.TotalMilliseconds} ms) should be <= 10000 ms");
 
             // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward
             Operation<AnalysisResult> rangeFrom10Operation = await client.AnalyzeAsync(
@@ -888,6 +900,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsTrue(rangeFrom10Audio.EndTime > rangeFrom10Audio.StartTime, "10s-onward range should have EndTime > StartTime");
             Assert.IsNotNull(rangeFrom10Audio.Markdown, "10s-onward range should have markdown");
             Assert.IsTrue(rangeFrom10Audio.Markdown!.Length > 0, "10s-onward range markdown should not be empty");
+            Assert.IsTrue(rangeFrom10Audio.StartTime >= TimeSpan.FromSeconds(10),
+                $"TimeRangeFrom(10s) audio StartTime ({rangeFrom10Audio.StartTime.TotalMilliseconds} ms) should be >= 10000 ms");
         }
 
         /// <summary>

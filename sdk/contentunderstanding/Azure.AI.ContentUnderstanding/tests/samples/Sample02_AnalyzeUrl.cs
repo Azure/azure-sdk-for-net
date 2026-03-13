@@ -370,11 +370,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(fullMarkdownLength > 0, "Full video markdown should not be empty");
             Assert.IsTrue(rangeMarkdownLength > 0, "Range video markdown should not be empty");
 
-            // Verify range segments are well-formed
+            // Verify range segments are well-formed and fall within the requested 0-5s window
             foreach (var seg in rangeSegments)
             {
                 Assert.IsTrue(seg.EndTime > seg.StartTime,
                     $"Range segment should have EndTime > StartTime");
+                Assert.IsTrue(seg.StartTime >= TimeSpan.Zero,
+                    $"Range(0-5s) segment StartTime ({seg.StartTime.TotalMilliseconds} ms) should be >= 0 ms");
+                Assert.IsTrue(seg.EndTime <= TimeSpan.FromSeconds(5),
+                    $"Range(0-5s) segment EndTime ({seg.EndTime.TotalMilliseconds} ms) should be <= 5000 ms");
             }
 
             Console.WriteLine($"Full video: {fullSegments.Count} segment(s), {fullTotalDurationMs} ms, {fullMarkdownLength} chars");
@@ -399,6 +403,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "TimeRangeFrom segments should have EndTime > StartTime");
             Assert.IsTrue(rangeFromSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
                 "TimeRangeFrom segments should have markdown");
+            Assert.IsTrue(rangeFromSegments.All(s => s.StartTime >= TimeSpan.FromSeconds(10)),
+                $"TimeRangeFrom(10s) all segments should start at >= 10000 ms, but found segment starting at {rangeFromSegments.Min(s => s.StartTime).TotalMilliseconds} ms");
 
             // ContentRange.TimeRange with sub-second precision (wire format: "1200-3651")
             Operation<AnalysisResult> subSecondOperation = await client.AnalyzeAsync(
@@ -418,6 +424,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(subSecondSegments.Count > 0, "Sub-second TimeRange should return segments");
             Assert.IsTrue(subSecondSegments.All(s => s.EndTime > s.StartTime),
                 "Sub-second segments should have EndTime > StartTime");
+            Assert.IsTrue(subSecondSegments.All(s => s.StartTime >= TimeSpan.FromMilliseconds(1200)),
+                $"TimeRange(1.2s-3.651s) all segments should start at >= 1200 ms, but found segment starting at {subSecondSegments.Min(s => s.StartTime).TotalMilliseconds} ms");
+            Assert.IsTrue(subSecondSegments.All(s => s.EndTime <= TimeSpan.FromMilliseconds(3651)),
+                $"TimeRange(1.2s-3.651s) all segments should end at <= 3651 ms, but found segment ending at {subSecondSegments.Max(s => s.EndTime).TotalMilliseconds} ms");
 
             // ContentRange.Combine — combined time ranges (wire format: "0-3000,30000-")
             Operation<AnalysisResult> combineVideoOperation = await client.AnalyzeAsync(
@@ -439,6 +449,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "Combine segments should have EndTime > StartTime");
             Assert.IsTrue(combineVideoSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
                 "Combine segments should have markdown");
+            // Each segment should fall within one of the combined ranges: 0-3s or 30s+
+            Assert.IsTrue(combineVideoSegments.All(s =>
+                    s.EndTime <= TimeSpan.FromSeconds(3) || s.StartTime >= TimeSpan.FromSeconds(30)),
+                "Combine(0-3s, 30s-) segments should fall within one of the combined ranges");
 
             Console.WriteLine($"TimeRangeFrom(10s): {rangeFromSegments.Count} segment(s)");
             Console.WriteLine($"TimeRange(1.2s, 3.651s): {subSecondSegments.Count} segment(s)");
@@ -556,8 +570,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(rangeResult.Contents.Count > 0);
             Assert.IsInstanceOf<AudioVisualContent>(rangeAudioContent);
 
-            // The service may return content beyond the requested range,
-            // so we use >= comparisons to avoid flaky assertions.
+            // Verify returned content starts at or after the requested 5s offset
+            Assert.IsTrue(rangeAudioContent.StartTime >= TimeSpan.FromSeconds(5),
+                $"TimeRangeFrom(5s) audio StartTime ({rangeAudioContent.StartTime.TotalMilliseconds} ms) should be >= 5000 ms");
+
             Assert.IsTrue(audioContent.Markdown!.Length >= rangeAudioContent.Markdown!.Length,
                 $"Full audio markdown ({audioContent.Markdown.Length} chars) should be >= range-limited ({rangeAudioContent.Markdown.Length} chars)");
 
@@ -593,6 +609,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "TimeRange(2s,8s) should have EndTime > StartTime");
             Assert.IsNotNull(audioWindowContent.Markdown, "TimeRange(2s,8s) should have markdown");
             Assert.IsTrue(audioWindowContent.Markdown!.Length > 0, "TimeRange(2s,8s) markdown should not be empty");
+            Assert.IsTrue(audioWindowContent.StartTime >= TimeSpan.FromSeconds(2),
+                $"TimeRange(2s,8s) audio StartTime ({audioWindowContent.StartTime.TotalMilliseconds} ms) should be >= 2000 ms");
+            Assert.IsTrue(audioWindowContent.EndTime <= TimeSpan.FromSeconds(8),
+                $"TimeRange(2s,8s) audio EndTime ({audioWindowContent.EndTime.TotalMilliseconds} ms) should be <= 8000 ms");
             Assert.IsTrue(fullDurationMs >= (audioWindowContent.EndTime - audioWindowContent.StartTime).TotalMilliseconds,
                 "Full audio duration should be >= time-windowed duration");
 
@@ -618,6 +638,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "TimeRange(1.2s,3.651s) should have EndTime > StartTime");
             Assert.IsNotNull(audioSubSecondContent.Markdown, "TimeRange(1.2s,3.651s) should have markdown");
             Assert.IsTrue(audioSubSecondContent.Markdown!.Length > 0, "TimeRange(1.2s,3.651s) markdown should not be empty");
+            Assert.IsTrue(audioSubSecondContent.StartTime >= TimeSpan.FromMilliseconds(1200),
+                $"TimeRange(1.2s,3.651s) audio StartTime ({audioSubSecondContent.StartTime.TotalMilliseconds} ms) should be >= 1200 ms");
+            Assert.IsTrue(audioSubSecondContent.EndTime <= TimeSpan.FromMilliseconds(3651),
+                $"TimeRange(1.2s,3.651s) audio EndTime ({audioSubSecondContent.EndTime.TotalMilliseconds} ms) should be <= 3651 ms");
             Assert.IsTrue(fullDurationMs >= (audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds,
                 "Full audio duration should be >= sub-second time-windowed duration");
 
