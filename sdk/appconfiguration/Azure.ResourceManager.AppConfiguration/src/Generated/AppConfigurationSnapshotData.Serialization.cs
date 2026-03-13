@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appConfigurationSnapshotData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(appConfigurationSnapshotData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AppConfigurationSnapshotData"/> from. </param>

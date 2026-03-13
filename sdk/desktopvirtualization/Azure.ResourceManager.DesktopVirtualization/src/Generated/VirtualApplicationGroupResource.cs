@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The AppGroup properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualApplicationGroupResource>> UpdateAsync(VirtualApplicationGroupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationGroupResource>> UpdateAsync(VirtualApplicationGroupPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.Update");
             scope.Start();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The AppGroup properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualApplicationGroupResource> Update(VirtualApplicationGroupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualApplicationGroupResource> Update(VirtualApplicationGroupPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.Update");
             scope.Start();

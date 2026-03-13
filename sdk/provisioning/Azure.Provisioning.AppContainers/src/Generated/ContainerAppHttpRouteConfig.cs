@@ -77,7 +77,7 @@ public partial class ContainerAppHttpRouteConfig : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppHttpRouteConfig.</param>
     public ContainerAppHttpRouteConfig(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/httpRouteConfigs", resourceVersion ?? "2026-01-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/httpRouteConfigs", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -99,11 +99,6 @@ public partial class ContainerAppHttpRouteConfig : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2026-01-01.
-        /// </summary>
-        public static readonly string V2026_01_01 = "2026-01-01";
-
         /// <summary>
         /// 2025-07-01.
         /// </summary>
