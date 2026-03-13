@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <summary> Initializes a new instance of <see cref="RunProperties"/>. </summary>
         internal RunProperties()
         {
-            OutputImages = new ChangeTrackingList<ImageDescriptor>();
+            OutputImages = new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>();
             CustomRegistries = new ChangeTrackingList<string>();
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunProperties(string runId, ContainerRegistryTaskRunStatus? status, DateTimeOffset? lastUpdatedOn, ContainerRegistryTaskRunType? runType, string agentPoolName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? finishOn, IList<ImageDescriptor> outputImages, string task, ImageUpdateTrigger imageUpdateTrigger, SourceTriggerDescriptor sourceTrigger, TimerTriggerDescriptor timerTrigger, PlatformProperties platform, AgentProperties agentConfiguration, string sourceRegistryAuth, IList<string> customRegistries, string runErrorMessage, string updateTriggerToken, ImageDescriptor logArtifact, ContainerRegistryTaskProvisioningState? provisioningState, bool? isArchiveEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunProperties(string runId, ContainerRegistryTaskRunStatus? status, DateTimeOffset? lastUpdatedOn, ContainerRegistryTaskRunType? runType, string agentPoolName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? finishOn, IList<ContainerRegistryTaskImageDescriptor> outputImages, string task, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string sourceRegistryAuth, IList<string> customRegistries, string runErrorMessage, string updateTriggerToken, ContainerRegistryTaskImageDescriptor logArtifact, ContainerRegistryTaskProvisioningState? provisioningState, bool? isArchiveEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunId = runId;
             Status = status;
@@ -100,22 +100,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public DateTimeOffset? FinishOn { get; }
 
         /// <summary> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </summary>
-        public IList<ImageDescriptor> OutputImages { get; } = new ChangeTrackingList<ImageDescriptor>();
+        public IList<ContainerRegistryTaskImageDescriptor> OutputImages { get; } = new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>();
 
         /// <summary> The task against which run was scheduled. </summary>
         public string Task { get; }
 
         /// <summary> The image update trigger that caused the run. This is applicable if the task has base image trigger configured. </summary>
-        public ImageUpdateTrigger ImageUpdateTrigger { get; }
+        public ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger { get; }
 
         /// <summary> The source trigger that caused the run. </summary>
-        public SourceTriggerDescriptor SourceTrigger { get; }
+        public ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger { get; }
 
         /// <summary> The timer trigger that caused the run. </summary>
-        public TimerTriggerDescriptor TimerTrigger { get; }
+        public ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger { get; }
 
         /// <summary> The platform properties against which the run will happen. </summary>
-        public PlatformProperties Platform { get; }
+        public ContainerRegistryTaskPlatformProperties Platform { get; }
 
         /// <summary> The machine configuration of the run agent. </summary>
         internal AgentProperties AgentConfiguration { get; }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public string UpdateTriggerToken { get; }
 
         /// <summary> The image description for the log artifact. </summary>
-        public ImageDescriptor LogArtifact { get; }
+        public ContainerRegistryTaskImageDescriptor LogArtifact { get; }
 
         /// <summary> The provisioning state of a run. </summary>
         public ContainerRegistryTaskProvisioningState? ProvisioningState { get; }

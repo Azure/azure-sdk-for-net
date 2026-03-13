@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             TaskProperties properties = default;
-            IdentityProperties identity = default;
+            ContainerRegistryTaskIdentityProperties identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(prop.Value, options);
+                    identity = ContainerRegistryTaskIdentityProperties.DeserializeContainerRegistryTaskIdentityProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

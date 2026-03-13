@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            SourceControlType? sourceControlType = default;
+            ContainerRegistryTaskSourceControlType? sourceControlType = default;
             string repositoryUri = default;
             string branch = default;
             AuthInfoUpdateContent sourceControlAuthProperties = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    sourceControlType = new SourceControlType(prop.Value.GetString());
+                    sourceControlType = new ContainerRegistryTaskSourceControlType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("repositoryUrl"u8))

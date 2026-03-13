@@ -114,22 +114,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<string> CustomRegistries { get { throw null; } }
         public System.DateTimeOffset? FinishOn { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger ImageUpdateTrigger { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger { get { throw null; } }
         public bool? IsArchiveEnabled { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor LogArtifact { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor> OutputImages { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties Platform { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor LogArtifact { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor> OutputImages { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? ProvisioningState { get { throw null; } }
         public string RunErrorMessage { get { throw null; } }
         public string RunId { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunType? RunType { get { throw null; } }
         public string SourceRegistryAuth { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor SourceTrigger { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunStatus? Status { get { throw null; } }
         public string Task { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor TimerTrigger { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger { get { throw null; } }
         public string UpdateTriggerToken { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string runId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Tasks.RunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Tasks.RunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult> GetLogSasUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>> GetLogSasUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult> GetLogSasUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>> GetLogSasUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ContainerRegistry.Tasks.RunData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.RunData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.RunData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerRegistry.Tasks.RunData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.RunData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -186,15 +186,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         public string AgentPoolName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties Identity { get { throw null; } set { } }
         public bool? IsSystemTask { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties Platform { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? Status { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties Step { get { throw null; } set { } }
         public int? TimeoutInSeconds { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties Trigger { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties Trigger { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
     {
         public TaskRunData() { }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent RunRequest { get { throw null; } set { } }
@@ -357,56 +357,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static Azure.ResourceManager.ContainerRegistry.Tasks.AgentPoolData AgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? count = default(int?), string tier = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS? os = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS?), Azure.Core.ResourceIdentifier virtualNetworkSubnetResourceId = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.AgentPoolPatch AgentPoolPatch(int? count = default(int?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.AgentPoolQueueStatus AgentPoolQueueStatus(int? count = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency BaseImageDependency(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType? type = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType?), string registry = null, string repository = null, string tag = null, string digest = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent BaseImageTriggerUpdateContent(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType? baseImageTriggerType = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType?), string updateTriggerEndpoint = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType? updateTriggerPayloadType = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials ContainerRegistryTaskCredentials(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials sourceRegistry = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials> customRegistries = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent DockerBuildContent(bool? isArchiveEnabled = default(bool?), string agentPoolName = null, string logTemplate = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? isCacheDisabled = default(bool?), string dockerFilePath = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform = null, int? agentCpu = default(int?), string sourceLocation = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep DockerBuildStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? isCacheDisabled = default(bool?), string dockerFilePath = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent BaseImageTriggerUpdateContent(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType?), string updateTriggerEndpoint = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency ContainerRegistryTaskBaseImageDependency(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType? type = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType?), string registry = null, string repository = null, string tag = null, string digest = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials ContainerRegistryTaskCredentials(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials sourceRegistry = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials> customRegistries = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties ContainerRegistryTaskIdentityProperties(string principalId = null, string tenantId = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskResourceIdentityType? type = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskResourceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties> userAssignedIdentities = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor ContainerRegistryTaskImageDescriptor(string registry = null, string repository = null, string tag = null, string digest = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger ContainerRegistryTaskImageUpdateTrigger(string id = null, System.DateTimeOffset? occurredOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor> images = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties ContainerRegistryTaskOverrideStepProperties(string contextPath = null, string file = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null, string updateTriggerToken = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult ContainerRegistryTaskRunLogResult(string logLink = null, string logArtifactLink = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger ContainerRegistryTaskSourceTrigger(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties sourceRepository = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor ContainerRegistryTaskSourceTriggerDescriptor(string id = null, string eventType = null, string commitId = null, string pullRequestId = null, System.Uri repositoryUri = null, string branchName = null, string providerType = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor ContainerRegistryTaskTimerTriggerDescriptor(string timerTriggerName = null, string scheduleOccurrence = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties ContainerRegistryTaskTriggerProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger> timerTriggers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger> sourceTriggers = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger baseImageTrigger = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties ContainerRegistryTaskUserIdentityProperties(string principalId = null, string clientId = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent DockerBuildContent(bool? isArchiveEnabled = default(bool?), string agentPoolName = null, string logTemplate = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? isCacheDisabled = default(bool?), string dockerFilePath = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform = null, int? agentCpu = default(int?), string sourceLocation = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStep DockerBuildStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? isCacheDisabled = default(bool?), string dockerFilePath = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildStepUpdateContent DockerBuildStepUpdateContent(string contextPath = null, string contextAccessToken = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? isCacheDisabled = default(bool?), string dockerFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null, string target = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskRunContent EncodedTaskRunContent(bool? isArchiveEnabled = default(bool?), string agentPoolName = null, string logTemplate = null, string encodedTaskContent = null, string encodedValuesContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform = null, int? agentCpu = default(int?), string sourceLocation = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep EncodedTaskStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string encodedTaskContent = null, string encodedValuesContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskRunContent EncodedTaskRunContent(bool? isArchiveEnabled = default(bool?), string agentPoolName = null, string logTemplate = null, string encodedTaskContent = null, string encodedValuesContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform = null, int? agentCpu = default(int?), string sourceLocation = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStep EncodedTaskStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string encodedTaskContent = null, string encodedValuesContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskStepUpdateContent EncodedTaskStepUpdateContent(string contextPath = null, string contextAccessToken = null, string encodedTaskContent = null, string encodedValuesContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskRunContent FileTaskRunContent(bool? isArchiveEnabled = default(bool?), string agentPoolName = null, string logTemplate = null, string taskFilePath = null, string valuesFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform = null, int? agentCpu = default(int?), string sourceLocation = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskStep FileTaskStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string taskFilePath = null, string valuesFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskRunContent FileTaskRunContent(bool? isArchiveEnabled = default(bool?), string agentPoolName = null, string logTemplate = null, string taskFilePath = null, string valuesFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform = null, int? agentCpu = default(int?), string sourceLocation = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskStep FileTaskStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string taskFilePath = null, string valuesFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskStepUpdateContent FileTaskStepUpdateContent(string contextPath = null, string contextAccessToken = null, string taskFilePath = null, string valuesFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties IdentityProperties(string principalId = null, string tenantId = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ResourceIdentityType? type = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ResourceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties> userAssignedIdentities = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor ImageDescriptor(string registry = null, string repository = null, string tag = null, string digest = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger ImageUpdateTrigger(string id = null, System.DateTimeOffset? occurredOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor> images = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties OverrideTaskStepProperties(string contextPath = null, string file = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> arguments = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> values = null, string updateTriggerToken = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.RunData RunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runId = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunStatus?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunType? runType = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunType?), string agentPoolName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor> outputImages = null, string task = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger imageUpdateTrigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor sourceTrigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor timerTrigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform = null, string sourceRegistryAuth = null, System.Collections.Generic.IEnumerable<string> customRegistries = null, string runErrorMessage = null, string updateTriggerToken = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor logArtifact = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?), bool? isArchiveEnabled = default(bool?), int? agentCpu = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult RunGetLogResult(string logLink = null, string logArtifactLink = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger SourceTrigger(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties sourceRepository = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent> sourceTriggerEvents = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor SourceTriggerDescriptor(string id = null, string eventType = null, string commitId = null, string pullRequestId = null, System.Uri repositoryUri = null, string branchName = null, string providerType = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerUpdateContent SourceTriggerUpdateContent(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceUpdateContent sourceRepository = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent> sourceTriggerEvents = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.RunData RunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runId = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunStatus?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunType? runType = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunType?), string agentPoolName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor> outputImages = null, string task = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform = null, string sourceRegistryAuth = null, System.Collections.Generic.IEnumerable<string> customRegistries = null, string runErrorMessage = null, string updateTriggerToken = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor logArtifact = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?), bool? isArchiveEnabled = default(bool?), int? agentCpu = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerUpdateContent SourceTriggerUpdateContent(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceUpdateContent sourceRepository = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceUploadResult SourceUploadResult(string uploadUri = null, string relativePath = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.TaskData TaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform = null, string agentPoolName = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties step = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties trigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null, string logTemplate = null, bool? isSystemTask = default(bool?), int? agentCpu = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties identity = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch TaskPatch(Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties identity = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent platform = null, string agentPoolName = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepUpdateContent step = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent trigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null, string logTemplate = null, int? agentCpu = default(int?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData TaskRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent runRequest = null, Azure.ResourceManager.ContainerRegistry.Tasks.RunData runResult = null, string forceUpdateTag = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties identity = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskRunPatch TaskRunPatch(Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties identity = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent runRequest = null, string forceUpdateTag = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties TaskStepProperties(string type = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor TimerTriggerDescriptor(string timerTriggerName = null, string scheduleOccurrence = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.TaskData TaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform = null, string agentPoolName = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties step = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties trigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null, string logTemplate = null, bool? isSystemTask = default(bool?), int? agentCpu = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties identity = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskPatch TaskPatch(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties identity = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent platform = null, string agentPoolName = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepUpdateContent step = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent trigger = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials credentials = null, string logTemplate = null, int? agentCpu = default(int?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.TaskRunData TaskRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState?), Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent runRequest = null, Azure.ResourceManager.ContainerRegistry.Tasks.RunData runResult = null, string forceUpdateTag = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties identity = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskRunPatch TaskRunPatch(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties identity = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent runRequest = null, string forceUpdateTag = null, string location = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties TaskStepProperties(string type = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerUpdateContent TimerTriggerUpdateContent(string schedule = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus?), string name = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties TriggerProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger> timerTriggers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger> sourceTriggers = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger baseImageTrigger = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent TriggerUpdateContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerUpdateContent> timerTriggers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerUpdateContent> sourceTriggers = null, Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent baseImageTrigger = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties UserIdentityProperties(string principalId = null, string clientId = null) { throw null; }
-    }
-    public partial class AuthInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>
-    {
-        public AuthInfo(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType tokenType, string token) { }
-        public int? ExpiresInSeconds { get { throw null; } set { } }
-        public string RefreshToken { get { throw null; } set { } }
-        public string Scope { get { throw null; } set { } }
-        public string Token { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType TokenType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AuthInfoUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfoUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfoUpdateContent>
     {
@@ -426,84 +408,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfoUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfoUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BaseImageDependency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>
-    {
-        internal BaseImageDependency() { }
-        public string Digest { get { throw null; } }
-        public string Registry { get { throw null; } }
-        public string Repository { get { throw null; } }
-        public string Tag { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType? Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BaseImageDependencyType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BaseImageDependencyType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType BuildTime { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType RunTime { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependencyType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class BaseImageTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>
-    {
-        public BaseImageTrigger(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType baseImageTriggerType, string name) { }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType BaseImageTriggerType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
-        public string UpdateTriggerEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType? UpdateTriggerPayloadType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BaseImageTriggerType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BaseImageTriggerType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType All { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType Runtime { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class BaseImageTriggerUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent>
     {
         public BaseImageTriggerUpdateContent(string name) { }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerType? BaseImageTriggerType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType? BaseImageTriggerType { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
         public string UpdateTriggerEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType? UpdateTriggerPayloadType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType? UpdateTriggerPayloadType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTriggerUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -523,8 +435,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture Amd64 { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture Arm { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture Arm64 { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture X386 { get { throw null; } }
         public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture X86 { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture _386 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -550,11 +462,99 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerRegistryTaskAuthInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>
+    {
+        public ContainerRegistryTaskAuthInfo(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType tokenType, string token) { }
+        public int? ExpiresInSeconds { get { throw null; } set { } }
+        public string RefreshToken { get { throw null; } set { } }
+        public string Scope { get { throw null; } set { } }
+        public string Token { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType TokenType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskBaseImageDependency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>
+    {
+        internal ContainerRegistryTaskBaseImageDependency() { }
+        public string Digest { get { throw null; } }
+        public string Registry { get { throw null; } }
+        public string Repository { get { throw null; } }
+        public string Tag { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType? Type { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskBaseImageDependencyType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskBaseImageDependencyType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType BuildTime { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType RunTime { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependencyType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskBaseImageTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>
+    {
+        public ContainerRegistryTaskBaseImageTrigger(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType baseImageTriggerType, string name) { }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType BaseImageTriggerType { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
+        public string UpdateTriggerEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType? UpdateTriggerPayloadType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskBaseImageTriggerType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskBaseImageTriggerType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType All { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType Runtime { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTriggerType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContainerRegistryTaskCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials>
     {
         public ContainerRegistryTaskCredentials() { }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials> CustomRegistries { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials SourceRegistry { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials> CustomRegistries { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials SourceRegistry { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -564,6 +564,72 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskCustomRegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>
+    {
+        public ContainerRegistryTaskCustomRegistryCredentials() { }
+        public string Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSecretObject Password { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSecretObject UserName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCustomRegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskIdentityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>
+    {
+        public ContainerRegistryTaskIdentityProperties() { }
+        public string PrincipalId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskResourceIdentityType? Type { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties> UserAssignedIdentities { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskImageDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>
+    {
+        internal ContainerRegistryTaskImageDescriptor() { }
+        public string Digest { get { throw null; } }
+        public string Registry { get { throw null; } }
+        public string Repository { get { throw null; } }
+        public string Tag { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskImageUpdateTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>
+    {
+        internal ContainerRegistryTaskImageUpdateTrigger() { }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageDescriptor> Images { get { throw null; } }
+        public System.DateTimeOffset? OccurredOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskImageUpdateTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskOS : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS>
@@ -581,6 +647,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskOverrideStepProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>
+    {
+        public ContainerRegistryTaskOverrideStepProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> Arguments { get { throw null; } }
+        public string ContextPath { get { throw null; } set { } }
+        public string File { get { throw null; } set { } }
+        public string Target { get { throw null; } set { } }
+        public string UpdateTriggerToken { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskPlatformProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>
+    {
+        public ContainerRegistryTaskPlatformProperties(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS os) { }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture? Architecture { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS OS { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskVariant? Variant { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskProvisioningState : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState>
@@ -602,6 +703,28 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public enum ContainerRegistryTaskResourceIdentityType
+    {
+        SystemAssigned = 0,
+        UserAssigned = 1,
+        SystemAssignedUserAssigned = 2,
+        None = 3,
+    }
+    public partial class ContainerRegistryTaskRunLogResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>
+    {
+        internal ContainerRegistryTaskRunLogResult() { }
+        public string LogArtifactLink { get { throw null; } }
+        public string LogLink { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunLogResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskRunStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskRunStatus>
@@ -694,6 +817,126 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskSourceControlType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskSourceControlType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType Github { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType VisualStudioTeamService { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>
+    {
+        public ContainerRegistryTaskSourceProperties(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType sourceControlType, System.Uri repositoryUri) { }
+        public string Branch { get { throw null; } set { } }
+        public System.Uri RepositoryUri { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskAuthInfo SourceControlAuthProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType SourceControlType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskSourceRegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>
+    {
+        public ContainerRegistryTaskSourceRegistryCredentials() { }
+        public string Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode? LoginMode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskSourceRegistryLoginMode : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskSourceRegistryLoginMode(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode Default { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceRegistryLoginMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskSourceTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>
+    {
+        public ContainerRegistryTaskSourceTrigger(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties sourceRepository, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents, string name) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceProperties SourceRepository { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent> SourceTriggerEvents { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskSourceTriggerDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>
+    {
+        internal ContainerRegistryTaskSourceTriggerDescriptor() { }
+        public string BranchName { get { throw null; } }
+        public string CommitId { get { throw null; } }
+        public string EventType { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string ProviderType { get { throw null; } }
+        public string PullRequestId { get { throw null; } }
+        public System.Uri RepositoryUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerDescriptor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskSourceTriggerEvent : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskSourceTriggerEvent(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent Commit { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent PullRequest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus>
     {
         private readonly object _dummy;
@@ -709,6 +952,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskTimerTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>
+    {
+        public ContainerRegistryTaskTimerTrigger(string schedule, string name) { }
+        public string Name { get { throw null; } set { } }
+        public string Schedule { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryTaskTimerTriggerDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>
+    {
+        internal ContainerRegistryTaskTimerTriggerDescriptor() { }
+        public string ScheduleOccurrence { get { throw null; } }
+        public string TimerTriggerName { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTriggerDescriptor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskTokenType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType>
@@ -726,6 +1000,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTokenType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskTriggerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>
+    {
+        public ContainerRegistryTaskTriggerProperties() { }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageTrigger BaseImageTrigger { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTrigger> SourceTriggers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTimerTrigger> TimerTriggers { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskTriggerStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus>
@@ -745,6 +1035,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskUpdateTriggerPayloadType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskUpdateTriggerPayloadType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType Default { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType Token { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUpdateTriggerPayloadType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistryTaskUserIdentityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>
+    {
+        public ContainerRegistryTaskUserIdentityProperties() { }
+        public string ClientId { get { throw null; } }
+        public string PrincipalId { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskUserIdentityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerRegistryTaskVariant : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskVariant>
     {
         private readonly object _dummy;
@@ -762,25 +1084,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskVariant left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskVariant right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CustomRegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>
-    {
-        public CustomRegistryCredentials() { }
-        public string Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSecretObject Password { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSecretObject UserName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.CustomRegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class DockerBuildContent : Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.DockerBuildContent>
     {
-        public DockerBuildContent(string dockerFilePath, Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform) { }
+        public DockerBuildContent(string dockerFilePath, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform) { }
         public int? AgentCpu { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> Arguments { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
@@ -788,7 +1094,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public System.Collections.Generic.IList<string> ImageNames { get { throw null; } }
         public bool? IsCacheDisabled { get { throw null; } set { } }
         public bool? IsPushEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties Platform { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
         public string SourceLocation { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
         public int? TimeoutInSeconds { get { throw null; } set { } }
@@ -842,12 +1148,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
     }
     public partial class EncodedTaskRunContent : Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskRunContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.EncodedTaskRunContent>
     {
-        public EncodedTaskRunContent(string encodedTaskContent, Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform) { }
+        public EncodedTaskRunContent(string encodedTaskContent, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform) { }
         public int? AgentCpu { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
         public string EncodedTaskContent { get { throw null; } set { } }
         public string EncodedValuesContent { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties Platform { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
         public string SourceLocation { get { throw null; } set { } }
         public int? TimeoutInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> Values { get { throw null; } }
@@ -895,10 +1201,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
     }
     public partial class FileTaskRunContent : Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskRunContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskRunContent>
     {
-        public FileTaskRunContent(string taskFilePath, Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties platform) { }
+        public FileTaskRunContent(string taskFilePath, Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties platform) { }
         public int? AgentCpu { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties Platform { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskPlatformProperties Platform { get { throw null; } set { } }
         public string SourceLocation { get { throw null; } set { } }
         public string TaskFilePath { get { throw null; } set { } }
         public int? TimeoutInSeconds { get { throw null; } set { } }
@@ -946,91 +1252,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskStepUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.FileTaskStepUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IdentityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>
-    {
-        public IdentityProperties() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties> UserAssignedIdentities { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>
-    {
-        internal ImageDescriptor() { }
-        public string Digest { get { throw null; } }
-        public string Registry { get { throw null; } }
-        public string Repository { get { throw null; } }
-        public string Tag { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImageUpdateTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>
-    {
-        internal ImageUpdateTrigger() { }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageDescriptor> Images { get { throw null; } }
-        public System.DateTimeOffset? OccurredOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ImageUpdateTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OverrideTaskStepProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>
-    {
-        public OverrideTaskStepProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArgument> Arguments { get { throw null; } }
-        public string ContextPath { get { throw null; } set { } }
-        public string File { get { throw null; } set { } }
-        public string Target { get { throw null; } set { } }
-        public string UpdateTriggerToken { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSetValue> Values { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PlatformProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>
-    {
-        public PlatformProperties(Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS os) { }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskArchitecture? Architecture { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOS OS { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskVariant? Variant { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PlatformUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent>
     {
         public PlatformUpdateContent() { }
@@ -1046,13 +1267,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        SystemAssignedUserAssigned = 2,
-        None = 3,
     }
     public abstract partial class RunContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent>
     {
@@ -1070,21 +1284,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RunGetLogResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>
-    {
-        internal RunGetLogResult() { }
-        public string LogArtifactLink { get { throw null; } }
-        public string LogLink { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunGetLogResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class RunPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunPatch>
     {
         public RunPatch() { }
@@ -1099,132 +1298,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SourceControlType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SourceControlType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType Github { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType VisualStudioTeamService { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>
-    {
-        public SourceProperties(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType sourceControlType, System.Uri repositoryUri) { }
-        public string Branch { get { throw null; } set { } }
-        public System.Uri RepositoryUri { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfo SourceControlAuthProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType SourceControlType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SourceRegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>
-    {
-        public SourceRegistryCredentials() { }
-        public string Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode? LoginMode { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SourceRegistryLoginMode : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SourceRegistryLoginMode(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode Default { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceRegistryLoginMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SourceTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>
-    {
-        public SourceTrigger(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties sourceRepository, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent> sourceTriggerEvents, string name) { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceProperties SourceRepository { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent> SourceTriggerEvents { get { throw null; } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SourceTriggerDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>
-    {
-        internal SourceTriggerDescriptor() { }
-        public string BranchName { get { throw null; } }
-        public string CommitId { get { throw null; } }
-        public string EventType { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string ProviderType { get { throw null; } }
-        public string PullRequestId { get { throw null; } }
-        public System.Uri RepositoryUri { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerDescriptor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SourceTriggerEvent : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SourceTriggerEvent(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent Commit { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent PullRequest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class SourceTriggerUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerUpdateContent>
     {
         public SourceTriggerUpdateContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceUpdateContent SourceRepository { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerEvent> SourceTriggerEvents { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceTriggerEvent> SourceTriggerEvents { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTriggerUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1242,7 +1321,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public string Branch { get { throw null; } set { } }
         public string RepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.AuthInfoUpdateContent SourceControlAuthProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceControlType? SourceControlType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskSourceControlType? SourceControlType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1274,7 +1353,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public int? AgentCpu { get { throw null; } set { } }
         public string AgentPoolName { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskCredentials Credentials { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties Identity { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.PlatformUpdateContent Platform { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskStatus? Status { get { throw null; } set { } }
@@ -1295,7 +1374,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
     public partial class TaskRunContent : Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskRunContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskRunContent>
     {
         public TaskRunContent(string taskId) { }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.OverrideTaskStepProperties OverrideTaskStepProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskOverrideStepProperties OverrideTaskStepProperties { get { throw null; } set { } }
         public string TaskId { get { throw null; } set { } }
         protected override Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1311,7 +1390,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
     {
         public TaskRunPatch() { }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.IdentityProperties Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskIdentityProperties Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Tasks.Models.RunContent RunRequest { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -1328,7 +1407,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
     public abstract partial class TaskStepProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties>
     {
         internal TaskStepProperties() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageDependency> BaseImageDependencies { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskBaseImageDependency> BaseImageDependencies { get { throw null; } }
         public string ContextAccessToken { get { throw null; } set { } }
         public string ContextPath { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1356,37 +1435,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TaskStepUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TimerTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>
-    {
-        public TimerTrigger(string schedule, string name) { }
-        public string Name { get { throw null; } set { } }
-        public string Schedule { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.ContainerRegistryTaskTriggerStatus? Status { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TimerTriggerDescriptor : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>
-    {
-        internal TimerTriggerDescriptor() { }
-        public string ScheduleOccurrence { get { throw null; } }
-        public string TimerTriggerName { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerDescriptor>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TimerTriggerUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerUpdateContent>
     {
         public TimerTriggerUpdateContent(string name) { }
@@ -1403,22 +1451,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTriggerUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TriggerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>
-    {
-        public TriggerProperties() { }
-        public Azure.ResourceManager.ContainerRegistry.Tasks.Models.BaseImageTrigger BaseImageTrigger { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.SourceTrigger> SourceTriggers { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TimerTrigger> TimerTriggers { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TriggerUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent>
     {
         public TriggerUpdateContent() { }
@@ -1434,37 +1466,5 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.TriggerUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UpdateTriggerPayloadType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UpdateTriggerPayloadType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType Default { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType Token { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Tasks.Models.UpdateTriggerPayloadType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class UserIdentityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>
-    {
-        public UserIdentityProperties() { }
-        public string ClientId { get { throw null; } }
-        public string PrincipalId { get { throw null; } }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Tasks.Models.UserIdentityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

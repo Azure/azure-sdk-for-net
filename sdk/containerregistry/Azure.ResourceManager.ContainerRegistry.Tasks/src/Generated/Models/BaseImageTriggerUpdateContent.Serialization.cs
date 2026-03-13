@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            BaseImageTriggerType? baseImageTriggerType = default;
+            ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType = default;
             string updateTriggerEndpoint = default;
-            UpdateTriggerPayloadType? updateTriggerPayloadType = default;
+            ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType = default;
             ContainerRegistryTaskTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    baseImageTriggerType = new BaseImageTriggerType(prop.Value.GetString());
+                    baseImageTriggerType = new ContainerRegistryTaskBaseImageTriggerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("updateTriggerEndpoint"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    updateTriggerPayloadType = new UpdateTriggerPayloadType(prop.Value.GetString());
+                    updateTriggerPayloadType = new ContainerRegistryTaskUpdateTriggerPayloadType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

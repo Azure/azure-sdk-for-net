@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The ARM resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskRunPatch(IdentityProperties identity, TaskRunPropertiesUpdateParameters properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskRunPatch(ContainerRegistryTaskIdentityProperties identity, TaskRunPropertiesUpdateParameters properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Properties = properties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> Identity for the resource. </summary>
-        public IdentityProperties Identity { get; set; }
+        public ContainerRegistryTaskIdentityProperties Identity { get; set; }
 
         /// <summary> The properties for updating a task run. </summary>
         internal TaskRunPropertiesUpdateParameters Properties { get; set; }

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            IdentityProperties identity = default;
+            ContainerRegistryTaskIdentityProperties identity = default;
             TaskPropertiesUpdateParameters properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(prop.Value, options);
+                    identity = ContainerRegistryTaskIdentityProperties.DeserializeContainerRegistryTaskIdentityProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

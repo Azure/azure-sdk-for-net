@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             TaskRunProperties properties = default;
-            IdentityProperties identity = default;
+            ContainerRegistryTaskIdentityProperties identity = default;
             AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(prop.Value, options);
+                    identity = ContainerRegistryTaskIdentityProperties.DeserializeContainerRegistryTaskIdentityProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))

@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            SourceRegistryCredentials sourceRegistry = default;
-            IDictionary<string, CustomRegistryCredentials> customRegistries = default;
+            ContainerRegistryTaskSourceRegistryCredentials sourceRegistry = default;
+            IDictionary<string, ContainerRegistryTaskCustomRegistryCredentials> customRegistries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(prop.Value, options);
+                    sourceRegistry = ContainerRegistryTaskSourceRegistryCredentials.DeserializeContainerRegistryTaskSourceRegistryCredentials(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customRegistries"u8))
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    Dictionary<string, CustomRegistryCredentials> dictionary = new Dictionary<string, CustomRegistryCredentials>();
+                    Dictionary<string, ContainerRegistryTaskCustomRegistryCredentials> dictionary = new Dictionary<string, ContainerRegistryTaskCustomRegistryCredentials>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ContainerRegistryTaskCustomRegistryCredentials.DeserializeContainerRegistryTaskCustomRegistryCredentials(prop0.Value, options));
                     }
                     customRegistries = dictionary;
                     continue;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryTaskCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), additionalBinaryDataProperties);
+            return new ContainerRegistryTaskCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, ContainerRegistryTaskCustomRegistryCredentials>(), additionalBinaryDataProperties);
         }
     }
 }

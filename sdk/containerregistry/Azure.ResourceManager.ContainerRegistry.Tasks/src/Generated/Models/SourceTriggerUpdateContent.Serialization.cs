@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();
-                foreach (SourceTriggerEvent item in SourceTriggerEvents)
+                foreach (ContainerRegistryTaskSourceTriggerEvent item in SourceTriggerEvents)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             SourceUpdateContent sourceRepository = default;
-            IList<SourceTriggerEvent> sourceTriggerEvents = default;
+            IList<ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents = default;
             ContainerRegistryTaskTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<SourceTriggerEvent> array = new List<SourceTriggerEvent>();
+                    List<ContainerRegistryTaskSourceTriggerEvent> array = new List<ContainerRegistryTaskSourceTriggerEvent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new SourceTriggerEvent(item.GetString()));
+                        array.Add(new ContainerRegistryTaskSourceTriggerEvent(item.GetString()));
                     }
                     sourceTriggerEvents = array;
                     continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<SourceTriggerEvent>(), status, name, additionalBinaryDataProperties);
+            return new SourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistryTaskSourceTriggerEvent>(), status, name, additionalBinaryDataProperties);
         }
     }
 }

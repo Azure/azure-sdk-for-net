@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            SourceTriggerEvents = new ChangeTrackingList<SourceTriggerEvent>();
+            SourceTriggerEvents = new ChangeTrackingList<ContainerRegistryTaskSourceTriggerEvent>();
             Name = name;
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceTriggerUpdateContent(SourceUpdateContent sourceRepository, IList<SourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceTriggerUpdateContent(SourceUpdateContent sourceRepository, IList<ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceRepository = sourceRepository;
             SourceTriggerEvents = sourceTriggerEvents;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public SourceUpdateContent SourceRepository { get; set; }
 
         /// <summary> The source event corresponding to the trigger. </summary>
-        public IList<SourceTriggerEvent> SourceTriggerEvents { get; }
+        public IList<ContainerRegistryTaskSourceTriggerEvent> SourceTriggerEvents { get; }
 
         /// <summary> The current status of trigger. </summary>
         public ContainerRegistryTaskTriggerStatus? Status { get; set; }

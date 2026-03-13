@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             ContainerRegistryTaskProvisioningState? provisioningState = default;
             DateTimeOffset? createdOn = default;
             ContainerRegistryTaskStatus? status = default;
-            PlatformProperties platform = default;
+            ContainerRegistryTaskPlatformProperties platform = default;
             AgentProperties agentConfiguration = default;
             string agentPoolName = default;
             int? timeoutInSeconds = default;
             TaskStepProperties step = default;
-            TriggerProperties trigger = default;
+            ContainerRegistryTaskTriggerProperties trigger = default;
             ContainerRegistryTaskCredentials credentials = default;
             string logTemplate = default;
             bool? isSystemTask = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    platform = PlatformProperties.DeserializePlatformProperties(prop.Value, options);
+                    platform = ContainerRegistryTaskPlatformProperties.DeserializeContainerRegistryTaskPlatformProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentConfiguration"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    trigger = TriggerProperties.DeserializeTriggerProperties(prop.Value, options);
+                    trigger = ContainerRegistryTaskTriggerProperties.DeserializeContainerRegistryTaskTriggerProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("credentials"u8))

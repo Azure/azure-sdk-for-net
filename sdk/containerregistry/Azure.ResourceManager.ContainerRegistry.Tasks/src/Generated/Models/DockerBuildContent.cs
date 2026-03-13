@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="dockerFilePath"> The Docker file path relative to the source location. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dockerFilePath"/> or <paramref name="platform"/> is null. </exception>
-        public DockerBuildContent(string dockerFilePath, PlatformProperties platform) : base("DockerBuildRequest")
+        public DockerBuildContent(string dockerFilePath, ContainerRegistryTaskPlatformProperties platform) : base("DockerBuildRequest")
         {
             Argument.AssertNotNull(dockerFilePath, nameof(dockerFilePath));
             Argument.AssertNotNull(platform, nameof(platform));
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        internal DockerBuildContent(string @type, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> imageNames, bool? isPushEnabled, bool? isCacheDisabled, string dockerFilePath, string target, IList<ContainerRegistryTaskArgument> arguments, int? timeoutInSeconds, PlatformProperties platform, AgentProperties agentConfiguration, string sourceLocation, ContainerRegistryTaskCredentials credentials) : base(@type, isArchiveEnabled, agentPoolName, logTemplate, additionalBinaryDataProperties)
+        internal DockerBuildContent(string @type, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> imageNames, bool? isPushEnabled, bool? isCacheDisabled, string dockerFilePath, string target, IList<ContainerRegistryTaskArgument> arguments, int? timeoutInSeconds, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string sourceLocation, ContainerRegistryTaskCredentials credentials) : base(@type, isArchiveEnabled, agentPoolName, logTemplate, additionalBinaryDataProperties)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public int? TimeoutInSeconds { get; set; }
 
         /// <summary> The platform properties against which the run has to happen. </summary>
-        public PlatformProperties Platform { get; set; }
+        public ContainerRegistryTaskPlatformProperties Platform { get; set; }
 
         /// <summary> The machine configuration of the run agent. </summary>
         internal AgentProperties AgentConfiguration { get; set; }

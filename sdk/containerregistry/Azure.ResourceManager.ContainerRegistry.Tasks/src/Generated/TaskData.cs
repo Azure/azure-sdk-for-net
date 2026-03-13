@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a task. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TaskProperties properties, IdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
+        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TaskProperties properties, ContainerRegistryTaskIdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         internal TaskProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
-        public IdentityProperties Identity { get; set; }
+        public ContainerRegistryTaskIdentityProperties Identity { get; set; }
 
         /// <summary> The provisioning state of the task. </summary>
         public ContainerRegistryTaskProvisioningState? ProvisioningState
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The platform properties against which the run has to happen. </summary>
-        public PlatformProperties Platform
+        public ContainerRegistryTaskPlatformProperties Platform
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The properties that describe all triggers for the task. </summary>
-        public TriggerProperties Trigger
+        public ContainerRegistryTaskTriggerProperties Trigger
         {
             get
             {

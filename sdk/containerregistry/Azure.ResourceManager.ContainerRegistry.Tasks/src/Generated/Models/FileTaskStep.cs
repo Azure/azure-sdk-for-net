@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
         /// <param name="valuesFilePath"> The task values/parameters file path relative to the source context. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        internal FileTaskStep(StepType @type, IReadOnlyList<BaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskSetValue> values) : base(@type, baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
+        internal FileTaskStep(StepType @type, IReadOnlyList<ContainerRegistryTaskBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskSetValue> values) : base(@type, baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
         {
             TaskFilePath = taskFilePath;
             ValuesFilePath = valuesFilePath;

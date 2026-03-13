@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </summary>
-        public IList<ImageDescriptor> OutputImages
+        public IList<ContainerRegistryTaskImageDescriptor> OutputImages
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The image update trigger that caused the run. This is applicable if the task has base image trigger configured. </summary>
-        public ImageUpdateTrigger ImageUpdateTrigger
+        public ContainerRegistryTaskImageUpdateTrigger ImageUpdateTrigger
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The source trigger that caused the run. </summary>
-        public SourceTriggerDescriptor SourceTrigger
+        public ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The timer trigger that caused the run. </summary>
-        public TimerTriggerDescriptor TimerTrigger
+        public ContainerRegistryTaskTimerTriggerDescriptor TimerTrigger
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The platform properties against which the run will happen. </summary>
-        public PlatformProperties Platform
+        public ContainerRegistryTaskPlatformProperties Platform
         {
             get
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary> The image description for the log artifact. </summary>
-        public ImageDescriptor LogArtifact
+        public ContainerRegistryTaskImageDescriptor LogArtifact
         {
             get
             {

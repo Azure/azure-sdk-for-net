@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskCredentials"/>. </summary>
         public ContainerRegistryTaskCredentials()
         {
-            CustomRegistries = new ChangeTrackingDictionary<string, CustomRegistryCredentials>();
+            CustomRegistries = new ChangeTrackingDictionary<string, ContainerRegistryTaskCustomRegistryCredentials>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskCredentials"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// the value of the item will be the registry credentials for accessing the registry.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTaskCredentials(SourceRegistryCredentials sourceRegistry, IDictionary<string, CustomRegistryCredentials> customRegistries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskCredentials(ContainerRegistryTaskSourceRegistryCredentials sourceRegistry, IDictionary<string, ContainerRegistryTaskCustomRegistryCredentials> customRegistries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceRegistry = sourceRegistry;
             CustomRegistries = customRegistries;
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> Describes the credential parameters for accessing the source registry. </summary>
-        public SourceRegistryCredentials SourceRegistry { get; set; }
+        public ContainerRegistryTaskSourceRegistryCredentials SourceRegistry { get; set; }
 
         /// <summary>
         /// Describes the credential parameters for accessing other custom registries. The key
         /// for the dictionary item will be the registry login server (myregistry.azurecr.io) and
         /// the value of the item will be the registry credentials for accessing the registry.
         /// </summary>
-        public IDictionary<string, CustomRegistryCredentials> CustomRegistries { get; }
+        public IDictionary<string, ContainerRegistryTaskCustomRegistryCredentials> CustomRegistries { get; }
     }
 }

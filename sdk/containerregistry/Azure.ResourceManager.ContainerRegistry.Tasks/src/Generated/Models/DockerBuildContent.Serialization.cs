@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             string target = default;
             IList<ContainerRegistryTaskArgument> arguments = default;
             int? timeoutInSeconds = default;
-            PlatformProperties platform = default;
+            ContainerRegistryTaskPlatformProperties platform = default;
             AgentProperties agentConfiguration = default;
             string sourceLocation = default;
             ContainerRegistryTaskCredentials credentials = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 if (prop.NameEquals("platform"u8))
                 {
-                    platform = PlatformProperties.DeserializePlatformProperties(prop.Value, options);
+                    platform = ContainerRegistryTaskPlatformProperties.DeserializeContainerRegistryTaskPlatformProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentConfiguration"u8))

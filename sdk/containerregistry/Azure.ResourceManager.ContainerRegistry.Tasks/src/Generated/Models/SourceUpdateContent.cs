@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// webhooks for notifications.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceUpdateContent(SourceControlType? sourceControlType, string repositoryUri, string branch, AuthInfoUpdateContent sourceControlAuthProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceUpdateContent(ContainerRegistryTaskSourceControlType? sourceControlType, string repositoryUri, string branch, AuthInfoUpdateContent sourceControlAuthProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlType = sourceControlType;
             RepositoryUri = repositoryUri;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The type of source control service. </summary>
-        public SourceControlType? SourceControlType { get; set; }
+        public ContainerRegistryTaskSourceControlType? SourceControlType { get; set; }
 
         /// <summary> The full URL to the source code repository. </summary>
         public string RepositoryUri { get; set; }

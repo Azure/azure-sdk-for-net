@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         private protected TaskStepProperties(StepType @type)
         {
             Type = @type;
-            BaseImageDependencies = new ChangeTrackingList<BaseImageDependency>();
+            BaseImageDependencies = new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskStepProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskStepProperties(StepType @type, IReadOnlyList<BaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskStepProperties(StepType @type, IReadOnlyList<ContainerRegistryTaskBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             BaseImageDependencies = baseImageDependencies;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         internal StepType Type { get; set; }
 
         /// <summary> List of base image dependencies for a step. </summary>
-        public IReadOnlyList<BaseImageDependency> BaseImageDependencies { get; }
+        public IReadOnlyList<ContainerRegistryTaskBaseImageDependency> BaseImageDependencies { get; }
 
         /// <summary> The URL(absolute or relative) of the source context for the task step. </summary>
         public string ContextPath { get; set; }

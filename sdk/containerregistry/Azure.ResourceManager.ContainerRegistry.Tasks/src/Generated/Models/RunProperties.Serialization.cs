@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("outputImages"u8);
                 writer.WriteStartArray();
-                foreach (ImageDescriptor item in OutputImages)
+                foreach (ContainerRegistryTaskImageDescriptor item in OutputImages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -249,18 +249,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? finishOn = default;
-            IList<ImageDescriptor> outputImages = default;
+            IList<ContainerRegistryTaskImageDescriptor> outputImages = default;
             string task = default;
-            ImageUpdateTrigger imageUpdateTrigger = default;
-            SourceTriggerDescriptor sourceTrigger = default;
-            TimerTriggerDescriptor timerTrigger = default;
-            PlatformProperties platform = default;
+            ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default;
+            ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default;
+            ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default;
+            ContainerRegistryTaskPlatformProperties platform = default;
             AgentProperties agentConfiguration = default;
             string sourceRegistryAuth = default;
             IList<string> customRegistries = default;
             string runErrorMessage = default;
             string updateTriggerToken = default;
-            ImageDescriptor logArtifact = default;
+            ContainerRegistryTaskImageDescriptor logArtifact = default;
             ContainerRegistryTaskProvisioningState? provisioningState = default;
             bool? isArchiveEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<ImageDescriptor> array = new List<ImageDescriptor>();
+                    List<ContainerRegistryTaskImageDescriptor> array = new List<ContainerRegistryTaskImageDescriptor>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImageDescriptor.DeserializeImageDescriptor(item, options));
+                        array.Add(ContainerRegistryTaskImageDescriptor.DeserializeContainerRegistryTaskImageDescriptor(item, options));
                     }
                     outputImages = array;
                     continue;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    imageUpdateTrigger = ImageUpdateTrigger.DeserializeImageUpdateTrigger(prop.Value, options);
+                    imageUpdateTrigger = ContainerRegistryTaskImageUpdateTrigger.DeserializeContainerRegistryTaskImageUpdateTrigger(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sourceTrigger"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    sourceTrigger = SourceTriggerDescriptor.DeserializeSourceTriggerDescriptor(prop.Value, options);
+                    sourceTrigger = ContainerRegistryTaskSourceTriggerDescriptor.DeserializeContainerRegistryTaskSourceTriggerDescriptor(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("timerTrigger"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    timerTrigger = TimerTriggerDescriptor.DeserializeTimerTriggerDescriptor(prop.Value, options);
+                    timerTrigger = ContainerRegistryTaskTimerTriggerDescriptor.DeserializeContainerRegistryTaskTimerTriggerDescriptor(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("platform"u8))
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    platform = PlatformProperties.DeserializePlatformProperties(prop.Value, options);
+                    platform = ContainerRegistryTaskPlatformProperties.DeserializeContainerRegistryTaskPlatformProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentConfiguration"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    logArtifact = ImageDescriptor.DeserializeImageDescriptor(prop.Value, options);
+                    logArtifact = ContainerRegistryTaskImageDescriptor.DeserializeContainerRegistryTaskImageDescriptor(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 createdOn,
                 startOn,
                 finishOn,
-                outputImages ?? new ChangeTrackingList<ImageDescriptor>(),
+                outputImages ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>(),
                 task,
                 imageUpdateTrigger,
                 sourceTrigger,

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="dockerFilePath"> The Docker file path relative to the source context. </param>
         /// <param name="target"> The name of the target build stage for the docker build. </param>
         /// <param name="arguments"> The collection of override arguments to be used when executing this build step. </param>
-        internal DockerBuildStep(StepType @type, IReadOnlyList<BaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> imageNames, bool? isPushEnabled, bool? isCacheDisabled, string dockerFilePath, string target, IList<ContainerRegistryTaskArgument> arguments) : base(@type, baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
+        internal DockerBuildStep(StepType @type, IReadOnlyList<ContainerRegistryTaskBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> imageNames, bool? isPushEnabled, bool? isCacheDisabled, string dockerFilePath, string target, IList<ContainerRegistryTaskArgument> arguments) : base(@type, baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         private readonly string _value;
         private const string Amd64Value = "amd64";
         private const string X86Value = "x86";
-        private const string _386Value = "386";
+        private const string X386Value = "386";
         private const string ArmValue = "arm";
         private const string Arm64Value = "arm64";
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <summary> Gets the X86. </summary>
         public static ContainerRegistryTaskArchitecture X86 { get; } = new ContainerRegistryTaskArchitecture(X86Value);
 
-        /// <summary> Gets the _386. </summary>
-        public static ContainerRegistryTaskArchitecture _386 { get; } = new ContainerRegistryTaskArchitecture(_386Value);
+        /// <summary> Gets the X386. </summary>
+        public static ContainerRegistryTaskArchitecture X386 { get; } = new ContainerRegistryTaskArchitecture(X386Value);
 
         /// <summary> Gets the Arm. </summary>
         public static ContainerRegistryTaskArchitecture Arm { get; } = new ContainerRegistryTaskArchitecture(ArmValue);

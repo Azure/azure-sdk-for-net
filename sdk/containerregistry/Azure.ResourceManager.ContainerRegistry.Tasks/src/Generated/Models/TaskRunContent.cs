@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <param name="overrideTaskStepProperties"> Set of overridable parameters that can be passed when running a Task. </param>
-        internal TaskRunContent(string @type, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties, string taskId, OverrideTaskStepProperties overrideTaskStepProperties) : base(@type, isArchiveEnabled, agentPoolName, logTemplate, additionalBinaryDataProperties)
+        internal TaskRunContent(string @type, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties, string taskId, ContainerRegistryTaskOverrideStepProperties overrideTaskStepProperties) : base(@type, isArchiveEnabled, agentPoolName, logTemplate, additionalBinaryDataProperties)
         {
             TaskId = taskId;
             OverrideTaskStepProperties = overrideTaskStepProperties;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public string TaskId { get; set; }
 
         /// <summary> Set of overridable parameters that can be passed when running a Task. </summary>
-        public OverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
+        public ContainerRegistryTaskOverrideStepProperties OverrideTaskStepProperties { get; set; }
     }
 }

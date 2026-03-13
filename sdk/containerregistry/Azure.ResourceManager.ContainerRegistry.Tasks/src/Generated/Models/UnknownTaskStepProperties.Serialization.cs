@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             StepType @type = default;
-            IReadOnlyList<BaseImageDependency> baseImageDependencies = default;
+            IReadOnlyList<ContainerRegistryTaskBaseImageDependency> baseImageDependencies = default;
             string contextPath = default;
             string contextAccessToken = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<BaseImageDependency> array = new List<BaseImageDependency>();
+                    List<ContainerRegistryTaskBaseImageDependency> array = new List<ContainerRegistryTaskBaseImageDependency>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BaseImageDependency.DeserializeBaseImageDependency(item, options));
+                        array.Add(ContainerRegistryTaskBaseImageDependency.DeserializeContainerRegistryTaskBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownTaskStepProperties(@type, baseImageDependencies ?? new ChangeTrackingList<BaseImageDependency>(), contextPath, contextAccessToken, additionalBinaryDataProperties);
+            return new UnknownTaskStepProperties(@type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>(), contextPath, contextAccessToken, additionalBinaryDataProperties);
         }
     }
 }

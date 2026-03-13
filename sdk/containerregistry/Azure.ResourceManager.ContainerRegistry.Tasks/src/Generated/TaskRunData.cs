@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="properties"> The properties associated with the task run, i.e., request and result of the run. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
-        internal TaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TaskRunProperties properties, IdentityProperties identity, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal TaskRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TaskRunProperties properties, ContainerRegistryTaskIdentityProperties identity, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         internal TaskRunProperties Properties { get; set; }
 
         /// <summary> Identity for the resource. </summary>
-        public IdentityProperties Identity { get; set; }
+        public ContainerRegistryTaskIdentityProperties Identity { get; set; }
 
         /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; set; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTaskStepProperties(StepType @type, IReadOnlyList<BaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
+        internal UnknownTaskStepProperties(StepType @type, IReadOnlyList<ContainerRegistryTaskBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
         {
         }
     }

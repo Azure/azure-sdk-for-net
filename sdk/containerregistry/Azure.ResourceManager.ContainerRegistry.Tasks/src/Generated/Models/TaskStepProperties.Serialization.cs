@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("baseImageDependencies"u8);
                 writer.WriteStartArray();
-                foreach (BaseImageDependency item in BaseImageDependencies)
+                foreach (ContainerRegistryTaskBaseImageDependency item in BaseImageDependencies)
                 {
                     writer.WriteObjectValue(item, options);
                 }

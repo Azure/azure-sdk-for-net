@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             string logTemplate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string taskId = default;
-            OverrideTaskStepProperties overrideTaskStepProperties = default;
+            ContainerRegistryTaskOverrideStepProperties overrideTaskStepProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    overrideTaskStepProperties = OverrideTaskStepProperties.DeserializeOverrideTaskStepProperties(prop.Value, options);
+                    overrideTaskStepProperties = ContainerRegistryTaskOverrideStepProperties.DeserializeContainerRegistryTaskOverrideStepProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

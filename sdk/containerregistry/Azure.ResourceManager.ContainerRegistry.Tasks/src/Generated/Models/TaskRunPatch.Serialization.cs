@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            IdentityProperties identity = default;
+            ContainerRegistryTaskIdentityProperties identity = default;
             TaskRunPropertiesUpdateParameters properties = default;
             string location = default;
             IDictionary<string, string> tags = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    identity = IdentityProperties.DeserializeIdentityProperties(prop.Value, options);
+                    identity = ContainerRegistryTaskIdentityProperties.DeserializeContainerRegistryTaskIdentityProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

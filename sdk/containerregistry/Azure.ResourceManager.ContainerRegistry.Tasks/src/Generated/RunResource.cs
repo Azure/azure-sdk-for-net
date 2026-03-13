@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RunGetLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryTaskRunLogResult>> GetLogSasUrlAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.GetLogSasUrl");
             scope.Start();
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _runsRestClient.CreateGetLogSasUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RunGetLogResult> response = Response.FromValue(RunGetLogResult.FromResponse(result), result);
+                Response<ContainerRegistryTaskRunLogResult> response = Response.FromValue(ContainerRegistryTaskRunLogResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RunGetLogResult> GetLogSasUrl(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryTaskRunLogResult> GetLogSasUrl(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _runsClientDiagnostics.CreateScope("RunResource.GetLogSasUrl");
             scope.Start();
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 };
                 HttpMessage message = _runsRestClient.CreateGetLogSasUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RunGetLogResult> response = Response.FromValue(RunGetLogResult.FromResponse(result), result);
+                Response<ContainerRegistryTaskRunLogResult> response = Response.FromValue(ContainerRegistryTaskRunLogResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

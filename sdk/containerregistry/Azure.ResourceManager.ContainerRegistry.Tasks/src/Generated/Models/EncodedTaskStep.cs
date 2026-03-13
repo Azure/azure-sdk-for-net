@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="encodedValuesContent"> Base64 encoded value of the parameters/values file content. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
-        internal EncodedTaskStep(StepType @type, IReadOnlyList<BaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskSetValue> values) : base(@type, baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
+        internal EncodedTaskStep(StepType @type, IReadOnlyList<ContainerRegistryTaskBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskSetValue> values) : base(@type, baseImageDependencies, contextPath, contextAccessToken, additionalBinaryDataProperties)
         {
             EncodedTaskContent = encodedTaskContent;
             EncodedValuesContent = encodedValuesContent;

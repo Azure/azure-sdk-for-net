@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BaseImageTriggerUpdateContent(BaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, UpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BaseImageTriggerUpdateContent(ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseImageTriggerType = baseImageTriggerType;
             UpdateTriggerEndpoint = updateTriggerEndpoint;
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The type of the auto trigger for base image dependency updates. </summary>
-        public BaseImageTriggerType? BaseImageTriggerType { get; set; }
+        public ContainerRegistryTaskBaseImageTriggerType? BaseImageTriggerType { get; set; }
 
         /// <summary> The endpoint URL for receiving update triggers. </summary>
         public string UpdateTriggerEndpoint { get; set; }
 
         /// <summary> Type of Payload body for Base image update triggers. </summary>
-        public UpdateTriggerPayloadType? UpdateTriggerPayloadType { get; set; }
+        public ContainerRegistryTaskUpdateTriggerPayloadType? UpdateTriggerPayloadType { get; set; }
 
         /// <summary> The current status of trigger. </summary>
         public ContainerRegistryTaskTriggerStatus? Status { get; set; }

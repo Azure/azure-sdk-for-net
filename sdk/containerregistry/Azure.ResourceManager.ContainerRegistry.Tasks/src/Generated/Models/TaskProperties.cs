@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskProperties(ContainerRegistryTaskProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, PlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, TaskStepProperties step, TriggerProperties trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, bool? isSystemTask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskProperties(ContainerRegistryTaskProvisioningState? provisioningState, DateTimeOffset? createdOn, ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformProperties platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, TaskStepProperties step, ContainerRegistryTaskTriggerProperties trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, bool? isSystemTask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public ContainerRegistryTaskStatus? Status { get; set; }
 
         /// <summary> The platform properties against which the run has to happen. </summary>
-        public PlatformProperties Platform { get; set; }
+        public ContainerRegistryTaskPlatformProperties Platform { get; set; }
 
         /// <summary> The machine configuration of the run agent. </summary>
         internal AgentProperties AgentConfiguration { get; set; }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public TaskStepProperties Step { get; set; }
 
         /// <summary> The properties that describe all triggers for the task. </summary>
-        public TriggerProperties Trigger { get; set; }
+        public ContainerRegistryTaskTriggerProperties Trigger { get; set; }
 
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
         public ContainerRegistryTaskCredentials Credentials { get; set; }
