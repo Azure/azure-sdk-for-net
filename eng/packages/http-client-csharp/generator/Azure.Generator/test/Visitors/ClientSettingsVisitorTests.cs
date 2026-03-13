@@ -5,6 +5,7 @@ using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -75,6 +76,8 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsTrue(initializer!.IsBase, "Initializer should be a base call");
             Assert.AreEqual(2, initializer.Arguments.Count,
                 "Initializer should have 2 arguments: section and null");
+            Assert.IsInstanceOf<KeywordExpression>(initializer.Arguments[1],
+                "Second argument should be a null keyword expression");
         }
 
         [Test]
