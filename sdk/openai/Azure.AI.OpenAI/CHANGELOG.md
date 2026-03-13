@@ -1,6 +1,6 @@
 # Release History
 
-## 2.8.0-beta.2 (2026-03-11)
+## 2.9.0-beta.1 (2026-03-13)
 
 This update restores compatibility with the latest `2.9.*` release of `OpenAI` and enables access to the latest features. For details, please see the full [OpenAI 2.9.0](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#290-2026-02-27) and [OpenAI 2.9.1](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#291-2026-03-02) release notes.
 
