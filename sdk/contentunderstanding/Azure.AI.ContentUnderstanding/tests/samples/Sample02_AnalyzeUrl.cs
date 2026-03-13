@@ -457,6 +457,44 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"TimeRangeFrom(10s): {rangeFromSegments.Count} segment(s)");
             Console.WriteLine($"TimeRange(1.2s, 3.651s): {subSecondSegments.Count} segment(s)");
             Console.WriteLine($"Combine(0-3s, 30s-): {combineVideoSegments.Count} segment(s)");
+
+            #region Snippet:ContentUnderstandingAnalyzeVideoUrlWithRawContentRangeAsync
+            // Analyze the first 5 seconds using a raw range string (milliseconds).
+            // This is equivalent to: ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))
+            Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = new ContentRange("0-5000")
+                    }
+                });
+
+            AnalysisResult rawRangeResult = rawRangeOperation.Value;
+            foreach (AnalysisContent rawMedia in rawRangeResult.Contents!)
+            {
+                AudioVisualContent rawVideoContent = (AudioVisualContent)rawMedia;
+                Console.WriteLine($"Raw ContentRange segment: {rawVideoContent.StartTime.TotalMilliseconds} ms - {rawVideoContent.EndTime.TotalMilliseconds} ms");
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeVideoUrlWithRawContentRangeAsync
+            Assert.IsNotNull(rawRangeOperation, "Raw range video operation should not be null");
+            Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range video operation should be completed");
+            Assert.IsNotNull(rawRangeResult, "Raw range video result should not be null");
+            Assert.IsNotNull(rawRangeResult.Contents, "Raw range video result contents should not be null");
+            Assert.IsTrue(rawRangeResult.Contents.Count > 0, "Raw range video should return segments");
+
+            // The raw string "0-5000" should produce identical results to
+            // ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))
+            var rawVideoSegments = rawRangeResult.Contents.Cast<AudioVisualContent>().ToList();
+            Assert.AreEqual(rangeSegments.Count, rawVideoSegments.Count,
+                $"Raw ContentRange('0-5000') should return same segment count as TimeRange equivalent ({rangeSegments.Count})");
+            Console.WriteLine($"Raw ContentRange('0-5000'): {rawVideoSegments.Count} segment(s)");
+            #endregion
         }
 
         [RecordedTest]
@@ -647,6 +685,42 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             Console.WriteLine($"TimeRange(1.2s,3.651s): {audioSubSecondContent.Markdown.Length} chars, " +
                 $"{(audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds} ms");
+
+            #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithRawContentRangeAsync
+            // Analyze audio from 5 seconds onward using a raw range string (milliseconds).
+            // This is equivalent to: ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
+            Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = new ContentRange("5000-")
+                    }
+                });
+
+            AnalysisResult rawRangeResult = rawRangeOperation.Value;
+            AudioVisualContent rawAudioContent = (AudioVisualContent)rawRangeResult.Contents!.First();
+            Console.WriteLine($"Raw ContentRange audio analysis: {rawAudioContent.StartTime.TotalMilliseconds} ms onward");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeAudioUrlWithRawContentRangeAsync
+            Assert.IsNotNull(rawRangeOperation, "Raw range audio operation should not be null");
+            Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range audio operation should be completed");
+            Assert.IsNotNull(rawRangeResult, "Raw range audio result should not be null");
+            Assert.IsNotNull(rawRangeResult.Contents, "Raw range audio result contents should not be null");
+            Assert.IsTrue(rawRangeResult.Contents.Count > 0, "Raw range audio should return content");
+
+            // The raw string "5000-" should produce identical results to
+            // ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
+            Assert.IsTrue(rawAudioContent.StartTime >= TimeSpan.FromSeconds(5),
+                $"Raw ContentRange('5000-') audio StartTime ({rawAudioContent.StartTime.TotalMilliseconds} ms) should be >= 5000 ms");
+            Assert.AreEqual(rangeAudioContent.Markdown!.Length, rawAudioContent.Markdown!.Length,
+                $"Raw ContentRange('5000-') should return same markdown length as TimeRangeFrom equivalent ({rangeAudioContent.Markdown.Length})");
+            Console.WriteLine($"Raw ContentRange('5000-'): {rawAudioContent.Markdown.Length} chars, starts at {rawAudioContent.StartTime.TotalMilliseconds} ms");
+            #endregion
         }
 
         [RecordedTest]

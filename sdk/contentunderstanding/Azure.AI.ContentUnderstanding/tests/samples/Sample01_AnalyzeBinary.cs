@@ -320,6 +320,79 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Page(2): {page2Doc.Pages.Count} page, {page2Doc.Markdown.Length} chars");
             Console.WriteLine($"Pages(1,3): {pages13Doc.Pages.Count} pages, {pages13Doc.Markdown.Length} chars");
             Console.WriteLine($"Combine(Page(1), Pages(3,4)): {combineDoc.Pages.Count} pages, {combineDoc.Markdown.Length} chars");
+
+            // Raw string "2" — single page, equivalent to ContentRange.Page(2)
+            Operation<AnalysisResult> rawPage2Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("2"));
+            DocumentContent rawPage2Doc = (DocumentContent)rawPage2Operation.Value.Contents!.First();
+            Assert.AreEqual(1, rawPage2Doc.Pages!.Count, "Raw ContentRange('2') should return exactly 1 page");
+            Assert.AreEqual(2, rawPage2Doc.StartPageNumber, "Raw ContentRange('2') should start at page 2");
+            Assert.AreEqual(2, rawPage2Doc.EndPageNumber, "Raw ContentRange('2') should end at page 2");
+            Assert.AreEqual(page2Doc.Markdown!.Length, rawPage2Doc.Markdown!.Length,
+                $"Raw ContentRange('2') should return same markdown length as Page(2) ({page2Doc.Markdown.Length})");
+
+            // Raw string "1-3" — page range, equivalent to ContentRange.Pages(1, 3)
+            Operation<AnalysisResult> rawPages13Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("1-3"));
+            DocumentContent rawPages13Doc = (DocumentContent)rawPages13Operation.Value.Contents!.First();
+            Assert.AreEqual(3, rawPages13Doc.Pages!.Count, "Raw ContentRange('1-3') should return exactly 3 pages");
+            Assert.AreEqual(1, rawPages13Doc.StartPageNumber, "Raw ContentRange('1-3') should start at page 1");
+            Assert.AreEqual(3, rawPages13Doc.EndPageNumber, "Raw ContentRange('1-3') should end at page 3");
+            Assert.AreEqual(pages13Doc.Markdown!.Length, rawPages13Doc.Markdown!.Length,
+                $"Raw ContentRange('1-3') should return same markdown length as Pages(1,3) ({pages13Doc.Markdown.Length})");
+
+            // Raw string "3-" — pages from, equivalent to ContentRange.PagesFrom(3)
+            Operation<AnalysisResult> rawPagesFrom3Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("3-"));
+            DocumentContent rawPagesFrom3Doc = (DocumentContent)rawPagesFrom3Operation.Value.Contents!.First();
+            Assert.AreEqual(2, rawPagesFrom3Doc.Pages!.Count, "Raw ContentRange('3-') should return 2 pages (pages 3-4)");
+            Assert.AreEqual(3, rawPagesFrom3Doc.StartPageNumber, "Raw ContentRange('3-') should start at page 3");
+            Assert.AreEqual(4, rawPagesFrom3Doc.EndPageNumber, "Raw ContentRange('3-') should end at page 4");
+            DocumentContent rangeFromDoc = (DocumentContent)rangeOperation.Value.Contents!.First();
+            Assert.AreEqual(rangeFromDoc.Markdown!.Length, rawPagesFrom3Doc.Markdown!.Length,
+                $"Raw ContentRange('3-') should return same markdown length as PagesFrom(3) ({rangeFromDoc.Markdown.Length})");
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+            // Analyze pages 1–3, page 5, and pages 9 onward using a raw range string.
+            // This is equivalent to: ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+            Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: new ContentRange("1-3,5,9-"));
+
+            AnalysisResult rawRangeResult = rawRangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+            Assert.IsNotNull(rawRangeOperation, "Raw range operation should not be null");
+            Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range operation should be completed");
+            Assert.IsNotNull(rawRangeResult, "Raw range result should not be null");
+            Assert.IsNotNull(rawRangeResult.Contents, "Raw range result contents should not be null");
+            DocumentContent rawRangeDoc = (DocumentContent)rawRangeResult.Contents!.First();
+            Assert.IsTrue(rawRangeDoc.Pages!.Count > 0, "Raw ContentRange should return at least one page");
+
+            // The raw string "1-3,5,9-" should produce identical results to
+            // ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+            Assert.AreEqual(combineRangeDoc.Pages.Count, rawRangeDoc.Pages.Count,
+                $"Raw ContentRange('1-3,5,9-') should return same page count as Combine equivalent ({combineRangeDoc.Pages.Count})");
+            Assert.AreEqual(combineRangeDoc.Markdown!.Length, rawRangeDoc.Markdown!.Length,
+                $"Raw ContentRange('1-3,5,9-') should return same markdown length as Combine equivalent ({combineRangeDoc.Markdown.Length})");
+            Console.WriteLine($"Raw ContentRange('1-3,5,9-'): {rawRangeDoc.Pages.Count} pages, {rawRangeDoc.Markdown.Length} chars");
+            #endregion
+
+            Console.WriteLine($"Raw ContentRange('2'): {rawPage2Doc.Pages.Count} page, {rawPage2Doc.Markdown.Length} chars");
+            Console.WriteLine($"Raw ContentRange('1-3'): {rawPages13Doc.Pages.Count} pages, {rawPages13Doc.Markdown.Length} chars");
+            Console.WriteLine($"Raw ContentRange('3-'): {rawPagesFrom3Doc.Pages.Count} pages, {rawPagesFrom3Doc.Markdown.Length} chars");
         }
     }
 }
