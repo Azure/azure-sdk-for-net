@@ -36,6 +36,7 @@ namespace Azure.Generator.Visitors
         private static readonly CSharpType IConfigurationSectionType = typeof(IConfigurationSection);
         private static readonly CSharpType AuthenticationPolicyType = typeof(AuthenticationPolicy);
         private static readonly CSharpType TokenCredentialType = typeof(TokenCredential);
+        private static readonly CSharpType AzureKeyCredentialType = typeof(AzureKeyCredential);
 
         // Tracks the internal AuthenticationPolicy constructor body per client,
         // so we can inline it into the "with options" constructors.
@@ -90,7 +91,7 @@ namespace Azure.Generator.Visitors
                 return null;
             }
 
-            // Modify the Settings constructor to chain to the TokenCredential constructor
+            // Modify the Settings constructor to chain to a credential constructor
             if (constructor.Signature.Parameters.Count == 1 &&
                 constructor.Signature.Parameters[0].Type.Name.EndsWith("Settings"))
             {
@@ -100,13 +101,19 @@ namespace Azure.Generator.Visitors
                     c.Signature.Parameters.Any(p => p.Type.Name == nameof(TokenCredential)) &&
                     c.Signature.Parameters.Count >= 3);
 
-                if (!hasTokenCredCtor)
+                // Check if there's an AzureKeyCredential constructor to chain to
+                bool hasKeyCredCtor = clientProvider.Constructors.Any(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                    c.Signature.Parameters.Any(p => p.Type.Name == nameof(AzureKeyCredential)) &&
+                    c.Signature.Parameters.Count >= 3);
+
+                if (!hasTokenCredCtor && !hasKeyCredCtor)
                 {
-                    // No TokenCredential constructor — remove the Settings constructor entirely
+                    // No credential constructor — remove the Settings constructor entirely
                     return null;
                 }
 
-                UpdateSettingsConstructor(constructor);
+                UpdateSettingsConstructor(constructor, hasTokenCredCtor, hasKeyCredCtor);
                 return constructor;
             }
 
@@ -120,30 +127,60 @@ namespace Azure.Generator.Visitors
             return constructor;
         }
 
-        private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor)
+        private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor, bool hasTokenCredCtor, bool hasKeyCredCtor)
         {
             // The base generator produces a Settings constructor like:
             //   this(AuthenticationPolicy.Create(settings), settings?.Endpoint, ...otherParams, settings?.Options)
             //
-            // We change it to chain to the TokenCredential constructor:
+            // For TokenCredential, we change it to chain to the TokenCredential constructor:
             //   this(settings?.Endpoint, settings?.TokenProvider as TokenCredential, ...otherParams, settings?.Options)
+            //
+            // For AzureKeyCredential only, we need to add a body that checks credentialSource
+            // and constructs the appropriate credential, then calls the key credential constructor.
             var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
             var settingsParam = settingsCtor.Signature.Parameters[0];
 
-            // Build: settings?.TokenProvider as TokenCredential
-            var tokenProviderAccess = new MemberExpression(new NullConditionalExpression(settingsParam), "TokenProvider");
-            var tokenCredentialArg = tokenProviderAccess.As(TokenCredentialType);
-
-            // New args: endpoint, tokenCredential, ...otherParams, options
-            var newArgs = new List<ValueExpression>();
-            newArgs.Add(existingArgs[1]); // endpoint
-            newArgs.Add(tokenCredentialArg); // credential
-            for (int i = 2; i < existingArgs.Count; i++) // other params + options
+            if (hasTokenCredCtor)
             {
-                newArgs.Add(existingArgs[i]);
-            }
+                // Build: settings?.TokenProvider as TokenCredential
+                var tokenProviderAccess = new MemberExpression(new NullConditionalExpression(settingsParam), "TokenProvider");
+                var tokenCredentialArg = tokenProviderAccess.As(TokenCredentialType);
 
-            settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
+                // New args: endpoint, tokenCredential, ...otherParams, options
+                var newArgs = new List<ValueExpression>();
+                newArgs.Add(existingArgs[1]); // endpoint
+                newArgs.Add(tokenCredentialArg); // credential
+                for (int i = 2; i < existingArgs.Count; i++) // other params + options
+                {
+                    newArgs.Add(existingArgs[i]);
+                }
+
+                settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
+            }
+            else if (hasKeyCredCtor)
+            {
+                // Key-credential only library.
+                // Build: new AzureKeyCredential(settings?.CredentialSource) — and chain to the AzureKeyCredential constructor.
+                // The settings?.TokenProvider property returns a TokenProvider which for key creds
+                // should be checked via credentialSource.
+                //
+                // settings?.TokenProvider as AzureKeyCredential
+                // Note: If the credentialSource from config is "apikeycredential" (case-insensitive),
+                // we construct an AzureKeyCredential.
+                var tokenProviderAccess = new MemberExpression(new NullConditionalExpression(settingsParam), "TokenProvider");
+                var keyCredentialArg = tokenProviderAccess.As(AzureKeyCredentialType);
+
+                // New args: endpoint, keyCredential, ...otherParams, options
+                var newArgs = new List<ValueExpression>();
+                newArgs.Add(existingArgs[1]); // endpoint
+                newArgs.Add(keyCredentialArg); // credential
+                for (int i = 2; i < existingArgs.Count; i++) // other params + options
+                {
+                    newArgs.Add(existingArgs[i]);
+                }
+
+                settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
+            }
         }
 
         private static void InlineConstructorBody(
