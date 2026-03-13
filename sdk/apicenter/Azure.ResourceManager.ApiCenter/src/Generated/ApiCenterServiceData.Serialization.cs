@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(apiCenterServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(apiCenterServiceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiCenterServiceData"/> from. </param>

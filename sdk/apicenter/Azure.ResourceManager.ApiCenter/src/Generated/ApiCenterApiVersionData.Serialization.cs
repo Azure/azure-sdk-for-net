@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(apiCenterApiVersionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(apiCenterApiVersionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApiCenterApiVersionData"/> from. </param>

@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(metadataSchemaExportContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(metadataSchemaExportContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
