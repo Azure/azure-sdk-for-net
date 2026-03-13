@@ -9,56 +9,56 @@ using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UnknownMemoryItem : MemoryItem, IJsonModel<MemoryItem>
+    internal partial class UnknownMemoryOutputItem : MemoryOutputItem, IJsonModel<MemoryOutputItem>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMemoryItem"/> for deserialization. </summary>
-        internal UnknownMemoryItem()
+        /// <summary> Initializes a new instance of <see cref="UnknownMemoryOutputItem"/> for deserialization. </summary>
+        internal UnknownMemoryOutputItem()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MemoryItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MemoryOutputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryOutputItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMemoryItem(document.RootElement, options);
+                        return DeserializeMemoryOutputItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MemoryItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryOutputItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MemoryItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MemoryItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MemoryOutputItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryItem IPersistableModel<MemoryItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MemoryOutputItem IPersistableModel<MemoryOutputItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MemoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MemoryOutputItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MemoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MemoryOutputItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,34 +69,34 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryOutputItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MemoryItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MemoryItem IJsonModel<MemoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MemoryOutputItem IJsonModel<MemoryOutputItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MemoryItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MemoryOutputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MemoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MemoryOutputItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MemoryItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MemoryOutputItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMemoryItem(document.RootElement, options);
+            return DeserializeMemoryOutputItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownMemoryItem DeserializeUnknownMemoryItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownMemoryOutputItem DeserializeUnknownMemoryOutputItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownMemoryItem(
+            return new UnknownMemoryOutputItem(
                 memoryId,
                 updatedAt,
                 scope,

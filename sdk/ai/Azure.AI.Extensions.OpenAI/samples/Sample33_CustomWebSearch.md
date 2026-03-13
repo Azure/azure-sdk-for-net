@@ -1,10 +1,10 @@
-# Sample custom web search with agent in Azure.AI.Extensions.OpenAI.
+# Sample of custom web search with agent in Azure.AI.Extensions.OpenAI.
 
 ## Warning
 Web Search with Bing Custom Search instance uses Grounding with Bing, which has additional costs and terms: [terms of use](https://www.microsoft.com/bing/apis/grounding-legal-enterprise) and [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839&clcid=0x409). Customer data will flow outside the Azure compliance boundary. Learn more [here](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/web-search).
 
 ## Sample
-To enable your Agent to use Web Search with Custom Bing instance.
+To enable your Agent to use Web Search with Custom Bing instance, we need to set `CustomSearchConfiguration` configuration on `WebSearchTool`.
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
@@ -49,7 +49,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-3. To get the formatted annotation we have created the `GetFormattedAnnotation` method.
+3. To get the formatted annotation we will use the `GetFormattedAnnotation` method.
 
 ```C# Snippet:Sample_FormatReference_WebSearchCustomStreaming
 private static string GetFormattedAnnotation(ResponseItem item)

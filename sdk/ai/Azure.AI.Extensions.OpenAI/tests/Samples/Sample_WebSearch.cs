@@ -9,6 +9,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
+using System.Text;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -48,7 +49,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
 
         #region Snippet:Sample_WaitForResponse_WebSearch
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        Console.WriteLine(response.GetOutputText());
+        Console.WriteLine($"{response.GetOutputText()} {GetFormattedAnnotation(response)}");
         #endregion
 
         #region Snippet:Sample_Cleanup_WebSearch_Async
@@ -87,12 +88,41 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-        Console.WriteLine(response.GetOutputText());
+        Console.WriteLine($"{response.GetOutputText()} {GetFormattedAnnotation(response)}");
 
         #region Snippet:Sample_Cleanup_WebSearch_Sync
         projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
+
+    #region Snippet:Sample_FormatReference_WebSearch
+    private static string GetFormattedAnnotation(ResponseResult results)
+    {
+        StringBuilder references = new();
+        foreach (ResponseItem item in results.OutputItems)
+        {
+            if (item is MessageResponseItem messageItem)
+            {
+                foreach (ResponseContentPart content in messageItem.Content)
+                {
+                    foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                    {
+                        if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                        {
+                            references.Append($"[{uriAnnotation.Title}]({uriAnnotation.Uri}),");
+                        }
+                    }
+                }
+            }
+        }
+        if (references.Length > 0)
+        {
+            // Remove the last comma.
+            references.Remove(references.Length - 1, 1);
+        }
+        return references.ToString();
+    }
+    #endregion
 
     public Sample_WebSearch(bool isAsync) : base(isAsync)
     { }
