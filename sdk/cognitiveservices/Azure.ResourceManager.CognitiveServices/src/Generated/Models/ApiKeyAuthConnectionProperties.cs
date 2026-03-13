@@ -14,31 +14,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary>
     /// This connection type covers the generic ApiKey auth connection categories, for examples:
     /// AzureOpenAI:
-    ///     Category:= AzureOpenAI
-    ///     AuthType:= ApiKey (as type discriminator)
-    ///     Credentials:= {ApiKey} as .ApiKey
-    ///     Target:= {ApiBase}
-    ///
+    /// Category:= AzureOpenAI
+    /// AuthType:= ApiKey (as type discriminator)
+    /// Credentials:= {ApiKey} as .ApiKey
+    /// Target:= {ApiBase}
     /// CognitiveService:
-    ///     Category:= CognitiveService
-    ///     AuthType:= ApiKey (as type discriminator)
-    ///     Credentials:= {SubscriptionKey} as ApiKey
-    ///     Target:= ServiceRegion={serviceRegion}
-    ///
+    /// Category:= CognitiveService
+    /// AuthType:= ApiKey (as type discriminator)
+    /// Credentials:= {SubscriptionKey} as ApiKey
+    /// Target:= ServiceRegion={serviceRegion}
     /// CognitiveSearch:
-    ///     Category:= CognitiveSearch
-    ///     AuthType:= ApiKey (as type discriminator)
-    ///     Credentials:= {Key} as ApiKey
-    ///     Target:= {Endpoint}
-    ///
+    /// Category:= CognitiveSearch
+    /// AuthType:= ApiKey (as type discriminator)
+    /// Credentials:= {Key} as ApiKey
+    /// Target:= {Endpoint}
     /// Use Metadata property bag for ApiType, ApiVersion, Kind and other metadata fields
     /// </summary>
     public partial class ApiKeyAuthConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ApiKeyAuthConnectionProperties"/>. </summary>
-        public ApiKeyAuthConnectionProperties()
+        public ApiKeyAuthConnectionProperties() : base(ConnectionAuthType.ApiKey)
         {
-            AuthType = ConnectionAuthType.ApiKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyAuthConnectionProperties"/>. </summary>
@@ -55,25 +51,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Api key object for connection credential. </param>
-        internal ApiKeyAuthConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionApiKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal ApiKeyAuthConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectionApiKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, @group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, additionalBinaryDataProperties)
         {
             Credentials = credentials;
-            AuthType = authType;
         }
 
         /// <summary> Api key object for connection credential. </summary>
         internal ConnectionApiKey Credentials { get; set; }
-        /// <summary> Gets or sets the credentials key. </summary>
-        [WirePath("credentials.key")]
+
+        /// <summary> Gets or sets the Key. </summary>
         public string CredentialsKey
         {
-            get => Credentials is null ? default : Credentials.Key;
+            get
+            {
+                return Credentials is null ? default : Credentials.Key;
+            }
             set
             {
                 if (Credentials is null)
+                {
                     Credentials = new ConnectionApiKey();
+                }
                 Credentials.Key = value;
             }
         }

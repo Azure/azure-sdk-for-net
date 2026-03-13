@@ -9,14 +9,2557 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCognitiveServicesModelFactory
     {
+        /// <summary> Check SKU availability parameter. </summary>
+        /// <param name="skus"> The SKU of the resource. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="type"> The Type of the resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesSkuAvailabilityContent"/> instance for mocking. </returns>
+        public static CognitiveServicesSkuAvailabilityContent CognitiveServicesSkuAvailabilityContent(IEnumerable<string> skus = default, string kind = default, string @type = default)
+        {
+            skus ??= new ChangeTrackingList<string>();
+
+            return new CognitiveServicesSkuAvailabilityContent(skus.ToList(), kind, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Check SKU availability result list. </summary>
+        /// <param name="value"> Check SKU availability result list. </param>
+        /// <returns> A new <see cref="Models.SkuAvailabilityListResult"/> instance for mocking. </returns>
+        public static SkuAvailabilityListResult SkuAvailabilityListResult(IEnumerable<CognitiveServicesSkuAvailabilityList> value = default)
+        {
+            value ??= new ChangeTrackingList<CognitiveServicesSkuAvailabilityList>();
+
+            return new SkuAvailabilityListResult(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> SKU availability. </summary>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="type"> The Type of the resource. </param>
+        /// <param name="skuName"> The name of SKU. </param>
+        /// <param name="skuAvailable"> Indicates the given SKU is available or not. </param>
+        /// <param name="reason"> Reason why the SKU is not available. </param>
+        /// <param name="message"> Additional error message. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesSkuAvailabilityList"/> instance for mocking. </returns>
+        public static CognitiveServicesSkuAvailabilityList CognitiveServicesSkuAvailabilityList(string kind = default, string @type = default, string skuName = default, bool? skuAvailable = default, string reason = default, string message = default)
+        {
+            return new CognitiveServicesSkuAvailabilityList(
+                kind,
+                @type,
+                skuName,
+                skuAvailable,
+                reason,
+                message,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Check Domain availability parameter. </summary>
+        /// <param name="subdomainName"> The subdomain name to use. </param>
+        /// <param name="type"> The Type of the resource. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityContent"/> instance for mocking. </returns>
+        public static CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName = default, string @type = default, string kind = default)
+        {
+            return new CognitiveServicesDomainAvailabilityContent(subdomainName, @type, kind, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Domain availability. </summary>
+        /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
+        /// <param name="reason"> Reason why the SKU is not available. </param>
+        /// <param name="subdomainName"> The subdomain name to use. </param>
+        /// <param name="type"> The Type of the resource. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityList"/> instance for mocking. </returns>
+        public static CognitiveServicesDomainAvailabilityList CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable = default, string reason = default, string subdomainName = default, string @type = default, string kind = default)
+        {
+            return new CognitiveServicesDomainAvailabilityList(
+                isSubdomainAvailable,
+                reason,
+                subdomainName,
+                @type,
+                kind,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Calculate Model Capacity parameter. </summary>
+        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="skuName"> The name of SKU. </param>
+        /// <param name="workloads"> List of Model Capacity Calculator Workload. </param>
+        /// <returns> A new <see cref="Models.CalculateModelCapacityContent"/> instance for mocking. </returns>
+        public static CalculateModelCapacityContent CalculateModelCapacityContent(CognitiveServicesAccountDeploymentModel model = default, string skuName = default, IEnumerable<ModelCapacityCalculatorWorkload> workloads = default)
+        {
+            workloads ??= new ChangeTrackingList<ModelCapacityCalculatorWorkload>();
+
+            return new CalculateModelCapacityContent(model, skuName, workloads.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        /// <param name="publisher"> Deployment model publisher. </param>
+        /// <param name="format"> Deployment model format. </param>
+        /// <param name="name"> Deployment model name. </param>
+        /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
+        /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
+        /// <param name="sourceAccount"> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentModel"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string publisher = default, string format = default, string name = default, string version = default, string source = default, ResourceIdentifier sourceAccount = default, ServiceAccountCallRateLimit callRateLimit = default)
+        {
+            return new CognitiveServicesAccountDeploymentModel(
+                publisher,
+                format,
+                name,
+                version,
+                source,
+                sourceAccount,
+                callRateLimit,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The call rate limit Cognitive Services account. </summary>
+        /// <param name="count"> The count value of Call Rate Limit. </param>
+        /// <param name="renewalPeriod"> The renewal period in seconds of Call Rate Limit. </param>
+        /// <param name="rules"></param>
+        /// <returns> A new <see cref="Models.ServiceAccountCallRateLimit"/> instance for mocking. </returns>
+        public static ServiceAccountCallRateLimit ServiceAccountCallRateLimit(float? count = default, float? renewalPeriod = default, IEnumerable<ServiceAccountThrottlingRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
+
+            return new ServiceAccountCallRateLimit(count, renewalPeriod, rules.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ServiceAccountThrottlingRule. </summary>
+        /// <param name="key"></param>
+        /// <param name="renewalPeriod"></param>
+        /// <param name="count"></param>
+        /// <param name="minCount"></param>
+        /// <param name="dynamicThrottlingEnabled"></param>
+        /// <param name="matchPatterns"></param>
+        /// <returns> A new <see cref="Models.ServiceAccountThrottlingRule"/> instance for mocking. </returns>
+        public static ServiceAccountThrottlingRule ServiceAccountThrottlingRule(string key = default, float? renewalPeriod = default, float? count = default, float? minCount = default, bool? dynamicThrottlingEnabled = default, IEnumerable<ServiceAccountThrottlingMatchPattern> matchPatterns = default)
+        {
+            matchPatterns ??= new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>();
+
+            return new ServiceAccountThrottlingRule(
+                key,
+                renewalPeriod,
+                count,
+                minCount,
+                dynamicThrottlingEnabled,
+                matchPatterns.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ServiceAccountThrottlingMatchPattern. </summary>
+        /// <param name="path"></param>
+        /// <param name="method"></param>
+        /// <returns> A new <see cref="Models.ServiceAccountThrottlingMatchPattern"/> instance for mocking. </returns>
+        public static ServiceAccountThrottlingMatchPattern ServiceAccountThrottlingMatchPattern(string path = default, string @method = default)
+        {
+            return new ServiceAccountThrottlingMatchPattern(path, @method, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Calculate Model Capacity result. </summary>
+        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="skuName"></param>
+        /// <param name="estimatedCapacity"> Model Estimated Capacity. </param>
+        /// <returns> A new <see cref="Models.CalculateModelCapacityResult"/> instance for mocking. </returns>
+        public static CalculateModelCapacityResult CalculateModelCapacityResult(CognitiveServicesAccountDeploymentModel model = default, string skuName = default, CalculateModelCapacityResultEstimatedCapacity estimatedCapacity = default)
+        {
+            return new CalculateModelCapacityResult(model, skuName, estimatedCapacity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Model Estimated Capacity. </summary>
+        /// <param name="value"></param>
+        /// <param name="deployableValue"></param>
+        /// <returns> A new <see cref="Models.CalculateModelCapacityResultEstimatedCapacity"/> instance for mocking. </returns>
+        public static CalculateModelCapacityResultEstimatedCapacity CalculateModelCapacityResultEstimatedCapacity(int? value = default, int? deployableValue = default)
+        {
+            return new CalculateModelCapacityResultEstimatedCapacity(value, deployableValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services account. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountData"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountData CognitiveServicesAccountData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAccountProperties properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default, string kind = default, CognitiveServicesSku sku = default, Identity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                etag,
+                kind,
+                sku,
+                identity);
+        }
+
+        /// <summary> Properties of Cognitive Services account. </summary>
+        /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
+        /// <param name="endpoint"> Endpoint of the created account. </param>
+        /// <param name="internalId"> The internal identifier (deprecated, do not use this property). </param>
+        /// <param name="capabilities"> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </param>
+        /// <param name="isMigrated"> If the resource is migrated from an existing key. </param>
+        /// <param name="migrationToken"> Resource migration token. </param>
+        /// <param name="skuChangeInfo"> Sku change info of account. </param>
+        /// <param name="customSubDomainName"> Optional subdomain name used for token-based authentication. </param>
+        /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
+        /// <param name="encryption"> The encryption properties for this resource. </param>
+        /// <param name="userOwnedStorage"> The storage accounts for this resource. </param>
+        /// <param name="amlWorkspace"> The user owned AML account properties. </param>
+        /// <param name="privateEndpointConnections"> The private endpoint connection associated with the Cognitive Services account. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this account. </param>
+        /// <param name="apiProperties"> The api properties for special APIs. </param>
+        /// <param name="dateCreated"> Gets the date of cognitive services account creation. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="dynamicThrottlingEnabled"> The flag to enable dynamic throttling. </param>
+        /// <param name="storedCompletionsDisabled"> The flag to disable stored completions. </param>
+        /// <param name="quotaLimit"></param>
+        /// <param name="restrictOutboundNetworkAccess"></param>
+        /// <param name="allowedFqdnList"></param>
+        /// <param name="disableLocalAuth"></param>
+        /// <param name="endpoints"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="restore"></param>
+        /// <param name="deletionDate"> The deletion date, only available for deleted account. </param>
+        /// <param name="scheduledPurgeDate"> The scheduled purge date, only available for deleted account. </param>
+        /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
+        /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
+        /// <param name="abusePenalty"> The abuse penalty. </param>
+        /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
+        /// <param name="networkInjections"></param>
+        /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
+        /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
+        /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, string internalId = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, string dateCreated = default, ServiceAccountCallRateLimit callRateLimit = default, bool? dynamicThrottlingEnabled = default, bool? storedCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, string deletionDate = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, AIFoundryNetworkInjection networkInjections = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
+        {
+            capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
+            userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
+            privateEndpointConnections ??= new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+            allowedFqdnList ??= new ChangeTrackingList<string>();
+            endpoints ??= new ChangeTrackingDictionary<string, string>();
+            commitmentPlanAssociations ??= new ChangeTrackingList<CommitmentPlanAssociation>();
+            associatedProjects ??= new ChangeTrackingList<string>();
+
+            return new CognitiveServicesAccountProperties(
+                provisioningState,
+                endpoint,
+                internalId,
+                capabilities.ToList(),
+                isMigrated,
+                migrationToken,
+                skuChangeInfo,
+                customSubDomainName,
+                networkAcls,
+                encryption,
+                userOwnedStorage.ToList(),
+                amlWorkspace,
+                privateEndpointConnections.ToList(),
+                publicNetworkAccess,
+                apiProperties,
+                dateCreated,
+                callRateLimit,
+                dynamicThrottlingEnabled,
+                storedCompletionsDisabled,
+                quotaLimit,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList.ToList(),
+                disableLocalAuth,
+                endpoints,
+                restore,
+                deletionDate,
+                scheduledPurgeDate,
+                locations,
+                commitmentPlanAssociations.ToList(),
+                abusePenalty,
+                raiMonitorConfig,
+                networkInjections,
+                allowProjectManagement,
+                defaultProject,
+                associatedProjects.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> SkuCapability indicates the capability of a certain feature. </summary>
+        /// <param name="name"> The name of the SkuCapability. </param>
+        /// <param name="value"> The value of the SkuCapability. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesSkuCapability"/> instance for mocking. </returns>
+        public static CognitiveServicesSkuCapability CognitiveServicesSkuCapability(string name = default, string value = default)
+        {
+            return new CognitiveServicesSkuCapability(name, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Sku change info of account. </summary>
+        /// <param name="countOfDowngrades"> Gets the count of downgrades. </param>
+        /// <param name="countOfUpgradesAfterDowngrades"> Gets the count of upgrades after downgrades. </param>
+        /// <param name="lastChangeDate"> Gets the last change date. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesSkuChangeInfo"/> instance for mocking. </returns>
+        public static CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades = default, float? countOfUpgradesAfterDowngrades = default, string lastChangeDate = default)
+        {
+            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangeDate, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A set of rules governing the network accessibility. </summary>
+        /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
+        /// <param name="bypass"> Setting for trusted services. </param>
+        /// <param name="ipRules"> The list of IP address rules. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesNetworkRuleSet"/> instance for mocking. </returns>
+        public static CognitiveServicesNetworkRuleSet CognitiveServicesNetworkRuleSet(CognitiveServicesNetworkRuleAction? defaultAction = default, TrustedServicesByPassSelection? bypass = default, IEnumerable<CognitiveServicesIPRule> ipRules = default, IEnumerable<CognitiveServicesVirtualNetworkRule> virtualNetworkRules = default)
+        {
+            ipRules ??= new ChangeTrackingList<CognitiveServicesIPRule>();
+            virtualNetworkRules ??= new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>();
+
+            return new CognitiveServicesNetworkRuleSet(defaultAction, bypass, ipRules.ToList(), virtualNetworkRules.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="location"> The location of the private endpoint connection. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default, string etag = default, string location = default)
+        {
+            return new CognitiveServicesPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                location);
+        }
+
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="groupIds"> The private link resource group ids. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(string privateEndpointId = default, CognitiveServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, groupIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The api properties for special APIs. </summary>
+        /// <param name="qnaRuntimeEndpoint"> (QnAMaker Only) The runtime endpoint of QnAMaker. </param>
+        /// <param name="qnaAzureSearchEndpointKey"> (QnAMaker Only) The Azure Search endpoint key of QnAMaker. </param>
+        /// <param name="qnaAzureSearchEndpointId"> (QnAMaker Only) The Azure Search endpoint id of QnAMaker. </param>
+        /// <param name="statisticsEnabled"> (Bing Search Only) The flag to enable statistics of Bing Search. </param>
+        /// <param name="eventHubConnectionString"> (Personalization Only) The flag to enable statistics of Bing Search. </param>
+        /// <param name="storageAccountConnectionString"> (Personalization Only) The storage account connection string. </param>
+        /// <param name="aadClientId"> (Metrics Advisor Only) The Azure AD Client Id (Application Id). </param>
+        /// <param name="aadTenantId"> (Metrics Advisor Only) The Azure AD Tenant Id. </param>
+        /// <param name="superUser"> (Metrics Advisor Only) The super user of Metrics Advisor. </param>
+        /// <param name="websiteName"> (Metrics Advisor Only) The website name of Metrics Advisor. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.ServiceAccountApiProperties"/> instance for mocking. </returns>
+        public static ServiceAccountApiProperties ServiceAccountApiProperties(string qnaRuntimeEndpoint = default, string qnaAzureSearchEndpointKey = default, string qnaAzureSearchEndpointId = default, bool? statisticsEnabled = default, string eventHubConnectionString = default, string storageAccountConnectionString = default, string aadClientId = default, string aadTenantId = default, string superUser = default, string websiteName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ServiceAccountApiProperties(
+                qnaRuntimeEndpoint,
+                qnaAzureSearchEndpointKey,
+                qnaAzureSearchEndpointId,
+                statisticsEnabled,
+                eventHubConnectionString,
+                storageAccountConnectionString,
+                aadClientId,
+                aadTenantId,
+                superUser,
+                websiteName,
+                additionalProperties);
+        }
+
+        /// <summary> The ServiceAccountQuotaLimit. </summary>
+        /// <param name="count"></param>
+        /// <param name="renewalPeriod"></param>
+        /// <param name="rules"></param>
+        /// <returns> A new <see cref="Models.ServiceAccountQuotaLimit"/> instance for mocking. </returns>
+        public static ServiceAccountQuotaLimit ServiceAccountQuotaLimit(float? count = default, float? renewalPeriod = default, IEnumerable<ServiceAccountThrottlingRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
+
+            return new ServiceAccountQuotaLimit(count, renewalPeriod, rules.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The multiregion settings Cognitive Services account. </summary>
+        /// <param name="routingMethod"> Multiregion routing methods. </param>
+        /// <param name="regions"></param>
+        /// <returns> A new <see cref="Models.CognitiveServicesMultiRegionSettings"/> instance for mocking. </returns>
+        public static CognitiveServicesMultiRegionSettings CognitiveServicesMultiRegionSettings(CognitiveServicesRoutingMethod? routingMethod = default, IEnumerable<CognitiveServicesRegionSetting> regions = default)
+        {
+            regions ??= new ChangeTrackingList<CognitiveServicesRegionSetting>();
+
+            return new CognitiveServicesMultiRegionSettings(routingMethod, regions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The commitment plan association. </summary>
+        /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
+        /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
+        /// <returns> A new <see cref="Models.CommitmentPlanAssociation"/> instance for mocking. </returns>
+        public static CommitmentPlanAssociation CommitmentPlanAssociation(string commitmentPlanId = default, string commitmentPlanLocation = default)
+        {
+            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The abuse penalty. </summary>
+        /// <param name="action"> The action of AbusePenalty. </param>
+        /// <param name="rateLimitPercentage"> The percentage of rate limit. </param>
+        /// <param name="expiration"> The datetime of expiration of the AbusePenalty. </param>
+        /// <returns> A new <see cref="Models.AbusePenalty"/> instance for mocking. </returns>
+        public static AbusePenalty AbusePenalty(AbusePenaltyAction? action = default, float? rateLimitPercentage = default, DateTimeOffset? expiration = default)
+        {
+            return new AbusePenalty(action, rateLimitPercentage, expiration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Identity for the resource. </summary>
+        /// <param name="type"> The identity type. </param>
+        /// <param name="tenantId"> The tenant ID of resource. </param>
+        /// <param name="principalId"> The principal ID of resource identity. </param>
+        /// <param name="userAssignedIdentities"> The list of user assigned identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. </param>
+        /// <returns> A new <see cref="Models.Identity"/> instance for mocking. </returns>
+        public static Identity Identity(ResourceIdentityType? @type = default, string tenantId = default, string principalId = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+
+            return new Identity(@type, tenantId, principalId, userAssignedIdentities, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> User-assigned managed identity. </summary>
+        /// <param name="principalId"> Azure Active Directory principal ID associated with this Identity. </param>
+        /// <param name="clientId"> Client App Id associated with this identity. </param>
+        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
+        public static UserAssignedIdentity UserAssignedIdentity(string principalId = default, string clientId = default)
+        {
+            return new UserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The access keys for the cognitive services account. </summary>
+        /// <param name="key1"> Gets the value of key 1. </param>
+        /// <param name="key2"> Gets the value of key 2. </param>
+        /// <returns> A new <see cref="Models.ServiceAccountApiKeys"/> instance for mocking. </returns>
+        public static ServiceAccountApiKeys ServiceAccountApiKeys(string key1 = default, string key2 = default)
+        {
+            return new ServiceAccountApiKeys(key1, key2, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Regenerate key parameters. </summary>
+        /// <param name="keyName"> key name to generate (Key1|Key2). </param>
+        /// <returns> A new <see cref="Models.RegenerateServiceAccountKeyContent"/> instance for mocking. </returns>
+        public static RegenerateServiceAccountKeyContent RegenerateServiceAccountKeyContent(ServiceAccountKeyName keyName = default)
+        {
+            return new RegenerateServiceAccountKeyContent(keyName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The list of cognitive services accounts operation response. </summary>
+        /// <param name="value"> Gets the list of Cognitive Services accounts and their properties. </param>
+        /// <returns> A new <see cref="Models.AccountSkuListResult"/> instance for mocking. </returns>
+        public static AccountSkuListResult AccountSkuListResult(IEnumerable<CognitiveServicesAccountSku> value = default)
+        {
+            value ??= new ChangeTrackingList<CognitiveServicesAccountSku>();
+
+            return new AccountSkuListResult(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services resource type and SKU. </summary>
+        /// <param name="resourceType"> Resource Namespace and Type. </param>
+        /// <param name="sku"> The SKU of Cognitive Services account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountSku"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountSku CognitiveServicesAccountSku(string resourceType = default, CognitiveServicesSku sku = default)
+        {
+            return new CognitiveServicesAccountSku(resourceType, sku, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response to a list usage request. </summary>
+        /// <param name="nextLink"> The link used to get the next page of Usages. </param>
+        /// <param name="value"> The list of usages for Cognitive Service account. </param>
+        /// <returns> A new <see cref="Models.UsageListResult"/> instance for mocking. </returns>
+        public static UsageListResult UsageListResult(string nextLink = default, IEnumerable<ServiceAccountUsage> value = default)
+        {
+            value ??= new ChangeTrackingList<ServiceAccountUsage>();
+
+            return new UsageListResult(nextLink, value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The usage data for a usage request. </summary>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
+        /// <param name="limit"> Maximum value for this metric. </param>
+        /// <param name="currentValue"> Current value for this metric. </param>
+        /// <param name="nextResetTime"> Next reset time for current quota. </param>
+        /// <param name="status"> Cognitive Services account quota usage status. </param>
+        /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
+        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default)
+        {
+            return new ServiceAccountUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                nextResetTime,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A metric name. </summary>
+        /// <param name="value"> The name of the metric. </param>
+        /// <param name="localizedValue"> The friendly name of the metric. </param>
+        /// <returns> A new <see cref="Models.ServiceAccountUsageMetricName"/> instance for mocking. </returns>
+        public static ServiceAccountUsageMetricName ServiceAccountUsageMetricName(string value = default, string localizedValue = default)
+        {
+            return new ServiceAccountUsageMetricName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account Model. </summary>
+        /// <param name="publisher"> Deployment model publisher. </param>
+        /// <param name="format"> Deployment model format. </param>
+        /// <param name="name"> Deployment model name. </param>
+        /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
+        /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
+        /// <param name="sourceAccount"> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="baseModel"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="isDefaultVersion"> If the model is default version. </param>
+        /// <param name="skus"> The list of Model Sku. </param>
+        /// <param name="maxCapacity"> The max capacity. </param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="finetuneCapabilities"> The capabilities for finetune models. </param>
+        /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
+        /// <param name="replacementConfig"> Configuration for model replacement. </param>
+        /// <param name="modelCatalogAssetId"> Asset identifier for the model in the model catalog. </param>
+        /// <param name="lifecycleStatus"> Model lifecycle status. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = default, string format = default, string name = default, string version = default, string source = default, ResourceIdentifier sourceAccount = default, ServiceAccountCallRateLimit callRateLimit = default, CognitiveServicesAccountDeploymentModel baseModel = default, bool? isDefaultVersion = default, IEnumerable<CognitiveServicesModelSku> skus = default, int? maxCapacity = default, IDictionary<string, string> capabilities = default, IDictionary<string, string> finetuneCapabilities = default, ServiceAccountModelDeprecationInfo deprecation = default, ReplacementConfig replacementConfig = default, string modelCatalogAssetId = default, ModelLifecycleStatus? lifecycleStatus = default, SystemData systemData = default)
+        {
+            skus ??= new ChangeTrackingList<CognitiveServicesModelSku>();
+            capabilities ??= new ChangeTrackingDictionary<string, string>();
+            finetuneCapabilities ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesAccountModel(
+                publisher,
+                format,
+                name,
+                version,
+                source,
+                sourceAccount,
+                callRateLimit,
+                additionalBinaryDataProperties: null,
+                baseModel,
+                isDefaultVersion,
+                skus.ToList(),
+                maxCapacity,
+                capabilities,
+                finetuneCapabilities,
+                deprecation,
+                replacementConfig,
+                modelCatalogAssetId,
+                lifecycleStatus,
+                systemData);
+        }
+
+        /// <summary> Describes an available Cognitive Services Model SKU. </summary>
+        /// <param name="name"> The name of the model SKU. </param>
+        /// <param name="usageName"> The usage name of the model SKU. </param>
+        /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
+        /// <param name="capacity"> The capacity configuration. </param>
+        /// <param name="rateLimits"> The list of rateLimit. </param>
+        /// <param name="cost"> The list of billing meter info. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesModelSku"/> instance for mocking. </returns>
+        public static CognitiveServicesModelSku CognitiveServicesModelSku(string name = default, string usageName = default, DateTimeOffset? deprecationOn = default, CognitiveServicesCapacityConfig capacity = default, IEnumerable<ServiceAccountCallRateLimit> rateLimits = default, IEnumerable<BillingMeterInfo> cost = default)
+        {
+            rateLimits ??= new ChangeTrackingList<ServiceAccountCallRateLimit>();
+            cost ??= new ChangeTrackingList<BillingMeterInfo>();
+
+            return new CognitiveServicesModelSku(
+                name,
+                usageName,
+                deprecationOn,
+                capacity,
+                rateLimits.ToList(),
+                cost.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The capacity configuration. </summary>
+        /// <param name="minimum"> The minimum capacity. </param>
+        /// <param name="maximum"> The maximum capacity. </param>
+        /// <param name="step"> The minimal incremental between allowed values for capacity. </param>
+        /// <param name="default"> The default capacity. </param>
+        /// <param name="allowedValues"> The array of allowed values for capacity. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesCapacityConfig"/> instance for mocking. </returns>
+        public static CognitiveServicesCapacityConfig CognitiveServicesCapacityConfig(int? minimum = default, int? maximum = default, int? step = default, int? @default = default, IEnumerable<int> allowedValues = default)
+        {
+            allowedValues ??= new ChangeTrackingList<int>();
+
+            return new CognitiveServicesCapacityConfig(
+                minimum,
+                maximum,
+                step,
+                @default,
+                allowedValues.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The BillingMeterInfo. </summary>
+        /// <param name="name"></param>
+        /// <param name="meterId"></param>
+        /// <param name="unit"></param>
+        /// <returns> A new <see cref="Models.BillingMeterInfo"/> instance for mocking. </returns>
+        public static BillingMeterInfo BillingMeterInfo(string name = default, string meterId = default, string unit = default)
+        {
+            return new BillingMeterInfo(name, meterId, unit, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account ModelDeprecationInfo. </summary>
+        /// <param name="fineTune"> The datetime of deprecation of the fineTune Model. </param>
+        /// <param name="inference"> The datetime of deprecation of the inference Model. </param>
+        /// <param name="deprecationStatus"> Indicates whether the deprecation date is a confirmed planned end-of-life date or an estimated deprecation date. When 'Planned', the deprecation date represents a confirmed and communicated model end-of-life date. When 'Tentative', the deprecation date is an estimated timeline that may be subject to change. </param>
+        /// <returns> A new <see cref="Models.ServiceAccountModelDeprecationInfo"/> instance for mocking. </returns>
+        public static ServiceAccountModelDeprecationInfo ServiceAccountModelDeprecationInfo(string fineTune = default, string inference = default, DeprecationStatus? deprecationStatus = default)
+        {
+            return new ServiceAccountModelDeprecationInfo(fineTune, inference, deprecationStatus, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration for model replacement. </summary>
+        /// <param name="targetModelName"> The name of the replacement model. </param>
+        /// <param name="targetModelVersion"> The version of the replacement model. </param>
+        /// <param name="autoUpgradeStartOn"> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </param>
+        /// <param name="upgradeOnExpiryLeadTimeDays"> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </param>
+        /// <returns> A new <see cref="Models.ReplacementConfig"/> instance for mocking. </returns>
+        public static ReplacementConfig ReplacementConfig(string targetModelName = default, string targetModelVersion = default, DateTimeOffset? autoUpgradeStartOn = default, int? upgradeOnExpiryLeadTimeDays = default)
+        {
+            return new ReplacementConfig(targetModelName, targetModelVersion, autoUpgradeStartOn, upgradeOnExpiryLeadTimeDays, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A list of private endpoint connections. </summary>
+        /// <param name="value"> Array of private endpoint connections. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesPrivateEndpointConnectionListResult"/> instance for mocking. </returns>
+        public static CognitiveServicesPrivateEndpointConnectionListResult CognitiveServicesPrivateEndpointConnectionListResult(IEnumerable<CognitiveServicesPrivateEndpointConnectionData> value = default)
+        {
+            value ??= new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+
+            return new CognitiveServicesPrivateEndpointConnectionListResult(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAccountDeploymentProperties properties = default, CognitiveServicesSku sku = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesAccountDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                sku,
+                etag,
+                tags);
+        }
+
+        /// <summary> Properties of Cognitive Services account deployment. </summary>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="raiPolicyName"> The name of RAI policy. </param>
+        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="rateLimits"></param>
+        /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
+        /// <param name="dynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
+        /// <param name="currentCapacity"> The current capacity. </param>
+        /// <param name="capacitySettings"> Internal use only. </param>
+        /// <param name="parentDeploymentName"> The name of parent deployment. </param>
+        /// <param name="spilloverDeploymentName"> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </param>
+        /// <param name="serviceTier"> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </param>
+        /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? dynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, ServiceTier? serviceTier = default, DeploymentState? deploymentState = default)
+        {
+            capabilities ??= new ChangeTrackingDictionary<string, string>();
+            rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
+
+            return new CognitiveServicesAccountDeploymentProperties(
+                provisioningState,
+                model,
+                scaleSettings,
+                capabilities,
+                raiPolicyName,
+                callRateLimit,
+                rateLimits.ToList(),
+                versionUpgradeOption,
+                dynamicThrottlingEnabled,
+                currentCapacity,
+                capacitySettings,
+                parentDeploymentName,
+                spilloverDeploymentName,
+                serviceTier,
+                deploymentState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </summary>
+        /// <param name="scaleType"> Deployment scale type. </param>
+        /// <param name="capacity"> Deployment capacity. </param>
+        /// <param name="activeCapacity"> Deployment active capacity. This value might be different from `capacity` if customer recently updated `capacity`. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentScaleSettings"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountDeploymentScaleSettings CognitiveServicesAccountDeploymentScaleSettings(CognitiveServicesAccountDeploymentScaleType? scaleType = default, int? capacity = default, int? activeCapacity = default)
+        {
+            return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The object being used to update tags and sku of a resource, in general used for PATCH operations. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <returns> A new <see cref="Models.PatchResourceTagsAndSku"/> instance for mocking. </returns>
+        public static PatchResourceTagsAndSku PatchResourceTagsAndSku(IDictionary<string, string> tags = default, CognitiveServicesSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PatchResourceTagsAndSku(tags, additionalBinaryDataProperties: null, sku);
+        }
+
+        /// <summary> The object being used to update tags of a resource, in general used for PATCH operations. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesPatchResourceTags"/> instance for mocking. </returns>
+        public static CognitiveServicesPatchResourceTags CognitiveServicesPatchResourceTags(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesPatchResourceTags(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of Cognitive Services account resource sku resource properties. </summary>
+        /// <param name="resourceType"> The resource type name. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="capacity"> The capacity configuration. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesResourceSku"/> instance for mocking. </returns>
+        public static CognitiveServicesResourceSku CognitiveServicesResourceSku(string resourceType = default, CognitiveServicesSku sku = default, CognitiveServicesCapacityConfig capacity = default)
+        {
+            return new CognitiveServicesResourceSku(resourceType, sku, capacity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account commitment plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <returns> A new <see cref="CognitiveServices.CommitmentPlanData"/> instance for mocking. </returns>
+        public static CommitmentPlanData CommitmentPlanData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CommitmentPlanProperties properties = default, IDictionary<string, string> tags = default, string location = default, string kind = default, CognitiveServicesSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommitmentPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                kind,
+                sku);
+        }
+
+        /// <summary> Properties of Cognitive Services account commitment plan. </summary>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="commitmentPlanGuid"> Commitment plan guid. </param>
+        /// <param name="hostingModel"> Account hosting model. </param>
+        /// <param name="planType"> Commitment plan type. </param>
+        /// <param name="current"> Cognitive Services account commitment period. </param>
+        /// <param name="autoRenew"> AutoRenew commitment plan. </param>
+        /// <param name="next"> Cognitive Services account commitment period. </param>
+        /// <param name="last"> Cognitive Services account commitment period. </param>
+        /// <param name="provisioningIssues"> The list of ProvisioningIssue. </param>
+        /// <returns> A new <see cref="Models.CommitmentPlanProperties"/> instance for mocking. </returns>
+        public static CommitmentPlanProperties CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState = default, string commitmentPlanGuid = default, ServiceAccountHostingModel? hostingModel = default, string planType = default, CommitmentPeriod current = default, bool? autoRenew = default, CommitmentPeriod next = default, CommitmentPeriod last = default, IEnumerable<string> provisioningIssues = default)
+        {
+            provisioningIssues ??= new ChangeTrackingList<string>();
+
+            return new CommitmentPlanProperties(
+                provisioningState,
+                commitmentPlanGuid,
+                hostingModel,
+                planType,
+                current,
+                autoRenew,
+                next,
+                last,
+                provisioningIssues.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account commitment period. </summary>
+        /// <param name="tier"> Commitment period commitment tier. </param>
+        /// <param name="count"> Commitment period commitment count. </param>
+        /// <param name="quota"> Cognitive Services account commitment quota. </param>
+        /// <param name="startDate"> Commitment period start date. </param>
+        /// <param name="endDate"> Commitment period end date. </param>
+        /// <returns> A new <see cref="Models.CommitmentPeriod"/> instance for mocking. </returns>
+        public static CommitmentPeriod CommitmentPeriod(string tier = default, int? count = default, CommitmentQuota quota = default, string startDate = default, string endDate = default)
+        {
+            return new CommitmentPeriod(
+                tier,
+                count,
+                quota,
+                startDate,
+                endDate,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account commitment quota. </summary>
+        /// <param name="quantity"> Commitment quota quantity. </param>
+        /// <param name="unit"> Commitment quota unit. </param>
+        /// <returns> A new <see cref="Models.CommitmentQuota"/> instance for mocking. </returns>
+        public static CommitmentQuota CommitmentQuota(long? quantity = default, string unit = default)
+        {
+            return new CommitmentQuota(quantity, unit, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="accountId"> The Azure resource id of the account. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/> instance for mocking. </returns>
+        public static CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountId = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommitmentPlanAccountAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                accountId is null ? default : new CommitmentPlanAccountAssociationProperties(accountId, null),
+                etag,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services EncryptionScope. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesEncryptionScopeData"/> instance for mocking. </returns>
+        public static CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesEncryptionScopeProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesEncryptionScopeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                tags);
+        }
+
+        /// <summary> Properties to EncryptionScope. </summary>
+        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
+        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="state"> The encryptionScope state. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesEncryptionScopeProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties = default, ServiceAccountEncryptionKeySource? keySource = default, EncryptionScopeProvisioningState? provisioningState = default, EncryptionScopeState? state = default)
+        {
+            return new CognitiveServicesEncryptionScopeProperties(keyVaultProperties, keySource, additionalBinaryDataProperties: null, provisioningState, state);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services RaiPolicy. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiPolicyData"/> instance for mocking. </returns>
+        public static RaiPolicyData RaiPolicyData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiPolicyProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                tags);
+        }
+
+        /// <summary> Azure OpenAI Content Filters properties. </summary>
+        /// <param name="type"> Content Filters policy type. </param>
+        /// <param name="mode"> Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3. Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version. </param>
+        /// <param name="basePolicyName"> Name of Rai policy. </param>
+        /// <param name="contentFilters"> The list of Content Filters. </param>
+        /// <param name="customBlocklists"> The list of custom Blocklist. </param>
+        /// <param name="customTopics"> The list of custom rai topics. </param>
+        /// <param name="safetyProviders"> The list of Safety Providers. </param>
+        /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? @type = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<CustomTopicConfig> customTopics = default, IEnumerable<SafetyProviderConfig> safetyProviders = default)
+        {
+            contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
+            customBlocklists ??= new ChangeTrackingList<CustomBlocklistConfig>();
+            customTopics ??= new ChangeTrackingList<CustomTopicConfig>();
+            safetyProviders ??= new ChangeTrackingList<SafetyProviderConfig>();
+
+            return new RaiPolicyProperties(
+                @type,
+                mode,
+                basePolicyName,
+                contentFilters.ToList(),
+                customBlocklists.ToList(),
+                customTopics.ToList(),
+                safetyProviders.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiBlocklistItemData"/> instance for mocking. </returns>
+        public static RaiBlocklistItemData RaiBlocklistItemData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiBlocklistItemProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiBlocklistItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="raiBlocklistDescription"> Description of the block list. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiBlocklistData"/> instance for mocking. </returns>
+        public static RaiBlocklistData RaiBlocklistData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string raiBlocklistDescription = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiBlocklistData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                raiBlocklistDescription is null ? default : new RaiBlocklistProperties(raiBlocklistDescription, null),
+                etag,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services Rai Topic. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiTopicData"/> instance for mocking. </returns>
+        public static RaiTopicData RaiTopicData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiTopicProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiTopicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the RAI Tool Label. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiToolLabelData"/> instance for mocking. </returns>
+        public static RaiToolLabelData RaiToolLabelData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiToolLabelProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiToolLabelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                tags);
+        }
+
+        /// <param name="toolConnectionName"> The unique tool connection name, e.g., 'Web_Search'. </param>
+        /// <param name="accountScopeLabelValues"> Dictionary of label key-value pairs for the account scope. </param>
+        /// <param name="projectScopes"> List of project-level tool label definitions. </param>
+        /// <returns> A new <see cref="Models.RaiToolLabelProperties"/> instance for mocking. </returns>
+        public static RaiToolLabelProperties RaiToolLabelProperties(string toolConnectionName = default, IDictionary<string, string> accountScopeLabelValues = default, IEnumerable<RaiToolLabelPropertiesProjectScopesItem> projectScopes = default)
+        {
+            projectScopes ??= new ChangeTrackingList<RaiToolLabelPropertiesProjectScopesItem>();
+
+            return new RaiToolLabelProperties(toolConnectionName, accountScopeLabelValues is null ? default : new RaiToolLabelPropertiesAccountScope(accountScopeLabelValues, null), projectScopes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RaiToolLabelPropertiesProjectScopesItem. </summary>
+        /// <param name="project"> Project name to which this scope applies. </param>
+        /// <param name="labelValues"> Dictionary of label key-value pairs for the project scope. </param>
+        /// <returns> A new <see cref="Models.RaiToolLabelPropertiesProjectScopesItem"/> instance for mocking. </returns>
+        public static RaiToolLabelPropertiesProjectScopesItem RaiToolLabelPropertiesProjectScopesItem(string project = default, IDictionary<string, string> labelValues = default)
+        {
+            labelValues ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiToolLabelPropertiesProjectScopesItem(project, labelValues, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure OpenAI Content Filter. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Azure OpenAI Content Filter Properties. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiContentFilterData"/> instance for mocking. </returns>
+        public static RaiContentFilterData RaiContentFilterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiContentFilterProperties properties = default)
+        {
+            return new RaiContentFilterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Azure OpenAI Content Filter Properties. </summary>
+        /// <param name="name"> Name of Content Filter. </param>
+        /// <param name="isMultiLevelFilter"> If the Content Filter has multi severity levels(Low, Medium, or High). </param>
+        /// <param name="source"> Content source to apply the Content Filters. </param>
+        /// <returns> A new <see cref="Models.RaiContentFilterProperties"/> instance for mocking. </returns>
+        public static RaiContentFilterProperties RaiContentFilterProperties(string name = default, bool? isMultiLevelFilter = default, RaiPolicyContentSource? source = default)
+        {
+            return new RaiContentFilterProperties(name, isMultiLevelFilter, source, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> NSP Configuration for an Cognitive Services account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> NSP Configuration properties. </param>
+        /// <returns> A new <see cref="CognitiveServices.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        {
+            return new NetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The properties of an NSP Configuration. </summary>
+        /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration. </param>
+        /// <param name="provisioningIssues"> List of Provisioning Issues. </param>
+        /// <param name="networkSecurityPerimeter"> Information about a linked Network Security Perimeter. </param>
+        /// <param name="resourceAssociation"> Network Security Perimeter Configuration Association Information. </param>
+        /// <param name="profile"> Network Security Perimeter Profile Information. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(string provisioningState = default, IEnumerable<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default, CognitiveServicesNetworkSecurityPerimeter networkSecurityPerimeter = default, NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation = default, NetworkSecurityPerimeterProfileInfo profile = default)
+        {
+            provisioningIssues ??= new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
+
+            return new NetworkSecurityPerimeterConfigurationProperties(
+                provisioningState,
+                provisioningIssues.ToList(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The NetworkSecurityPerimeterProvisioningIssue. </summary>
+        /// <param name="name"> Name of the NSP provisioning issue. </param>
+        /// <param name="properties"> Properties of Provisioning Issue. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProvisioningIssue NetworkSecurityPerimeterProvisioningIssue(string name = default, NetworkSecurityPerimeterProvisioningIssueProperties properties = default)
+        {
+            return new NetworkSecurityPerimeterProvisioningIssue(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of Provisioning Issue. </summary>
+        /// <param name="issueType"> Type of Issue. </param>
+        /// <param name="severity"> Severity of the issue. </param>
+        /// <param name="description"> Description of the issue. </param>
+        /// <param name="suggestedResourceIds"> IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
+        /// <param name="suggestedAccessRules"> Optional array, suggested access rules. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProvisioningIssueProperties NetworkSecurityPerimeterProvisioningIssueProperties(string issueType = default, string severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<NetworkSecurityPerimeterAccessRule> suggestedAccessRules = default)
+        {
+            suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            suggestedAccessRules ??= new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
+
+            return new NetworkSecurityPerimeterProvisioningIssueProperties(
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds.ToList(),
+                suggestedAccessRules.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Security Perimeter Access Rule. </summary>
+        /// <param name="name"> Network Security Perimeter Access Rule Name. </param>
+        /// <param name="properties"> Properties of Network Security Perimeter Access Rule. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAccessRule"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAccessRule NetworkSecurityPerimeterAccessRule(string name = default, NetworkSecurityPerimeterAccessRuleProperties properties = default)
+        {
+            return new NetworkSecurityPerimeterAccessRule(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Properties of Network Security Perimeter Rule. </summary>
+        /// <param name="direction"> Direction of Access Rule. </param>
+        /// <param name="addressPrefixes"> Address prefixes for inbound rules. </param>
+        /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
+        /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
+        /// <param name="fullyQualifiedDomainNames"> Fully qualified domain name for outbound rules. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAccessRuleProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterAccessRuleProperties NetworkSecurityPerimeterAccessRuleProperties(NspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<WritableSubResource> subscriptions = default, IEnumerable<CognitiveServicesNetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default)
+        {
+            addressPrefixes ??= new ChangeTrackingList<string>();
+            subscriptions ??= new ChangeTrackingList<WritableSubResource>();
+            networkSecurityPerimeters ??= new ChangeTrackingList<CognitiveServicesNetworkSecurityPerimeter>();
+            fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
+
+            return new NetworkSecurityPerimeterAccessRuleProperties(
+                direction,
+                addressPrefixes.ToList(),
+                subscriptions.ToList(),
+                networkSecurityPerimeters.ToList(),
+                fullyQualifiedDomainNames.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about a linked Network Security Perimeter. </summary>
+        /// <param name="id"> Fully qualified identifier of the resource. </param>
+        /// <param name="perimeterGuid"> Guid of the resource. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesNetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static CognitiveServicesNetworkSecurityPerimeter CognitiveServicesNetworkSecurityPerimeter(ResourceIdentifier id = default, string perimeterGuid = default, string location = default)
+        {
+            return new CognitiveServicesNetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Security Perimeter Configuration Association Information. </summary>
+        /// <param name="name"> Name of the resource association. </param>
+        /// <param name="accessMode"> Access Mode of the resource association. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationAssociationInfo"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationAssociationInfo NetworkSecurityPerimeterConfigurationAssociationInfo(string name = default, string accessMode = default)
+        {
+            return new NetworkSecurityPerimeterConfigurationAssociationInfo(name, accessMode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network Security Perimeter Profile Information. </summary>
+        /// <param name="name"> Name of the resource profile. </param>
+        /// <param name="accessRulesVersion"> Access rules version of the resource profile. </param>
+        /// <param name="accessRules"></param>
+        /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
+        /// <param name="enabledLogCategories"> List of enabled log categories. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterProfileInfo"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterProfileInfo NetworkSecurityPerimeterProfileInfo(string name = default, long? accessRulesVersion = default, IEnumerable<NetworkSecurityPerimeterAccessRule> accessRules = default, long? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        {
+            accessRules ??= new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
+            enabledLogCategories ??= new ChangeTrackingList<string>();
+
+            return new NetworkSecurityPerimeterProfileInfo(
+                name,
+                accessRulesVersion,
+                accessRules.ToList(),
+                diagnosticSettingsVersion,
+                enabledLogCategories.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="state"> Defender for AI state on the AI resource. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.DefenderForAISettingData"/> instance for mocking. </returns>
+        public static DefenderForAISettingData DefenderForAISettingData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DefenderForAISettingState? state = default, string etag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DefenderForAISettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                state is null ? default : new DefenderForAISettingProperties(state, null),
+                etag,
+                tags);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services project. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectData"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectData CognitiveServicesProjectData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesProjectProperties properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default, Identity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                etag,
+                identity);
+        }
+
+        /// <summary> Properties of Cognitive Services Project'. </summary>
+        /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
+        /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
+        /// <param name="description"> The description of the Cognitive Services Project. </param>
+        /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
+        /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = default, string displayName = default, string description = default, IReadOnlyDictionary<string, string> endpoints = default, bool? isDefault = default)
+        {
+            endpoints ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesProjectProperties(
+                provisioningState,
+                displayName,
+                description,
+                endpoints,
+                isDefault,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Connection base resource schema. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Connection property base schema. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesConnectionData"/> instance for mocking. </returns>
+        public static CognitiveServicesConnectionData CognitiveServicesConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesConnectionProperties properties = default)
+        {
+            return new CognitiveServicesConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary>
+        /// Connection property base schema.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PatAuthTypeConnectionProperties"/>, <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="Models.NoneAuthTypeConnectionProperties"/>, <see cref="Models.SASAuthTypeConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>, <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>, <see cref="Models.ApiKeyAuthConnectionProperties"/>, <see cref="Models.CustomKeysConnectionProperties"/>, <see cref="Models.OAuth2AuthTypeConnectionProperties"/>, and <see cref="Models.AadAuthTypeConnectionProperties"/>.
+        /// </summary>
+        /// <param name="authType"> Authentication type of the connection target. </param>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <returns> A new <see cref="Models.CognitiveServicesConnectionProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesConnectionProperties CognitiveServicesConnectionProperties(string authType = default, CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new UnknownCognitiveServicesConnectionProperties(
+                new ConnectionAuthType(authType),
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentialsPat"> Gets or sets the Pat. </param>
+        /// <returns> A new <see cref="Models.PatAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static PatAuthTypeConnectionProperties PatAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, string credentialsPat = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new PatAuthTypeConnectionProperties(
+                ConnectionAuthType.PAT,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentialsPat is null ? default : new ConnectionPersonalAccessToken(credentialsPat, null));
+        }
+
+        /// <summary> The ManagedIdentityAuthTypeConnectionProperties. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static ManagedIdentityAuthTypeConnectionProperties ManagedIdentityAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, CognitiveServicesConnectionManagedIdentity credentials = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new ManagedIdentityAuthTypeConnectionProperties(
+                ConnectionAuthType.ManagedIdentity,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentials);
+        }
+
+        /// <summary> The UsernamePasswordAuthTypeConnectionProperties. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static UsernamePasswordAuthTypeConnectionProperties UsernamePasswordAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, CognitiveServicesConnectionUsernamePassword credentials = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new UsernamePasswordAuthTypeConnectionProperties(
+                ConnectionAuthType.UsernamePassword,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentials);
+        }
+
+        /// <summary> The NoneAuthTypeConnectionProperties. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <returns> A new <see cref="Models.NoneAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static NoneAuthTypeConnectionProperties NoneAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new NoneAuthTypeConnectionProperties(
+                ConnectionAuthType.None,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentialsSas"> Gets or sets the Sas. </param>
+        /// <returns> A new <see cref="Models.SASAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static SASAuthTypeConnectionProperties SASAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, string credentialsSas = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new SASAuthTypeConnectionProperties(
+                ConnectionAuthType.SAS,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentialsSas is null ? default : new ConnectionSharedAccessSignature(credentialsSas, null));
+        }
+
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentialsKey"> Gets or sets the Key. </param>
+        /// <returns> A new <see cref="Models.AccountKeyAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static AccountKeyAuthTypeConnectionProperties AccountKeyAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, string credentialsKey = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new AccountKeyAuthTypeConnectionProperties(
+                ConnectionAuthType.AccountKey,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentialsKey is null ? default : new ConnectionAccountKey(credentialsKey, null));
+        }
+
+        /// <summary> The ServicePrincipalAuthTypeConnectionProperties. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static ServicePrincipalAuthTypeConnectionProperties ServicePrincipalAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, CognitiveServicesConnectionServicePrincipal credentials = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new ServicePrincipalAuthTypeConnectionProperties(
+                ConnectionAuthType.ServicePrincipal,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentials);
+        }
+
+        /// <summary> The AccessKeyAuthTypeConnectionProperties. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.AccessKeyAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static AccessKeyAuthTypeConnectionProperties AccessKeyAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, CognitiveServicesConnectionAccessKey credentials = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new AccessKeyAuthTypeConnectionProperties(
+                ConnectionAuthType.AccessKey,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentials);
+        }
+
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentialsKey"> Gets or sets the Key. </param>
+        /// <returns> A new <see cref="Models.ApiKeyAuthConnectionProperties"/> instance for mocking. </returns>
+        public static ApiKeyAuthConnectionProperties ApiKeyAuthConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, string credentialsKey = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new ApiKeyAuthConnectionProperties(
+                ConnectionAuthType.ApiKey,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentialsKey is null ? default : new ConnectionApiKey(credentialsKey, null));
+        }
+
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentialsKeys"> Dictionary of &lt;string&gt;. </param>
+        /// <returns> A new <see cref="Models.CustomKeysConnectionProperties"/> instance for mocking. </returns>
+        public static CustomKeysConnectionProperties CustomKeysConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, IDictionary<string, string> credentialsKeys = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new CustomKeysConnectionProperties(
+                ConnectionAuthType.CustomKeys,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentialsKeys is null ? default : new CustomKeys(credentialsKeys, null));
+        }
+
+        /// <summary> The OAuth2AuthTypeConnectionProperties. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="credentials">
+        /// ClientId and ClientSecret are required. Other properties are optional
+        /// depending on each OAuth2 provider's implementation.
+        /// </param>
+        /// <returns> A new <see cref="Models.OAuth2AuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static OAuth2AuthTypeConnectionProperties OAuth2AuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default, CognitiveServicesConnectionOAuth2 credentials = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new OAuth2AuthTypeConnectionProperties(
+                ConnectionAuthType.OAuth2,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null,
+                credentials);
+        }
+
+        /// <summary> This connection type covers the AAD auth for any applicable Azure service. </summary>
+        /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="target"> The connection URL to be used. </param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <returns> A new <see cref="Models.AadAuthTypeConnectionProperties"/> instance for mocking. </returns>
+        public static AadAuthTypeConnectionProperties AadAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = default, ResourceIdentifier createdByWorkspaceArmId = default, string error = default, DateTimeOffset? expiryOn = default, CognitiveServicesConnectionGroup? @group = default, bool? isSharedToAll = default, IDictionary<string, string> metadata = default, ManagedPERequirement? peRequirement = default, ManagedPEStatus? peStatus = default, IEnumerable<string> sharedUserList = default, string target = default, bool? useWorkspaceManagedIdentity = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            sharedUserList ??= new ChangeTrackingList<string>();
+
+            return new AadAuthTypeConnectionProperties(
+                ConnectionAuthType.AAD,
+                category,
+                createdByWorkspaceArmId,
+                error,
+                expiryOn,
+                @group,
+                isSharedToAll,
+                metadata,
+                peRequirement,
+                peStatus,
+                sharedUserList.ToList(),
+                target,
+                useWorkspaceManagedIdentity,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure Resource Manager resource envelope for Project CapabilityHost. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.ProjectCapabilityHostData"/> instance for mocking. </returns>
+        public static ProjectCapabilityHostData ProjectCapabilityHostData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProjectCapabilityHostProperties properties = default)
+        {
+            return new ProjectCapabilityHostData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The ProjectCapabilityHostProperties. </summary>
+        /// <param name="aiServicesConnections"> List of AI services connections. </param>
+        /// <param name="vectorStoreConnections"> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </param>
+        /// <param name="storageConnections"> List of connection names from those available in the account or project to be used as a storage resource. </param>
+        /// <param name="threadStorageConnections"> List of connection names from those available in the account or project to be used for Thread storage. </param>
+        /// <param name="provisioningState"> Provisioning state for the CapabilityHost. </param>
+        /// <returns> A new <see cref="Models.ProjectCapabilityHostProperties"/> instance for mocking. </returns>
+        public static ProjectCapabilityHostProperties ProjectCapabilityHostProperties(IEnumerable<string> aiServicesConnections = default, IEnumerable<string> vectorStoreConnections = default, IEnumerable<string> storageConnections = default, IEnumerable<string> threadStorageConnections = default, CapabilityHostProvisioningState? provisioningState = default)
+        {
+            aiServicesConnections ??= new ChangeTrackingList<string>();
+            vectorStoreConnections ??= new ChangeTrackingList<string>();
+            storageConnections ??= new ChangeTrackingList<string>();
+            threadStorageConnections ??= new ChangeTrackingList<string>();
+
+            return new ProjectCapabilityHostProperties(
+                aiServicesConnections.ToList(),
+                vectorStoreConnections.ToList(),
+                storageConnections.ToList(),
+                threadStorageConnections.ToList(),
+                provisioningState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The quota tier information for the subscription. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of quota tier resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.QuotaTierData"/> instance for mocking. </returns>
+        public static QuotaTierData QuotaTierData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaTierProperties properties = default)
+        {
+            return new QuotaTierData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of Quota Tier resource'. </summary>
+        /// <param name="currentTierName"> Name of the current quota tier for the subscription. </param>
+        /// <param name="tierUpgradePolicy"> Gets the tier upgrade policy for the subscription. </param>
+        /// <param name="assignmentOn"> The date on which the current tier was assigned to the subscription (UTC). </param>
+        /// <param name="tierUpgradeEligibilityInfo"> Information about the quota tier upgrade eligibility for the subscription. </param>
+        /// <returns> A new <see cref="Models.QuotaTierProperties"/> instance for mocking. </returns>
+        public static QuotaTierProperties QuotaTierProperties(string currentTierName = default, TierUpgradePolicy? tierUpgradePolicy = default, DateTimeOffset? assignmentOn = default, QuotaTierUpgradeEligibilityInfo tierUpgradeEligibilityInfo = default)
+        {
+            return new QuotaTierProperties(currentTierName, tierUpgradePolicy, assignmentOn, tierUpgradeEligibilityInfo, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about the quota tier upgrade eligibility for the subscription. </summary>
+        /// <param name="nextTierName"> Name of the next quota tier for the subscription. </param>
+        /// <param name="upgradeAvailabilityStatus"> Specifies whether an upgrade to the next quota tier is available. </param>
+        /// <param name="upgradeApplicableOn"> The date after which the current tier will be upgraded to the next tier if the TierUpgradePolicy is "OnceUpgradeIsAvailable" (UTC). </param>
+        /// <param name="upgradeUnavailabilityReason"> Reason in case the subscription is not eligible for upgrade to the next tier. </param>
+        /// <returns> A new <see cref="Models.QuotaTierUpgradeEligibilityInfo"/> instance for mocking. </returns>
+        public static QuotaTierUpgradeEligibilityInfo QuotaTierUpgradeEligibilityInfo(string nextTierName = default, UpgradeAvailabilityStatus? upgradeAvailabilityStatus = default, DateTimeOffset? upgradeApplicableOn = default, string upgradeUnavailabilityReason = default)
+        {
+            return new QuotaTierUpgradeEligibilityInfo(nextTierName, upgradeAvailabilityStatus, upgradeApplicableOn, upgradeUnavailabilityReason, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Agent Application resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.AgentApplicationData"/> instance for mocking. </returns>
+        public static AgentApplicationData AgentApplicationData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AgenticApplicationProperties properties = default)
+        {
+            return new AgentApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Resource type representing an agentic application as a management construct. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="displayName"> The display name of the application. </param>
+        /// <param name="baseUri"> The application's dedicated invocation endpoint. </param>
+        /// <param name="agents"> The list of agent definitions comprising this application, returned as references to the objects under the parent project; use this to obtain a flat list of all agent-version pairs represented by this application. </param>
+        /// <param name="agentIdentityBlueprint"> The EntraId Agentic Blueprint of the application. </param>
+        /// <param name="defaultInstanceIdentity"> The (default) agent instance identity of the application. </param>
+        /// <param name="authorizationPolicy"> Gets or sets the authorization policy associated with this agentic application instance. </param>
+        /// <param name="trafficRoutingPolicy"> Gets or sets the traffic routing policy for the application's deployments. </param>
+        /// <param name="provisioningState"> Provisioning state of the application. </param>
+        /// <param name="isEnabled"> Enabledstate of the application. </param>
+        /// <returns> A new <see cref="Models.AgenticApplicationProperties"/> instance for mocking. </returns>
+        public static AgenticApplicationProperties AgenticApplicationProperties(string description = default, IDictionary<string, string> tags = default, string displayName = default, string baseUri = default, IEnumerable<AgentReferenceProperties> agents = default, AssignedIdentity agentIdentityBlueprint = default, AssignedIdentity defaultInstanceIdentity = default, ApplicationAuthorizationPolicy authorizationPolicy = default, ApplicationTrafficRoutingPolicy trafficRoutingPolicy = default, AgenticApplicationProvisioningState? provisioningState = default, bool? isEnabled = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            agents ??= new ChangeTrackingList<AgentReferenceProperties>();
+
+            return new AgenticApplicationProperties(
+                description,
+                tags,
+                additionalBinaryDataProperties: null,
+                displayName,
+                baseUri,
+                agents.ToList(),
+                agentIdentityBlueprint,
+                defaultInstanceIdentity,
+                authorizationPolicy,
+                trafficRoutingPolicy,
+                provisioningState,
+                isEnabled);
+        }
+
+        /// <summary> Type representing an identity assignment. </summary>
+        /// <param name="kind"> Specifies the kind of Entra identity described by this object. </param>
+        /// <param name="type"> Enumeration of identity types, from the perspective of management. </param>
+        /// <param name="clientId"> The client ID of the identity. </param>
+        /// <param name="principalId"> The principal ID of the identity. </param>
+        /// <param name="tenantId"> The tenant ID of the identity. </param>
+        /// <param name="subject"> The subject of this identity assignment. </param>
+        /// <param name="provisioningState"> Represents the provisioning state of an identity resource. </param>
+        /// <returns> A new <see cref="Models.AssignedIdentity"/> instance for mocking. </returns>
+        public static AssignedIdentity AssignedIdentity(IdentityKind kind = default, IdentityManagementType @type = default, string clientId = default, string principalId = default, string tenantId = default, string subject = default, IdentityProvisioningState? provisioningState = default)
+        {
+            return new AssignedIdentity(
+                kind,
+                @type,
+                clientId,
+                principalId,
+                tenantId,
+                subject,
+                provisioningState,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A paginated list of Agent Reference entities. </summary>
+        /// <param name="nextLink"> The link to the next page of Agent Reference objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type Agent Reference. </param>
+        /// <returns> A new <see cref="Models.AgentReferenceResourceArmPaginatedResult"/> instance for mocking. </returns>
+        public static AgentReferenceResourceArmPaginatedResult AgentReferenceResourceArmPaginatedResult(string nextLink = default, IEnumerable<AgentReference> value = default)
+        {
+            value ??= new ChangeTrackingList<AgentReference>();
+
+            return new AgentReferenceResourceArmPaginatedResult(nextLink, value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Agent Reference resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="Models.AgentReference"/> instance for mocking. </returns>
+        public static AgentReference AgentReference(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AgentReferenceProperties properties = default)
+        {
+            return new AgentReference(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> A list of private link resources. </summary>
+        /// <param name="value"> Array of private link resources. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkResourceListResult"/> instance for mocking. </returns>
+        public static CognitiveServicesPrivateLinkResourceListResult CognitiveServicesPrivateLinkResourceListResult(IEnumerable<CognitiveServicesPrivateLinkResource> value = default)
+        {
+            value ??= new ChangeTrackingList<CognitiveServicesPrivateLinkResource>();
+
+            return new CognitiveServicesPrivateLinkResourceListResult(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkResource"/> instance for mocking. </returns>
+        public static CognitiveServicesPrivateLinkResource CognitiveServicesPrivateLinkResource(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesPrivateLinkResourceProperties properties = default)
+        {
+            return new CognitiveServicesPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <param name="displayName"> The private link resource display name. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesPrivateLinkResourceProperties CognitiveServicesPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, string displayName = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new CognitiveServicesPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), displayName, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services Rai External Safety provider. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiExternalSafetyProviderSchemaData"/> instance for mocking. </returns>
+        public static RaiExternalSafetyProviderSchemaData RaiExternalSafetyProviderSchemaData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiExternalSafetyProviderSchemaProperties properties = default, string etag = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiExternalSafetyProviderSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                etag,
+                tags);
+        }
+
+        /// <summary> RAI External SafetyProvider schema properties. </summary>
+        /// <param name="providerId"> The unique identifier of the safety provider. </param>
+        /// <param name="providerName"> Name of the safety provider. </param>
+        /// <param name="mode"> Safety provider mode sync/async. </param>
+        /// <param name="uri"> Webhook URL for the safety provider. </param>
+        /// <param name="secretName"> The name of the secret in Key Vault that contains the api key to access the webhook. </param>
+        /// <param name="managedIdentity"> The managed identity to access the Key Vault. </param>
+        /// <param name="keyVaultUri"> The Key Vault URI that contains the api key for safety provider urls. </param>
+        /// <param name="createdOn"> Creation time of the safety provider. </param>
+        /// <param name="lastModifiedOn"> Last modified time of the safety provider. </param>
+        /// <returns> A new <see cref="Models.RaiExternalSafetyProviderSchemaProperties"/> instance for mocking. </returns>
+        public static RaiExternalSafetyProviderSchemaProperties RaiExternalSafetyProviderSchemaProperties(string providerId = default, string providerName = default, string mode = default, Uri uri = default, string secretName = default, string managedIdentity = default, Uri keyVaultUri = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        {
+            return new RaiExternalSafetyProviderSchemaProperties(
+                providerId,
+                providerName,
+                mode,
+                uri,
+                secretName,
+                managedIdentity,
+                keyVaultUri,
+                createdOn,
+                lastModifiedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure Resource Manager resource envelope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/> instance for mocking. </returns>
+        public static CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesCapabilityHostProperties properties = default)
+        {
+            return new CognitiveServicesCapabilityHostData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The CognitiveServicesCapabilityHostProperties. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="aiServicesConnections"> List of AI services connections. </param>
+        /// <param name="capabilityHostKind"> Kind of this capability host. </param>
+        /// <param name="customerSubnet"> Customer subnet info to help set up this capability host. </param>
+        /// <param name="provisioningState"> Provisioning state for the CapabilityHost. </param>
+        /// <param name="storageConnections"> List of connection names from those available in the account or project to be used as a storage resource. </param>
+        /// <param name="threadStorageConnections"> List of connection names from those available in the account or project to be used for Thread storage. </param>
+        /// <param name="vectorStoreConnections"> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </param>
+        /// <param name="enablePublicHostingEnvironment"> Whether public hosting environment is enabled for the capability host. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesCapabilityHostProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description = default, IDictionary<string, string> tags = default, IEnumerable<string> aiServicesConnections = default, CapabilityHostKind? capabilityHostKind = default, string customerSubnet = default, CapabilityHostProvisioningState? provisioningState = default, IEnumerable<string> storageConnections = default, IEnumerable<string> threadStorageConnections = default, IEnumerable<string> vectorStoreConnections = default, bool? enablePublicHostingEnvironment = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            aiServicesConnections ??= new ChangeTrackingList<string>();
+            storageConnections ??= new ChangeTrackingList<string>();
+            threadStorageConnections ??= new ChangeTrackingList<string>();
+            vectorStoreConnections ??= new ChangeTrackingList<string>();
+
+            return new CognitiveServicesCapabilityHostProperties(
+                description,
+                tags,
+                additionalBinaryDataProperties: null,
+                aiServicesConnections.ToList(),
+                capabilityHostKind,
+                customerSubnet,
+                provisioningState,
+                storageConnections.ToList(),
+                threadStorageConnections.ToList(),
+                vectorStoreConnections.ToList(),
+                enablePublicHostingEnvironment);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Outbound Rule for the managed network of a cognitive services account. </param>
+        /// <returns> A new <see cref="CognitiveServices.OutboundRuleBasicResourceData"/> instance for mocking. </returns>
+        public static OutboundRuleBasicResourceData OutboundRuleBasicResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OutboundRule properties = default)
+        {
+            return new OutboundRuleBasicResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary>
+        /// Outbound Rule for the managed network of a cognitive services account.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FqdnOutboundRule"/>.
+        /// </summary>
+        /// <param name="category"> Category of a managed network Outbound Rule of a cognitive services account. </param>
+        /// <param name="status"> Type of a managed network Outbound Rule of a cognitive services account. </param>
+        /// <param name="type"> Type of a managed network Outbound Rule of a cognitive services account. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <returns> A new <see cref="Models.OutboundRule"/> instance for mocking. </returns>
+        public static OutboundRule OutboundRule(RuleCategory? category = default, RuleStatus? status = default, string @type = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default)
+        {
+            parentRuleNames ??= new ChangeTrackingList<string>();
+
+            return new UnknownOutboundRule(
+                category,
+                status,
+                new RuleType(@type),
+                errorInformation,
+                parentRuleNames.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> FQDN Outbound Rule for the managed network of a cognitive services account. </summary>
+        /// <param name="category"> Category of a managed network Outbound Rule of a cognitive services account. </param>
+        /// <param name="status"> Type of a managed network Outbound Rule of a cognitive services account. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <param name="destination"></param>
+        /// <returns> A new <see cref="Models.FqdnOutboundRule"/> instance for mocking. </returns>
+        public static FqdnOutboundRule FqdnOutboundRule(RuleCategory? category = default, RuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, string destination = default)
+        {
+            parentRuleNames ??= new ChangeTrackingList<string>();
+
+            return new FqdnOutboundRule(
+                category,
+                status,
+                RuleType.FQDN,
+                errorInformation,
+                parentRuleNames.ToList(),
+                additionalBinaryDataProperties: null,
+                destination);
+        }
+
+        /// <summary> List of outbound rules for the managed network of a cognitive services account. </summary>
+        /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
+        /// <param name="value"> The list of cognitive services accounts. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </param>
+        /// <returns> A new <see cref="Models.OutboundRuleListResult"/> instance for mocking. </returns>
+        public static OutboundRuleListResult OutboundRuleListResult(string nextLink = default, IEnumerable<OutboundRuleBasicResourceData> value = default)
+        {
+            value ??= new ChangeTrackingList<OutboundRuleBasicResourceData>();
+
+            return new OutboundRuleListResult(nextLink, value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the managed network settings of a cognitive services account. </param>
+        /// <returns> A new <see cref="CognitiveServices.ManagedNetworkSettingsPropertiesBasicResourceData"/> instance for mocking. </returns>
+        public static ManagedNetworkSettingsPropertiesBasicResourceData ManagedNetworkSettingsPropertiesBasicResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettingsProperties properties = default)
+        {
+            return new ManagedNetworkSettingsPropertiesBasicResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The properties of the managed network settings of a cognitive services account. </summary>
+        /// <param name="managedNetwork"> Managed Network settings for a cognitive services account. </param>
+        /// <param name="provisioningState"> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkSettingsProperties"/> instance for mocking. </returns>
+        public static ManagedNetworkSettingsProperties ManagedNetworkSettingsProperties(ManagedNetworkSettingsEx managedNetwork = default, ManagedNetworkProvisioningState? provisioningState = default)
+        {
+            return new ManagedNetworkSettingsProperties(managedNetwork, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="isolationMode"> Isolation mode for the managed network of a cognitive services account. </param>
+        /// <param name="networkId"></param>
+        /// <param name="outboundRules"> Dictionary of &lt;OutboundRule&gt;. </param>
+        /// <param name="status"> Status for the managed network of a cognitive services account. </param>
+        /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
+        /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
+        /// <param name="egressIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="changeableIsolationModes"></param>
+        /// <returns> A new <see cref="Models.ManagedNetworkSettingsEx"/> instance for mocking. </returns>
+        public static ManagedNetworkSettingsEx ManagedNetworkSettingsEx(IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, OutboundRule> outboundRules = default, ManagedNetworkStatus? status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string egressIpAddress = default, IEnumerable<IsolationMode> changeableIsolationModes = default)
+        {
+            outboundRules ??= new ChangeTrackingDictionary<string, OutboundRule>();
+            changeableIsolationModes ??= new ChangeTrackingList<IsolationMode>();
+
+            return new ManagedNetworkSettingsEx(
+                isolationMode,
+                networkId,
+                outboundRules,
+                status is null ? default : new ManagedNetworkProvisionStatus(status, null),
+                firewallSku,
+                managedNetworkKind,
+                egressIpAddress,
+                additionalBinaryDataProperties: null,
+                changeableIsolationModes.ToList());
+        }
+
+        /// <param name="isolationMode"> Isolation mode for the managed network of a cognitive services account. </param>
+        /// <param name="networkId"></param>
+        /// <param name="outboundRules"> Dictionary of &lt;OutboundRule&gt;. </param>
+        /// <param name="status"> Status for the managed network of a cognitive services account. </param>
+        /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
+        /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
+        /// <param name="egressIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
+        public static ManagedNetworkSettings ManagedNetworkSettings(IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, OutboundRule> outboundRules = default, ManagedNetworkStatus? status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string egressIpAddress = default)
+        {
+            outboundRules ??= new ChangeTrackingDictionary<string, OutboundRule>();
+
+            return new ManagedNetworkSettings(
+                isolationMode,
+                networkId,
+                outboundRules,
+                status is null ? default : new ManagedNetworkProvisionStatus(status, null),
+                firewallSku,
+                managedNetworkKind,
+                egressIpAddress,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ManagedNetworkSettingsBasicResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Managed Network settings for a cognitive services account. </param>
+        /// <returns> A new <see cref="Models.ManagedNetworkSettingsBasicResource"/> instance for mocking. </returns>
+        public static ManagedNetworkSettingsBasicResource ManagedNetworkSettingsBasicResource(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettings properties = default)
+        {
+            return new ManagedNetworkSettingsBasicResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Agent Deployment resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.AgentDeploymentData"/> instance for mocking. </returns>
+        public static AgentDeploymentData AgentDeploymentData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AgentDeploymentProperties properties = default)
+        {
+            return new AgentDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary>
+        /// Type representing an agent deployment as a management construct.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedAgentDeployment"/> and <see cref="Models.HostedAgentDeployment"/>.
+        /// </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="displayName"> Gets or sets the display name of the deployment. </param>
+        /// <param name="deploymentId"> Gets or sets the unique identifier of the deployment. </param>
+        /// <param name="state"> Gets or sets the current operational state of the deployment (and, intrinsically, of the comprising agents). </param>
+        /// <param name="protocols"> Gets or sets the supported protocol types and versions exposed by this deployment. </param>
+        /// <param name="agents"> Returns a flat list of agent:version deployed in this deployment. </param>
+        /// <param name="deploymentType"> Gets or sets the type of deployment for the agent. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
+        /// <returns> A new <see cref="Models.AgentDeploymentProperties"/> instance for mocking. </returns>
+        public static AgentDeploymentProperties AgentDeploymentProperties(string description = default, IDictionary<string, string> tags = default, string displayName = default, string deploymentId = default, AgentDeploymentState? state = default, IEnumerable<AgentProtocolVersion> protocols = default, IEnumerable<VersionedAgentReference> agents = default, string deploymentType = default, AgentDeploymentProvisioningState? provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            protocols ??= new ChangeTrackingList<AgentProtocolVersion>();
+            agents ??= new ChangeTrackingList<VersionedAgentReference>();
+
+            return new UnknownAgentDeploymentProperties(
+                description,
+                tags,
+                additionalBinaryDataProperties: null,
+                displayName,
+                deploymentId,
+                state,
+                protocols.ToList(),
+                agents.ToList(),
+                new AgentDeploymentType(deploymentType),
+                provisioningState);
+        }
+
+        /// <summary> Represents a managed agent deployment where the underlying infrastructure is managed by the platform in the deployer's subscription. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="displayName"> Gets or sets the display name of the deployment. </param>
+        /// <param name="deploymentId"> Gets or sets the unique identifier of the deployment. </param>
+        /// <param name="state"> Gets or sets the current operational state of the deployment (and, intrinsically, of the comprising agents). </param>
+        /// <param name="protocols"> Gets or sets the supported protocol types and versions exposed by this deployment. </param>
+        /// <param name="agents"> Returns a flat list of agent:version deployed in this deployment. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
+        /// <returns> A new <see cref="Models.ManagedAgentDeployment"/> instance for mocking. </returns>
+        public static ManagedAgentDeployment ManagedAgentDeployment(string description = default, IDictionary<string, string> tags = default, string displayName = default, string deploymentId = default, AgentDeploymentState? state = default, IEnumerable<AgentProtocolVersion> protocols = default, IEnumerable<VersionedAgentReference> agents = default, AgentDeploymentProvisioningState? provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            protocols ??= new ChangeTrackingList<AgentProtocolVersion>();
+            agents ??= new ChangeTrackingList<VersionedAgentReference>();
+
+            return new ManagedAgentDeployment(
+                description,
+                tags,
+                additionalBinaryDataProperties: null,
+                displayName,
+                deploymentId,
+                state,
+                protocols.ToList(),
+                agents.ToList(),
+                AgentDeploymentType.Managed,
+                provisioningState);
+        }
+
+        /// <summary> Represents a hosted agent deployment where the underlying infrastructure is owned by the platform. </summary>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="displayName"> Gets or sets the display name of the deployment. </param>
+        /// <param name="deploymentId"> Gets or sets the unique identifier of the deployment. </param>
+        /// <param name="state"> Gets or sets the current operational state of the deployment (and, intrinsically, of the comprising agents). </param>
+        /// <param name="protocols"> Gets or sets the supported protocol types and versions exposed by this deployment. </param>
+        /// <param name="agents"> Returns a flat list of agent:version deployed in this deployment. </param>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the agent deployment. </param>
+        /// <param name="minReplicas"> Gets or sets the minimum number of replicas for this hosted deployment. </param>
+        /// <param name="maxReplicas"> Gets or sets the maximum number of replicas for this hosted deployment. </param>
+        /// <returns> A new <see cref="Models.HostedAgentDeployment"/> instance for mocking. </returns>
+        public static HostedAgentDeployment HostedAgentDeployment(string description = default, IDictionary<string, string> tags = default, string displayName = default, string deploymentId = default, AgentDeploymentState? state = default, IEnumerable<AgentProtocolVersion> protocols = default, IEnumerable<VersionedAgentReference> agents = default, AgentDeploymentProvisioningState? provisioningState = default, int? minReplicas = default, int? maxReplicas = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            protocols ??= new ChangeTrackingList<AgentProtocolVersion>();
+            agents ??= new ChangeTrackingList<VersionedAgentReference>();
+
+            return new HostedAgentDeployment(
+                description,
+                tags,
+                additionalBinaryDataProperties: null,
+                displayName,
+                deploymentId,
+                state,
+                protocols.ToList(),
+                agents.ToList(),
+                AgentDeploymentType.Hosted,
+                provisioningState,
+                minReplicas,
+                maxReplicas);
+        }
+
+        /// <summary> Describes an available Cognitive Services SKU. </summary>
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="name"> The name of SKU. </param>
+        /// <param name="tier"> Specifies the tier of Cognitive Services account. </param>
+        /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>
+        /// <param name="locations"> The set of locations that the SKU is available. </param>
+        /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
+        /// <returns> A new <see cref="Models.AvailableCognitiveServicesSku"/> instance for mocking. </returns>
+        public static AvailableCognitiveServicesSku AvailableCognitiveServicesSku(string resourceType = default, string name = default, string tier = default, string kind = default, IEnumerable<AzureLocation> locations = default, IEnumerable<CognitiveServicesSkuRestrictions> restrictions = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            restrictions ??= new ChangeTrackingList<CognitiveServicesSkuRestrictions>();
+
+            return new AvailableCognitiveServicesSku(
+                resourceType,
+                name,
+                tier,
+                kind,
+                locations.ToList(),
+                restrictions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes restrictions of a SKU. </summary>
+        /// <param name="type"> The type of restrictions. </param>
+        /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
+        /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
+        /// <param name="reasonCode"> The reason for restriction. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesSkuRestrictions"/> instance for mocking. </returns>
+        public static CognitiveServicesSkuRestrictions CognitiveServicesSkuRestrictions(CognitiveServicesSkuRestrictionsType? @type = default, IEnumerable<string> values = default, CognitiveServicesSkuRestrictionInfo restrictionInfo = default, CognitiveServicesSkuRestrictionReasonCode? reasonCode = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new CognitiveServicesSkuRestrictions(@type, values.ToList(), restrictionInfo, reasonCode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CognitiveServicesSkuRestrictionInfo. </summary>
+        /// <param name="locations"> Locations where the SKU is restricted. </param>
+        /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesSkuRestrictionInfo"/> instance for mocking. </returns>
+        public static CognitiveServicesSkuRestrictionInfo CognitiveServicesSkuRestrictionInfo(IEnumerable<AzureLocation> locations = default, IEnumerable<string> zones = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new CognitiveServicesSkuRestrictionInfo(locations.ToList(), zones.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account commitment tier. </summary>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="skuName"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="hostingModel"> Account hosting model. </param>
+        /// <param name="planType"> Commitment plan type. </param>
+        /// <param name="tier"> Commitment period commitment tier. </param>
+        /// <param name="maxCount"> Commitment period commitment max count. </param>
+        /// <param name="quota"> Cognitive Services account commitment quota. </param>
+        /// <param name="cost"> Cognitive Services account commitment cost. </param>
+        /// <returns> A new <see cref="Models.CommitmentTier"/> instance for mocking. </returns>
+        public static CommitmentTier CommitmentTier(string kind = default, string skuName = default, ServiceAccountHostingModel? hostingModel = default, string planType = default, string tier = default, int? maxCount = default, CommitmentQuota quota = default, CommitmentCost cost = default)
+        {
+            return new CommitmentTier(
+                kind,
+                skuName,
+                hostingModel,
+                planType,
+                tier,
+                maxCount,
+                quota,
+                cost,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services account commitment cost. </summary>
+        /// <param name="commitmentMeterId"> Commitment meter Id. </param>
+        /// <param name="overageMeterId"> Overage meter Id. </param>
+        /// <returns> A new <see cref="Models.CommitmentCost"/> instance for mocking. </returns>
+        public static CommitmentCost CommitmentCost(string commitmentMeterId = default, string overageMeterId = default)
+        {
+            return new CommitmentCost(commitmentMeterId, overageMeterId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cognitive Services Model. </summary>
+        /// <param name="model"> Cognitive Services account Model. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="skuName"> The name of SKU. </param>
+        /// <param name="description"> The description of the model. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesModel"/> instance for mocking. </returns>
+        public static CognitiveServicesModel CognitiveServicesModel(CognitiveServicesAccountModel model = default, string kind = default, string skuName = default, string description = default)
+        {
+            return new CognitiveServicesModel(model, kind, skuName, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ModelCapacityListResultValueItem. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The location of the Model Sku Capacity. </param>
+        /// <param name="properties"> Cognitive Services account ModelSkuCapacity. </param>
+        /// <returns> A new <see cref="Models.ModelCapacityListResultValueItem"/> instance for mocking. </returns>
+        public static ModelCapacityListResultValueItem ModelCapacityListResultValueItem(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, ModelSkuCapacityProperties properties = default)
+        {
+            return new ModelCapacityListResultValueItem(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties);
+        }
+
+        /// <summary> Cognitive Services account ModelSkuCapacity. </summary>
+        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
+        /// <param name="skuName"></param>
+        /// <param name="availableCapacity"> The available capacity for deployment with this model and sku. </param>
+        /// <param name="availableFinetuneCapacity"> The available capacity for deployment with a fine-tune version of this model and sku. </param>
+        /// <returns> A new <see cref="Models.ModelSkuCapacityProperties"/> instance for mocking. </returns>
+        public static ModelSkuCapacityProperties ModelSkuCapacityProperties(CognitiveServicesAccountDeploymentModel model = default, string skuName = default, float? availableCapacity = default, float? availableFinetuneCapacity = default)
+        {
+            return new ModelSkuCapacityProperties(model, skuName, availableCapacity, availableFinetuneCapacity, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -30,23 +2573,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="properties"> Properties of Cognitive Services account. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountData"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountData CognitiveServicesAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, CognitiveServicesSku sku = null, ManagedServiceIdentity identity = null, CognitiveServicesAccountProperties properties = null, ETag? etag = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountData CognitiveServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity, CognitiveServicesAccountProperties properties, ETag? etag)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CognitiveServicesAccountData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                properties,
                 tags,
                 location,
+                default,
                 kind,
                 sku,
-                identity,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountProperties"/>. </summary>
@@ -84,61 +2628,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, UserOwnedAmlWorkspace amlWorkspace = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null, CognitiveServicesMultiRegionSettings locations = null, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = null, AbusePenalty abusePenalty = null, RaiMonitorConfig raiMonitorConfig = null, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = null, bool? allowProjectManagement = null, string defaultProject = null, IEnumerable<string> associatedProjects = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects)
         {
-            capabilities ??= new List<CognitiveServicesSkuCapability>();
-            userOwnedStorage ??= new List<ServiceAccountUserOwnedStorage>();
-            privateEndpointConnections ??= new List<CognitiveServicesPrivateEndpointConnectionData>();
-            allowedFqdnList ??= new List<string>();
-            endpoints ??= new Dictionary<string, string>();
-            commitmentPlanAssociations ??= new List<CommitmentPlanAssociation>();
-            aiFoundryNetworkInjections ??= new List<AIFoundryNetworkInjection>();
-            associatedProjects ??= new List<string>();
+            capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
+            userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
+            privateEndpointConnections ??= new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+            allowedFqdnList ??= new ChangeTrackingList<string>();
+            endpoints ??= new ChangeTrackingDictionary<string, string>();
+            commitmentPlanAssociations ??= new ChangeTrackingList<CommitmentPlanAssociation>();
+            aiFoundryNetworkInjections ??= new ChangeTrackingList<AIFoundryNetworkInjection>();
+            associatedProjects ??= new ChangeTrackingList<string>();
 
             return new CognitiveServicesAccountProperties(
                 provisioningState,
                 endpoint,
-                capabilities?.ToList(),
+                default,
+                capabilities.ToList(),
                 isMigrated,
                 migrationToken,
                 skuChangeInfo,
                 customSubDomainName,
                 networkAcls,
                 encryption,
-                userOwnedStorage?.ToList(),
+                userOwnedStorage.ToList(),
                 amlWorkspace,
-                privateEndpointConnections?.ToList(),
+                privateEndpointConnections.ToList(),
                 publicNetworkAccess,
                 apiProperties,
-                createdOn,
+                default,
                 callRateLimit,
-                enableDynamicThrottling,
+                default,
+                default,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
-                allowedFqdnList?.ToList(),
+                allowedFqdnList.ToList(),
                 disableLocalAuth,
                 endpoints,
                 restore,
-                deletedOn,
+                default,
                 scheduledPurgeDate,
                 locations,
-                commitmentPlanAssociations?.ToList(),
+                commitmentPlanAssociations.ToList(),
                 abusePenalty,
                 raiMonitorConfig,
-                aiFoundryNetworkInjections?.ToList(),
+                default,
                 allowProjectManagement,
                 defaultProject,
-                associatedProjects?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuCapability"/>. </summary>
-        /// <param name="name"> The name of the SkuCapability. </param>
-        /// <param name="value"> The value of the SkuCapability. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesSkuCapability"/> instance for mocking. </returns>
-        public static CognitiveServicesSkuCapability CognitiveServicesSkuCapability(string name = null, string value = null)
-        {
-            return new CognitiveServicesSkuCapability(name, value, serializedAdditionalRawData: null);
+                associatedProjects.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuChangeInfo"/>. </summary>
@@ -146,9 +2684,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="countOfUpgradesAfterDowngrades"> Gets the count of upgrades after downgrades. </param>
         /// <param name="lastChangedOn"> Gets the last change date. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesSkuChangeInfo"/> instance for mocking. </returns>
-        public static CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades = null, float? countOfUpgradesAfterDowngrades = null, DateTimeOffset? lastChangedOn = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades, float? countOfUpgradesAfterDowngrades, DateTimeOffset? lastChangedOn)
         {
-            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangedOn, serializedAdditionalRawData: null);
+            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesPrivateEndpointConnectionData"/>. </summary>
@@ -163,193 +2702,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="groupIds"> The private link resource group ids. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier privateEndpointId = null, CognitiveServicesPrivateLinkServiceConnectionState connectionState = null, CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState = null, IEnumerable<string> groupIds = null, ETag? etag = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesPrivateEndpointConnectionData CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier privateEndpointId, CognitiveServicesPrivateLinkServiceConnectionState connectionState, CognitiveServicesPrivateEndpointConnectionProvisioningState? provisioningState, IEnumerable<string> groupIds, ETag? etag)
         {
-            groupIds ??= new List<string>();
+            groupIds ??= new ChangeTrackingList<string>();
 
             return new CognitiveServicesPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                location,
-                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
-                connectionState,
-                provisioningState,
-                groupIds?.ToList(),
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountCallRateLimit"/>. </summary>
-        /// <param name="count"> The count value of Call Rate Limit. </param>
-        /// <param name="renewalPeriod"> The renewal period in seconds of Call Rate Limit. </param>
-        /// <param name="rules"></param>
-        /// <returns> A new <see cref="Models.ServiceAccountCallRateLimit"/> instance for mocking. </returns>
-        public static ServiceAccountCallRateLimit ServiceAccountCallRateLimit(float? count = null, float? renewalPeriod = null, IEnumerable<ServiceAccountThrottlingRule> rules = null)
-        {
-            rules ??= new List<ServiceAccountThrottlingRule>();
-
-            return new ServiceAccountCallRateLimit(count, renewalPeriod, rules?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountThrottlingRule"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="renewalPeriod"></param>
-        /// <param name="count"></param>
-        /// <param name="minCount"></param>
-        /// <param name="isDynamicThrottlingEnabled"></param>
-        /// <param name="matchPatterns"></param>
-        /// <returns> A new <see cref="Models.ServiceAccountThrottlingRule"/> instance for mocking. </returns>
-        public static ServiceAccountThrottlingRule ServiceAccountThrottlingRule(string key = null, float? renewalPeriod = null, float? count = null, float? minCount = null, bool? isDynamicThrottlingEnabled = null, IEnumerable<ServiceAccountThrottlingMatchPattern> matchPatterns = null)
-        {
-            matchPatterns ??= new List<ServiceAccountThrottlingMatchPattern>();
-
-            return new ServiceAccountThrottlingRule(
-                key,
-                renewalPeriod,
-                count,
-                minCount,
-                isDynamicThrottlingEnabled,
-                matchPatterns?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountThrottlingMatchPattern"/>. </summary>
-        /// <param name="path"></param>
-        /// <param name="method"></param>
-        /// <returns> A new <see cref="Models.ServiceAccountThrottlingMatchPattern"/> instance for mocking. </returns>
-        public static ServiceAccountThrottlingMatchPattern ServiceAccountThrottlingMatchPattern(string path = null, string method = null)
-        {
-            return new ServiceAccountThrottlingMatchPattern(path, method, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountQuotaLimit"/>. </summary>
-        /// <param name="count"></param>
-        /// <param name="renewalPeriod"></param>
-        /// <param name="rules"></param>
-        /// <returns> A new <see cref="Models.ServiceAccountQuotaLimit"/> instance for mocking. </returns>
-        public static ServiceAccountQuotaLimit ServiceAccountQuotaLimit(float? count = null, float? renewalPeriod = null, IEnumerable<ServiceAccountThrottlingRule> rules = null)
-        {
-            rules ??= new List<ServiceAccountThrottlingRule>();
-
-            return new ServiceAccountQuotaLimit(count, renewalPeriod, rules?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CommitmentPlanAssociation"/>. </summary>
-        /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
-        /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
-        /// <returns> A new <see cref="Models.CommitmentPlanAssociation"/> instance for mocking. </returns>
-        public static CommitmentPlanAssociation CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId = null, string commitmentPlanLocation = null)
-        {
-            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AbusePenalty"/>. </summary>
-        /// <param name="action"> The action of AbusePenalty. </param>
-        /// <param name="rateLimitPercentage"> The percentage of rate limit. </param>
-        /// <param name="expiration"> The datetime of expiration of the AbusePenalty. </param>
-        /// <returns> A new <see cref="Models.AbusePenalty"/> instance for mocking. </returns>
-        public static AbusePenalty AbusePenalty(AbusePenaltyAction? action = null, float? rateLimitPercentage = null, DateTimeOffset? expiration = null)
-        {
-            return new AbusePenalty(action, rateLimitPercentage, expiration, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountApiKeys"/>. </summary>
-        /// <param name="key1"> Gets the value of key 1. </param>
-        /// <param name="key2"> Gets the value of key 2. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountApiKeys"/> instance for mocking. </returns>
-        public static ServiceAccountApiKeys ServiceAccountApiKeys(string key1 = null, string key2 = null)
-        {
-            return new ServiceAccountApiKeys(key1, key2, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AvailableCognitiveServicesSku"/>. </summary>
-        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
-        /// <param name="name"> The name of SKU. </param>
-        /// <param name="tier"> Specifies the tier of Cognitive Services account. </param>
-        /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>
-        /// <param name="locations"> The set of locations that the SKU is available. </param>
-        /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        /// <returns> A new <see cref="Models.AvailableCognitiveServicesSku"/> instance for mocking. </returns>
-        public static AvailableCognitiveServicesSku AvailableCognitiveServicesSku(string resourceType = null, string name = null, string tier = null, string kind = null, IEnumerable<AzureLocation> locations = null, IEnumerable<CognitiveServicesSkuRestrictions> restrictions = null)
-        {
-            locations ??= new List<AzureLocation>();
-            restrictions ??= new List<CognitiveServicesSkuRestrictions>();
-
-            return new AvailableCognitiveServicesSku(
-                resourceType,
-                name,
-                tier,
-                kind,
-                locations?.ToList(),
-                restrictions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuRestrictions"/>. </summary>
-        /// <param name="restrictionsType"> The type of restrictions. </param>
-        /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
-        /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
-        /// <param name="reasonCode"> The reason for restriction. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesSkuRestrictions"/> instance for mocking. </returns>
-        public static CognitiveServicesSkuRestrictions CognitiveServicesSkuRestrictions(CognitiveServicesSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, CognitiveServicesSkuRestrictionInfo restrictionInfo = null, CognitiveServicesSkuRestrictionReasonCode? reasonCode = null)
-        {
-            values ??= new List<string>();
-
-            return new CognitiveServicesSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuRestrictionInfo"/>. </summary>
-        /// <param name="locations"> Locations where the SKU is restricted. </param>
-        /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesSkuRestrictionInfo"/> instance for mocking. </returns>
-        public static CognitiveServicesSkuRestrictionInfo CognitiveServicesSkuRestrictionInfo(IEnumerable<AzureLocation> locations = null, IEnumerable<string> zones = null)
-        {
-            locations ??= new List<AzureLocation>();
-            zones ??= new List<string>();
-
-            return new CognitiveServicesSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountSku"/>. </summary>
-        /// <param name="resourceType"> Resource Namespace and Type. </param>
-        /// <param name="sku"> The SKU of Cognitive Services account. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesAccountSku"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountSku CognitiveServicesAccountSku(ResourceType? resourceType = null, CognitiveServicesSku sku = null)
-        {
-            return new CognitiveServicesAccountSku(resourceType, sku, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsage"/>. </summary>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="name"> The name information for the metric. </param>
-        /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
-        /// <param name="limit"> Maximum value for this metric. </param>
-        /// <param name="currentValue"> Current value for this metric. </param>
-        /// <param name="nextResetTime"> Next reset time for current quota. </param>
-        /// <param name="status"> Cognitive Services account quota usage status. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
-        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = null, ServiceAccountUsageMetricName name = null, string quotaPeriod = null, double? limit = null, double? currentValue = null, string nextResetTime = null, ServiceAccountQuotaUsageStatus? status = null)
-        {
-            return new ServiceAccountUsage(
-                unit,
-                name,
-                quotaPeriod,
-                limit,
-                currentValue,
-                nextResetTime,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsageMetricName"/>. </summary>
-        /// <param name="value"> The name of the metric. </param>
-        /// <param name="localizedValue"> The friendly name of the metric. </param>
-        /// <returns> A new <see cref="Models.ServiceAccountUsageMetricName"/> instance for mocking. </returns>
-        public static ServiceAccountUsageMetricName ServiceAccountUsageMetricName(string value = null, string localizedValue = null)
-        {
-            return new ServiceAccountUsageMetricName(value, localizedValue, serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
@@ -370,168 +2736,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, ResourceIdentifier sourceAccount = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = null, IEnumerable<CognitiveServicesModelSku> skus = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, IDictionary<string, string> finetuneCapabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, ModelLifecycleStatus? lifecycleStatus = null, SystemData systemData = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IEnumerable<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData)
         {
-            skus ??= new List<CognitiveServicesModelSku>();
-            capabilities ??= new Dictionary<string, string>();
-            finetuneCapabilities ??= new Dictionary<string, string>();
-
-            return new CognitiveServicesAccountModel(
-                publisher,
-                format,
-                name,
-                version,
-                source,
-                sourceAccount,
-                callRateLimit,
-                serializedAdditionalRawData: null,
-                baseModel,
-                isDefaultVersion,
-                skus?.ToList(),
-                maxCapacity,
-                capabilities,
-                finetuneCapabilities,
-                deprecation,
-                lifecycleStatus,
-                systemData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentModel"/>. </summary>
-        /// <param name="publisher"> Deployment model publisher. </param>
-        /// <param name="format"> Deployment model format. </param>
-        /// <param name="name"> Deployment model name. </param>
-        /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
-        /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
-        /// <param name="sourceAccount"> Optional. Source of the model, another Microsoft.CognitiveServices accounts ARM resource ID. </param>
-        /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string publisher = null, string format = null, string name = null, string version = null, string source = null, ResourceIdentifier sourceAccount = null, ServiceAccountCallRateLimit callRateLimit = null)
-        {
-            return new CognitiveServicesAccountDeploymentModel(
-                publisher,
-                format,
-                name,
-                version,
-                source,
-                sourceAccount,
-                callRateLimit,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModelSku"/>. </summary>
-        /// <param name="name"> The name of the model SKU. </param>
-        /// <param name="usageName"> The usage name of the model SKU. </param>
-        /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
-        /// <param name="capacity"> The capacity configuration. </param>
-        /// <param name="rateLimits"> The list of rateLimit. </param>
-        /// <param name="cost"> The list of billing meter info. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesModelSku"/> instance for mocking. </returns>
-        public static CognitiveServicesModelSku CognitiveServicesModelSku(string name = null, string usageName = null, DateTimeOffset? deprecationOn = null, CognitiveServicesCapacityConfig capacity = null, IEnumerable<ServiceAccountCallRateLimit> rateLimits = null, IEnumerable<BillingMeterInfo> cost = null)
-        {
-            rateLimits ??= new List<ServiceAccountCallRateLimit>();
-            cost ??= new List<BillingMeterInfo>();
-
-            return new CognitiveServicesModelSku(
-                name,
-                usageName,
-                deprecationOn,
-                capacity,
-                rateLimits?.ToList(),
-                cost?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuAvailabilityList"/>. </summary>
-        /// <param name="kind"> The Kind of the resource. </param>
-        /// <param name="skuAvailabilityType"> The Type of the resource. </param>
-        /// <param name="skuName"> The SKU of Cognitive Services account. </param>
-        /// <param name="isSkuAvailable"> Indicates the given SKU is available or not. </param>
-        /// <param name="reason"> Reason why the SKU is not available. </param>
-        /// <param name="message"> Additional error message. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesSkuAvailabilityList"/> instance for mocking. </returns>
-        public static CognitiveServicesSkuAvailabilityList CognitiveServicesSkuAvailabilityList(string kind = null, string skuAvailabilityType = null, string skuName = null, bool? isSkuAvailable = null, string reason = null, string message = null)
-        {
-            return new CognitiveServicesSkuAvailabilityList(
-                kind,
-                skuAvailabilityType,
-                skuName,
-                isSkuAvailable,
-                reason,
-                message,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CommitmentTier"/>. </summary>
-        /// <param name="kind"> The Kind of the resource. </param>
-        /// <param name="skuName"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="hostingModel"> Account hosting model. </param>
-        /// <param name="planType"> Commitment plan type. </param>
-        /// <param name="tier"> Commitment period commitment tier. </param>
-        /// <param name="maxCount"> Commitment period commitment max count. </param>
-        /// <param name="quota"> Cognitive Services account commitment quota. </param>
-        /// <param name="cost"> Cognitive Services account commitment cost. </param>
-        /// <returns> A new <see cref="Models.CommitmentTier"/> instance for mocking. </returns>
-        public static CommitmentTier CommitmentTier(string kind = null, string skuName = null, ServiceAccountHostingModel? hostingModel = null, string planType = null, string tier = null, int? maxCount = null, CommitmentQuota quota = null, CommitmentCost cost = null)
-        {
-            return new CommitmentTier(
-                kind,
-                skuName,
-                hostingModel,
-                planType,
-                tier,
-                maxCount,
-                quota,
-                cost,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CommitmentQuota"/>. </summary>
-        /// <param name="quantity"> Commitment quota quantity. </param>
-        /// <param name="unit"> Commitment quota unit. </param>
-        /// <returns> A new <see cref="Models.CommitmentQuota"/> instance for mocking. </returns>
-        public static CommitmentQuota CommitmentQuota(long? quantity = null, string unit = null)
-        {
-            return new CommitmentQuota(quantity, unit, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CommitmentCost"/>. </summary>
-        /// <param name="commitmentMeterId"> Commitment meter Id. </param>
-        /// <param name="overageMeterId"> Overage meter Id. </param>
-        /// <returns> A new <see cref="Models.CommitmentCost"/> instance for mocking. </returns>
-        public static CommitmentCost CommitmentCost(string commitmentMeterId = null, string overageMeterId = null)
-        {
-            return new CommitmentCost(commitmentMeterId, overageMeterId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModel"/>. </summary>
-        /// <param name="model"> Cognitive Services account Model. </param>
-        /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="skuName"> The name of SKU. </param>
-        /// <param name="description"> The description of the model. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesModel"/> instance for mocking. </returns>
-        public static CognitiveServicesModel CognitiveServicesModel(CognitiveServicesAccountModel model = null, string kind = null, string skuName = null, string description = null)
-        {
-            return new CognitiveServicesModel(model, kind, skuName, description, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ModelCapacityListResultValueItem"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the Model Sku Capacity. </param>
-        /// <param name="properties"> Cognitive Services account ModelSkuCapacity. </param>
-        /// <returns> A new <see cref="Models.ModelCapacityListResultValueItem"/> instance for mocking. </returns>
-        public static ModelCapacityListResultValueItem ModelCapacityListResultValueItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ModelSkuCapacityProperties properties = null)
-        {
-            return new ModelCapacityListResultValueItem(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
+            return CognitiveServicesAccountModel(publisher, format, name, version, source, sourceAccount, callRateLimit, baseModel, isDefaultVersion, skus, maxCapacity, capabilities, finetuneCapabilities, deprecation, replacementConfig: default, modelCatalogAssetId: default, lifecycleStatus, systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesDomainAvailabilityContent"/>. </summary>
@@ -539,78 +2747,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="resourceType"> The Type of the resource. </param>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityContent"/> instance for mocking. </returns>
-        public static CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName = null, ResourceType resourceType = default, string kind = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName, ResourceType resourceType, string kind)
         {
-            return new CognitiveServicesDomainAvailabilityContent(subdomainName, resourceType, kind, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesDomainAvailabilityList"/>. </summary>
-        /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
-        /// <param name="reason"> Reason why the SKU is not available. </param>
-        /// <param name="subdomainName"> The subdomain name to use. </param>
-        /// <param name="domainAvailabilityType"> The Type of the resource. </param>
-        /// <param name="kind"> The Kind of the resource. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityList"/> instance for mocking. </returns>
-        public static CognitiveServicesDomainAvailabilityList CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable = null, string reason = null, string subdomainName = null, string domainAvailabilityType = null, string kind = null)
-        {
-            return new CognitiveServicesDomainAvailabilityList(
-                isSubdomainAvailable,
-                reason,
-                subdomainName,
-                domainAvailabilityType,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CalculateModelCapacityResult"/>. </summary>
-        /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
-        /// <param name="skuName"></param>
-        /// <param name="estimatedCapacity"> Model Estimated Capacity. </param>
-        /// <returns> A new <see cref="Models.CalculateModelCapacityResult"/> instance for mocking. </returns>
-        public static CalculateModelCapacityResult CalculateModelCapacityResult(CognitiveServicesAccountDeploymentModel model = null, string skuName = null, CalculateModelCapacityResultEstimatedCapacity estimatedCapacity = null)
-        {
-            return new CalculateModelCapacityResult(model, skuName, estimatedCapacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CalculateModelCapacityResultEstimatedCapacity"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="deployableValue"></param>
-        /// <returns> A new <see cref="Models.CalculateModelCapacityResultEstimatedCapacity"/> instance for mocking. </returns>
-        public static CalculateModelCapacityResultEstimatedCapacity CalculateModelCapacityResultEstimatedCapacity(int? value = null, int? deployableValue = null)
-        {
-            return new CalculateModelCapacityResultEstimatedCapacity(value, deployableValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkResource"/> instance for mocking. </returns>
-        public static CognitiveServicesPrivateLinkResource CognitiveServicesPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesPrivateLinkResourceProperties properties = null)
-        {
-            return new CognitiveServicesPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <param name="displayName"> The private link resource display name. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesPrivateLinkResourceProperties CognitiveServicesPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null, string displayName = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new CognitiveServicesPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), displayName, serializedAdditionalRawData: null);
+            return new CognitiveServicesDomainAvailabilityContent(subdomainName, default, kind, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/>. </summary>
@@ -623,20 +2763,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesSku sku = null, ETag? etag = null, IDictionary<string, string> tags = null, CognitiveServicesAccountDeploymentProperties properties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesSku sku, ETag? etag, IDictionary<string, string> tags, CognitiveServicesAccountDeploymentProperties properties)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CognitiveServicesAccountDeploymentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                sku,
-                etag,
-                tags,
+                additionalBinaryDataProperties: null,
                 properties,
-                serializedAdditionalRawData: null);
+                sku,
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
@@ -654,10 +2795,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="parentDeploymentName"> The name of parent deployment. </param>
         /// <param name="spilloverDeploymentName"> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = null, CognitiveServicesAccountDeploymentModel model = null, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = null, IReadOnlyDictionary<string, string> capabilities = null, string raiPolicyName = null, ServiceAccountCallRateLimit callRateLimit = null, IEnumerable<ServiceAccountThrottlingRule> rateLimits = null, DeploymentModelVersionUpgradeOption? versionUpgradeOption = null, bool? isDynamicThrottlingEnabled = null, int? currentCapacity = null, DeploymentCapacitySettings capacitySettings = null, string parentDeploymentName = null, string spilloverDeploymentName = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName, string spilloverDeploymentName)
         {
-            capabilities ??= new Dictionary<string, string>();
-            rateLimits ??= new List<ServiceAccountThrottlingRule>();
+            capabilities ??= new ChangeTrackingDictionary<string, string>();
+            rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
 
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
@@ -666,34 +2808,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 capabilities,
                 raiPolicyName,
                 callRateLimit,
-                rateLimits?.ToList(),
+                rateLimits.ToList(),
                 versionUpgradeOption,
-                isDynamicThrottlingEnabled,
+                default,
                 currentCapacity,
                 capacitySettings,
                 parentDeploymentName,
                 spilloverDeploymentName,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentScaleSettings"/>. </summary>
-        /// <param name="scaleType"> Deployment scale type. </param>
-        /// <param name="capacity"> Deployment capacity. </param>
-        /// <param name="activeCapacity"> Deployment active capacity. This value might be different from `capacity` if customer recently updated `capacity`. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentScaleSettings"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentScaleSettings CognitiveServicesAccountDeploymentScaleSettings(CognitiveServicesAccountDeploymentScaleType? scaleType = null, int? capacity = null, int? activeCapacity = null)
-        {
-            return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesResourceSku"/>. </summary>
-        /// <param name="resourceType"> The resource type name. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="capacity"> The capacity configuration. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesResourceSku"/> instance for mocking. </returns>
-        public static CognitiveServicesResourceSku CognitiveServicesResourceSku(string resourceType = null, CognitiveServicesSku sku = null, CognitiveServicesCapacityConfig capacity = null)
-        {
-            return new CognitiveServicesResourceSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanData"/>. </summary>
@@ -708,50 +2832,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
         /// <returns> A new <see cref="CognitiveServices.CommitmentPlanData"/> instance for mocking. </returns>
-        public static CommitmentPlanData CommitmentPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string kind = null, CognitiveServicesSku sku = null, IDictionary<string, string> tags = null, AzureLocation? location = null, CommitmentPlanProperties properties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommitmentPlanData CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string kind, CognitiveServicesSku sku, IDictionary<string, string> tags, AzureLocation? location, CommitmentPlanProperties properties)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CommitmentPlanData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                kind,
-                sku,
+                additionalBinaryDataProperties: null,
+                properties,
                 tags,
                 location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CommitmentPlanProperties"/>. </summary>
-        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
-        /// <param name="commitmentPlanGuid"> Commitment plan guid. </param>
-        /// <param name="hostingModel"> Account hosting model. </param>
-        /// <param name="planType"> Commitment plan type. </param>
-        /// <param name="current"> Cognitive Services account commitment period. </param>
-        /// <param name="autoRenew"> AutoRenew commitment plan. </param>
-        /// <param name="next"> Cognitive Services account commitment period. </param>
-        /// <param name="last"> Cognitive Services account commitment period. </param>
-        /// <param name="provisioningIssues"> The list of ProvisioningIssue. </param>
-        /// <returns> A new <see cref="Models.CommitmentPlanProperties"/> instance for mocking. </returns>
-        public static CommitmentPlanProperties CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState = null, Guid? commitmentPlanGuid = null, ServiceAccountHostingModel? hostingModel = null, string planType = null, CommitmentPeriod current = null, bool? autoRenew = null, CommitmentPeriod next = null, CommitmentPeriod last = null, IEnumerable<string> provisioningIssues = null)
-        {
-            provisioningIssues ??= new List<string>();
-
-            return new CommitmentPlanProperties(
-                provisioningState,
-                commitmentPlanGuid,
-                hostingModel,
-                planType,
-                current,
-                autoRenew,
-                next,
-                last,
-                provisioningIssues?.ToList(),
-                serializedAdditionalRawData: null);
+                kind,
+                sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommitmentPeriod"/>. </summary>
@@ -761,15 +2857,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="startOn"> Commitment period start date. </param>
         /// <param name="endOn"> Commitment period end date. </param>
         /// <returns> A new <see cref="Models.CommitmentPeriod"/> instance for mocking. </returns>
-        public static CommitmentPeriod CommitmentPeriod(string tier = null, int? count = null, CommitmentQuota quota = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommitmentPeriod CommitmentPeriod(string tier, int? count, CommitmentQuota quota, DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
             return new CommitmentPeriod(
                 tier,
                 count,
                 quota,
-                startOn,
-                endOn,
-                serializedAdditionalRawData: null);
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesEncryptionScopeData"/>. </summary>
@@ -781,30 +2878,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of Cognitive Services EncryptionScope. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesEncryptionScopeData"/> instance for mocking. </returns>
-        public static CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, CognitiveServicesEncryptionScopeProperties properties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesEncryptionScopeData CognitiveServicesEncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, CognitiveServicesEncryptionScopeProperties properties)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CognitiveServicesEncryptionScopeData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags,
+                additionalBinaryDataProperties: null,
                 properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesEncryptionScopeProperties"/>. </summary>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
-        /// <param name="state"> The encryptionScope state. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesEncryptionScopeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties = null, ServiceAccountEncryptionKeySource? keySource = null, EncryptionScopeProvisioningState? provisioningState = null, EncryptionScopeState? state = null)
-        {
-            return new CognitiveServicesEncryptionScopeProperties(keyVaultProperties, keySource, serializedAdditionalRawData: null, provisioningState, state);
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiPolicyData"/>. </summary>
@@ -816,19 +2903,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of Cognitive Services RaiPolicy. </param>
         /// <returns> A new <see cref="CognitiveServices.RaiPolicyData"/> instance for mocking. </returns>
-        public static RaiPolicyData RaiPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, RaiPolicyProperties properties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RaiPolicyData RaiPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, RaiPolicyProperties properties)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new RaiPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags,
+                additionalBinaryDataProperties: null,
                 properties,
-                serializedAdditionalRawData: null);
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RaiPolicyProperties"/>. </summary>
@@ -838,18 +2926,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="contentFilters"> The list of Content Filters. </param>
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
         /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
-        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType = null, RaiPolicyMode? mode = null, string basePolicyName = null, IEnumerable<RaiPolicyContentFilter> contentFilters = null, IEnumerable<CustomBlocklistConfig> customBlocklists = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists)
         {
-            contentFilters ??= new List<RaiPolicyContentFilter>();
-            customBlocklists ??= new List<CustomBlocklistConfig>();
+            contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
+            customBlocklists ??= new ChangeTrackingList<CustomBlocklistConfig>();
 
             return new RaiPolicyProperties(
-                policyType,
+                default,
                 mode,
                 basePolicyName,
-                contentFilters?.ToList(),
-                customBlocklists?.ToList(),
-                serializedAdditionalRawData: null);
+                contentFilters.ToList(),
+                customBlocklists.ToList(),
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiBlocklistData"/>. </summary>
@@ -861,19 +2952,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="raiBlocklistDescription"> Properties of Cognitive Services RaiBlocklist. </param>
         /// <returns> A new <see cref="CognitiveServices.RaiBlocklistData"/> instance for mocking. </returns>
-        public static RaiBlocklistData RaiBlocklistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, string raiBlocklistDescription = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RaiBlocklistData RaiBlocklistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, string raiBlocklistDescription)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new RaiBlocklistData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags,
-                raiBlocklistDescription != null ? new RaiBlocklistProperties(raiBlocklistDescription, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiBlocklistItemData"/>. </summary>
@@ -885,37 +2977,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
         /// <returns> A new <see cref="CognitiveServices.RaiBlocklistItemData"/> instance for mocking. </returns>
-        public static RaiBlocklistItemData RaiBlocklistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, RaiBlocklistItemProperties properties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RaiBlocklistItemData RaiBlocklistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, RaiBlocklistItemProperties properties)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new RaiBlocklistItemData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags,
+                additionalBinaryDataProperties: null,
                 properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiContentFilterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Azure OpenAI Content Filter Properties. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiContentFilterData"/> instance for mocking. </returns>
-        public static RaiContentFilterData RaiContentFilterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RaiContentFilterProperties properties = null)
-        {
-            return new RaiContentFilterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/>. </summary>
@@ -927,57 +3002,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="accountId"> The Azure resource id of the account. </param>
         /// <returns> A new <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/> instance for mocking. </returns>
-        public static CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, string accountId = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, string accountId)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CommitmentPlanAccountAssociationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags,
-                accountId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> NSP Configuration properties. </param>
-        /// <returns> A new <see cref="CognitiveServices.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkSecurityPerimeterConfigurationProperties properties = null)
-        {
-            return new NetworkSecurityPerimeterConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration. </param>
-        /// <param name="provisioningIssues"> List of Provisioning Issues. </param>
-        /// <param name="networkSecurityPerimeter"> Information about a linked Network Security Perimeter. </param>
-        /// <param name="resourceAssociation"> Network Security Perimeter Configuration Association Information. </param>
-        /// <param name="profile"> Network Security Perimeter Profile Information. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(string provisioningState = null, IEnumerable<NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, CognitiveServicesNetworkSecurityPerimeter networkSecurityPerimeter = null, NetworkSecurityPerimeterConfigurationAssociationInfo resourceAssociation = null, NetworkSecurityPerimeterProfileInfo profile = null)
-        {
-            provisioningIssues ??= new List<NetworkSecurityPerimeterProvisioningIssue>();
-
-            return new NetworkSecurityPerimeterConfigurationProperties(
-                provisioningState,
-                provisioningIssues?.ToList(),
-                networkSecurityPerimeter,
-                resourceAssociation,
-                profile,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.DefenderForAISettingData"/>. </summary>
@@ -989,19 +3027,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="state"> Defender for AI state on the AI resource. </param>
         /// <returns> A new <see cref="CognitiveServices.DefenderForAISettingData"/> instance for mocking. </returns>
-        public static DefenderForAISettingData DefenderForAISettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, DefenderForAISettingState? state = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DefenderForAISettingData DefenderForAISettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, DefenderForAISettingState? state)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DefenderForAISettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags,
-                state,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesProjectData"/>. </summary>
@@ -1015,118 +3054,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="properties"> Properties of Cognitive Services project. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectData"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectData CognitiveServicesProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, CognitiveServicesProjectProperties properties = null, ETag? etag = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesProjectData CognitiveServicesProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CognitiveServicesProjectProperties properties, ETag? etag)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CognitiveServicesProjectData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                properties,
                 tags,
                 location,
-                identity,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesProjectProperties"/>. </summary>
-        /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
-        /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
-        /// <param name="description"> The description of the Cognitive Services Project. </param>
-        /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
-        /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState = null, string displayName = null, string description = null, IReadOnlyDictionary<string, string> endpoints = null, bool? isDefault = null)
-        {
-            endpoints ??= new Dictionary<string, string>();
-
-            return new CognitiveServicesProjectProperties(
-                provisioningState,
-                displayName,
-                description,
-                endpoints,
-                isDefault,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Connection property base schema.
-        /// Please note <see cref="Models.CognitiveServicesConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AadAuthTypeConnectionProperties"/>, <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>, <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>, <see cref="Models.ApiKeyAuthConnectionProperties"/>, <see cref="Models.CustomKeysConnectionProperties"/>, <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="Models.NoneAuthTypeConnectionProperties"/>, <see cref="Models.OAuth2AuthTypeConnectionProperties"/>, <see cref="Models.PatAuthTypeConnectionProperties"/>, <see cref="Models.SASAuthTypeConnectionProperties"/>, <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/> and <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>.
-        /// </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesConnectionData"/> instance for mocking. </returns>
-        public static CognitiveServicesConnectionData CognitiveServicesConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesConnectionProperties properties = null)
-        {
-            return new CognitiveServicesConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesConnectionProperties"/>. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <returns> A new <see cref="Models.CognitiveServicesConnectionProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesConnectionProperties CognitiveServicesConnectionProperties(string authType = null, CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new UnknownConnectionPropertiesV2(
-                authType == null ? default : new ConnectionAuthType(authType),
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/> instance for mocking. </returns>
-        public static CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesCapabilityHostProperties properties = null)
-        {
-            return new CognitiveServicesCapabilityHostData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                default,
+                identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesCapabilityHostProperties"/>. </summary>
@@ -1140,484 +3083,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="threadStorageConnections"> List of connection names from those available in the account or project to be used for Thread storage. </param>
         /// <param name="vectorStoreConnections"> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </param>
         /// <returns> A new <see cref="Models.CognitiveServicesCapabilityHostProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description = null, IDictionary<string, string> tags = null, IEnumerable<string> aiServicesConnections = null, CapabilityHostKind? capabilityHostKind = null, string customerSubnet = null, CapabilityHostProvisioningState? provisioningState = null, IEnumerable<string> storageConnections = null, IEnumerable<string> threadStorageConnections = null, IEnumerable<string> vectorStoreConnections = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CognitiveServicesCapabilityHostProperties CognitiveServicesCapabilityHostProperties(string description, IDictionary<string, string> tags, IEnumerable<string> aiServicesConnections, CapabilityHostKind? capabilityHostKind, string customerSubnet, CapabilityHostProvisioningState? provisioningState, IEnumerable<string> storageConnections, IEnumerable<string> threadStorageConnections, IEnumerable<string> vectorStoreConnections)
         {
-            tags ??= new Dictionary<string, string>();
-            aiServicesConnections ??= new List<string>();
-            storageConnections ??= new List<string>();
-            threadStorageConnections ??= new List<string>();
-            vectorStoreConnections ??= new List<string>();
-
-            return new CognitiveServicesCapabilityHostProperties(
-                description,
-                tags,
-                serializedAdditionalRawData: null,
-                aiServicesConnections?.ToList(),
-                capabilityHostKind,
-                customerSubnet,
-                provisioningState,
-                storageConnections?.ToList(),
-                threadStorageConnections?.ToList(),
-                vectorStoreConnections?.ToList());
+            return CognitiveServicesCapabilityHostProperties(description, tags, aiServicesConnections, capabilityHostKind, customerSubnet, provisioningState, storageConnections, threadStorageConnections, vectorStoreConnections, enablePublicHostingEnvironment: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PatAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentialsPat"></param>
-        /// <returns> A new <see cref="Models.PatAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static PatAuthTypeConnectionProperties PatAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsPat = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new PatAuthTypeConnectionProperties(
-                ConnectionAuthType.PAT,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentialsPat != null ? new ConnectionPersonalAccessToken(credentialsPat, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.ManagedIdentityAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static ManagedIdentityAuthTypeConnectionProperties ManagedIdentityAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionManagedIdentity credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new ManagedIdentityAuthTypeConnectionProperties(
-                ConnectionAuthType.ManagedIdentity,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.UsernamePasswordAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static UsernamePasswordAuthTypeConnectionProperties UsernamePasswordAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionUsernamePassword credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new UsernamePasswordAuthTypeConnectionProperties(
-                ConnectionAuthType.UsernamePassword,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NoneAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <returns> A new <see cref="Models.NoneAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static NoneAuthTypeConnectionProperties NoneAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new NoneAuthTypeConnectionProperties(
-                ConnectionAuthType.None,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SASAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentialsSas"></param>
-        /// <returns> A new <see cref="Models.SASAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static SASAuthTypeConnectionProperties SASAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsSas = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new SASAuthTypeConnectionProperties(
-                ConnectionAuthType.SAS,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentialsSas != null ? new ConnectionSharedAccessSignature(credentialsSas, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccountKeyAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentialsKey"> Account key object for connection credential. </param>
-        /// <returns> A new <see cref="Models.AccountKeyAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static AccountKeyAuthTypeConnectionProperties AccountKeyAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsKey = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new AccountKeyAuthTypeConnectionProperties(
-                ConnectionAuthType.AccountKey,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentialsKey != null ? new ConnectionAccountKey(credentialsKey, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.ServicePrincipalAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static ServicePrincipalAuthTypeConnectionProperties ServicePrincipalAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionServicePrincipal credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new ServicePrincipalAuthTypeConnectionProperties(
-                ConnectionAuthType.ServicePrincipal,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessKeyAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentials"></param>
-        /// <returns> A new <see cref="Models.AccessKeyAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static AccessKeyAuthTypeConnectionProperties AccessKeyAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionAccessKey credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new AccessKeyAuthTypeConnectionProperties(
-                ConnectionAuthType.AccessKey,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyAuthConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentialsKey"> Api key object for connection credential. </param>
-        /// <returns> A new <see cref="Models.ApiKeyAuthConnectionProperties"/> instance for mocking. </returns>
-        public static ApiKeyAuthConnectionProperties ApiKeyAuthConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, string credentialsKey = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new ApiKeyAuthConnectionProperties(
-                ConnectionAuthType.ApiKey,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentialsKey != null ? new ConnectionApiKey(credentialsKey, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomKeysConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentialsKeys"> Custom Keys credential object. </param>
-        /// <returns> A new <see cref="Models.CustomKeysConnectionProperties"/> instance for mocking. </returns>
-        public static CustomKeysConnectionProperties CustomKeysConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, IDictionary<string, string> credentialsKeys = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-            credentialsKeys ??= new Dictionary<string, string>();
-
-            return new CustomKeysConnectionProperties(
-                ConnectionAuthType.CustomKeys,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentialsKeys != null ? new CustomKeys(credentialsKeys, serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OAuth2AuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="credentials">
-        /// ClientId and ClientSecret are required. Other properties are optional
-        /// depending on each OAuth2 provider's implementation.
-        /// </param>
-        /// <returns> A new <see cref="Models.OAuth2AuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static OAuth2AuthTypeConnectionProperties OAuth2AuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null, CognitiveServicesConnectionOAuth2 credentials = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new OAuth2AuthTypeConnectionProperties(
-                ConnectionAuthType.OAuth2,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null,
-                credentials);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AadAuthTypeConnectionProperties"/>. </summary>
-        /// <param name="category"> Category of the connection. </param>
-        /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"> Provides the error message if the connection fails. </param>
-        /// <param name="expiryOn"></param>
-        /// <param name="group"> Group based on connection category. </param>
-        /// <param name="isSharedToAll"></param>
-        /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
-        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
-        /// <param name="sharedUserList"></param>
-        /// <param name="target"> The connection URL to be used. </param>
-        /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <returns> A new <see cref="Models.AadAuthTypeConnectionProperties"/> instance for mocking. </returns>
-        public static AadAuthTypeConnectionProperties AadAuthTypeConnectionProperties(CognitiveServicesConnectionCategory? category = null, ResourceIdentifier createdByWorkspaceArmId = null, string error = null, DateTimeOffset? expiryOn = null, CognitiveServicesConnectionGroup? group = null, bool? isSharedToAll = null, IDictionary<string, string> metadata = null, ManagedPERequirement? peRequirement = null, ManagedPEStatus? peStatus = null, IEnumerable<string> sharedUserList = null, string target = null, bool? useWorkspaceManagedIdentity = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            sharedUserList ??= new List<string>();
-
-            return new AadAuthTypeConnectionProperties(
-                ConnectionAuthType.AAD,
-                category,
-                createdByWorkspaceArmId,
-                error,
-                expiryOn,
-                group,
-                isSharedToAll,
-                metadata,
-                peRequirement,
-                peStatus,
-                sharedUserList?.ToList(),
-                target,
-                useWorkspaceManagedIdentity,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
         /// <param name="capabilities"> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </param>
@@ -1647,14 +3119,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
         /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig)
         {
-            return CognitiveServicesAccountProperties(provisioningState: provisioningState, endpoint: endpoint, capabilities: capabilities, isMigrated: isMigrated, migrationToken: migrationToken, skuChangeInfo: skuChangeInfo, customSubDomainName: customSubDomainName, networkAcls: networkAcls, encryption: encryption, userOwnedStorage: userOwnedStorage, amlWorkspace: amlWorkspace, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, apiProperties: apiProperties, createdOn: createdOn, callRateLimit: callRateLimit, enableDynamicThrottling: enableDynamicThrottling, quotaLimit: quotaLimit, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, disableLocalAuth: disableLocalAuth, endpoints: endpoints, restore: restore, deletedOn: deletedOn, scheduledPurgeDate: scheduledPurgeDate, locations: locations, commitmentPlanAssociations: commitmentPlanAssociations, abusePenalty: abusePenalty, raiMonitorConfig: raiMonitorConfig, aiFoundryNetworkInjections: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
+            capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
+            userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
+            privateEndpointConnections ??= new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+            allowedFqdnList ??= new ChangeTrackingList<string>();
+            endpoints ??= new ChangeTrackingDictionary<string, string>();
+            commitmentPlanAssociations ??= new ChangeTrackingList<CommitmentPlanAssociation>();
+
+            return new CognitiveServicesAccountProperties(
+                provisioningState,
+                endpoint,
+                default,
+                capabilities.ToList(),
+                isMigrated,
+                migrationToken,
+                skuChangeInfo,
+                customSubDomainName,
+                networkAcls,
+                encryption,
+                userOwnedStorage.ToList(),
+                amlWorkspace,
+                privateEndpointConnections.ToList(),
+                publicNetworkAccess,
+                apiProperties,
+                default,
+                callRateLimit,
+                default,
+                default,
+                quotaLimit,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList.ToList(),
+                disableLocalAuth,
+                endpoints,
+                restore,
+                default,
+                scheduledPurgeDate,
+                locations,
+                commitmentPlanAssociations.ToList(),
+                abusePenalty,
+                raiMonitorConfig,
+                default,
+                default,
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. (Deprecated, please use Deployment.sku instead.). </param>
@@ -1667,14 +3182,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentCapacity"> The current capacity. </param>
         /// <param name="capacitySettings"> Internal use only. </param>
         /// <param name="parentDeploymentName"> The name of parent deployment. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption, bool? isDynamicThrottlingEnabled, int? currentCapacity, DeploymentCapacitySettings capacitySettings, string parentDeploymentName)
         {
-            return CognitiveServicesAccountDeploymentProperties(provisioningState: provisioningState, model: model, scaleSettings: scaleSettings, capabilities: capabilities, raiPolicyName: raiPolicyName, callRateLimit: callRateLimit, rateLimits: rateLimits, versionUpgradeOption: versionUpgradeOption, isDynamicThrottlingEnabled: isDynamicThrottlingEnabled, currentCapacity: currentCapacity, capacitySettings: capacitySettings, parentDeploymentName: parentDeploymentName, spilloverDeploymentName: default);
+            capabilities ??= new ChangeTrackingDictionary<string, string>();
+            rateLimits ??= new ChangeTrackingList<ServiceAccountThrottlingRule>();
+
+            return new CognitiveServicesAccountDeploymentProperties(
+                provisioningState,
+                model,
+                scaleSettings,
+                capabilities,
+                raiPolicyName,
+                callRateLimit,
+                rateLimits.ToList(),
+                versionUpgradeOption,
+                default,
+                currentCapacity,
+                capacitySettings,
+                parentDeploymentName,
+                default,
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
         /// <param name="capabilities"> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </param>
@@ -1702,14 +3236,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
         /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
         /// <param name="abusePenalty"> The abuse penalty. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountProperties" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty)
         {
-            return CognitiveServicesAccountProperties(provisioningState: provisioningState, endpoint: endpoint, capabilities: capabilities, isMigrated: isMigrated, migrationToken: migrationToken, skuChangeInfo: skuChangeInfo, customSubDomainName: customSubDomainName, networkAcls: networkAcls, encryption: encryption, userOwnedStorage: userOwnedStorage, amlWorkspace: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, apiProperties: apiProperties, createdOn: createdOn, callRateLimit: callRateLimit, enableDynamicThrottling: enableDynamicThrottling, quotaLimit: quotaLimit, restrictOutboundNetworkAccess: restrictOutboundNetworkAccess, allowedFqdnList: allowedFqdnList, disableLocalAuth: disableLocalAuth, endpoints: endpoints, restore: restore, deletedOn: deletedOn, scheduledPurgeDate: scheduledPurgeDate, locations: locations, commitmentPlanAssociations: commitmentPlanAssociations, abusePenalty: abusePenalty, raiMonitorConfig: default, aiFoundryNetworkInjections: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
+            capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
+            userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
+            privateEndpointConnections ??= new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+            allowedFqdnList ??= new ChangeTrackingList<string>();
+            endpoints ??= new ChangeTrackingDictionary<string, string>();
+            commitmentPlanAssociations ??= new ChangeTrackingList<CommitmentPlanAssociation>();
+
+            return new CognitiveServicesAccountProperties(
+                provisioningState,
+                endpoint,
+                default,
+                capabilities.ToList(),
+                isMigrated,
+                migrationToken,
+                skuChangeInfo,
+                customSubDomainName,
+                networkAcls,
+                encryption,
+                userOwnedStorage.ToList(),
+                default,
+                privateEndpointConnections.ToList(),
+                publicNetworkAccess,
+                apiProperties,
+                default,
+                callRateLimit,
+                default,
+                default,
+                quotaLimit,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList.ToList(),
+                disableLocalAuth,
+                endpoints,
+                restore,
+                default,
+                scheduledPurgeDate,
+                locations,
+                commitmentPlanAssociations.ToList(),
+                abusePenalty,
+                default,
+                default,
+                default,
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
@@ -1724,51 +3301,51 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountModel" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IEnumerable<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData)
         {
-            return CognitiveServicesAccountModel(publisher: default, format: format, name: name, version: version, source: source, sourceAccount: default, callRateLimit: callRateLimit, baseModel: baseModel, isDefaultVersion: isDefaultVersion, skus: skus, maxCapacity: maxCapacity, capabilities: capabilities, finetuneCapabilities: finetuneCapabilities, deprecation: deprecation, lifecycleStatus: lifecycleStatus, systemData: systemData);
+            return CognitiveServicesAccountModel(publisher: default, format, name, version, source, sourceAccount: default, callRateLimit, baseModel, isDefaultVersion, skus, maxCapacity, capabilities, finetuneCapabilities, deprecation, replacementConfig: default, modelCatalogAssetId: default, lifecycleStatus, systemData);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentModel"/>. </summary>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
         /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
         /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentModel" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentModel"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit)
         {
-            return CognitiveServicesAccountDeploymentModel(publisher: default, format: format, name: name, version: version, source: source, sourceAccount: default, callRateLimit: callRateLimit);
+            return CognitiveServicesAccountDeploymentModel(publisher: default, format, name, version, source, sourceAccount: default, callRateLimit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModelSku"/>. </summary>
         /// <param name="name"> The name of the model SKU. </param>
         /// <param name="usageName"> The usage name of the model SKU. </param>
         /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="rateLimits"> The list of rateLimit. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModelSku" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesModelSku"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesModelSku CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IEnumerable<ServiceAccountCallRateLimit> rateLimits)
         {
-            return CognitiveServicesModelSku(name: name, usageName: usageName, deprecationOn: deprecationOn, capacity: capacity, rateLimits: rateLimits, cost: default);
+            return CognitiveServicesModelSku(name, usageName, deprecationOn, capacity, rateLimits, cost: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModel"/>. </summary>
         /// <param name="model"> Model Metadata. </param>
         /// <param name="kind"> The Kind of the Model. </param>
         /// <param name="skuName"> The SKU of the Model. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesModel" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesModel"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesModel CognitiveServicesModel(CognitiveServicesAccountModel model, string kind, string skuName)
         {
-            return CognitiveServicesModel(model: model, kind: kind, skuName: skuName, description: default);
+            return CognitiveServicesModel(model, kind, skuName, description: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1776,14 +3353,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.CognitiveServicesAccountDeploymentData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesSku sku, ETag? etag, CognitiveServicesAccountDeploymentProperties properties)
         {
-            return CognitiveServicesAccountDeploymentData(id: id, name: name, resourceType: resourceType, systemData: systemData, sku: sku, etag: etag, tags: default, properties: properties);
+            return new CognitiveServicesAccountDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                sku,
+                default,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. </param>
@@ -1792,25 +3378,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="rateLimits"></param>
         /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.Models.CognitiveServicesAccountDeploymentProperties" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState, CognitiveServicesAccountDeploymentModel model, CognitiveServicesAccountDeploymentScaleSettings scaleSettings, IReadOnlyDictionary<string, string> capabilities, string raiPolicyName, ServiceAccountCallRateLimit callRateLimit, IEnumerable<ServiceAccountThrottlingRule> rateLimits, DeploymentModelVersionUpgradeOption? versionUpgradeOption)
         {
-            return CognitiveServicesAccountDeploymentProperties(provisioningState: provisioningState, model: model, scaleSettings: scaleSettings, capabilities: capabilities, raiPolicyName: raiPolicyName, callRateLimit: callRateLimit, rateLimits: rateLimits, versionUpgradeOption: versionUpgradeOption, isDynamicThrottlingEnabled: default, currentCapacity: default, capacitySettings: default, parentDeploymentName: default, spilloverDeploymentName: default);
+            return CognitiveServicesAccountDeploymentProperties(provisioningState, model, scaleSettings, capabilities, raiPolicyName, callRateLimit, rateLimits, versionUpgradeOption, dynamicThrottlingEnabled: default, currentCapacity: default, capacitySettings: default, parentDeploymentName: default, spilloverDeploymentName: default, serviceTier: default, deploymentState: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="accountId"> The Azure resource id of the account. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.CognitiveServices.CommitmentPlanAccountAssociationData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string accountId)
         {
-            return CommitmentPlanAccountAssociationData(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, tags: default, accountId: accountId);
+            return new CommitmentPlanAccountAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                default);
         }
     }
 }

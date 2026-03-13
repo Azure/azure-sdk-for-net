@@ -21,15 +21,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CustomBlocklistConfig"/>. </summary>
         /// <param name="blocklistName"> Name of ContentFilter. </param>
         /// <param name="blocking"> If blocking would occur. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
-        internal CustomBlocklistConfig(string blocklistName, bool? blocking, IDictionary<string, BinaryData> serializedAdditionalRawData, RaiPolicyContentSource? source) : base(blocklistName, blocking, serializedAdditionalRawData)
+        internal CustomBlocklistConfig(string blocklistName, bool? blocking, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiPolicyContentSource? source) : base(blocklistName, blocking, additionalBinaryDataProperties)
         {
             Source = source;
         }
 
         /// <summary> Content source to apply the Content Filters. </summary>
-        [WirePath("source")]
         public RaiPolicyContentSource? Source { get; set; }
     }
 }

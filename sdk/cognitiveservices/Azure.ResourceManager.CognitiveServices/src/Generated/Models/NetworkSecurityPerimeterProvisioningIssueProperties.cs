@@ -8,46 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Provisioning Issue. </summary>
     public partial class NetworkSecurityPerimeterProvisioningIssueProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
-        public NetworkSecurityPerimeterProvisioningIssueProperties()
+        internal NetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             SuggestedAccessRules = new ChangeTrackingList<NetworkSecurityPerimeterAccessRule>();
@@ -59,31 +31,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Optional array, suggested access rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProvisioningIssueProperties(string issueType, string severity, string description, IList<ResourceIdentifier> suggestedResourceIds, IList<NetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterProvisioningIssueProperties(string issueType, string severity, string description, IList<ResourceIdentifier> suggestedResourceIds, IList<NetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
             Description = description;
             SuggestedResourceIds = suggestedResourceIds;
             SuggestedAccessRules = suggestedAccessRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of Issue. </summary>
-        [WirePath("issueType")]
-        public string IssueType { get; set; }
+        public string IssueType { get; }
+
         /// <summary> Severity of the issue. </summary>
-        [WirePath("severity")]
-        public string Severity { get; set; }
+        public string Severity { get; }
+
         /// <summary> Description of the issue. </summary>
-        [WirePath("description")]
-        public string Description { get; set; }
+        public string Description { get; }
+
         /// <summary> IDs of resources that can be associated to the same perimeter to remediate the issue. </summary>
-        [WirePath("suggestedResourceIds")]
         public IList<ResourceIdentifier> SuggestedResourceIds { get; }
+
         /// <summary> Optional array, suggested access rules. </summary>
-        [WirePath("suggestedAccessRules")]
         public IList<NetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get; }
     }
 }

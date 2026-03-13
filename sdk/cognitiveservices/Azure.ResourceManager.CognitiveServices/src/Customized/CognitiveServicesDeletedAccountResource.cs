@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.AddTag");
+            using var scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await GetAsync(cancellationToken).ConfigureAwait(false);
+                return originalResponse;
             }
             catch (Exception e)
             {
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.AddTag");
+            using var scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = Get(cancellationToken);
+                return originalResponse;
             }
             catch (Exception e)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.SetTags");
+            using var scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.SetTags");
             scope.Start();
             try
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await GetAsync(cancellationToken).ConfigureAwait(false);
+                return originalResponse;
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.SetTags");
+            using var scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.SetTags");
             scope.Start();
             try
             {
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = Get(cancellationToken);
+                return originalResponse;
             }
             catch (Exception e)
             {
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.RemoveTag");
+            using var scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await GetAsync(cancellationToken).ConfigureAwait(false);
+                return originalResponse;
             }
             catch (Exception e)
             {
@@ -237,15 +237,15 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.RemoveTag");
+            using var scope = _cognitiveServicesDeletedAccountClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = Get(cancellationToken);
+                return originalResponse;
             }
             catch (Exception e)
             {

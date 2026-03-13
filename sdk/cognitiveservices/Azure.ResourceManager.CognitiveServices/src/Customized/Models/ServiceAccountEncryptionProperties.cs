@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             get
             {
-                if (KeyVaultProperties != null)
-                    return KeyVaultProperties.KeyVaultUri;
+                if (KeyVaultProperties != null && Uri.TryCreate(KeyVaultProperties.KeyVaultUri, UriKind.Absolute, out Uri keyVaultUri))
+                    return keyVaultUri;
                 else
                     return default;
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (KeyVaultProperties == null)
                     KeyVaultProperties = new CognitiveServicesKeyVaultProperties();
-                KeyVaultProperties.KeyVaultUri = value;
+                KeyVaultProperties.KeyVaultUri = value?.AbsoluteUri;
             }
         }
         /// <summary> Gets or sets the identity client id. </summary>
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             get
             {
-                if (KeyVaultProperties != null)
-                    return KeyVaultProperties.IdentityClientId;
+                if (KeyVaultProperties != null && Guid.TryParse(KeyVaultProperties.IdentityClientId, out Guid identityClientId))
+                    return identityClientId;
                 else
                     return default;
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 if (KeyVaultProperties == null)
                     KeyVaultProperties = new CognitiveServicesKeyVaultProperties();
-                KeyVaultProperties.IdentityClientId = value;
+                KeyVaultProperties.IdentityClientId = value?.ToString();
             }
         }
     }
