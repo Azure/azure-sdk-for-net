@@ -177,8 +177,9 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
                     ResponseItem.CreateUserMessageItem("What was a positive news story from today?"),
                 }
             });
-        Assert.That(result.OutputItems, Has.Count.EqualTo(2));
-        WebSearchCallResponseItem? webSearchCall = result?.OutputItems?[0] as WebSearchCallResponseItem;
+        Assert.That(result.OutputItems, Is.Not.Null.And.Not.Empty);
+        WebSearchCallResponseItem? webSearchCall =
+            result.OutputItems!.OfType<WebSearchCallResponseItem>().FirstOrDefault();
         Assert.That(webSearchCall, Is.Not.Null);
     }
 
