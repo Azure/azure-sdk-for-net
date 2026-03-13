@@ -2,8 +2,8 @@
   <PropertyGroup>
     <Version>1.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <!--ApiCompatVersion temporarily removed during TypeSpec migration. Restore after breaking changes are mitigated.-->
-    <!--<ApiCompatVersion>1.2.0</ApiCompatVersion>-->
+    <!--ApiCompatVersion temporarily disabled during TypeSpec migration. Set WebPubSub_EnableApiCompat=true to restore after breaking changes are mitigated.-->
+    <ApiCompatVersion Condition="'$(WebPubSub_EnableApiCompat)' == 'true'">1.2.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.WebPubSub</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.SignalRService.</Description>
     <PackageTags>azure;management;webpubsub</PackageTags>

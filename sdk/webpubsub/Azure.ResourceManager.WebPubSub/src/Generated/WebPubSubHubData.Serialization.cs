@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(webPubSubHubData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(webPubSubHubData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WebPubSubHubData"/> from. </param>

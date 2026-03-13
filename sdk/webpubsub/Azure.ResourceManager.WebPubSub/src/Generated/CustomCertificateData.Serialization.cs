@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(customCertificateData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(customCertificateData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomCertificateData"/> from. </param>

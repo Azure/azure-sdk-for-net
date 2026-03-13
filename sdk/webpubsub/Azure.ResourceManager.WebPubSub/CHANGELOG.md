@@ -19,6 +19,8 @@
 - `PrivateEndpointConnectionResource` and `PrivateEndpointConnectionCollection` no longer have `WebPubSub` prefix
 - `WebPubSubSharedPrivateLinkResourceCollection` replaces `WebPubSubSharedPrivateLinkCollection`
 
+### Bugs Fixed
+
 ### Other Changes
 
 - API compatibility version temporarily removed during migration

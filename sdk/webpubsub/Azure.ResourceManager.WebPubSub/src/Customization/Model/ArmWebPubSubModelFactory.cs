@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
@@ -15,8 +16,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
     [CodeGenSuppress("WebPubSubData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(BillingInfoSku), typeof(ManagedServiceIdentity), typeof(WebPubSubProvisioningState?), typeof(string), typeof(string), typeof(int?), typeof(int?), typeof(string), typeof(IEnumerable<WebPubSubPrivateEndpointConnectionData>), typeof(IEnumerable<WebPubSubSharedPrivateLinkData>), typeof(bool?), typeof(string), typeof(LiveTraceConfiguration), typeof(IEnumerable<ResourceLogCategory>), typeof(WebPubSubNetworkAcls), typeof(string), typeof(bool?), typeof(bool?))]
     public static partial class ArmWebPubSubModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.WebPubSub.WebPubSubData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload accepts ManagedServiceIdentity which has been replaced by ManagedIdentity. Use the overload that accepts ManagedIdentity instead.")]
         public static WebPubSubData WebPubSubData(
             ResourceIdentifier id,
             string name,
@@ -43,8 +45,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
             bool? isLocalAuthDisabled,
             bool? isAadAuthDisabled)
         {
-            // Delegate to the new overload, dropping the identity parameter
-            // since the type changed from ManagedServiceIdentity to ManagedIdentity.
+            // Map ManagedServiceIdentity to ManagedIdentity (best-effort).
+            ManagedIdentity mappedIdentity = null;
+            if (identity != null)
+            {
+                var userAssigned = identity.UserAssignedIdentities?
+                    .ToDictionary(
+                        kvp => kvp.Key.ToString(),
+                        kvp => new UserAssignedIdentityProperty());
+
+                mappedIdentity = ManagedIdentity(
+                    type: new ManagedIdentityType(identity.ManagedServiceIdentityType.ToString()),
+                    userAssignedIdentities: userAssigned,
+                    principalId: identity.PrincipalId?.ToString(),
+                    tenantId: identity.TenantId?.ToString());
+            }
+
             return WebPubSubData(
                 id: id,
                 name: name,
@@ -68,7 +84,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 isAadAuthDisabled: isAadAuthDisabled,
                 resourceLogCategories: resourceLogCategories,
                 sku: sku,
-                isClientCertEnabled: isClientCertEnabled);
+                isClientCertEnabled: isClientCertEnabled,
+                identity: mappedIdentity);
         }
     }
 }
