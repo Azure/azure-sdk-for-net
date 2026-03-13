@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerServicePrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(containerServicePrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServicePrivateLinkResourceData"/> from. </param>

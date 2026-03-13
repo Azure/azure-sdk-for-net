@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedClusterRunCommandContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(managedClusterRunCommandContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

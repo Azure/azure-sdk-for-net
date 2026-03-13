@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedClusterIdentityBindingData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(managedClusterIdentityBindingData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedClusterIdentityBindingData"/> from. </param>

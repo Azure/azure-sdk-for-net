@@ -73,9 +73,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerServiceManagedClusterData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(containerServiceManagedClusterData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceManagedClusterData"/> from. </param>
