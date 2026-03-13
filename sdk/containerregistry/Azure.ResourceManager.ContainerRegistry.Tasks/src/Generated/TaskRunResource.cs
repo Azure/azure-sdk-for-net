@@ -13,10 +13,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// A class representing a TaskRun along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         internal TaskRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string taskRunApiVersion);
-            _taskRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistryTasks", ResourceType.Namespace, Diagnostics);
+            _taskRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", ResourceType.Namespace, Diagnostics);
             _taskRunsRestClient = new TaskRuns(_taskRunsClientDiagnostics, Pipeline, Endpoint, taskRunApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TaskRunPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerRegistryTasksArmOperation<TaskRunResource> operation = new ContainerRegistryTasksArmOperation<TaskRunResource>(
+                TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
                     new TaskRunOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TaskRunPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerRegistryTasksArmOperation<TaskRunResource> operation = new ContainerRegistryTasksArmOperation<TaskRunResource>(
+                TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
                     new TaskRunOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ContainerRegistryTasksArmOperation operation = new ContainerRegistryTasksArmOperation(response, rehydrationToken);
+                TasksArmOperation operation = new TasksArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ContainerRegistryTasksArmOperation operation = new ContainerRegistryTasksArmOperation(response, rehydrationToken);
+                TasksArmOperation operation = new TasksArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

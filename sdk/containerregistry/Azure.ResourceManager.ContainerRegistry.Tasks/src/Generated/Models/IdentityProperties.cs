@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistryTasks;
+using Azure.ResourceManager.ContainerRegistry._Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> Managed identity for the resource. </summary>
     public partial class IdentityProperties

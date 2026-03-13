@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     internal partial class AsyncPageableWrapper<T, U> : AsyncPageable<U>
     {

@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     internal static partial class ClientPipelineExtensions
     {

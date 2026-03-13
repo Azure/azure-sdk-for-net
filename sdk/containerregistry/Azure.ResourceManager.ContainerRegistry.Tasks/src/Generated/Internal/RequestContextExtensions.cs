@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     internal static partial class RequestContextExtensions
     {

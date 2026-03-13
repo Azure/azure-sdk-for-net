@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ContainerRegistryTasks;
+using Azure.ResourceManager.ContainerRegistry._Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> The properties of a source based trigger. </summary>
     public partial class SourceTrigger

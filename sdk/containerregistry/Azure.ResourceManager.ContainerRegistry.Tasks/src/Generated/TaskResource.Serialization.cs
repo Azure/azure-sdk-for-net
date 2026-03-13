@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary></summary>
     public partial class TaskResource : IJsonModel<TaskData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         TaskData IJsonModel<TaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TaskData>(Data, options, AzureResourceManagerContainerRegistryTasksContext.Default);
+        BinaryData IPersistableModel<TaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TaskData>(Data, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TaskData IPersistableModel<TaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TaskData>(data, options, AzureResourceManagerContainerRegistryTasksContext.Default);
+        TaskData IPersistableModel<TaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TaskData>(data, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

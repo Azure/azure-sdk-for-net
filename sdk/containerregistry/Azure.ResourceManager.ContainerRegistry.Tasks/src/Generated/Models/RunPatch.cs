@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> The set of run properties that can be updated. </summary>
     public partial class RunPatch

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     internal partial class AgentPoolsGetAllAsyncCollectionResultOfT : AsyncPageable<AgentPoolData>
     {

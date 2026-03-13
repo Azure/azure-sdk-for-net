@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// A class representing a collection of <see cref="RunResource"/> and their operations.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         {
             TryGetApiVersion(RunResource.ResourceType, out string runApiVersion);
             _registryName = registryName;
-            _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistryTasks", RunResource.ResourceType.Namespace, Diagnostics);
+            _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", RunResource.ResourceType.Namespace, Diagnostics);
             _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Endpoint, runApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }

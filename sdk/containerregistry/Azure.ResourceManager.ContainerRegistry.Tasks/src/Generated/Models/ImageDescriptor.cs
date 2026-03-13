@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> Properties for a registry image. </summary>
     public partial class ImageDescriptor

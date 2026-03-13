@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistryTasks;
+using Azure.ResourceManager.ContainerRegistry._Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> The type of the step. </summary>
     internal readonly partial struct StepType : IEquatable<StepType>

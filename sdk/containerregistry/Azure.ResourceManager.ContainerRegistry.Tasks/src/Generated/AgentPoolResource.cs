@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// A class representing a AgentPool along with the instance operations that can be performed on it.
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         internal AgentPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string agentPoolApiVersion);
-            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistryTasks", ResourceType.Namespace, Diagnostics);
+            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", ResourceType.Namespace, Diagnostics);
             _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentPoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerRegistryTasksArmOperation<AgentPoolResource> operation = new ContainerRegistryTasksArmOperation<AgentPoolResource>(
+                TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
                     new AgentPoolOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentPoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerRegistryTasksArmOperation<AgentPoolResource> operation = new ContainerRegistryTasksArmOperation<AgentPoolResource>(
+                TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
                     new AgentPoolOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerRegistryTasksArmOperation operation = new ContainerRegistryTasksArmOperation(_agentPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TasksArmOperation operation = new TasksArmOperation(_agentPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerRegistryTasksArmOperation operation = new ContainerRegistryTasksArmOperation(_agentPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TasksArmOperation operation = new TasksArmOperation(_agentPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// A class representing a collection of <see cref="TaskRunResource"/> and their operations.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         {
             TryGetApiVersion(TaskRunResource.ResourceType, out string taskRunApiVersion);
             _registryName = registryName;
-            _taskRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistryTasks", TaskRunResource.ResourceType.Namespace, Diagnostics);
+            _taskRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", TaskRunResource.ResourceType.Namespace, Diagnostics);
             _taskRunsRestClient = new TaskRuns(_taskRunsClientDiagnostics, Pipeline, Endpoint, taskRunApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskRunName, TaskRunData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerRegistryTasksArmOperation<TaskRunResource> operation = new ContainerRegistryTasksArmOperation<TaskRunResource>(
+                TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
                     new TaskRunOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _taskRunsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskRunName, TaskRunData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerRegistryTasksArmOperation<TaskRunResource> operation = new ContainerRegistryTasksArmOperation<TaskRunResource>(
+                TasksArmOperation<TaskRunResource> operation = new TasksArmOperation<TaskRunResource>(
                     new TaskRunOperationSource(Client),
                     _taskRunsClientDiagnostics,
                     Pipeline,

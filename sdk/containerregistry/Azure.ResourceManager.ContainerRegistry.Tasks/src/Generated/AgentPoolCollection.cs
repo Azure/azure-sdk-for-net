@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// A class representing a collection of <see cref="AgentPoolResource"/> and their operations.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         {
             TryGetApiVersion(AgentPoolResource.ResourceType, out string agentPoolApiVersion);
             _registryName = registryName;
-            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistryTasks", AgentPoolResource.ResourceType.Namespace, Diagnostics);
+            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", AgentPoolResource.ResourceType.Namespace, Diagnostics);
             _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, AgentPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerRegistryTasksArmOperation<AgentPoolResource> operation = new ContainerRegistryTasksArmOperation<AgentPoolResource>(
+                TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
                     new AgentPoolOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                 };
                 HttpMessage message = _agentPoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, agentPoolName, AgentPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ContainerRegistryTasksArmOperation<AgentPoolResource> operation = new ContainerRegistryTasksArmOperation<AgentPoolResource>(
+                TasksArmOperation<AgentPoolResource> operation = new TasksArmOperation<AgentPoolResource>(
                     new AgentPoolOperationSource(Client),
                     _agentPoolsClientDiagnostics,
                     Pipeline,

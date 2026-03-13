@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     internal partial class ErrorResult<T> : Response<T>
     {

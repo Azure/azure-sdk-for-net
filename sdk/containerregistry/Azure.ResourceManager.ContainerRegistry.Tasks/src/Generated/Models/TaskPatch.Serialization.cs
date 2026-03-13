@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistryTasks;
+using Azure.ResourceManager.ContainerRegistry._Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> The parameters for updating a task. </summary>
     public partial class TaskPatch : IJsonModel<TaskPatch>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TaskPatch)} does not support writing '{options.Format}' format.");
             }
@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(taskPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(taskPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

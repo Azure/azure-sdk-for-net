@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// The task that has the ARM resource and task properties.
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TaskData)} does not support writing '{options.Format}' format.");
             }
@@ -75,9 +75,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(taskData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(taskData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TaskData"/> from. </param>
@@ -183,7 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerRegistryTasksContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerRegistry_TasksContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

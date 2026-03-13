@@ -7,10 +7,10 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
     [ModelReaderWriterBuildable(typeof(UnknownTaskStepProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownTaskStepUpdateContent))]
     [ModelReaderWriterBuildable(typeof(UserIdentityProperties))]
-    public partial class AzureResourceManagerContainerRegistryTasksContext : ModelReaderWriterContext
+    public partial class AzureResourceManagerContainerRegistry_TasksContext : ModelReaderWriterContext
     {
     }
 }

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerRegistryTasks;
+using Azure.ResourceManager.ContainerRegistry._Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> The properties for updating a task. </summary>
     internal partial class TaskPropertiesUpdateParameters : IJsonModel<TaskPropertiesUpdateParameters>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TaskPropertiesUpdateParameters)} does not support writing '{options.Format}' format.");
             }

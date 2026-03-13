@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> The identity type. </summary>
     public enum ResourceIdentityType

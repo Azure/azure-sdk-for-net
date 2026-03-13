@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistryTasks;
+using Azure.ResourceManager.ContainerRegistry._Tasks;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Models
+namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmContainerRegistryTasksModelFactory
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
         /// <param name="os"> The OS of agent machine. </param>
         /// <param name="virtualNetworkSubnetResourceId"> The Virtual Network Subnet Resource Id of the agent machine. </param>
         /// <param name="provisioningState"> The provisioning state of this agent pool. </param>
-        /// <returns> A new <see cref="ContainerRegistryTasks.AgentPoolData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="_Tasks.AgentPoolData"/> instance for mocking. </returns>
         public static AgentPoolData AgentPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? count = default, string tier = default, ContainerRegistryTaskOS? os = default, ResourceIdentifier virtualNetworkSubnetResourceId = default, ContainerRegistryTaskProvisioningState? provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
         /// <param name="provisioningState"> The provisioning state of a run. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
-        /// <returns> A new <see cref="ContainerRegistryTasks.RunData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="_Tasks.RunData"/> instance for mocking. </returns>
         public static RunData RunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, IEnumerable<ImageDescriptor> outputImages = default, string task = default, ImageUpdateTrigger imageUpdateTrigger = default, SourceTriggerDescriptor sourceTrigger = default, TimerTriggerDescriptor timerTrigger = default, PlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
         {
             return new RunData(
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
         /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="location"> The location of the resource. </param>
-        /// <returns> A new <see cref="ContainerRegistryTasks.TaskRunData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="_Tasks.TaskRunData"/> instance for mocking. </returns>
         public static TaskRunData TaskRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryTaskProvisioningState? provisioningState = default, RunContent runRequest = default, RunData runResult = default, string forceUpdateTag = default, IdentityProperties identity = default, AzureLocation? location = default)
         {
             return new TaskRunData(
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks.Models
         /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="ContainerRegistryTasks.TaskData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="_Tasks.TaskData"/> instance for mocking. </returns>
         public static TaskData TaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, ContainerRegistryTaskStatus? status = default, PlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepProperties step = default, TriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, IdentityProperties identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();

@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary> Run resource properties. </summary>
     public partial class RunData : ResourceData, IJsonModel<RunData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RunData)} does not support writing '{options.Format}' format.");
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerRegistryTasksContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerRegistry_TasksContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

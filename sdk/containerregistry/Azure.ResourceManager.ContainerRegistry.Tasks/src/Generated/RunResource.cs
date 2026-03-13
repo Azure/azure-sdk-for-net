@@ -13,10 +13,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistryTasks.Models;
+using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks
+namespace Azure.ResourceManager.ContainerRegistry._Tasks
 {
     /// <summary>
     /// A class representing a Run along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistryTasks
         internal RunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string runApiVersion);
-            _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistryTasks", ResourceType.Namespace, Diagnostics);
+            _runsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", ResourceType.Namespace, Diagnostics);
             _runsRestClient = new Runs(_runsClientDiagnostics, Pipeline, Endpoint, runApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
