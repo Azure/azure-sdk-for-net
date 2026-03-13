@@ -116,6 +116,8 @@ az keyvault secret set \
   --value "my-secret-key"
 ```
 
+This maps the Key Vault secret to the configuration path `Clients:MyClient:Credential:Key`. The value will not appear in your `appsettings.json`, but it will effectively act as if the secret from Key Vault is at that path.
+
 **appsettings.json:**
 
 ```json
