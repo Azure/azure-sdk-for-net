@@ -27,7 +27,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
         public ParamAliasClient(Uri endpoint, string blobName, string blob, ParamAliasClientOptions options) : this(null, endpoint, blobName, blob, options) => throw null;
 
         [Experimental("SCME0002")]
-        public ParamAliasClient(ParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        public ParamAliasClient(ParamAliasClientSettings settings) : this((HttpPipelinePolicy)null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

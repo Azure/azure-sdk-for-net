@@ -27,7 +27,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
         public IndividuallyNestedWithParamAliasClient(Uri endpoint, string blobName, string blob, IndividuallyNestedWithParamAliasClientOptions options) : this(null, endpoint, blobName, blob, options) => throw null;
 
         [Experimental("SCME0002")]
-        public IndividuallyNestedWithParamAliasClient(IndividuallyNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        public IndividuallyNestedWithParamAliasClient(IndividuallyNestedWithParamAliasClientSettings settings) : this((HttpPipelinePolicy)null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

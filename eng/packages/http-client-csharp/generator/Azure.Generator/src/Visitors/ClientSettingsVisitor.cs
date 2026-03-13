@@ -97,8 +97,6 @@ namespace Azure.Generator.Visitors
                     }
                     else
                     {
-                        // No credential constructors — chain to the internal constructor
-                        // with null for the auth policy parameter.
                         UpdateSettingsConstructorForNoAuth(ctor);
                     }
                 }
@@ -167,11 +165,12 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateSettingsConstructorForNoAuth(ConstructorProvider settingsCtor)
         {
-            // No credential constructors exist — the Settings constructor chains to the
-            // internal (HttpPipelinePolicy, endpoint, options) constructor with null for auth.
+            // No credential constructors — replace the AuthenticationPolicy.Create(settings)
+            // argument with null so the internal constructor receives a null auth policy.
+            // Cast to HttpPipelinePolicy to avoid overload ambiguity.
             var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
             var newArgs = new List<ValueExpression>();
-            newArgs.Add(Null); // null auth policy
+            newArgs.Add(Null.CastTo(HttpPipelinePolicyType));
             for (int i = 1; i < existingArgs.Count; i++)
             {
                 newArgs.Add(existingArgs[i]);
