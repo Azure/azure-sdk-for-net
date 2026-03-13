@@ -11,21 +11,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportSource. </summary>
     public partial class ContainerRegistryImportSource
     {
-        /// <summary> The address of the source registry (e.g. &apos;mcr.microsoft.com&apos;). </summary>
-        [Obsolete("RegistryUri is deprecated, use RegistryAddress instead")]
+        /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
+        [WirePath("registryUri")]
+        public Uri RegistryUri { get; set; }
+
+        /// <summary> The address of the source registry (e.g. 'mcr.microsoft.com'). </summary>
+        [Obsolete("RegistryAddress is deprecated, use RegistryUri instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri RegistryUri
+        public string RegistryAddress
         {
-            get
-            {
-                if (RegistryAddress != null && Uri.TryCreate(RegistryAddress, UriKind.Absolute, out var registryUri))
-                    return registryUri;
-                return null;
-            }
-            set
-            {
-                RegistryAddress = value == null ? null : value.AbsoluteUri;
-            }
+            get => RegistryUri?.AbsoluteUri;
+            set => RegistryUri = value == null ? null : new Uri(value);
         }
     }
 }

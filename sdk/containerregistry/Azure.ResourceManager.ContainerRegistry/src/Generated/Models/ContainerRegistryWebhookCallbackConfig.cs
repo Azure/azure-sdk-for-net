@@ -7,51 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The configuration of service URI and custom headers for the webhook. </summary>
     public partial class ContainerRegistryWebhookCallbackConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCallbackConfig"/>. </summary>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceUri"/> is null. </exception>
-        internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri)
+        internal ContainerRegistryWebhookCallbackConfig(string serviceUri)
         {
-            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
-
             ServiceUri = serviceUri;
             CustomHeaders = new ChangeTrackingDictionary<string, string>();
         }
@@ -59,24 +28,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCallbackConfig"/>. </summary>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookCallbackConfig(Uri serviceUri, IReadOnlyDictionary<string, string> customHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryWebhookCallbackConfig(string serviceUri, IReadOnlyDictionary<string, string> customHeaders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUri = serviceUri;
             CustomHeaders = customHeaders;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCallbackConfig"/> for deserialization. </summary>
-        internal ContainerRegistryWebhookCallbackConfig()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service URI for the webhook to post notifications. </summary>
-        [WirePath("serviceUri")]
-        public Uri ServiceUri { get; }
+        public string ServiceUri { get; }
+
         /// <summary> Custom headers that will be added to the webhook notifications. </summary>
-        [WirePath("customHeaders")]
         public IReadOnlyDictionary<string, string> CustomHeaders { get; }
     }
 }

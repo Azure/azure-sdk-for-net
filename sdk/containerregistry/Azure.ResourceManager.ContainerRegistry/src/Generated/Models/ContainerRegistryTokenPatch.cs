@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for updating a token. </summary>
     public partial class ContainerRegistryTokenPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPatch"/>. </summary>
         public ContainerRegistryTokenPatch()
@@ -52,26 +22,66 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPatch"/>. </summary>
-        /// <param name="scopeMapId"> The resource ID of the scope map to which the token will be associated with. </param>
-        /// <param name="status"> The status of the token example enabled or disabled. </param>
-        /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTokenPatch(ResourceIdentifier scopeMapId, ContainerRegistryTokenStatus? status, ContainerRegistryTokenCredentials credentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the token update parameters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTokenPatch(TokenUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ScopeMapId = scopeMapId;
-            Status = status;
-            Credentials = credentials;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of the token update parameters. </summary>
+        internal TokenUpdateProperties Properties { get; set; }
+
         /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
-        [WirePath("properties.scopeMapId")]
-        public ResourceIdentifier ScopeMapId { get; set; }
+        public string ScopeMapId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScopeMapId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TokenUpdateProperties();
+                }
+                Properties.ScopeMapId = value;
+            }
+        }
+
         /// <summary> The status of the token example enabled or disabled. </summary>
-        [WirePath("properties.status")]
-        public ContainerRegistryTokenStatus? Status { get; set; }
+        public ContainerRegistryTokenStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TokenUpdateProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> The credentials that can be used for authenticating the token. </summary>
-        [WirePath("properties.credentials")]
-        public ContainerRegistryTokenCredentials Credentials { get; set; }
+        public ContainerRegistryTokenCredentials Credentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Credentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TokenUpdateProperties();
+                }
+                Properties.Credentials = value;
+            }
+        }
     }
 }

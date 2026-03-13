@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The TLS certificate properties of the connected registry login server. </summary>
     public partial class ContainerRegistryTlsCertificateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsCertificateProperties"/>. </summary>
         internal ContainerRegistryTlsCertificateProperties()
@@ -51,21 +22,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsCertificateProperties"/>. </summary>
-        /// <param name="certificateType"> The type of certificate location. </param>
+        /// <param name="type"> The type of certificate location. </param>
         /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? certificateType, string certificateLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? @type, string certificateLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CertificateType = certificateType;
+            Type = @type;
             CertificateLocation = certificateLocation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of certificate location. </summary>
-        [WirePath("type")]
-        public ContainerRegistryCertificateType? CertificateType { get; }
+        public ContainerRegistryCertificateType? Type { get; }
+
         /// <summary> Indicates the location of the certificates. </summary>
-        [WirePath("location")]
         public string CertificateLocation { get; }
     }
 }
