@@ -160,15 +160,32 @@ namespace Azure.Generator.Visitors
             else if (hasKeyCredCtor)
             {
                 // Key-credential only library.
-                // Build: new AzureKeyCredential(settings?.CredentialSource) — and chain to the AzureKeyCredential constructor.
-                // The settings?.TokenProvider property returns a TokenProvider which for key creds
-                // should be checked via credentialSource.
+                // Build a ternary that checks if CredentialSource is "apikeycredential" (case-insensitive),
+                // and if so constructs a new AzureKeyCredential from the key, otherwise passes null.
                 //
-                // settings?.TokenProvider as AzureKeyCredential
-                // Note: If the credentialSource from config is "apikeycredential" (case-insensitive),
-                // we construct an AzureKeyCredential.
-                var tokenProviderAccess = new MemberExpression(new NullConditionalExpression(settingsParam), "TokenProvider");
-                var keyCredentialArg = tokenProviderAccess.As(AzureKeyCredentialType);
+                // Generated code:
+                //   string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase)
+                //       ? new AzureKeyCredential(settings.Credential.Key)
+                //       : null
+                var credentialAccess = new MemberExpression(
+                    new NullConditionalExpression(settingsParam), "Credential");
+                var credentialSourceProp = new MemberExpression(
+                    new NullConditionalExpression(credentialAccess), "CredentialSource");
+
+                var stringEqualsCall = Static(typeof(string)).Invoke("Equals", [
+                    credentialSourceProp,
+                    Literal("apikeycredential"),
+                    Static(typeof(StringComparison)).Property("OrdinalIgnoreCase")]);
+
+                // settings.Credential.Key (non-null path — we're inside the true branch of the ternary)
+                var keyAccess = new MemberExpression(
+                    new MemberExpression(settingsParam, "Credential"), "Key");
+                var newKeyCredential = New.Instance(AzureKeyCredentialType, [keyAccess]);
+
+                var keyCredentialArg = new TernaryConditionalExpression(
+                    stringEqualsCall,
+                    newKeyCredential,
+                    Null);
 
                 // New args: endpoint, keyCredential, ...otherParams, options
                 var newArgs = new List<ValueExpression>();
