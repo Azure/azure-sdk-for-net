@@ -78,7 +78,7 @@ If the author matches the bot allowlist, add "customer-reported" and "question" 
 
 ### Organization and Permission Checks
 
-If the author is not on the allowlist, perform these checks:
+If the author is not on the bot allowlist, perform these checks:
 
 **Check Azure organization membership**: Use the GitHub CLI to check if the user is a public member of the Azure organization:
 
@@ -96,7 +96,7 @@ gh api repos/${{ github.repository }}/collaborators/<AUTHOR_LOGIN>/permission --
 
 This returns one of: "admin", "write", "read", or "none"
 
-### Customer Decision
+### Author Decision
 
 ```
 IF the author matches the bot allowlist:
@@ -133,7 +133,7 @@ Analyze the issue title and body to determine appropriate labels
   - Example: Azure.Identity → "Azure.Identity"
   - Example: Azure.Provisioning.Storage → category "Provisioning", service "Storage"
   - Example: Azure.Provisioning (base library) → category "Provisioning", service "Provisioning"
-  - Non-service issues such as engineering systems, scripts, workflows, or pipelines in /eng → "Central-EngSys"
+  - Non-service issues such as engineering systems, scripts, workflows, or pipelines in /eng folder in this repository → "Central-EngSys"
 
 When selecting labels, use repository context and previously seen issues for guidance; do not run `gh label list` and only use labels that already exist in this repository
 
@@ -148,7 +148,7 @@ A prediction is confident — targeting 96% accuracy — when ALL of the followi
 - The prediction aligns with patterns seen in previously resolved issues; those with "customer-reported" and "issue-addressed" labels are good indicators of correct labeling
 - There is no reasonable doubt about either label
 
-When in doubt, prefer applying "needs-triage" for manual review over risking an incorrect assignment
+When the above criteria cannot be met, prefer applying "needs-triage" for manual review over risking an incorrect assignment
 
 ### Label Decision
 
@@ -165,7 +165,7 @@ ELSE:
 
 Non-customer (team member) issues receive only service and category labels; no assignment, no routing labels, no CODEOWNERS owner lookup
 
-## Step 4: Owner Lookup and Routing (Customer-Reported Only)
+## Step 4: Owner Lookup and Routing (is_customer Only)
 
 All issues reaching this step are customer-reported
 
@@ -185,9 +185,9 @@ The CODEOWNERS file contains `# ServiceLabel:` entries that associate one or mor
 
 **Matching uses bottom-to-top scanning with first-match-wins semantics:**
 
-1. Start from the END of the CODEOWNERS file and scan upward
+1. Start from the END of the CODEOWNERS file and scan each line upward
 2. For each `# ServiceLabel:` entry, check if ALL labels listed in it (after each `%`) are present in the issue's predicted labels
-3. STOP at the first entry where all its labels match — this is the winning entry
+3. STOP at the first entry where all its labels match — this is the matching entry
 4. Use the AzureSdkOwners and/or ServiceOwners from that entry and any adjacent owner lines
 
 **Why this matters:** The file is structured so that more specific multi-label entries (like `%Event Hubs %Mgmt`) appear later in the file than less specific entries (like `%Event Hubs` or the `%Mgmt` catch-all)
