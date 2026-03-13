@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default, ConfidentialLedgerNameUnavailableReason? reason = default, string message = default)
         {
             return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }

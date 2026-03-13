@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable, ConfidentialLedgerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public bool? IsNameAvailable { get; }
 
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public ConfidentialLedgerNameUnavailableReason? Reason { get; }
 
         /// <summary> Detailed reason why the given name is not available. </summary>
         public string Message { get; }

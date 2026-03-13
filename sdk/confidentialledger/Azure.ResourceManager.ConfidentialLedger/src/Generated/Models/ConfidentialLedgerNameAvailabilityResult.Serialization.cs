@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 return null;
             }
             bool? isNameAvailable = default;
-            CheckNameAvailabilityReason? reason = default;
+            ConfidentialLedgerNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(prop.Value.GetString());
+                    reason = new ConfidentialLedgerNameUnavailableReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
