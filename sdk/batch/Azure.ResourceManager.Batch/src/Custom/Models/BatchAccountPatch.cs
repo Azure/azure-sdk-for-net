@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    // Manually added back for completed compatibility
+    // Manually added back for backward compatibility
     public partial class BatchAccountPatch
     {
         /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>

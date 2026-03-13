@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    // Manually added back for completed compatibility
+    // Manually added back for backward compatibility
     public partial class BatchNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
