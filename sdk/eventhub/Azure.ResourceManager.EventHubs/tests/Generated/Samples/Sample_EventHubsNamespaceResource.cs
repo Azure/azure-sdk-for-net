@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsNamespaceFailover eventHubsNamespaceFailOver = new EventHubsNamespaceFailover
             {
                 PrimaryLocation = new AzureLocation("centralus"),
-                Force = true,
+                IsForced = true,
             };
             ArmOperation<EventHubsNamespaceFailover> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, eventHubsNamespaceFailOver);
             EventHubsNamespaceFailover result = lro.Value;
