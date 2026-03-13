@@ -699,7 +699,6 @@ namespace Azure.Generator.Management.Visitors
                             if (currentInternalProperty is not null)
                             {
                                 var properties = value.Where(x => flattenedProperties.Contains(x.FlattenedProperty)).ToList();
-
                                 var nestedModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[variable.Type] as ModelProvider;
                                 bool nestedHasPublicCtor = nestedModelType?.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)) == true;
                                 var conditionExpression = BuildConditionExpression(properties, publicConstructor: nestedHasPublicCtor);
