@@ -28,6 +28,9 @@ public class CredentialSettingsTests
     [TestCase("APIKEYCREDENTIAL", "apikeycredential")]
     [TestCase("TokenCredential", "tokencredential")]
     [TestCase("CustomCredential", "customcredential")]
+    [TestCase("ManagedIdentity", "managedidentity")]
+    [TestCase("ManagedIdentityCredential", "managedidentitycredential")]
+    [TestCase("AzureCli", "azurecli")]
     public void CredentialSource_NormalizesToLowercaseLongForm(string input, string expected)
     {
         CredentialSettings settings = new CredentialSettings(null!)
