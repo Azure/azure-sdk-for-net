@@ -14,7 +14,7 @@ namespace Azure.Storage
     /// </summary>
     internal static partial class StreamExtensions
     {
-        private const int DefaultCopyBufferSize = 81920; // Match original .NET Stream.CopyTo default buffer size
+        private const int DefaultCopyBufferSize = 81920; // default from .NET documentation
 
         public static async Task<int> ReadInternal(
             this Stream stream,
