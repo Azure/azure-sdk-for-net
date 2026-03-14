@@ -12,22 +12,22 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Extensions summary for virtual machines of a virtual machine scale set. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionsSummary
+    public partial class VirtualMachineScaleSetVmExtensionsSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionsSummary"/>. </summary>
-        internal VirtualMachineScaleSetVMExtensionsSummary()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsSummary"/>. </summary>
+        internal VirtualMachineScaleSetVmExtensionsSummary()
         {
             StatusesSummary = new ChangeTrackingList<VirtualMachineStatusCodeCount>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionsSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsSummary"/>. </summary>
         /// <param name="name"> The extension name. </param>
         /// <param name="statusesSummary"> The extensions information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVMExtensionsSummary(string name, IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmExtensionsSummary(string name, IReadOnlyList<VirtualMachineStatusCodeCount> statusesSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             StatusesSummary = statusesSummary;

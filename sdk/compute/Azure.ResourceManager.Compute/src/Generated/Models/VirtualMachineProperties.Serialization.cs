@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.Compute.Models
             SubResource availabilitySet = default;
             SubResource virtualMachineScaleSet = default;
             SubResource proximityPlacementGroup = default;
-            VirtualMachinePriorityTypes? priority = default;
-            VirtualMachineEvictionPolicyTypes? evictionPolicy = default;
+            VirtualMachinePriorityType? priority = default;
+            VirtualMachineEvictionPolicyType? evictionPolicy = default;
             BillingProfile billingProfile = default;
             SubResource host = default;
             SubResource hostGroup = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Compute.Models
             string vmId = default;
             string extensionsTimeBudget = default;
             int? platformFaultDomain = default;
-            ScheduledEventsProfile scheduledEventsProfile = default;
+            ComputeScheduledEventsProfile scheduledEventsProfile = default;
             string userData = default;
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    priority = new VirtualMachinePriorityTypes(prop.Value.GetString());
+                    priority = new VirtualMachinePriorityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evictionPolicy"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    evictionPolicy = new VirtualMachineEvictionPolicyTypes(prop.Value.GetString());
+                    evictionPolicy = new VirtualMachineEvictionPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingProfile"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(prop.Value, options);
+                    scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userData"u8))

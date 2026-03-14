@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.Compute.Models
             SupportedCapabilities supportedCapabilities = default;
             string familyId = default;
             string sourceUniqueId = default;
-            Encryption encryption = default;
+            DiskEncryption encryption = default;
             bool? supportsHibernation = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
             string diskAccessId = default;
             float? completionPercent = default;
             string replicationState = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(prop.Value, options);
+                    encryption = DiskEncryption.DeserializeDiskEncryption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("supportsHibernation"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DiskPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskAccessId"u8))

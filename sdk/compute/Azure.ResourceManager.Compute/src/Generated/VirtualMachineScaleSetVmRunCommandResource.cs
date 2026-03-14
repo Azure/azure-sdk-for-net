@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary>
     /// A class representing a VirtualMachineScaleSetVMRunCommand along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetVMRunCommandResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVMResource"/> using the GetVirtualMachineScaleSetVMRunCommands method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVmResource"/> using the GetVirtualMachineScaleSetVMRunCommands method.
     /// </summary>
     public partial class VirtualMachineScaleSetVMRunCommandResource : ArmResource
     {

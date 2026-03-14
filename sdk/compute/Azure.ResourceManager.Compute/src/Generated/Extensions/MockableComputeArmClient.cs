@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new VirtualMachineScaleSetResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RollingUpgradeStatusInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RollingUpgradeStatusInfoResource"/> object. </returns>
-        public virtual RollingUpgradeStatusInfoResource GetRollingUpgradeStatusInfoResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(ResourceIdentifier id)
         {
-            RollingUpgradeStatusInfoResource.ValidateResourceId(id);
-            return new RollingUpgradeStatusInfoResource(Client, id);
+            VirtualMachineScaleSetRollingUpgradeResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetRollingUpgradeResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new VirtualMachineScaleSetExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVMResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMResource"/> object. </returns>
-        public virtual VirtualMachineScaleSetVMResource GetVirtualMachineScaleSetVMResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVMResource.ValidateResourceId(id);
-            return new VirtualMachineScaleSetVMResource(Client, id);
+            VirtualMachineScaleSetVmResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetVmResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVMExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetVmExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMExtensionResource"/> object. </returns>
-        public virtual VirtualMachineScaleSetVMExtensionResource GetVirtualMachineScaleSetVMExtensionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetVmExtensionResource GetVirtualMachineScaleSetVmExtensionResource(ResourceIdentifier id)
         {
-            VirtualMachineScaleSetVMExtensionResource.ValidateResourceId(id);
-            return new VirtualMachineScaleSetVMExtensionResource(Client, id);
+            VirtualMachineScaleSetVmExtensionResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetVmExtensionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualMachineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -323,22 +323,22 @@ namespace Azure.ResourceManager.Compute.Mocking
             return new GalleryScriptVersionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GalleryInVMAccessControlProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GalleryInVmAccessControlProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GalleryInVMAccessControlProfileResource"/> object. </returns>
-        public virtual GalleryInVMAccessControlProfileResource GetGalleryInVMAccessControlProfileResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileResource"/> object. </returns>
+        public virtual GalleryInVmAccessControlProfileResource GetGalleryInVmAccessControlProfileResource(ResourceIdentifier id)
         {
-            GalleryInVMAccessControlProfileResource.ValidateResourceId(id);
-            return new GalleryInVMAccessControlProfileResource(Client, id);
+            GalleryInVmAccessControlProfileResource.ValidateResourceId(id);
+            return new GalleryInVmAccessControlProfileResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GalleryInVMAccessControlProfileVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GalleryInVmAccessControlProfileVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GalleryInVMAccessControlProfileVersionResource"/> object. </returns>
-        public virtual GalleryInVMAccessControlProfileVersionResource GetGalleryInVMAccessControlProfileVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileVersionResource"/> object. </returns>
+        public virtual GalleryInVmAccessControlProfileVersionResource GetGalleryInVmAccessControlProfileVersionResource(ResourceIdentifier id)
         {
-            GalleryInVMAccessControlProfileVersionResource.ValidateResourceId(id);
-            return new GalleryInVMAccessControlProfileVersionResource(Client, id);
+            GalleryInVmAccessControlProfileVersionResource.ValidateResourceId(id);
+            return new GalleryInVmAccessControlProfileVersionResource(Client, id);
         }
     }
 }

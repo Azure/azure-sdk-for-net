@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The restore point instance view. </param>
         /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointProperties(IList<ApiEntityReference> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeTypes? consistencyMode, DateTimeOffset? timeCreated, ApiEntityReference sourceRestorePoint, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointProperties(IList<ApiEntityReference> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, ApiEntityReference sourceRestorePoint, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get; }
 
         /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
-        public ConsistencyModeTypes? ConsistencyMode { get; set; }
+        public ConsistencyModeType? ConsistencyMode { get; set; }
 
         /// <summary> Gets the creation time of the restore point. </summary>
         public DateTimeOffset? TimeCreated { get; set; }

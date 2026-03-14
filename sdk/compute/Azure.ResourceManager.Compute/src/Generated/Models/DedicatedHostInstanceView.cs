@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
 
         /// <summary> The unutilized capacity of the dedicated host represented in terms of each VM size that is allowed to be deployed to the dedicated host. </summary>
-        public IList<DedicatedHostAllocatableVM> AvailableCapacityAllocatableVMs
+        public IList<DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs
         {
             get
             {

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-    internal partial class VirtualMachineScaleSetVmProperties
+    public partial class VirtualMachineScaleSetVmProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVMDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVMDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LatestModelApplied = latestModelApplied;
             VmId = vmId;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the network profile configuration of the virtual machine. </summary>
-        internal VirtualMachineScaleSetVMNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
+        internal VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
 
         /// <summary> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (NetworkProfileConfiguration is null)
                 {
-                    NetworkProfileConfiguration = new VirtualMachineScaleSetVMNetworkProfileConfiguration();
+                    NetworkProfileConfiguration = new VirtualMachineScaleSetVmNetworkProfileConfiguration();
                 }
                 return NetworkProfileConfiguration.NetworkInterfaceConfigurations;
             }

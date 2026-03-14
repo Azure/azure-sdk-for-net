@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
             string privacyStatementUri = default;
             string releaseNoteUri = default;
             OperatingSystemTypes osType = default;
-            OperatingSystemStateTypes osState = default;
+            OperatingSystemStateType osState = default;
             HyperVGeneration? hyperVGeneration = default;
             DateTimeOffset? endOfLifeOn = default;
             GalleryImageIdentifier identifier = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osState"u8))
                 {
-                    osState = prop.Value.GetString().ToOperatingSystemStateTypes();
+                    osState = prop.Value.GetString().ToOperatingSystemStateType();
                     continue;
                 }
                 if (prop.NameEquals("hyperVGeneration"u8))

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
-    internal partial class VirtualMachineScaleSetProperties : IJsonModel<VirtualMachineScaleSetProperties>
+    public partial class VirtualMachineScaleSetProperties : IJsonModel<VirtualMachineScaleSetProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
-            VirtualMachineScaleSetVMProfile virtualMachineProfile = default;
+            VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
             string provisioningState = default;
             bool? overprovision = default;
             bool? doNotRunExtensionsOnOverprovisionedVMs = default;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachineProfile = VirtualMachineScaleSetVMProfile.DeserializeVirtualMachineScaleSetVMProfile(prop.Value, options);
+                    virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

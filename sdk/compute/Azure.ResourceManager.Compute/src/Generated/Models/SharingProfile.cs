@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="communityGalleryInfo"> Information of community gallery if current gallery is shared to community. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharingProfile(GallerySharingPermissionTypes? permissions, IReadOnlyList<SharingProfileGroup> groups, CommunityGalleryInfo communityGalleryInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharingProfile(GallerySharingPermissionType? permissions, IReadOnlyList<SharingProfileGroup> groups, CommunityGalleryInfo communityGalleryInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Permissions = permissions;
             Groups = groups;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the permission of sharing gallery. Possible values are: <b>Private,</b> <b>Groups,</b> <b>Community.</b>. </summary>
-        public GallerySharingPermissionTypes? Permissions { get; set; }
+        public GallerySharingPermissionType? Permissions { get; set; }
 
         /// <summary> A list of sharing profile groups. </summary>
         public IReadOnlyList<SharingProfileGroup> Groups { get; }

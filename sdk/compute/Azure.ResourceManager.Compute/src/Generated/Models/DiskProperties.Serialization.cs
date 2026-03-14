@@ -293,18 +293,18 @@ namespace Azure.ResourceManager.Compute.Models
             HyperVGeneration? hyperVGeneration = default;
             DiskPurchasePlan purchasePlan = default;
             SupportedCapabilities supportedCapabilities = default;
-            CreationData creationData = default;
+            DiskCreationData creationData = default;
             int? diskSizeGB = default;
             long? diskSizeBytes = default;
             string uniqueId = default;
-            EncryptionSettingsCollection encryptionSettingsCollection = default;
+            EncryptionSettingsGroup encryptionSettingsCollection = default;
             string provisioningState = default;
             long? diskIOPSReadWrite = default;
             long? diskMBpsReadWrite = default;
             long? diskIOPSReadOnly = default;
             long? diskMBpsReadOnly = default;
             DiskState? diskState = default;
-            Encryption encryption = default;
+            DiskEncryption encryption = default;
             int? maxShares = default;
             IReadOnlyList<ShareInfoElement> shareInfo = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? supportsHibernation = default;
             DiskSecurityProfile securityProfile = default;
             float? completionPercent = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
             DateTimeOffset? lastOwnershipUpdateOn = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("creationData"u8))
                 {
-                    creationData = CreationData.DeserializeCreationData(prop.Value, options);
+                    creationData = DiskCreationData.DeserializeDiskCreationData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(prop.Value, options);
+                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(prop.Value, options);
+                    encryption = DiskEncryption.DeserializeDiskEncryption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("maxShares"u8))
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new DiskPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataAccessAuthMode"u8))

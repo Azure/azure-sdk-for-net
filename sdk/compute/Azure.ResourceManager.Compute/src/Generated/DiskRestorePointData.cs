@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of an incremental disk restore point. </param>
-        internal DiskRestorePointData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiskRestorePointProperties properties) : base(id, name, resourceType, systemData)
+        internal DiskRestorePointData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiskRestorePointProperties properties) : base(new ResourceIdentifier(id), name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption
+        public DiskEncryption Encryption
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess
+        public DiskPublicNetworkAccess? PublicNetworkAccess
         {
             get
             {

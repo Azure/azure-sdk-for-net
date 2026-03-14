@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a gallery inVMAccessControlProfile. </summary>
-    public partial class GalleryInVMAccessControlProfileProperties : GalleryResourceProfilePropertiesBase
+    public partial class GalleryInVmAccessControlProfileProperties : GalleryResourceProfilePropertiesBase
     {
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileProperties"/>. </summary>
         /// <param name="osType"> This property allows you to specify the OS type of the VMs/VMSS for which this profile can be used against. Possible values are: 'Windows' or 'Linux'. </param>
         /// <param name="applicableHostEndpoint"> This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'. </param>
-        public GalleryInVMAccessControlProfileProperties(OperatingSystemTypes osType, EndpointTypes applicableHostEndpoint)
+        public GalleryInVmAccessControlProfileProperties(OperatingSystemTypes osType, EndpointTypes applicableHostEndpoint)
         {
             OsType = osType;
             ApplicableHostEndpoint = applicableHostEndpoint;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> The description of this gallery inVMAccessControlProfile resources. This property is updatable. </param>
         /// <param name="osType"> This property allows you to specify the OS type of the VMs/VMSS for which this profile can be used against. Possible values are: 'Windows' or 'Linux'. </param>
         /// <param name="applicableHostEndpoint"> This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'. </param>
-        internal GalleryInVMAccessControlProfileProperties(GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, OperatingSystemTypes osType, EndpointTypes applicableHostEndpoint) : base(provisioningState, additionalBinaryDataProperties)
+        internal GalleryInVmAccessControlProfileProperties(GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, OperatingSystemTypes osType, EndpointTypes applicableHostEndpoint) : base(provisioningState, additionalBinaryDataProperties)
         {
             Description = description;
             OsType = osType;

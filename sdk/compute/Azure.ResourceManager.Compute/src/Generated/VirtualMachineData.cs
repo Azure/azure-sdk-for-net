@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
         /// <param name="eTag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
-        internal VirtualMachineData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, VirtualMachineIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string managedBy, string eTag, Placement placement) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, VirtualMachineIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string managedBy, string eTag, VirtualMachinePlacement placement) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
         public string ETag { get; }
 
         /// <summary> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </summary>
-        public Placement Placement { get; set; }
+        public VirtualMachinePlacement Placement { get; set; }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>
         public VirtualMachineHardwareProfile HardwareProfile
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </summary>
-        public VirtualMachinePriorityTypes? Priority
+        public VirtualMachinePriorityType? Priority
         {
             get
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy
+        public VirtualMachineEvictionPolicyType? EvictionPolicy
         {
             get
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile
+        public ComputeScheduledEventsProfile ScheduledEventsProfile
         {
             get
             {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {

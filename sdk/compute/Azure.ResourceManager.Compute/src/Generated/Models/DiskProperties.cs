@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DiskProperties"/>. </summary>
         /// <param name="creationData"> Disk source information. CreationData information cannot be changed after the disk has been created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
-        public DiskProperties(CreationData creationData)
+        public DiskProperties(DiskCreationData creationData)
         {
             Argument.AssertNotNull(creationData, nameof(creationData));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
         /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskProperties(DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskProperties(DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             OsType = osType;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SupportedCapabilities SupportedCapabilities { get; set; }
 
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
-        public CreationData CreationData { get; set; }
+        public DiskCreationData CreationData { get; set; }
 
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
         public int? DiskSizeGB { get; set; }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string UniqueId { get; }
 
         /// <summary> Encryption settings collection used for Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsCollection { get; set; }
 
         /// <summary> The disk provisioning state. </summary>
         public string ProvisioningState { get; }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskState? DiskState { get; }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption { get; set; }
+        public DiskEncryption Encryption { get; set; }
 
         /// <summary> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </summary>
         public int? MaxShares { get; set; }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
         public float? CompletionPercent { get; set; }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }

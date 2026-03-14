@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CommunityGalleryCollection : ArmCollection
     {
         private readonly ClientDiagnostics _communityGalleryClientDiagnostics;
-        private readonly CommunityGalleriesRestOperations _communityGalleryRestClient;
+        private readonly CommunityGalleries _communityGalleryRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CommunityGalleryCollection"/> class for mocking. </summary>
         protected CommunityGalleryCollection()
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         {
             _communityGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CommunityGalleryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CommunityGalleryResource.ResourceType, out string communityGalleryApiVersion);
-            _communityGalleryRestClient = new CommunityGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryApiVersion);
+            _communityGalleryRestClient = new CommunityGalleries(Diagnostics, Pipeline, Endpoint, communityGalleryApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

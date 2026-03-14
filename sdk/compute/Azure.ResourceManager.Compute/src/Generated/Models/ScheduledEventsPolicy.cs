@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Compute.Models
         internal AllInstancesDown AllInstancesDown { get; set; }
 
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
-        public bool? AutomaticallyApprove
+        public bool? AutomaticallyApproveRedeploy
         {
             get
             {
-                return UserInitiatedRedeploy is null ? default : UserInitiatedRedeploy.AutomaticallyApprove;
+                return UserInitiatedRedeploy is null ? default : UserInitiatedRedeploy.AutomaticallyApproveRedeploy;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     UserInitiatedRedeploy = new UserInitiatedRedeploy();
                 }
-                UserInitiatedRedeploy.AutomaticallyApprove = value;
+                UserInitiatedRedeploy.AutomaticallyApproveRedeploy = value;
             }
         }
 
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// Specifies if Scheduled Events should be auto-approved when all instances are down.
         /// its default value is true
         /// </summary>
-        public bool? AutomaticallyApprove
+        public bool? AutomaticallyApproveAllDown
         {
             get
             {
-                return AllInstancesDown is null ? default : AllInstancesDown.AutomaticallyApprove;
+                return AllInstancesDown is null ? default : AllInstancesDown.AutomaticallyApproveAllDown;
             }
             set
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     AllInstancesDown = new AllInstancesDown();
                 }
-                AllInstancesDown.AutomaticallyApprove = value;
+                AllInstancesDown.AutomaticallyApproveAllDown = value;
             }
         }
     }

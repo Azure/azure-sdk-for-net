@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVMExtensionPatch : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVmExtensionPatch : SubResourceReadOnly
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionPatch"/>. </summary>
-        public VirtualMachineScaleSetVMExtensionPatch()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionPatch"/>. </summary>
+        public VirtualMachineScaleSetVmExtensionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMExtensionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionPatch"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
-        internal VirtualMachineScaleSetVMExtensionPatch(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualMachineExtensionUpdateProperties properties) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualMachineExtensionUpdateProperties properties) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type
+        public string ExtensionType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ExtensionType;
             }
             set
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineExtensionUpdateProperties();
                 }
-                Properties.Type = value;
+                Properties.ExtensionType = value;
             }
         }
 
@@ -191,23 +191,6 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new VirtualMachineExtensionUpdateProperties();
                 }
                 Properties.SuppressFailures = value.Value;
-            }
-        }
-
-        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProtectedSettingsFromKeyVault;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionUpdateProperties();
-                }
-                Properties.ProtectedSettingsFromKeyVault = value;
             }
         }
     }

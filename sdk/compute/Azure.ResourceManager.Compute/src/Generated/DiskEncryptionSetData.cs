@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"></param>
         /// <param name="identity"> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </param>
-        internal DiskEncryptionSetData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, EncryptionSetProperties properties, EncryptionSetIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DiskEncryptionSetData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, EncryptionSetProperties properties, EncryptionSetIdentity identity) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </summary>
-        public ApiError AutoKeyRotationError
+        public ComputeApiError AutoKeyRotationError
         {
             get
             {

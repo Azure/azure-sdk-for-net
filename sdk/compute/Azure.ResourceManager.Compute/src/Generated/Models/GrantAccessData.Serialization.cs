@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
             AccessLevel access = default;
             int durationInSeconds = default;
             bool? getSecureVMGuestStateSAS = default;
-            FileFormat? fileFormat = default;
+            DiskImageFileFormat? fileFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    fileFormat = new FileFormat(prop.Value.GetString());
+                    fileFormat = new DiskImageFileFormat(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

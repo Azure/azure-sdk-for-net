@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class VirtualMachineScaleSetVMSGetAllCollectionResultOfT : Pageable<VirtualMachineScaleSetVMData>
+    internal partial class VirtualMachineScaleSetVMSGetAllCollectionResultOfT : Pageable<VirtualMachineScaleSetVmData>
     {
         private readonly VirtualMachineScaleSetVMS _client;
         private readonly string _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VirtualMachineScaleSetVMSGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualMachineScaleSetVMData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<VirtualMachineScaleSetVmData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Compute
                 {
                     yield break;
                 }
-                VirtualMachineScaleSetVMListResult result = VirtualMachineScaleSetVMListResult.FromResponse(response);
-                yield return Page<VirtualMachineScaleSetVMData>.FromValues((IReadOnlyList<VirtualMachineScaleSetVMData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                VirtualMachineScaleSetVmListResult result = VirtualMachineScaleSetVmListResult.FromResponse(response);
+                yield return Page<VirtualMachineScaleSetVmData>.FromValues((IReadOnlyList<VirtualMachineScaleSetVmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualMachineScaleSetName, _filter, _select, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _virtualMachineScaleSetName, _filter, _select, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetVMCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetVmCollection.GetAll");
             scope.Start();
             try
             {

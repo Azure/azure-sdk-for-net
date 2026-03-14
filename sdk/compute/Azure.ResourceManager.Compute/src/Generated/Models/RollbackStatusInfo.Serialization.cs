@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? successfullyRolledbackInstanceCount = default;
             int? failedRolledbackInstanceCount = default;
-            ApiError rollbackError = default;
+            ComputeApiError rollbackError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackError = ApiError.DeserializeApiError(prop.Value, options);
+                    rollbackError = ComputeApiError.DeserializeComputeApiError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

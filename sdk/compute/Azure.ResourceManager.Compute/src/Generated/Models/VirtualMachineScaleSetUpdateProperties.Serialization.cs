@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
-            VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default;
+            VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile = default;
             bool? overprovision = default;
             bool? doNotRunExtensionsOnOverprovisionedVMs = default;
             bool? singlePlacementGroup = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    virtualMachineProfile = VirtualMachineScaleSetUpdateVMProfile.DeserializeVirtualMachineScaleSetUpdateVMProfile(prop.Value, options);
+                    virtualMachineProfile = VirtualMachineScaleSetUpdateVmProfile.DeserializeVirtualMachineScaleSetUpdateVmProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overprovision"u8))

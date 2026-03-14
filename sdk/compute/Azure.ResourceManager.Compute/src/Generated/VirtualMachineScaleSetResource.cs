@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteInstancesAsync(WaitUntil waitUntil, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, bool? forceDeletion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteInstancesAsync(WaitUntil waitUntil, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vmInstanceIDs, nameof(vmInstanceIDs));
 
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVMInstanceRequiredIDs.ToRequestContent(vmInstanceIDs), forceDeletion, context);
+                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIDs), forceDeletion, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="forceDeletion"> Optional parameter to force delete virtual machines from the VM scale set. (Feature in Preview). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual ArmOperation DeleteInstances(WaitUntil waitUntil, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, bool? forceDeletion = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteInstances(WaitUntil waitUntil, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, bool? forceDeletion = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vmInstanceIDs, nameof(vmInstanceIDs));
 
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVMInstanceRequiredIDs.ToRequestContent(vmInstanceIDs), forceDeletion, context);
+                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIDs), forceDeletion, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2476,7 +2476,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateInstancesAsync(WaitUntil waitUntil, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateInstancesAsync(WaitUntil waitUntil, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vmInstanceIDs, nameof(vmInstanceIDs));
 
@@ -2488,7 +2488,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVMInstanceRequiredIDs.ToRequestContent(vmInstanceIDs), context);
+                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIDs), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2529,7 +2529,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="vmInstanceIDs"> A list of virtual machine instance IDs from the VM scale set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInstanceIDs"/> is null. </exception>
-        public virtual ArmOperation UpdateInstances(WaitUntil waitUntil, VirtualMachineScaleSetVMInstanceRequiredIDs vmInstanceIDs, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpdateInstances(WaitUntil waitUntil, VirtualMachineScaleSetVmInstanceRequiredIds vmInstanceIDs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(vmInstanceIDs, nameof(vmInstanceIDs));
 
@@ -2541,7 +2541,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVMInstanceRequiredIDs.ToRequestContent(vmInstanceIDs), context);
+                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIDs), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2831,11 +2831,11 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="RollingUpgradeStatusInfoResource"/> along with the instance operations that can be performed on it in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
-        /// <returns> Returns a <see cref="RollingUpgradeStatusInfoResource"/> object. </returns>
-        public virtual RollingUpgradeStatusInfoResource GetRollingUpgradeStatusInfo()
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> along with the instance operations that can be performed on it in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgrade()
         {
-            return new RollingUpgradeStatusInfoResource(Client, Id.AppendChildResource("rollingUpgrades", "latest"));
+            return new VirtualMachineScaleSetRollingUpgradeResource(Client, Id.AppendChildResource("rollingUpgrades", "latest"));
         }
 
         /// <summary> Gets a collection of VirtualMachineScaleSetExtensions in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
@@ -2873,11 +2873,11 @@ namespace Azure.ResourceManager.Compute
             return GetVirtualMachineScaleSetExtensions().Get(vmssExtensionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetVMs in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetVMs and their operations over a VirtualMachineScaleSetVMResource. </returns>
-        public virtual VirtualMachineScaleSetVMCollection GetVirtualMachineScaleSetVMs()
+        /// <summary> Gets a collection of VirtualMachineScaleSetVms in the <see cref="VirtualMachineScaleSetResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetVms and their operations over a VirtualMachineScaleSetVmResource. </returns>
+        public virtual VirtualMachineScaleSetVmCollection GetVirtualMachineScaleSetVms()
         {
-            return GetCachedClient(client => new VirtualMachineScaleSetVMCollection(client, Id));
+            return GetCachedClient(client => new VirtualMachineScaleSetVmCollection(client, Id));
         }
 
         /// <summary> Gets a virtual machine from a VM scale set. </summary>
@@ -2887,11 +2887,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineScaleSetVMResource>> GetVirtualMachineScaleSetVMAsync(string instanceId, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetVmResource>> GetVirtualMachineScaleSetVmAsync(string instanceId, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            return await GetVirtualMachineScaleSetVMs().GetAsync(instanceId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualMachineScaleSetVms().GetAsync(instanceId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a virtual machine from a VM scale set. </summary>
@@ -2901,11 +2901,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineScaleSetVMResource> GetVirtualMachineScaleSetVM(string instanceId, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVmResource> GetVirtualMachineScaleSetVm(string instanceId, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            return GetVirtualMachineScaleSetVMs().Get(instanceId, expand, cancellationToken);
+            return GetVirtualMachineScaleSetVms().Get(instanceId, expand, cancellationToken);
         }
     }
 }

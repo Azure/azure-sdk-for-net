@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (Models.VirtualMachineScaleSetScaleInRule item in Rules)
+                foreach (VirtualMachineScaleSetScaleInRule item in Rules)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<Models.VirtualMachineScaleSetScaleInRule> rules = default;
+            IList<VirtualMachineScaleSetScaleInRule> rules = default;
             bool? forceDeletion = default;
             bool? prioritizeUnhealthyVMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<Models.VirtualMachineScaleSetScaleInRule> array = new List<Models.VirtualMachineScaleSetScaleInRule>();
+                    List<VirtualMachineScaleSetScaleInRule> array = new List<VirtualMachineScaleSetScaleInRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new Models.VirtualMachineScaleSetScaleInRule(item.GetString()));
+                        array.Add(new VirtualMachineScaleSetScaleInRule(item.GetString()));
                     }
                     rules = array;
                     continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScaleInPolicy(rules ?? new ChangeTrackingList<Models.VirtualMachineScaleSetScaleInRule>(), forceDeletion, prioritizeUnhealthyVMs, additionalBinaryDataProperties);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, prioritizeUnhealthyVMs, additionalBinaryDataProperties);
         }
     }
 }

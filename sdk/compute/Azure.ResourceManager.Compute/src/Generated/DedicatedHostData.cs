@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the dedicated host. </param>
         /// <param name="sku"> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </param>
-        internal DedicatedHostData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostProperties properties, ComputeSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHostData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostProperties properties, ComputeSku sku) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
-        public DedicatedHostLicenseTypes? LicenseType
+        public DedicatedHostLicenseType? LicenseType
         {
             get
             {

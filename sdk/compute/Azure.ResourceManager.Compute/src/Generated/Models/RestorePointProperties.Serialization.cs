@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<ApiEntityReference> excludeDisks = default;
             RestorePointSourceMetadata sourceMetadata = default;
             string provisioningState = default;
-            ConsistencyModeTypes? consistencyMode = default;
+            ConsistencyModeType? consistencyMode = default;
             DateTimeOffset? timeCreated = default;
             ApiEntityReference sourceRestorePoint = default;
             RestorePointInstanceView instanceView = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    consistencyMode = new ConsistencyModeTypes(prop.Value.GetString());
+                    consistencyMode = new ConsistencyModeType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeCreated"u8))

@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             OperatingSystemTypes osType = default;
-            OperatingSystemStateTypes osState = default;
+            OperatingSystemStateType osState = default;
             DateTimeOffset? endOfLifeOn = default;
             CommunityGalleryImageIdentifier identifier = default;
             RecommendedMachineConfiguration recommended = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osState"u8))
                 {
-                    osState = prop.Value.GetString().ToOperatingSystemStateTypes();
+                    osState = prop.Value.GetString().ToOperatingSystemStateType();
                     continue;
                 }
                 if (prop.NameEquals("endOfLifeDate"u8))

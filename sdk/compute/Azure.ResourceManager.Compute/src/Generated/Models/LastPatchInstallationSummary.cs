@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ApiError Error { get; }
+        public ComputeApiError Error { get; }
     }
 }

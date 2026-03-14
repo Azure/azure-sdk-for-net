@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfile"/>. </summary>
         public ComputeSkuProfile()
         {
-            VmSizes = new ChangeTrackingList<Models.ComputeSkuProfileVmSize>();
+            VmSizes = new ChangeTrackingList<ComputeSkuProfileVmSize>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfile"/>. </summary>
         /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
         /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuProfile(IList<Models.ComputeSkuProfileVmSize> vmSizes, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             AllocationStrategy = allocationStrategy;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the VM sizes for the virtual machine scale set. </summary>
-        public IList<Models.ComputeSkuProfileVmSize> VmSizes { get; }
+        public IList<ComputeSkuProfileVmSize> VmSizes { get; }
 
         /// <summary> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </summary>
         public AllocationStrategy? AllocationStrategy { get; set; }

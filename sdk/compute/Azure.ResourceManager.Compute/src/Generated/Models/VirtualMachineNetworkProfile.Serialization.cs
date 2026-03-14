@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
-                foreach (Models.VirtualMachineNetworkInterfaceReference item in NetworkInterfaces)
+                foreach (VirtualMachineNetworkInterfaceReference item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue<Models.VirtualMachineNetworkInterfaceReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<Models.VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
+            IList<VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
             NetworkApiVersion? networkApiVersion = default;
             IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<Models.VirtualMachineNetworkInterfaceReference> array = new List<Models.VirtualMachineNetworkInterfaceReference>();
+                    List<VirtualMachineNetworkInterfaceReference> array = new List<VirtualMachineNetworkInterfaceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item, options));
+                        array.Add(VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<Models.VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
+            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

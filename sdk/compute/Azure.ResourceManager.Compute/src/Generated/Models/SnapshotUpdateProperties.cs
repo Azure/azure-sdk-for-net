@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsCollection encryptionSettingsCollection, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsCollection { get; set; }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption { get; set; }
+        public DiskEncryption Encryption { get; set; }
 
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? SupportsHibernation { get; set; }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }

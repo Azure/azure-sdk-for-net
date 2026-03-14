@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Dedicated Host Group Properties. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal DedicatedHostGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHostGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostGroupProperties properties, IList<string> zones) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -13,23 +13,23 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Gallery InVMAccessControlProfile Versions operation response. </summary>
-    internal partial class GalleryInVMAccessControlProfileVersionList
+    internal partial class GalleryInVmAccessControlProfileVersionList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionList"/>. </summary>
         /// <param name="value"> The GalleryInVMAccessControlProfileVersion items on this page. </param>
-        internal GalleryInVMAccessControlProfileVersionList(IEnumerable<GalleryInVMAccessControlProfileVersionData> value)
+        internal GalleryInVmAccessControlProfileVersionList(IEnumerable<GalleryInVmAccessControlProfileVersionData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionList"/>. </summary>
         /// <param name="value"> The GalleryInVMAccessControlProfileVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryInVMAccessControlProfileVersionList(IList<GalleryInVMAccessControlProfileVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryInVmAccessControlProfileVersionList(IList<GalleryInVmAccessControlProfileVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The GalleryInVMAccessControlProfileVersion items on this page. </summary>
-        public IList<GalleryInVMAccessControlProfileVersionData> Value { get; }
+        public IList<GalleryInVmAccessControlProfileVersionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

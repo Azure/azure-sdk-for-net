@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
             HyperVGenerationTypes? hyperVGeneration = default;
             DisallowedConfiguration disallowed = default;
             IList<VirtualMachineImageFeature> features = default;
-            ArchitectureTypes? architecture = default;
+            ArchitectureType? architecture = default;
             ImageDeprecationStatus imageDeprecationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    architecture = new ArchitectureTypes(prop.Value.GetString());
+                    architecture = new ArchitectureType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("imageDeprecationStatus"u8))

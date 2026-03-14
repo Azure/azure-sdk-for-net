@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
             string provisioningState = default;
             bool? rotationToLatestKeyVersionEnabled = default;
             DateTimeOffset? lastKeyRotationTimestamp = default;
-            ApiError autoKeyRotationError = default;
+            ComputeApiError autoKeyRotationError = default;
             string federatedClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    autoKeyRotationError = ApiError.DeserializeApiError(prop.Value, options);
+                    autoKeyRotationError = ComputeApiError.DeserializeComputeApiError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("federatedClientId"u8))

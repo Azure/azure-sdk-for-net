@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? publishedOn = default;
             DateTimeOffset? endOfLifeOn = default;
             StorageAccountType? storageAccountType = default;
-            ReplicationMode? replicationMode = default;
+            GalleryReplicationMode? replicationMode = default;
             IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             StorageAccountStrategy? storageAccountStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    replicationMode = new ReplicationMode(prop.Value.GetString());
+                    replicationMode = new GalleryReplicationMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetExtendedLocations"u8))

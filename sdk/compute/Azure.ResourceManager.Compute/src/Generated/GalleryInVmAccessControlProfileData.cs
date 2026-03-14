@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile that you want to create or update. </summary>
-    public partial class GalleryInVMAccessControlProfileData : TrackedResourceData
+    public partial class GalleryInVmAccessControlProfileData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public GalleryInVMAccessControlProfileData(AzureLocation location) : base(location)
+        public GalleryInVmAccessControlProfileData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a gallery inVMAccessControlProfile. </param>
-        internal GalleryInVMAccessControlProfileData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVMAccessControlProfileProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryInVmAccessControlProfileData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVmAccessControlProfileProperties properties) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Describes the properties of a gallery inVMAccessControlProfile. </summary>
-        public GalleryInVMAccessControlProfileProperties Properties { get; set; }
+        public GalleryInVmAccessControlProfileProperties Properties { get; set; }
     }
 }

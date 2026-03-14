@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </summary>
-    internal partial class SecurityPostureReference : IJsonModel<SecurityPostureReference>
+    public partial class SecurityPostureReference : IJsonModel<SecurityPostureReference>
     {
         /// <summary> Initializes a new instance of <see cref="SecurityPostureReference"/> for deserialization. </summary>
         internal SecurityPostureReference()

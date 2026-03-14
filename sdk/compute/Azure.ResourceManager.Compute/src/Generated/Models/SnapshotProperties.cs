@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
         /// <param name="creationData"> Disk source information. CreationData information cannot be changed after the disk has been created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
-        public SnapshotProperties(CreationData creationData)
+        public SnapshotProperties(DiskCreationData creationData)
         {
             Argument.AssertNotNull(creationData, nameof(creationData));
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
             OsType = osType;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SupportedCapabilities SupportedCapabilities { get; set; }
 
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
-        public CreationData CreationData { get; set; }
+        public DiskCreationData CreationData { get; set; }
 
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
         public int? DiskSizeGB { get; set; }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string UniqueId { get; }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsCollection { get; set; }
 
         /// <summary> The disk provisioning state. </summary>
         public string ProvisioningState { get; }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string IncrementalSnapshotFamilyId { get; }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption { get; set; }
+        public DiskEncryption Encryption { get; set; }
 
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? SupportsHibernation { get; set; }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Percentage complete for the background copy when a resource is created via the CopyStart operation. </summary>
         public float? CompletionPercent { get; set; }

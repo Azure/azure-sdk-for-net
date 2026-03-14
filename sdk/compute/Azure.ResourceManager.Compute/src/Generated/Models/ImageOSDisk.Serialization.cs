@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             OperatingSystemTypes osType = default;
-            OperatingSystemStateTypes osState = default;
+            OperatingSystemStateType osState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("snapshot"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osState"u8))
                 {
-                    osState = prop.Value.GetString().ToOperatingSystemStateTypes();
+                    osState = prop.Value.GetString().ToOperatingSystemStateType();
                     continue;
                 }
                 if (options.Format != "W")

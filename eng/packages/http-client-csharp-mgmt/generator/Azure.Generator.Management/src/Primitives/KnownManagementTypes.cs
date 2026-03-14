@@ -77,6 +77,7 @@ namespace Azure.Generator.Management.Primitives
 
         private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
+            [typeof(ResourceIdentifier)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(ResourceType)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(ExtendedLocationType)] = SerializeTypeWithToString,
             [typeof(ManagedServiceIdentityType)] = SerializeTypeWithToString,
@@ -84,6 +85,7 @@ namespace Azure.Generator.Management.Primitives
 
         private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
+            [typeof(ResourceIdentifier)] = DeserializeNewInstanceStringLikeType,
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
             [typeof(ExtendedLocationType)] = DeserializeNewInstanceStringLikeType,
             [typeof(ManagedServiceIdentityType)] = DeserializeNewInstanceStringLikeType,

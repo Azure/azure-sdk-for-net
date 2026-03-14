@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> capacity reservation group Properties. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal CapacityReservationGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CapacityReservationGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityReservationGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CapacityReservationGroupProperties properties, IList<string> zones) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-        public ReservationType? ReservationType
+        public CapacityReservationType? ReservationType
         {
             get
             {

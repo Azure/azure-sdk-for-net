@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
-        internal VirtualMachineExtensionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineExtensionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineExtensionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineExtensionProperties properties) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type
+        public string ExtensionType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ExtensionType;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineExtensionProperties();
                 }
-                Properties.Type = value;
+                Properties.ExtensionType = value;
             }
         }
 

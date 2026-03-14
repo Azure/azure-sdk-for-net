@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RollingUpgradeStatusInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetRollingUpgradeStatusInfoResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetRollingUpgradeResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RollingUpgradeStatusInfoResource"/> object. </returns>
-        public static RollingUpgradeStatusInfoResource GetRollingUpgradeStatusInfoResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> object. </returns>
+        public static VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetRollingUpgradeStatusInfoResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetRollingUpgradeResource(id);
         }
 
         /// <summary>
@@ -93,39 +93,39 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVMResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVMResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVmResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMResource"/> object. </returns>
-        public static VirtualMachineScaleSetVMResource GetVirtualMachineScaleSetVMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource"/> object. </returns>
+        public static VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVMResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVmResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVMExtensionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmExtensionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVMExtensionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVmExtensionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMExtensionResource"/> object. </returns>
-        public static VirtualMachineScaleSetVMExtensionResource GetVirtualMachineScaleSetVMExtensionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource"/> object. </returns>
+        public static VirtualMachineScaleSetVmExtensionResource GetVirtualMachineScaleSetVmExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVMExtensionResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVmExtensionResource(id);
         }
 
         /// <summary>
@@ -633,39 +633,39 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GalleryInVMAccessControlProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GalleryInVmAccessControlProfileResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryInVMAccessControlProfileResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryInVmAccessControlProfileResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GalleryInVMAccessControlProfileResource"/> object. </returns>
-        public static GalleryInVMAccessControlProfileResource GetGalleryInVMAccessControlProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileResource"/> object. </returns>
+        public static GalleryInVmAccessControlProfileResource GetGalleryInVmAccessControlProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetGalleryInVMAccessControlProfileResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryInVmAccessControlProfileResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GalleryInVMAccessControlProfileVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GalleryInVmAccessControlProfileVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryInVMAccessControlProfileVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryInVmAccessControlProfileVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GalleryInVMAccessControlProfileVersionResource"/> object. </returns>
-        public static GalleryInVMAccessControlProfileVersionResource GetGalleryInVMAccessControlProfileVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileVersionResource"/> object. </returns>
+        public static GalleryInVmAccessControlProfileVersionResource GetGalleryInVmAccessControlProfileVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeArmClient(client).GetGalleryInVMAccessControlProfileVersionResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryInVmAccessControlProfileVersionResource(id);
         }
 
         /// <summary>
@@ -2116,7 +2116,7 @@ namespace Azure.ResourceManager.Compute
         /// Gets all the VM scale sets under the specified subscription for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetByLocationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2124,18 +2124,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineScaleSetResource> GetByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetByLocationAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineScaleSetsByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Gets all the VM scale sets under the specified subscription for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetByLocation(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2143,18 +2143,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineScaleSetResource> GetByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetByLocation(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineScaleSetsByLocation(location, cancellationToken);
         }
 
         /// <summary>
         /// Gets all the virtual machines under the specified subscription for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetByLocationAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachinesByLocationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2162,18 +2162,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineResource> GetByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetByLocationAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Gets all the virtual machines under the specified subscription for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetByLocation(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachinesByLocation(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -2181,11 +2181,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineResource> GetByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetByLocation(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesByLocation(location, cancellationToken);
         }
 
         /// <summary>

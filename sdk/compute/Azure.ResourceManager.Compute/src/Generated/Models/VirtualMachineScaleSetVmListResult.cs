@@ -13,23 +13,23 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Virtual Machine Scale Set VMs operation response. </summary>
-    internal partial class VirtualMachineScaleSetVMListResult
+    internal partial class VirtualMachineScaleSetVmListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
-        internal VirtualMachineScaleSetVMListResult(IEnumerable<VirtualMachineScaleSetVMData> value)
+        internal VirtualMachineScaleSetVmListResult(IEnumerable<VirtualMachineScaleSetVmData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine scale sets VMs. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVMListResult(IList<VirtualMachineScaleSetVMData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmListResult(IList<VirtualMachineScaleSetVmData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of virtual machine scale sets VMs. </summary>
-        public IList<VirtualMachineScaleSetVMData> Value { get; }
+        public IList<VirtualMachineScaleSetVmData> Value { get; }
 
         /// <summary> The uri to fetch the next page of Virtual Machine Scale Set VMs. Call ListNext() with this to fetch the next page of VMSS VMs. </summary>
         public Uri NextLink { get; }

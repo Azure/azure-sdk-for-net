@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set OS profile. </summary>
-    internal partial class VirtualMachineScaleSetUpdateOSProfile : IJsonModel<VirtualMachineScaleSetUpdateOSProfile>
+    public partial class VirtualMachineScaleSetUpdateOSProfile : IJsonModel<VirtualMachineScaleSetUpdateOSProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

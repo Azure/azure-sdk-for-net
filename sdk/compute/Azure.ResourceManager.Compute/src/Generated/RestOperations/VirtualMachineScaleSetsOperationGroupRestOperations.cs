@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByLocationRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineScaleSetsByLocationRequest(string subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetVirtualMachineScaleSetsByLocationRequest(Uri nextPage, string subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

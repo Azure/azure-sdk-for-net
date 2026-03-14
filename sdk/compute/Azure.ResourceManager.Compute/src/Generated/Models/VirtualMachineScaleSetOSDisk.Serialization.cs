@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set operating system disk. </summary>
-    internal partial class VirtualMachineScaleSetOSDisk : IJsonModel<VirtualMachineScaleSetOSDisk>
+    public partial class VirtualMachineScaleSetOSDisk : IJsonModel<VirtualMachineScaleSetOSDisk>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetOSDisk"/> for deserialization. </summary>
         internal VirtualMachineScaleSetOSDisk()

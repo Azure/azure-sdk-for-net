@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineScaleSetVMRunCommandResource"/> and their operations.
-    /// Each <see cref="VirtualMachineScaleSetVMRunCommandResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetVMResource"/>.
-    /// To get a <see cref="VirtualMachineScaleSetVMRunCommandCollection"/> instance call the GetVirtualMachineScaleSetVMRunCommands method from an instance of <see cref="VirtualMachineScaleSetVMResource"/>.
+    /// Each <see cref="VirtualMachineScaleSetVMRunCommandResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetVmResource"/>.
+    /// To get a <see cref="VirtualMachineScaleSetVMRunCommandCollection"/> instance call the GetVirtualMachineScaleSetVMRunCommands method from an instance of <see cref="VirtualMachineScaleSetVmResource"/>.
     /// </summary>
     public partial class VirtualMachineScaleSetVMRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetVMRunCommandResource>, IAsyncEnumerable<VirtualMachineScaleSetVMRunCommandResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Compute
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VirtualMachineScaleSetVMResource.ResourceType)
+            if (id.ResourceType != VirtualMachineScaleSetVmResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineScaleSetVMResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualMachineScaleSetVmResource.ResourceType), id);
             }
         }
 

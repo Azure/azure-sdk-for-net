@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="getSecureVMGuestStateSAS"> Set this flag to true to get additional SAS for VM guest state. </param>
         /// <param name="fileFormat"> Used to specify the file format when making request for SAS on a VHDX file format snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrantAccessData(AccessLevel access, int durationInSeconds, bool? getSecureVMGuestStateSAS, FileFormat? fileFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrantAccessData(AccessLevel access, int durationInSeconds, bool? getSecureVMGuestStateSAS, DiskImageFileFormat? fileFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Access = access;
             DurationInSeconds = durationInSeconds;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? GetSecureVMGuestStateSAS { get; set; }
 
         /// <summary> Used to specify the file format when making request for SAS on a VHDX file format snapshot. </summary>
-        public FileFormat? FileFormat { get; set; }
+        public DiskImageFileFormat? FileFormat { get; set; }
     }
 }

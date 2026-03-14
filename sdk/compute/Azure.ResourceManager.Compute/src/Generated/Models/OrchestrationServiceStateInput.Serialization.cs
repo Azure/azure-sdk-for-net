@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OrchestrationServiceNames serviceName = default;
+            OrchestrationServiceName serviceName = default;
             OrchestrationServiceStateAction action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("serviceName"u8))
                 {
-                    serviceName = new OrchestrationServiceNames(prop.Value.GetString());
+                    serviceName = new OrchestrationServiceName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("action"u8))

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupProperties"/>. </summary>
         public ProximityPlacementGroupProperties()
         {
-            VirtualMachines = new ChangeTrackingList<SubResourceWithColocationStatus>();
-            VirtualMachineScaleSets = new ChangeTrackingList<SubResourceWithColocationStatus>();
-            AvailabilitySets = new ChangeTrackingList<SubResourceWithColocationStatus>();
+            VirtualMachines = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            VirtualMachineScaleSets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            AvailabilitySets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="colocationStatus"> Describes colocation status of the Proximity Placement Group. </param>
         /// <param name="intent"> Specifies the user intent of the proximity placement group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProximityPlacementGroupProperties(ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<SubResourceWithColocationStatus> virtualMachines, IReadOnlyList<SubResourceWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<SubResourceWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus, ProximityPlacementGroupPropertiesIntent intent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProximityPlacementGroupProperties(ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus, ProximityPlacementGroupPropertiesIntent intent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProximityPlacementGroupType = proximityPlacementGroupType;
             VirtualMachines = virtualMachines;
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Compute.Models
         public ProximityPlacementGroupType? ProximityPlacementGroupType { get; set; }
 
         /// <summary> A list of references to all virtual machines in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachines { get; } = new ChangeTrackingList<SubResourceWithColocationStatus>();
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachines { get; } = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
 
         /// <summary> A list of references to all virtual machine scale sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachineScaleSets { get; } = new ChangeTrackingList<SubResourceWithColocationStatus>();
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachineScaleSets { get; } = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
 
         /// <summary> A list of references to all availability sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> AvailabilitySets { get; } = new ChangeTrackingList<SubResourceWithColocationStatus>();
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> AvailabilitySets { get; } = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
 
         /// <summary> Describes colocation status of the Proximity Placement Group. </summary>
         public InstanceViewStatus ColocationStatus { get; set; }

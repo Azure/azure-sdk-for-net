@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="optimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
         /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsCollection encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsCollection { get; set; }
 
         /// <summary> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </summary>
         public long? DiskIOPSReadWrite { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? MaxShares { get; set; }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption { get; set; }
+        public DiskEncryption Encryption { get; set; }
 
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? SupportsHibernation { get; set; }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
         public DataAccessAuthMode? DataAccessAuthMode { get; set; }

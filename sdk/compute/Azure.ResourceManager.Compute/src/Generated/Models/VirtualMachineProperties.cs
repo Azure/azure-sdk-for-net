@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, SubResource host, SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, SubResource availabilitySet, SubResource virtualMachineScaleSet, SubResource proximityPlacementGroup, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, SubResource host, SubResource hostGroup, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Compute.Models
         internal SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </summary>
-        public VirtualMachinePriorityTypes? Priority { get; set; }
+        public VirtualMachinePriorityType? Priority { get; set; }
 
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyType? EvictionPolicy { get; set; }
 
         /// <summary> Specifies the billing related details of a Azure Spot virtual machine. Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomain { get; set; }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
 
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {

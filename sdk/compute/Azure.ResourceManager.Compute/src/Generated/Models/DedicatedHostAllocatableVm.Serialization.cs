@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Represents the dedicated host unutilized capacity in terms of a specific VM size. </summary>
-    public partial class DedicatedHostAllocatableVM : IJsonModel<DedicatedHostAllocatableVM>
+    public partial class DedicatedHostAllocatableVm : IJsonModel<DedicatedHostAllocatableVm>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DedicatedHostAllocatableVM PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DedicatedHostAllocatableVm PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVM>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVm>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDedicatedHostAllocatableVM(document.RootElement, options);
+                        return DeserializeDedicatedHostAllocatableVm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostAllocatableVM)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostAllocatableVm)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVM>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVm>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostAllocatableVM)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostAllocatableVm)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHostAllocatableVM>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DedicatedHostAllocatableVm>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHostAllocatableVM IPersistableModel<DedicatedHostAllocatableVM>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DedicatedHostAllocatableVm IPersistableModel<DedicatedHostAllocatableVm>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedHostAllocatableVM>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DedicatedHostAllocatableVm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DedicatedHostAllocatableVM>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DedicatedHostAllocatableVm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVM>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostAllocatableVM)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostAllocatableVm)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHostAllocatableVM IJsonModel<DedicatedHostAllocatableVM>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DedicatedHostAllocatableVm IJsonModel<DedicatedHostAllocatableVm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DedicatedHostAllocatableVM JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DedicatedHostAllocatableVm JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVM>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAllocatableVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostAllocatableVM)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostAllocatableVm)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHostAllocatableVM(document.RootElement, options);
+            return DeserializeDedicatedHostAllocatableVm(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DedicatedHostAllocatableVM DeserializeDedicatedHostAllocatableVM(JsonElement element, ModelReaderWriterOptions options)
+        internal static DedicatedHostAllocatableVm DeserializeDedicatedHostAllocatableVm(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DedicatedHostAllocatableVM(vmSize, count, additionalBinaryDataProperties);
+            return new DedicatedHostAllocatableVm(vmSize, count, additionalBinaryDataProperties);
         }
     }
 }

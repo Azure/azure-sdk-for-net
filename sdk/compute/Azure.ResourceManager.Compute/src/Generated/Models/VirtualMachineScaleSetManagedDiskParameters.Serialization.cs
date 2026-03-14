@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the parameters of a ScaleSet managed disk. </summary>
-    internal partial class VirtualMachineScaleSetManagedDiskParameters : IJsonModel<VirtualMachineScaleSetManagedDiskParameters>
+    public partial class VirtualMachineScaleSetManagedDiskParameters : IJsonModel<VirtualMachineScaleSetManagedDiskParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

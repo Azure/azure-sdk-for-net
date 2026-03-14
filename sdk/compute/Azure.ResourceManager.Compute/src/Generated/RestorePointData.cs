@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The restore point properties. </param>
-        internal RestorePointData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointProperties properties) : base(id, name, resourceType, systemData)
+        internal RestorePointData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointProperties properties) : base(new ResourceIdentifier(id), name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
-        public ConsistencyModeTypes? ConsistencyMode
+        public ConsistencyModeType? ConsistencyMode
         {
             get
             {

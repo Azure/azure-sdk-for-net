@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"></param>
         /// <param name="extendedLocation"> The extended location where the disk access will be created. Extended location cannot be changed. </param>
-        internal DiskAccessData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DiskAccessProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal DiskAccessData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DiskAccessProperties properties, ExtendedLocation extendedLocation) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of an Image. </param>
         /// <param name="extendedLocation"> The extended location of the Image. </param>
-        internal ImageData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ImageProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal ImageData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ImageProperties properties, ExtendedLocation extendedLocation) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

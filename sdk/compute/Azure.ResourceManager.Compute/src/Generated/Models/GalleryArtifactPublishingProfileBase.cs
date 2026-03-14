@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="storageAccountStrategy"> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, ReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, StorageAccountStrategy? storageAccountStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryArtifactPublishingProfileBase(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, StorageAccountStrategy? storageAccountStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetRegions = targetRegions;
             ReplicaCount = replicaCount;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         public StorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </summary>
-        public ReplicationMode? ReplicationMode { get; set; }
+        public GalleryReplicationMode? ReplicationMode { get; set; }
 
         /// <summary> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </summary>
         public IList<GalleryTargetExtendedLocation> TargetExtendedLocations { get; }

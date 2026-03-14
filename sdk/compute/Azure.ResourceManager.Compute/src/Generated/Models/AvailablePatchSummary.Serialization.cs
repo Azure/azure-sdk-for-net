@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? otherPatchCount = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? lastModifiedOn = default;
-            ApiError error = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(prop.Value, options);
+                    error = ComputeApiError.DeserializeComputeApiError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

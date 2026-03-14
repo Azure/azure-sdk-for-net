@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set VM Reimage Parameters. </summary>
-    public partial class VirtualMachineScaleSetReimageParameters : VirtualMachineScaleSetVMReimageParameters, IJsonModel<VirtualMachineScaleSetReimageParameters>
+    public partial class VirtualMachineScaleSetReimageParameters : VirtualMachineScaleSetVmReimageContent, IJsonModel<VirtualMachineScaleSetReimageParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

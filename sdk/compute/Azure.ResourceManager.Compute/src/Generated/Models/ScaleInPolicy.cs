@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ScaleInPolicy"/>. </summary>
         public ScaleInPolicy()
         {
-            Rules = new ChangeTrackingList<Models.VirtualMachineScaleSetScaleInRule>();
+            Rules = new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScaleInPolicy"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="forceDeletion"> This property allows you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.(Feature in Preview). </param>
         /// <param name="prioritizeUnhealthyVMs"> This property allows you to prioritize the deletion of unhealthy and inactive VMs when a virtual machine scale set is being scaled-in.(Feature in Preview). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleInPolicy(IList<Models.VirtualMachineScaleSetScaleInRule> rules, bool? forceDeletion, bool? prioritizeUnhealthyVMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScaleInPolicy(IList<VirtualMachineScaleSetScaleInRule> rules, bool? forceDeletion, bool? prioritizeUnhealthyVMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             ForceDeletion = forceDeletion;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The rules to be followed when scaling-in a virtual machine scale set. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; <b>Default</b> When a virtual machine scale set is scaled in, the scale set will first be balanced across zones if it is a zonal scale set. Then, it will be balanced across Fault Domains as far as possible. Within each Fault Domain, the virtual machines chosen for removal will be the newest ones that are not protected from scale-in. &lt;br&gt;&lt;br&gt; <b>OldestVM</b> When a virtual machine scale set is being scaled-in, the oldest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the oldest virtual machines that are not protected will be chosen for removal. &lt;br&gt;&lt;br&gt; <b>NewestVM</b> When a virtual machine scale set is being scaled-in, the newest virtual machines that are not protected from scale-in will be chosen for removal. For zonal virtual machine scale sets, the scale set will first be balanced across zones. Within each zone, the newest virtual machines that are not protected will be chosen for removal. &lt;br&gt;&lt;br&gt;. </summary>
-        public IList<Models.VirtualMachineScaleSetScaleInRule> Rules { get; }
+        public IList<VirtualMachineScaleSetScaleInRule> Rules { get; }
 
         /// <summary> This property allows you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.(Feature in Preview). </summary>
         public bool? ForceDeletion { get; set; }

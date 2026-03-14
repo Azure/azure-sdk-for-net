@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set VM Reimage Parameters. </summary>
-    public partial class VirtualMachineScaleSetReimageParameters : VirtualMachineScaleSetVMReimageParameters
+    public partial class VirtualMachineScaleSetReimageParameters : VirtualMachineScaleSetVmReimageContent
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetReimageParameters"/>. </summary>
         public VirtualMachineScaleSetReimageParameters()

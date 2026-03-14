@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CommunityGalleryImageCollection : ArmCollection, IEnumerable<CommunityGalleryImageResource>, IAsyncEnumerable<CommunityGalleryImageResource>
     {
         private readonly ClientDiagnostics _communityGalleryImageClientDiagnostics;
-        private readonly CommunityGalleryImagesRestOperations _communityGalleryImageRestClient;
+        private readonly CommunityGalleryImages _communityGalleryImageRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CommunityGalleryImageCollection"/> class for mocking. </summary>
         protected CommunityGalleryImageCollection()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             _communityGalleryImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CommunityGalleryImageResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CommunityGalleryImageResource.ResourceType, out string communityGalleryImageApiVersion);
-            _communityGalleryImageRestClient = new CommunityGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryImageApiVersion);
+            _communityGalleryImageRestClient = new CommunityGalleryImages(Diagnostics, Pipeline, Endpoint, communityGalleryImageApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the Architecture Type. </summary>
-        public ArchitectureTypes? Architecture
+        public ArchitectureType? Architecture
         {
             get
             {

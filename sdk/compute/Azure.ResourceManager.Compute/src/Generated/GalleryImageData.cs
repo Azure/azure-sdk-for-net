@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a gallery image definition. </param>
-        internal GalleryImageData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryImageProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryImageData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryImageProperties properties) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateTypes OsState
+        public OperatingSystemStateType OsState
         {
             get
             {

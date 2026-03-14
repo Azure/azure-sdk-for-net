@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateTypes OsState
+        public OperatingSystemStateType OsState
         {
             get
             {
@@ -62,15 +62,6 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties.EndOfLifeOn;
-            }
-        }
-
-        /// <summary> This is the gallery image definition identifier. </summary>
-        public GalleryImageIdentifier Identifier
-        {
-            get
-            {
-                return Properties.Identifier;
             }
         }
 

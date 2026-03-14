@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         private readonly ClientDiagnostics _communityGalleryClientDiagnostics;
-        private readonly CommunityGalleriesRestOperations _communityGalleryRestClient;
+        private readonly CommunityGalleries _communityGalleryRestClient;
         private readonly CommunityGalleryData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         {
             _communityGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string communityGalleryApiVersion);
-            _communityGalleryRestClient = new CommunityGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryApiVersion);
+            _communityGalleryRestClient = new CommunityGalleries(Diagnostics, Pipeline, Endpoint, communityGalleryApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

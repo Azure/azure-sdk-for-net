@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SharedGalleryImageVersionCollection : ArmCollection, IEnumerable<SharedGalleryImageVersionResource>, IAsyncEnumerable<SharedGalleryImageVersionResource>
     {
         private readonly ClientDiagnostics _sharedGalleryImageVersionClientDiagnostics;
-        private readonly SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionRestClient;
+        private readonly SharedGalleryImageVersions _sharedGalleryImageVersionRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersionCollection"/> class for mocking. </summary>
         protected SharedGalleryImageVersionCollection()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         {
             _sharedGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryImageVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedGalleryImageVersionResource.ResourceType, out string sharedGalleryImageVersionApiVersion);
-            _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryImageVersionApiVersion);
+            _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersions(Diagnostics, Pipeline, Endpoint, sharedGalleryImageVersionApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="advancedSettings"> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </param>
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with this Gallery Application Version. </param>
-        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, ReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, StorageAccountStrategy? storageAccountStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties, UserArtifactSource source, UserArtifactManage manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck, IList<GalleryApplicationCustomAction> customActions) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations, storageAccountStrategy, additionalBinaryDataProperties)
+        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, StorageAccountStrategy? storageAccountStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck, IList<GalleryApplicationCustomAction> customActions) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations, storageAccountStrategy, additionalBinaryDataProperties)
         {
             Source = source;
             ManageActions = manageActions;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         public UserArtifactSource Source { get; set; }
 
         /// <summary> Gets or sets the ManageActions. </summary>
-        public UserArtifactManage ManageActions { get; set; }
+        public UserArtifactManagement ManageActions { get; set; }
 
         /// <summary> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </summary>
         public UserArtifactSettings Settings { get; set; }

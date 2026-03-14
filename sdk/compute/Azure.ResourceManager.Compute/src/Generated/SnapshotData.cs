@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="managedBy"> Unused. Always Null. </param>
         /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
         /// <param name="extendedLocation"> The extended location where the snapshot will be created. Extended location cannot be changed. </param>
-        internal SnapshotData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SnapshotProperties properties, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal SnapshotData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SnapshotProperties properties, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
-        public CreationData CreationData
+        public DiskCreationData CreationData
         {
             get
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection
+        public EncryptionSettingsGroup EncryptionSettingsCollection
         {
             get
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption
+        public DiskEncryption Encryption
         {
             get
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess
+        public DiskPublicNetworkAccess? PublicNetworkAccess
         {
             get
             {

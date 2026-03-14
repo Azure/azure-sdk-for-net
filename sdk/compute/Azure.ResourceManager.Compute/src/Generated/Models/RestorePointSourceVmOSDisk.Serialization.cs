@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OperatingSystemType? osType = default;
+            SupportedOperatingSystemType? osType = default;
             DiskEncryptionSettings encryptionSettings = default;
             string name = default;
             CachingType? caching = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osType = new OperatingSystemType(prop.Value.GetString());
+                    osType = new SupportedOperatingSystemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionSettings"u8))

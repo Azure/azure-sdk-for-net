@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
-                foreach (VMGalleryApplication item in GalleryApplications)
+                foreach (VirtualMachineGalleryApplication item in GalleryApplications)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<VMGalleryApplication> galleryApplications = default;
+            IList<VirtualMachineGalleryApplication> galleryApplications = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<VMGalleryApplication> array = new List<VMGalleryApplication>();
+                    List<VirtualMachineGalleryApplication> array = new List<VirtualMachineGalleryApplication>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VMGalleryApplication.DeserializeVMGalleryApplication(item, options));
+                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item, options));
                     }
                     galleryApplications = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationProfile(galleryApplications ?? new ChangeTrackingList<VMGalleryApplication>(), additionalBinaryDataProperties);
+            return new ApplicationProfile(galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>(), additionalBinaryDataProperties);
         }
     }
 }

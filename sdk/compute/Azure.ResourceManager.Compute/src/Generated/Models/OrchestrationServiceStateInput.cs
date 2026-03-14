@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="OrchestrationServiceStateInput"/>. </summary>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="action"> The action to be performed. </param>
-        public OrchestrationServiceStateInput(OrchestrationServiceNames serviceName, OrchestrationServiceStateAction action)
+        public OrchestrationServiceStateInput(OrchestrationServiceName serviceName, OrchestrationServiceStateAction action)
         {
             ServiceName = serviceName;
             Action = action;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="action"> The action to be performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationServiceStateInput(OrchestrationServiceNames serviceName, OrchestrationServiceStateAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrchestrationServiceStateInput(OrchestrationServiceName serviceName, OrchestrationServiceStateAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             Action = action;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The name of the service. </summary>
-        public OrchestrationServiceNames ServiceName { get; }
+        public OrchestrationServiceName ServiceName { get; }
 
         /// <summary> The action to be performed. </summary>
         public OrchestrationServiceStateAction Action { get; }

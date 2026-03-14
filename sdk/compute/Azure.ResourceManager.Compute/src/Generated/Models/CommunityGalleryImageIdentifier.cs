@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the community gallery image definition identifier. </summary>
-    internal partial class CommunityGalleryImageIdentifier
+    public partial class CommunityGalleryImageIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

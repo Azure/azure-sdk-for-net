@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetResource> GetByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetByLocationAsyncCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationAsyncCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetResource> GetByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetByLocationCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineScaleSetResource(Client, data));
+            return new PageableWrapper<VirtualMachineScaleSetData, VirtualMachineScaleSetResource>(new VirtualMachineScaleSetsOperationGroupGetVirtualMachineScaleSetsByLocationCollectionResultOfT(VirtualMachineScaleSetsOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineScaleSetResource(Client, data));
         }
 
         /// <summary>
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineResource> GetByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetByLocationAsyncCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineResource(Client, data));
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationAsyncCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineResource> GetByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -1315,7 +1315,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetByLocationCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineResource(Client, data));
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesOperationGroupGetVirtualMachinesByLocationCollectionResultOfT(VirtualMachinesOperationGroupRestClient, Id.SubscriptionId, location, context), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>

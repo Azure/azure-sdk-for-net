@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         private readonly ClientDiagnostics _sharedGalleryClientDiagnostics;
-        private readonly SharedGalleriesRestOperations _sharedGalleryRestClient;
+        private readonly SharedGalleries _sharedGalleryRestClient;
         private readonly SharedGalleryData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         {
             _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sharedGalleryApiVersion);
-            _sharedGalleryRestClient = new SharedGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryApiVersion);
+            _sharedGalleryRestClient = new SharedGalleries(Diagnostics, Pipeline, Endpoint, sharedGalleryApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

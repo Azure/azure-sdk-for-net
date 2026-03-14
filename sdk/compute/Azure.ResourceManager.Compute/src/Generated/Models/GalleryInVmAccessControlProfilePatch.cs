@@ -11,26 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile that you want to update. </summary>
-    public partial class GalleryInVMAccessControlProfilePatch : UpdateResourceDefinition
+    public partial class GalleryInVmAccessControlProfilePatch : UpdateResourceDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfilePatch"/>. </summary>
-        public GalleryInVMAccessControlProfilePatch()
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfilePatch"/>. </summary>
+        public GalleryInVmAccessControlProfilePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfilePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfilePatch"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a gallery inVMAccessControlProfile. </param>
-        internal GalleryInVMAccessControlProfilePatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryInVMAccessControlProfileProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        internal GalleryInVmAccessControlProfilePatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryInVmAccessControlProfileProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Describes the properties of a gallery inVMAccessControlProfile. </summary>
-        public GalleryInVMAccessControlProfileProperties Properties { get; set; }
+        public GalleryInVmAccessControlProfileProperties Properties { get; set; }
     }
 }

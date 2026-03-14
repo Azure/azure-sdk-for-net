@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkProfile"/>. </summary>
         public VirtualMachineNetworkProfile()
         {
-            NetworkInterfaces = new ChangeTrackingList<Models.VirtualMachineNetworkInterfaceReference>();
+            NetworkInterfaces = new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>();
             NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkProfile(IList<Models.VirtualMachineNetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkProfile(IList<VirtualMachineNetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaces = networkInterfaces;
             NetworkApiVersion = networkApiVersion;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </summary>
-        public IList<Models.VirtualMachineNetworkInterfaceReference> NetworkInterfaces { get; }
+        public IList<VirtualMachineNetworkInterfaceReference> NetworkInterfaces { get; }
 
         /// <summary> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </summary>
         public NetworkApiVersion? NetworkApiVersion { get; set; }

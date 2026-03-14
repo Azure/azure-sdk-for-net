@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
         /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionSetProperties(DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ApiError autoKeyRotationError, string federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionSetProperties(DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ComputeApiError autoKeyRotationError, string federatedClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncryptionType = encryptionType;
             ActiveKey = activeKey;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? LastKeyRotationTimestamp { get; }
 
         /// <summary> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </summary>
-        public ApiError AutoKeyRotationError { get; }
+        public ComputeApiError AutoKeyRotationError { get; }
 
         /// <summary> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </summary>
         public string FederatedClientId { get; set; }

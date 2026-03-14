@@ -6,6 +6,7 @@
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> This is the gallery image definition identifier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
+        public new GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
         {
             Publisher = ImageIdentifier.Publisher,
             Offer = ImageIdentifier.Offer,

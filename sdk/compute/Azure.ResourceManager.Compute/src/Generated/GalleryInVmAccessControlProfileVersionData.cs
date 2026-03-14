@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery inVMAccessControlProfile version that you want to create or update. </summary>
-    public partial class GalleryInVMAccessControlProfileVersionData : TrackedResourceData
+    public partial class GalleryInVmAccessControlProfileVersionData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public GalleryInVMAccessControlProfileVersionData(AzureLocation location) : base(location)
+        public GalleryInVmAccessControlProfileVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of an inVMAccessControlProfile version. </param>
-        internal GalleryInVMAccessControlProfileVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVMAccessControlProfileVersionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryInVmAccessControlProfileVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVmAccessControlProfileVersionProperties properties) : base(new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Describes the properties of an inVMAccessControlProfile version. </summary>
-        internal GalleryInVMAccessControlProfileVersionProperties Properties { get; set; }
+        internal GalleryInVmAccessControlProfileVersionProperties Properties { get; set; }
 
         /// <summary> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </summary>
         public IList<TargetRegion> TargetLocations
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 return Properties.TargetLocations;
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.ExcludeFromLatest = value.Value;
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </summary>
-        public AccessControlRulesMode Mode
+        public GalleryInVmAccessControlRulesMode Mode
         {
             get
             {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.Mode = value;
             }
         }
 
         /// <summary> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </summary>
-        public EndpointAccess DefaultAccess
+        public ComputeGalleryEndpointAccess DefaultAccess
         {
             get
             {
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.DefaultAccess = value;
             }
         }
 
         /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
-        public AccessControlRules Rules
+        public GalleryInVmAccessControlRules Rules
         {
             get
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (Properties is null)
                 {
-                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                    Properties = new GalleryInVmAccessControlProfileVersionProperties();
                 }
                 Properties.Rules = value;
             }

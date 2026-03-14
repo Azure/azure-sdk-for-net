@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection
+        public EncryptionSettingsGroup EncryptionSettingsCollection
         {
             get
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption
+        public DiskEncryption Encryption
         {
             get
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Policy for controlling export on the disk. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess
+        public DiskPublicNetworkAccess? PublicNetworkAccess
         {
             get
             {

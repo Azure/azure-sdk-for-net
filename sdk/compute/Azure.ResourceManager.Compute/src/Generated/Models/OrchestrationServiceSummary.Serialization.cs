@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OrchestrationServiceNames? serviceName = default;
+            OrchestrationServiceName? serviceName = default;
             OrchestrationServiceState? serviceState = default;
             OrchestrationServiceOperationStatus? latestOperationStatus = default;
             DateTimeOffset? lastStatusChangeOn = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    serviceName = new OrchestrationServiceNames(prop.Value.GetString());
+                    serviceName = new OrchestrationServiceName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serviceState"u8))

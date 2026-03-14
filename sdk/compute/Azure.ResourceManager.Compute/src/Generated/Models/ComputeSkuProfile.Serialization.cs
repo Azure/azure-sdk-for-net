@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
-                foreach (Models.ComputeSkuProfileVmSize item in VmSizes)
+                foreach (ComputeSkuProfileVmSize item in VmSizes)
                 {
-                    writer.WriteObjectValue<Models.ComputeSkuProfileVmSize>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<Models.ComputeSkuProfileVmSize> vmSizes = default;
+            IList<ComputeSkuProfileVmSize> vmSizes = default;
             AllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<Models.ComputeSkuProfileVmSize> array = new List<Models.ComputeSkuProfileVmSize>();
+                    List<ComputeSkuProfileVmSize> array = new List<ComputeSkuProfileVmSize>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ComputeSkuProfileVmSize.DeserializeComputeSkuProfileVmSize(item, options));
+                        array.Add(ComputeSkuProfileVmSize.DeserializeComputeSkuProfileVmSize(item, options));
                     }
                     vmSizes = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<Models.ComputeSkuProfileVmSize>(), allocationStrategy, additionalBinaryDataProperties);
+            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>(), allocationStrategy, additionalBinaryDataProperties);
         }
     }
 }

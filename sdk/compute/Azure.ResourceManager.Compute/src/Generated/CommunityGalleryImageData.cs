@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateTypes OsState
+        public OperatingSystemStateType OsState
         {
             get
             {

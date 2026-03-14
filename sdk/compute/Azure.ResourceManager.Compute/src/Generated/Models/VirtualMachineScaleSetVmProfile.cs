@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
-    internal partial class VirtualMachineScaleSetVMProfile
+    public partial class VirtualMachineScaleSetVmProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMProfile"/>. </summary>
-        public VirtualMachineScaleSetVMProfile()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmProfile"/>. </summary>
+        public VirtualMachineScaleSetVmProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmProfile"/>. </summary>
         /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="securityPostureReference"> Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01. </param>
         /// <param name="timeCreated"> Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityTypes? priority, VirtualMachineEvictionPolicyTypes? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, ServiceArtifactReference serviceArtifactReference, SecurityPostureReference securityPostureReference, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, ServiceArtifactReference serviceArtifactReference, SecurityPostureReference securityPostureReference, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.Compute.Models
         public string LicenseType { get; set; }
 
         /// <summary> Specifies the priority for the virtual machines in the scale set. Minimum api-version: 2017-10-30-preview. </summary>
-        public VirtualMachinePriorityTypes? Priority { get; set; }
+        public VirtualMachinePriorityType? Priority { get; set; }
 
         /// <summary> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </summary>
-        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyType? EvictionPolicy { get; set; }
 
         /// <summary> Specifies the billing related details of a Azure Spot VMSS. Minimum api-version: 2019-03-01. </summary>
         internal BillingProfile BillingProfile { get; set; }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        public ScheduledEventsProfile ScheduledEventsProfile { get; set; }
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
 
         /// <summary> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VMGalleryApplication> GalleryApplications
+        public IList<VirtualMachineGalleryApplication> GalleryApplications
         {
             get
             {

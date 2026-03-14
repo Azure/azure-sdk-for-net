@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            GallerySharingPermissionTypes? permissions = default;
+            GallerySharingPermissionType? permissions = default;
             IReadOnlyList<SharingProfileGroup> groups = default;
             CommunityGalleryInfo communityGalleryInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    permissions = new GallerySharingPermissionTypes(prop.Value.GetString());
+                    permissions = new GallerySharingPermissionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("groups"u8))
