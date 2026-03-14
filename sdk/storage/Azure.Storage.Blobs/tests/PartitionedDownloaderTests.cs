@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Moq;
@@ -36,6 +37,12 @@ namespace Azure.Storage.Blobs.Test
             _async = async;
         }
 
+        /// <summary>
+        /// Verifies that downloading a zero-length blob succeeds and returns
+        /// a valid response. The first ranged request returns HTTP 416 (InvalidRange),
+        /// causing the downloader to retry without a range header and detect the
+        /// empty blob via ContentLength == 0.
+        /// </summary>
         [Test]
         public async Task ReturnsPropertiesForZeroLength()
         {
@@ -62,6 +69,11 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(result);
         }
 
+        /// <summary>
+        /// Verifies that a blob smaller than the initial transfer size is downloaded
+        /// in a single request (one-shot path) and the destination stream contains
+        /// the correct bytes.
+        /// </summary>
         [Test]
         public async Task DownloadsInOneBlockIfUnderLimit()
         {
@@ -82,6 +94,12 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(result);
         }
 
+        /// <summary>
+        /// Verifies that a blob larger than the maximum transfer size is split
+        /// into multiple range requests. With 100 bytes, InitialTransferLength=20,
+        /// and MaximumTransferLength=10, expects 9 requests (1 initial + 8 subsequent)
+        /// and correct byte content in the destination.
+        /// </summary>
         [Test]
         public async Task DownloadsInBlocksWhenOverTheLimit()
         {
@@ -107,6 +125,12 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(result);
         }
 
+        /// <summary>
+        /// Verifies that InitialTransferLength and MaximumTransferLength are
+        /// honored independently. The first request uses InitialTransferLength=10,
+        /// and subsequent requests use MaximumTransferLength=40, resulting in
+        /// 4 total requests for 100 bytes (10 + 40 + 40 + 10).
+        /// </summary>
         [Test]
         public async Task RespectsInitialTransferSizeBeforeDownloadingInBlocks()
         {
@@ -133,6 +157,13 @@ namespace Azure.Storage.Blobs.Test
             Assert.NotNull(result);
         }
 
+        /// <summary>
+        /// Verifies that the ETag from the initial download response is captured
+        /// and included as an IfMatch condition on all subsequent range requests.
+        /// This prevents reading inconsistent data if the blob is modified
+        /// mid-download. Also verifies that user-provided conditions (LeaseId,
+        /// IfModifiedSince, etc.) are forwarded on every request.
+        /// </summary>
         [Test]
         public async Task IncludesEtagInConditions()
         {
@@ -176,6 +207,10 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        /// <summary>
+        /// Verifies that an exception thrown by the first DownloadStreamingInternal
+        /// call propagates directly to the caller without being wrapped or swallowed.
+        /// </summary>
         [Test]
         public void SurfacesDownloadExceptions()
         {
@@ -274,6 +309,312 @@ namespace Azure.Storage.Blobs.Test
             return await downloader.DownloadToInternal(stream, s_conditions, _async, s_cancellationToken);
         }
 
+        /// <summary>
+        /// Verifies the end-to-end CRC64 checksum validation happy path for a
+        /// multi-block download. Each mock response includes a correct
+        /// x-ms-content-crc64 header computed from the range data. This exercises:
+        /// (1) per-partition checksum computation and comparison in both
+        /// BufferResponseAsync (async) and CopyToInternal (sync),
+        /// (2) master CRC composition via StorageCrc64Composer across partitions,
+        /// and (3) final master CRC validation in ValidateFinalCrc comparing the
+        /// composed CRC against an independently calculated whole-blob CRC.
+        /// </summary>
+        [Test]
+        public async Task DownloadsSuccessfullyWithCrc64Validation()
+        {
+            MemoryStream destination = new MemoryStream();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+
+            const int totalLength = 100;
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    var response = CreateResponseWithCrc64(range, totalLength);
+                    return async
+                        ? new ValueTask<Response<BlobDownloadStreamingResult>>(Task.Delay(25).ContinueWith(_ => response))
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(response);
+                });
+
+            DownloadTransferValidationOptions checksumValidation = new DownloadTransferValidationOptions()
+            {
+                AutoValidateChecksum = true,
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+            };
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: checksumValidation);
+
+            Response result = await InvokeDownloadToAsync(downloader, destination);
+
+            AssertContent(totalLength, destination);
+            Assert.NotNull(result);
+        }
+
+        /// <summary>
+        /// Verifies that all ArrayPool buffers are returned when the destination
+        /// stream throws during a write. In the async/multi-worker path, this
+        /// exercises the two-layer cleanup: ConsumeBufferedTask's finally block
+        /// returns the current task's buffer, and the outer finally block in
+        /// DownloadToInternal cleans up any remaining queued tasks.
+        /// </summary>
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnDestinationWriteFailure()
+        {
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            MockDataSource dataSource = new MockDataSource(100);
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+            SetupDownload(blockClient, dataSource);
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                arrayPool: trackingPool);
+
+            Assert.CatchAsync<IOException>(async () => await InvokeDownloadToAsync(downloader, new ThrowingDestinationStream()));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after destination write failure");
+        }
+
+        /// <summary>
+        /// Verifies buffer cleanup when the initial download succeeds but a
+        /// subsequent range request fails with an HTTP error (500). Unlike
+        /// SurfacesDownloadExceptions which fails on the first request, this
+        /// exercises the cleanup of mixed completed/in-flight tasks in the queue
+        /// when a later DownloadStreamingInternal call throws.
+        /// </summary>
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnLaterRangeFailure()
+        {
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            int requestCount = 0;
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    int current = Interlocked.Increment(ref requestCount);
+                    if (current > 1)
+                    {
+                        throw new RequestFailedException(500, "Internal Server Error");
+                    }
+                    return async
+                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                });
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                arrayPool: trackingPool);
+
+            Assert.CatchAsync<RequestFailedException>(async () => await InvokeDownloadToAsync(downloader, destination));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after later range HTTP failure");
+        }
+
+        /// <summary>
+        /// Verifies buffer cleanup when a CancellationToken is cancelled mid-download.
+        /// The token is cancelled in the mock callback for the second range request.
+        /// When BufferResponseAsync or CopyToInternal checks the token via
+        /// CancellationHelper.ThrowIfCancellationRequested, it throws
+        /// OperationCanceledException. All rented ArrayPool buffers must still
+        /// be returned despite the cancellation.
+        /// </summary>
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnCancellation()
+        {
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            CancellationTokenSource cts = new CancellationTokenSource();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            int requestCount = 0;
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                It.IsAny<CancellationToken>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    int current = Interlocked.Increment(ref requestCount);
+                    if (current > 1)
+                    {
+                        // Cancel the token before returning the response;
+                        // BufferResponseAsync/CopyToInternal will check it before reading.
+                        cts.Cancel();
+                    }
+                    return async
+                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                });
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                arrayPool: trackingPool);
+
+            Assert.CatchAsync<OperationCanceledException>(
+                async () => await downloader.DownloadToInternal(destination, s_conditions, _async, cts.Token));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after cancellation");
+        }
+
+        /// <summary>
+        /// Verifies that an IProgress&lt;long&gt; provided to the PartitionedDownloader
+        /// constructor receives progress reports during download. The constructor
+        /// wraps the user's handler in an AggregatingProgressIncrementer, which
+        /// accumulates incremental byte counts and reports cumulative totals.
+        /// The mock simulates the underlying client calling progress.Report()
+        /// for each range, and we verify the final reported value equals the
+        /// total bytes downloaded.
+        /// </summary>
+        [Test]
+        public async Task ReportsProgressDuringDownload()
+        {
+            MemoryStream destination = new MemoryStream();
+            TestProgress progress = new TestProgress();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progressArg, operationName, async, cancellation) =>
+                {
+                    long contentLength = Math.Min(range.Length ?? 0, 100);
+                    // Simulate the underlying client reporting progress
+                    progressArg?.Report(contentLength);
+
+                    var memoryStream = new MemoryStream();
+                    for (int i = 0; i < contentLength; i++)
+                        memoryStream.WriteByte((byte)(range.Offset + i));
+                    memoryStream.Position = 0;
+
+                    var response = Response.FromValue(new BlobDownloadStreamingResult()
+                    {
+                        Content = memoryStream,
+                        Details = new BlobDownloadDetails()
+                        {
+                            BlobType = BlobType.Page,
+                            ContentLength = contentLength,
+                            ContentType = "test",
+                            ContentHash = new byte[] { 1, 2, 3 },
+                            LastModified = DateTimeOffset.Now,
+                            Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                            ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/100",
+                            ETag = s_etag,
+                            ContentEncoding = "test",
+                            CacheControl = "test",
+                            ContentDisposition = "test",
+                            ContentLanguage = "test",
+                            BlobSequenceNumber = 12,
+                            CopyCompletedOn = DateTimeOffset.Now,
+                            CopyStatusDescription = "test",
+                            CopyId = "test",
+                            CopyProgress = "test",
+                            CopySource = new Uri("http://example.com"),
+                            CopyStatus = CopyStatus.Failed,
+                            LeaseDuration = LeaseDurationType.Fixed,
+                            LeaseState = LeaseState.Expired,
+                            LeaseStatus = LeaseStatus.Unlocked,
+                            AcceptRanges = "test",
+                            BlobCommittedBlockCount = 5,
+                            IsServerEncrypted = true,
+                            EncryptionKeySha256 = "test",
+                        }
+                    }, new MockResponse(200));
+
+                    return async
+                        ? new ValueTask<Response<BlobDownloadStreamingResult>>(Task.Delay(25).ContinueWith(_ => response))
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(response);
+                });
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                progress: progress);
+
+            Response result = await InvokeDownloadToAsync(downloader, destination);
+
+            AssertContent(100, destination);
+            Assert.NotNull(result);
+            // AggregatingProgressIncrementer reports cumulative totals to the inner handler.
+            // The final reported value should be the total bytes downloaded.
+            Assert.AreEqual(100, progress.LastReportedValue);
+        }
+
+        /// <summary>
+        /// Verifies that all ArrayPool buffers are returned when the response
+        /// stream throws IOException during ReadAsync. In the async path, this
+        /// exercises the catch block in BufferResponseAsync that returns both
+        /// the data buffer and checksum buffer before re-throwing. In the sync
+        /// path, CopyToInternal propagates the exception through the using block
+        /// that holds the rented checksum buffer.
+        /// </summary>
         [Test]
         public async Task ReturnsArrayPoolBuffersOnStreamReadException()
         {
@@ -357,6 +698,13 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after exception");
         }
 
+        /// <summary>
+        /// Verifies that all ArrayPool buffers are returned when per-partition
+        /// checksum validation fails. CRC64 validation is enabled but the mock
+        /// responses lack x-ms-content-crc64 headers, so the computed hash
+        /// (non-empty) never matches the empty response hash, triggering
+        /// InvalidDataException from Errors.HashMismatchOnStreamedDownload.
+        /// </summary>
         [Test]
         public async Task ReturnsArrayPoolBuffersOnChecksumMismatch()
         {
@@ -403,6 +751,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after checksum mismatch");
         }
 
+        /// <summary>
+        /// Verifies that all ArrayPool buffers are returned when the response
+        /// stream contains more data than the Content-Length header indicates.
+        /// This guard only exists in BufferResponseAsync (async/multi-worker path),
+        /// so the test is skipped for the sync fixture. An InfiniteStream always
+        /// returns data on read, filling the rented buffer and then producing an
+        /// extra byte on the overflow check, triggering InvalidOperationException.
+        /// </summary>
         [Test]
         public async Task ReturnsArrayPoolBuffersOnContentLengthOverflow()
         {
@@ -539,6 +895,88 @@ namespace Azure.Storage.Blobs.Test
                     buffer[i] = 0xAA;
                 return Task.FromResult(count);
             }
+        }
+
+        /// <summary>
+        /// A stream that throws IOException on any write operation, used to simulate
+        /// destination stream failures during download.
+        /// </summary>
+        private class ThrowingDestinationStream : MemoryStream
+        {
+            public override void Write(byte[] buffer, int offset, int count)
+                => throw new IOException("Simulated destination write failure");
+            public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+                => Task.FromException(new IOException("Simulated destination write failure"));
+        }
+
+        /// <summary>
+        /// Simple IProgress implementation that tracks reported values.
+        /// </summary>
+        private class TestProgress : IProgress<long>
+        {
+            public long LastReportedValue { get; private set; }
+            public int ReportCount { get; private set; }
+
+            public void Report(long value)
+            {
+                LastReportedValue = value;
+                ReportCount++;
+            }
+        }
+
+        /// <summary>
+        /// Creates a response with a valid CRC64 header matching the data content.
+        /// Data bytes follow the MockDataSource pattern: (byte)(range.Offset + i).
+        /// </summary>
+        private static Response<BlobDownloadStreamingResult> CreateResponseWithCrc64(HttpRange range, int totalLength)
+        {
+            int contentLength = (int)Math.Min(range.Length ?? 0, totalLength);
+
+            byte[] data = new byte[contentLength];
+            for (int i = 0; i < contentLength; i++)
+                data[i] = (byte)(range.Offset + i);
+
+            var crc = StorageCrc64HashAlgorithm.Create();
+            crc.Append(data);
+            byte[] crcHash = new byte[8];
+            crc.GetCurrentHash(crcHash);
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader("x-ms-content-crc64", Convert.ToBase64String(crcHash));
+
+            return Response.FromValue(new BlobDownloadStreamingResult()
+            {
+                Content = new MemoryStream(data),
+                Details = new BlobDownloadDetails()
+                {
+                    BlobType = BlobType.Page,
+                    ContentLength = contentLength,
+                    ContentType = "test",
+                    ContentHash = new byte[] { 1, 2, 3 },
+                    LastModified = DateTimeOffset.Now,
+                    Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                    ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/{totalLength}",
+                    ETag = s_etag,
+                    ContentEncoding = "test",
+                    CacheControl = "test",
+                    ContentDisposition = "test",
+                    ContentLanguage = "test",
+                    BlobSequenceNumber = 12,
+                    CopyCompletedOn = DateTimeOffset.Now,
+                    CopyStatusDescription = "test",
+                    CopyId = "test",
+                    CopyProgress = "test",
+                    CopySource = new Uri("http://example.com"),
+                    CopyStatus = CopyStatus.Failed,
+                    LeaseDuration = LeaseDurationType.Fixed,
+                    LeaseState = LeaseState.Expired,
+                    LeaseStatus = LeaseStatus.Unlocked,
+                    AcceptRanges = "test",
+                    BlobCommittedBlockCount = 5,
+                    IsServerEncrypted = true,
+                    EncryptionKeySha256 = "test",
+                }
+            }, mockResponse);
         }
 
         /// <summary>
