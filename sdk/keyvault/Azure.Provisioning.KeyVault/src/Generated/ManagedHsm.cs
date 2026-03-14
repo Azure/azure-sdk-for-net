@@ -27,7 +27,7 @@ namespace Azure.Provisioning.KeyVault
         /// <summary> Creates a new ManagedHsm. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ManagedHsm(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2026-03-01-preview")
+        public ManagedHsm(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -172,10 +172,6 @@ namespace Azure.Provisioning.KeyVault
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-03-01-preview". </summary>
-            public static readonly string V2026_03_01_preview = "2026-03-01-preview";
-            /// <summary> API version "2026-02-01". </summary>
-            public static readonly string V2026_02_01 = "2026-02-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }
