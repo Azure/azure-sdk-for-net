@@ -48,7 +48,8 @@ import {
   postProcessArmResources,
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
-  calculateResourceTypeFromPath
+  calculateResourceTypeFromPath,
+  resolveResourceApiVersions
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
@@ -91,6 +92,20 @@ export function resolveArmResources(
     ResolvedResource
   >();
 
+  // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
+  // so that we can efficiently resolve per-resource API versions
+  const methodApiVersionsMap = new Map<string, string[]>();
+  for (const client of getAllSdkClients(sdkContext)) {
+    for (const method of client.methods) {
+      if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
+        methodApiVersionsMap.set(
+          method.crossLanguageDefinitionId,
+          method.apiVersions
+        );
+      }
+    }
+  }
+
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
       // Get the model from SDK context
@@ -113,7 +128,8 @@ export function resolveArmResources(
       const metadata = convertResolvedResourceToMetadata(
         program,
         sdkContext,
-        resolvedResource
+        resolvedResource,
+        methodApiVersionsMap
       );
 
       const resource = {
@@ -258,7 +274,8 @@ export function resolveArmResources(
 function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
-  resolvedResource: ResolvedResource
+  resolvedResource: ResolvedResource,
+  methodApiVersionsMap: Map<string, string[]>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -395,6 +412,9 @@ function convertResolvedResourceToMetadata(
     maxLength: nameProperty ? getMaxLength(program, nameProperty) : undefined
   };
 
+  // Collect API versions from the resource's Create method (preferred) or Read method
+  const apiVersions = resolveResourceApiVersions(methods, methodApiVersionsMap);
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -409,7 +429,8 @@ function convertResolvedResourceToMetadata(
       resolvedResource.resourceInstancePath
     ),
     resourceName: resourceName,
-    nameConstraints
+    nameConstraints,
+    apiVersions
   };
 }
 

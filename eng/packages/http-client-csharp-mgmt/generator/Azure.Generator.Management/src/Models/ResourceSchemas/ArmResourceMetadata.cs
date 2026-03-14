@@ -19,6 +19,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="ParentResourceId"> The parent resource ID pattern, if applicable. </param>
 /// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
+/// <param name="ApiVersions"> The API versions that this resource is available in. </param>
 public record ArmResourceMetadata(
     string ResourceIdPattern,
     string ResourceName,
@@ -29,7 +30,8 @@ public record ArmResourceMetadata(
     string? SingletonResourceName,
     string? ParentResourceId,
     IReadOnlyList<string> ChildResourceIds,
-    ArmResourceNameConstraints NameConstraints)
+    ArmResourceNameConstraints NameConstraints,
+    IReadOnlyList<string> ApiVersions)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
@@ -90,6 +92,19 @@ public record ArmResourceMetadata(
             nameConstraints = ArmResourceNameConstraints.DeserializeNameConstraints(nameConstraintsElement);
         }
 
+        var apiVersions = new List<string>();
+        if (element.TryGetProperty("apiVersions", out var apiVersionsElement))
+        {
+            foreach (var item in apiVersionsElement.EnumerateArray())
+            {
+                var version = item.GetString();
+                if (version is not null)
+                {
+                    apiVersions.Add(version);
+                }
+            }
+        }
+
         return new(
             resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
             resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
@@ -100,6 +115,7 @@ public record ArmResourceMetadata(
             singletonResourceName,
             parentResource,
             childResourceIds,
-            nameConstraints);
+            nameConstraints,
+            apiVersions);
     }
 }

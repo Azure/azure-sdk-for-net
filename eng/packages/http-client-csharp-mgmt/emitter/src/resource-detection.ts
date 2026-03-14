@@ -19,7 +19,8 @@ import {
   convertArmProviderSchemaToArguments,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  resolveResourceApiVersions
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -283,7 +284,8 @@ export function buildArmProviderSchema(
           parentResourceModelId: undefined,
           // Use model name as default; will be updated later if multiple paths exist
           resourceName: model?.name ?? "Unknown",
-          nameConstraints: {}
+          nameConstraints: {},
+          apiVersions: []
         } as ResourceMetadata;
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
@@ -513,6 +515,10 @@ export function buildArmProviderSchema(
   }
 
   // Extract name constraints (@pattern, @minLength, @maxLength) from the resource model's "name" property
+  // and collect per-resource API versions
+  const methodApiVersionsMap = new Map<string, string[]>(
+    Array.from(serviceMethods.entries()).map(([id, m]) => [id, m.apiVersions])
+  );
   for (const resource of filteredResources) {
     const sdkModel = models.get(resource.resourceModelId);
     const typespecModel = sdkModel?.__raw as Model | undefined;
@@ -529,6 +535,11 @@ export function buildArmProviderSchema(
         ? getMaxLength(sdkContext.program, nameProperty)
         : undefined
     };
+
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.
