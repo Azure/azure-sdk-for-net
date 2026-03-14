@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -271,6 +272,133 @@ namespace Azure.Storage.Blobs.Test
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
         {
             return await downloader.DownloadToInternal(stream, s_conditions, _async, s_cancellationToken);
+        }
+
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnStreamReadException()
+        {
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            int requestCount = 0;
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    int current = Interlocked.Increment(ref requestCount);
+                    if (current > 1)
+                    {
+                        // Return a response whose stream throws on read
+                        long contentLength = Math.Min(range.Length ?? 0, 100);
+                        return new ValueTask<Response<BlobDownloadStreamingResult>>(
+                            Response.FromValue(new BlobDownloadStreamingResult()
+                            {
+                                Content = new ThrowingStream(),
+                                Details = new BlobDownloadDetails()
+                                {
+                                    BlobType = BlobType.Page,
+                                    ContentLength = contentLength,
+                                    ContentType = "test",
+                                    ContentHash = new byte[] { 1, 2, 3 },
+                                    LastModified = DateTimeOffset.Now,
+                                    Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                                    ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/100",
+                                    ETag = s_etag,
+                                    ContentEncoding = "test",
+                                    CacheControl = "test",
+                                    ContentDisposition = "test",
+                                    ContentLanguage = "test",
+                                    BlobSequenceNumber = 12,
+                                    CopyCompletedOn = DateTimeOffset.Now,
+                                    CopyStatusDescription = "test",
+                                    CopyId = "test",
+                                    CopyProgress = "test",
+                                    CopySource = new Uri("http://example.com"),
+                                    CopyStatus = CopyStatus.Failed,
+                                    LeaseDuration = LeaseDurationType.Fixed,
+                                    LeaseState = LeaseState.Expired,
+                                    LeaseStatus = LeaseStatus.Unlocked,
+                                    AcceptRanges = "test",
+                                    BlobCommittedBlockCount = 5,
+                                    IsServerEncrypted = true,
+                                    EncryptionKeySha256 = "test",
+                                }
+                            }, new MockResponse(200)));
+                    }
+                    // First request returns normal data
+                    return async
+                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                });
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                arrayPool: trackingPool);
+
+            Assert.ThrowsAsync<IOException>(async () => await InvokeDownloadToAsync(downloader, destination));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after exception");
+        }
+
+        /// <summary>
+        /// A stream that throws IOException on any read operation, used to simulate
+        /// download failures in BufferResponseAsync.
+        /// </summary>
+        private class ThrowingStream : Stream
+        {
+            public override bool CanRead => true;
+            public override bool CanSeek => false;
+            public override bool CanWrite => false;
+            public override long Length => 0;
+            public override long Position { get; set; }
+            public override void Flush() { }
+            public override int Read(byte[] buffer, int offset, int count) => throw new IOException("Simulated read failure");
+            public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+            public override void SetLength(long value) => throw new NotSupportedException();
+            public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+            public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+                => Task.FromException<int>(new IOException("Simulated read failure"));
+        }
+
+        /// <summary>
+        /// An ArrayPool wrapper that tracks outstanding rentals to verify proper cleanup.
+        /// </summary>
+        private class TrackingArrayPool : ArrayPool<byte>
+        {
+            private readonly ArrayPool<byte> _inner = ArrayPool<byte>.Shared;
+            private int _rentCount;
+            private int _returnCount;
+
+            public int OutstandingRentals => _rentCount - _returnCount;
+
+            public override byte[] Rent(int minimumLength)
+            {
+                Interlocked.Increment(ref _rentCount);
+                return _inner.Rent(minimumLength);
+            }
+
+            public override void Return(byte[] array, bool clearArray = false)
+            {
+                Interlocked.Increment(ref _returnCount);
+                _inner.Return(array, clearArray);
+            }
         }
 
         private class MockDataSource
