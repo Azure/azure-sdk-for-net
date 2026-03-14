@@ -270,7 +270,6 @@ stages:
                       parameters:
                         paths:
                           - /sdk
-                          - '!**/*.cs'
 
                     - template: /eng/pipelines/templates/steps/install-dotnet.yml
                       parameters:
@@ -278,6 +277,13 @@ stages:
                     - pwsh: |
                         eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -SkipCpmUpdate $false
                       displayName: Increment package version
+                    # Re-export API listings because preview feature flags can add
+                    # APIs in beta that are absent in GA. When the version bumps
+                    # from e.g. 1.0.0 to 1.1.0-beta.1 the public API surface may
+                    # change, so the listing files need to be regenerated.
+                    - pwsh: |
+                        eng/scripts/Export-API.ps1 '${{ parameters.ServiceDirectory }}'
+                      displayName: Export API listings
                     - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                       parameters:
                         RepoName: azure-sdk-for-net

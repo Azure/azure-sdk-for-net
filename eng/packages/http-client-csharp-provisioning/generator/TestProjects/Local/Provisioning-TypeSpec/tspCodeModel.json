@@ -2327,7 +2327,14 @@
           "readOnly": true,
           "discriminator": false,
           "flatten": false,
-          "decorators": [],
+          "decorators": [
+            {
+              "name": "TypeSpec.@pattern",
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
+            }
+          ],
           "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStore.name",
           "serializationOptions": {
             "json": {
@@ -2847,7 +2854,14 @@
           "readOnly": true,
           "discriminator": false,
           "flatten": false,
-          "decorators": [],
+          "decorators": [
+            {
+              "name": "TypeSpec.@pattern",
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
+            }
+          ],
           "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValue.name",
           "serializationOptions": {
             "json": {
@@ -3016,7 +3030,16 @@
           "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.apiVersion",
           "readOnly": false,
           "access": "public",
-          "decorators": []
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ]
         }
       ],
       "initializedBy": 1,
@@ -3082,7 +3105,10 @@
                   }
                 ],
                 "resourceScope": "ResourceGroup",
-                "resourceName": "ConfigurationStore"
+                "resourceName": "ConfigurationStore",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                }
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.KeyValue",
@@ -3124,7 +3150,10 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ProvisioningTypeSpec/configurationStores/{configurationStoreName}",
-                "resourceName": "KeyValue"
+                "resourceName": "KeyValue",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                }
               }
             ],
             "nonResourceMethods": [
@@ -3190,7 +3219,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -3385,7 +3423,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -3418,7 +3465,16 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.apiVersion",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -3449,7 +3505,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
@@ -3480,7 +3545,16 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.subscriptionId",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -3504,7 +3578,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
@@ -3528,7 +3625,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -3552,7 +3672,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.configurationStoreName",
                     "methodParameterSegments": [
@@ -3576,7 +3703,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -3860,7 +3994,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -3896,7 +4039,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.subscriptionId",
                     "methodParameterSegments": [
@@ -3925,7 +4077,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.resourceGroupName",
                     "methodParameterSegments": [
@@ -3949,7 +4124,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -3973,7 +4171,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.configurationStoreName",
                     "methodParameterSegments": [
@@ -3997,7 +4202,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -4146,7 +4358,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -4182,7 +4403,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.subscriptionId",
                     "methodParameterSegments": [
@@ -4211,7 +4441,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.resourceGroupName",
                     "methodParameterSegments": [
@@ -4235,7 +4488,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -4259,7 +4535,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.configurationStoreName",
                     "methodParameterSegments": [
@@ -4283,7 +4566,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -4561,7 +4851,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -4597,7 +4896,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.subscriptionId",
                     "methodParameterSegments": [
@@ -4626,7 +4934,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.resourceGroupName",
                     "methodParameterSegments": [
@@ -4650,7 +4981,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -4674,7 +5028,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.configurationStoreName",
                     "methodParameterSegments": [
@@ -4698,7 +5059,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.delete.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   }
@@ -4839,7 +5207,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -4875,7 +5252,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.subscriptionId",
                     "methodParameterSegments": [
@@ -4904,7 +5290,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.resourceGroupName",
                     "methodParameterSegments": [
@@ -4928,7 +5337,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5089,7 +5521,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -5125,7 +5566,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription.subscriptionId",
                     "methodParameterSegments": [
@@ -5346,7 +5796,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -5379,7 +5838,16 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.apiVersion",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5410,7 +5878,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.subscriptionId",
                     "methodParameterSegments": [
@@ -5441,7 +5918,16 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.subscriptionId",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5465,7 +5951,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.resourceGroupName",
                     "methodParameterSegments": [
@@ -5489,7 +5998,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5513,7 +6045,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.configurationStoreName",
                     "methodParameterSegments": [
@@ -5537,7 +6076,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5561,7 +6107,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.keyValueName",
                     "methodParameterSegments": [
@@ -5585,7 +6138,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.keyValueName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5823,7 +6383,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -5859,7 +6428,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.subscriptionId",
                     "methodParameterSegments": [
@@ -5888,7 +6466,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.resourceGroupName",
                     "methodParameterSegments": [
@@ -5912,7 +6513,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5936,7 +6560,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.configurationStoreName",
                     "methodParameterSegments": [
@@ -5960,7 +6591,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -5984,7 +6622,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.keyValueName",
                     "methodParameterSegments": [
@@ -6008,7 +6653,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.keyValueName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -6160,7 +6812,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -6196,7 +6857,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.subscriptionId",
                     "methodParameterSegments": [
@@ -6225,7 +6895,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.resourceGroupName",
                     "methodParameterSegments": [
@@ -6249,7 +6942,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -6273,7 +6989,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.configurationStoreName",
                     "methodParameterSegments": [
@@ -6297,7 +7020,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -6321,7 +7051,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.keyValueName",
                     "methodParameterSegments": [
@@ -6345,7 +7082,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.delete.keyValueName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   }
@@ -6456,7 +7200,16 @@
                     },
                     "optional": false,
                     "scope": "Client",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.apiVersion",
                     "readOnly": false,
                     "methodParameterSegments": [
@@ -6492,7 +7245,16 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.subscriptionId",
                     "methodParameterSegments": [
@@ -6521,7 +7283,30 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.resourceGroupName",
                     "methodParameterSegments": [
@@ -6545,7 +7330,30 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.resourceGroupName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
@@ -6569,7 +7377,14 @@
                     "skipUrlEncoding": false,
                     "optional": false,
                     "scope": "Method",
-                    "decorators": [],
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
                     "readOnly": false,
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.configurationStoreName",
                     "methodParameterSegments": [
@@ -6593,7 +7408,14 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ]
                       }
                     ]
                   },
