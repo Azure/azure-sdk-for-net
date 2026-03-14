@@ -5,28 +5,39 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary></summary>
     public enum IdentityAccessSecretPermission
     {
         /// <summary> All. </summary>
+        [DataMember(Name = "all")]
         All,
         /// <summary> Get. </summary>
+        [DataMember(Name = "get")]
         Get,
         /// <summary> List. </summary>
+        [DataMember(Name = "list")]
         List,
         /// <summary> Set. </summary>
+        [DataMember(Name = "set")]
         Set,
         /// <summary> Delete. </summary>
+        [DataMember(Name = "delete")]
         Delete,
         /// <summary> Backup. </summary>
+        [DataMember(Name = "backup")]
         Backup,
         /// <summary> Restore. </summary>
+        [DataMember(Name = "restore")]
         Restore,
         /// <summary> Recover. </summary>
+        [DataMember(Name = "recover")]
         Recover,
         /// <summary> Purge. </summary>
+        [DataMember(Name = "purge")]
         Purge
     }
 }

@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
     public enum ManagedHsmCreateMode
     {
         /// <summary> Default. </summary>
+        [DataMember(Name = "default")]
         Default,
         /// <summary> Recover. </summary>
+        [DataMember(Name = "recover")]
         Recover
     }
 }

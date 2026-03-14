@@ -5,44 +5,63 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary></summary>
     public enum IdentityAccessCertificatePermission
     {
         /// <summary> All. </summary>
+        [DataMember(Name = "all")]
         All,
         /// <summary> Get. </summary>
+        [DataMember(Name = "get")]
         Get,
         /// <summary> List. </summary>
+        [DataMember(Name = "list")]
         List,
         /// <summary> Delete. </summary>
+        [DataMember(Name = "delete")]
         Delete,
         /// <summary> Create. </summary>
+        [DataMember(Name = "create")]
         Create,
         /// <summary> Import. </summary>
+        [DataMember(Name = "import")]
         Import,
         /// <summary> Update. </summary>
+        [DataMember(Name = "update")]
         Update,
         /// <summary> ManageContacts. </summary>
+        [DataMember(Name = "managecontacts")]
         ManageContacts,
         /// <summary> GetIssuers. </summary>
+        [DataMember(Name = "getissuers")]
         GetIssuers,
         /// <summary> ListIssuers. </summary>
+        [DataMember(Name = "listissuers")]
         ListIssuers,
         /// <summary> SetIssuers. </summary>
+        [DataMember(Name = "setissuers")]
         SetIssuers,
         /// <summary> DeleteIssuers. </summary>
+        [DataMember(Name = "deleteissuers")]
         DeleteIssuers,
         /// <summary> ManageIssuers. </summary>
+        [DataMember(Name = "manageissuers")]
         ManageIssuers,
         /// <summary> Recover. </summary>
+        [DataMember(Name = "recover")]
         Recover,
         /// <summary> Purge. </summary>
+        [DataMember(Name = "purge")]
         Purge,
         /// <summary> Backup. </summary>
+        [DataMember(Name = "backup")]
         Backup,
         /// <summary> Restore. </summary>
+        [DataMember(Name = "restore")]
         Restore
     }
 }
