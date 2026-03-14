@@ -17,8 +17,8 @@ namespace Azure.Provisioning.KeyVault
     {
         private BicepValue<ResourceIdentifier> _managedHsmId;
         private BicepValue<AzureLocation> _location;
-        private BicepValue<DateTimeOffset> _deletionDate;
-        private BicepValue<DateTimeOffset> _scheduledPurgeDate;
+        private BicepValue<DateTimeOffset> _deletedOn;
+        private BicepValue<DateTimeOffset> _scheduledPurgeOn;
         private BicepValue<bool> _purgeProtectionEnabled;
         private BicepDictionary<string> _tags;
 
@@ -47,23 +47,23 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets the DeletionDate. </summary>
-        public BicepValue<DateTimeOffset> DeletionDate
+        /// <summary> Gets the DeletedOn. </summary>
+        public BicepValue<DateTimeOffset> DeletedOn
         {
             get
             {
                 Initialize();
-                return _deletionDate;
+                return _deletedOn;
             }
         }
 
-        /// <summary> Gets the ScheduledPurgeDate. </summary>
-        public BicepValue<DateTimeOffset> ScheduledPurgeDate
+        /// <summary> Gets the ScheduledPurgeOn. </summary>
+        public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get
             {
                 Initialize();
-                return _scheduledPurgeDate;
+                return _scheduledPurgeOn;
             }
         }
 
@@ -93,8 +93,8 @@ namespace Azure.Provisioning.KeyVault
             base.DefineProvisionableProperties();
             _managedHsmId = DefineProperty<ResourceIdentifier>(nameof(ManagedHsmId), new string[] { "mhsmId" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _deletionDate = DefineProperty<DateTimeOffset>(nameof(DeletionDate), new string[] { "deletionDate" }, isOutput: true);
-            _scheduledPurgeDate = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeDate), new string[] { "scheduledPurgeDate" }, isOutput: true);
+            _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionDate" }, isOutput: true);
+            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true);
             _purgeProtectionEnabled = DefineProperty<bool>(nameof(PurgeProtectionEnabled), new string[] { "purgeProtectionEnabled" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
         }

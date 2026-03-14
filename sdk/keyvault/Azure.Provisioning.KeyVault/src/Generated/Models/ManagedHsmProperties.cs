@@ -27,7 +27,7 @@ namespace Azure.Provisioning.KeyVault
         private BicepList<ManagedHsmGeoReplicatedRegion> _regions;
         private BicepList<ManagedHsmPrivateEndpointConnectionItemData> _privateEndpointConnections;
         private BicepValue<ManagedHsmPublicNetworkAccess> _publicNetworkAccess;
-        private BicepValue<DateTimeOffset> _scheduledPurgeDate;
+        private BicepValue<DateTimeOffset> _scheduledPurgeOn;
         private ManagedHSMSecurityDomainProperties _securityDomainProperties;
 
         /// <summary> Creates a new ManagedHsmProperties. </summary>
@@ -210,13 +210,13 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets the ScheduledPurgeDate. </summary>
-        public BicepValue<DateTimeOffset> ScheduledPurgeDate
+        /// <summary> Gets the ScheduledPurgeOn. </summary>
+        public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get
             {
                 Initialize();
-                return _scheduledPurgeDate;
+                return _scheduledPurgeOn;
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Provisioning.KeyVault
             _regions = DefineListProperty<ManagedHsmGeoReplicatedRegion>(nameof(Regions), new string[] { "regions" });
             _privateEndpointConnections = DefineListProperty<ManagedHsmPrivateEndpointConnectionItemData>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<ManagedHsmPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _scheduledPurgeDate = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeDate), new string[] { "scheduledPurgeDate" }, isOutput: true);
+            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true);
             _securityDomainProperties = DefineModelProperty<ManagedHSMSecurityDomainProperties>(nameof(SecurityDomainProperties), new string[] { "securityDomainProperties" }, isOutput: true);
         }
     }
