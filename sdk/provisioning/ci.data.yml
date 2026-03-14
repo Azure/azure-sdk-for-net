@@ -22,7 +22,6 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
-    - sdk/provisioning/Azure.Provisioning.SignalR
     - sdk/provisioning/Azure.Provisioning.Sql
     - sdk/provisioning/Azure.Provisioning.Storage
     - sdk/provisioning/Azure.Provisioning.WebPubSub
@@ -76,10 +75,6 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_ServiceBus
     displayName: 'Azure.Provisioning.ServiceBus'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_SignalR
-    displayName: 'Azure.Provisioning.SignalR'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Sql
@@ -138,9 +133,6 @@ extends:
     - name: Azure.Provisioning.ServiceBus
       safeName: AzureProvisioningServiceBus
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_ServiceBus }}
-    - name: Azure.Provisioning.SignalR
-      safeName: AzureProvisioningSignalR
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_SignalR }}
     - name: Azure.Provisioning.Sql
       safeName: AzureProvisioningSql
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Sql }}
