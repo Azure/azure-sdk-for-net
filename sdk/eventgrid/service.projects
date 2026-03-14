@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.EventGrid\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.EventGrid\**\*.csproj" />
   </ItemGroup>
 

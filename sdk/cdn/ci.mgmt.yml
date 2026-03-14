@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Cdn
       safeName: AzureResourceManagerCdn
+    - name: Azure.Provisioning.Cdn
+      safeName: AzureProvisioningCdn

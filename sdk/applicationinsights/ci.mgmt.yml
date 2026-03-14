@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ApplicationInsights
       safeName: AzureResourceManagerApplicationInsights
+    - name: Azure.Provisioning.ApplicationInsights
+      safeName: AzureProvisioningApplicationInsights

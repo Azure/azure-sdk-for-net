@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.KubernetesConfiguration
       safeName: AzureResourceManagerKubernetesConfiguration
+    - name: Azure.Provisioning.KubernetesConfiguration
+      safeName: AzureProvisioningKubernetesConfiguration

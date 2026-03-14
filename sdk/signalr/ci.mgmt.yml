@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SignalR
       safeName: AzureResourceManagerSignalR
+    - name: Azure.Provisioning.SignalR
+      safeName: AzureProvisioningSignalR
