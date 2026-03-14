@@ -23,14 +23,11 @@ SubscriptionResource subscription = armClient.GetDefaultSubscription();
 
 ## Understanding IaaS VM Protected Item Types
 
-When enabling backup protection for Azure Virtual Machines, it is important to use the **correct derived class** based on the VM type:
+When enabling backup protection for Azure Virtual Machines, use the `IaasComputeVmProtectedItem` class for ARM (Azure Resource Manager) VMs. This class sets the `protectedItemType` to `"Microsoft.Compute/virtualMachines"`.
 
-| VM Type | Class to Use | `protectedItemType` Value |
-|---|---|---|
-| ARM (Resource Manager) VM | `IaasComputeVmProtectedItem` | `Microsoft.Compute/virtualMachines` |
-| Classic VM | `IaasClassicComputeVmProtectedItem` | `Microsoft.ClassicCompute/virtualMachines` |
-
-> **Important:** Do **not** use the base class `IaasVmProtectedItem` directly. It sets `protectedItemType` to `"AzureIaaSVMProtectedItem"` which the service does not accept for the `ConfigureProtection` operation. Using it will result in a `400 BadRequest` error: *"AzureIaaSVMProtectedItem is not in correct format"*.
+> **Important:** 
+> - **Classic (ASM) Virtual Machines are no longer supported** by Azure Backup. Only ARM VMs are supported.
+> - Do **not** use the base class `IaasVmProtectedItem` directly. It sets `protectedItemType` to `"AzureIaaSVMProtectedItem"` which the service does not accept for the `ConfigureProtection` operation. Using it will result in a `400 BadRequest` error: *"AzureIaaSVMProtectedItem is not in correct format"*.
 
 ---
 
@@ -78,54 +75,6 @@ BackupProtectedItemData data = new BackupProtectedItemData(default)
 };
 
 // Enable protection (this is a long-running operation)
-ArmOperation<BackupProtectedItemResource> operation =
-    await protectedItems.CreateOrUpdateAsync(WaitUntil.Completed, protectedItemName, data);
-
-BackupProtectedItemResource result = operation.Value;
-Console.WriteLine($"Protection enabled. Resource ID: {result.Data.Id}");
-```
-
----
-
-## Enable Protection on a Classic Virtual Machine
-
-For Classic (ASM) VMs, use `IaasClassicComputeVmProtectedItem` instead. Note the naming convention uses `"iaasvmcontainer"` (without the `v2` suffix).
-
-```C# Snippet:Manage_IaaSVM_EnableProtection_Classic
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-
-string subscriptionId = "00000000-0000-0000-0000-000000000000";
-string resourceGroupName = "MyResourceGroup";
-string vaultName = "MyRecoveryServicesVault";
-string vmResourceGroup = "MyVMResourceGroup";
-string vmName = "MyClassicVM";
-string policyName = "DefaultPolicy";
-
-// For Classic VMs, the container name format uses "iaasvmcontainer" (no v2)
-string fabricName = "Azure";
-string containerName = $"IaasVMContainer;iaasvmcontainer;{vmResourceGroup};{vmName}";
-string protectedItemName = $"VM;iaasvmcontainer;{vmResourceGroup};{vmName}";
-
-ResourceIdentifier containerId = BackupProtectionContainerResource.CreateResourceIdentifier(
-    subscriptionId, resourceGroupName, vaultName, fabricName, containerName);
-BackupProtectionContainerResource container = armClient.GetBackupProtectionContainerResource(containerId);
-
-BackupProtectedItemCollection protectedItems = container.GetBackupProtectedItems();
-
-// Use IaasClassicComputeVmProtectedItem for Classic VMs
-BackupProtectedItemData data = new BackupProtectedItemData(default)
-{
-    Properties = new IaasClassicComputeVmProtectedItem
-    {
-        SourceResourceId = new ResourceIdentifier(
-            $"/subscriptions/{subscriptionId}/resourceGroups/{vmResourceGroup}" +
-            $"/providers/Microsoft.ClassicCompute/virtualMachines/{vmName}"),
-        PolicyId = new ResourceIdentifier(
-            $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}" +
-            $"/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}"),
-    },
-};
-
 ArmOperation<BackupProtectedItemResource> operation =
     await protectedItems.CreateOrUpdateAsync(WaitUntil.Completed, protectedItemName, data);
 
@@ -238,4 +187,6 @@ BackupProtectedItemData data = new BackupProtectedItemData(default)
 // This will result in: 400 BadRequest - "AzureIaaSVMProtectedItem is not in correct format"
 ```
 
-**Why?** The base class `IaasVmProtectedItem` sets `protectedItemType` to `"AzureIaaSVMProtectedItem"`. The service expects a specific VM type discriminator: either `"Microsoft.Compute/virtualMachines"` (ARM) or `"Microsoft.ClassicCompute/virtualMachines"` (Classic). Always use the derived class that matches your VM type.
+**Why?** The base class `IaasVmProtectedItem` sets `protectedItemType` to `"AzureIaaSVMProtectedItem"`. The service expects the specific discriminator `"Microsoft.Compute/virtualMachines"` for ARM VMs. Always use `IaasComputeVmProtectedItem` for ARM virtual machines.
+
+> **Note:** Classic (ASM) Virtual Machines are no longer supported by Azure Backup. If you have existing Classic VMs, they should be migrated to ARM VMs.
