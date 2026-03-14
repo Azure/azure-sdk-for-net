@@ -67,18 +67,29 @@ import {
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { findLongestPrefixMatch } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
+import {
+  parseResourceClientOptions,
+  getMarkedNonResourceIds
+} from "./client-option-processor.js";
 
 export async function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
+  // Parse all @clientOption decorators once, early in the pipeline.
+  const clientOptionsMap = parseResourceClientOptions(sdkContext);
+
   let armProviderSchema: ArmProviderSchema;
 
   if (options?.["use-legacy-resource-detection"] === false) {
     armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
   } else {
-    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+    armProviderSchema = buildArmProviderSchema(
+      sdkContext,
+      codeModel,
+      clientOptionsMap
+    );
   }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
@@ -94,11 +105,14 @@ export async function updateClients(
  *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
+ * @param clientOptionsMap - Optional map of client options; models marked as non-resource
+ *   are filtered out before schema construction so they are never treated as resources.
  * @returns The unified ARM provider schema containing all resources and non-resource methods
  */
 export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
-  codeModel: CodeModel
+  codeModel: CodeModel,
+  clientOptionsMap?: Map<string, import("./client-option-processor.js").ResourceClientOptions>
 ): ArmProviderSchema {
   // Use the existing custom resource detection logic
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
@@ -109,7 +123,20 @@ export function buildArmProviderSchema(
   const models = new Map<string, SdkModelType>(
     sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
   );
-  const resourceModels = getAllResourceModels(codeModel);
+  let resourceModels = getAllResourceModels(codeModel);
+
+  // Filter out models marked as non-resource via @clientOption before building the schema.
+  // This ensures the schema builder never sees them as resources, so their operations
+  // are naturally assigned to parent resources via non-resource method handling.
+  if (clientOptionsMap) {
+    const nonResourceIds = getMarkedNonResourceIds(clientOptionsMap);
+    if (nonResourceIds.size > 0) {
+      resourceModels = resourceModels.filter(
+        (m) => !nonResourceIds.has(m.crossLanguageDefinitionId)
+      );
+    }
+  }
+
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
