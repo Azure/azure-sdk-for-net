@@ -357,6 +357,141 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after exception");
         }
 
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnChecksumMismatch()
+        {
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) => async
+                    ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                    : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
+
+            // Enable CRC64 validation — MockDataSource responses lack checksum headers,
+            // so the computed hash will never match, triggering a hash mismatch exception.
+            DownloadTransferValidationOptions checksumValidation = new DownloadTransferValidationOptions()
+            {
+                AutoValidateChecksum = true,
+                ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+            };
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: checksumValidation,
+                arrayPool: trackingPool);
+
+            Assert.CatchAsync<InvalidDataException>(async () => await InvokeDownloadToAsync(downloader, destination));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after checksum mismatch");
+        }
+
+        [Test]
+        public async Task ReturnsArrayPoolBuffersOnContentLengthOverflow()
+        {
+            // The Content-Length overflow guard only exists in BufferResponseAsync (async/multi-worker path)
+            if (!_async)
+            {
+                Assert.Ignore("Content-Length overflow guard only exists in the buffered (async) path");
+            }
+
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            int requestCount = 0;
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    int current = Interlocked.Increment(ref requestCount);
+                    if (current > 1)
+                    {
+                        // Return a response whose stream produces more data than Content-Length indicates
+                        long contentLength = range.Length ?? 10;
+                        return new ValueTask<Response<BlobDownloadStreamingResult>>(
+                            Response.FromValue(new BlobDownloadStreamingResult()
+                            {
+                                Content = new InfiniteStream(),
+                                Details = new BlobDownloadDetails()
+                                {
+                                    BlobType = BlobType.Page,
+                                    ContentLength = contentLength,
+                                    ContentType = "test",
+                                    ContentHash = new byte[] { 1, 2, 3 },
+                                    LastModified = DateTimeOffset.Now,
+                                    Metadata = new Dictionary<string, string>() { { "meta", "data" } },
+                                    ContentRange = $"bytes {range.Offset}-{Math.Max(1, range.Offset + contentLength - 1)}/100",
+                                    ETag = s_etag,
+                                    ContentEncoding = "test",
+                                    CacheControl = "test",
+                                    ContentDisposition = "test",
+                                    ContentLanguage = "test",
+                                    BlobSequenceNumber = 12,
+                                    CopyCompletedOn = DateTimeOffset.Now,
+                                    CopyStatusDescription = "test",
+                                    CopyId = "test",
+                                    CopyProgress = "test",
+                                    CopySource = new Uri("http://example.com"),
+                                    CopyStatus = CopyStatus.Failed,
+                                    LeaseDuration = LeaseDurationType.Fixed,
+                                    LeaseState = LeaseState.Expired,
+                                    LeaseStatus = LeaseStatus.Unlocked,
+                                    AcceptRanges = "test",
+                                    BlobCommittedBlockCount = 5,
+                                    IsServerEncrypted = true,
+                                    EncryptionKeySha256 = "test",
+                                }
+                            }, new MockResponse(200)));
+                    }
+                    // First request returns normal data
+                    return async
+                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                });
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                arrayPool: trackingPool);
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await InvokeDownloadToAsync(downloader, destination));
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after content-length overflow");
+        }
+
         /// <summary>
         /// A stream that throws IOException on any read operation, used to simulate
         /// download failures in BufferResponseAsync.
@@ -375,6 +510,35 @@ namespace Azure.Storage.Blobs.Test
             public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
                 => Task.FromException<int>(new IOException("Simulated read failure"));
+        }
+
+        /// <summary>
+        /// A stream that always returns data on read, used to simulate a response
+        /// with more data than the Content-Length header indicates.
+        /// </summary>
+        private class InfiniteStream : Stream
+        {
+            public override bool CanRead => true;
+            public override bool CanSeek => false;
+            public override bool CanWrite => false;
+            public override long Length => throw new NotSupportedException();
+            public override long Position { get; set; }
+            public override void Flush() { }
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                for (int i = offset; i < offset + count; i++)
+                    buffer[i] = 0xAA;
+                return count;
+            }
+            public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+            public override void SetLength(long value) => throw new NotSupportedException();
+            public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+            public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                for (int i = offset; i < offset + count; i++)
+                    buffer[i] = 0xAA;
+                return Task.FromResult(count);
+            }
         }
 
         /// <summary>
