@@ -509,6 +509,13 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             var constraints = resourceMetadata.NameConstraints;
+
+            // Only generate the override when the spec actually specifies name constraints
+            if (constraints.Pattern is null && constraints.MinLength is null && constraints.MaxLength is null)
+            {
+                return null;
+            }
+
             int minLength = constraints.MinLength ?? 1;
             int maxLength = constraints.MaxLength ?? 24;
 

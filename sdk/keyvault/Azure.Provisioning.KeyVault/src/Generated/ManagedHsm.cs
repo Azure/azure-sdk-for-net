@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -169,11 +168,6 @@ namespace Azure.Provisioning.KeyVault
 
         /// <summary> Define additional provisionable properties for ManagedHsm that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
-
-        /// <summary> Get the requirements for naming this resource. </summary>
-        /// <returns> Naming requirements. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters);
 
         /// <summary></summary>
         public static partial class ResourceVersions
