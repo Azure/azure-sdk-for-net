@@ -153,9 +153,7 @@ export function resolveResourceApiVersions(
   const createMethod = methods.find(
     (m) => m.kind === ResourceOperationKind.Create
   );
-  const readMethod = methods.find(
-    (m) => m.kind === ResourceOperationKind.Read
-  );
+  const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
   const primaryMethod = createMethod ?? readMethod;
   return primaryMethod
     ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
