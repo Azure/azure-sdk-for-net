@@ -148,6 +148,7 @@ This maps the Key Vault secret to the configuration path `Clients:MyClient:Crede
 ```csharp
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
+builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddKeyVaultSecrets("AzureClients:KeyVault");
 
 builder.AddClient<MyClient, MyClientSettings>("Clients:MyClient");
