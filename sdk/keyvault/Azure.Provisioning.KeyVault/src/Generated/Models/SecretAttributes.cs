@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KeyVault
@@ -12,15 +14,91 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> The secret management attributes. </summary>
     public partial class SecretAttributes : ProvisionableConstruct
     {
+        private BicepValue<bool> _enabled;
+        private BicepValue<DateTimeOffset> _notBefore;
+        private BicepValue<DateTimeOffset> _expires;
+        private BicepValue<DateTimeOffset> _created;
+        private BicepValue<DateTimeOffset> _updated;
+
         /// <summary> Creates a new SecretAttributes. </summary>
         public SecretAttributes()
         {
+        }
+
+        /// <summary> Gets or sets the Enabled. </summary>
+        public BicepValue<bool> Enabled
+        {
+            get
+            {
+                Initialize();
+                return _enabled;
+            }
+            set
+            {
+                Initialize();
+                _enabled.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the NotBefore. </summary>
+        public BicepValue<DateTimeOffset> NotBefore
+        {
+            get
+            {
+                Initialize();
+                return _notBefore;
+            }
+            set
+            {
+                Initialize();
+                _notBefore.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Expires. </summary>
+        public BicepValue<DateTimeOffset> Expires
+        {
+            get
+            {
+                Initialize();
+                return _expires;
+            }
+            set
+            {
+                Initialize();
+                _expires.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the Created. </summary>
+        public BicepValue<DateTimeOffset> Created
+        {
+            get
+            {
+                Initialize();
+                return _created;
+            }
+        }
+
+        /// <summary> Gets the Updated. </summary>
+        public BicepValue<DateTimeOffset> Updated
+        {
+            get
+            {
+                Initialize();
+                return _updated;
+            }
         }
 
         /// <summary> Define all the provisionable properties for SecretAttributes. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
+            _notBefore = DefineProperty<DateTimeOffset>(nameof(NotBefore), new string[] { "nbf" });
+            _expires = DefineProperty<DateTimeOffset>(nameof(Expires), new string[] { "exp" });
+            _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
+            _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
         }
     }
 }

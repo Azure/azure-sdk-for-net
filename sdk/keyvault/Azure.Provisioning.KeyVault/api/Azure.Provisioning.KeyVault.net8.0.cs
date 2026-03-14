@@ -597,6 +597,11 @@ namespace Azure.Provisioning.KeyVault
     public partial class SecretAttributes : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SecretAttributes() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Created { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Expires { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotBefore { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Updated { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SecretProperties : Azure.Provisioning.Primitives.ProvisionableConstruct

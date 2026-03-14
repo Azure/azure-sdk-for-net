@@ -209,6 +209,10 @@ try {
         $tspOptions = "--emit $ProvisioningPackageRoot"
         foreach ($key in $provisioningEmitterOptions.Keys) {
             $value = $provisioningEmitterOptions[$key]
+            # Normalize boolean values to lowercase for TypeSpec compiler
+            if ($value -is [bool]) {
+                $value = if ($value) { "true" } else { "false" }
+            }
             $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.$key=$value`""
         }
         $tspOutput = Invoke-Expression "npx tsp compile $mainTsp $tspOptions 2>&1"
