@@ -515,7 +515,6 @@ export function buildArmProviderSchema(
   }
 
   // Extract name constraints (@pattern, @minLength, @maxLength) from the resource model's "name" property
-  // and collect per-resource API versions
   const methodApiVersionsMap = new Map<string, string[]>(
     Array.from(serviceMethods.entries()).map(([id, m]) => [id, m.apiVersions])
   );
@@ -535,11 +534,6 @@ export function buildArmProviderSchema(
         ? getMaxLength(sdkContext.program, nameProperty)
         : undefined
     };
-
-    resource.metadata.apiVersions = resolveResourceApiVersions(
-      resource.metadata.methods,
-      methodApiVersionsMap
-    );
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.
@@ -549,6 +543,15 @@ export function buildArmProviderSchema(
     filteredResources,
     nonResourceMethodsArray
   );
+
+  // Compute per-resource API versions after all post-processing is complete,
+  // so that merged/moved methods are reflected in the final version set.
+  for (const resource of filteredResources) {
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
+  }
 
   return {
     resources: filteredResources,

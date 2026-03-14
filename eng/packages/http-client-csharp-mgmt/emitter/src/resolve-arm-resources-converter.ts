@@ -128,8 +128,7 @@ export function resolveArmResources(
       const metadata = convertResolvedResourceToMetadata(
         program,
         sdkContext,
-        resolvedResource,
-        methodApiVersionsMap
+        resolvedResource
       );
 
       const resource = {
@@ -262,6 +261,15 @@ export function resolveArmResources(
   // move it into that resource as an Action (longest prefix wins).
   assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
 
+  // Compute per-resource API versions after all post-processing is complete,
+  // so that merged/moved methods are reflected in the final version set.
+  for (const resource of filteredResources) {
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
+  }
+
   return {
     resources: filteredResources,
     nonResourceMethods
@@ -274,8 +282,7 @@ export function resolveArmResources(
 function convertResolvedResourceToMetadata(
   program: Program,
   sdkContext: CSharpEmitterContext,
-  resolvedResource: ResolvedResource,
-  methodApiVersionsMap: Map<string, string[]>
+  resolvedResource: ResolvedResource
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -412,8 +419,8 @@ function convertResolvedResourceToMetadata(
     maxLength: nameProperty ? getMaxLength(program, nameProperty) : undefined
   };
 
-  // Collect API versions from the resource's Create method (preferred) or Read method
-  const apiVersions = resolveResourceApiVersions(methods, methodApiVersionsMap);
+  // API versions will be computed after post-processing when methods are finalized
+  const apiVersions: string[] = [];
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
