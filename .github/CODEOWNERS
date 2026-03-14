@@ -898,7 +898,10 @@
 /**/*Management*/                                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Mgmt
-/**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978
+/**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978 @live1206
+
+# PRLabel: %Provisioning
+/**/Azure.Provisioning*/                                           @ArcturusZhang @ArthurMa1978 @m-nash
 
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
