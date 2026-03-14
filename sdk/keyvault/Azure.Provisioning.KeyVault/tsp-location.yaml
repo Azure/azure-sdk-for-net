@@ -1,4 +1,5 @@
 directory: specification/keyvault/resource-manager/Microsoft.KeyVault/KeyVault
-commit: c0ce833c96c53ca80510a088f1ed67fb80fd380e
+commit: 7d93fd75958d1276002018a1a5d7ae57134f475f
 repo: Azure/azure-rest-api-specs
+additionalDirectories: []
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
