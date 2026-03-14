@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -22,15 +23,14 @@ namespace Azure.AI.Extensions.OpenAI;
 /// </summary>
 public static partial class AzureAIExtensions
 {
-    extension(ResponseItem responseItem)
+    // ResponseItem
+    public static AgentResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
-        public AgentResponseItem AsAgentResponseItem()
-        {
-            BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-            return ModelReaderWriter.Read<AgentResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-        }
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+        return ModelReaderWriter.Read<AgentResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
 
+    // ResponseResult
     extension(ResponseResult response)
     {
         public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
@@ -38,67 +38,61 @@ public static partial class AzureAIExtensions
         public string AgentConversationId => response.Patch.GetStringEx("$.conversation.id"u8);
     }
 
-    extension(ResponsesClient responseClient)
+    // ResponsesClient
+    public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
-        public ClientResult<ResponseResult> CreateResponse(ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
-        {
-            using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
-            ClientResult protocolResult = responseClient.CreateResponse(
-                content,
-                cancellationToken.ToRequestOptions() ?? new RequestOptions()
-            );
-            ResponseResult convenienceValue = (ResponseResult)protocolResult;
-            return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
-        }
-
-        public async Task<ClientResult<ResponseResult>> CreateResponseAsync(ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
-        {
-            using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
-            ClientResult protocolResult = await responseClient.CreateResponseAsync(
-                content,
-                cancellationToken.ToRequestOptions() ?? new RequestOptions()
-            ).ConfigureAwait(false);
-            ResponseResult convenienceValue = (ResponseResult)protocolResult;
-            return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
-        }
-
-        private static BinaryContent RemoveItems(ProjectConversation conversation, AgentReference agentRef)
-        {
-            CreateResponseOptions responseOptions = new()
-            {
-                Agent = agentRef,
-                AgentConversationId = conversation.Id,
-            };
-            using BinaryContent contentBytes = BinaryContent.Create(responseOptions, ModelSerializationExtensions.WireOptions);
-            using var stream = new MemoryStream();
-            contentBytes.WriteTo(stream);
-            string json = Encoding.UTF8.GetString(stream.ToArray());
-            JsonObject fixedOptions = new();
-            JsonObject options = JsonObject.Parse(json).AsObject();
-            options.Remove("input");
-            return BinaryContent.CreateJson(options.ToJsonString());
-        }
+        using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
+        ClientResult protocolResult = responseClient.CreateResponse(
+            content,
+            cancellationToken.ToRequestOptions() ?? new RequestOptions()
+        );
+        ResponseResult convenienceValue = (ResponseResult)protocolResult;
+        return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
-    extension(OpenAIFile file)
+    public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
-        public string GetAzureFileStatus()
+        using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
+        ClientResult protocolResult = await responseClient.CreateResponseAsync(
+            content,
+            cancellationToken.ToRequestOptions() ?? new RequestOptions()
+        ).ConfigureAwait(false);
+        ResponseResult convenienceValue = (ResponseResult)protocolResult;
+        return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
+    }
+
+    private static BinaryContent RemoveItems(ProjectConversation conversation, AgentReference agentRef)
+    {
+        CreateResponseOptions responseOptions = new()
         {
-            using BinaryContent contentBytes = BinaryContent.Create(file, ModelSerializationExtensions.WireOptions);
-            using var stream = new MemoryStream();
-            contentBytes.WriteTo(stream);
-            string json = Encoding.UTF8.GetString(stream.ToArray());
-            JsonDocument doc = JsonDocument.Parse(json);
-            if (doc.RootElement.TryGetProperty("_sdk_status", out JsonElement extraStatusElement))
+            Agent = agentRef,
+            AgentConversationId = conversation.Id,
+        };
+        using BinaryContent contentBytes = BinaryContent.Create(responseOptions, ModelSerializationExtensions.WireOptions);
+        using var stream = new MemoryStream();
+        contentBytes.WriteTo(stream);
+        string json = Encoding.UTF8.GetString(stream.ToArray());
+        JsonObject options = JsonObject.Parse(json).AsObject();
+        options.Remove("input");
+        return BinaryContent.CreateJson(options.ToJsonString());
+    }
+
+    public static string GetAzureFileStatus(this OpenAIFile file)
+    {
+        using BinaryContent contentBytes = BinaryContent.Create(file, ModelSerializationExtensions.WireOptions);
+        using var stream = new MemoryStream();
+        contentBytes.WriteTo(stream);
+        string json = Encoding.UTF8.GetString(stream.ToArray());
+        JsonDocument doc = JsonDocument.Parse(json);
+        if (doc.RootElement.TryGetProperty("_sdk_status", out JsonElement extraStatusElement))
+        {
+            string extraStatusValue = extraStatusElement.GetString();
+            if (!string.IsNullOrEmpty(extraStatusValue))
             {
-                string extraStatusValue = extraStatusElement.GetString();
-                if (!string.IsNullOrEmpty(extraStatusValue))
-                {
-                    return extraStatusValue;
-                }
+                return extraStatusValue;
             }
-            return null;
         }
+        return null;
     }
 
     extension(CreateResponseOptions options)
@@ -118,23 +112,21 @@ public static partial class AzureAIExtensions
         public ExtraDataDictionary StructuredInputs => new ExtraDataDictionary(options, "$.structured_inputs"u8);
     }
 
-    extension(ClientConnectionProvider connectionProvider)
+    // ClientConnectionProvider
+    public static ProjectOpenAIClient GetProjectOpenAIClient(this ClientConnectionProvider connectionProvider, ProjectOpenAIClientOptions options = null)
     {
-        public ProjectOpenAIClient GetProjectOpenAIClient(ProjectOpenAIClientOptions options = null)
+        ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.DirectPipelinePassthrough");
+        if (pipelineConnection.CredentialKind == CredentialKind.None)
         {
-            ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.DirectPipelinePassthrough");
-            if (pipelineConnection.CredentialKind == CredentialKind.None)
+            ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
+            options ??= new()
             {
-                ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
-                options ??= new()
-                {
-                    Endpoint = new Uri(pipelineConnection.Locator),
-                };
-                // If the option without endpoint were provided, make sure, we still set it.
-                options.Endpoint = new Uri(pipelineConnection.Locator);
-                return new ProjectOpenAIClient(smuggledPipeline, options);
-            }
-            return null;
+                Endpoint = new Uri(pipelineConnection.Locator),
+            };
+            // If the option without endpoint were provided, make sure, we still set it.
+            options.Endpoint = new Uri(pipelineConnection.Locator);
+            return new ProjectOpenAIClient(smuggledPipeline, options);
         }
+        return null;
     }
 }

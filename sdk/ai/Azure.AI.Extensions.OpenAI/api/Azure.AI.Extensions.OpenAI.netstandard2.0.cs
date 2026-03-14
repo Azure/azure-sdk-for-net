@@ -193,16 +193,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.ExtraDataDictionary get_StructuredInputs(OpenAI.Responses.CreateResponseOptions options) { throw null; }
         public static void set_Agent(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Extensions.OpenAI.AgentReference value) { }
         public static void set_AgentConversationId(OpenAI.Responses.CreateResponseOptions options, string value) { }
-        public sealed partial class <G>$55090AD9564870C6E86F4C4E19878959
-        {
-            internal <G>$55090AD9564870C6E86F4C4E19878959() { }
-            public System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(Azure.AI.Extensions.OpenAI.ProjectConversation conversation, Azure.AI.Extensions.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-            public System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(Azure.AI.Extensions.OpenAI.ProjectConversation conversation, Azure.AI.Extensions.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-            public static partial class <M>$AE732D53C8E16A733658670509221C83
-            {
-                public static void <Extension>$(OpenAI.Responses.ResponsesClient responseClient) { }
-            }
-        }
         public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
         {
             internal <G>$9441C364D6D7BED1E759B10623E362FD() { }
@@ -214,15 +204,6 @@ namespace Azure.AI.Extensions.OpenAI
                 public static void <Extension>$(OpenAI.Responses.CreateResponseOptions options) { }
             }
         }
-        public sealed partial class <G>$CD6DD0E838328613645351660BA78F03
-        {
-            internal <G>$CD6DD0E838328613645351660BA78F03() { }
-            public string GetAzureFileStatus() { throw null; }
-            public static partial class <M>$F04799A08FE603F1A2F7BC904E8CB5A4
-            {
-                public static void <Extension>$(OpenAI.Files.OpenAIFile file) { }
-            }
-        }
         public sealed partial class <G>$D7C08262BAEC712802F8752B389F8208
         {
             internal <G>$D7C08262BAEC712802F8752B389F8208() { }
@@ -231,24 +212,6 @@ namespace Azure.AI.Extensions.OpenAI
             public static partial class <M>$9CB7C4485EAB7B97A3544F52CBDBA0F9
             {
                 public static void <Extension>$(OpenAI.Responses.ResponseResult response) { }
-            }
-        }
-        public sealed partial class <G>$EE9D7A1C67932FB454531401B8375DE4
-        {
-            internal <G>$EE9D7A1C67932FB454531401B8375DE4() { }
-            public Azure.AI.Extensions.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
-            public static partial class <M>$781747A4149937EE6CD40CB5B8268DAD
-            {
-                public static void <Extension>$(System.ClientModel.Primitives.ClientConnectionProvider connectionProvider) { }
-            }
-        }
-        public sealed partial class <G>$F3F0025ADD8FA456F8E93354548ADC99
-        {
-            internal <G>$F3F0025ADD8FA456F8E93354548ADC99() { }
-            public Azure.AI.Extensions.OpenAI.AgentResponseItem AsAgentResponseItem() { throw null; }
-            public static partial class <M>$7F64B929AD6EA0C883A133529C594C8F
-            {
-                public static void <Extension>$(OpenAI.Responses.ResponseItem responseItem) { }
             }
         }
     }
