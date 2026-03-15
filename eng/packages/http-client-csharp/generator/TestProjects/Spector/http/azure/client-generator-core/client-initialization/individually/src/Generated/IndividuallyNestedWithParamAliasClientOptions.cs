@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient
 {
     public partial class IndividuallyNestedWithParamAliasClientOptions : ClientOptions
     {
-        public IndividuallyNestedWithParamAliasClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal IndividuallyNestedWithParamAliasClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

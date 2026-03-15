@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,12 +21,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
 
         public IndividuallyNestedWithPathClient(string blobName, IndividuallyNestedWithPathClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        internal IndividuallyNestedWithPathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyNestedWithPathClientOptions options) => throw null;
-
-        public IndividuallyNestedWithPathClient(Uri endpoint, string blobName, IndividuallyNestedWithPathClientOptions options) : this(null, endpoint, blobName, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public IndividuallyNestedWithPathClient(IndividuallyNestedWithPathClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
+        public IndividuallyNestedWithPathClient(Uri endpoint, string blobName, IndividuallyNestedWithPathClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

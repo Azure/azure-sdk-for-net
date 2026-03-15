@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
     public partial class MixedParamsClientOptions : ClientOptions
     {
-        public MixedParamsClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal MixedParamsClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }
