@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set. </param>
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. </param>
-        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetUpdateProperties properties, VirtualMachineScaleSetIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, VirtualMachineScaleSetIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
         {
             Sku = sku;
             Plan = plan;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputePlan Plan { get; set; }
 
         /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
-        internal VirtualMachineScaleSetUpdateProperties Properties { get; set; }
+        internal VirtualMachineScaleSetPatchProperties Properties { get; set; }
 
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public VirtualMachineScaleSetIdentity Identity { get; set; }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new VirtualMachineScaleSetUpdateProperties();
+                    Properties = new VirtualMachineScaleSetPatchProperties();
                 }
                 Properties.DoNotRunExtensionsOnOverprovisionedVMs = value.Value;
             }

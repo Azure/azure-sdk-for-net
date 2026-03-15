@@ -20,12 +20,15 @@ namespace Azure.ResourceManager.Compute.Models
         public ComputeSecurityPostureReference()
         {
             ExcludeExtensions = new ChangeTrackingList<VirtualMachineExtensionData>();
-            ExcludeExtensionNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> List of virtual machine extensions to exclude when applying the Security Posture. This property is deprecated. Instead, use ExcludeExtensionNames that takes in list of strings. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<VirtualMachineExtensionData> ExcludeExtensions { get; }
+
+        /// <summary> List of virtual machine extension names to exclude when applying the Security Posture. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<string> ExcludeExtensionNames { get; }
     }
 }
 

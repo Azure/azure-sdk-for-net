@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             LinuxVMGuestPatchMode? patchMode = default;
             LinuxPatchAssessmentMode? assessmentMode = default;
-            LinuxVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
+            LinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = LinuxVMGuestPatchAutomaticByPlatformSettings.DeserializeLinuxVMGuestPatchAutomaticByPlatformSettings(prop.Value, options);
+                    automaticByPlatformSettings = LinuxVmGuestPatchAutomaticByPlatformSettings.DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

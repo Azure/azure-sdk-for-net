@@ -33,8 +33,6 @@ namespace Azure.ResourceManager.Compute
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _communityGalleryClientDiagnostics;
-        private readonly CommunityGalleries _communityGalleryRestClient;
         private readonly CommunityGalleryData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +57,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CommunityGalleryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _communityGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string communityGalleryApiVersion);
-            _communityGalleryRestClient = new CommunityGalleries(Diagnostics, Pipeline, Endpoint, communityGalleryApiVersion);
+            _communityGalleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string communityGalleriesApiVersion);
+            _communityGalleriesRestClient = new CommunityGalleries(_communityGalleriesClientDiagnostics, Pipeline, Endpoint, communityGalleriesApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -181,11 +179,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunityGalleryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryResource.Get");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryResource.Get");
             scope.Start();
             try
             {
-                var response = await _communityGalleryRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
@@ -222,11 +223,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunityGalleryResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _communityGalleryClientDiagnostics.CreateScope("CommunityGalleryResource.Get");
+            using var scope = _communityGalleriesClientDiagnostics.CreateScope("CommunityGalleryResource.Get");
             scope.Start();
             try
             {
-                var response = _communityGalleryRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _communityGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);

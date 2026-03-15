@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public new GalleryImageIdentifier Identifier => new GalleryImageIdentifier()
         {
-            Publisher = ImageIdentifier.Publisher,
-            Offer = ImageIdentifier.Offer,
-            Sku = ImageIdentifier.Sku
+            Publisher = Properties?.Identifier?.Publisher,
+            Offer = Properties?.Identifier?.Offer,
+            Sku = Properties?.Identifier?.Sku
         };
 
         // we also must add back this property to avoid breaking changes, but its payload never have this property.

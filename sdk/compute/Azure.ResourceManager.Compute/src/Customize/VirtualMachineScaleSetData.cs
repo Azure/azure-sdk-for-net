@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DoNotRunExtensionsOnOverprovisionedVms
         {
-            get => Properties?.DoNotRunExtensionsOnOverprovisionedVms;
+            get => Properties?.DoNotRunExtensionsOnOverprovisionedVMs;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new VirtualMachineScaleSetProperties();
                 }
-                Properties.DoNotRunExtensionsOnOverprovisionedVms = value;
+                Properties.DoNotRunExtensionsOnOverprovisionedVMs = value;
             }
         }
 
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier ProximityPlacementGroupId
         {
-            get => Properties?.ProximityPlacementGroupId;
+            get => Properties?.ProximityPlacementGroupId != null ? new ResourceIdentifier(Properties.ProximityPlacementGroupId) : null;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new VirtualMachineScaleSetProperties();
                 }
-                Properties.ProximityPlacementGroupId = value;
+                Properties.ProximityPlacementGroupId = value?.ToString();
             }
         }
 
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier HostGroupId
         {
-            get => Properties?.HostGroupId;
+            get => Properties?.HostGroupId != null ? new ResourceIdentifier(Properties.HostGroupId) : null;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new VirtualMachineScaleSetProperties();
                 }
-                Properties.HostGroupId = value;
+                Properties.HostGroupId = value?.ToString();
             }
         }
 
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsMaximumCapacityConstrained
         {
-            get => Properties?.IsMaximumCapacityConstrained;
+            get => Properties?.ConstrainedMaximumCapacity;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new VirtualMachineScaleSetProperties();
                 }
-                Properties.IsMaximumCapacityConstrained = value;
+                Properties.ConstrainedMaximumCapacity = value;
             }
         }
 

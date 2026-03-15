@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Compute
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, vmName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, vmName, data, default(MatchConditions), cancellationToken).ConfigureAwait(false);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, vmName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, vmName, data, default(MatchConditions), cancellationToken);
     }
 }

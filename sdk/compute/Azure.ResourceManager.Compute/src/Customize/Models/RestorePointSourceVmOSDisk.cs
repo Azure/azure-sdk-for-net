@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmOSDisk
+    public partial class RestorePointSourceVMOSDisk
     {
         /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

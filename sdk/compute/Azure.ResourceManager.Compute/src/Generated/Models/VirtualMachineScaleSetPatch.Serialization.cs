@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ComputeSku sku = default;
             ComputePlan plan = default;
-            VirtualMachineScaleSetUpdateProperties properties = default;
+            VirtualMachineScaleSetPatchProperties properties = default;
             VirtualMachineScaleSetIdentity identity = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = VirtualMachineScaleSetUpdateProperties.DeserializeVirtualMachineScaleSetUpdateProperties(prop.Value, options);
+                    properties = VirtualMachineScaleSetPatchProperties.DeserializeVirtualMachineScaleSetPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

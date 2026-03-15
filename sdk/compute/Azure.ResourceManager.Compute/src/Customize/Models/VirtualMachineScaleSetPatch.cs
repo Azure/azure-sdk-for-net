@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DoNotRunExtensionsOnOverprovisionedVms
         {
-            get => Properties?.DoNotRunExtensionsOnOverprovisionedVms;
+            get => Properties?.DoNotRunExtensionsOnOverprovisionedVMs;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new VirtualMachineScaleSetPatchProperties();
                 }
-                Properties.DoNotRunExtensionsOnOverprovisionedVms = value;
+                Properties.DoNotRunExtensionsOnOverprovisionedVMs = value;
             }
         }
 
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier ProximityPlacementGroupId
         {
-            get => Properties?.ProximityPlacementGroupId;
+            get => Properties?.ProximityPlacementGroupId != null ? new ResourceIdentifier(Properties.ProximityPlacementGroupId) : null;
             set
             {
                 if (Properties is null)
                 {
                     Properties = new VirtualMachineScaleSetPatchProperties();
                 }
-                Properties.ProximityPlacementGroupId = value;
+                Properties.ProximityPlacementGroupId = value?.ToString();
             }
         }
 

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assessmentMode"> Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
         /// <param name="automaticByPlatformSettings"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Linux. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxPatchSettings(LinuxVMGuestPatchMode? patchMode, LinuxPatchAssessmentMode? assessmentMode, LinuxVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinuxPatchSettings(LinuxVMGuestPatchMode? patchMode, LinuxPatchAssessmentMode? assessmentMode, LinuxVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchMode = patchMode;
             AssessmentMode = assessmentMode;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
         public LinuxPatchAssessmentMode? AssessmentMode { get; set; }
 
         /// <summary> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Linux. </summary>
-        public LinuxVMGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
+        public LinuxVmGuestPatchAutomaticByPlatformSettings AutomaticByPlatformSettings { get; set; }
     }
 }

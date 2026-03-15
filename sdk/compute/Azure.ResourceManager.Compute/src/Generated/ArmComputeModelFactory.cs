@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalBinaryDataProperties: null,
                 sku,
                 plan,
-                upgradePolicy is null && automaticRepairsPolicy is null && virtualMachineProfile is null && overprovision is null && doNotRunExtensionsOnOverprovisionedVMs is null && singlePlacementGroup is null && additionalCapabilities is null && scaleInPolicy is null && priorityMixPolicy is null && spotRestorePolicy is null && resiliencyPolicy is null && zonalPlatformFaultDomainAlignMode is null && skuProfile is null && proximityPlacementGroupId is null ? default : new VirtualMachineScaleSetUpdateProperties(
+                upgradePolicy is null && automaticRepairsPolicy is null && virtualMachineProfile is null && overprovision is null && doNotRunExtensionsOnOverprovisionedVMs is null && singlePlacementGroup is null && additionalCapabilities is null && scaleInPolicy is null && priorityMixPolicy is null && spotRestorePolicy is null && resiliencyPolicy is null && zonalPlatformFaultDomainAlignMode is null && skuProfile is null && proximityPlacementGroupId is null ? default : new VirtualMachineScaleSetPatchProperties(
                     upgradePolicy,
                     automaticRepairsPolicy,
                     virtualMachineProfile,

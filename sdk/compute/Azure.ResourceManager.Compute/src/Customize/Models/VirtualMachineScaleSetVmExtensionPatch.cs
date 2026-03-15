@@ -44,8 +44,18 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ProtectedSettingsFromKeyVault
         {
-            get => ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(ModelSerializationExtensions.WireOptions);
-            set => KeyVaultProtectedSettings = ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+            get
+            {
+                return Properties?.ProtectedSettingsFromKeyVault is null ? null : ((IJsonModel<KeyVaultSecretReference>)Properties.ProtectedSettingsFromKeyVault).Write(ModelSerializationExtensions.WireOptions);
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionUpdateProperties();
+                }
+                Properties.ProtectedSettingsFromKeyVault = ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+            }
         }
     }
 }

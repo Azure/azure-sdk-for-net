@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResilientVmDeletionStatus? ResilientVmDeletionStatus
         {
-            get => Properties?.ResilientVmDeletionStatus;
+            get => Properties?.ResilientVMDeletionStatus;
             set
             {
                 if (Properties == null)
                     Properties = new VirtualMachineScaleSetVmProperties();
-                Properties.ResilientVmDeletionStatus = value;
+                Properties.ResilientVMDeletionStatus = value;
             }
         }
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public VirtualMachineOSProfile OSProfile
         {
-            get => Properties?.OSProfile;
+            get => Properties?.OsProfile;
             set
             {
                 if (Properties == null)
                     Properties = new VirtualMachineScaleSetVmProperties();
-                Properties.OSProfile = value;
+                Properties.OsProfile = value;
             }
         }
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier AvailabilitySetId
         {
-            get => Properties?.AvailabilitySetId;
+            get => Properties?.AvailabilitySetId != null ? new ResourceIdentifier(Properties.AvailabilitySetId) : null;
             set
             {
                 if (Properties == null)
                     Properties = new VirtualMachineScaleSetVmProperties();
-                Properties.AvailabilitySetId = value;
+                Properties.AvailabilitySetId = value?.ToString();
             }
         }
 

@@ -11,7 +11,6 @@ using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -27,8 +26,6 @@ namespace Azure.ResourceManager.Compute
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SharedGalleryCollection : ArmCollection, IEnumerable<SharedGalleryResource>, IAsyncEnumerable<SharedGalleryResource>
     {
-        private readonly ClientDiagnostics _sharedGalleryClientDiagnostics;
-        private readonly SharedGalleries _sharedGalleryRestClient;
         private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryCollection"/> class for mocking. </summary>
@@ -43,9 +40,9 @@ namespace Azure.ResourceManager.Compute
         internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
-            _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, Diagnostics);
+            _sharedGalleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedGalleryResource.ResourceType, out string sharedGalleryApiVersion);
-            _sharedGalleryRestClient = new SharedGalleries(Diagnostics, Pipeline, Endpoint, sharedGalleryApiVersion);
+            _sharedGalleriesRestClient = new SharedGalleries(_sharedGalleriesClientDiagnostics, Pipeline, Endpoint, sharedGalleryApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -86,11 +83,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.Get");
+            using var scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
@@ -132,11 +132,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.Get");
+            using var scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Get");
             scope.Start();
             try
             {
-                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
@@ -175,9 +178,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="SharedGalleryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedGalleryResource> GetAllAsync(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleriesRestClient.CreateGetAllRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo?.ToString(), null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleriesRestClient.CreateNextGetAllRequest(new Uri(nextLink), Id.SubscriptionId, new AzureLocation(_location), sharedTo?.ToString(), null);
+            return GalleryPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, DeserializeSharedGalleryData(e)), _sharedGalleriesClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,14 +209,14 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="SharedGalleryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedGalleryResource> GetAll(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleriesRestClient.CreateGetAllRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo?.ToString(), null);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleriesRestClient.CreateNextGetAllRequest(new Uri(nextLink), Id.SubscriptionId, new AzureLocation(_location), sharedTo?.ToString(), null);
+            return GalleryPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, DeserializeSharedGalleryData(e)), _sharedGalleriesClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         private SharedGalleryData DeserializeSharedGalleryData(JsonElement element)
         {
-            var data = SharedGalleryData.DeserializeSharedGalleryData(element);
+            var data = SharedGalleryData.DeserializeSharedGalleryData(element, ModelSerializationExtensions.WireOptions);
             data.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), data.Name);
             return data;
         }
@@ -247,12 +250,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.Exists");
+            using var scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, context);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(!message.Response.IsError, message.Response);
             }
             catch (Exception e)
             {
@@ -290,12 +295,14 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.Exists");
+            using var scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, context);
+                Pipeline.Send(message, cancellationToken);
+                return Response.FromValue(!message.Response.IsError, message.Response);
             }
             catch (Exception e)
             {
@@ -333,13 +340,16 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
+            using var scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sharedGalleryRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return new NoValueResponse<SharedGalleryResource>(response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, context);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                if (message.Response.IsError)
+                    return new NoValueResponse<SharedGalleryResource>(message.Response);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(message.Response), message.Response);
                 response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
                 return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
             }
@@ -379,13 +389,16 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
-            using var scope = _sharedGalleryClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
+            using var scope = _sharedGalleriesClientDiagnostics.CreateScope("SharedGalleryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sharedGalleryRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return new NoValueResponse<SharedGalleryResource>(response.GetRawResponse());
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _sharedGalleriesRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName, context);
+                Pipeline.Send(message, cancellationToken);
+                if (message.Response.IsError)
+                    return new NoValueResponse<SharedGalleryResource>(message.Response);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(message.Response), message.Response);
                 response.Value.Id = SharedGalleryResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(_location), galleryUniqueName);
                 return Response.FromValue(new SharedGalleryResource(Client, response.Value), response.GetRawResponse());
             }

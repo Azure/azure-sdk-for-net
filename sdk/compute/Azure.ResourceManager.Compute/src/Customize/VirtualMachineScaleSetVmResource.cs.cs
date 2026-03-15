@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Compute
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineScaleSetVmResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, data, default(MatchConditions), cancellationToken).ConfigureAwait(false);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineScaleSetVmResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
-            => Update(waitUntil, data, null, null, cancellationToken);
+            => Update(waitUntil, data, default(MatchConditions), cancellationToken);
     }
 }

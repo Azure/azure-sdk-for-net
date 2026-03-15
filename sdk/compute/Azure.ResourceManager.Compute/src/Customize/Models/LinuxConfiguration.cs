@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// Specifies whether password authentication should be disabled.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? DisablePasswordAuthentication { get => IsPasswordAuthenticationDisabled; set => IsPasswordAuthenticationDisabled = value; }
+        public bool? DisablePasswordAuthentication { get; set; }
         /// <summary>
         /// Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? EnableVmAgentPlatformUpdates { get => IsVmAgentPlatformUpdatesEnabled; set => IsVmAgentPlatformUpdatesEnabled = value; }
+        public bool? EnableVmAgentPlatformUpdates { get => EnableVMAgentPlatformUpdates; set => EnableVMAgentPlatformUpdates = value; }
     }
 }

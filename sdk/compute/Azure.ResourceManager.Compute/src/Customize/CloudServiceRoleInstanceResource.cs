@@ -1,6 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// TODO: CloudService has no TypeSpec spec. This entire file is disabled until CloudService
+// is migrated to TypeSpec or a decision is made on how to handle it.
+// The CloudService spec is at specification/compute/resource-manager/Microsoft.Compute/Compute/Cloudservice/
+// but it is NOT included in the parent client.tsp combined service definition.
+#if false
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -254,3 +260,5 @@ namespace Azure.ResourceManager.Compute
         }
     }
 }
+
+#endif

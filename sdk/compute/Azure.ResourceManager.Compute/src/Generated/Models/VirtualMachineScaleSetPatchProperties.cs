@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
-    internal partial class VirtualMachineScaleSetUpdateProperties
+    internal partial class VirtualMachineScaleSetPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateProperties"/>. </summary>
-        public VirtualMachineScaleSetUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPatchProperties"/>. </summary>
+        public VirtualMachineScaleSetPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPatchProperties"/>. </summary>
         /// <param name="upgradePolicy"> The upgrade policy. </param>
         /// <param name="automaticRepairsPolicy"> Policy for automatic repairs. </param>
         /// <param name="virtualMachineProfile"> The virtual machine profile. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zonalPlatformFaultDomainAlignMode"> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </param>
         /// <param name="skuProfile"> Specifies the sku profile for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, SubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetPatchProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVMs, bool? singlePlacementGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, SubResource proximityPlacementGroup, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, SpotRestorePolicy spotRestorePolicy, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;

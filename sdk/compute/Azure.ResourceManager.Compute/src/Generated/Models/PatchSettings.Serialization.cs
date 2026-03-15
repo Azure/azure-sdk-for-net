@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             WindowsVMGuestPatchMode? patchMode = default;
             bool? enableHotpatching = default;
             WindowsPatchAssessmentMode? assessmentMode = default;
-            WindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
+            WindowsVmGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    automaticByPlatformSettings = WindowsVMGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVMGuestPatchAutomaticByPlatformSettings(prop.Value, options);
+                    automaticByPlatformSettings = WindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

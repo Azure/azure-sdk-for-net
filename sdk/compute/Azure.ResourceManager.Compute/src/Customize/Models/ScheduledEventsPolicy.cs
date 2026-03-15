@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? Enable
         {
-            get => ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph?.IsEnabled;
+            get => ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph?.Enable;
             set
             {
                 if (ScheduledEventsAdditionalPublishingTargets is null)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         EventGridAndResourceGraph = new()
                     };
-                ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph.IsEnabled = value;
+                ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph.Enable = value;
             }
         }
     }
