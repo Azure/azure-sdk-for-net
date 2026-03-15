@@ -298,9 +298,22 @@ namespace Azure.Storage.Blobs
                 // massively reduces code duplication.
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
 
+                // For the multi-worker path, kick off downloads for subsequent
+                // ranges immediately — they will download and buffer in the
+                // background while we stream the initial response below.
+                IEnumerator<HttpRange> remainingRanges = GetRanges(initialLength, totalLength).GetEnumerator();
+                if (effectiveWorkerCount > 1)
+                {
+                    bufferedTasks = new();
+                    while (bufferedTasks.Count < effectiveWorkerCount && remainingRanges.MoveNext())
+                    {
+                        bufferedTasks.Enqueue(DownloadAndBufferAsync(
+                            remainingRanges.Current, conditionsWithEtag, cancellationToken));
+                    }
+                }
+
                 // Stream the initial response directly to the destination
-                // without buffering — the data is already in-hand, so there
-                // is nothing to overlap it with.
+                // without buffering into a rented array.
                 using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
                 {
                     await CopyToInternal(initialResponse, destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
@@ -314,14 +327,9 @@ namespace Azure.Storage.Blobs
                     }
                 }
 
-                if (effectiveWorkerCount > 1)
-                {
-                    bufferedTasks = new();
-                }
-
                 // Fill the queue with tasks to download each of the remaining
                 // ranges in the blob
-                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
+                while (remainingRanges.MoveNext())
                 {
                     if (bufferedTasks != null)
                     {
@@ -330,7 +338,7 @@ namespace Azure.Storage.Blobs
                         // response body into a rented buffer, enabling true
                         // parallel network I/O across all workers.
                         bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                            httpRange, conditionsWithEtag, cancellationToken));
+                            remainingRanges.Current, conditionsWithEtag, cancellationToken));
 
                         // If we have fewer tasks than allotted workers, then just
                         // continue adding tasks until we have effectiveWorkerCount
@@ -348,7 +356,7 @@ namespace Azure.Storage.Blobs
                     {
                         ValueTask<Response<BlobDownloadStreamingResult>> responseValueTask = _client
                             .DownloadStreamingInternal(
-                                httpRange,
+                                remainingRanges.Current,
                                 conditionsWithEtag,
                                 ValidationOptions,
                                 _progress,
