@@ -398,6 +398,68 @@ namespace Azure.Storage.Blobs.Test
         }
 
         /// <summary>
+        /// Verifies that a 412 Precondition Failed response (caused by the blob's
+        /// ETag changing mid-download) propagates as a RequestFailedException and
+        /// that all ArrayPool buffers are properly cleaned up. The downloader pins
+        /// the ETag from the initial response via IfMatch on subsequent requests;
+        /// if the blob is modified, the server returns 412 ConditionNotMet.
+        /// </summary>
+        [Test]
+        public async Task PropagatesEtagMismatchAndCleansUpBuffers()
+        {
+            MemoryStream destination = new MemoryStream();
+            MockDataSource dataSource = new MockDataSource(100);
+            TrackingArrayPool trackingPool = new TrackingArrayPool();
+            Mock<BlobBaseClient> blockClient = new Mock<BlobBaseClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            blockClient.SetupGet(c => c.ClientConfiguration).CallBase();
+
+            int requestCount = 0;
+            blockClient.SetupGet(c => c.UsingClientSideEncryption).Returns(false);
+            blockClient.Setup(c => c.DownloadStreamingInternal(
+                It.IsAny<HttpRange>(),
+                It.IsAny<BlobRequestConditions>(),
+                It.Is<DownloadTransferValidationOptions>(options =>
+                    options != null && options != s_validationOptions && !options.AutoValidateChecksum),
+                It.IsAny<IProgress<long>>(),
+                $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, async, cancellation) =>
+                {
+                    int current = Interlocked.Increment(ref requestCount);
+                    if (current > 1)
+                    {
+                        // Simulate the server rejecting the request because the blob
+                        // was modified after the initial download (ETag mismatch).
+                        throw new RequestFailedException(
+                            status: 412,
+                            errorCode: BlobErrorCode.ConditionNotMet.ToString(),
+                            message: "The condition specified using HTTP conditional header(s) is not met.",
+                            innerException: null);
+                    }
+                    return async
+                        ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
+                        : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation));
+                });
+
+            PartitionedDownloader downloader = new PartitionedDownloader(
+                blockClient.Object,
+                new StorageTransferOptions()
+                {
+                    MaximumTransferLength = 10,
+                    InitialTransferLength = 10
+                },
+                transferValidation: s_validationOptions,
+                arrayPool: trackingPool);
+
+            RequestFailedException thrown = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await InvokeDownloadToAsync(downloader, destination));
+            Assert.AreEqual(412, thrown.Status);
+            Assert.AreEqual(0, trackingPool.OutstandingRentals, "All array pool buffers should be returned after ETag mismatch");
+        }
+
+        /// <summary>
         /// Verifies buffer cleanup when the initial download succeeds but a
         /// subsequent range request fails with an HTTP error (500). Unlike
         /// SurfacesDownloadExceptions which fails on the first request, this
