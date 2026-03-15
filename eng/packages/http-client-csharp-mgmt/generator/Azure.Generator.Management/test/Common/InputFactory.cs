@@ -493,6 +493,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="response"></param>
         /// <param name="exception"></param>
         /// <param name="pagingMetadata"></param>
+        /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
         public static InputPagingServiceMethod PagingServiceMethod(
            string name,
@@ -501,7 +502,8 @@ namespace Azure.Generator.Management.Tests.Common
            IReadOnlyList<InputMethodParameter>? parameters = null,
            InputServiceMethodResponse? response = null,
            InputServiceMethodResponse? exception = null,
-           InputPagingServiceMetadata? pagingMetadata = null)
+           InputPagingServiceMetadata? pagingMetadata = null,
+           string? crossLanguageDefinitionId = null)
         {
             return new InputPagingServiceMethod(
                 name,
@@ -516,7 +518,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty,
+                crossLanguageDefinitionId ?? Guid.NewGuid().ToString(),
                 pagingMetadata ?? PagingMetadata([], null, null));
         }
 
