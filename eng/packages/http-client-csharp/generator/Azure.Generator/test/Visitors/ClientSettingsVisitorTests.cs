@@ -263,7 +263,9 @@ namespace Azure.Generator.Tests.Visitors
 
             // The initializer should contain a ternary checking CredentialSource for "apikeycredential"
             var display = string.Join(", ", initializer.Arguments.Select(a => a.ToDisplayString()));
+#pragma warning disable SCME0002
             Assert.IsTrue(display.Contains(nameof(CredentialSettings.CredentialSource)),
+#pragma warning restore SCME0002
                 $"Settings constructor initializer should check CredentialSource. Args: {display}");
             Assert.IsTrue(display.Contains("apikeycredential"),
                 $"Settings constructor initializer should compare against 'apikeycredential'. Args: {display}");
@@ -306,7 +308,7 @@ namespace Azure.Generator.Tests.Visitors
 
                 // The first argument should be null (no auth policy)
                 var firstArgDisplay = initializer.Arguments[0].ToDisplayString();
-                Assert.AreEqual("null", firstArgDisplay,
+                Assert.AreEqual("((global::Azure.Core.Pipeline.HttpPipelinePolicy)null)", firstArgDisplay,
                     $"First argument of no-auth Settings constructor should be null, was: {firstArgDisplay}");
             }
             else
