@@ -297,27 +297,26 @@ namespace Azure.Storage.Blobs
                 // Rule checker cannot understand this section, but this
                 // massively reduces code duplication.
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
+
+                // Stream the initial response directly to the destination
+                // without buffering — the data is already in-hand, so there
+                // is nothing to overlap it with.
+                using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
+                {
+                    await CopyToInternal(initialResponse, destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
+                    if (UseMasterCrc)
+                    {
+                        StorageCrc64Composer.Compose(
+                            (composedCrcBuf, 0L),
+                            (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
+                                ?? initialResponse.Value.Details.ContentLength)
+                        ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
+                    }
+                }
+
                 if (effectiveWorkerCount > 1)
                 {
-                    // Buffer the initial response into memory as a task
-                    // (runs concurrently with subsequent download tasks)
                     bufferedTasks = new();
-                    bufferedTasks.Enqueue(BufferResponseAsync(initialResponse, cancellationToken));
-                }
-                else
-                {
-                    using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
-                    {
-                        await CopyToInternal(initialResponse, destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
-                        if (UseMasterCrc)
-                        {
-                            StorageCrc64Composer.Compose(
-                                (composedCrcBuf, 0L),
-                                (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                                    ?? initialResponse.Value.Details.ContentLength)
-                            ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
-                        }
-                    }
                 }
 
                 // Fill the queue with tasks to download each of the remaining
