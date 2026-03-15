@@ -16,6 +16,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     [CodeGenSuppress("DeserializeServiceBusNamespacePatch", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class ServiceBusNamespacePatch
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/>. </summary>
+        /// <param name="location"> The resource location. </param>
+        public ServiceBusNamespacePatch(AzureLocation location) : this()
+        {
+            Location = location.Name;
+        }
+
         internal static ServiceBusNamespacePatch DeserializeServiceBusNamespacePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
