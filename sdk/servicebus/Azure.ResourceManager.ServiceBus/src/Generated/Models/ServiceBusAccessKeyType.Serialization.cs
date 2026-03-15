@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusAccessKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusAccessKeyType value) => value switch
         {
             ServiceBusAccessKeyType.PrimaryKey => "PrimaryKey",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusAccessKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusAccessKeyType ToServiceBusAccessKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryKey")) return ServiceBusAccessKeyType.PrimaryKey;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecondaryKey")) return ServiceBusAccessKeyType.SecondaryKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryKey"))
+            {
+                return ServiceBusAccessKeyType.PrimaryKey;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SecondaryKey"))
+            {
+                return ServiceBusAccessKeyType.SecondaryKey;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusAccessKeyType value.");
         }
     }
