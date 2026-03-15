@@ -3,42 +3,28 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    [CodeGenSuppress("GetConfigurations")]
-    [CodeGenSuppress("GetConfigurationAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetConfiguration", typeof(string), typeof(CancellationToken))]
+    // Backward-compat: baseline PromoteReadReplica had 2-param signature (no content body).
+    // New generator adds optional content param. Add overloads matching baseline.
     public partial class CosmosDBForPostgreSqlClusterResource
     {
-        /// <summary> Gets a collection of Configurations in the <see cref="CosmosDBForPostgreSqlClusterResource"/>. </summary>
-        /// <returns> An object representing collection of Configurations and their operations over a ConfigurationResource. </returns>
-        public virtual ConfigurationCollection GetConfigurations()
+        /// <summary> Promotes read replica cluster to an independent read-write cluster. </summary>
+        /// <param name="waitUntil"> Defines how to use the LRO. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation PromoteReadReplica(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            return this.GetCachedClient(client => new ConfigurationCollection(client, Id));
+            return PromoteReadReplica(waitUntil, default(CosmosDBForPostgreSqlPromoteRequestContent), cancellationToken);
         }
 
-        /// <summary> Gets information of a configuration for coordinator/worker nodes. </summary>
-        /// <param name="configurationName"> The name of the cluster configuration. </param>
+        /// <summary> Promotes read replica cluster to an independent read-write cluster. </summary>
+        /// <param name="waitUntil"> Defines how to use the LRO. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationResource>> GetConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> PromoteReadReplicaAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
-            return await this.GetConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets information of a configuration for coordinator/worker nodes. </summary>
-        /// <param name="configurationName"> The name of the cluster configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ConfigurationResource> GetConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
-            return this.GetConfigurations().Get(configurationName, cancellationToken);
+            return await PromoteReadReplicaAsync(waitUntil, default(CosmosDBForPostgreSqlPromoteRequestContent), cancellationToken).ConfigureAwait(false);
         }
     }
 }
