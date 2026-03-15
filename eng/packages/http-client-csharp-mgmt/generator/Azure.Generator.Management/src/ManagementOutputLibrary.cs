@@ -113,10 +113,10 @@ namespace Azure.Generator.Management
             }
 
             var resourceMetadatas = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas;
-            var resourceMethodCategories = new Dictionary<ResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
+            var resourceMethodCategories = new Dictionary<ArmResourceMetadata, ResourceMethodCategory>(resourceMetadatas.Count);
 
             // build resource methods per resource metadata
-            var resourceDict = new Dictionary<ResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
+            var resourceDict = new Dictionary<ArmResourceMetadata, ResourceClientProvider>(resourceMetadatas.Count);
             var collections = new List<ResourceCollectionClientProvider>(resourceMetadatas.Count);
             foreach (var resourceMetadata in resourceMetadatas)
             {
@@ -173,8 +173,8 @@ namespace Azure.Generator.Management
             _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
-                IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
-                IReadOnlyDictionary<ResourceMetadata, ResourceMethodCategory> resourceMethods,
+                IReadOnlyDictionary<ArmResourceMetadata, ResourceClientProvider> resourceDict,
+                IReadOnlyDictionary<ArmResourceMetadata, ResourceMethodCategory> resourceMethods,
                 IEnumerable<NonResourceMethod> nonResourceMethods)
             {
                 // walk through all resources to figure out their scopes

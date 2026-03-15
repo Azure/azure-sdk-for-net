@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceRegistrySchemaData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(deviceRegistrySchemaData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistrySchemaData"/> from. </param>

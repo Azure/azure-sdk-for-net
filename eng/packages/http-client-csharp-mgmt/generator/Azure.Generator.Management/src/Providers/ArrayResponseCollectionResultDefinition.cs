@@ -12,6 +12,7 @@ using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -84,6 +85,8 @@ namespace Azure.Generator.Management.Providers
             return [baseType];
         }
 
+        private static string ToFieldName(string paramName) => $"_{paramName.ToVariableName()}";
+
         protected override FieldProvider[] BuildFields()
         {
             var fields = new List<FieldProvider>
@@ -101,7 +104,7 @@ namespace Azure.Generator.Management.Providers
                 fields.Add(new FieldProvider(
                     FieldModifiers.Private | FieldModifiers.ReadOnly,
                     param.Type,
-                    $"_{param.Name}",
+                    ToFieldName(param.Name),
                     this));
             }
 
@@ -139,7 +142,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var param in _constructorParameters)
             {
-                bodyStatements.Add(This.Property($"_{param.Name}").Assign(param).Terminate());
+                bodyStatements.Add(This.Property(ToFieldName(param.Name)).Assign(param).Terminate());
             }
 
             bodyStatements.Add(This.Property("_context").Assign(contextParam).Terminate());
@@ -224,7 +227,7 @@ namespace Azure.Generator.Management.Providers
             // Add arguments from fields
             foreach (var param in _constructorParameters)
             {
-                requestArgs.Add(This.Property($"_{param.Name}"));
+                requestArgs.Add(This.Property(ToFieldName(param.Name)));
             }
 
             // Add context parameter

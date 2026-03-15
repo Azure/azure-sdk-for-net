@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(agricultureServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(agricultureServiceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AgricultureServiceData"/> from. </param>

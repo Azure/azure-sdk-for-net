@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nginxDeploymentData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(nginxDeploymentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentData"/> from. </param>
