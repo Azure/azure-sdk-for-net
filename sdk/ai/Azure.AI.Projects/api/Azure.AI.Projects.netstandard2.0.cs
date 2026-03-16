@@ -80,6 +80,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : System.ClientModel.Primitives.ClientConnectionProvider
     {
         protected AIProjectClient() : base (default(int)) { }
+        public AIProjectClient(Azure.AI.Projects.AIProjectClientSettings settings) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public virtual Azure.AI.Projects.Agents.AgentsClient Agents { get { throw null; } }
@@ -109,6 +110,13 @@ namespace Azure.AI.Projects
             V2025_05_01 = 1,
             V1 = 2,
         }
+    }
+    public partial class AIProjectClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public AIProjectClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Projects.AIProjectClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class AIProjectConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AIProjectConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AIProjectConnection>
     {
