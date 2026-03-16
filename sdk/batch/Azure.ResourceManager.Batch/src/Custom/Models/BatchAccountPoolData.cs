@@ -17,6 +17,24 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountPoolData : ResourceData
     {
+        // This custom property is needed because the TypeSpec code generator does not expose
+        // DeploymentConfiguration as a public property on BatchAccountPoolData.
+        //
+        // In the spec (models.tsp), Pool has a nested "properties" bag (PoolProperties) which
+        // contains "deploymentConfiguration?: DeploymentConfiguration". The back-compatible.tsp
+        // applies @@flattenProperty(Pool.properties) to flatten PoolProperties into the resource
+        // data class. However, because DeploymentConfiguration contains only a single property
+        // (virtualMachineConfiguration), the generator further flattens it into a convenience
+        // property "DeploymentVmConfiguration" on PoolProperties and marks the original
+        // DeploymentConfiguration as internal (see PoolProperties.cs line 109).
+        //
+        // This means the generated BatchAccountPoolData does not expose the full
+        // BatchDeploymentConfiguration object. For API backward compatibility with the previous
+        // Swagger/AutoRest-generated SDK (which exposed DeploymentConfiguration directly),
+        // and to allow users to set the entire deployment configuration rather than only
+        // VmConfiguration, this custom partial class re-exposes the property publicly by
+        // delegating to the internal Properties.DeploymentConfiguration.
+
         /// <summary> Deployment configuration properties. </summary>
         public BatchDeploymentConfiguration DeploymentConfiguration
         {
