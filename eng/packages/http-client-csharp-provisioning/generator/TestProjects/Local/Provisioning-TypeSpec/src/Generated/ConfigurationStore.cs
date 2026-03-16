@@ -27,7 +27,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Creates a new ConfigurationStore. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ConfigurationStore(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores", resourceVersion)
+        public ConfigurationStore(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores", resourceVersion ?? "2024-05-01")
         {
         }
 
@@ -152,5 +152,14 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
+
+        /// <summary></summary>
+        public static partial class ResourceVersions
+        {
+            /// <summary> API version "2024-05-01". </summary>
+            public static readonly string V2024_05_01 = "2024-05-01";
+            /// <summary> API version "2024-04-01". </summary>
+            public static readonly string V2024_04_01 = "2024-04-01";
+        }
     }
 }
