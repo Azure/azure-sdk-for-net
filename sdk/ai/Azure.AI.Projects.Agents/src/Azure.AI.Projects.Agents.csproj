@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>
+      The official .NET library for performing CRUD opertations on Agents in Microsoft Foundry.
+
+      This library features the client to perform Agent administration operations. It depends on and builds from the official OpenAI library for .NET to maintain rapid upstream feature propagation and
+      ongoing forward compatibility.
+    </Description>
+    <AssemblyTitle>Microsoft Azure.AI.Projects.Agents client library</AssemblyTitle>
+    <Version>2.0.0-beta.1</Version>
+    <PackageTags>Azure.AI.Projects.Agents</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Acknowledge experimental OpenAI features -->
+    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
+    <!-- Temporary suppression of XML doc requirement -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Ignore ModelFactory error (applied to externally originating types) -->
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
+    <!-- Ignore warnings about the experimental features -->
+    <NoWarn>$(NoWarn);AAIP001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenAI" />
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+</Project>

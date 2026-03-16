@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Upgraded API version to `2024-12-01-preview`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

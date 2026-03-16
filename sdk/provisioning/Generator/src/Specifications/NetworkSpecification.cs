@@ -81,6 +81,13 @@ public class NetworkSpecification() :
         typeof(PublicIPAddressResource),
         typeof(PublicIPPrefixResource),
         typeof(NetworkSecurityGroupResource),
+        typeof(NetworkSecurityPerimeterResource),
+        typeof(NetworkSecurityPerimeterAccessRuleResource),
+        typeof(NetworkSecurityPerimeterAssociationResource),
+        typeof(NetworkSecurityPerimeterLinkResource),
+        // NetworkSecurityPerimeterLinkReferenceResource is read-only (no PUT operation)
+        typeof(NetworkSecurityPerimeterLoggingConfigurationResource),
+        typeof(NetworkSecurityPerimeterProfileResource),
         typeof(RouteResource),
         typeof(RouteTableResource),
         typeof(PrivateLinkServiceResource),

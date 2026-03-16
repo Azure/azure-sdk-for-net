@@ -16,7 +16,6 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
     - sdk/provisioning/Azure.Provisioning.FrontDoor
-    - sdk/provisioning/Azure.Provisioning.KeyVault
     - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
@@ -53,10 +52,6 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_FrontDoor
     displayName: 'Azure.Provisioning.FrontDoor'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_KeyVault
-    displayName: 'Azure.Provisioning.KeyVault'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Kusto
@@ -125,9 +120,6 @@ extends:
     - name: Azure.Provisioning.FrontDoor
       safeName: AzureProvisioningFrontDoor
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_FrontDoor }}
-    - name: Azure.Provisioning.KeyVault
-      safeName: AzureProvisioningKeyVault
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}
     - name: Azure.Provisioning.Kusto
       safeName: AzureProvisioningKusto
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(localRulestackData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(localRulestackData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LocalRulestackData"/> from. </param>

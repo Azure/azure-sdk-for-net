@@ -51,7 +51,14 @@ import {
   subscriptionResource,
   tenantResource
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
+import {
+  DecoratorApplication,
+  Model,
+  NoTarget,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
 import {
   resolveArmResources,
   getOperationScopeFromPath
@@ -275,7 +282,8 @@ export function buildArmProviderSchema(
           parentResourceId: undefined, // this will be populated later
           parentResourceModelId: undefined,
           // Use model name as default; will be updated later if multiple paths exist
-          resourceName: model?.name ?? "Unknown"
+          resourceName: model?.name ?? "Unknown",
+          nameConstraints: {}
         } as ResourceMetadata;
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
@@ -502,6 +510,25 @@ export function buildArmProviderSchema(
       }
     }
     // If there's only one resource for this model, keep using the model name (already set)
+  }
+
+  // Extract name constraints (@pattern, @minLength, @maxLength) from the resource model's "name" property
+  for (const resource of filteredResources) {
+    const sdkModel = models.get(resource.resourceModelId);
+    const typespecModel = sdkModel?.__raw as Model | undefined;
+    const nameProperty = typespecModel?.properties.get("name");
+    const rawPattern = nameProperty
+      ? getPattern(sdkContext.program, nameProperty)
+      : undefined;
+    resource.metadata.nameConstraints = {
+      pattern: rawPattern || undefined,
+      minLength: nameProperty
+        ? getMinLength(sdkContext.program, nameProperty)
+        : undefined,
+      maxLength: nameProperty
+        ? getMaxLength(sdkContext.program, nameProperty)
+        : undefined
+    };
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.

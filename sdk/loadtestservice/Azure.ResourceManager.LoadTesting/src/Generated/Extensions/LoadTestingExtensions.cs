@@ -74,6 +74,176 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="LoadTestMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappingResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LoadTestMappingResource"/> object. </returns>
+        public static LoadTestMappingResource GetLoadTestMappingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetLoadTestMappingResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="LoadTestMappingCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappings(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="LoadTestMappingResource"/> objects. </returns>
+        public static LoadTestMappingCollection GetLoadTestMappings(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetLoadTestMappings(scope);
+        }
+
+        /// <summary>
+        /// Get a LoadTestMappingResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMapping(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestMappingName"> Load Test Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LoadTestMappingResource> GetLoadTestMapping(this ArmClient client, ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetLoadTestMapping(scope, loadTestMappingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a LoadTestMappingResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappingAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestMappingName"> Load Test Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LoadTestMappingResource>> GetLoadTestMappingAsync(this ArmClient client, ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableLoadTestingArmClient(client).GetLoadTestMappingAsync(scope, loadTestMappingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadTestProfileMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappingResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LoadTestProfileMappingResource"/> object. </returns>
+        public static LoadTestProfileMappingResource GetLoadTestProfileMappingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappingResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="LoadTestProfileMappingCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappings(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="LoadTestProfileMappingResource"/> objects. </returns>
+        public static LoadTestProfileMappingCollection GetLoadTestProfileMappings(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappings(scope);
+        }
+
+        /// <summary>
+        /// Get a LoadTestProfileMappingResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMapping(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestProfileMappingName"> Load Test Profile Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<LoadTestProfileMappingResource> GetLoadTestProfileMapping(this ArmClient client, ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMapping(scope, loadTestProfileMappingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a LoadTestProfileMappingResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappingAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestProfileMappingName"> Load Test Profile Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<LoadTestProfileMappingResource>> GetLoadTestProfileMappingAsync(this ArmClient client, ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappingAsync(scope, loadTestProfileMappingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MaxMonthlyVirtualUserHoursResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetMaxMonthlyVirtualUserHoursResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MaxMonthlyVirtualUserHoursResource"/> object. </returns>
+        public static MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableLoadTestingArmClient(client).GetMaxMonthlyVirtualUserHoursResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of LoadTestingResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
