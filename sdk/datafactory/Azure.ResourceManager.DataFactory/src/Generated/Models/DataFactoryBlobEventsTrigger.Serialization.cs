@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -227,6 +229,244 @@ namespace Azure.ResourceManager.DataFactory.Models
                 scope);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Pipelines), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pipelines: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Pipelines))
+                {
+                    if (Pipelines.Any())
+                    {
+                        builder.Append("  pipelines: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Pipelines)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  pipelines: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TriggerType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TriggerType))
+                {
+                    builder.Append("  type: ");
+                    if (TriggerType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TriggerType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TriggerType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  runtimeState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeState))
+                {
+                    builder.Append("  runtimeState: ");
+                    builder.AppendLine($"'{RuntimeState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Annotations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  annotations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Annotations))
+                {
+                    if (Annotations.Any())
+                    {
+                        builder.Append("  annotations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Annotations)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobPathBeginsWith), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    blobPathBeginsWith: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BlobPathBeginsWith))
+                {
+                    builder.Append("    blobPathBeginsWith: ");
+                    if (BlobPathBeginsWith.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BlobPathBeginsWith}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BlobPathBeginsWith}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobPathEndsWith), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    blobPathEndsWith: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BlobPathEndsWith))
+                {
+                    builder.Append("    blobPathEndsWith: ");
+                    if (BlobPathEndsWith.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BlobPathEndsWith}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BlobPathEndsWith}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreEmptyBlobs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ignoreEmptyBlobs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreEmptyBlobs))
+                {
+                    builder.Append("    ignoreEmptyBlobs: ");
+                    var boolValue = IgnoreEmptyBlobs.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Events), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    events: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Events))
+                {
+                    if (Events.Any())
+                    {
+                        builder.Append("    events: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Events)
+                        {
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
+                {
+                    builder.Append("    scope: ");
+                    if (Scope.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Scope}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Scope}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataFactoryBlobEventsTrigger>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
@@ -235,6 +475,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{options.Format}' format.");
             }

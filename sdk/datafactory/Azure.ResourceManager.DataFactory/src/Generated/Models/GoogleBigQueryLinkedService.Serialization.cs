@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -341,6 +343,345 @@ namespace Azure.ResourceManager.DataFactory.Models
                 encryptedCredential);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedServiceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedServiceType))
+                {
+                    builder.Append("  type: ");
+                    if (LinkedServiceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkedServiceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkedServiceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedServiceVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedServiceVersion))
+                {
+                    builder.Append("  version: ");
+                    if (LinkedServiceVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkedServiceVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkedServiceVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectVia), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectVia: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectVia))
+                {
+                    builder.Append("  connectVia: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectVia, options, 2, false, "  connectVia: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Parameters))
+                {
+                    if (Parameters.Any())
+                    {
+                        builder.Append("  parameters: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Parameters)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  parameters: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Annotations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  annotations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Annotations))
+                {
+                    if (Annotations.Any())
+                    {
+                        builder.Append("  annotations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Annotations)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Project), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    project: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Project))
+                {
+                    builder.Append("    project: ");
+                    builder.AppendLine($"'{Project.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalProjects), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    additionalProjects: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdditionalProjects))
+                {
+                    builder.Append("    additionalProjects: ");
+                    builder.AppendLine($"'{AdditionalProjects.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestGoogleDriveScope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    requestGoogleDriveScope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestGoogleDriveScope))
+                {
+                    builder.Append("    requestGoogleDriveScope: ");
+                    builder.AppendLine($"'{RequestGoogleDriveScope.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authenticationType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("    authenticationType: ");
+                builder.AppendLine($"'{AuthenticationType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    refreshToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefreshToken))
+                {
+                    builder.Append("    refreshToken: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RefreshToken, options, 4, false, "    refreshToken: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("    clientId: ");
+                    builder.AppendLine($"'{ClientId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecret))
+                {
+                    builder.Append("    clientSecret: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ClientSecret, options, 4, false, "    clientSecret: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    email: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Email))
+                {
+                    builder.Append("    email: ");
+                    builder.AppendLine($"'{Email.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyFilePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    keyFilePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyFilePath))
+                {
+                    builder.Append("    keyFilePath: ");
+                    builder.AppendLine($"'{KeyFilePath.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedCertPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    trustedCertPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TrustedCertPath))
+                {
+                    builder.Append("    trustedCertPath: ");
+                    builder.AppendLine($"'{TrustedCertPath.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseSystemTrustStore), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    useSystemTrustStore: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseSystemTrustStore))
+                {
+                    builder.Append("    useSystemTrustStore: ");
+                    builder.AppendLine($"'{UseSystemTrustStore.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptedCredential), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    encryptedCredential: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptedCredential))
+                {
+                    builder.Append("    encryptedCredential: ");
+                    if (EncryptedCredential.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncryptedCredential}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncryptedCredential}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GoogleBigQueryLinkedService>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GoogleBigQueryLinkedService>)this).GetFormatFromOptions(options) : options.Format;
@@ -349,6 +690,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GoogleBigQueryLinkedService)} does not support writing '{options.Format}' format.");
             }

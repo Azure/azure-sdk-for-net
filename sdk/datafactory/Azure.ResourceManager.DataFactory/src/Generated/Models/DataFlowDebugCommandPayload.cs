@@ -77,12 +77,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The stream name which is used for preview. </summary>
+        [WirePath("streamName")]
         public string StreamName { get; }
         /// <summary> Row limits for preview response. </summary>
+        [WirePath("rowLimits")]
         public int? RowLimits { get; set; }
         /// <summary> Array of column names. </summary>
+        [WirePath("columns")]
         public IList<string> Columns { get; }
         /// <summary> The expression which is used for preview. </summary>
+        [WirePath("expression")]
         public string Expression { get; set; }
     }
 }

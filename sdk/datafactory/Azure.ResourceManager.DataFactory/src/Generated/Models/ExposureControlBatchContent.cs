@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of exposure control features. </summary>
+        [WirePath("exposureControlRequests")]
         public IList<ExposureControlContent> ExposureControlRequests { get; }
     }
 }

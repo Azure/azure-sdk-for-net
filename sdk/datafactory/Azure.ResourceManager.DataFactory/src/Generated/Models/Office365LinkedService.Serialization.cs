@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -263,6 +265,288 @@ namespace Azure.ResourceManager.DataFactory.Models
                 encryptedCredential);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedServiceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedServiceType))
+                {
+                    builder.Append("  type: ");
+                    if (LinkedServiceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkedServiceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkedServiceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedServiceVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedServiceVersion))
+                {
+                    builder.Append("  version: ");
+                    if (LinkedServiceVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkedServiceVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkedServiceVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectVia), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connectVia: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectVia))
+                {
+                    builder.Append("  connectVia: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectVia, options, 2, false, "  connectVia: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  parameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Parameters))
+                {
+                    if (Parameters.Any())
+                    {
+                        builder.Append("  parameters: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Parameters)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  parameters: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Annotations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  annotations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Annotations))
+                {
+                    if (Annotations.Any())
+                    {
+                        builder.Append("  annotations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Annotations)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.Append("  typeProperties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Office365TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    office365TenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Office365TenantId))
+                {
+                    builder.Append("    office365TenantId: ");
+                    builder.AppendLine($"'{Office365TenantId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalTenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipalTenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipalTenantId))
+                {
+                    builder.Append("    servicePrincipalTenantId: ");
+                    builder.AppendLine($"'{ServicePrincipalTenantId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipalId))
+                {
+                    builder.Append("    servicePrincipalId: ");
+                    builder.AppendLine($"'{ServicePrincipalId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipalKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipalKey))
+                {
+                    builder.Append("    servicePrincipalKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipalKey, options, 4, false, "    servicePrincipalKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalCredentialType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipalCredentialType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipalCredentialType))
+                {
+                    builder.Append("    servicePrincipalCredentialType: ");
+                    builder.AppendLine($"'{ServicePrincipalCredentialType.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalEmbeddedCert), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipalEmbeddedCert: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipalEmbeddedCert))
+                {
+                    builder.Append("    servicePrincipalEmbeddedCert: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipalEmbeddedCert, options, 4, false, "    servicePrincipalEmbeddedCert: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalEmbeddedCertPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    servicePrincipalEmbeddedCertPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServicePrincipalEmbeddedCertPassword))
+                {
+                    builder.Append("    servicePrincipalEmbeddedCertPassword: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipalEmbeddedCertPassword, options, 4, false, "    servicePrincipalEmbeddedCertPassword: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptedCredential), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    encryptedCredential: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptedCredential))
+                {
+                    builder.Append("    encryptedCredential: ");
+                    if (EncryptedCredential.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncryptedCredential}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncryptedCredential}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<Office365LinkedService>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Office365LinkedService>)this).GetFormatFromOptions(options) : options.Format;
@@ -271,6 +555,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Office365LinkedService)} does not support writing '{options.Format}' format.");
             }

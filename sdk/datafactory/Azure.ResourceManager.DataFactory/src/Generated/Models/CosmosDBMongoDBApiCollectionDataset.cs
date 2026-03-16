@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.collection")]
         public DataFactoryElement<string> Collection { get; set; }
     }
 }

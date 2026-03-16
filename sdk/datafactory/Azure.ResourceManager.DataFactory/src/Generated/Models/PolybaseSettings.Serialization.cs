@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -139,6 +140,81 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RejectType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rejectType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RejectType))
+                {
+                    builder.Append("  rejectType: ");
+                    builder.AppendLine($"'{RejectType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RejectValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rejectValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RejectValue))
+                {
+                    builder.Append("  rejectValue: ");
+                    builder.AppendLine($"'{RejectValue.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RejectSampleValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rejectSampleValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RejectSampleValue))
+                {
+                    builder.Append("  rejectSampleValue: ");
+                    builder.AppendLine($"'{RejectSampleValue.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseTypeDefault), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  useTypeDefault: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UseTypeDefault))
+                {
+                    builder.Append("  useTypeDefault: ");
+                    builder.AppendLine($"'{UseTypeDefault.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PolybaseSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,6 +223,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolybaseSettings)} does not support writing '{options.Format}' format.");
             }

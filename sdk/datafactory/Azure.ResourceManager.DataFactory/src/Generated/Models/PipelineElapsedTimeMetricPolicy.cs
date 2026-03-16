@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("duration")]
         public BinaryData Duration { get; set; }
     }
 }

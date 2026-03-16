@@ -48,16 +48,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Copy sink type. </summary>
         internal string CopySinkType { get; set; }
         /// <summary> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        [WirePath("writeBatchSize")]
         public DataFactoryElement<int> WriteBatchSize { get; set; }
         /// <summary> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("writeBatchTimeout")]
         public DataFactoryElement<string> WriteBatchTimeout { get; set; }
         /// <summary> Sink retry count. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("sinkRetryCount")]
         public DataFactoryElement<int> SinkRetryCount { get; set; }
         /// <summary> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("sinkRetryWait")]
         public DataFactoryElement<string> SinkRetryWait { get; set; }
         /// <summary> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("maxConcurrentConnections")]
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("disableMetricsCollection")]
         public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
         /// <summary>
         /// Additional Properties
@@ -89,6 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -54,24 +54,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The version of the MariaDB driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. The legacy driver is scheduled for deprecation by October 2024. </summary>
+        [WirePath("typeProperties.driverVersion")]
         public DataFactoryElement<string> DriverVersion { get; set; }
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Server name for connection. Type: string. </summary>
+        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The port for the connection. Type: integer. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Username for authentication. Type: string. </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Database name for connection. Type: string. </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> This option specifies whether the driver uses TLS encryption and verification when connecting to MariaDB. E.g., SSLMode=&lt;0/1/2/3/4&gt;. Options: DISABLED (0) / PREFERRED (1) (Default) / REQUIRED (2) / VERIFY_CA (3) / VERIFY_IDENTITY (4), REQUIRED (2) is recommended to only allow connections encrypted with SSL/TLS. </summary>
+        [WirePath("typeProperties.sslMode")]
         public DataFactoryElement<int> SslMode { get; set; }
         /// <summary> This option specifies whether to use a CA certificate from the system trust store, or from a specified PEM file. E.g. UseSystemTrustStore=&lt;0/1&gt;; Options: Enabled (1) / Disabled (0) (Default). </summary>
+        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<int> UseSystemTrustStore { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

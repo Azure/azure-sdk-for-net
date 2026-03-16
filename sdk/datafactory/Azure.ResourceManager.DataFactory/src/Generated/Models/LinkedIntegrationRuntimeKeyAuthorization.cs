@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The key used for authorization. </summary>
+        [WirePath("key")]
         public DataFactorySecretString Key { get; set; }
     }
 }

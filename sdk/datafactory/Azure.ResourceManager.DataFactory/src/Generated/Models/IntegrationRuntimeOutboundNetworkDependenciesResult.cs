@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The list of outbound network dependency endpoints. </summary>
+        [WirePath("value")]
         public IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> Value { get; }
     }
 }

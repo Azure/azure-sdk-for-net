@@ -72,32 +72,46 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Type of authentication used to connect to the OData service. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public ODataAuthenticationType? AuthenticationType { get; set; }
         /// <summary> User name of the OData service. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password of the OData service. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </summary>
+        [WirePath("typeProperties.authHeaders")]
         public DataFactoryElement<IDictionary<string, string>> AuthHeaders { get; set; }
         /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.azureCloudType")]
         public DataFactoryElement<string> AzureCloudType { get; set; }
         /// <summary> Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.aadResourceId")]
         public DataFactoryElement<string> AadResourceId { get; set; }
         /// <summary> Specify the credential type (key or cert) is used for service principal. </summary>
+        [WirePath("typeProperties.aadServicePrincipalCredentialType")]
         public ODataAadServicePrincipalCredentialType? AadServicePrincipalCredentialType { get; set; }
         /// <summary> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalEmbeddedCert")]
         public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
         /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalEmbeddedCertPassword")]
         public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

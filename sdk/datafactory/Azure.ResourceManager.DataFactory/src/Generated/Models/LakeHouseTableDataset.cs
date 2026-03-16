@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The schema name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
     }
 }

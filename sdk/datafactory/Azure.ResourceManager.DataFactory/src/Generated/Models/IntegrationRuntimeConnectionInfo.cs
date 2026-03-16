@@ -39,16 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The token generated in service. Callers use this token to authenticate to integration runtime. </summary>
+        [WirePath("serviceToken")]
         public string ServiceToken { get; }
         /// <summary> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </summary>
+        [WirePath("identityCertThumbprint")]
         public string IdentityCertThumbprint { get; }
         /// <summary> The on-premises integration runtime host URL. </summary>
+        [WirePath("hostServiceUri")]
         public Uri HostServiceUri { get; }
         /// <summary> The integration runtime version. </summary>
+        [WirePath("version")]
         public string Version { get; }
         /// <summary> The public key for encrypting a credential when transferring the credential to the integration runtime. </summary>
+        [WirePath("publicKey")]
         public string PublicKey { get; }
         /// <summary> Whether the identity certificate is expired. </summary>
+        [WirePath("isIdentityCertExprired")]
         public bool? IsIdentityCertExprired { get; }
         /// <summary>
         /// Additional Properties
@@ -80,6 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

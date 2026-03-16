@@ -66,16 +66,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Gets the provisioning state. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
         /// <summary> The state of a private link connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

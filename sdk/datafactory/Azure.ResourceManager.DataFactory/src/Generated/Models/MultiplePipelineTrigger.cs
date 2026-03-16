@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Pipelines that need to be started. </summary>
+        [WirePath("pipelines")]
         public IList<TriggerPipelineReference> Pipelines { get; }
     }
 }

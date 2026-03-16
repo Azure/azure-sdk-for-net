@@ -46,16 +46,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The authentication type to be used to connect to the SAP HANA server. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public SapHanaAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to access the SAP HANA server. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

@@ -63,20 +63,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.accountName")]
         public DataFactoryElement<string> AccountName { get; set; }
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The Key of the application used to authenticate against the Azure Data Lake Analytics account. </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.subscriptionId")]
         public DataFactoryElement<string> SubscriptionId { get; set; }
         /// <summary> Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.resourceGroupName")]
         public DataFactoryElement<string> ResourceGroupName { get; set; }
         /// <summary> Azure Data Lake Analytics URI Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.dataLakeAnalyticsUri")]
         public DataFactoryElement<string> DataLakeAnalyticsUri { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

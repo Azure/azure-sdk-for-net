@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The required version of Azure PowerShell to install. </summary>
+        [WirePath("typeProperties.version")]
         public string Version { get; set; }
     }
 }

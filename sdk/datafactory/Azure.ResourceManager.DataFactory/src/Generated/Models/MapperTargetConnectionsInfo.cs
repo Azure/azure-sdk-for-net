@@ -69,10 +69,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of source tables for a target connection. </summary>
+        [WirePath("targetEntities")]
         public IList<MapperTable> TargetEntities { get; }
         /// <summary> Source connection details. </summary>
+        [WirePath("connection")]
         public MapperConnection Connection { get; set; }
         /// <summary> List of table mappings. </summary>
+        [WirePath("dataMapperMappings")]
         public IList<DataMapperMapping> DataMapperMappings { get; }
         /// <summary>
         /// List of relationship info among the tables.
@@ -104,6 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("relationships")]
         public IList<BinaryData> Relationships { get; }
     }
 }

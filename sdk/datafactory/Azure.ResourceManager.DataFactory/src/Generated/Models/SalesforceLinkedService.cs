@@ -46,16 +46,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of Salesforce instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'. To copy data from custom domain, specify, for example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.environmentUrl")]
         public DataFactoryElement<string> EnvironmentUri { get; set; }
         /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password for Basic authentication of the Salesforce instance. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The security token is optional to remotely access Salesforce instance. </summary>
+        [WirePath("typeProperties.securityToken")]
         public DataFactorySecret SecurityToken { get; set; }
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.apiVersion")]
         public DataFactoryElement<string> ApiVersion { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

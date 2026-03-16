@@ -73,24 +73,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
         /// </summary>
+        [WirePath("typeProperties.location")]
         public DatasetLocation DataLocation { get; set; }
         /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.columnDelimiter")]
         public DataFactoryElement<string> ColumnDelimiter { get; set; }
         /// <summary> The row delimiter. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.rowDelimiter")]
         public DataFactoryElement<string> RowDelimiter { get; set; }
         /// <summary> The code page name of the preferred encoding. If miss, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.encodingName")]
         public DataFactoryElement<string> EncodingName { get; set; }
         /// <summary> The data compressionCodec. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.compressionCodec")]
         public DataFactoryElement<string> CompressionCodec { get; set; }
         /// <summary> The data compression method used for DelimitedText. </summary>
+        [WirePath("typeProperties.compressionLevel")]
         public DataFactoryElement<string> CompressionLevel { get; set; }
         /// <summary> The quote character. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.quoteChar")]
         public DataFactoryElement<string> QuoteChar { get; set; }
         /// <summary> The escape character. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.escapeChar")]
         public DataFactoryElement<string> EscapeChar { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.firstRowAsHeader")]
         public DataFactoryElement<bool> FirstRowAsHeader { get; set; }
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.nullValue")]
         public DataFactoryElement<string> NullValue { get; set; }
     }
 }

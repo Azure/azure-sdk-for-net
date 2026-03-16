@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the column in integer or datetime type that will be used for proceeding partitioning. If not specified, the primary key of the table is auto-detected and used as the partition column. Type: string (or Expression with resultType string). </summary>
+        [WirePath("partitionColumnName")]
         public DataFactoryElement<string> PartitionColumnName { get; set; }
         /// <summary> The maximum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </summary>
+        [WirePath("partitionUpperBound")]
         public DataFactoryElement<string> PartitionUpperBound { get; set; }
         /// <summary> The minimum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </summary>
+        [WirePath("partitionLowerBound")]
         public DataFactoryElement<string> PartitionLowerBound { get; set; }
     }
 }

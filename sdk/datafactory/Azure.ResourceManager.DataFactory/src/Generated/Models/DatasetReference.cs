@@ -77,8 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Dataset reference type. </summary>
+        [WirePath("type")]
         public DatasetReferenceType ReferenceType { get; set; }
         /// <summary> Reference dataset name. </summary>
+        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
         /// <summary>
         /// Arguments for dataset.
@@ -110,6 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

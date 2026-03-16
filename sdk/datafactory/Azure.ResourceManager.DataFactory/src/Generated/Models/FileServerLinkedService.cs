@@ -52,12 +52,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userId")]
         public DataFactoryElement<string> UserId { get; set; }
         /// <summary> Password to logon the server. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

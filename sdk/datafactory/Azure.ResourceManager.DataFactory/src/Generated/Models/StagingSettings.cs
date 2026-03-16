@@ -44,10 +44,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Staging linked service reference. </summary>
+        [WirePath("linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </summary>
+        [WirePath("path")]
         public DataFactoryElement<string> Path { get; set; }
         /// <summary> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("enableCompression")]
         public DataFactoryElement<bool> EnableCompression { get; set; }
         /// <summary>
         /// Additional Properties
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

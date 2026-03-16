@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The self-hosted integration runtime reference. </summary>
+        [WirePath("connectVia")]
         public EntityReference ConnectVia { get; set; }
         /// <summary> The staging linked service reference. </summary>
+        [WirePath("stagingLinkedService")]
         public EntityReference StagingLinkedService { get; set; }
         /// <summary> The path to contain the staged data in the Blob storage. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

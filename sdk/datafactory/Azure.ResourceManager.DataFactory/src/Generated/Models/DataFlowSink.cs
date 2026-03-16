@@ -43,8 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Schema linked service reference. </summary>
+        [WirePath("schemaLinkedService")]
         public DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
         /// <summary> Rejected data linked service reference. </summary>
+        [WirePath("rejectedDataLinkedService")]
         public DataFactoryLinkedServiceReference RejectedDataLinkedService { get; set; }
     }
 }

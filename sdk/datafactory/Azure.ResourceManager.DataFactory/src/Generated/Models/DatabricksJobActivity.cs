@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Id of the Databricks Job to be executed. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.jobId")]
         public DataFactoryElement<string> JobId { get; set; }
         /// <summary>
         /// Job parameters to be used for each run of this job. If the job takes a parameter that is not specified, the default value from the job will be used.
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.jobParameters")]
         public IDictionary<string, BinaryData> JobParameters { get; }
     }
 }

@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
     }
 }

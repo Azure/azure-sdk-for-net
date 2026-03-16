@@ -60,20 +60,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the FTP server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port number that the FTP server uses to listen for client connections. Default value is 21. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> The authentication type to be used to connect to the FTP server. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public FtpAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username to logon the FTP server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to logon the FTP server. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.enableSsl")]
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.enableServerCertificateValidation")]
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
     }
 }

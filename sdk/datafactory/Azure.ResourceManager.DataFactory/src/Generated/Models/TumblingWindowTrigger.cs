@@ -73,26 +73,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Pipeline for which runs are created when an event is fired for trigger window that is ready. </summary>
+        [WirePath("pipeline")]
         public TriggerPipelineReference Pipeline { get; set; }
         /// <summary> The frequency of the time windows. </summary>
+        [WirePath("typeProperties.frequency")]
         public TumblingWindowFrequency Frequency { get; set; }
         /// <summary> The interval of the time windows. The minimum interval allowed is 15 Minutes. </summary>
+        [WirePath("typeProperties.interval")]
         public int Interval { get; set; }
         /// <summary> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
+        [WirePath("typeProperties.startTime")]
         public DateTimeOffset StartOn { get; set; }
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
+        [WirePath("typeProperties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Specifies how long the trigger waits past due time before triggering new run. It doesn't alter window start and end time. The default is 0. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("typeProperties.delay")]
         public DataFactoryElement<string> Delay { get; set; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a new run is triggered. </summary>
+        [WirePath("typeProperties.maxConcurrency")]
         public int MaxConcurrency { get; set; }
         /// <summary> Retry policy that will be applied for failed pipeline runs. </summary>
+        [WirePath("typeProperties.retryPolicy")]
         public RetryPolicy RetryPolicy { get; set; }
         /// <summary>
         /// Triggers that this trigger depends on. Only tumbling window triggers are supported.
         /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
         /// </summary>
+        [WirePath("typeProperties.dependsOn")]
         public IList<DependencyReference> DependsOn { get; }
     }
 }

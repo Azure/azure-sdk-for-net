@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of source tables for a source connection. </summary>
+        [WirePath("sourceEntities")]
         public IList<MapperTable> SourceEntities { get; }
         /// <summary> Source connection details. </summary>
+        [WirePath("connection")]
         public MapperConnection Connection { get; set; }
     }
 }

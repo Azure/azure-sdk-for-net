@@ -82,23 +82,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.connectionProperties")]
         public BinaryData ConnectionProperties { get; set; }
         /// <summary> The endpoint of the Xero server. (i.e. api.xero.com). </summary>
+        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The consumer key associated with the Xero application. </summary>
+        [WirePath("typeProperties.consumerKey")]
         public DataFactorySecret ConsumerKey { get; set; }
         /// <summary>
         /// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including the Unix line endings(
         /// ).
         /// </summary>
+        [WirePath("typeProperties.privateKey")]
         public DataFactorySecret PrivateKey { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
+        [WirePath("typeProperties.useEncryptedEndpoints")]
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        [WirePath("typeProperties.useHostVerification")]
         public DataFactoryElement<bool> UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
+        [WirePath("typeProperties.usePeerVerification")]
         public DataFactoryElement<bool> UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

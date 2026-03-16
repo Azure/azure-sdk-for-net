@@ -50,10 +50,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Admin Key for Azure Search service. </summary>
+        [WirePath("typeProperties.key")]
         public DataFactorySecret Key { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

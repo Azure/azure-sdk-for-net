@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -204,6 +205,149 @@ namespace Azure.ResourceManager.DataFactory.Models
                 jsonPathDefinition);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FilePattern), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  filePattern: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FilePattern))
+                {
+                    builder.Append("  filePattern: ");
+                    builder.AppendLine($"'{FilePattern.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NestingSeparator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nestingSeparator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NestingSeparator))
+                {
+                    builder.Append("  nestingSeparator: ");
+                    builder.AppendLine($"'{NestingSeparator.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncodingName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  encodingName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncodingName))
+                {
+                    builder.Append("  encodingName: ");
+                    builder.AppendLine($"'{EncodingName.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JsonNodeReference), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jsonNodeReference: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JsonNodeReference))
+                {
+                    builder.Append("  jsonNodeReference: ");
+                    builder.AppendLine($"'{JsonNodeReference.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JsonPathDefinition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  jsonPathDefinition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(JsonPathDefinition))
+                {
+                    builder.Append("  jsonPathDefinition: ");
+                    builder.AppendLine($"'{JsonPathDefinition.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatasetStorageFormatType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DatasetStorageFormatType))
+                {
+                    builder.Append("  type: ");
+                    if (DatasetStorageFormatType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatasetStorageFormatType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatasetStorageFormatType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Serializer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serializer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Serializer))
+                {
+                    builder.Append("  serializer: ");
+                    builder.AppendLine($"'{Serializer.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deserializer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deserializer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Deserializer))
+                {
+                    builder.Append("  deserializer: ");
+                    builder.AppendLine($"'{Deserializer.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DatasetJsonFormat>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
@@ -212,6 +356,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support writing '{options.Format}' format.");
             }

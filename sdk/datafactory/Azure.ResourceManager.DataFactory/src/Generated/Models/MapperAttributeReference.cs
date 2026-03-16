@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the column. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Name of the table. </summary>
+        [WirePath("entity")]
         public string Entity { get; set; }
         /// <summary> The connection reference for the connection. </summary>
+        [WirePath("entityConnectionReference")]
         public MapperConnectionReference EntityConnectionReference { get; set; }
     }
 }

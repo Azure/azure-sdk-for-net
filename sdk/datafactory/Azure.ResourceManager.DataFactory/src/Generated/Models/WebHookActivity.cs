@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Activity policy. </summary>
+        [WirePath("policy")]
         public SecureInputOutputPolicy Policy { get; set; }
         /// <summary> Rest API method for target endpoint. </summary>
+        [WirePath("typeProperties.method")]
         public WebHookActivityMethod Method { get; set; }
         /// <summary> WebHook activity target endpoint and path. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The timeout within which the webhook should be called back. If there is no value specified, it defaults to 10 minutes. Type: string. Pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("typeProperties.timeout")]
         public string Timeout { get; set; }
         /// <summary>
         /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string).
@@ -103,12 +107,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.headers")]
         public IDictionary<string, BinaryData> RequestHeaders { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.body")]
         public DataFactoryElement<string> Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>
+        [WirePath("typeProperties.authentication")]
         public WebActivityAuthentication Authentication { get; set; }
         /// <summary> When set to true, statusCode, output and error in callback request body will be consumed by activity. The activity can be marked as failed by setting statusCode &gt;= 400 in callback request. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.reportStatusOnCallBack")]
         public DataFactoryElement<bool> ReportStatusOnCallBack { get; set; }
     }
 }

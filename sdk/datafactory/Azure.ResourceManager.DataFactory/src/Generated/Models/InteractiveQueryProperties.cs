@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default value is 'Enabling'. </summary>
+        [WirePath("status")]
         public InteractiveCapabilityStatus? Status { get; }
         /// <summary> The allowed idle time for interactive authoring. </summary>
+        [WirePath("autoTerminationMinutes")]
         public int? AutoTerminationMinutes { get; }
     }
 }

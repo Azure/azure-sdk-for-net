@@ -38,10 +38,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of sources in Power Query. </summary>
+        [WirePath("typeProperties.sources")]
         public IList<PowerQuerySource> Sources { get; }
         /// <summary> Power query mashup script. </summary>
+        [WirePath("typeProperties.script")]
         public string Script { get; set; }
         /// <summary> Locale of the Power query mashup document. </summary>
+        [WirePath("typeProperties.documentLocale")]
         public string DocumentLocale { get; set; }
     }
 }

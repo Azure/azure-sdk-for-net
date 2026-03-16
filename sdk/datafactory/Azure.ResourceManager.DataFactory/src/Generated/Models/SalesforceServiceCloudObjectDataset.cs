@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.objectApiName")]
         public DataFactoryElement<string> ObjectApiName { get; set; }
     }
 }

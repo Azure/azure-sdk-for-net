@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Reject type. </summary>
+        [WirePath("rejectType")]
         public PolybaseSettingsRejectType? RejectType { get; set; }
         /// <summary> Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression with resultType number), minimum: 0. </summary>
+        [WirePath("rejectValue")]
         public DataFactoryElement<int> RejectValue { get; set; }
         /// <summary> Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        [WirePath("rejectSampleValue")]
         public DataFactoryElement<int> RejectSampleValue { get; set; }
         /// <summary> Specifies how to handle missing values in delimited text files when PolyBase retrieves data from the text file. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("useTypeDefault")]
         public DataFactoryElement<bool> UseTypeDefault { get; set; }
         /// <summary>
         /// Additional Properties
@@ -73,6 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -35,8 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </summary>
+        [WirePath("bucketName")]
         public DataFactoryElement<string> BucketName { get; set; }
         /// <summary> Specify the version of amazon S3. Type: string (or Expression with resultType string). </summary>
+        [WirePath("version")]
         public DataFactoryElement<string> Version { get; set; }
     }
 }

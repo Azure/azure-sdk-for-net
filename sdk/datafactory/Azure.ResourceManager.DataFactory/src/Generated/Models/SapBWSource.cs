@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> MDX query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
     }
 }

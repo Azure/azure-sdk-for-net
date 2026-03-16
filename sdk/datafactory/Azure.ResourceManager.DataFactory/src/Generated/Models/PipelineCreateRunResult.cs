@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Identifier of a run. </summary>
+        [WirePath("runId")]
         public Guid RunId { get; }
     }
 }

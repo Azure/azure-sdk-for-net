@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The data factory name for linked integration runtime. </summary>
+        [WirePath("factoryName")]
         public string LinkedFactoryName { get; }
     }
 }

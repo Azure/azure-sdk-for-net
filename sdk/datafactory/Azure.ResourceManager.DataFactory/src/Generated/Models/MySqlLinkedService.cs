@@ -68,38 +68,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The version of the MySQL driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </summary>
+        [WirePath("typeProperties.driverVersion")]
         public DataFactoryElement<string> DriverVersion { get; set; }
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Server name for connection. Type: string. </summary>
+        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The port for the connection. Type: integer. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Username for authentication. Type: string. </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Database name for connection. Type: string. </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1: prefer, 2: require, 3: verify-ca, 4: verify-full. </summary>
+        [WirePath("typeProperties.sslMode")]
         public DataFactoryElement<int> SslMode { get; set; }
         /// <summary> Use system trust store for connection. Type: integer. 0: enable, 1: disable. </summary>
+        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<int> UseSystemTrustStore { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> This allows the special “zero” date value 0000-00-00 to be retrieved from the database. Type: boolean. </summary>
+        [WirePath("typeProperties.allowZeroDateTime")]
         public DataFactoryElement<bool> AllowZeroDateTime { get; set; }
         /// <summary> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. Type: integer. </summary>
+        [WirePath("typeProperties.connectionTimeout")]
         public DataFactoryElement<int> ConnectionTimeout { get; set; }
         /// <summary> True to return DateTime.MinValue for date or datetime columns that have disallowed values. Type: boolean. </summary>
+        [WirePath("typeProperties.convertZeroDateTime")]
         public DataFactoryElement<bool> ConvertZeroDateTime { get; set; }
         /// <summary> Determines which column type (if any) should be read as a GUID. Type: string. None: No column types are automatically read as a Guid; Char36: All CHAR(36) columns are read/written as a Guid using lowercase hex with hyphens, which matches UUID. </summary>
+        [WirePath("typeProperties.guidFormat")]
         public DataFactoryElement<string> GuidFormat { get; set; }
         /// <summary> The path to the client’s SSL certificate file in PEM format. SslKey must also be specified. Type: string. </summary>
+        [WirePath("typeProperties.sslCert")]
         public DataFactoryElement<string> SslCert { get; set; }
         /// <summary> The path to the client’s SSL private key in PEM format. SslCert must also be specified. Type: string. </summary>
+        [WirePath("typeProperties.sslKey")]
         public DataFactoryElement<string> SslKey { get; set; }
         /// <summary> When set to true, TINYINT(1) values are returned as booleans. Type: bool. </summary>
+        [WirePath("typeProperties.treatTinyAsBoolean")]
         public DataFactoryElement<bool> TreatTinyAsBoolean { get; set; }
     }
 }

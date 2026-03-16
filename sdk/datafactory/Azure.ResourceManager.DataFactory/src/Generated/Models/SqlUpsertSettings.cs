@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("useTempDB")]
         public DataFactoryElement<bool> UseTempDB { get; set; }
         /// <summary> Schema name for interim table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("interimSchemaName")]
         public DataFactoryElement<string> InterimSchemaName { get; set; }
         /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
+        [WirePath("keys")]
         public DataFactoryElement<IList<string>> Keys { get; set; }
     }
 }

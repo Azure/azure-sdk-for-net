@@ -41,12 +41,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Folder id which contains project. </summary>
+        [WirePath("folderId")]
         public long? FolderId { get; }
         /// <summary> Project version. </summary>
+        [WirePath("version")]
         public long? Version { get; }
         /// <summary> Environment reference in project. </summary>
+        [WirePath("environmentRefs")]
         public IReadOnlyList<SsisEnvironmentReference> EnvironmentRefs { get; }
         /// <summary> Parameters in project. </summary>
+        [WirePath("parameters")]
         public IReadOnlyList<SsisParameterInfo> Parameters { get; }
     }
 }

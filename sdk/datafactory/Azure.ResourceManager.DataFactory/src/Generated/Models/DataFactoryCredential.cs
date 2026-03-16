@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of credential. </summary>
         internal string CredentialType { get; set; }
         /// <summary> Credential description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary>
         /// List of tags that can be used for describing the Credential.
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("annotations")]
         public IList<BinaryData> Annotations { get; }
         /// <summary>
         /// Additional Properties
@@ -102,6 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

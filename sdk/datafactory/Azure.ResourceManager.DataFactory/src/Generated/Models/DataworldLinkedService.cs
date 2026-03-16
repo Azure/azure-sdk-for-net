@@ -48,8 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The api token for the Dataworld source. </summary>
+        [WirePath("typeProperties.apiToken")]
         public DataFactorySecret ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

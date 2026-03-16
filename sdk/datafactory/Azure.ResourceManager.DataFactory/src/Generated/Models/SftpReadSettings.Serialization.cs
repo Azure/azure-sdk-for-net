@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -270,6 +271,224 @@ namespace Azure.ResourceManager.DataFactory.Models
                 disableChunking);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Recursive), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  recursive: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Recursive))
+                {
+                    builder.Append("  recursive: ");
+                    builder.AppendLine($"'{Recursive.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WildcardFolderPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  wildcardFolderPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WildcardFolderPath))
+                {
+                    builder.Append("  wildcardFolderPath: ");
+                    builder.AppendLine($"'{WildcardFolderPath.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WildcardFileName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  wildcardFileName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WildcardFileName))
+                {
+                    builder.Append("  wildcardFileName: ");
+                    builder.AppendLine($"'{WildcardFileName.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePartitionDiscovery), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enablePartitionDiscovery: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnablePartitionDiscovery))
+                {
+                    builder.Append("  enablePartitionDiscovery: ");
+                    builder.AppendLine($"'{EnablePartitionDiscovery.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionRootPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  partitionRootPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartitionRootPath))
+                {
+                    builder.Append("  partitionRootPath: ");
+                    builder.AppendLine($"'{PartitionRootPath.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileListPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileListPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileListPath))
+                {
+                    builder.Append("  fileListPath: ");
+                    builder.AppendLine($"'{FileListPath.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeleteFilesAfterCompletion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deleteFilesAfterCompletion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeleteFilesAfterCompletion))
+                {
+                    builder.Append("  deleteFilesAfterCompletion: ");
+                    builder.AppendLine($"'{DeleteFilesAfterCompletion.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedDatetimeStart), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modifiedDatetimeStart: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModifiedDatetimeStart))
+                {
+                    builder.Append("  modifiedDatetimeStart: ");
+                    builder.AppendLine($"'{ModifiedDatetimeStart.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedDatetimeEnd), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modifiedDatetimeEnd: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModifiedDatetimeEnd))
+                {
+                    builder.Append("  modifiedDatetimeEnd: ");
+                    builder.AppendLine($"'{ModifiedDatetimeEnd.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableChunking), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disableChunking: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisableChunking))
+                {
+                    builder.Append("  disableChunking: ");
+                    builder.AppendLine($"'{DisableChunking.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StoreReadSettingsType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StoreReadSettingsType))
+                {
+                    builder.Append("  type: ");
+                    if (StoreReadSettingsType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StoreReadSettingsType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StoreReadSettingsType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxConcurrentConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxConcurrentConnections))
+                {
+                    builder.Append("  maxConcurrentConnections: ");
+                    builder.AppendLine($"'{MaxConcurrentConnections.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableMetricsCollection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disableMetricsCollection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisableMetricsCollection))
+                {
+                    builder.Append("  disableMetricsCollection: ");
+                    builder.AppendLine($"'{DisableMetricsCollection.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SftpReadSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SftpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -278,6 +497,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SftpReadSettings)} does not support writing '{options.Format}' format.");
             }

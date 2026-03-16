@@ -78,48 +78,70 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Server name for connection. Type: string. </summary>
+        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The port for the connection. Type: integer. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Username for authentication. Type: string. </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Database name for connection. Type: string. </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </summary>
+        [WirePath("typeProperties.sslMode")]
         public DataFactoryElement<int> SslMode { get; set; }
         /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. </summary>
+        [WirePath("typeProperties.timeout")]
         public DataFactoryElement<int> Timeout { get; set; }
         /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. </summary>
+        [WirePath("typeProperties.commandTimeout")]
         public DataFactoryElement<int> CommandTimeout { get; set; }
         /// <summary> Whether to trust the server certificate without validating it. Type: boolean. </summary>
+        [WirePath("typeProperties.trustServerCertificate")]
         public DataFactoryElement<bool> TrustServerCertificate { get; set; }
         /// <summary> Determines the size of the internal buffer uses when reading. Increasing may improve performance if transferring large values from the database. Type: integer. </summary>
+        [WirePath("typeProperties.readBufferSize")]
         public DataFactoryElement<int> ReadBufferSize { get; set; }
         /// <summary> Gets or sets the session timezone. Type: string. </summary>
+        [WirePath("typeProperties.timezone")]
         public DataFactoryElement<string> Timezone { get; set; }
         /// <summary> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </summary>
+        [WirePath("typeProperties.encoding")]
         public DataFactoryElement<string> Encoding { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalCredentialType")]
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalEmbeddedCert")]
         public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
         /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalEmbeddedCertPassword")]
         public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.azureCloudType")]
         public DataFactoryElement<string> AzureCloudType { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

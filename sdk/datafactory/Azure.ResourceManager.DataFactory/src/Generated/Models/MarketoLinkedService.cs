@@ -61,18 +61,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </summary>
+        [WirePath("typeProperties.endpoint")]
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The client Id of your Marketo service. </summary>
+        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret of your Marketo service. </summary>
+        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
+        [WirePath("typeProperties.useEncryptedEndpoints")]
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        [WirePath("typeProperties.useHostVerification")]
         public DataFactoryElement<bool> UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
+        [WirePath("typeProperties.usePeerVerification")]
         public DataFactoryElement<bool> UsePeerVerification { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

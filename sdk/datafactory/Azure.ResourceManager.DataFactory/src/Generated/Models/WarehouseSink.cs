@@ -45,14 +45,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
+        [WirePath("preCopyScript")]
         public DataFactoryElement<string> PreCopyScript { get; set; }
         /// <summary> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("allowCopyCommand")]
         public DataFactoryElement<bool> AllowCopyCommand { get; set; }
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
+        [WirePath("copyCommandSettings")]
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
+        [WirePath("tableOption")]
         public DataFactoryElement<string> TableOption { get; set; }
         /// <summary> Write behavior when copying data into azure Microsoft Fabric Data Warehouse. Type: DWWriteBehaviorEnum (or Expression with resultType DWWriteBehaviorEnum). </summary>
+        [WirePath("writeBehavior")]
         public DataFactoryElement<string> WriteBehavior { get; set; }
     }
 }

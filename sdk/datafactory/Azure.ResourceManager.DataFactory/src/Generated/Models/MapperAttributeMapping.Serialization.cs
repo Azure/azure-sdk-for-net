@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -179,6 +181,143 @@ namespace Azure.ResourceManager.DataFactory.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MappingType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MappingType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{MappingType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  functionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FunctionName))
+                {
+                    builder.Append("  functionName: ");
+                    if (FunctionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FunctionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FunctionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expression), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expression: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Expression))
+                {
+                    builder.Append("  expression: ");
+                    if (Expression.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Expression}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Expression}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AttributeReference), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  attributeReference: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AttributeReference))
+                {
+                    builder.Append("  attributeReference: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AttributeReference, options, 2, false, "  attributeReference: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AttributeReferences), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  attributeReferences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AttributeReferences))
+                {
+                    if (AttributeReferences.Any())
+                    {
+                        builder.Append("  attributeReferences: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AttributeReferences)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  attributeReferences: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MapperAttributeMapping>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MapperAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -187,6 +326,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support writing '{options.Format}' format.");
             }

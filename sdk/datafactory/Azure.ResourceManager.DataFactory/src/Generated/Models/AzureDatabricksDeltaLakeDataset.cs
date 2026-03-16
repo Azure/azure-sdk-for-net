@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of delta table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
         /// <summary> The database name of delta table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
     }
 }

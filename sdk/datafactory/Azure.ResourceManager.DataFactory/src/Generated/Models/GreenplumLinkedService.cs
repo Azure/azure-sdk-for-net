@@ -56,26 +56,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        [WirePath("typeProperties.pwd")]
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The authentication type to use. Type: string. Only used for V2. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public GreenplumAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Host name for connection. Type: string. Only used for V2. </summary>
+        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The port for the connection. Type: integer. Only used for V2. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Username for authentication. Type: string. Only used for V2. </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Database name for connection. Type: string. Only used for V2. </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. Only used for V2. </summary>
+        [WirePath("typeProperties.sslMode")]
         public DataFactoryElement<int> SslMode { get; set; }
         /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. Only used for V2. </summary>
+        [WirePath("typeProperties.connectionTimeout")]
         public DataFactoryElement<int> ConnectionTimeout { get; set; }
         /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. Only used for V2. </summary>
+        [WirePath("typeProperties.commandTimeout")]
         public DataFactoryElement<int> CommandTimeout { get; set; }
     }
 }

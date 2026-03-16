@@ -98,68 +98,100 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name or network address of the instance of SQL Server to which to connect, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The name of the database, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> Indicate whether TLS encryption is required for all data sent between the client and server, used by recommended version. Possible values are true/yes/mandatory, false/no/optional and strict. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.encrypt")]
         public DataFactoryElement<string> Encrypt { get; set; }
         /// <summary> Indicate whether the channel will be encrypted while bypassing walking the certificate chain to validate trust, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.trustServerCertificate")]
         public DataFactoryElement<bool> TrustServerCertificate { get; set; }
         /// <summary> The host name to use when validating the server certificate for the connection. When not specified, the server name from the Data Source is used for certificate validation, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.hostNameInCertificate")]
         public DataFactoryElement<string> HostNameInCertificate { get; set; }
         /// <summary> The application workload type when connecting to a server, used by recommended version. Possible values are ReadOnly and ReadWrite. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.applicationIntent")]
         public DataFactoryElement<string> ApplicationIntent { get; set; }
         /// <summary> The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.connectTimeout")]
         public DataFactoryElement<int> ConnectTimeout { get; set; }
         /// <summary> The number of re-connections attempted after identifying that there was an idle connection failure, used by recommended version. This must be an integer between 0 and 255. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.connectRetryCount")]
         public DataFactoryElement<int> ConnectRetryCount { get; set; }
         /// <summary> The amount of time (in seconds) between each re-connection attempt after identifying that there was an idle connection failure, used by recommended version. This must be an integer between 1 and 60. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.connectRetryInterval")]
         public DataFactoryElement<int> ConnectRetryInterval { get; set; }
         /// <summary> The minimum time, in seconds, for the connection to live in the connection pool before being destroyed, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.loadBalanceTimeout")]
         public DataFactoryElement<int> LoadBalanceTimeout { get; set; }
         /// <summary> The default wait time (in seconds) before terminating the attempt to execute a command and generating an error, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.commandTimeout")]
         public DataFactoryElement<int> CommandTimeout { get; set; }
         /// <summary> Indicate whether User ID and Password are specified in the connection (when false) or whether the current Windows account credentials are used for authentication (when true), used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.integratedSecurity")]
         public DataFactoryElement<bool> IntegratedSecurity { get; set; }
         /// <summary> The name or address of the partner server to connect to if the primary server is down, used by recommended version. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.failoverPartner")]
         public DataFactoryElement<string> FailoverPartner { get; set; }
         /// <summary> The maximum number of connections allowed in the connection pool for this specific connection string, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.maxPoolSize")]
         public DataFactoryElement<int> MaxPoolSize { get; set; }
         /// <summary> The minimum number of connections allowed in the connection pool for this specific connection string, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.minPoolSize")]
         public DataFactoryElement<int> MinPoolSize { get; set; }
         /// <summary> When true, an application can maintain multiple active result sets (MARS). When false, an application must process or cancel all result sets from one batch before it can execute any other batch on that connection, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.multipleActiveResultSets")]
         public DataFactoryElement<bool> MultipleActiveResultSets { get; set; }
         /// <summary> If your application is connecting to an AlwaysOn availability group (AG) on different subnets, setting MultiSubnetFailover=true provides faster detection of and connection to the (currently) active server, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.multiSubnetFailover")]
         public DataFactoryElement<bool> MultiSubnetFailover { get; set; }
         /// <summary> The size in bytes of the network packets used to communicate with an instance of server, used by recommended version. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.packetSize")]
         public DataFactoryElement<int> PacketSize { get; set; }
         /// <summary> Indicate whether the connection will be pooled or explicitly opened every time that the connection is requested, used by recommended version. Type: Boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.pooling")]
         public DataFactoryElement<bool> Pooling { get; set; }
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The type used for authentication. Type: string. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public AzureSqlMIAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The user name to be used when connecting to server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Managed Instance. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against Azure SQL Managed Instance. </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalCredentialType")]
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.servicePrincipalCredential")]
         public DataFactorySecret ServicePrincipalCredential { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.azureCloudType")]
         public DataFactoryElement<string> AzureCloudType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> Sql always encrypted properties. </summary>
+        [WirePath("typeProperties.alwaysEncryptedSettings")]
         public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

@@ -79,10 +79,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
+        [WirePath("text")]
         public DataFactoryElement<string> Text { get; set; }
         /// <summary> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </summary>
+        [WirePath("type")]
         public DataFactoryElement<string> QueryType { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>
+        [WirePath("parameters")]
         public IList<ScriptActivityParameter> Parameters { get; }
     }
 }

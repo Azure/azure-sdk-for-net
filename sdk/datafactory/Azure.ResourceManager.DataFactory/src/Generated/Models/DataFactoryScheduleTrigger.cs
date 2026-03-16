@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Recurrence schedule configuration. </summary>
+        [WirePath("typeProperties.recurrence")]
         public ScheduleTriggerRecurrence Recurrence { get; set; }
     }
 }

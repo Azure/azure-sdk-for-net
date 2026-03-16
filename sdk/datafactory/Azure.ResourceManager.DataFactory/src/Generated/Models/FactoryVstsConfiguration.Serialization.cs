@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -149,6 +150,213 @@ namespace Azure.ResourceManager.DataFactory.Models
                 tenantId);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProjectName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  projectName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProjectName))
+                {
+                    builder.Append("  projectName: ");
+                    if (ProjectName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProjectName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProjectName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("  tenantId: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FactoryRepoConfigurationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FactoryRepoConfigurationType))
+                {
+                    builder.Append("  type: ");
+                    if (FactoryRepoConfigurationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FactoryRepoConfigurationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FactoryRepoConfigurationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountName))
+                {
+                    builder.Append("  accountName: ");
+                    if (AccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepositoryName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  repositoryName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RepositoryName))
+                {
+                    builder.Append("  repositoryName: ");
+                    if (RepositoryName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RepositoryName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RepositoryName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CollaborationBranch), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  collaborationBranch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CollaborationBranch))
+                {
+                    builder.Append("  collaborationBranch: ");
+                    if (CollaborationBranch.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CollaborationBranch}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CollaborationBranch}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RootFolder), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rootFolder: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RootFolder))
+                {
+                    builder.Append("  rootFolder: ");
+                    if (RootFolder.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RootFolder}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RootFolder}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastCommitId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastCommitId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastCommitId))
+                {
+                    builder.Append("  lastCommitId: ");
+                    if (LastCommitId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastCommitId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastCommitId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisablePublish), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disablePublish: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisablePublish))
+                {
+                    builder.Append("  disablePublish: ");
+                    var boolValue = DisablePublish.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FactoryVstsConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FactoryVstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -157,6 +365,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support writing '{options.Format}' format.");
             }

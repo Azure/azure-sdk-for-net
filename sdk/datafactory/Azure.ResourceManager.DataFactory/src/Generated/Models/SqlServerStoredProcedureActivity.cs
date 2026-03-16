@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.storedProcedureName")]
         public DataFactoryElement<string> StoredProcedureName { get; set; }
         /// <summary>
         /// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
@@ -84,6 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.storedProcedureParameters")]
         public BinaryData StoredProcedureParameters { get; set; }
     }
 }

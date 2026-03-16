@@ -67,24 +67,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The authentication type to be used to connect to the MongoDB database. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public MongoDBAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.databaseName")]
         public DataFactoryElement<string> DatabaseName { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> Database to verify the username and password. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.authSource")]
         public DataFactoryElement<string> AuthSource { get; set; }
         /// <summary> The TCP port number that the MongoDB server uses to listen for client connections. The default value is 27017. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.enableSsl")]
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.allowSelfSignedServerCert")]
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

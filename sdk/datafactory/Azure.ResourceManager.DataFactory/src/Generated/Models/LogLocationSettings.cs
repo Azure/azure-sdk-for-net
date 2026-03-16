@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Log storage linked service reference. </summary>
+        [WirePath("linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        [WirePath("path")]
         public DataFactoryElement<string> Path { get; set; }
     }
 }

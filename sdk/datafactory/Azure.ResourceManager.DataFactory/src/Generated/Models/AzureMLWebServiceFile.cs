@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </summary>
+        [WirePath("filePath")]
         public DataFactoryElement<string> FilePath { get; set; }
         /// <summary> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </summary>
+        [WirePath("linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
     }
 }

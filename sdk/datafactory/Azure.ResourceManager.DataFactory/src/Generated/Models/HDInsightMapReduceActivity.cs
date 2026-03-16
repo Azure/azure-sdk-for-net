@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
+        [WirePath("typeProperties.storageLinkedServices")]
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
@@ -103,14 +104,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.arguments")]
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
+        [WirePath("typeProperties.getDebugInfo")]
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> Class name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.className")]
         public DataFactoryElement<string> ClassName { get; set; }
         /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.jarFilePath")]
         public DataFactoryElement<string> JarFilePath { get; set; }
         /// <summary> Jar linked service reference. </summary>
+        [WirePath("typeProperties.jarLinkedService")]
         public DataFactoryLinkedServiceReference JarLinkedService { get; set; }
         /// <summary>
         /// Jar libs.
@@ -142,6 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.jarLibs")]
         public IList<BinaryData> JarLibs { get; }
         /// <summary>
         /// Allows user to specify defines for the MapReduce job request.
@@ -173,6 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.defines")]
         public IDictionary<string, BinaryData> Defines { get; }
     }
 }

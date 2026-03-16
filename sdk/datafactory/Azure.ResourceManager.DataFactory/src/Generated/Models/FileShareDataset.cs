@@ -63,22 +63,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The path of the on-premises file system. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.folderPath")]
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> The name of the on-premises file system. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.fileName")]
         public DataFactoryElement<string> FileName { get; set; }
         /// <summary> The start of file's modified datetime. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.modifiedDatetimeStart")]
         public DataFactoryElement<string> ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file's modified datetime. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.modifiedDatetimeEnd")]
         public DataFactoryElement<string> ModifiedDatetimeEnd { get; set; }
         /// <summary>
         /// The format of the files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
+        [WirePath("typeProperties.format")]
         public DatasetStorageFormat Format { get; set; }
         /// <summary> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.fileFilter")]
         public DataFactoryElement<string> FileFilter { get; set; }
         /// <summary> The data compression method used for the file system. </summary>
+        [WirePath("typeProperties.compression")]
         public DatasetCompression Compression { get; set; }
     }
 }

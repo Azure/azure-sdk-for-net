@@ -41,12 +41,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
+        [WirePath("requestMethod")]
         public DataFactoryElement<string> RequestMethod { get; set; }
         /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
+        [WirePath("requestBody")]
         public DataFactoryElement<string> RequestBody { get; set; }
         /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
+        [WirePath("additionalHeaders")]
         public DataFactoryElement<string> AdditionalHeaders { get; set; }
         /// <summary> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("requestTimeout")]
         public DataFactoryElement<string> RequestTimeout { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
@@ -78,6 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
     }
 }

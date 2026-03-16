@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the entity that started the pipeline run. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The ID of the entity that started the run. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The type of the entity that started the run. </summary>
+        [WirePath("invokedByType")]
         public string InvokedByType { get; }
         /// <summary> The name of the pipeline that triggered the run, if any. </summary>
+        [WirePath("pipelineName")]
         public string PipelineName { get; }
         /// <summary> The run id of the pipeline that triggered the run, if any. </summary>
+        [WirePath("pipelineRunId")]
         public Guid? PipelineRunId { get; }
     }
 }

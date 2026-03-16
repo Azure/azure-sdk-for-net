@@ -47,8 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL Data Warehouse reader query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("sqlReaderQuery")]
         public DataFactoryElement<string> SqlReaderQuery { get; set; }
         /// <summary> Name of the stored procedure for a SQL Data Warehouse source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string). </summary>
+        [WirePath("sqlReaderStoredProcedureName")]
         public DataFactoryElement<string> SqlReaderStoredProcedureName { get; set; }
         /// <summary>
         /// Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". Type: object (or Expression with resultType object), itemType: StoredProcedureParameter.
@@ -80,12 +82,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("storedProcedureParameters")]
         public BinaryData StoredProcedureParameters { get; set; }
         /// <summary> Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string). </summary>
+        [WirePath("isolationLevel")]
         public DataFactoryElement<string> IsolationLevel { get; set; }
         /// <summary> The partition mechanism that will be used for Sql read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "DynamicRange". Type: string (or Expression with resultType string). </summary>
+        [WirePath("partitionOption")]
         public DataFactoryElement<string> PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for Sql source partitioning. </summary>
+        [WirePath("partitionSettings")]
         public SqlPartitionSettings PartitionSettings { get; set; }
     }
 }

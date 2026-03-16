@@ -80,24 +80,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The SSIS package path. Type: string (or Expression with resultType string). </summary>
+        [WirePath("packagePath")]
         public DataFactoryElement<string> PackagePath { get; set; }
         /// <summary> The type of SSIS package location. </summary>
+        [WirePath("type")]
         public SsisPackageLocationType? LocationType { get; set; }
         /// <summary> Password of the package. </summary>
+        [WirePath("typeProperties.packagePassword")]
         public DataFactorySecret PackagePassword { get; set; }
         /// <summary> The package access credential. </summary>
+        [WirePath("typeProperties.accessCredential")]
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.configurationPath")]
         public DataFactoryElement<string> ConfigurationPath { get; set; }
         /// <summary> The configuration file access credential. </summary>
+        [WirePath("typeProperties.configurationAccessCredential")]
         public SsisAccessCredential ConfigurationAccessCredential { get; set; }
         /// <summary> The package name. </summary>
+        [WirePath("typeProperties.packageName")]
         public string PackageName { get; set; }
         /// <summary> The embedded package content. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.packageContent")]
         public DataFactoryElement<string> PackageContent { get; set; }
         /// <summary> The embedded package last modified date. </summary>
+        [WirePath("typeProperties.packageLastModifiedDate")]
         public string PackageLastModifiedDate { get; set; }
         /// <summary> The embedded child package list. </summary>
+        [WirePath("typeProperties.childPackages")]
         public IList<SsisChildPackage> ChildPackages { get; }
     }
 }

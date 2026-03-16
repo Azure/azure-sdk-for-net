@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The OData resource path. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.path")]
         public DataFactoryElement<string> Path { get; set; }
     }
 }

@@ -61,10 +61,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.trainedModelName")]
         public DataFactoryElement<string> TrainedModelName { get; set; }
         /// <summary> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </summary>
+        [WirePath("typeProperties.trainedModelLinkedServiceName")]
         public DataFactoryLinkedServiceReference TrainedModelLinkedServiceName { get; set; }
         /// <summary> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.trainedModelFilePath")]
         public DataFactoryElement<string> TrainedModelFilePath { get; set; }
     }
 }

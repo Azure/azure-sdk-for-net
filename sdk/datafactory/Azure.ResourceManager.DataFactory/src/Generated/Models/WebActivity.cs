@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Rest API method for target endpoint. </summary>
+        [WirePath("typeProperties.method")]
         public WebActivityMethod Method { get; set; }
         /// <summary> Web activity target endpoint and path. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary>
         /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string).
@@ -109,22 +111,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.headers")]
         public IDictionary<string, BinaryData> RequestHeaders { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.body")]
         public DataFactoryElement<string> Body { get; set; }
         /// <summary> Authentication method used for calling the endpoint. </summary>
+        [WirePath("typeProperties.authentication")]
         public WebActivityAuthentication Authentication { get; set; }
         /// <summary> When set to true, Certificate validation will be disabled. </summary>
+        [WirePath("typeProperties.disableCertValidation")]
         public bool? DisableCertValidation { get; set; }
         /// <summary> Timeout for the HTTP request to get a response. Format is in TimeSpan (hh:mm:ss). This value is the timeout to get a response, not the activity timeout. The default value is 00:01:00 (1 minute). The range is from 1 to 10 minutes. </summary>
+        [WirePath("typeProperties.httpRequestTimeout")]
         public DataFactoryElement<string> HttpRequestTimeout { get; set; }
         /// <summary> Option to disable invoking HTTP GET on location given in response header of a HTTP 202 Response. If set true, it stops invoking HTTP GET on http location given in response header. If set false then continues to invoke HTTP GET call on location given in http response headers. </summary>
+        [WirePath("typeProperties.turnOffAsync")]
         public bool? TurnOffAsync { get; set; }
         /// <summary> List of datasets passed to web endpoint. </summary>
+        [WirePath("typeProperties.datasets")]
         public IList<DatasetReference> Datasets { get; }
         /// <summary> List of linked services passed to web endpoint. </summary>
+        [WirePath("typeProperties.linkedServices")]
         public IList<DataFactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary> The integration runtime reference. </summary>
+        [WirePath("typeProperties.connectVia")]
         public IntegrationRuntimeReference ConnectVia { get; set; }
     }
 }

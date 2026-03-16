@@ -39,8 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure Table source query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("azureTableSourceQuery")]
         public DataFactoryElement<string> AzureTableSourceQuery { get; set; }
         /// <summary> Azure Table source ignore table not found. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("azureTableSourceIgnoreTableNotFound")]
         public DataFactoryElement<bool> AzureTableSourceIgnoreTableNotFound { get; set; }
     }
 }

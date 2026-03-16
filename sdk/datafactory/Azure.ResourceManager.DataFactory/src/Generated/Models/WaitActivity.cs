@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.waitTimeInSeconds")]
         public DataFactoryElement<int> WaitTimeInSeconds { get; set; }
     }
 }

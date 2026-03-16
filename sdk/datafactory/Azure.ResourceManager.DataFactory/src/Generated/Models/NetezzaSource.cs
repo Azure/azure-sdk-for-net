@@ -41,10 +41,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A query to retrieve data from source. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> The partition mechanism that will be used for Netezza read in parallel. Possible values include: "None", "DataSlice", "DynamicRange". </summary>
+        [WirePath("partitionOption")]
         public DataFactoryElement<string> PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for Netezza source partitioning. </summary>
+        [WirePath("partitionSettings")]
         public NetezzaPartitionSettings PartitionSettings { get; set; }
     }
 }

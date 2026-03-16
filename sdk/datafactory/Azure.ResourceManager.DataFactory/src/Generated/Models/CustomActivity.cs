@@ -64,12 +64,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.command")]
         public DataFactoryElement<string> Command { get; set; }
         /// <summary> Resource linked service reference. </summary>
+        [WirePath("typeProperties.resourceLinkedService")]
         public DataFactoryLinkedServiceReference ResourceLinkedService { get; set; }
         /// <summary> Folder path for resource files Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.folderPath")]
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> Reference objects. </summary>
+        [WirePath("typeProperties.referenceObjects")]
         public CustomActivityReferenceObject ReferenceObjects { get; set; }
         /// <summary>
         /// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined.
@@ -101,6 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.extendedProperties")]
         public IDictionary<string, BinaryData> ExtendedProperties { get; }
         /// <summary>
         /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
@@ -132,8 +137,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.retentionTimeInDays")]
         public BinaryData RetentionTimeInDays { get; set; }
         /// <summary> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </summary>
+        [WirePath("typeProperties.autoUserSpecification")]
         public DataFactoryElement<string> AutoUserSpecification { get; set; }
     }
 }

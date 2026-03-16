@@ -47,8 +47,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> Snowflake export settings. </summary>
+        [WirePath("exportSettings")]
         public SnowflakeExportCopyCommand ExportSettings { get; set; }
     }
 }

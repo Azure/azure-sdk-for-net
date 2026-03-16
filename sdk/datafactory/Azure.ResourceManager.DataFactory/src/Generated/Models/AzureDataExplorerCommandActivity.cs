@@ -53,8 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.command")]
         public DataFactoryElement<string> Command { get; set; }
         /// <summary> Control command timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..). </summary>
+        [WirePath("typeProperties.commandTimeout")]
         public DataFactoryElement<string> CommandTimeout { get; set; }
     }
 }

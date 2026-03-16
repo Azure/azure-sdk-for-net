@@ -68,16 +68,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </summary>
+        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.aadResourceId")]
         public DataFactoryElement<string> AadResourceId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

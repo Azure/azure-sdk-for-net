@@ -53,8 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Input array on which filter should be applied. </summary>
+        [WirePath("typeProperties.items")]
         public DataFactoryExpression Items { get; set; }
         /// <summary> Condition to be used for filtering the input. </summary>
+        [WirePath("typeProperties.condition")]
         public DataFactoryExpression Condition { get; set; }
     }
 }

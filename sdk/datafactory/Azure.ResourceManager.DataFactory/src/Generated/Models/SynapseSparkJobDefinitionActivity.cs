@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Synapse spark job reference. </summary>
+        [WirePath("typeProperties.sparkJob")]
         public SynapseSparkJobReference SparkJob { get; set; }
         /// <summary>
         /// User specified arguments to SynapseSparkJobDefinitionActivity.
@@ -117,12 +118,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.args")]
         public IList<BinaryData> Arguments { get; }
         /// <summary> The main file used for the job, which will override the 'file' of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.file")]
         public DataFactoryElement<string> File { get; set; }
         /// <summary> Scanning subfolders from the root folder of the main definition file, these files will be added as reference files. The folders named 'jars', 'pyFiles', 'files' or 'archives' will be scanned, and the folders name are case sensitive. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.scanFolder")]
         public DataFactoryElement<bool> ScanFolder { get; set; }
         /// <summary> The fully-qualified identifier or the main class that is in the main definition file, which will override the 'className' of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.className")]
         public DataFactoryElement<string> ClassName { get; set; }
         /// <summary>
         /// (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for reference in the main definition file, which will override the 'files' of the spark job definition you provide.
@@ -154,6 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.files")]
         public IList<BinaryData> Files { get; }
         /// <summary>
         /// Additional python code files used for reference in the main definition file, which will override the 'pyFiles' of the spark job definition you provide.
@@ -185,6 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.pythonCodeReference")]
         public IList<BinaryData> PythonCodeReference { get; }
         /// <summary>
         /// Additional files used for reference in the main definition file, which will override the 'jars' and 'files' of the spark job definition you provide.
@@ -216,10 +223,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.filesV2")]
         public IList<BinaryData> FilesV2 { get; }
         /// <summary> The name of the big data pool which will be used to execute the spark batch job, which will override the 'targetBigDataPool' of the spark job definition you provide. </summary>
+        [WirePath("typeProperties.targetBigDataPool")]
         public BigDataPoolParametrizationReference TargetBigDataPool { get; set; }
         /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the job, which will be used for overriding 'executorCores' and 'executorMemory' of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.executorSize")]
         public DataFactoryElement<string> ExecutorSize { get; set; }
         /// <summary>
         /// Spark configuration properties, which will override the 'conf' of the spark job definition you provide.
@@ -251,14 +261,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.conf")]
         public BinaryData Conf { get; set; }
         /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the job, which will be used for overriding 'driverCores' and 'driverMemory' of the spark job definition you provide. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.driverSize")]
         public DataFactoryElement<string> DriverSize { get; set; }
         /// <summary> Number of executors to launch for this job, which will override the 'numExecutors' of the spark job definition you provide. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("typeProperties.numExecutors")]
         public DataFactoryElement<int> NumExecutors { get; set; }
         /// <summary> The type of the spark config. </summary>
+        [WirePath("typeProperties.configurationType")]
         public DataFactorySparkConfigurationType? ConfigurationType { get; set; }
         /// <summary> The spark configuration of the spark job. </summary>
+        [WirePath("typeProperties.targetSparkConfiguration")]
         public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
         /// <summary>
         /// Spark configuration property.
@@ -290,6 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.sparkConfig")]
         public IDictionary<string, BinaryData> SparkConfig { get; }
     }
 }

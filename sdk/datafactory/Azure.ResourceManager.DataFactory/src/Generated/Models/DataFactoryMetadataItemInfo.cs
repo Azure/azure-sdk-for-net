@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Metadata item key name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("name")]
         public DataFactoryElement<string> Name { get; set; }
         /// <summary> Metadata item value. Type: string (or Expression with resultType string). </summary>
+        [WirePath("value")]
         public DataFactoryElement<string> Value { get; set; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Staging linked service reference. </summary>
+        [WirePath("linkedService")]
         public DataFactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        [WirePath("folderPath")]
         public DataFactoryElement<string> FolderPath { get; set; }
     }
 }

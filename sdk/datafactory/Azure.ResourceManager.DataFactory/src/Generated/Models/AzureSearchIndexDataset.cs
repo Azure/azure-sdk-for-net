@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Azure Search Index. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.indexName")]
         public DataFactoryElement<string> IndexName { get; set; }
     }
 }

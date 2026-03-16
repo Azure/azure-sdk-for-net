@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
+        [WirePath("secureInput")]
         public bool? IsSecureInputEnabled { get; set; }
         /// <summary> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </summary>
+        [WirePath("secureOutput")]
         public bool? IsSecureOutputEnabled { get; set; }
     }
 }

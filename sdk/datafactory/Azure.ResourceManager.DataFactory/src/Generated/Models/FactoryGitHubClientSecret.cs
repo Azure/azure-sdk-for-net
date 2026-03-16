@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Bring your own app client secret AKV URL. </summary>
+        [WirePath("byoaSecretAkvUrl")]
         public Uri ByoaSecretAkvUri { get; set; }
         /// <summary> Bring your own app client secret name in AKV. </summary>
+        [WirePath("byoaSecretName")]
         public string ByoaSecretName { get; set; }
     }
 }

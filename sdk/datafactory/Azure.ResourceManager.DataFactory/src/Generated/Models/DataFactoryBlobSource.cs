@@ -39,10 +39,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Treat empty as null. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("treatEmptyAsNull")]
         public DataFactoryElement<bool> TreatEmptyAsNull { get; set; }
         /// <summary> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("skipHeaderLineCount")]
         public DataFactoryElement<int> SkipHeaderLineCount { get; set; }
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("recursive")]
         public DataFactoryElement<bool> Recursive { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the folder that this Pipeline is in. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

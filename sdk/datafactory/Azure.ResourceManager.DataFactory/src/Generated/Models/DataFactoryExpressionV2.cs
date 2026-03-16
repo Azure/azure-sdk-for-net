@@ -69,12 +69,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of expressions supported by the system. Type: string. </summary>
+        [WirePath("type")]
         public DataFactoryExpressionV2Type? V2Type { get; set; }
         /// <summary> Value for Constant/Field Type: object. </summary>
+        [WirePath("value")]
         public DataFactoryElement<string> V2Value { get; set; }
         /// <summary> Expression operator value Type: list of strings. </summary>
+        [WirePath("operators")]
         public IList<DataFactoryElement<string>> Operators { get; }
         /// <summary> List of nested expressions. </summary>
+        [WirePath("operands")]
         public IList<DataFactoryExpressionV2> Operands { get; }
     }
 }

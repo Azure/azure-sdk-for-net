@@ -51,10 +51,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The server name of data source access. Type: string. </summary>
+        [WirePath("typeProperties.targetName")]
         public DataFactoryElement<string> TargetName { get; set; }
         /// <summary> The user name of data source access. Type: string. </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of data source access. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
     }
 }

@@ -39,8 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
+        [WirePath("preCopyScript")]
         public DataFactoryElement<string> PreCopyScript { get; set; }
         /// <summary> Azure Databricks Delta Lake import settings. </summary>
+        [WirePath("importSettings")]
         public AzureDatabricksDeltaLakeImportCommand ImportSettings { get; set; }
     }
 }

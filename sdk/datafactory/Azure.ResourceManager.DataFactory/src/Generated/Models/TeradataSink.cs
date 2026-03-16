@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Teradata import settings. </summary>
+        [WirePath("importSettings")]
         public TeradataImportCommand ImportSettings { get; set; }
     }
 }

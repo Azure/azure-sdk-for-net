@@ -95,36 +95,52 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.connectionProperties")]
         public BinaryData ConnectionProperties { get; set; }
         /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.clientCustomerID")]
         public DataFactoryElement<string> ClientCustomerId { get; set; }
         /// <summary> The developer token associated with the manager account that you use to grant access to the AdWords API. </summary>
+        [WirePath("typeProperties.developerToken")]
         public DataFactorySecret DeveloperToken { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public GoogleAdWordsAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </summary>
+        [WirePath("typeProperties.refreshToken")]
         public DataFactorySecret RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
+        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.email")]
         public DataFactoryElement<string> Email { get; set; }
         /// <summary> (Deprecated) The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.keyFilePath")]
         public DataFactoryElement<string> KeyFilePath { get; set; }
         /// <summary> (Deprecated) The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.trustedCertPath")]
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
         /// <summary> The private key that is used to authenticate the service account email address and can only be used on self-hosted IR. </summary>
+        [WirePath("typeProperties.privateKey")]
         public DataFactorySecret PrivateKey { get; set; }
         /// <summary> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.loginCustomerID")]
         public DataFactoryElement<string> LoginCustomerId { get; set; }
         /// <summary> The Google Ads API major version such as v14. The supported major versions could be found on https://developers.google.com/google-ads/api/docs/release-notes. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.googleAdsApiVersion")]
         public DataFactoryElement<string> GoogleAdsApiVersion { get; set; }
         /// <summary> Specifies whether to use the legacy data type mappings, which maps float, int32 and int64 from Google to string. Do not set this to true unless you want to keep backward compatibility with legacy driver's data type mappings. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.supportLegacyDataTypes")]
         public DataFactoryElement<bool> SupportLegacyDataTypes { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

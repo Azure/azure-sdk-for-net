@@ -79,14 +79,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the key in Azure Key Vault to use as Customer Managed Key. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
         /// <summary> The url of the Azure Key Vault used for CMK. </summary>
+        [WirePath("vaultBaseUrl")]
         public Uri VaultBaseUri { get; set; }
         /// <summary> The version of the key used for CMK. If not provided, latest version will be used. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
         /// <summary> User assigned identity to use to authenticate to customer's key vault. If not provided Managed Service Identity will be used. </summary>
         internal DataFactoryCmkIdentity Identity { get; set; }
         /// <summary> The resource id of the user assigned identity to authenticate to customer's key vault. </summary>
+        [WirePath("identity.userAssignedIdentity")]
         public string UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;

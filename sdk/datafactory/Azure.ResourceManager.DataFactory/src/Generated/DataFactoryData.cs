@@ -70,16 +70,21 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Factory provisioning state, example Succeeded. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Time the factory was created in ISO8601 format. </summary>
+        [WirePath("properties.createTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Version of the factory. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> Purview information of the factory. </summary>
         internal DataFactoryPurviewConfiguration PurviewConfiguration { get; set; }
         /// <summary> Purview resource id. </summary>
+        [WirePath("properties.purviewConfiguration.purviewResourceId")]
         public ResourceIdentifier PurviewResourceId
         {
             get => PurviewConfiguration is null ? default : PurviewConfiguration.PurviewResourceId;
@@ -96,14 +101,19 @@ namespace Azure.ResourceManager.DataFactory
         /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
         /// </summary>
+        [WirePath("properties.repoConfiguration")]
         public FactoryRepoConfiguration RepoConfiguration { get; set; }
         /// <summary> List of parameters for factory. </summary>
+        [WirePath("properties.globalParameters")]
         public IDictionary<string, DataFactoryGlobalParameterProperties> GlobalParameters { get; }
         /// <summary> Properties to enable Customer Managed Key for the factory. </summary>
+        [WirePath("properties.encryption")]
         public DataFactoryEncryptionConfiguration Encryption { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
+        [WirePath("eTag")]
         public ETag? ETag { get; }
         /// <summary>
         /// Additional Properties
@@ -135,6 +145,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

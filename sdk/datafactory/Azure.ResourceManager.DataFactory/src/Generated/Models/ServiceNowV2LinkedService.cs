@@ -62,20 +62,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </summary>
+        [WirePath("typeProperties.endpoint")]
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The authentication type to use. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public ServiceNowV2AuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password corresponding to the user name for Basic and OAuth2 authentication. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The client id for OAuth2 authentication. </summary>
+        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret for OAuth2 authentication. </summary>
+        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> GrantType for OAuth2 authentication. Default value is password. </summary>
+        [WirePath("typeProperties.grantType")]
         public DataFactoryElement<string> GrantType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

@@ -45,22 +45,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the data flow. </summary>
+        [WirePath("dataFlowName")]
         public string DataFlowName { get; }
         /// <summary> Compute type of the cluster. </summary>
+        [WirePath("computeType")]
         public string ComputeType { get; }
         /// <summary> Core count of the cluster. </summary>
+        [WirePath("coreCount")]
         public int? CoreCount { get; }
         /// <summary> Node count of the cluster. (deprecated property). </summary>
+        [WirePath("nodeCount")]
         public int? NodeCount { get; }
         /// <summary> Attached integration runtime name of data flow debug session. </summary>
+        [WirePath("integrationRuntimeName")]
         public string IntegrationRuntimeName { get; }
         /// <summary> The ID of data flow debug session. </summary>
+        [WirePath("sessionId")]
         public Guid? SessionId { get; }
         /// <summary> Start time of data flow debug session. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Compute type of the cluster. </summary>
+        [WirePath("timeToLiveInMinutes")]
         public int? TimeToLiveInMinutes { get; }
         /// <summary> Last activity time of data flow debug session. </summary>
+        [WirePath("lastActivityTime")]
         public DateTimeOffset? LastActivityOn { get; }
         /// <summary>
         /// Additional Properties
@@ -92,6 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

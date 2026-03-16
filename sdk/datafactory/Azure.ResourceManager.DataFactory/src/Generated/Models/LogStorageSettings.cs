@@ -46,12 +46,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Log storage linked service reference. </summary>
+        [WirePath("linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        [WirePath("path")]
         public DataFactoryElement<string> Path { get; set; }
         /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
+        [WirePath("logLevel")]
         public DataFactoryElement<string> LogLevel { get; set; }
         /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("enableReliableLogging")]
         public DataFactoryElement<bool> EnableReliableLogging { get; set; }
         /// <summary>
         /// Additional Properties
@@ -83,6 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

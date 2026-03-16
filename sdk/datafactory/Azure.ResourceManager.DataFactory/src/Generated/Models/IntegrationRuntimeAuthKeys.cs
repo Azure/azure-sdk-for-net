@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The primary integration runtime authentication key. </summary>
+        [WirePath("authKey1")]
         public string AuthKey1 { get; }
         /// <summary> The secondary integration runtime authentication key. </summary>
+        [WirePath("authKey2")]
         public string AuthKey2 { get; }
     }
 }

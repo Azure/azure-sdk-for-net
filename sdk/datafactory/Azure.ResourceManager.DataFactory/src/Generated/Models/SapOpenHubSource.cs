@@ -43,12 +43,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("excludeLastRequest")]
         public DataFactoryElement<bool> ExcludeLastRequest { get; set; }
         /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
+        [WirePath("baseRequestId")]
         public DataFactoryElement<int> BaseRequestId { get; set; }
         /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("customRfcReadTableFunctionModule")]
         public DataFactoryElement<string> CustomRfcReadTableFunctionModule { get; set; }
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
+        [WirePath("sapDataColumnDelimiter")]
         public DataFactoryElement<string> SapDataColumnDelimiter { get; set; }
     }
 }

@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The managed integration runtime node id. </summary>
+        [WirePath("nodeId")]
         public string NodeId { get; }
         /// <summary> The managed integration runtime node status. </summary>
+        [WirePath("status")]
         public ManagedIntegrationRuntimeNodeStatus? Status { get; }
         /// <summary> The errors that occurred on this integration runtime node. </summary>
+        [WirePath("errors")]
         public IReadOnlyList<ManagedIntegrationRuntimeError> Errors { get; }
         /// <summary>
         /// Additional Properties
@@ -69,6 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

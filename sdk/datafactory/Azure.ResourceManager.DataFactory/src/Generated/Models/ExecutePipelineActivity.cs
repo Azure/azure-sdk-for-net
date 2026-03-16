@@ -55,8 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Execute pipeline activity policy. </summary>
+        [WirePath("policy")]
         public ExecutePipelineActivityPolicy Policy { get; set; }
         /// <summary> Pipeline reference. </summary>
+        [WirePath("typeProperties.pipeline")]
         public DataFactoryPipelineReference Pipeline { get; set; }
         /// <summary>
         /// Pipeline parameters.
@@ -88,8 +90,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </summary>
+        [WirePath("typeProperties.waitOnCompletion")]
         public bool? WaitOnCompletion { get; set; }
     }
 }

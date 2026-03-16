@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The user access policy. </summary>
+        [WirePath("policy")]
         public DataFactoryDataPlaneUserAccessPolicy Policy { get; }
         /// <summary> Data Plane read only access token. </summary>
+        [WirePath("accessToken")]
         public string AccessToken { get; }
         /// <summary> Data Plane service base URL. </summary>
+        [WirePath("dataPlaneUrl")]
         public Uri DataPlaneUri { get; }
     }
 }

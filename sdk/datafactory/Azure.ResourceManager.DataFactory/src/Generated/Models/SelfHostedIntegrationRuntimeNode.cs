@@ -64,40 +64,58 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the integration runtime node. </summary>
+        [WirePath("nodeName")]
         public string NodeName { get; }
         /// <summary> Machine name of the integration runtime node. </summary>
+        [WirePath("machineName")]
         public string MachineName { get; }
         /// <summary> URI for the host machine of the integration runtime. </summary>
+        [WirePath("hostServiceUri")]
         public Uri HostServiceUri { get; }
         /// <summary> Status of the integration runtime node. </summary>
+        [WirePath("status")]
         public SelfHostedIntegrationRuntimeNodeStatus? Status { get; }
         /// <summary> The integration runtime capabilities dictionary. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyDictionary<string, string> Capabilities { get; }
         /// <summary> Status of the integration runtime node version. </summary>
+        [WirePath("versionStatus")]
         public string VersionStatus { get; }
         /// <summary> Version of the integration runtime node. </summary>
+        [WirePath("version")]
         public string Version { get; }
         /// <summary> The time at which the integration runtime node was registered in ISO8601 format. </summary>
+        [WirePath("registerTime")]
         public DateTimeOffset? RegisterOn { get; }
         /// <summary> The most recent time at which the integration runtime was connected in ISO8601 format. </summary>
+        [WirePath("lastConnectTime")]
         public DateTimeOffset? LastConnectOn { get; }
         /// <summary> The time at which the integration runtime will expire in ISO8601 format. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> The time the node last started up. </summary>
+        [WirePath("lastStartTime")]
         public DateTimeOffset? LastStartOn { get; }
         /// <summary> The integration runtime node last stop time. </summary>
+        [WirePath("lastStopTime")]
         public DateTimeOffset? LastStopOn { get; }
         /// <summary> The result of the last integration runtime node update. </summary>
+        [WirePath("lastUpdateResult")]
         public IntegrationRuntimeUpdateResult? LastUpdateResult { get; }
         /// <summary> The last time for the integration runtime node update start. </summary>
+        [WirePath("lastStartUpdateTime")]
         public DateTimeOffset? LastStartUpdateOn { get; }
         /// <summary> The last time for the integration runtime node update end. </summary>
+        [WirePath("lastEndUpdateTime")]
         public DateTimeOffset? LastEndUpdateOn { get; }
         /// <summary> Indicates whether this node is the active dispatcher for integration runtime requests. </summary>
+        [WirePath("isActiveDispatcher")]
         public bool? IsActiveDispatcher { get; }
         /// <summary> Maximum concurrent jobs on the integration runtime node. </summary>
+        [WirePath("concurrentJobsLimit")]
         public int? ConcurrentJobsLimit { get; }
         /// <summary> The maximum concurrent jobs in this integration runtime. </summary>
+        [WirePath("maxConcurrentJobs")]
         public int? MaxConcurrentJobs { get; }
         /// <summary>
         /// Additional Properties
@@ -129,6 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

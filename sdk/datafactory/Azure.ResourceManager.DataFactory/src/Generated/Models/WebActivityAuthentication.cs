@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </summary>
+        [WirePath("type")]
         public string WebActivityAuthenticationType { get; set; }
         /// <summary> Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal. </summary>
+        [WirePath("pfx")]
         public DataFactorySecret Pfx { get; set; }
         /// <summary> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </summary>
+        [WirePath("username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for the PFX file or basic authentication / Secret when used for ServicePrincipal. </summary>
+        [WirePath("password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("resource")]
         public DataFactoryElement<string> Resource { get; set; }
         /// <summary> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("userTenant")]
         public DataFactoryElement<string> UserTenant { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

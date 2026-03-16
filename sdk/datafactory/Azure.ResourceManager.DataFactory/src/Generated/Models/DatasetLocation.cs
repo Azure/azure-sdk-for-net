@@ -40,8 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset storage location. </summary>
         internal string DatasetLocationType { get; set; }
         /// <summary> Specify the folder path of dataset. Type: string (or Expression with resultType string). </summary>
+        [WirePath("folderPath")]
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> Specify the file name of dataset. Type: string (or Expression with resultType string). </summary>
+        [WirePath("fileName")]
         public DataFactoryElement<string> FileName { get; set; }
         /// <summary>
         /// Additional Properties
@@ -73,6 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

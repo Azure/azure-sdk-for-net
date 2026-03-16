@@ -56,16 +56,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.domain")]
         public DataFactoryElement<string> Domain { get; set; }
         /// <summary> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.accessToken")]
         public DataFactorySecret AccessToken { get; set; }
         /// <summary> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.clusterId")]
         public DataFactoryElement<string> ClusterId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
         /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.workspaceResourceId")]
         public DataFactoryElement<string> WorkspaceResourceId { get; set; }
     }
 }

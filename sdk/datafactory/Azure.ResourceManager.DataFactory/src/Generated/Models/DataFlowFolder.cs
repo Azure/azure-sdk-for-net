@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the folder that this data flow is in. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

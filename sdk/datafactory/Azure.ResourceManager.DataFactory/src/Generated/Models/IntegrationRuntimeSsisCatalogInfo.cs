@@ -38,14 +38,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The catalog database server URL. </summary>
+        [WirePath("catalogServerEndpoint")]
         public string CatalogServerEndpoint { get; set; }
         /// <summary> The administrator user name of catalog database. </summary>
+        [WirePath("catalogAdminUserName")]
         public string CatalogAdminUserName { get; set; }
         /// <summary> The password of the administrator user account of the catalog database. </summary>
+        [WirePath("catalogAdminPassword")]
         public DataFactorySecretString CatalogAdminPassword { get; set; }
         /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
+        [WirePath("catalogPricingTier")]
         public IntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get; set; }
         /// <summary> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </summary>
+        [WirePath("dualStandbyPairName")]
         public string DualStandbyPairName { get; set; }
         /// <summary>
         /// Additional Properties
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

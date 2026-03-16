@@ -80,12 +80,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Path for embedded child package. Type: string (or Expression with resultType string). </summary>
+        [WirePath("packagePath")]
         public DataFactoryElement<string> PackagePath { get; set; }
         /// <summary> Name for embedded child package. </summary>
+        [WirePath("packageName")]
         public string PackageName { get; set; }
         /// <summary> Content for embedded child package. Type: string (or Expression with resultType string). </summary>
+        [WirePath("packageContent")]
         public DataFactoryElement<string> PackageContent { get; set; }
         /// <summary> Last modified date for embedded child package. </summary>
+        [WirePath("packageLastModifiedDate")]
         public string PackageLastModifiedDate { get; set; }
     }
 }

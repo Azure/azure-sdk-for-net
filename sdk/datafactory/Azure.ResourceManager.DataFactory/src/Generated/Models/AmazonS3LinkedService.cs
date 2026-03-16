@@ -46,16 +46,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.authenticationType")]
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.accessKeyId")]
         public DataFactoryElement<string> AccessKeyId { get; set; }
         /// <summary> The secret access key of the Amazon S3 Identity and Access Management (IAM) user. </summary>
+        [WirePath("typeProperties.secretAccessKey")]
         public DataFactorySecret SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.serviceUrl")]
         public DataFactoryElement<string> ServiceUri { get; set; }
         /// <summary> The session token for the S3 temporary security credential. </summary>
+        [WirePath("typeProperties.sessionToken")]
         public DataFactorySecret SessionToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

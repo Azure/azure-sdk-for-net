@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Referenced trigger. </summary>
+        [WirePath("referenceTrigger")]
         public DataFactoryTriggerReference ReferenceTrigger { get; set; }
     }
 }

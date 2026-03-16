@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GetMetadata activity dataset reference. </summary>
+        [WirePath("typeProperties.dataset")]
         public DatasetReference Dataset { get; set; }
         /// <summary>
         /// Fields of metadata to get from dataset.
@@ -97,18 +98,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.fieldList")]
         public IList<BinaryData> FieldList { get; }
         /// <summary>
         /// GetMetadata activity store settings.
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </summary>
+        [WirePath("typeProperties.storeSettings")]
         public StoreReadSettings StoreSettings { get; set; }
         /// <summary>
         /// GetMetadata activity format settings.
         /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="ParquetReadSettings"/> and <see cref="XmlReadSettings"/>.
         /// </summary>
+        [WirePath("typeProperties.formatSettings")]
         public FormatReadSettings FormatSettings { get; set; }
     }
 }

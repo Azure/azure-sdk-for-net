@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> Type of value copied from source. </summary>
+        [WirePath("typeProperties.valueType")]
         public DatasetSourceValueType? ValueType { get; set; }
     }
 }

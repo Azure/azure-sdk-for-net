@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the linked integration runtime. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The subscription ID for which the linked integration runtime belong to. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
         /// <summary> The name of the data factory for which the linked integration runtime belong to. </summary>
+        [WirePath("dataFactoryName")]
         public string DataFactoryName { get; }
         /// <summary> The location of the data factory for which the linked integration runtime belong to. </summary>
+        [WirePath("dataFactoryLocation")]
         public AzureLocation? DataFactoryLocation { get; }
         /// <summary> The creating time of the linked integration runtime. </summary>
+        [WirePath("createTime")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

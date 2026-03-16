@@ -49,22 +49,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
+        [WirePath("columnDelimiter")]
         public DataFactoryElement<string> ColumnDelimiter { get; set; }
         /// <summary> The row delimiter. Type: string (or Expression with resultType string). </summary>
+        [WirePath("rowDelimiter")]
         public DataFactoryElement<string> RowDelimiter { get; set; }
         /// <summary> The escape character. Type: string (or Expression with resultType string). </summary>
+        [WirePath("escapeChar")]
         public DataFactoryElement<string> EscapeChar { get; set; }
         /// <summary> The quote character. Type: string (or Expression with resultType string). </summary>
+        [WirePath("quoteChar")]
         public DataFactoryElement<string> QuoteChar { get; set; }
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
+        [WirePath("nullValue")]
         public DataFactoryElement<string> NullValue { get; set; }
         /// <summary> The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
+        [WirePath("encodingName")]
         public DataFactoryElement<string> EncodingName { get; set; }
         /// <summary> Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("treatEmptyAsNull")]
         public DataFactoryElement<bool> TreatEmptyAsNull { get; set; }
         /// <summary> The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("skipLineCount")]
         public DataFactoryElement<int> SkipLineCount { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("firstRowAsHeader")]
         public DataFactoryElement<bool> FirstRowAsHeader { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies whether the document with same key to be overwritten (upsert) rather than throw exception (insert). The default value is "insert". Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
+        [WirePath("writeBehavior")]
         public DataFactoryElement<string> WriteBehavior { get; set; }
     }
 }

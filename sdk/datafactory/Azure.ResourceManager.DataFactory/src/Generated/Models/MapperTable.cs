@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the table. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> List of columns for the source table. </summary>
+        [WirePath("properties.schema")]
         public IList<MapperTableSchema> Schema { get; }
         /// <summary> List of name/value pairs for connection properties. </summary>
+        [WirePath("properties.dslConnectorProperties")]
         public IList<MapperDslConnectorProperties> DslConnectorProperties { get; }
     }
 }

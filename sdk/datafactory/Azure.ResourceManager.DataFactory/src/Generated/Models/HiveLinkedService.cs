@@ -82,40 +82,58 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
+        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Hive server uses to listen for client connections. </summary>
+        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> The type of Hive server. </summary>
+        [WirePath("typeProperties.serverType")]
         public HiveServerType? ServerType { get; set; }
         /// <summary> The transport protocol to use in the Thrift layer. </summary>
+        [WirePath("typeProperties.thriftTransportProtocol")]
         public HiveThriftTransportProtocol? ThriftTransportProtocol { get; set; }
         /// <summary> The authentication method used to access the Hive server. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public HiveAuthenticationType AuthenticationType { get; set; }
         /// <summary> true to indicate using the ZooKeeper service, false not. </summary>
+        [WirePath("typeProperties.serviceDiscoveryMode")]
         public DataFactoryElement<bool> ServiceDiscoveryMode { get; set; }
         /// <summary> The namespace on ZooKeeper under which Hive Server 2 nodes are added. </summary>
+        [WirePath("typeProperties.zooKeeperNameSpace")]
         public DataFactoryElement<string> ZooKeeperNameSpace { get; set; }
         /// <summary> Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL. </summary>
+        [WirePath("typeProperties.useNativeQuery")]
         public DataFactoryElement<bool> UseNativeQuery { get; set; }
         /// <summary> The user name that you use to access Hive Server. </summary>
+        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The partial URL corresponding to the Hive server. </summary>
+        [WirePath("typeProperties.httpPath")]
         public DataFactoryElement<string> HttpPath { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
+        [WirePath("typeProperties.enableSsl")]
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </summary>
+        [WirePath("typeProperties.enableServerCertificateValidation")]
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
+        [WirePath("typeProperties.trustedCertPath")]
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
+        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
+        [WirePath("typeProperties.allowHostNameCNMismatch")]
         public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
+        [WirePath("typeProperties.allowSelfSignedServerCert")]
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

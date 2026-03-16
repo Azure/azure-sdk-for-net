@@ -40,12 +40,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
+        [WirePath("typeProperties.createTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The list of nodes for managed integration runtime. </summary>
+        [WirePath("typeProperties.nodes")]
         public IReadOnlyList<ManagedIntegrationRuntimeNode> Nodes { get; }
         /// <summary> The errors that occurred on this integration runtime. </summary>
+        [WirePath("typeProperties.otherErrors")]
         public IReadOnlyList<ManagedIntegrationRuntimeError> OtherErrors { get; }
         /// <summary> The last operation result that occurred on this integration runtime. </summary>
+        [WirePath("typeProperties.lastOperation")]
         public ManagedIntegrationRuntimeOperationResult LastOperation { get; }
     }
 }

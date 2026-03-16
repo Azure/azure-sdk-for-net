@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The port of endpoint. </summary>
+        [WirePath("port")]
         public int? Port { get; }
     }
 }

@@ -54,8 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
+        [WirePath("typeProperties.subjectBeginsWith")]
         public string SubjectBeginsWith { get; set; }
         /// <summary> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
+        [WirePath("typeProperties.subjectEndsWith")]
         public string SubjectEndsWith { get; set; }
         /// <summary>
         /// The list of event types that cause this trigger to fire.
@@ -87,8 +89,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.events")]
         public IList<BinaryData> Events { get; }
         /// <summary> The ARM resource ID of the Azure Event Grid Topic. </summary>
+        [WirePath("typeProperties.scope")]
         public string Scope { get; set; }
     }
 }

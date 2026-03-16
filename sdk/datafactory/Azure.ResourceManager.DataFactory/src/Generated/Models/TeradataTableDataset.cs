@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The database name of Teradata. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The table name of Teradata. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
     }
 }

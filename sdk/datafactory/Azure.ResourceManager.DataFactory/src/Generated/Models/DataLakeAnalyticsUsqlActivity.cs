@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.scriptPath")]
         public DataFactoryElement<string> ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
+        [WirePath("typeProperties.scriptLinkedService")]
         public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
+        [WirePath("typeProperties.degreeOfParallelism")]
         public DataFactoryElement<int> DegreeOfParallelism { get; set; }
         /// <summary> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
+        [WirePath("typeProperties.priority")]
         public DataFactoryElement<int> Priority { get; set; }
         /// <summary>
         /// Parameters for U-SQL job request.
@@ -104,10 +108,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.runtimeVersion")]
         public DataFactoryElement<string> RuntimeVersion { get; set; }
         /// <summary> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.compilationMode")]
         public DataFactoryElement<string> CompilationMode { get; set; }
     }
 }

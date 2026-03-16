@@ -56,16 +56,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.functionAppUrl")]
         public DataFactoryElement<string> FunctionAppUri { get; set; }
         /// <summary> Function or Host key for Azure Function App. </summary>
+        [WirePath("typeProperties.functionKey")]
         public DataFactorySecret FunctionKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
         /// <summary> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.resourceId")]
         public DataFactoryElement<string> ResourceId { get; set; }
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.authentication")]
         public DataFactoryElement<string> Authentication { get; set; }
     }
 }

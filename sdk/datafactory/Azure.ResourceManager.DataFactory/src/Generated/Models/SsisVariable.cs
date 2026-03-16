@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Variable id. </summary>
+        [WirePath("id")]
         public long? Id { get; }
         /// <summary> Variable name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Variable description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Variable type. </summary>
+        [WirePath("dataType")]
         public string DataType { get; }
         /// <summary> Whether variable is sensitive. </summary>
+        [WirePath("sensitive")]
         public bool? IsSensitive { get; }
         /// <summary> Variable value. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Variable sensitive value. </summary>
+        [WirePath("sensitiveValue")]
         public string SensitiveValue { get; }
     }
 }

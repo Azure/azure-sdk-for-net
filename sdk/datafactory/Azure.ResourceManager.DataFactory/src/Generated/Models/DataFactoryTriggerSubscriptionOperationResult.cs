@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Trigger name. </summary>
+        [WirePath("triggerName")]
         public string TriggerName { get; }
         /// <summary> Event Subscription Status. </summary>
+        [WirePath("status")]
         public EventSubscriptionStatus? Status { get; }
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of copy behavior for copy sink. </summary>
+        [WirePath("copyBehavior")]
         public DataFactoryElement<string> CopyBehavior { get; set; }
     }
 }

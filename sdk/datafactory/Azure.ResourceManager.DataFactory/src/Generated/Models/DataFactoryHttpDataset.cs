@@ -65,24 +65,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The relative URL based on the URL in the HttpLinkedService refers to an HTTP file Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.relativeUrl")]
         public DataFactoryElement<string> RelativeUri { get; set; }
         /// <summary> The HTTP method for the HTTP request. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.requestMethod")]
         public DataFactoryElement<string> RequestMethod { get; set; }
         /// <summary> The body for the HTTP request. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.requestBody")]
         public DataFactoryElement<string> RequestBody { get; set; }
         /// <summary>
         /// The headers for the HTTP Request. e.g. request-header-name-1:request-header-value-1
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </summary>
+        [WirePath("typeProperties.additionalHeaders")]
         public DataFactoryElement<string> AdditionalHeaders { get; set; }
         /// <summary>
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
+        [WirePath("typeProperties.format")]
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used on files. </summary>
+        [WirePath("typeProperties.compression")]
         public DatasetCompression Compression { get; set; }
     }
 }

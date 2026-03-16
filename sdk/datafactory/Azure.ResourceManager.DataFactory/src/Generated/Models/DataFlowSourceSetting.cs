@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The data flow source name. </summary>
+        [WirePath("sourceName")]
         public string SourceName { get; set; }
         /// <summary> Defines the row limit of data flow source in debug. </summary>
+        [WirePath("rowLimit")]
         public int? RowLimit { get; set; }
         /// <summary>
         /// Additional Properties
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

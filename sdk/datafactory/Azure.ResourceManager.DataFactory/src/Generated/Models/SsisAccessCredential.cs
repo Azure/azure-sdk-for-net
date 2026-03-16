@@ -81,10 +81,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Domain for windows authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("domain")]
         public DataFactoryElement<string> Domain { get; set; }
         /// <summary> UseName for windows authentication. Type: string (or Expression with resultType string). </summary>
+        [WirePath("userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for windows authentication. </summary>
+        [WirePath("password")]
         public DataFactorySecret Password { get; set; }
     }
 }

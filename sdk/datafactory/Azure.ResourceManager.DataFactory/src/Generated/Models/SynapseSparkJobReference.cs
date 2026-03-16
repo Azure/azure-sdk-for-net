@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Synapse spark job reference type. </summary>
+        [WirePath("type")]
         public SparkJobReferenceType SparkJobReferenceType { get; set; }
         /// <summary> Reference spark job name. Expression with resultType string. </summary>
+        [WirePath("referenceName")]
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

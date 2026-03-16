@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>
+        [WirePath("blobContainerUri")]
         public Uri BlobContainerUri { get; set; }
         /// <summary> The SAS token of the Azure blob container. </summary>
+        [WirePath("sasToken")]
         public DataFactorySecretString SasToken { get; set; }
     }
 }

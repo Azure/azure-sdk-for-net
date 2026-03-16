@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -227,6 +229,157 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogInfo))
+                {
+                    builder.Append("  catalogInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CatalogInfo, options, 2, false, "  catalogInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LicenseType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  licenseType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LicenseType))
+                {
+                    builder.Append("  licenseType: ");
+                    builder.AppendLine($"'{LicenseType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomSetupScriptProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customSetupScriptProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomSetupScriptProperties))
+                {
+                    builder.Append("  customSetupScriptProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CustomSetupScriptProperties, options, 2, false, "  customSetupScriptProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataProxyProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataProxyProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataProxyProperties))
+                {
+                    builder.Append("  dataProxyProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataProxyProperties, options, 2, false, "  dataProxyProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Edition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  edition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Edition))
+                {
+                    builder.Append("  edition: ");
+                    builder.AppendLine($"'{Edition.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpressCustomSetupProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expressCustomSetupProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
+                {
+                    if (ExpressCustomSetupProperties.Any())
+                    {
+                        builder.Append("  expressCustomSetupProperties: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ExpressCustomSetupProperties)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  expressCustomSetupProperties: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageStores), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageStores: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PackageStores))
+                {
+                    if (PackageStores.Any())
+                    {
+                        builder.Append("  packageStores: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PackageStores)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  packageStores: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Credential), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  credential: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Credential))
+                {
+                    builder.Append("  credential: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Credential, options, 2, false, "  credential: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -235,6 +388,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeSsisProperties)} does not support writing '{options.Format}' format.");
             }

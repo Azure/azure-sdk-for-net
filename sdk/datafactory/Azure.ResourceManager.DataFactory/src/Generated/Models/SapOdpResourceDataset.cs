@@ -55,8 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.context")]
         public DataFactoryElement<string> Context { get; set; }
         /// <summary> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.objectName")]
         public DataFactoryElement<string> ObjectName { get; set; }
     }
 }

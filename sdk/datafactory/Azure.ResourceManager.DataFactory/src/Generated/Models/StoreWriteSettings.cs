@@ -45,12 +45,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The write setting type. </summary>
         internal string StoreWriteSettingsType { get; set; }
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("maxConcurrentConnections")]
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("disableMetricsCollection")]
         public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
         /// <summary> The type of copy behavior for copy sink. </summary>
+        [WirePath("copyBehavior")]
         public DataFactoryElement<string> CopyBehavior { get; set; }
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        [WirePath("metadata")]
         public IList<DataFactoryMetadataItemInfo> Metadata { get; }
         /// <summary>
         /// Additional Properties
@@ -82,6 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

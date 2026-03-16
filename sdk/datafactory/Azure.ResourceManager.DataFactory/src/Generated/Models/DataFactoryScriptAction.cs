@@ -82,8 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The user provided name of the script action. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The URI for the script action. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
         /// <summary>
         /// The node types on which the script action should be executed.
@@ -115,8 +117,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("roles")]
         public BinaryData Roles { get; set; }
         /// <summary> The parameters for the script action. </summary>
+        [WirePath("parameters")]
         public string Parameters { get; set; }
     }
 }

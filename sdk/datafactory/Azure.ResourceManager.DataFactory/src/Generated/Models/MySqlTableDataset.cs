@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The MySQL table name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
     }
 }

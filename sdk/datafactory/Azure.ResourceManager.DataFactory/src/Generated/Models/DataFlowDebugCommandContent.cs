@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
+        [WirePath("sessionId")]
         public Guid? SessionId { get; set; }
         /// <summary> The command type. </summary>
+        [WirePath("command")]
         public DataFlowDebugCommandType? Command { get; set; }
         /// <summary> The command payload object. </summary>
+        [WirePath("commandPayload")]
         public DataFlowDebugCommandPayload CommandPayload { get; set; }
     }
 }

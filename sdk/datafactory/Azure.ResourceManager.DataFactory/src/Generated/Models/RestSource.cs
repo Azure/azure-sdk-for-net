@@ -47,14 +47,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
+        [WirePath("requestMethod")]
         public DataFactoryElement<string> RequestMethod { get; set; }
         /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
+        [WirePath("requestBody")]
         public DataFactoryElement<string> RequestBody { get; set; }
         /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
+        [WirePath("additionalHeaders")]
         public DataFactoryElement<string> AdditionalHeaders { get; set; }
         /// <summary> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </summary>
+        [WirePath("paginationRules")]
         public DataFactoryElement<string> PaginationRules { get; set; }
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("httpRequestTimeout")]
         public DataFactoryElement<string> HttpRequestTimeout { get; set; }
         /// <summary>
         /// The time to await before sending next page request.
@@ -86,8 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("requestInterval")]
         public BinaryData RequestInterval { get; set; }
         /// <summary> Specifies the additional columns to be added to source data. Type: key value pairs (value should be string type). </summary>
+        [WirePath("additionalColumns")]
         public DataFactoryElement<IDictionary<string, string>> AdditionalColumns { get; set; }
     }
 }

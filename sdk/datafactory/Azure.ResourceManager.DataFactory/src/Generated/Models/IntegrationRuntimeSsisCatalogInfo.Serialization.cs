@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -148,6 +149,120 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogServerEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogServerEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogServerEndpoint))
+                {
+                    builder.Append("  catalogServerEndpoint: ");
+                    if (CatalogServerEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CatalogServerEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CatalogServerEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogAdminUserName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogAdminUserName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogAdminUserName))
+                {
+                    builder.Append("  catalogAdminUserName: ");
+                    if (CatalogAdminUserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CatalogAdminUserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CatalogAdminUserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogAdminPassword), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogAdminPassword: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogAdminPassword))
+                {
+                    builder.Append("  catalogAdminPassword: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CatalogAdminPassword, options, 2, false, "  catalogAdminPassword: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogPricingTier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogPricingTier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogPricingTier))
+                {
+                    builder.Append("  catalogPricingTier: ");
+                    builder.AppendLine($"'{CatalogPricingTier.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DualStandbyPairName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dualStandbyPairName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DualStandbyPairName))
+                {
+                    builder.Append("  dualStandbyPairName: ");
+                    if (DualStandbyPairName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DualStandbyPairName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DualStandbyPairName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IntegrationRuntimeSsisCatalogInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +271,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeSsisCatalogInfo)} does not support writing '{options.Format}' format.");
             }

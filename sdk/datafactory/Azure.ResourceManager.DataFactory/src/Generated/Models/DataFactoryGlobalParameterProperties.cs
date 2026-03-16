@@ -74,6 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Global Parameter type. </summary>
+        [WirePath("type")]
         public DataFactoryGlobalParameterType GlobalParameterType { get; set; }
         /// <summary>
         /// Value of parameter.
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; set; }
     }
 }

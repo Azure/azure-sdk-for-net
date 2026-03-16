@@ -84,10 +84,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.globalParameters")]
         public IDictionary<string, BinaryData> GlobalParameters { get; }
         /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request. </summary>
+        [WirePath("typeProperties.webServiceOutputs")]
         public IDictionary<string, AzureMLWebServiceFile> WebServiceOutputs { get; }
         /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request. </summary>
+        [WirePath("typeProperties.webServiceInputs")]
         public IDictionary<string, AzureMLWebServiceFile> WebServiceInputs { get; }
     }
 }

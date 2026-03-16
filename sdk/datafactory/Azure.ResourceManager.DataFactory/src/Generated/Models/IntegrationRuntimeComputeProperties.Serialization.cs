@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -203,6 +204,149 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeSize))
+                {
+                    builder.Append("  nodeSize: ");
+                    if (NodeSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NodeSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NodeSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfNodes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  numberOfNodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberOfNodes))
+                {
+                    builder.Append("  numberOfNodes: ");
+                    builder.AppendLine($"{NumberOfNodes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxParallelExecutionsPerNode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxParallelExecutionsPerNode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxParallelExecutionsPerNode))
+                {
+                    builder.Append("  maxParallelExecutionsPerNode: ");
+                    builder.AppendLine($"{MaxParallelExecutionsPerNode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataFlowProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataFlowProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataFlowProperties))
+                {
+                    builder.Append("  dataFlowProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataFlowProperties, options, 2, false, "  dataFlowProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vNetProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetProperties))
+                {
+                    builder.Append("  vNetProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, VnetProperties, options, 2, false, "  vNetProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CopyComputeScaleProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  copyComputeScaleProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CopyComputeScaleProperties))
+                {
+                    builder.Append("  copyComputeScaleProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CopyComputeScaleProperties, options, 2, false, "  copyComputeScaleProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PipelineExternalComputeScaleProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  pipelineExternalComputeScaleProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PipelineExternalComputeScaleProperties))
+                {
+                    builder.Append("  pipelineExternalComputeScaleProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PipelineExternalComputeScaleProperties, options, 2, false, "  pipelineExternalComputeScaleProperties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -211,6 +355,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeComputeProperties)} does not support writing '{options.Format}' format.");
             }

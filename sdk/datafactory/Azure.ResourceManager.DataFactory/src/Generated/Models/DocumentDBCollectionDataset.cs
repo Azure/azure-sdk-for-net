@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Document Database collection name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.collectionName")]
         public DataFactoryElement<string> CollectionName { get; set; }
     }
 }

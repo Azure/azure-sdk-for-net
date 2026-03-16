@@ -43,8 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Credential reference type. </summary>
+        [WirePath("type")]
         public DataFactoryCredentialReferenceType ReferenceType { get; set; }
         /// <summary> Reference credential name. </summary>
+        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
         /// <summary>
         /// Additional Properties
@@ -76,6 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

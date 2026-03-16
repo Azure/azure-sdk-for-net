@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
+        [WirePath("name")]
         public DataFactoryElement<string> ColumnName { get; set; }
         /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
+        [WirePath("type")]
         public DataFactoryElement<string> ColumnType { get; set; }
     }
 }

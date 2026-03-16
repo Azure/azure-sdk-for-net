@@ -53,18 +53,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The number of rows to be retrieved. Type: integer(or Expression with resultType integer). </summary>
+        [WirePath("rowCount")]
         public DataFactoryElement<int> RowCount { get; set; }
         /// <summary> The number of rows that will be skipped. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("rowSkips")]
         public DataFactoryElement<int> RowSkips { get; set; }
         /// <summary> The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string). </summary>
+        [WirePath("rfcTableFields")]
         public DataFactoryElement<string> RfcTableFields { get; set; }
         /// <summary> The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string). </summary>
+        [WirePath("rfcTableOptions")]
         public DataFactoryElement<string> RfcTableOptions { get; set; }
         /// <summary> Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("batchSize")]
         public DataFactoryElement<int> BatchSize { get; set; }
         /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
+        [WirePath("customRfcReadTableFunctionModule")]
         public DataFactoryElement<string> CustomRfcReadTableFunctionModule { get; set; }
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
+        [WirePath("sapDataColumnDelimiter")]
         public DataFactoryElement<string> SapDataColumnDelimiter { get; set; }
         /// <summary>
         /// The partition mechanism that will be used for SAP table read in parallel. Possible values include: "None", "PartitionOnInt", "PartitionOnCalendarYear", "PartitionOnCalendarMonth", "PartitionOnCalendarDate", "PartitionOnTime".
@@ -96,8 +103,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("partitionOption")]
         public BinaryData PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
+        [WirePath("partitionSettings")]
         public SapTablePartitionSettings PartitionSettings { get; set; }
     }
 }

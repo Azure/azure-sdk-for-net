@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -191,6 +193,117 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SnowflakeExportCopyCommand(type, additionalProperties, additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), storageIntegration);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalCopyOptions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalCopyOptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdditionalCopyOptions))
+                {
+                    if (AdditionalCopyOptions.Any())
+                    {
+                        builder.Append("  additionalCopyOptions: ");
+                        builder.AppendLine("{");
+                        foreach (var item in AdditionalCopyOptions)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalFormatOptions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalFormatOptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AdditionalFormatOptions))
+                {
+                    if (AdditionalFormatOptions.Any())
+                    {
+                        builder.Append("  additionalFormatOptions: ");
+                        builder.AppendLine("{");
+                        foreach (var item in AdditionalFormatOptions)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageIntegration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageIntegration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageIntegration))
+                {
+                    builder.Append("  storageIntegration: ");
+                    builder.AppendLine($"'{StorageIntegration.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExportSettingsType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExportSettingsType))
+                {
+                    builder.Append("  type: ");
+                    if (ExportSettingsType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExportSettingsType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExportSettingsType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SnowflakeExportCopyCommand>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeExportCopyCommand>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,6 +312,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SnowflakeExportCopyCommand)} does not support writing '{options.Format}' format.");
             }

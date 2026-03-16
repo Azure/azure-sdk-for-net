@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
+        [WirePath("continuationToken")]
         public string ContinuationToken { get; set; }
         /// <summary> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </summary>
+        [WirePath("parentTriggerName")]
         public string ParentTriggerName { get; set; }
     }
 }

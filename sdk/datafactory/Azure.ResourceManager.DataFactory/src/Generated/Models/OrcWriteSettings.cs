@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("maxRowsPerFile")]
         public DataFactoryElement<int> MaxRowsPerFile { get; set; }
         /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
+        [WirePath("fileNamePrefix")]
         public DataFactoryElement<string> FileNamePrefix { get; set; }
     }
 }

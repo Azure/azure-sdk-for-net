@@ -39,8 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of integration runtime. </summary>
         internal IntegrationRuntimeType RuntimeType { get; set; }
         /// <summary> The data factory name which the integration runtime belong to. </summary>
+        [WirePath("dataFactoryName")]
         public string DataFactoryName { get; }
         /// <summary> The state of integration runtime. </summary>
+        [WirePath("state")]
         public IntegrationRuntimeState? State { get; }
         /// <summary>
         /// Additional Properties
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

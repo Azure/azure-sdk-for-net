@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Metadata path. </summary>
+        [WirePath("metadataPath")]
         public string MetadataPath { get; set; }
     }
 }

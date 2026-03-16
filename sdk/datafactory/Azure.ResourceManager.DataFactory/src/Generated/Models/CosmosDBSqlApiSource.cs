@@ -43,12 +43,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL API query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("pageSize")]
         public DataFactoryElement<int> PageSize { get; set; }
         /// <summary> Preferred regions. Type: array of strings (or Expression with resultType array of strings). </summary>
+        [WirePath("preferredRegions")]
         public DataFactoryElement<IList<string>> PreferredRegions { get; set; }
         /// <summary> Whether detect primitive values as datetime values. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("detectDatetime")]
         public DataFactoryElement<bool> DetectDatetime { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
     }
 }

@@ -56,14 +56,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
+        [WirePath("typeProperties.blobPathBeginsWith")]
         public string BlobPathBeginsWith { get; set; }
         /// <summary> The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
+        [WirePath("typeProperties.blobPathEndsWith")]
         public string BlobPathEndsWith { get; set; }
         /// <summary> If set to true, blobs with zero bytes will be ignored. </summary>
+        [WirePath("typeProperties.ignoreEmptyBlobs")]
         public bool? IgnoreEmptyBlobs { get; set; }
         /// <summary> The type of events that cause this trigger to fire. </summary>
+        [WirePath("typeProperties.events")]
         public IList<DataFactoryBlobEventType> Events { get; }
         /// <summary> The ARM resource ID of the Storage Account. </summary>
+        [WirePath("typeProperties.scope")]
         public string Scope { get; set; }
     }
 }

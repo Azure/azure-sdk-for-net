@@ -51,10 +51,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> This property is only supported in Jira V1 Dataset, please consider upgrading to V2 dataset. </summary>
+        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The schema name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
     }
 }

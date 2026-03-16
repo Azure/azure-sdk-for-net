@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The PostgreSQL table name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
         /// <summary> The PostgreSQL schema name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
     }
 }

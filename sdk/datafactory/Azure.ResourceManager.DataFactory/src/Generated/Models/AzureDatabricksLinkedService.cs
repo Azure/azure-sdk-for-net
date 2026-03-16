@@ -87,22 +87,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.domain")]
         public DataFactoryElement<string> Domain { get; set; }
         /// <summary> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.accessToken")]
         public DataFactorySecret AccessToken { get; set; }
         /// <summary> Required to specify MSI, if using Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.authentication")]
         public DataFactoryElement<string> Authentication { get; set; }
         /// <summary> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.workspaceResourceId")]
         public DataFactoryElement<string> WorkspaceResourceId { get; set; }
         /// <summary> The id of an existing interactive cluster that will be used for all runs of this activity. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.existingClusterId")]
         public DataFactoryElement<string> ExistingClusterId { get; set; }
         /// <summary> The id of an existing instance pool that will be used for all runs of this activity. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.instancePoolId")]
         public DataFactoryElement<string> InstancePoolId { get; set; }
         /// <summary> If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each run of this activity. Required if instancePoolId is specified. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.newClusterVersion")]
         public DataFactoryElement<string> NewClusterVersion { get; set; }
         /// <summary> If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job clusters, this a string-formatted Int32, like '1' means numOfWorker is 1 or '1:10' means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify a fixed number of worker nodes, such as '2'. Required if newClusterVersion is specified. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.newClusterNumOfWorker")]
         public DataFactoryElement<string> NewClusterNumOfWorker { get; set; }
         /// <summary> The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId is specified, this property is ignored. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.newClusterNodeType")]
         public DataFactoryElement<string> NewClusterNodeType { get; set; }
         /// <summary>
         /// A set of optional, user-specified Spark configuration key-value pairs.
@@ -134,6 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.newClusterSparkConf")]
         public IDictionary<string, BinaryData> NewClusterSparkConf { get; }
         /// <summary>
         /// A set of optional, user-specified Spark environment variables key-value pairs.
@@ -165,6 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.newClusterSparkEnvVars")]
         public IDictionary<string, BinaryData> NewClusterSparkEnvVars { get; }
         /// <summary>
         /// Additional tags for cluster resources. This property is ignored in instance pool configurations.
@@ -196,22 +207,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.newClusterCustomTags")]
         public IDictionary<string, BinaryData> NewClusterCustomTags { get; }
         /// <summary> Specify a location to deliver Spark driver, worker, and event logs. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.newClusterLogDestination")]
         public DataFactoryElement<string> NewClusterLogDestination { get; set; }
         /// <summary> The driver node type for the new job cluster. This property is ignored in instance pool configurations. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.newClusterDriverNodeType")]
         public DataFactoryElement<string> NewClusterDriverNodeType { get; set; }
         /// <summary> User-defined initialization scripts for the new cluster. Type: array of strings (or Expression with resultType array of strings). </summary>
+        [WirePath("typeProperties.newClusterInitScripts")]
         public DataFactoryElement<IList<string>> NewClusterInitScripts { get; set; }
         /// <summary> Enable the elastic disk on the new cluster. This property is now ignored, and takes the default elastic disk behavior in Databricks (elastic disks are always enabled). Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.newClusterEnableElasticDisk")]
         public DataFactoryElement<bool> NewClusterEnableElasticDisk { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.policyId")]
         public DataFactoryElement<string> PolicyId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
         /// <summary> The data security mode for the Databricks Cluster. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.dataSecurityMode")]
         public DataFactoryElement<string> DataSecurityMode { get; set; }
     }
 }

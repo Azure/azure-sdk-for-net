@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Frequency of period in terms of 'Hour', 'Minute' or 'Second'. </summary>
+        [WirePath("frequency")]
         public MapperPolicyRecurrenceFrequencyType? Frequency { get; set; }
         /// <summary> Actual interval value as per chosen frequency. </summary>
+        [WirePath("interval")]
         public int? Interval { get; set; }
     }
 }

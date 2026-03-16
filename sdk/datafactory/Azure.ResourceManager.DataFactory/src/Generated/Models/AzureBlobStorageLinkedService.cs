@@ -62,32 +62,46 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
+        [WirePath("typeProperties.accountKey")]
         public DataFactoryKeyVaultSecret AccountKey { get; set; }
         /// <summary> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.sasUri")]
         public DataFactoryElement<string> SasUri { get; set; }
         /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
+        [WirePath("typeProperties.sasToken")]
         public DataFactoryKeyVaultSecret SasToken { get; set; }
         /// <summary> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
+        [WirePath("typeProperties.serviceEndpoint")]
         public DataFactoryElement<string> ServiceEndpoint { get; set; }
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.azureCloudType")]
         public DataFactoryElement<string> AzureCloudType { get; set; }
         /// <summary> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.accountKind")]
         public DataFactoryElement<string> AccountKind { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
         /// <summary> The type used for authentication. Type: string. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public AzureStorageAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.containerUri")]
         public DataFactoryElement<string> ContainerUri { get; set; }
     }
 }

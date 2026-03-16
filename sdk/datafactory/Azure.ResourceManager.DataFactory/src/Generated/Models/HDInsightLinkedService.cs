@@ -64,24 +64,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> HDInsight cluster URI. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.clusterUri")]
         public DataFactoryElement<string> ClusterUri { get; set; }
         /// <summary> HDInsight cluster authentication type. </summary>
+        [WirePath("typeProperties.clusterAuthType")]
         public HDInsightClusterAuthenticationType? ClusterAuthType { get; set; }
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> HDInsight cluster password. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
+        [WirePath("typeProperties.linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> A reference to the Azure SQL linked service that points to the HCatalog database. </summary>
+        [WirePath("typeProperties.hcatalogLinkedServiceName")]
         public DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </summary>
+        [WirePath("typeProperties.isEspEnabled")]
         public DataFactoryElement<bool> IsEspEnabled { get; set; }
         /// <summary> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.fileSystem")]
         public DataFactoryElement<string> FileSystem { get; set; }
         /// <summary> The credential reference containing MI authentication information for the HDInsight cluster. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

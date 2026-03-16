@@ -47,12 +47,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> AmazonRdsForOracle reader query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("oracleReaderQuery")]
         public DataFactoryElement<string> OracleReaderQuery { get; set; }
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("queryTimeout")]
         public DataFactoryElement<string> QueryTimeout { get; set; }
         /// <summary> The partition mechanism that will be used for AmazonRdsForOracle read in parallel. Type: string (or Expression with resultType string). </summary>
+        [WirePath("partitionOption")]
         public DataFactoryElement<string> PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
+        [WirePath("partitionSettings")]
         public AmazonRdsForOraclePartitionSettings PartitionSettings { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
@@ -84,10 +88,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
         /// <summary> The decimal precision used to represent Oracle NUMBER type without precision and scale. The range is 1 to 256 and default value is 256 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
+        [WirePath("numberPrecision")]
         public DataFactoryElement<int> NumberPrecision { get; set; }
         /// <summary> The decimal scale used to represent Oracle NUMBER type without precision and scale. The range is 0 to 130 and default value is 130 if not specified. Type: integer (or Expression with resultType integer). Only used for Version 2.0. </summary>
+        [WirePath("numberScale")]
         public DataFactoryElement<int> NumberScale { get; set; }
     }
 }

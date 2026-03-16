@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource id of user assigned managed identity. </summary>
+        [WirePath("typeProperties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

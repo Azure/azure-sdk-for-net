@@ -58,28 +58,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userId")]
         public DataFactoryElement<string> UserId { get; set; }
         /// <summary> Password to logon the server. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
+        [WirePath("typeProperties.accountKey")]
         public DataFactoryKeyVaultSecret AccountKey { get; set; }
         /// <summary> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        [WirePath("typeProperties.sasUri")]
         public DataFactoryElement<string> SasUri { get; set; }
         /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
+        [WirePath("typeProperties.sasToken")]
         public DataFactoryKeyVaultSecret SasToken { get; set; }
         /// <summary> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.fileShare")]
         public DataFactoryElement<string> FileShare { get; set; }
         /// <summary> The azure file share snapshot version. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.snapshot")]
         public DataFactoryElement<string> Snapshot { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
+        [WirePath("typeProperties.serviceEndpoint")]
         public DataFactoryElement<string> ServiceEndpoint { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

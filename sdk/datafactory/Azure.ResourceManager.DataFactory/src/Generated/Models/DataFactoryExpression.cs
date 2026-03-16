@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Expression type. </summary>
+        [WirePath("type")]
         public DataFactoryExpressionType ExpressionType { get; set; }
         /// <summary> Expression value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

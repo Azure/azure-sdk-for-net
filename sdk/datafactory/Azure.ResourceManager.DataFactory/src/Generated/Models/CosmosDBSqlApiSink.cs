@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Describes how to write data to Azure Cosmos DB. Type: string (or Expression with resultType string). Allowed values: insert and upsert. </summary>
+        [WirePath("writeBehavior")]
         public DataFactoryElement<string> WriteBehavior { get; set; }
     }
 }

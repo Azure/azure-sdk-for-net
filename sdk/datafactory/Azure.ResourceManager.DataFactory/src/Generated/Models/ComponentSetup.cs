@@ -43,8 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the 3rd party component. </summary>
+        [WirePath("typeProperties.componentName")]
         public string ComponentName { get; set; }
         /// <summary> The license key to activate the component. </summary>
+        [WirePath("typeProperties.licenseKey")]
         public DataFactorySecret LicenseKey { get; set; }
     }
 }

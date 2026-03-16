@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> sink script. </summary>
+        [WirePath("script")]
         public string Script { get; set; }
     }
 }

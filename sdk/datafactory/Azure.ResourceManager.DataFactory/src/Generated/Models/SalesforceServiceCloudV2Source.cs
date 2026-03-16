@@ -41,10 +41,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </summary>
+        [WirePath("SOQLQuery")]
         public DataFactoryElement<string> SoqlQuery { get; set; }
         /// <summary> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("includeDeletedObjects")]
         public DataFactoryElement<bool> IncludeDeletedObjects { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
@@ -76,6 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
     }
 }

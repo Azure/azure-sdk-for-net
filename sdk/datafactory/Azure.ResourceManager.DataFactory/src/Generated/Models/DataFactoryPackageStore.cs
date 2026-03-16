@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the package store. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The package store linked service reference. </summary>
+        [WirePath("packageStoreLinkedService")]
         public EntityReference PackageStoreLinkedService { get; set; }
     }
 }

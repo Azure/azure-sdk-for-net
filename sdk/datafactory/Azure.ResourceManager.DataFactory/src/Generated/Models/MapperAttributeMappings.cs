@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of attribute mappings. </summary>
+        [WirePath("attributeMappings")]
         public IList<MapperAttributeMapping> AttributeMappings { get; }
     }
 }

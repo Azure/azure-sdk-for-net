@@ -57,10 +57,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.relativeUrl")]
         public DataFactoryElement<string> RelativeUri { get; set; }
         /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.requestMethod")]
         public DataFactoryElement<string> RequestMethod { get; set; }
         /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.requestBody")]
         public DataFactoryElement<string> RequestBody { get; set; }
         /// <summary>
         /// The additional HTTP headers in the request to the RESTful API.
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.additionalHeaders")]
         public IDictionary<string, BinaryData> AdditionalHeaders { get; }
         /// <summary>
         /// The pagination rules to compose next page requests.
@@ -123,6 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.paginationRules")]
         public IDictionary<string, BinaryData> PaginationRules { get; }
     }
 }

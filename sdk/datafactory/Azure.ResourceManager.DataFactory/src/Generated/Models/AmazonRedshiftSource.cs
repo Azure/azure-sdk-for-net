@@ -39,8 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Database query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
+        [WirePath("redshiftUnloadSettings")]
         public RedshiftUnloadSettings RedshiftUnloadSettings { get; set; }
     }
 }

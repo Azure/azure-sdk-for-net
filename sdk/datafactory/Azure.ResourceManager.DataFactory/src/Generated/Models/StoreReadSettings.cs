@@ -40,8 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The read setting type. </summary>
         internal string StoreReadSettingsType { get; set; }
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("maxConcurrentConnections")]
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("disableMetricsCollection")]
         public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
         /// <summary>
         /// Additional Properties
@@ -73,6 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

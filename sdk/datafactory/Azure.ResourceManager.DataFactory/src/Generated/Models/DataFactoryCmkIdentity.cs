@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource id of the user assigned identity to authenticate to customer's key vault. </summary>
+        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
     }
 }

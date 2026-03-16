@@ -51,8 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The auth token of Twilio service. </summary>
+        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
     }
 }

@@ -37,10 +37,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The app ID of the service principal used to authenticate. </summary>
+        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate. </summary>
+        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactoryKeyVaultSecret ServicePrincipalKey { get; set; }
         /// <summary> The ID of the tenant to which the service principal belongs. </summary>
+        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
     }
 }

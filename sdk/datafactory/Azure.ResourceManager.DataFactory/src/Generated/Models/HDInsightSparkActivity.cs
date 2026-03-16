@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.rootPath")]
         public DataFactoryElement<string> RootPath { get; set; }
         /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.entryFilePath")]
         public DataFactoryElement<string> EntryFilePath { get; set; }
         /// <summary>
         /// The user-specified arguments to HDInsightSparkActivity.
@@ -103,14 +105,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.arguments")]
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
+        [WirePath("typeProperties.getDebugInfo")]
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
+        [WirePath("typeProperties.sparkJobLinkedService")]
         public DataFactoryLinkedServiceReference SparkJobLinkedService { get; set; }
         /// <summary> The application's Java/Spark main class. </summary>
+        [WirePath("typeProperties.className")]
         public string ClassName { get; set; }
         /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.proxyUser")]
         public DataFactoryElement<string> ProxyUser { get; set; }
         /// <summary>
         /// Spark configuration property.
@@ -142,6 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.sparkConfig")]
         public IDictionary<string, BinaryData> SparkConfig { get; }
     }
 }

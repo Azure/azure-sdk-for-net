@@ -77,14 +77,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Linked service reference. </summary>
+        [WirePath("linkedService")]
         public DataFactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary> Type of the linked service e.g.: AzureBlobFS. </summary>
+        [WirePath("linkedServiceType")]
         public string LinkedServiceType { get; set; }
         /// <summary> Type of connection via linked service or dataset. </summary>
+        [WirePath("type")]
         public MapperConnectionType ConnectionType { get; set; }
         /// <summary> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </summary>
+        [WirePath("isInlineDataset")]
         public bool? IsInlineDataset { get; set; }
         /// <summary> List of name/value pairs for connection properties. </summary>
+        [WirePath("commonDslConnectorProperties")]
         public IList<MapperDslConnectorProperties> CommonDslConnectorProperties { get; }
     }
 }

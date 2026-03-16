@@ -70,28 +70,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The default BigQuery project to query against. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.project")]
         public DataFactoryElement<string> Project { get; set; }
         /// <summary> A comma-separated list of public BigQuery projects to access. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.additionalProjects")]
         public DataFactoryElement<string> AdditionalProjects { get; set; }
         /// <summary> Whether to request access to Google Drive. Allowing Google Drive access enables support for federated tables that combine BigQuery data with data from Google Drive. The default value is false. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.requestGoogleDriveScope")]
         public DataFactoryElement<bool> RequestGoogleDriveScope { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public GoogleBigQueryAuthenticationType AuthenticationType { get; set; }
         /// <summary> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </summary>
+        [WirePath("typeProperties.refreshToken")]
         public DataFactorySecret RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
+        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.email")]
         public DataFactoryElement<string> Email { get; set; }
         /// <summary> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.keyFilePath")]
         public DataFactoryElement<string> KeyFilePath { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.trustedCertPath")]
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

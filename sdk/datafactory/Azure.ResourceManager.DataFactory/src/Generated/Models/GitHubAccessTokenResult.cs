@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GitHub access token. </summary>
+        [WirePath("gitHubAccessToken")]
         public string GitHubAccessToken { get; }
     }
 }

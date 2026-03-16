@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        [WirePath("partitionColumnName")]
         public DataFactoryElement<string> PartitionColumnName { get; set; }
     }
 }

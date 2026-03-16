@@ -48,8 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.baseUrl")]
         public DataFactoryElement<string> BaseUri { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
+        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

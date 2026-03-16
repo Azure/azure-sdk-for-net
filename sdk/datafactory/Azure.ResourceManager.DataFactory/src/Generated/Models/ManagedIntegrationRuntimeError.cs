@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The time when the error occurred. </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; }
         /// <summary> Error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Managed integration runtime error parameters. </summary>
+        [WirePath("parameters")]
         public IReadOnlyList<string> Parameters { get; }
         /// <summary> Error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary>
         /// Additional Properties
@@ -73,6 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

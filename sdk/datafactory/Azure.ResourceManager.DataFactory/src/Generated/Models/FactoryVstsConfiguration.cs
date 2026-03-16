@@ -56,8 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> VSTS project name. </summary>
+        [WirePath("projectName")]
         public string ProjectName { get; set; }
         /// <summary> VSTS tenant id. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

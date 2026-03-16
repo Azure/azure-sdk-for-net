@@ -50,10 +50,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.endpoint")]
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.authentication")]
         public DataFactoryElement<string> Authentication { get; set; }
         /// <summary> The resource ID of the Synapse workspace. The format should be: /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.workspaceResourceId")]
         public DataFactoryElement<string> WorkspaceResourceId { get; set; }
     }
 }

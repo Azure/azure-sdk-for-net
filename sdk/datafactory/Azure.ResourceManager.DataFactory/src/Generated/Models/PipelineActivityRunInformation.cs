@@ -53,24 +53,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the pipeline. </summary>
+        [WirePath("pipelineName")]
         public string PipelineName { get; }
         /// <summary> The id of the pipeline run. </summary>
+        [WirePath("pipelineRunId")]
         public Guid? PipelineRunId { get; }
         /// <summary> The name of the activity. </summary>
+        [WirePath("activityName")]
         public string ActivityName { get; }
         /// <summary> The type of the activity. </summary>
+        [WirePath("activityType")]
         public string ActivityType { get; }
         /// <summary> The id of the activity run. </summary>
+        [WirePath("activityRunId")]
         public Guid? ActivityRunId { get; }
         /// <summary> The name of the compute linked service. </summary>
+        [WirePath("linkedServiceName")]
         public string LinkedServiceName { get; }
         /// <summary> The status of the activity run. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> The start time of the activity run in 'ISO 8601' format. </summary>
+        [WirePath("activityRunStart")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the activity run in 'ISO 8601' format. </summary>
+        [WirePath("activityRunEnd")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The duration of the activity run. </summary>
+        [WirePath("durationInMs")]
         public int? DurationInMs { get; }
         /// <summary>
         /// The input for the activity.
@@ -102,6 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("input")]
         public BinaryData Input { get; }
         /// <summary>
         /// The output for the activity.
@@ -133,6 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("output")]
         public BinaryData Output { get; }
         /// <summary>
         /// The error if any from the activity run.
@@ -164,6 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("error")]
         public BinaryData Error { get; }
         /// <summary>
         /// Additional Properties
@@ -195,6 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

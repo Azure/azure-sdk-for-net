@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </summary>
+        [WirePath("dateFormat")]
         public DataFactoryElement<string> DateFormat { get; set; }
         /// <summary> Specify the timestamp format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </summary>
+        [WirePath("timestampFormat")]
         public DataFactoryElement<string> TimestampFormat { get; set; }
     }
 }

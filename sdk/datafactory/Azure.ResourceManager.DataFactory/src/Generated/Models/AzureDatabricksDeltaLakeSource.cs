@@ -37,8 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure Databricks Delta Lake Sql query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> Azure Databricks Delta Lake export settings. </summary>
+        [WirePath("exportSettings")]
         public AzureDatabricksDeltaLakeExportCommand ExportSettings { get; set; }
     }
 }

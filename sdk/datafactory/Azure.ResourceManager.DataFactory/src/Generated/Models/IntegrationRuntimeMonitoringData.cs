@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Integration runtime name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Integration runtime node monitoring data. </summary>
+        [WirePath("nodes")]
         public IReadOnlyList<IntegrationRuntimeNodeMonitoringData> Nodes { get; }
     }
 }

@@ -49,8 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name of the Cassandra database. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.keyspace")]
         public DataFactoryElement<string> Keyspace { get; set; }
     }
 }

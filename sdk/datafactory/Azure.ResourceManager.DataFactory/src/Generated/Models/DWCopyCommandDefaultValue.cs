@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("columnName")]
         public BinaryData ColumnName { get; set; }
         /// <summary>
         /// The default value of the column. Type: object (or Expression with resultType string).
@@ -122,6 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("defaultValue")]
         public BinaryData DefaultValue { get; set; }
     }
 }

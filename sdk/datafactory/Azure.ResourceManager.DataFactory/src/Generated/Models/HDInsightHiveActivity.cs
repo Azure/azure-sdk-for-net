@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
+        [WirePath("typeProperties.storageLinkedServices")]
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
@@ -97,12 +98,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.arguments")]
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
+        [WirePath("typeProperties.getDebugInfo")]
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.scriptPath")]
         public DataFactoryElement<string> ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
+        [WirePath("typeProperties.scriptLinkedService")]
         public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// Allows user to specify defines for Hive job request.
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.defines")]
         public IDictionary<string, BinaryData> Defines { get; }
         /// <summary>
         /// User specified arguments under hivevar namespace.
@@ -165,8 +171,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.variables")]
         public IDictionary<string, BinaryData> Variables { get; }
         /// <summary> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </summary>
+        [WirePath("typeProperties.queryTimeout")]
         public int? QueryTimeout { get; set; }
     }
 }

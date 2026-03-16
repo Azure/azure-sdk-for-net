@@ -46,16 +46,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of Salesforce Service Cloud instance. For example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.environmentUrl")]
         public DataFactoryElement<string> EnvironmentUri { get; set; }
         /// <summary> The authentication type to be used to connect to the Salesforce. Currently, we only support OAuth2ClientCredentials, it is also the default value. </summary>
+        [WirePath("typeProperties.authenticationType")]
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </summary>
+        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.apiVersion")]
         public DataFactoryElement<string> ApiVersion { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

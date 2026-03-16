@@ -42,8 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
+        [WirePath("type")]
         public DataFactoryElement<string> DatasetCompressionType { get; set; }
         /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>
+        [WirePath("level")]
         public DataFactoryElement<string> Level { get; set; }
         /// <summary>
         /// Additional Properties
@@ -75,6 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

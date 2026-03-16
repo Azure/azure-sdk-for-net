@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </summary>
+        [WirePath("blockSizeInMB")]
         public DataFactoryElement<int> BlockSizeInMB { get; set; }
     }
 }

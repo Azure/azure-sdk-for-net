@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -193,6 +195,110 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperTargetConnectionsInfo(targetEntities ?? new ChangeTrackingList<MapperTable>(), connection, dataMapperMappings ?? new ChangeTrackingList<DataMapperMapping>(), relationships ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetEntities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetEntities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TargetEntities))
+                {
+                    if (TargetEntities.Any())
+                    {
+                        builder.Append("  targetEntities: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TargetEntities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  targetEntities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Connection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  connection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Connection))
+                {
+                    builder.Append("  connection: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Connection, options, 2, false, "  connection: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataMapperMappings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataMapperMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataMapperMappings))
+                {
+                    if (DataMapperMappings.Any())
+                    {
+                        builder.Append("  dataMapperMappings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DataMapperMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataMapperMappings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Relationships), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  relationships: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Relationships))
+                {
+                    if (Relationships.Any())
+                    {
+                        builder.Append("  relationships: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Relationships)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MapperTargetConnectionsInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MapperTargetConnectionsInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +307,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MapperTargetConnectionsInfo)} does not support writing '{options.Format}' format.");
             }

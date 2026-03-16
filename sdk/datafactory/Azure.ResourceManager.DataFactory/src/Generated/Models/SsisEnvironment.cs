@@ -36,8 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Folder id which contains environment. </summary>
+        [WirePath("folderId")]
         public long? FolderId { get; }
         /// <summary> Variable in environment. </summary>
+        [WirePath("variables")]
         public IReadOnlyList<SsisVariable> Variables { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -218,6 +219,194 @@ namespace Azure.ResourceManager.DataFactory.Models
                 azureTableInsertType);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureTableDefaultPartitionKeyValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureTableDefaultPartitionKeyValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
+                {
+                    builder.Append("  azureTableDefaultPartitionKeyValue: ");
+                    builder.AppendLine($"'{AzureTableDefaultPartitionKeyValue.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureTablePartitionKeyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureTablePartitionKeyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureTablePartitionKeyName))
+                {
+                    builder.Append("  azureTablePartitionKeyName: ");
+                    builder.AppendLine($"'{AzureTablePartitionKeyName.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureTableRowKeyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureTableRowKeyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureTableRowKeyName))
+                {
+                    builder.Append("  azureTableRowKeyName: ");
+                    builder.AppendLine($"'{AzureTableRowKeyName.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureTableInsertType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureTableInsertType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureTableInsertType))
+                {
+                    builder.Append("  azureTableInsertType: ");
+                    builder.AppendLine($"'{AzureTableInsertType.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CopySinkType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CopySinkType))
+                {
+                    builder.Append("  type: ");
+                    if (CopySinkType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CopySinkType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CopySinkType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WriteBatchSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  writeBatchSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WriteBatchSize))
+                {
+                    builder.Append("  writeBatchSize: ");
+                    builder.AppendLine($"'{WriteBatchSize.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WriteBatchTimeout), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  writeBatchTimeout: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WriteBatchTimeout))
+                {
+                    builder.Append("  writeBatchTimeout: ");
+                    builder.AppendLine($"'{WriteBatchTimeout.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SinkRetryCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sinkRetryCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SinkRetryCount))
+                {
+                    builder.Append("  sinkRetryCount: ");
+                    builder.AppendLine($"'{SinkRetryCount.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SinkRetryWait), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sinkRetryWait: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SinkRetryWait))
+                {
+                    builder.Append("  sinkRetryWait: ");
+                    builder.AppendLine($"'{SinkRetryWait.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxConcurrentConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxConcurrentConnections))
+                {
+                    builder.Append("  maxConcurrentConnections: ");
+                    builder.AppendLine($"'{MaxConcurrentConnections.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableMetricsCollection), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  disableMetricsCollection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisableMetricsCollection))
+                {
+                    builder.Append("  disableMetricsCollection: ");
+                    builder.AppendLine($"'{DisableMetricsCollection.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AzureTableSink>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
@@ -226,6 +415,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{options.Format}' format.");
             }

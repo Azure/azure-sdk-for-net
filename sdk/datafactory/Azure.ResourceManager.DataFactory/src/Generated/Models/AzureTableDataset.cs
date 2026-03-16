@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
     }
 }

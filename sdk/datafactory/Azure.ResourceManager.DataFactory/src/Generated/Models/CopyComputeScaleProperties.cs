@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256. </summary>
+        [WirePath("dataIntegrationUnit")]
         public int? DataIntegrationUnit { get; set; }
         /// <summary> Time to live (in minutes) setting of integration runtime which will execute copy activity. </summary>
+        [WirePath("timeToLive")]
         public int? TimeToLive { get; set; }
         /// <summary>
         /// Additional Properties
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

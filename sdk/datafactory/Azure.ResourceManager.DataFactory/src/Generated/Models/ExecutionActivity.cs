@@ -52,8 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Linked service reference. </summary>
+        [WirePath("linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Activity policy. </summary>
+        [WirePath("policy")]
         public PipelineActivityPolicy Policy { get; set; }
     }
 }

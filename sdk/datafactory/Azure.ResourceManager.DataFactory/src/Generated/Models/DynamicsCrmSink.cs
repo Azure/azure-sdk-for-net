@@ -52,14 +52,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The write behavior for the operation. </summary>
+        [WirePath("writeBehavior")]
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
         /// <summary> The flag indicating whether to ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("ignoreNullValues")]
         public DataFactoryElement<bool> IgnoreNullValues { get; set; }
         /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
+        [WirePath("alternateKeyName")]
         public DataFactoryElement<string> AlternateKeyName { get; set; }
         /// <summary> Controls the bypass of Dataverse custom business logic. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </summary>
+        [WirePath("bypassBusinessLogicExecution")]
         public DataFactoryElement<string> BypassBusinessLogicExecution { get; set; }
         /// <summary> Controls the bypass of Power Automate flows. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        [WirePath("bypassPowerAutomateFlows")]
         public DataFactoryElement<bool> BypassPowerAutomateFlows { get; set; }
     }
 }

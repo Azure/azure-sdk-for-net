@@ -80,10 +80,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.tableName")]
         public BinaryData TableName { get; set; }
         /// <summary> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
         /// <summary> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>
+        [WirePath("typeProperties.dataset")]
         public DataFactoryElement<string> Dataset { get; set; }
     }
 }

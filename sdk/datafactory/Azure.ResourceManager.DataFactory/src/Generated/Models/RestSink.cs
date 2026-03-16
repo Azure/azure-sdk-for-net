@@ -45,10 +45,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The HTTP method used to call the RESTful API. The default is POST. Type: string (or Expression with resultType string). </summary>
+        [WirePath("requestMethod")]
         public DataFactoryElement<string> RequestMethod { get; set; }
         /// <summary> The additional HTTP headers in the request to the RESTful API. Type: key value pairs (value should be string type). </summary>
+        [WirePath("additionalHeaders")]
         public DataFactoryElement<IDictionary<string, string>> AdditionalHeaders { get; set; }
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        [WirePath("httpRequestTimeout")]
         public DataFactoryElement<string> HttpRequestTimeout { get; set; }
         /// <summary>
         /// The time to await before sending next request, in milliseconds
@@ -80,8 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("requestInterval")]
         public BinaryData RequestInterval { get; set; }
         /// <summary> Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. Type: string (or Expression with resultType string). </summary>
+        [WirePath("httpCompressionType")]
         public DataFactoryElement<string> HttpCompressionType { get; set; }
     }
 }

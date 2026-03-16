@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalCopyOptions")]
         public IDictionary<string, BinaryData> AdditionalCopyOptions { get; }
         /// <summary>
         /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }
@@ -97,8 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("additionalFormatOptions")]
         public IDictionary<string, BinaryData> AdditionalFormatOptions { get; }
         /// <summary> The name of the snowflake storage integration to use for the copy operation. Type: string (or Expression with resultType string). </summary>
+        [WirePath("storageIntegration")]
         public DataFactoryElement<string> StorageIntegration { get; set; }
     }
 }

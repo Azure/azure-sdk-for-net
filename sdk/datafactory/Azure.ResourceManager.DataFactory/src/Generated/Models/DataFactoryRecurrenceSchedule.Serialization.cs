@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -209,6 +211,136 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Minutes))
+                {
+                    if (Minutes.Any())
+                    {
+                        builder.Append("  minutes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Minutes)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hours), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  hours: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Hours))
+                {
+                    if (Hours.Any())
+                    {
+                        builder.Append("  hours: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Hours)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeekDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  weekDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(WeekDays))
+                {
+                    if (WeekDays.Any())
+                    {
+                        builder.Append("  weekDays: ");
+                        builder.AppendLine("[");
+                        foreach (var item in WeekDays)
+                        {
+                            builder.AppendLine($"    '{item.ToSerialString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthDays), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  monthDays: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MonthDays))
+                {
+                    if (MonthDays.Any())
+                    {
+                        builder.Append("  monthDays: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MonthDays)
+                        {
+                            builder.AppendLine($"    {item}");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthlyOccurrences), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  monthlyOccurrences: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MonthlyOccurrences))
+                {
+                    if (MonthlyOccurrences.Any())
+                    {
+                        builder.Append("  monthlyOccurrences: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MonthlyOccurrences)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  monthlyOccurrences: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataFactoryRecurrenceSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -217,6 +349,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryRecurrenceSchedule)} does not support writing '{options.Format}' format.");
             }

@@ -84,12 +84,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("typeProperties.parentTrigger")]
         public BinaryData ParentTrigger { get; set; }
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
+        [WirePath("typeProperties.requestedStartTime")]
         public DateTimeOffset RequestedStartOn { get; set; }
         /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
+        [WirePath("typeProperties.requestedEndTime")]
         public DateTimeOffset RequestedEndOn { get; set; }
         /// <summary> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </summary>
+        [WirePath("typeProperties.rerunConcurrency")]
         public int RerunConcurrency { get; set; }
     }
 }

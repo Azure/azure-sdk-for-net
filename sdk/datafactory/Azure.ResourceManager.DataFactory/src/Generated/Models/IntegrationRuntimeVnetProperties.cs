@@ -37,12 +37,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of the VNet that this integration runtime will join. </summary>
+        [WirePath("vNetId")]
         public Guid? VnetId { get; set; }
         /// <summary> The name of the subnet this integration runtime will join. </summary>
+        [WirePath("subnet")]
         public string Subnet { get; set; }
         /// <summary> Resource IDs of the public IP addresses that this integration runtime will use. </summary>
+        [WirePath("publicIPs")]
         public IList<string> PublicIPs { get; }
         /// <summary> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </summary>
+        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary>
         /// Additional Properties
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

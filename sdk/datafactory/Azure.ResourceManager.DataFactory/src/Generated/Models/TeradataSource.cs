@@ -41,10 +41,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Teradata query. Type: string (or Expression with resultType string). </summary>
+        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> The partition mechanism that will be used for teradata read in parallel. Possible values include: "None", "Hash", "DynamicRange". </summary>
+        [WirePath("partitionOption")]
         public DataFactoryElement<string> PartitionOption { get; set; }
         /// <summary> The settings that will be leveraged for teradata source partitioning. </summary>
+        [WirePath("partitionSettings")]
         public TeradataPartitionSettings PartitionSettings { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of data flow debug job version. </summary>
+        [WirePath("jobVersion")]
         public string JobVersion { get; }
     }
 }

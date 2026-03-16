@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The day of the week. </summary>
+        [WirePath("day")]
         public DataFactoryDayOfWeek? Day { get; set; }
         /// <summary> The occurrence. </summary>
+        [WirePath("occurrence")]
         public int? Occurrence { get; set; }
         /// <summary>
         /// Additional Properties
@@ -64,6 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

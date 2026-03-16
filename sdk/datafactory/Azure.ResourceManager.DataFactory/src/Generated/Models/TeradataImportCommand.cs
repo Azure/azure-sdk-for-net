@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Additional format options for Teradata Copy Command. The format options only applies to direct copy from CSV source. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "timeFormat": "HHhMImSSs" }. </summary>
+        [WirePath("additionalFormatOptions")]
         public DataFactoryElement<IDictionary<string, string>> AdditionalFormatOptions { get; set; }
     }
 }

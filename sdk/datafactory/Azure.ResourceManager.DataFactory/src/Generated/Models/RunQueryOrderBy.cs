@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
+        [WirePath("orderBy")]
         public RunQueryOrderByField OrderBy { get; }
         /// <summary> Sorting order of the parameter. </summary>
+        [WirePath("order")]
         public RunQueryOrder Order { get; }
     }
 }
