@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -179,10 +179,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -207,14 +207,13 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync())
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -238,15 +237,14 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Open'";
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -270,15 +268,14 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Updating'";
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -302,15 +299,14 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Open'";
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -334,15 +330,14 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Updating'";
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -366,15 +361,14 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "ProblemClassificationId eq 'compute_vm_problemClassification_guid'";
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -398,15 +392,14 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "ServiceId eq 'vm_windows_service_guid'";
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
+            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -430,10 +423,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -454,10 +447,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
