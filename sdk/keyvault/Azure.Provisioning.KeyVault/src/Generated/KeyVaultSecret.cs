@@ -75,13 +75,18 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets the Tags. </summary>
+        /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
             {
                 Initialize();
                 return _tags;
+            }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
             }
         }
 
@@ -127,7 +132,7 @@ namespace Azure.Provisioning.KeyVault
             _properties = DefineModelProperty<SecretProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _parent = DefineResource<KeyVaultService>("Parent", new string[] { "parent" }, isRequired: true);

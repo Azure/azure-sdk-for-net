@@ -330,7 +330,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.KeyVault.KeyVaultService Parent { get { throw null; } set { } }
         public Azure.Provisioning.KeyVault.SecretProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
