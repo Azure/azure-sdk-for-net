@@ -19,16 +19,16 @@
     The suffix to use ('sync', 'async', or 'both'). Defaults to 'both'.
 
 .PARAMETER Iteration
-    Optional iteration number (1, 2, 3, ...) appended to the suffix.
+    Required iteration number (1, 2, 3, ...) appended to the suffix.
     Must match the iteration used during setup.
 
 .PARAMETER Force
     Skip all confirmation prompts and delete everything.
 
 .EXAMPLE
-    ./Teardown-CmsTestPrerequisites.ps1
-    ./Teardown-CmsTestPrerequisites.ps1 -Suffix sync
-    ./Teardown-CmsTestPrerequisites.ps1 -Iteration 2
+    ./Teardown-CmsTestPrerequisites.ps1 -Iteration 1
+    ./Teardown-CmsTestPrerequisites.ps1 -Suffix sync -Iteration 1
+    ./Teardown-CmsTestPrerequisites.ps1 -Suffix async -Iteration 2
     ./Teardown-CmsTestPrerequisites.ps1 -Iteration 3 -Force
 #>
 
@@ -39,7 +39,8 @@ param(
     [string]$SubscriptionId = "53cd450b-b108-4e6e-b048-f63c1dcc8c8f",
     [ValidateSet("sync", "async", "both")]
     [string]$Suffix = "both",
-    [int]$Iteration = 0,
+    [Parameter(Mandatory = $true)]
+    [int]$Iteration,
     [switch]$Force
 )
 

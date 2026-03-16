@@ -25,7 +25,7 @@
     The suffix to use ('sync', 'async', or 'both'). Defaults to 'both'.
 
 .PARAMETER Iteration
-    Optional iteration number (1, 2, 3, ...) appended to the suffix.
+    Required iteration number (1, 2, 3, ...) appended to the suffix.
     Useful when you need to create multiple sets of resources (e.g., after a failed run).
     When set, resource names use suffix like 'sync2', 'async3', etc.
     NOTE: The test code must also be updated to match the iteration suffix.
@@ -34,8 +34,8 @@
     Skip all "Press Y to continue" prompts and run all steps automatically.
 
 .EXAMPLE
-    ./Setup-CmsTestPrerequisites.ps1
-    ./Setup-CmsTestPrerequisites.ps1 -Suffix sync
+    ./Setup-CmsTestPrerequisites.ps1 -Iteration 1
+    ./Setup-CmsTestPrerequisites.ps1 -Suffix sync -Iteration 1
     ./Setup-CmsTestPrerequisites.ps1 -Suffix async -Iteration 2
     ./Setup-CmsTestPrerequisites.ps1 -Iteration 3 -NoPrompt
 #>
@@ -48,7 +48,8 @@ param(
     [string]$Location = "eastus2euap",
     [ValidateSet("sync", "async", "both")]
     [string]$Suffix = "both",
-    [int]$Iteration = 0,
+    [Parameter(Mandatory = $true)]
+    [int]$Iteration,
     [switch]$NoPrompt
 )
 
@@ -255,10 +256,9 @@ if ($Iteration -gt 0) {
     Write-Host ""
     Write-Host "⚠  IMPORTANT: You used -Iteration $Iteration" -ForegroundColor Yellow
     Write-Host "   Resource names use suffix like 'sync$Iteration' / 'async$Iteration'." -ForegroundColor Yellow
-    Write-Host "   Update the test code constructor to match:" -ForegroundColor Yellow
-    Write-Host "     _resourceGroupName = `$`"adr-sdk-test-cms-{suffix}$Iteration`";" -ForegroundColor White
-    Write-Host "     _namespaceName = `$`"cms-test-namespace-{suffix}$Iteration`";" -ForegroundColor White
-    Write-Host "     _policyName = `$`"cms-test-policy-{suffix}$Iteration`";" -ForegroundColor White
+    Write-Host "   Ensure your test's resource name construction uses the same suffix pattern" -ForegroundColor Yellow
+    Write-Host "   (for example, update the test's Iteration constant or suffix composition so that" -ForegroundColor Yellow
+    Write-Host "   names end with 'sync$Iteration' / 'async$Iteration' as created by this script)." -ForegroundColor Yellow
     Write-Host ""
 }
 

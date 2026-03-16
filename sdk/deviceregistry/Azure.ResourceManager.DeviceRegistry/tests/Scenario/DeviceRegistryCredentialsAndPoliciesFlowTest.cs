@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
     public class DeviceRegistryCredentialsAndPoliciesFlowTest : DeviceRegistryManagementTestBase
     {
-        // This allows running tests with specified test modes without needing to set env vars locally (e.g. in Visual Studio Test Explorer).
         static DeviceRegistryCredentialsAndPoliciesFlowTest()
         {
             var testModeEnvVar = Environment.GetEnvironmentVariable("AZURE_TEST_MODE") ?? "(not set → defaults to Playback)";
             Console.WriteLine($"\n  AZURE_TEST_MODE = {testModeEnvVar}");
-            // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "PLAYBACK");  //Comment this out before committing
+            // This allows running tests with specified test modes without needing to set env vars locally (e.g. in Visual Studio Test Explorer):
+            // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "PLAYBACK");
         }
 
         // Iteration number appended to the suffix for resource name uniqueness.
-        // Change this when you need fresh resources (e.g., after a failed run).
+        // Change this locally when you need fresh resources (e.g., after a failed run).
         // Must match the -Iteration parameter used with the setup/teardown scripts.
         private const string Iteration = "1";  // e.g., "2", "3", etc. Empty string = no iteration.
 
