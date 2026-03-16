@@ -10,5 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ContainerRegistry
       safeName: AzureResourceManagerContainerRegistry
-    - name: Azure.ResourceManager.ContainerRegistryTasks
+    - name: Azure.ResourceManager.ContainerRegistry.Tasks
       safeName: AzureResourceManagerContainerRegistryTasks

@@ -130,7 +130,7 @@ namespace Azure.Generator.Management
             return resourceModels;
         }
 
-        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
+        internal IReadOnlyList<ArmResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
 
         internal IReadOnlyList<NonResourceMethod> NonResourceMethods => ArmProviderSchema.NonResourceMethods;
 
@@ -177,7 +177,7 @@ namespace Azure.Generator.Management
                 .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
         }
 
-        private static bool IsModelUsedInCreateOperation(ResourceMetadata metadata, InputModelType model)
+        private static bool IsModelUsedInCreateOperation(ArmResourceMetadata metadata, InputModelType model)
         {
             var createMethod = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Create).FirstOrDefault()?.InputMethod;
             if (createMethod is { Operation.HttpMethod: "PUT" })
@@ -212,7 +212,7 @@ namespace Azure.Generator.Management
             if (rootClient == null)
             {
                 // Fallback to empty schema if no root client is available
-                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+                return new ArmProviderSchema(Array.Empty<ArmResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
             var armProviderDecorators = rootClient.Decorators
@@ -222,10 +222,10 @@ namespace Azure.Generator.Management
             if (armProviderDecorators.Count == 0)
             {
                 // Fallback to empty schema if decorator not found
-                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+                return new ArmProviderSchema(Array.Empty<ArmResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
-            var resourcesByIdPattern = new Dictionary<string, ResourceMetadata>(StringComparer.OrdinalIgnoreCase);
+            var resourcesByIdPattern = new Dictionary<string, ArmResourceMetadata>(StringComparer.OrdinalIgnoreCase);
             var nonResourceMethodsById = new Dictionary<string, NonResourceMethod>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var decorator in armProviderDecorators)

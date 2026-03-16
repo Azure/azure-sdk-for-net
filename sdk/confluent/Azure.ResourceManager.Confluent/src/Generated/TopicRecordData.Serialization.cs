@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(topicRecordData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(topicRecordData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TopicRecordData"/> from. </param>
