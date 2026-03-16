@@ -13,12 +13,11 @@ This guide is focused on .NET only and uses constructor-and-variable style examp
 
 ## 1. Update package references
 
-Remove the Azure SDK package and add OpenAI directly.
+Remove the `Azure.AI.OpenAI` package reference from your project file and add `OpenAI` directly.
 
 ```xml
 <ItemGroup>
-  <PackageReference Remove="Azure.AI.OpenAI" />
-  <PackageReference Include="OpenAI" Version="*" />
+  <PackageReference Include="OpenAI" Version="<OpenAI SDK version>" />
 </ItemGroup>
 ```
 
@@ -26,7 +25,7 @@ If you use Microsoft Entra ID authentication, also add:
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Azure.Identity" Version="*" />
+  <PackageReference Include="Azure.Identity" Version="<Azure.Identity version>" />
 </ItemGroup>
 ```
 
@@ -34,8 +33,8 @@ Or with the CLI:
 
 ```bash
 dotnet remove package Azure.AI.OpenAI
-dotnet add package OpenAI
-dotnet add package Azure.Identity
+dotnet add package OpenAI --version <OpenAI SDK version>
+dotnet add package Azure.Identity --version <Azure.Identity version>
 ```
 
 ## 2. Understand the key differences
