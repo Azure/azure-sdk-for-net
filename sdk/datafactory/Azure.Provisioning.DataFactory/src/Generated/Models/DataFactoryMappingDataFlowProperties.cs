@@ -80,10 +80,11 @@ public partial class DataFactoryMappingDataFlowProperties : DataFactoryDataFlowP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sources = DefineListProperty<DataFlowSource>("Sources", ["Sources"]);
-        _sinks = DefineListProperty<DataFlowSink>("Sinks", ["Sinks"]);
-        _transformations = DefineListProperty<DataFlowTransformation>("Transformations", ["Transformations"]);
-        _script = DefineProperty<string>("Script", ["Script"]);
-        _scriptLines = DefineListProperty<string>("ScriptLines", ["ScriptLines"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MappingDataFlow");
+        _sources = DefineListProperty<DataFlowSource>("Sources", ["typeProperties", "sources"]);
+        _sinks = DefineListProperty<DataFlowSink>("Sinks", ["typeProperties", "sinks"]);
+        _transformations = DefineListProperty<DataFlowTransformation>("Transformations", ["typeProperties", "transformations"]);
+        _script = DefineProperty<string>("Script", ["typeProperties", "script"]);
+        _scriptLines = DefineListProperty<string>("ScriptLines", ["typeProperties", "scriptLines"]);
     }
 }

@@ -97,11 +97,11 @@ public partial class AzureDatabricksDeltaLakeLinkedService : DataFactoryLinkedSe
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _domain = DefineProperty<string>("Domain", ["Domain"]);
-        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["AccessToken"]);
-        _clusterId = DefineProperty<string>("ClusterId", ["ClusterId"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
-        _workspaceResourceId = DefineProperty<string>("WorkspaceResourceId", ["WorkspaceResourceId"]);
+        _domain = DefineProperty<string>("Domain", ["typeProperties", "domain"]);
+        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["typeProperties", "accessToken"]);
+        _clusterId = DefineProperty<string>("ClusterId", ["typeProperties", "clusterId"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
+        _workspaceResourceId = DefineProperty<string>("WorkspaceResourceId", ["typeProperties", "workspaceResourceId"]);
     }
 }

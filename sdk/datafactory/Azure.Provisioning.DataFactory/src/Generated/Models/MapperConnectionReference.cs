@@ -48,7 +48,7 @@ public partial class MapperConnectionReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionName = DefineProperty<string>("ConnectionName", ["ConnectionName"]);
-        _connectionType = DefineProperty<MapperConnectionType>("ConnectionType", ["ConnectionType"]);
+        _connectionName = DefineProperty<string>("ConnectionName", ["connectionName"]);
+        _connectionType = DefineProperty<MapperConnectionType>("ConnectionType", ["type"]);
     }
 }

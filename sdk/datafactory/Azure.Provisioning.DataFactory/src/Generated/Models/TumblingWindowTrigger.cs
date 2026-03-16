@@ -140,14 +140,14 @@ public partial class TumblingWindowTrigger : DataFactoryTriggerProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _pipeline = DefineModelProperty<TriggerPipelineReference>("Pipeline", ["Pipeline"]);
-        _frequency = DefineProperty<TumblingWindowFrequency>("Frequency", ["Frequency"]);
-        _interval = DefineProperty<int>("Interval", ["Interval"]);
-        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["StartOn"]);
-        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["EndOn"]);
-        _delay = DefineProperty<string>("Delay", ["Delay"]);
-        _maxConcurrency = DefineProperty<int>("MaxConcurrency", ["MaxConcurrency"]);
-        _retryPolicy = DefineModelProperty<RetryPolicy>("RetryPolicy", ["RetryPolicy"]);
-        _dependsOn = DefineListProperty<DependencyReference>("DependsOn", ["DependsOn"]);
+        _pipeline = DefineModelProperty<TriggerPipelineReference>("Pipeline", ["pipeline"]);
+        _frequency = DefineProperty<TumblingWindowFrequency>("Frequency", ["typeProperties", "frequency"]);
+        _interval = DefineProperty<int>("Interval", ["typeProperties", "interval"]);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["typeProperties", "startTime"]);
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["typeProperties", "endTime"]);
+        _delay = DefineProperty<string>("Delay", ["typeProperties", "delay"]);
+        _maxConcurrency = DefineProperty<int>("MaxConcurrency", ["typeProperties", "maxConcurrency"]);
+        _retryPolicy = DefineModelProperty<RetryPolicy>("RetryPolicy", ["typeProperties", "retryPolicy"]);
+        _dependsOn = DefineListProperty<DependencyReference>("DependsOn", ["typeProperties", "dependsOn"]);
     }
 }

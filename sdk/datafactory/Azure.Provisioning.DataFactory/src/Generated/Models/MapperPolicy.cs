@@ -48,7 +48,7 @@ public partial class MapperPolicy : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _mode = DefineProperty<string>("Mode", ["Mode"]);
-        _recurrence = DefineModelProperty<MapperPolicyRecurrence>("Recurrence", ["Recurrence"]);
+        _mode = DefineProperty<string>("Mode", ["mode"]);
+        _recurrence = DefineModelProperty<MapperPolicyRecurrence>("Recurrence", ["recurrence"]);
     }
 }

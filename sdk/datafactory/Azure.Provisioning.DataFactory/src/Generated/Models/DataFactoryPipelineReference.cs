@@ -58,8 +58,8 @@ public partial class DataFactoryPipelineReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceType = DefineProperty<DataFactoryPipelineReferenceType>("ReferenceType", ["ReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
+        _referenceType = DefineProperty<DataFactoryPipelineReferenceType>("ReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
         _name = DefineProperty<string>("Name", ["name"]);
     }
 }

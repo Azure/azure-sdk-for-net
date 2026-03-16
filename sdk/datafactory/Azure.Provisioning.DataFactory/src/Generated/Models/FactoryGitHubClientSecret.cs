@@ -49,7 +49,7 @@ public partial class FactoryGitHubClientSecret : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _byoaSecretAkvUri = DefineProperty<Uri>("ByoaSecretAkvUri", ["ByoaSecretAkvUri"]);
-        _byoaSecretName = DefineProperty<string>("ByoaSecretName", ["ByoaSecretName"]);
+        _byoaSecretAkvUri = DefineProperty<Uri>("ByoaSecretAkvUri", ["byoaSecretAkvUrl"]);
+        _byoaSecretName = DefineProperty<string>("ByoaSecretName", ["byoaSecretName"]);
     }
 }

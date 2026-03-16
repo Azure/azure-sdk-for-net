@@ -169,17 +169,17 @@ public partial class GoogleBigQueryLinkedService : DataFactoryLinkedServicePrope
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _project = DefineProperty<string>("Project", ["Project"]);
-        _additionalProjects = DefineProperty<string>("AdditionalProjects", ["AdditionalProjects"]);
-        _requestGoogleDriveScope = DefineProperty<bool>("RequestGoogleDriveScope", ["RequestGoogleDriveScope"]);
-        _authenticationType = DefineProperty<GoogleBigQueryAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["RefreshToken"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _email = DefineProperty<string>("Email", ["Email"]);
-        _keyFilePath = DefineProperty<string>("KeyFilePath", ["KeyFilePath"]);
-        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["TrustedCertPath"]);
-        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["UseSystemTrustStore"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _project = DefineProperty<string>("Project", ["typeProperties", "project"]);
+        _additionalProjects = DefineProperty<string>("AdditionalProjects", ["typeProperties", "additionalProjects"]);
+        _requestGoogleDriveScope = DefineProperty<bool>("RequestGoogleDriveScope", ["typeProperties", "requestGoogleDriveScope"]);
+        _authenticationType = DefineProperty<GoogleBigQueryAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["typeProperties", "refreshToken"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _email = DefineProperty<string>("Email", ["typeProperties", "email"]);
+        _keyFilePath = DefineProperty<string>("KeyFilePath", ["typeProperties", "keyFilePath"]);
+        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["typeProperties", "trustedCertPath"]);
+        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["typeProperties", "useSystemTrustStore"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

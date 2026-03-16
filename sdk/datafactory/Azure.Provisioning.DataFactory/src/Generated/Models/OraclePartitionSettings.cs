@@ -87,9 +87,9 @@ public partial class OraclePartitionSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _partitionNames = DefineProperty<BinaryData>("PartitionNames", ["PartitionNames"]);
-        _partitionColumnName = DefineProperty<string>("PartitionColumnName", ["PartitionColumnName"]);
-        _partitionUpperBound = DefineProperty<string>("PartitionUpperBound", ["PartitionUpperBound"]);
-        _partitionLowerBound = DefineProperty<string>("PartitionLowerBound", ["PartitionLowerBound"]);
+        _partitionNames = DefineProperty<BinaryData>("PartitionNames", ["partitionNames"]);
+        _partitionColumnName = DefineProperty<string>("PartitionColumnName", ["partitionColumnName"]);
+        _partitionUpperBound = DefineProperty<string>("PartitionUpperBound", ["partitionUpperBound"]);
+        _partitionLowerBound = DefineProperty<string>("PartitionLowerBound", ["partitionLowerBound"]);
     }
 }

@@ -96,10 +96,11 @@ public partial class DataFactoryBlobSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _blobWriterOverwriteFiles = DefineProperty<bool>("BlobWriterOverwriteFiles", ["BlobWriterOverwriteFiles"]);
-        _blobWriterDateTimeFormat = DefineProperty<string>("BlobWriterDateTimeFormat", ["BlobWriterDateTimeFormat"]);
-        _blobWriterAddHeader = DefineProperty<bool>("BlobWriterAddHeader", ["BlobWriterAddHeader"]);
-        _copyBehavior = DefineProperty<BinaryData>("CopyBehavior", ["CopyBehavior"]);
-        _metadata = DefineListProperty<DataFactoryMetadataItemInfo>("Metadata", ["Metadata"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "BlobSink");
+        _blobWriterOverwriteFiles = DefineProperty<bool>("BlobWriterOverwriteFiles", ["blobWriterOverwriteFiles"]);
+        _blobWriterDateTimeFormat = DefineProperty<string>("BlobWriterDateTimeFormat", ["blobWriterDateTimeFormat"]);
+        _blobWriterAddHeader = DefineProperty<bool>("BlobWriterAddHeader", ["blobWriterAddHeader"]);
+        _copyBehavior = DefineProperty<BinaryData>("CopyBehavior", ["copyBehavior"]);
+        _metadata = DefineListProperty<DataFactoryMetadataItemInfo>("Metadata", ["metadata"]);
     }
 }

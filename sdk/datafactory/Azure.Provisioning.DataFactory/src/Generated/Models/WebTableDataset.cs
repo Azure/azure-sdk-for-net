@@ -50,7 +50,7 @@ public partial class WebTableDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _index = DefineProperty<int>("Index", ["Index"]);
-        _path = DefineProperty<string>("Path", ["Path"]);
+        _index = DefineProperty<int>("Index", ["typeProperties", "index"]);
+        _path = DefineProperty<string>("Path", ["typeProperties", "path"]);
     }
 }

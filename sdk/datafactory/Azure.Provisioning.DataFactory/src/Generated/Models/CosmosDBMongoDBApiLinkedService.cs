@@ -64,8 +64,8 @@ public partial class CosmosDBMongoDBApiLinkedService : DataFactoryLinkedServiceP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isServerVersionAbove32 = DefineProperty<bool>("IsServerVersionAbove32", ["IsServerVersionAbove32"]);
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
+        _isServerVersionAbove32 = DefineProperty<bool>("IsServerVersionAbove32", ["typeProperties", "isServerVersionAbove32"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
     }
 }

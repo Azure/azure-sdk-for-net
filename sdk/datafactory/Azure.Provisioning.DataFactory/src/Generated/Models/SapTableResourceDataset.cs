@@ -39,6 +39,6 @@ public partial class SapTableResourceDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
     }
 }

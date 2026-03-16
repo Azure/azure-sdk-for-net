@@ -85,9 +85,10 @@ public partial class DocumentDBCollectionSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _nestingSeparator = DefineProperty<string>("NestingSeparator", ["NestingSeparator"]);
-        _queryTimeout = DefineProperty<string>("QueryTimeout", ["QueryTimeout"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "DocumentDbCollectionSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _nestingSeparator = DefineProperty<string>("NestingSeparator", ["nestingSeparator"]);
+        _queryTimeout = DefineProperty<string>("QueryTimeout", ["queryTimeout"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

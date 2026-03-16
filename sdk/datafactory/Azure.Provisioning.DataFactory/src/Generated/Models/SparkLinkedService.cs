@@ -191,20 +191,20 @@ public partial class SparkLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _serverType = DefineProperty<SparkServerType>("ServerType", ["ServerType"]);
-        _thriftTransportProtocol = DefineProperty<SparkThriftTransportProtocol>("ThriftTransportProtocol", ["ThriftTransportProtocol"]);
-        _authenticationType = DefineProperty<SparkAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _httpPath = DefineProperty<string>("HttpPath", ["HttpPath"]);
-        _enableSsl = DefineProperty<bool>("EnableSsl", ["EnableSsl"]);
-        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["EnableServerCertificateValidation"]);
-        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["TrustedCertPath"]);
-        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["UseSystemTrustStore"]);
-        _allowHostNameCNMismatch = DefineProperty<bool>("AllowHostNameCNMismatch", ["AllowHostNameCNMismatch"]);
-        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["AllowSelfSignedServerCert"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _serverType = DefineProperty<SparkServerType>("ServerType", ["typeProperties", "serverType"]);
+        _thriftTransportProtocol = DefineProperty<SparkThriftTransportProtocol>("ThriftTransportProtocol", ["typeProperties", "thriftTransportProtocol"]);
+        _authenticationType = DefineProperty<SparkAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _httpPath = DefineProperty<string>("HttpPath", ["typeProperties", "httpPath"]);
+        _enableSsl = DefineProperty<bool>("EnableSsl", ["typeProperties", "enableSsl"]);
+        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["typeProperties", "enableServerCertificateValidation"]);
+        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["typeProperties", "trustedCertPath"]);
+        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["typeProperties", "useSystemTrustStore"]);
+        _allowHostNameCNMismatch = DefineProperty<bool>("AllowHostNameCNMismatch", ["typeProperties", "allowHostNameCNMismatch"]);
+        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["typeProperties", "allowSelfSignedServerCert"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

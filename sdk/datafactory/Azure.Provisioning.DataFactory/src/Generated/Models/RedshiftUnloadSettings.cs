@@ -56,7 +56,7 @@ public partial class RedshiftUnloadSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _s3LinkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("S3LinkedServiceName", ["S3LinkedServiceName"]);
-        _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
+        _s3LinkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("S3LinkedServiceName", ["s3LinkedServiceName"]);
+        _bucketName = DefineProperty<string>("BucketName", ["bucketName"]);
     }
 }

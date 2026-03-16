@@ -27,5 +27,6 @@ public partial class AzureQueueSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureQueueSink");
     }
 }

@@ -27,5 +27,6 @@ public partial class DatasetOrcFormat : DatasetStorageFormat
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        DefineProperty<string>("type", ["type"], defaultValue: "OrcFormat");
     }
 }

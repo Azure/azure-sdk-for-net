@@ -148,15 +148,16 @@ public partial class QuickBooksLinkedService : DataFactoryLinkedServicePropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["ConnectionProperties"]);
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _companyId = DefineProperty<string>("CompanyId", ["CompanyId"]);
-        _consumerKey = DefineProperty<string>("ConsumerKey", ["ConsumerKey"]);
-        _consumerSecret = DefineModelProperty<DataFactorySecret>("ConsumerSecret", ["ConsumerSecret"]);
-        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["AccessToken"]);
-        _accessTokenSecret = DefineModelProperty<DataFactorySecret>("AccessTokenSecret", ["AccessTokenSecret"]);
-        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["RefreshToken"]);
-        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["UseEncryptedEndpoints"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "QuickBooks");
+        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["typeProperties", "connectionProperties"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _companyId = DefineProperty<string>("CompanyId", ["typeProperties", "companyId"]);
+        _consumerKey = DefineProperty<string>("ConsumerKey", ["typeProperties", "consumerKey"]);
+        _consumerSecret = DefineModelProperty<DataFactorySecret>("ConsumerSecret", ["typeProperties", "consumerSecret"]);
+        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["typeProperties", "accessToken"]);
+        _accessTokenSecret = DefineModelProperty<DataFactorySecret>("AccessTokenSecret", ["typeProperties", "accessTokenSecret"]);
+        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["typeProperties", "refreshToken"]);
+        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["typeProperties", "useEncryptedEndpoints"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

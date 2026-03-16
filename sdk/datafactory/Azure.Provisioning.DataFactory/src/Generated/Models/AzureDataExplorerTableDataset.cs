@@ -40,6 +40,6 @@ public partial class AzureDataExplorerTableDataset : DataFactoryDatasetPropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _table = DefineProperty<string>("Table", ["Table"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
     }
 }

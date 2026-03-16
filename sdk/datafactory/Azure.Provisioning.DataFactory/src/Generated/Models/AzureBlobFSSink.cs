@@ -51,7 +51,8 @@ public partial class AzureBlobFSSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _copyBehavior = DefineProperty<string>("CopyBehavior", ["CopyBehavior"]);
-        _metadata = DefineListProperty<DataFactoryMetadataItemInfo>("Metadata", ["Metadata"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureBlobFSSink");
+        _copyBehavior = DefineProperty<string>("CopyBehavior", ["copyBehavior"]);
+        _metadata = DefineListProperty<DataFactoryMetadataItemInfo>("Metadata", ["metadata"]);
     }
 }

@@ -140,14 +140,15 @@ public partial class SqlServerSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sqlWriterStoredProcedureName = DefineProperty<string>("SqlWriterStoredProcedureName", ["SqlWriterStoredProcedureName"]);
-        _sqlWriterTableType = DefineProperty<string>("SqlWriterTableType", ["SqlWriterTableType"]);
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
-        _storedProcedureParameters = DefineProperty<BinaryData>("StoredProcedureParameters", ["StoredProcedureParameters"]);
-        _storedProcedureTableTypeParameterName = DefineProperty<string>("StoredProcedureTableTypeParameterName", ["StoredProcedureTableTypeParameterName"]);
-        _tableOption = DefineProperty<string>("TableOption", ["TableOption"]);
-        _sqlWriterUseTableLock = DefineProperty<bool>("SqlWriterUseTableLock", ["SqlWriterUseTableLock"]);
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
-        _upsertSettings = DefineModelProperty<SqlUpsertSettings>("UpsertSettings", ["UpsertSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SqlServerSink");
+        _sqlWriterStoredProcedureName = DefineProperty<string>("SqlWriterStoredProcedureName", ["sqlWriterStoredProcedureName"]);
+        _sqlWriterTableType = DefineProperty<string>("SqlWriterTableType", ["sqlWriterTableType"]);
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
+        _storedProcedureParameters = DefineProperty<BinaryData>("StoredProcedureParameters", ["storedProcedureParameters"]);
+        _storedProcedureTableTypeParameterName = DefineProperty<string>("StoredProcedureTableTypeParameterName", ["storedProcedureTableTypeParameterName"]);
+        _tableOption = DefineProperty<string>("TableOption", ["tableOption"]);
+        _sqlWriterUseTableLock = DefineProperty<bool>("SqlWriterUseTableLock", ["sqlWriterUseTableLock"]);
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
+        _upsertSettings = DefineModelProperty<SqlUpsertSettings>("UpsertSettings", ["upsertSettings"]);
     }
 }

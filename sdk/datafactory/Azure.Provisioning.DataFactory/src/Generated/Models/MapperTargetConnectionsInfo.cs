@@ -83,9 +83,9 @@ public partial class MapperTargetConnectionsInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _targetEntities = DefineListProperty<MapperTable>("TargetEntities", ["TargetEntities"]);
-        _connection = DefineModelProperty<MapperConnection>("Connection", ["Connection"]);
-        _dataMapperMappings = DefineListProperty<DataMapperMapping>("DataMapperMappings", ["DataMapperMappings"]);
-        _relationships = DefineListProperty<BinaryData>("Relationships", ["Relationships"]);
+        _targetEntities = DefineListProperty<MapperTable>("TargetEntities", ["targetEntities"]);
+        _connection = DefineModelProperty<MapperConnection>("Connection", ["connection"]);
+        _dataMapperMappings = DefineListProperty<DataMapperMapping>("DataMapperMappings", ["dataMapperMappings"]);
+        _relationships = DefineListProperty<BinaryData>("Relationships", ["relationships"]);
     }
 }

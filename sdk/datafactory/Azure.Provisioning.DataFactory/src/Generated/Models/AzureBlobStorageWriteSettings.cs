@@ -40,6 +40,7 @@ public partial class AzureBlobStorageWriteSettings : StoreWriteSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _blockSizeInMB = DefineProperty<int>("BlockSizeInMB", ["BlockSizeInMB"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureBlobStorageWriteSettings");
+        _blockSizeInMB = DefineProperty<int>("BlockSizeInMB", ["blockSizeInMB"]);
     }
 }

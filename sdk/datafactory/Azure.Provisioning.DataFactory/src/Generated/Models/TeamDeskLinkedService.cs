@@ -92,11 +92,11 @@ public partial class TeamDeskLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _authenticationType = DefineProperty<TeamDeskAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _apiToken = DefineModelProperty<DataFactorySecret>("ApiToken", ["ApiToken"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _authenticationType = DefineProperty<TeamDeskAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _apiToken = DefineModelProperty<DataFactorySecret>("ApiToken", ["typeProperties", "apiToken"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

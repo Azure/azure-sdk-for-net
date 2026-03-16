@@ -141,13 +141,13 @@ public partial class AzureMLExecutePipelineActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _mLPipelineId = DefineProperty<string>("MLPipelineId", ["MLPipelineId"]);
-        _mLPipelineEndpointId = DefineProperty<string>("MLPipelineEndpointId", ["MLPipelineEndpointId"]);
-        _version = DefineProperty<string>("Version", ["Version"]);
-        _experimentName = DefineProperty<string>("ExperimentName", ["ExperimentName"]);
-        _mLPipelineParameters = DefineDictionaryProperty<string>("MLPipelineParameters", ["MLPipelineParameters"]);
-        _dataPathAssignments = DefineProperty<BinaryData>("DataPathAssignments", ["DataPathAssignments"]);
-        _mLParentRunId = DefineProperty<string>("MLParentRunId", ["MLParentRunId"]);
-        _continueOnStepFailure = DefineProperty<bool>("ContinueOnStepFailure", ["ContinueOnStepFailure"]);
+        _mLPipelineId = DefineProperty<string>("MLPipelineId", ["typeProperties", "mlPipelineId"]);
+        _mLPipelineEndpointId = DefineProperty<string>("MLPipelineEndpointId", ["typeProperties", "mlPipelineEndpointId"]);
+        _version = DefineProperty<string>("Version", ["typeProperties", "version"]);
+        _experimentName = DefineProperty<string>("ExperimentName", ["typeProperties", "experimentName"]);
+        _mLPipelineParameters = DefineDictionaryProperty<string>("MLPipelineParameters", ["typeProperties", "mlPipelineParameters"]);
+        _dataPathAssignments = DefineProperty<BinaryData>("DataPathAssignments", ["typeProperties", "dataPathAssignments"]);
+        _mLParentRunId = DefineProperty<string>("MLParentRunId", ["typeProperties", "mlParentRunId"]);
+        _continueOnStepFailure = DefineProperty<bool>("ContinueOnStepFailure", ["typeProperties", "continueOnStepFailure"]);
     }
 }

@@ -73,8 +73,8 @@ public partial class DataFactoryRecurrenceScheduleOccurrence : ProvisionableCons
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _day = DefineProperty<DataFactoryDayOfWeek>("Day", ["Day"]);
-        _occurrence = DefineProperty<int>("Occurrence", ["Occurrence"]);
+        _day = DefineProperty<DataFactoryDayOfWeek>("Day", ["day"]);
+        _occurrence = DefineProperty<int>("Occurrence", ["occurrence"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

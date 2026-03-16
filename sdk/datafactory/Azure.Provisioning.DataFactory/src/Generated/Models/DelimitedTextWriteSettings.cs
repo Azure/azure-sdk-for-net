@@ -99,10 +99,10 @@ public partial class DelimitedTextWriteSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _quoteAllText = DefineProperty<bool>("QuoteAllText", ["QuoteAllText"]);
-        _fileExtension = DefineProperty<string>("FileExtension", ["FileExtension"]);
-        _maxRowsPerFile = DefineProperty<int>("MaxRowsPerFile", ["MaxRowsPerFile"]);
-        _fileNamePrefix = DefineProperty<string>("FileNamePrefix", ["FileNamePrefix"]);
+        _quoteAllText = DefineProperty<bool>("QuoteAllText", ["quoteAllText"]);
+        _fileExtension = DefineProperty<string>("FileExtension", ["fileExtension"]);
+        _maxRowsPerFile = DefineProperty<int>("MaxRowsPerFile", ["maxRowsPerFile"]);
+        _fileNamePrefix = DefineProperty<string>("FileNamePrefix", ["fileNamePrefix"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

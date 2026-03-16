@@ -120,12 +120,13 @@ public partial class RestSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _requestMethod = DefineProperty<string>("RequestMethod", ["RequestMethod"]);
-        _requestBody = DefineProperty<string>("RequestBody", ["RequestBody"]);
-        _additionalHeaders = DefineProperty<string>("AdditionalHeaders", ["AdditionalHeaders"]);
-        _paginationRules = DefineProperty<string>("PaginationRules", ["PaginationRules"]);
-        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["HttpRequestTimeout"]);
-        _requestInterval = DefineProperty<BinaryData>("RequestInterval", ["RequestInterval"]);
-        _additionalColumns = DefineDictionaryProperty<string>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "RestSource");
+        _requestMethod = DefineProperty<string>("RequestMethod", ["requestMethod"]);
+        _requestBody = DefineProperty<string>("RequestBody", ["requestBody"]);
+        _additionalHeaders = DefineProperty<string>("AdditionalHeaders", ["additionalHeaders"]);
+        _paginationRules = DefineProperty<string>("PaginationRules", ["paginationRules"]);
+        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["httpRequestTimeout"]);
+        _requestInterval = DefineProperty<BinaryData>("RequestInterval", ["requestInterval"]);
+        _additionalColumns = DefineDictionaryProperty<string>("AdditionalColumns", ["additionalColumns"]);
     }
 }

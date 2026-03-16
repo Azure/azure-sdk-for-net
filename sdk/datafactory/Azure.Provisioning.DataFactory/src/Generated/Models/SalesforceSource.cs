@@ -49,7 +49,8 @@ public partial class SalesforceSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _readBehavior = DefineProperty<string>("ReadBehavior", ["ReadBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _readBehavior = DefineProperty<string>("ReadBehavior", ["readBehavior"]);
     }
 }

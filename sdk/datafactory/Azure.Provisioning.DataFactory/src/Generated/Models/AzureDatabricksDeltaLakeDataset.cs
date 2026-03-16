@@ -51,7 +51,7 @@ public partial class AzureDatabricksDeltaLakeDataset : DataFactoryDatasetPropert
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _table = DefineProperty<string>("Table", ["Table"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
     }
 }

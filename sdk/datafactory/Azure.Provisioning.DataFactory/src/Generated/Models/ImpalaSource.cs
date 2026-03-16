@@ -39,6 +39,7 @@ public partial class ImpalaSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ImpalaSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

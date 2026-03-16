@@ -65,7 +65,7 @@ public partial class DatabricksJobActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _jobId = DefineProperty<string>("JobId", ["JobId"]);
-        _jobParameters = DefineDictionaryProperty<BinaryData>("JobParameters", ["JobParameters"]);
+        _jobId = DefineProperty<string>("JobId", ["typeProperties", "jobId"]);
+        _jobParameters = DefineDictionaryProperty<BinaryData>("JobParameters", ["typeProperties", "jobParameters"]);
     }
 }

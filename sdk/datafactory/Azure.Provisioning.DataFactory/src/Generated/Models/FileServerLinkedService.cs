@@ -72,9 +72,9 @@ public partial class FileServerLinkedService : DataFactoryLinkedServicePropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _userId = DefineProperty<string>("UserId", ["UserId"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _userId = DefineProperty<string>("UserId", ["typeProperties", "userId"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

@@ -60,8 +60,8 @@ public partial class ScriptActivityScriptBlock : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _text = DefineProperty<string>("Text", ["Text"]);
-        _queryType = DefineProperty<string>("QueryType", ["QueryType"]);
-        _parameters = DefineListProperty<ScriptActivityParameter>("Parameters", ["Parameters"]);
+        _text = DefineProperty<string>("Text", ["text"]);
+        _queryType = DefineProperty<string>("QueryType", ["type"]);
+        _parameters = DefineListProperty<ScriptActivityParameter>("Parameters", ["parameters"]);
     }
 }

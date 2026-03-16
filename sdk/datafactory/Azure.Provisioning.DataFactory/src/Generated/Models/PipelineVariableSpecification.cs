@@ -62,7 +62,7 @@ public partial class PipelineVariableSpecification : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _variableType = DefineProperty<PipelineVariableType>("VariableType", ["VariableType"]);
-        _defaultValue = DefineProperty<BinaryData>("DefaultValue", ["DefaultValue"]);
+        _variableType = DefineProperty<PipelineVariableType>("VariableType", ["type"]);
+        _defaultValue = DefineProperty<BinaryData>("DefaultValue", ["defaultValue"]);
     }
 }

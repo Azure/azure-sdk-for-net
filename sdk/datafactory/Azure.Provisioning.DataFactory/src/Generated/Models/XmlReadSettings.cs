@@ -96,10 +96,11 @@ public partial class XmlReadSettings : FormatReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["CompressionProperties"]);
-        _validationMode = DefineProperty<string>("ValidationMode", ["ValidationMode"]);
-        _detectDataType = DefineProperty<bool>("DetectDataType", ["DetectDataType"]);
-        _namespaces = DefineProperty<bool>("Namespaces", ["Namespaces"]);
-        _namespacePrefixes = DefineDictionaryProperty<string>("NamespacePrefixes", ["NamespacePrefixes"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "XmlReadSettings");
+        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["compressionProperties"]);
+        _validationMode = DefineProperty<string>("ValidationMode", ["validationMode"]);
+        _detectDataType = DefineProperty<bool>("DetectDataType", ["detectDataType"]);
+        _namespaces = DefineProperty<bool>("Namespaces", ["namespaces"]);
+        _namespacePrefixes = DefineDictionaryProperty<string>("NamespacePrefixes", ["namespacePrefixes"]);
     }
 }

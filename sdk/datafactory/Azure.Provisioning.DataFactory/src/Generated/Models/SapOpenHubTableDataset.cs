@@ -63,8 +63,8 @@ public partial class SapOpenHubTableDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _openHubDestinationName = DefineProperty<string>("OpenHubDestinationName", ["OpenHubDestinationName"]);
-        _excludeLastRequest = DefineProperty<bool>("ExcludeLastRequest", ["ExcludeLastRequest"]);
-        _baseRequestId = DefineProperty<int>("BaseRequestId", ["BaseRequestId"]);
+        _openHubDestinationName = DefineProperty<string>("OpenHubDestinationName", ["typeProperties", "openHubDestinationName"]);
+        _excludeLastRequest = DefineProperty<bool>("ExcludeLastRequest", ["typeProperties", "excludeLastRequest"]);
+        _baseRequestId = DefineProperty<int>("BaseRequestId", ["typeProperties", "baseRequestId"]);
     }
 }

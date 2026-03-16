@@ -50,7 +50,7 @@ public partial class SkipErrorFile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _fileMissing = DefineProperty<bool>("FileMissing", ["FileMissing"]);
-        _dataInconsistency = DefineProperty<bool>("DataInconsistency", ["DataInconsistency"]);
+        _fileMissing = DefineProperty<bool>("FileMissing", ["fileMissing"]);
+        _dataInconsistency = DefineProperty<bool>("DataInconsistency", ["dataInconsistency"]);
     }
 }

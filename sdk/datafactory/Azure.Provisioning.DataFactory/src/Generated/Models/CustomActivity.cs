@@ -132,12 +132,12 @@ public partial class CustomActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _command = DefineProperty<string>("Command", ["Command"]);
-        _resourceLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ResourceLinkedService", ["ResourceLinkedService"]);
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
-        _referenceObjects = DefineModelProperty<CustomActivityReferenceObject>("ReferenceObjects", ["ReferenceObjects"]);
-        _extendedProperties = DefineDictionaryProperty<BinaryData>("ExtendedProperties", ["ExtendedProperties"]);
-        _retentionTimeInDays = DefineProperty<BinaryData>("RetentionTimeInDays", ["RetentionTimeInDays"]);
-        _autoUserSpecification = DefineProperty<string>("AutoUserSpecification", ["AutoUserSpecification"]);
+        _command = DefineProperty<string>("Command", ["typeProperties", "command"]);
+        _resourceLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ResourceLinkedService", ["typeProperties", "resourceLinkedService"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["typeProperties", "folderPath"]);
+        _referenceObjects = DefineModelProperty<CustomActivityReferenceObject>("ReferenceObjects", ["typeProperties", "referenceObjects"]);
+        _extendedProperties = DefineDictionaryProperty<BinaryData>("ExtendedProperties", ["typeProperties", "extendedProperties"]);
+        _retentionTimeInDays = DefineProperty<BinaryData>("RetentionTimeInDays", ["typeProperties", "retentionTimeInDays"]);
+        _autoUserSpecification = DefineProperty<string>("AutoUserSpecification", ["typeProperties", "autoUserSpecification"]);
     }
 }

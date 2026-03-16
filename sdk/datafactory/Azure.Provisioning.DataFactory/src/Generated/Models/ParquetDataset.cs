@@ -69,7 +69,7 @@ public partial class ParquetDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _compressionCodec = DefineProperty<string>("CompressionCodec", ["CompressionCodec"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _compressionCodec = DefineProperty<string>("CompressionCodec", ["typeProperties", "compressionCodec"]);
     }
 }

@@ -48,7 +48,7 @@ public partial class FilterActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _items = DefineModelProperty<DataFactoryExpression>("Items", ["Items"]);
-        _condition = DefineModelProperty<DataFactoryExpression>("Condition", ["Condition"]);
+        _items = DefineModelProperty<DataFactoryExpression>("Items", ["typeProperties", "items"]);
+        _condition = DefineModelProperty<DataFactoryExpression>("Condition", ["typeProperties", "condition"]);
     }
 }

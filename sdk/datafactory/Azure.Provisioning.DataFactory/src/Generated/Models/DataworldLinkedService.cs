@@ -50,7 +50,7 @@ public partial class DataworldLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _apiToken = DefineModelProperty<DataFactorySecret>("ApiToken", ["ApiToken"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _apiToken = DefineModelProperty<DataFactorySecret>("ApiToken", ["typeProperties", "apiToken"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

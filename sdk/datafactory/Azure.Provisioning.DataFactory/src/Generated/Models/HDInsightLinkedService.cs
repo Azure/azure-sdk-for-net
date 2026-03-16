@@ -137,15 +137,15 @@ public partial class HDInsightLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _clusterUri = DefineProperty<string>("ClusterUri", ["ClusterUri"]);
-        _clusterAuthType = DefineProperty<HDInsightClusterAuthenticationType>("ClusterAuthType", ["ClusterAuthType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _hcatalogLinkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("HcatalogLinkedServiceName", ["HcatalogLinkedServiceName"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _isEspEnabled = DefineProperty<bool>("IsEspEnabled", ["IsEspEnabled"]);
-        _fileSystem = DefineProperty<string>("FileSystem", ["FileSystem"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _clusterUri = DefineProperty<string>("ClusterUri", ["typeProperties", "clusterUri"]);
+        _clusterAuthType = DefineProperty<HDInsightClusterAuthenticationType>("ClusterAuthType", ["typeProperties", "clusterAuthType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["typeProperties", "linkedServiceName"]);
+        _hcatalogLinkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("HcatalogLinkedServiceName", ["typeProperties", "hcatalogLinkedServiceName"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _isEspEnabled = DefineProperty<bool>("IsEspEnabled", ["typeProperties", "isEspEnabled"]);
+        _fileSystem = DefineProperty<string>("FileSystem", ["typeProperties", "fileSystem"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

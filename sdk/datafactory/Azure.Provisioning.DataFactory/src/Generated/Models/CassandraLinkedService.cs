@@ -94,11 +94,11 @@ public partial class CassandraLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _authenticationType = DefineProperty<string>("AuthenticationType", ["AuthenticationType"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _authenticationType = DefineProperty<string>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

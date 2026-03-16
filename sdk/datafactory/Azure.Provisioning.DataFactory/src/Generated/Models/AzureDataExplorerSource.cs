@@ -99,9 +99,9 @@ public partial class AzureDataExplorerSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _noTruncation = DefineProperty<BinaryData>("NoTruncation", ["NoTruncation"]);
-        _queryTimeout = DefineProperty<string>("QueryTimeout", ["QueryTimeout"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        _query = DefineProperty<string>("Query", ["query"]);
+        _noTruncation = DefineProperty<BinaryData>("NoTruncation", ["noTruncation"]);
+        _queryTimeout = DefineProperty<string>("QueryTimeout", ["queryTimeout"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

@@ -49,6 +49,7 @@ public partial class MultiplePipelineTrigger : DataFactoryTriggerProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _pipelines = DefineListProperty<TriggerPipelineReference>("Pipelines", ["Pipelines"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MultiplePipelineTrigger");
+        _pipelines = DefineListProperty<TriggerPipelineReference>("Pipelines", ["pipelines"]);
     }
 }

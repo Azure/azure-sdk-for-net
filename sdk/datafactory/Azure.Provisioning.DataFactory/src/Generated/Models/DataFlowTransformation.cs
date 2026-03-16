@@ -80,9 +80,9 @@ public partial class DataFlowTransformation : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["Dataset"]);
-        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["LinkedService"]);
-        _flowlet = DefineModelProperty<DataFlowReference>("Flowlet", ["Flowlet"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["dataset"]);
+        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["linkedService"]);
+        _flowlet = DefineModelProperty<DataFlowReference>("Flowlet", ["flowlet"]);
     }
 }

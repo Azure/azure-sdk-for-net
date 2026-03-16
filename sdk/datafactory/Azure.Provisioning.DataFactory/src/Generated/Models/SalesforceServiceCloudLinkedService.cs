@@ -109,12 +109,13 @@ public partial class SalesforceServiceCloudLinkedService : DataFactoryLinkedServ
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _environmentUri = DefineProperty<string>("EnvironmentUri", ["EnvironmentUri"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _securityToken = DefineModelProperty<DataFactorySecret>("SecurityToken", ["SecurityToken"]);
-        _apiVersion = DefineProperty<string>("ApiVersion", ["ApiVersion"]);
-        _extendedProperties = DefineProperty<string>("ExtendedProperties", ["ExtendedProperties"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceServiceCloud");
+        _environmentUri = DefineProperty<string>("EnvironmentUri", ["typeProperties", "environmentUrl"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _securityToken = DefineModelProperty<DataFactorySecret>("SecurityToken", ["typeProperties", "securityToken"]);
+        _apiVersion = DefineProperty<string>("ApiVersion", ["typeProperties", "apiVersion"]);
+        _extendedProperties = DefineProperty<string>("ExtendedProperties", ["typeProperties", "extendedProperties"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

@@ -66,7 +66,7 @@ public partial class TeradataImportCommand : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _additionalFormatOptions = DefineDictionaryProperty<string>("AdditionalFormatOptions", ["AdditionalFormatOptions"]);
+        _additionalFormatOptions = DefineDictionaryProperty<string>("AdditionalFormatOptions", ["additionalFormatOptions"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

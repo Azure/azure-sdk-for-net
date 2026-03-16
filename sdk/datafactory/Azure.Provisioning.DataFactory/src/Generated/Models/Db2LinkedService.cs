@@ -134,14 +134,15 @@ public partial class Db2LinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _authenticationType = DefineProperty<Db2AuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _packageCollection = DefineProperty<string>("PackageCollection", ["PackageCollection"]);
-        _certificateCommonName = DefineProperty<string>("CertificateCommonName", ["CertificateCommonName"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Db2");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _authenticationType = DefineProperty<Db2AuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _packageCollection = DefineProperty<string>("PackageCollection", ["typeProperties", "packageCollection"]);
+        _certificateCommonName = DefineProperty<string>("CertificateCommonName", ["typeProperties", "certificateCommonName"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

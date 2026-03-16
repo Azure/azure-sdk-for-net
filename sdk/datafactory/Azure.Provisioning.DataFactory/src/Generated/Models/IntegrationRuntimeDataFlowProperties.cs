@@ -107,11 +107,11 @@ public partial class IntegrationRuntimeDataFlowProperties : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _computeType = DefineProperty<DataFlowComputeType>("ComputeType", ["ComputeType"]);
-        _coreCount = DefineProperty<int>("CoreCount", ["CoreCount"]);
-        _timeToLiveInMinutes = DefineProperty<int>("TimeToLiveInMinutes", ["TimeToLiveInMinutes"]);
-        _shouldCleanupAfterTtl = DefineProperty<bool>("ShouldCleanupAfterTtl", ["ShouldCleanupAfterTtl"]);
-        _customProperties = DefineListProperty<IntegrationRuntimeDataFlowCustomItem>("CustomProperties", ["CustomProperties"]);
+        _computeType = DefineProperty<DataFlowComputeType>("ComputeType", ["computeType"]);
+        _coreCount = DefineProperty<int>("CoreCount", ["coreCount"]);
+        _timeToLiveInMinutes = DefineProperty<int>("TimeToLiveInMinutes", ["timeToLive"]);
+        _shouldCleanupAfterTtl = DefineProperty<bool>("ShouldCleanupAfterTtl", ["cleanup"]);
+        _customProperties = DefineListProperty<IntegrationRuntimeDataFlowCustomItem>("CustomProperties", ["customProperties"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

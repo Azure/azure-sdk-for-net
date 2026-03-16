@@ -61,8 +61,8 @@ public partial class PostgreSqlTableDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
-        _table = DefineProperty<string>("Table", ["Table"]);
-        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["SchemaTypePropertiesSchema"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
+        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["typeProperties", "schema"]);
     }
 }

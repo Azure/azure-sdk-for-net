@@ -50,7 +50,7 @@ public partial class SapOdpResourceDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _context = DefineProperty<string>("Context", ["Context"]);
-        _objectName = DefineProperty<string>("ObjectName", ["ObjectName"]);
+        _context = DefineProperty<string>("Context", ["typeProperties", "context"]);
+        _objectName = DefineProperty<string>("ObjectName", ["typeProperties", "objectName"]);
     }
 }

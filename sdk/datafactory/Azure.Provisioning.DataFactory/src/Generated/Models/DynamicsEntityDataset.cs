@@ -39,6 +39,6 @@ public partial class DynamicsEntityDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _entityName = DefineProperty<string>("EntityName", ["EntityName"]);
+        _entityName = DefineProperty<string>("EntityName", ["typeProperties", "entityName"]);
     }
 }

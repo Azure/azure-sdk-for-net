@@ -50,6 +50,6 @@ public partial class WebLinkedServiceTypeProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
+        _uri = DefineProperty<string>("Uri", ["url"]);
     }
 }

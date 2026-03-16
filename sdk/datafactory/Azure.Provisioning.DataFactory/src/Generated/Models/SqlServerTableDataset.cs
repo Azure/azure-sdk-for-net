@@ -74,8 +74,8 @@ public partial class SqlServerTableDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<BinaryData>("TableName", ["TableName"]);
-        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["SchemaTypePropertiesSchema"]);
-        _table = DefineProperty<string>("Table", ["Table"]);
+        _tableName = DefineProperty<BinaryData>("TableName", ["typeProperties", "tableName"]);
+        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["typeProperties", "schema"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
     }
 }

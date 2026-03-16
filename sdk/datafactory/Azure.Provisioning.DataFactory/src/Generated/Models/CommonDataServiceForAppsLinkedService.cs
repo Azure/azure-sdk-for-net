@@ -192,18 +192,18 @@ public partial class CommonDataServiceForAppsLinkedService : DataFactoryLinkedSe
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _deploymentType = DefineProperty<string>("DeploymentType", ["DeploymentType"]);
-        _hostName = DefineProperty<string>("HostName", ["HostName"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _serviceUri = DefineProperty<string>("ServiceUri", ["ServiceUri"]);
-        _organizationName = DefineProperty<string>("OrganizationName", ["OrganizationName"]);
-        _authenticationType = DefineProperty<string>("AuthenticationType", ["AuthenticationType"]);
-        _domain = DefineProperty<string>("Domain", ["Domain"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["ServicePrincipalCredential"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _deploymentType = DefineProperty<string>("DeploymentType", ["typeProperties", "deploymentType"]);
+        _hostName = DefineProperty<string>("HostName", ["typeProperties", "hostName"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _serviceUri = DefineProperty<string>("ServiceUri", ["typeProperties", "serviceUri"]);
+        _organizationName = DefineProperty<string>("OrganizationName", ["typeProperties", "organizationName"]);
+        _authenticationType = DefineProperty<string>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _domain = DefineProperty<string>("Domain", ["typeProperties", "domain"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["typeProperties", "servicePrincipalCredential"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

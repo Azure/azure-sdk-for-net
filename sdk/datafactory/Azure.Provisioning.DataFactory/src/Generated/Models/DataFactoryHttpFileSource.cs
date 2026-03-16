@@ -42,6 +42,7 @@ public partial class DataFactoryHttpFileSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["HttpRequestTimeout"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "HttpSource");
+        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["httpRequestTimeout"]);
     }
 }

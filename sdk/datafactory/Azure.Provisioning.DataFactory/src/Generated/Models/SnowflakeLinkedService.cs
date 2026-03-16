@@ -61,8 +61,8 @@ public partial class SnowflakeLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

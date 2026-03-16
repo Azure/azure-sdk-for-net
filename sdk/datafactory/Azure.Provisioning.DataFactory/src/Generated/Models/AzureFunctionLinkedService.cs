@@ -95,11 +95,11 @@ public partial class AzureFunctionLinkedService : DataFactoryLinkedServiceProper
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _functionAppUri = DefineProperty<string>("FunctionAppUri", ["FunctionAppUri"]);
-        _functionKey = DefineModelProperty<DataFactorySecret>("FunctionKey", ["FunctionKey"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
-        _resourceId = DefineProperty<string>("ResourceId", ["ResourceId"]);
-        _authentication = DefineProperty<string>("Authentication", ["Authentication"]);
+        _functionAppUri = DefineProperty<string>("FunctionAppUri", ["typeProperties", "functionAppUrl"]);
+        _functionKey = DefineModelProperty<DataFactorySecret>("FunctionKey", ["typeProperties", "functionKey"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
+        _resourceId = DefineProperty<string>("ResourceId", ["typeProperties", "resourceId"]);
+        _authentication = DefineProperty<string>("Authentication", ["typeProperties", "authentication"]);
     }
 }

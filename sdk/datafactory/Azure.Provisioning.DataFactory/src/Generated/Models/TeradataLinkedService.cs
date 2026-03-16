@@ -165,17 +165,18 @@ public partial class TeradataLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _authenticationType = DefineProperty<TeradataAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _sslMode = DefineProperty<string>("SslMode", ["SslMode"]);
-        _portNumber = DefineProperty<int>("PortNumber", ["PortNumber"]);
-        _httpsPortNumber = DefineProperty<int>("HttpsPortNumber", ["HttpsPortNumber"]);
-        _useDataEncryption = DefineProperty<int>("UseDataEncryption", ["UseDataEncryption"]);
-        _characterSet = DefineProperty<string>("CharacterSet", ["CharacterSet"]);
-        _maxRespSize = DefineProperty<int>("MaxRespSize", ["MaxRespSize"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Teradata");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _authenticationType = DefineProperty<TeradataAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _sslMode = DefineProperty<string>("SslMode", ["typeProperties", "sslMode"]);
+        _portNumber = DefineProperty<int>("PortNumber", ["typeProperties", "portNumber"]);
+        _httpsPortNumber = DefineProperty<int>("HttpsPortNumber", ["typeProperties", "httpsPortNumber"]);
+        _useDataEncryption = DefineProperty<int>("UseDataEncryption", ["typeProperties", "useDataEncryption"]);
+        _characterSet = DefineProperty<string>("CharacterSet", ["typeProperties", "characterSet"]);
+        _maxRespSize = DefineProperty<int>("MaxRespSize", ["typeProperties", "maxRespSize"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

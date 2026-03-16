@@ -186,19 +186,20 @@ public partial class AzureBlobStorageLinkedService : DataFactoryLinkedServicePro
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _accountKey = DefineModelProperty<DataFactoryKeyVaultSecret>("AccountKey", ["AccountKey"]);
-        _sasUri = DefineProperty<string>("SasUri", ["SasUri"]);
-        _sasToken = DefineModelProperty<DataFactoryKeyVaultSecret>("SasToken", ["SasToken"]);
-        _serviceEndpoint = DefineProperty<string>("ServiceEndpoint", ["ServiceEndpoint"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _azureCloudType = DefineProperty<string>("AzureCloudType", ["AzureCloudType"]);
-        _accountKind = DefineProperty<string>("AccountKind", ["AccountKind"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
-        _authenticationType = DefineProperty<AzureStorageAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _containerUri = DefineProperty<string>("ContainerUri", ["ContainerUri"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureBlobStorage");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _accountKey = DefineModelProperty<DataFactoryKeyVaultSecret>("AccountKey", ["typeProperties", "accountKey"]);
+        _sasUri = DefineProperty<string>("SasUri", ["typeProperties", "sasUri"]);
+        _sasToken = DefineModelProperty<DataFactoryKeyVaultSecret>("SasToken", ["typeProperties", "sasToken"]);
+        _serviceEndpoint = DefineProperty<string>("ServiceEndpoint", ["typeProperties", "serviceEndpoint"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _azureCloudType = DefineProperty<string>("AzureCloudType", ["typeProperties", "azureCloudType"]);
+        _accountKind = DefineProperty<string>("AccountKind", ["typeProperties", "accountKind"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
+        _authenticationType = DefineProperty<AzureStorageAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _containerUri = DefineProperty<string>("ContainerUri", ["typeProperties", "containerUri"]);
     }
 }

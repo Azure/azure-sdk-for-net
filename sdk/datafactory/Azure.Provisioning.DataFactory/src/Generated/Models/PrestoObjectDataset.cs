@@ -74,8 +74,8 @@ public partial class PrestoObjectDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<BinaryData>("TableName", ["TableName"]);
-        _table = DefineProperty<string>("Table", ["Table"]);
-        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["SchemaTypePropertiesSchema"]);
+        _tableName = DefineProperty<BinaryData>("TableName", ["typeProperties", "tableName"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
+        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["typeProperties", "schema"]);
     }
 }

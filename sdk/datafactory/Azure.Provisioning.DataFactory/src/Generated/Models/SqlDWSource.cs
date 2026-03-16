@@ -114,11 +114,12 @@ public partial class SqlDWSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sqlReaderQuery = DefineProperty<string>("SqlReaderQuery", ["SqlReaderQuery"]);
-        _sqlReaderStoredProcedureName = DefineProperty<string>("SqlReaderStoredProcedureName", ["SqlReaderStoredProcedureName"]);
-        _storedProcedureParameters = DefineProperty<BinaryData>("StoredProcedureParameters", ["StoredProcedureParameters"]);
-        _isolationLevel = DefineProperty<string>("IsolationLevel", ["IsolationLevel"]);
-        _partitionOption = DefineProperty<string>("PartitionOption", ["PartitionOption"]);
-        _partitionSettings = DefineModelProperty<SqlPartitionSettings>("PartitionSettings", ["PartitionSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SqlDWSource");
+        _sqlReaderQuery = DefineProperty<string>("SqlReaderQuery", ["sqlReaderQuery"]);
+        _sqlReaderStoredProcedureName = DefineProperty<string>("SqlReaderStoredProcedureName", ["sqlReaderStoredProcedureName"]);
+        _storedProcedureParameters = DefineProperty<BinaryData>("StoredProcedureParameters", ["storedProcedureParameters"]);
+        _isolationLevel = DefineProperty<string>("IsolationLevel", ["isolationLevel"]);
+        _partitionOption = DefineProperty<string>("PartitionOption", ["partitionOption"]);
+        _partitionSettings = DefineModelProperty<SqlPartitionSettings>("PartitionSettings", ["partitionSettings"]);
     }
 }

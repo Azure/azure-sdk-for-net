@@ -51,7 +51,7 @@ public partial class WebClientCertificateAuthentication : WebLinkedServiceTypePr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _pfx = DefineModelProperty<DataFactorySecret>("Pfx", ["Pfx"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
+        _pfx = DefineModelProperty<DataFactorySecret>("Pfx", ["pfx"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["password"]);
     }
 }

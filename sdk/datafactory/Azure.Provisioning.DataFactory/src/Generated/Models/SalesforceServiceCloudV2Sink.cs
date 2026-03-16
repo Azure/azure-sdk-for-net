@@ -67,8 +67,9 @@ public partial class SalesforceServiceCloudV2Sink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<SalesforceV2SinkWriteBehavior>("WriteBehavior", ["WriteBehavior"]);
-        _externalIdFieldName = DefineProperty<string>("ExternalIdFieldName", ["ExternalIdFieldName"]);
-        _ignoreNullValues = DefineProperty<bool>("IgnoreNullValues", ["IgnoreNullValues"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceServiceCloudV2Sink");
+        _writeBehavior = DefineProperty<SalesforceV2SinkWriteBehavior>("WriteBehavior", ["writeBehavior"]);
+        _externalIdFieldName = DefineProperty<string>("ExternalIdFieldName", ["externalIdFieldName"]);
+        _ignoreNullValues = DefineProperty<bool>("IgnoreNullValues", ["ignoreNullValues"]);
     }
 }

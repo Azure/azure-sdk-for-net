@@ -50,6 +50,6 @@ public partial class MapperTableSchema : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _dataType = DefineProperty<string>("DataType", ["DataType"]);
+        _dataType = DefineProperty<string>("DataType", ["dataType"]);
     }
 }

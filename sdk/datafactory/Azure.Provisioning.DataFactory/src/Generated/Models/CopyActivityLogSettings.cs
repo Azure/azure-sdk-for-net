@@ -50,7 +50,7 @@ public partial class CopyActivityLogSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _logLevel = DefineProperty<string>("LogLevel", ["LogLevel"]);
-        _enableReliableLogging = DefineProperty<bool>("EnableReliableLogging", ["EnableReliableLogging"]);
+        _logLevel = DefineProperty<string>("LogLevel", ["logLevel"]);
+        _enableReliableLogging = DefineProperty<bool>("EnableReliableLogging", ["enableReliableLogging"]);
     }
 }

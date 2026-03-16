@@ -144,14 +144,15 @@ public partial class SapTableSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _rowCount = DefineProperty<int>("RowCount", ["RowCount"]);
-        _rowSkips = DefineProperty<int>("RowSkips", ["RowSkips"]);
-        _rfcTableFields = DefineProperty<string>("RfcTableFields", ["RfcTableFields"]);
-        _rfcTableOptions = DefineProperty<string>("RfcTableOptions", ["RfcTableOptions"]);
-        _batchSize = DefineProperty<int>("BatchSize", ["BatchSize"]);
-        _customRfcReadTableFunctionModule = DefineProperty<string>("CustomRfcReadTableFunctionModule", ["CustomRfcReadTableFunctionModule"]);
-        _sapDataColumnDelimiter = DefineProperty<string>("SapDataColumnDelimiter", ["SapDataColumnDelimiter"]);
-        _partitionOption = DefineProperty<BinaryData>("PartitionOption", ["PartitionOption"]);
-        _partitionSettings = DefineModelProperty<SapTablePartitionSettings>("PartitionSettings", ["PartitionSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapTableSource");
+        _rowCount = DefineProperty<int>("RowCount", ["rowCount"]);
+        _rowSkips = DefineProperty<int>("RowSkips", ["rowSkips"]);
+        _rfcTableFields = DefineProperty<string>("RfcTableFields", ["rfcTableFields"]);
+        _rfcTableOptions = DefineProperty<string>("RfcTableOptions", ["rfcTableOptions"]);
+        _batchSize = DefineProperty<int>("BatchSize", ["batchSize"]);
+        _customRfcReadTableFunctionModule = DefineProperty<string>("CustomRfcReadTableFunctionModule", ["customRfcReadTableFunctionModule"]);
+        _sapDataColumnDelimiter = DefineProperty<string>("SapDataColumnDelimiter", ["sapDataColumnDelimiter"]);
+        _partitionOption = DefineProperty<BinaryData>("PartitionOption", ["partitionOption"]);
+        _partitionSettings = DefineModelProperty<SapTablePartitionSettings>("PartitionSettings", ["partitionSettings"]);
     }
 }

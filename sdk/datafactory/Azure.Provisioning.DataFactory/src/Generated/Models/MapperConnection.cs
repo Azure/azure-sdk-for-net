@@ -80,10 +80,10 @@ public partial class MapperConnection : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["LinkedService"]);
-        _linkedServiceType = DefineProperty<string>("LinkedServiceType", ["LinkedServiceType"]);
-        _connectionType = DefineProperty<MapperConnectionType>("ConnectionType", ["ConnectionType"]);
-        _isInlineDataset = DefineProperty<bool>("IsInlineDataset", ["IsInlineDataset"]);
-        _commonDslConnectorProperties = DefineListProperty<MapperDslConnectorProperties>("CommonDslConnectorProperties", ["CommonDslConnectorProperties"]);
+        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["linkedService"]);
+        _linkedServiceType = DefineProperty<string>("LinkedServiceType", ["linkedServiceType"]);
+        _connectionType = DefineProperty<MapperConnectionType>("ConnectionType", ["type"]);
+        _isInlineDataset = DefineProperty<bool>("IsInlineDataset", ["isInlineDataset"]);
+        _commonDslConnectorProperties = DefineListProperty<MapperDslConnectorProperties>("CommonDslConnectorProperties", ["commonDslConnectorProperties"]);
     }
 }

@@ -50,7 +50,7 @@ public partial class MapperSourceConnectionsInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sourceEntities = DefineListProperty<MapperTable>("SourceEntities", ["SourceEntities"]);
-        _connection = DefineModelProperty<MapperConnection>("Connection", ["Connection"]);
+        _sourceEntities = DefineListProperty<MapperTable>("SourceEntities", ["sourceEntities"]);
+        _connection = DefineModelProperty<MapperConnection>("Connection", ["connection"]);
     }
 }

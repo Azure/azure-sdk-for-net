@@ -242,25 +242,25 @@ public partial class PostgreSqlV2LinkedService : DataFactoryLinkedServicePropert
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _authenticationType = DefineProperty<string>("AuthenticationType", ["AuthenticationType"]);
-        _sslMode = DefineProperty<int>("SslMode", ["SslMode"]);
-        _schema = DefineProperty<string>("Schema", ["Schema"]);
-        _pooling = DefineProperty<bool>("Pooling", ["Pooling"]);
-        _connectionTimeout = DefineProperty<int>("ConnectionTimeout", ["ConnectionTimeout"]);
-        _commandTimeout = DefineProperty<int>("CommandTimeout", ["CommandTimeout"]);
-        _trustServerCertificate = DefineProperty<bool>("TrustServerCertificate", ["TrustServerCertificate"]);
-        _sslCertificate = DefineProperty<string>("SslCertificate", ["SslCertificate"]);
-        _sslKey = DefineProperty<string>("SslKey", ["SslKey"]);
-        _sslPassword = DefineProperty<string>("SslPassword", ["SslPassword"]);
-        _readBufferSize = DefineProperty<int>("ReadBufferSize", ["ReadBufferSize"]);
-        _logParameters = DefineProperty<bool>("LogParameters", ["LogParameters"]);
-        _timezone = DefineProperty<string>("Timezone", ["Timezone"]);
-        _encoding = DefineProperty<string>("Encoding", ["Encoding"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _authenticationType = DefineProperty<string>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _sslMode = DefineProperty<int>("SslMode", ["typeProperties", "sslMode"]);
+        _schema = DefineProperty<string>("Schema", ["typeProperties", "schema"]);
+        _pooling = DefineProperty<bool>("Pooling", ["typeProperties", "pooling"]);
+        _connectionTimeout = DefineProperty<int>("ConnectionTimeout", ["typeProperties", "connectionTimeout"]);
+        _commandTimeout = DefineProperty<int>("CommandTimeout", ["typeProperties", "commandTimeout"]);
+        _trustServerCertificate = DefineProperty<bool>("TrustServerCertificate", ["typeProperties", "trustServerCertificate"]);
+        _sslCertificate = DefineProperty<string>("SslCertificate", ["typeProperties", "sslCertificate"]);
+        _sslKey = DefineProperty<string>("SslKey", ["typeProperties", "sslKey"]);
+        _sslPassword = DefineProperty<string>("SslPassword", ["typeProperties", "sslPassword"]);
+        _readBufferSize = DefineProperty<int>("ReadBufferSize", ["typeProperties", "readBufferSize"]);
+        _logParameters = DefineProperty<bool>("LogParameters", ["typeProperties", "logParameters"]);
+        _timezone = DefineProperty<string>("Timezone", ["typeProperties", "timezone"]);
+        _encoding = DefineProperty<string>("Encoding", ["typeProperties", "encoding"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

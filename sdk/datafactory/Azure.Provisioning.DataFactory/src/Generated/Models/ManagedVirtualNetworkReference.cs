@@ -49,7 +49,7 @@ public partial class ManagedVirtualNetworkReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceType = DefineProperty<ManagedVirtualNetworkReferenceType>("ReferenceType", ["ReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
+        _referenceType = DefineProperty<ManagedVirtualNetworkReferenceType>("ReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
     }
 }

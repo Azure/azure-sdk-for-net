@@ -72,8 +72,8 @@ public partial class IntegrationRuntimeReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceType = DefineProperty<IntegrationRuntimeReferenceType>("ReferenceType", ["ReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
-        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["Parameters"]);
+        _referenceType = DefineProperty<IntegrationRuntimeReferenceType>("ReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
+        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["parameters"]);
     }
 }

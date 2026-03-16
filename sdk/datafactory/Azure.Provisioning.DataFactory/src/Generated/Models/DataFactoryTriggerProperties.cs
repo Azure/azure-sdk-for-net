@@ -110,9 +110,9 @@ public partial class DataFactoryTriggerProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _runtimeState = DefineProperty<DataFactoryTriggerRuntimeState>("RuntimeState", ["RuntimeState"], isOutput: true);
-        _annotations = DefineListProperty<BinaryData>("Annotations", ["Annotations"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _runtimeState = DefineProperty<DataFactoryTriggerRuntimeState>("RuntimeState", ["runtimeState"], isOutput: true);
+        _annotations = DefineListProperty<BinaryData>("Annotations", ["annotations"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

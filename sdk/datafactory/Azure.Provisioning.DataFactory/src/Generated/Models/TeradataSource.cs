@@ -60,8 +60,9 @@ public partial class TeradataSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _partitionOption = DefineProperty<string>("PartitionOption", ["PartitionOption"]);
-        _partitionSettings = DefineModelProperty<TeradataPartitionSettings>("PartitionSettings", ["PartitionSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "TeradataSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _partitionOption = DefineProperty<string>("PartitionOption", ["partitionOption"]);
+        _partitionSettings = DefineModelProperty<TeradataPartitionSettings>("PartitionSettings", ["partitionSettings"]);
     }
 }

@@ -50,7 +50,7 @@ public partial class SparkConfigurationParametrizationReference : ProvisionableC
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceType = DefineProperty<SparkConfigurationReferenceType>("ReferenceType", ["ReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
+        _referenceType = DefineProperty<SparkConfigurationReferenceType>("ReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
     }
 }

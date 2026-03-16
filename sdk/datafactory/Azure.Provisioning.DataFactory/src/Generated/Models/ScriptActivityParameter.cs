@@ -81,9 +81,9 @@ public partial class ScriptActivityParameter : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _parameterType = DefineProperty<ScriptActivityParameterType>("ParameterType", ["ParameterType"]);
-        _value = DefineProperty<string>("Value", ["Value"]);
-        _direction = DefineProperty<ScriptActivityParameterDirection>("Direction", ["Direction"]);
-        _size = DefineProperty<int>("Size", ["Size"]);
+        _parameterType = DefineProperty<ScriptActivityParameterType>("ParameterType", ["type"]);
+        _value = DefineProperty<string>("Value", ["value"]);
+        _direction = DefineProperty<ScriptActivityParameterDirection>("Direction", ["direction"]);
+        _size = DefineProperty<int>("Size", ["size"]);
     }
 }

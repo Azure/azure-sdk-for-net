@@ -117,13 +117,13 @@ public partial class AzureMLLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _mLEndpoint = DefineProperty<string>("MLEndpoint", ["MLEndpoint"]);
-        _apiKey = DefineModelProperty<DataFactorySecret>("ApiKey", ["ApiKey"]);
-        _updateResourceEndpoint = DefineProperty<string>("UpdateResourceEndpoint", ["UpdateResourceEndpoint"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _authentication = DefineProperty<string>("Authentication", ["Authentication"]);
+        _mLEndpoint = DefineProperty<string>("MLEndpoint", ["typeProperties", "mlEndpoint"]);
+        _apiKey = DefineModelProperty<DataFactorySecret>("ApiKey", ["typeProperties", "apiKey"]);
+        _updateResourceEndpoint = DefineProperty<string>("UpdateResourceEndpoint", ["typeProperties", "updateResourceEndpoint"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _authentication = DefineProperty<string>("Authentication", ["typeProperties", "authentication"]);
     }
 }

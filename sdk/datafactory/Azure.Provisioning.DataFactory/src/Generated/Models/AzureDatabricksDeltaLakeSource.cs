@@ -51,7 +51,8 @@ public partial class AzureDatabricksDeltaLakeSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _exportSettings = DefineModelProperty<AzureDatabricksDeltaLakeExportCommand>("ExportSettings", ["ExportSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureDatabricksDeltaLakeSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _exportSettings = DefineModelProperty<AzureDatabricksDeltaLakeExportCommand>("ExportSettings", ["exportSettings"]);
     }
 }

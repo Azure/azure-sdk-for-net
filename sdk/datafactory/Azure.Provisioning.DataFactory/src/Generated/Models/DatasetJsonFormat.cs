@@ -122,10 +122,11 @@ public partial class DatasetJsonFormat : DatasetStorageFormat
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _filePattern = DefineProperty<BinaryData>("FilePattern", ["FilePattern"]);
-        _nestingSeparator = DefineProperty<string>("NestingSeparator", ["NestingSeparator"]);
-        _encodingName = DefineProperty<string>("EncodingName", ["EncodingName"]);
-        _jsonNodeReference = DefineProperty<string>("JsonNodeReference", ["JsonNodeReference"]);
-        _jsonPathDefinition = DefineProperty<BinaryData>("JsonPathDefinition", ["JsonPathDefinition"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "JsonFormat");
+        _filePattern = DefineProperty<BinaryData>("FilePattern", ["filePattern"]);
+        _nestingSeparator = DefineProperty<string>("NestingSeparator", ["nestingSeparator"]);
+        _encodingName = DefineProperty<string>("EncodingName", ["encodingName"]);
+        _jsonNodeReference = DefineProperty<string>("JsonNodeReference", ["jsonNodeReference"]);
+        _jsonPathDefinition = DefineProperty<BinaryData>("JsonPathDefinition", ["jsonPathDefinition"]);
     }
 }

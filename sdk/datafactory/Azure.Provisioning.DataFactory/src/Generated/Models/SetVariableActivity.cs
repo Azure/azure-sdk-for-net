@@ -68,9 +68,9 @@ public partial class SetVariableActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _policy = DefineModelProperty<SecureInputOutputPolicy>("Policy", ["Policy"]);
-        _variableName = DefineProperty<string>("VariableName", ["VariableName"]);
-        _value = DefineProperty<BinaryData>("Value", ["Value"]);
-        _setSystemVariable = DefineProperty<bool>("SetSystemVariable", ["SetSystemVariable"]);
+        _policy = DefineModelProperty<SecureInputOutputPolicy>("Policy", ["policy"]);
+        _variableName = DefineProperty<string>("VariableName", ["typeProperties", "variableName"]);
+        _value = DefineProperty<BinaryData>("Value", ["typeProperties", "value"]);
+        _setSystemVariable = DefineProperty<bool>("SetSystemVariable", ["typeProperties", "setSystemVariable"]);
     }
 }

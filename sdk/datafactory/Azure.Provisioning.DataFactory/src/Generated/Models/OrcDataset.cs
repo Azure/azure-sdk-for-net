@@ -69,7 +69,7 @@ public partial class OrcDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _orcCompressionCodec = DefineProperty<string>("OrcCompressionCodec", ["OrcCompressionCodec"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _orcCompressionCodec = DefineProperty<string>("OrcCompressionCodec", ["typeProperties", "orcCompressionCodec"]);
     }
 }

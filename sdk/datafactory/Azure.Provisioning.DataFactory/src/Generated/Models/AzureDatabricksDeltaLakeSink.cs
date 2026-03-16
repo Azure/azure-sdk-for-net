@@ -50,7 +50,8 @@ public partial class AzureDatabricksDeltaLakeSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
-        _importSettings = DefineModelProperty<AzureDatabricksDeltaLakeImportCommand>("ImportSettings", ["ImportSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureDatabricksDeltaLakeSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
+        _importSettings = DefineModelProperty<AzureDatabricksDeltaLakeImportCommand>("ImportSettings", ["importSettings"]);
     }
 }

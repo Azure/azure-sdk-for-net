@@ -91,11 +91,12 @@ public partial class ManagedIntegrationRuntime : DataFactoryIntegrationRuntimePr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _state = DefineProperty<IntegrationRuntimeState>("State", ["State"], isOutput: true);
-        _managedVirtualNetwork = DefineModelProperty<ManagedVirtualNetworkReference>("ManagedVirtualNetwork", ["ManagedVirtualNetwork"]);
-        _computeProperties = DefineModelProperty<IntegrationRuntimeComputeProperties>("ComputeProperties", ["ComputeProperties"]);
-        _ssisProperties = DefineModelProperty<IntegrationRuntimeSsisProperties>("SsisProperties", ["SsisProperties"]);
-        _customerVirtualNetworkSubnetId = DefineProperty<ResourceIdentifier>("CustomerVirtualNetworkSubnetId", ["CustomerVirtualNetworkSubnetId"]);
-        _interactiveQuery = DefineModelProperty<InteractiveQueryProperties>("InteractiveQuery", ["InteractiveQuery"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Managed");
+        _state = DefineProperty<IntegrationRuntimeState>("State", ["state"], isOutput: true);
+        _managedVirtualNetwork = DefineModelProperty<ManagedVirtualNetworkReference>("ManagedVirtualNetwork", ["managedVirtualNetwork"]);
+        _computeProperties = DefineModelProperty<IntegrationRuntimeComputeProperties>("ComputeProperties", ["typeProperties", "computeProperties"]);
+        _ssisProperties = DefineModelProperty<IntegrationRuntimeSsisProperties>("SsisProperties", ["typeProperties", "ssisProperties"]);
+        _customerVirtualNetworkSubnetId = DefineProperty<ResourceIdentifier>("CustomerVirtualNetworkSubnetId", ["typeProperties", "customerVirtualNetwork", "subnetId"]);
+        _interactiveQuery = DefineModelProperty<InteractiveQueryProperties>("InteractiveQuery", ["typeProperties", "interactiveQuery"]);
     }
 }

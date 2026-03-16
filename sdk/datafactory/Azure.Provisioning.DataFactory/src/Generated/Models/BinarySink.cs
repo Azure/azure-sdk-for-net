@@ -51,6 +51,7 @@ public partial class BinarySink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["StoreSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "BinarySink");
+        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["storeSettings"]);
     }
 }

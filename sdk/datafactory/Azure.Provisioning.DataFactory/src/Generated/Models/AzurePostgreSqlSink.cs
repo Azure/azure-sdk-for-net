@@ -61,8 +61,9 @@ public partial class AzurePostgreSqlSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
-        _writeMethod = DefineProperty<AzurePostgreSqlWriteMethodEnum>("WriteMethod", ["WriteMethod"]);
-        _upsertKeys = DefineListProperty<string>("UpsertKeys", ["UpsertKeys"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzurePostgreSqlSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
+        _writeMethod = DefineProperty<AzurePostgreSqlWriteMethodEnum>("WriteMethod", ["writeMethod"]);
+        _upsertKeys = DefineListProperty<string>("UpsertKeys", ["upsertSettings", "keys"]);
     }
 }

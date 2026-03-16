@@ -39,6 +39,6 @@ public partial class DataFactoryScheduleTrigger : MultiplePipelineTrigger
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recurrence = DefineModelProperty<ScheduleTriggerRecurrence>("Recurrence", ["Recurrence"]);
+        _recurrence = DefineModelProperty<ScheduleTriggerRecurrence>("Recurrence", ["typeProperties", "recurrence"]);
     }
 }

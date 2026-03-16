@@ -48,7 +48,7 @@ public partial class ServiceNowV2ObjectDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
-        _valueType = DefineProperty<DatasetSourceValueType>("ValueType", ["ValueType"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
+        _valueType = DefineProperty<DatasetSourceValueType>("ValueType", ["typeProperties", "valueType"]);
     }
 }

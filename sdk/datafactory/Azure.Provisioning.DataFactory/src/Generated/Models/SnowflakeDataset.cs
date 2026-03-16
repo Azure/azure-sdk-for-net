@@ -50,7 +50,7 @@ public partial class SnowflakeDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["SchemaTypePropertiesSchema"]);
-        _table = DefineProperty<string>("Table", ["Table"]);
+        _schemaTypePropertiesSchema = DefineProperty<string>("SchemaTypePropertiesSchema", ["typeProperties", "schema"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
     }
 }

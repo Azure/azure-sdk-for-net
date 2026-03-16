@@ -107,11 +107,11 @@ public partial class PipelineActivityPolicy : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _timeout = DefineProperty<string>("Timeout", ["Timeout"]);
-        _retry = DefineProperty<int>("Retry", ["Retry"]);
-        _retryIntervalInSeconds = DefineProperty<int>("RetryIntervalInSeconds", ["RetryIntervalInSeconds"]);
-        _isSecureInputEnabled = DefineProperty<bool>("IsSecureInputEnabled", ["IsSecureInputEnabled"]);
-        _isSecureOutputEnabled = DefineProperty<bool>("IsSecureOutputEnabled", ["IsSecureOutputEnabled"]);
+        _timeout = DefineProperty<string>("Timeout", ["timeout"]);
+        _retry = DefineProperty<int>("Retry", ["retry"]);
+        _retryIntervalInSeconds = DefineProperty<int>("RetryIntervalInSeconds", ["retryIntervalInSeconds"]);
+        _isSecureInputEnabled = DefineProperty<bool>("IsSecureInputEnabled", ["secureInput"]);
+        _isSecureOutputEnabled = DefineProperty<bool>("IsSecureOutputEnabled", ["secureOutput"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

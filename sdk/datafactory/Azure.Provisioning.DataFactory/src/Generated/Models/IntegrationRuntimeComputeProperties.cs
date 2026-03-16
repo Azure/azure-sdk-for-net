@@ -138,13 +138,13 @@ public partial class IntegrationRuntimeComputeProperties : ProvisionableConstruc
     {
         base.DefineProvisionableProperties();
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _nodeSize = DefineProperty<string>("NodeSize", ["NodeSize"]);
-        _numberOfNodes = DefineProperty<int>("NumberOfNodes", ["NumberOfNodes"]);
-        _maxParallelExecutionsPerNode = DefineProperty<int>("MaxParallelExecutionsPerNode", ["MaxParallelExecutionsPerNode"]);
-        _dataFlowProperties = DefineModelProperty<IntegrationRuntimeDataFlowProperties>("DataFlowProperties", ["DataFlowProperties"]);
-        _vnetProperties = DefineModelProperty<IntegrationRuntimeVnetProperties>("VnetProperties", ["VnetProperties"]);
-        _copyComputeScaleProperties = DefineModelProperty<CopyComputeScaleProperties>("CopyComputeScaleProperties", ["CopyComputeScaleProperties"]);
-        _pipelineExternalComputeScaleProperties = DefineModelProperty<PipelineExternalComputeScaleProperties>("PipelineExternalComputeScaleProperties", ["PipelineExternalComputeScaleProperties"]);
+        _nodeSize = DefineProperty<string>("NodeSize", ["nodeSize"]);
+        _numberOfNodes = DefineProperty<int>("NumberOfNodes", ["numberOfNodes"]);
+        _maxParallelExecutionsPerNode = DefineProperty<int>("MaxParallelExecutionsPerNode", ["maxParallelExecutionsPerNode"]);
+        _dataFlowProperties = DefineModelProperty<IntegrationRuntimeDataFlowProperties>("DataFlowProperties", ["dataFlowProperties"]);
+        _vnetProperties = DefineModelProperty<IntegrationRuntimeVnetProperties>("VnetProperties", ["vNetProperties"]);
+        _copyComputeScaleProperties = DefineModelProperty<CopyComputeScaleProperties>("CopyComputeScaleProperties", ["copyComputeScaleProperties"]);
+        _pipelineExternalComputeScaleProperties = DefineModelProperty<PipelineExternalComputeScaleProperties>("PipelineExternalComputeScaleProperties", ["pipelineExternalComputeScaleProperties"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

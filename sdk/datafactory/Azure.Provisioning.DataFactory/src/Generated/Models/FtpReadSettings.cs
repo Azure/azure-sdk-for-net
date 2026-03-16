@@ -129,14 +129,15 @@ public partial class FtpReadSettings : StoreReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["WildcardFolderPath"]);
-        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["WildcardFileName"]);
-        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["EnablePartitionDiscovery"]);
-        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["PartitionRootPath"]);
-        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["DeleteFilesAfterCompletion"]);
-        _fileListPath = DefineProperty<string>("FileListPath", ["FileListPath"]);
-        _useBinaryTransfer = DefineProperty<bool>("UseBinaryTransfer", ["UseBinaryTransfer"]);
-        _disableChunking = DefineProperty<bool>("DisableChunking", ["DisableChunking"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "FtpReadSettings");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
+        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["wildcardFolderPath"]);
+        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["wildcardFileName"]);
+        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["enablePartitionDiscovery"]);
+        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["partitionRootPath"]);
+        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["deleteFilesAfterCompletion"]);
+        _fileListPath = DefineProperty<string>("FileListPath", ["fileListPath"]);
+        _useBinaryTransfer = DefineProperty<bool>("UseBinaryTransfer", ["useBinaryTransfer"]);
+        _disableChunking = DefineProperty<bool>("DisableChunking", ["disableChunking"]);
     }
 }

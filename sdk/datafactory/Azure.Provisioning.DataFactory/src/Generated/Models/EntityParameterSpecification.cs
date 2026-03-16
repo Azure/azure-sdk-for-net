@@ -61,7 +61,7 @@ public partial class EntityParameterSpecification : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _parameterType = DefineProperty<EntityParameterType>("ParameterType", ["ParameterType"]);
-        _defaultValue = DefineProperty<BinaryData>("DefaultValue", ["DefaultValue"]);
+        _parameterType = DefineProperty<EntityParameterType>("ParameterType", ["type"]);
+        _defaultValue = DefineProperty<BinaryData>("DefaultValue", ["defaultValue"]);
     }
 }

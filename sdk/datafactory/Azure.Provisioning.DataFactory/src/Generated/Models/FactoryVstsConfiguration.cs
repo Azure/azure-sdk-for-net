@@ -48,7 +48,7 @@ public partial class FactoryVstsConfiguration : FactoryRepoConfiguration
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _projectName = DefineProperty<string>("ProjectName", ["ProjectName"]);
-        _tenantId = DefineProperty<Guid>("TenantId", ["TenantId"]);
+        _projectName = DefineProperty<string>("ProjectName", ["projectName"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"]);
     }
 }

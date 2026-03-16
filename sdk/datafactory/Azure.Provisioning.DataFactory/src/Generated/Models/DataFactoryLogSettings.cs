@@ -60,8 +60,8 @@ public partial class DataFactoryLogSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _enableCopyActivityLog = DefineProperty<bool>("EnableCopyActivityLog", ["EnableCopyActivityLog"]);
-        _copyActivityLogSettings = DefineModelProperty<CopyActivityLogSettings>("CopyActivityLogSettings", ["CopyActivityLogSettings"]);
-        _logLocationSettings = DefineModelProperty<LogLocationSettings>("LogLocationSettings", ["LogLocationSettings"]);
+        _enableCopyActivityLog = DefineProperty<bool>("EnableCopyActivityLog", ["enableCopyActivityLog"]);
+        _copyActivityLogSettings = DefineModelProperty<CopyActivityLogSettings>("CopyActivityLogSettings", ["copyActivityLogSettings"]);
+        _logLocationSettings = DefineModelProperty<LogLocationSettings>("LogLocationSettings", ["logLocationSettings"]);
     }
 }

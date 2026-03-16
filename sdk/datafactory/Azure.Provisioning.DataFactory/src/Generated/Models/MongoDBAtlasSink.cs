@@ -41,6 +41,7 @@ public partial class MongoDBAtlasSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MongoDbAtlasSink");
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
     }
 }

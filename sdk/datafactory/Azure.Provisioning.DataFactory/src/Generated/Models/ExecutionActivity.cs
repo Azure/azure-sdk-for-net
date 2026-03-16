@@ -81,7 +81,7 @@ public partial class ExecutionActivity : PipelineActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _policy = DefineModelProperty<PipelineActivityPolicy>("Policy", ["Policy"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["linkedServiceName"]);
+        _policy = DefineModelProperty<PipelineActivityPolicy>("Policy", ["policy"]);
     }
 }

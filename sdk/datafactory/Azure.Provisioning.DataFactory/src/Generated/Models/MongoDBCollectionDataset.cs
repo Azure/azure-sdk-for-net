@@ -39,6 +39,6 @@ public partial class MongoDBCollectionDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _collectionName = DefineProperty<string>("CollectionName", ["CollectionName"]);
+        _collectionName = DefineProperty<string>("CollectionName", ["typeProperties", "collectionName"]);
     }
 }

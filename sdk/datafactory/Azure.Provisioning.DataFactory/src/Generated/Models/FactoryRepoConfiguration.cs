@@ -96,11 +96,11 @@ public partial class FactoryRepoConfiguration : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _accountName = DefineProperty<string>("AccountName", ["AccountName"]);
-        _repositoryName = DefineProperty<string>("RepositoryName", ["RepositoryName"]);
-        _collaborationBranch = DefineProperty<string>("CollaborationBranch", ["CollaborationBranch"]);
-        _rootFolder = DefineProperty<string>("RootFolder", ["RootFolder"]);
-        _lastCommitId = DefineProperty<string>("LastCommitId", ["LastCommitId"]);
-        _disablePublish = DefineProperty<bool>("DisablePublish", ["DisablePublish"]);
+        _accountName = DefineProperty<string>("AccountName", ["accountName"]);
+        _repositoryName = DefineProperty<string>("RepositoryName", ["repositoryName"]);
+        _collaborationBranch = DefineProperty<string>("CollaborationBranch", ["collaborationBranch"]);
+        _rootFolder = DefineProperty<string>("RootFolder", ["rootFolder"]);
+        _lastCommitId = DefineProperty<string>("LastCommitId", ["lastCommitId"]);
+        _disablePublish = DefineProperty<bool>("DisablePublish", ["disablePublish"]);
     }
 }

@@ -106,11 +106,11 @@ public partial class IntegrationRuntimeSsisCatalogInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _catalogServerEndpoint = DefineProperty<string>("CatalogServerEndpoint", ["CatalogServerEndpoint"]);
-        _catalogAdminUserName = DefineProperty<string>("CatalogAdminUserName", ["CatalogAdminUserName"]);
-        _catalogAdminPassword = DefineModelProperty<DataFactorySecretString>("CatalogAdminPassword", ["CatalogAdminPassword"]);
-        _catalogPricingTier = DefineProperty<IntegrationRuntimeSsisCatalogPricingTier>("CatalogPricingTier", ["CatalogPricingTier"]);
-        _dualStandbyPairName = DefineProperty<string>("DualStandbyPairName", ["DualStandbyPairName"]);
+        _catalogServerEndpoint = DefineProperty<string>("CatalogServerEndpoint", ["catalogServerEndpoint"]);
+        _catalogAdminUserName = DefineProperty<string>("CatalogAdminUserName", ["catalogAdminUserName"]);
+        _catalogAdminPassword = DefineModelProperty<DataFactorySecretString>("CatalogAdminPassword", ["catalogAdminPassword"]);
+        _catalogPricingTier = DefineProperty<IntegrationRuntimeSsisCatalogPricingTier>("CatalogPricingTier", ["catalogPricingTier"]);
+        _dualStandbyPairName = DefineProperty<string>("DualStandbyPairName", ["dualStandbyPairName"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

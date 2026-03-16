@@ -132,15 +132,15 @@ public partial class SsisPackageLocation : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _packagePath = DefineProperty<string>("PackagePath", ["PackagePath"]);
-        _locationType = DefineProperty<SsisPackageLocationType>("LocationType", ["LocationType"]);
-        _packagePassword = DefineModelProperty<DataFactorySecret>("PackagePassword", ["PackagePassword"]);
-        _accessCredential = DefineModelProperty<SsisAccessCredential>("AccessCredential", ["AccessCredential"]);
-        _configurationPath = DefineProperty<string>("ConfigurationPath", ["ConfigurationPath"]);
-        _configurationAccessCredential = DefineModelProperty<SsisAccessCredential>("ConfigurationAccessCredential", ["ConfigurationAccessCredential"]);
-        _packageName = DefineProperty<string>("PackageName", ["PackageName"]);
-        _packageContent = DefineProperty<string>("PackageContent", ["PackageContent"]);
-        _packageLastModifiedDate = DefineProperty<string>("PackageLastModifiedDate", ["PackageLastModifiedDate"]);
-        _childPackages = DefineListProperty<SsisChildPackage>("ChildPackages", ["ChildPackages"]);
+        _packagePath = DefineProperty<string>("PackagePath", ["packagePath"]);
+        _locationType = DefineProperty<SsisPackageLocationType>("LocationType", ["type"]);
+        _packagePassword = DefineModelProperty<DataFactorySecret>("PackagePassword", ["typeProperties", "packagePassword"]);
+        _accessCredential = DefineModelProperty<SsisAccessCredential>("AccessCredential", ["typeProperties", "accessCredential"]);
+        _configurationPath = DefineProperty<string>("ConfigurationPath", ["typeProperties", "configurationPath"]);
+        _configurationAccessCredential = DefineModelProperty<SsisAccessCredential>("ConfigurationAccessCredential", ["typeProperties", "configurationAccessCredential"]);
+        _packageName = DefineProperty<string>("PackageName", ["typeProperties", "packageName"]);
+        _packageContent = DefineProperty<string>("PackageContent", ["typeProperties", "packageContent"]);
+        _packageLastModifiedDate = DefineProperty<string>("PackageLastModifiedDate", ["typeProperties", "packageLastModifiedDate"]);
+        _childPackages = DefineListProperty<SsisChildPackage>("ChildPackages", ["typeProperties", "childPackages"]);
     }
 }

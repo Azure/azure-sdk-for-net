@@ -175,18 +175,18 @@ public partial class ImpalaLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _authenticationType = DefineProperty<ImpalaAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _thriftTransportProtocol = DefineProperty<ImpalaThriftTransportProtocol>("ThriftTransportProtocol", ["ThriftTransportProtocol"]);
-        _enableSsl = DefineProperty<bool>("EnableSsl", ["EnableSsl"]);
-        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["EnableServerCertificateValidation"]);
-        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["TrustedCertPath"]);
-        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["UseSystemTrustStore"]);
-        _allowHostNameCNMismatch = DefineProperty<bool>("AllowHostNameCNMismatch", ["AllowHostNameCNMismatch"]);
-        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["AllowSelfSignedServerCert"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _authenticationType = DefineProperty<ImpalaAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _thriftTransportProtocol = DefineProperty<ImpalaThriftTransportProtocol>("ThriftTransportProtocol", ["typeProperties", "thriftTransportProtocol"]);
+        _enableSsl = DefineProperty<bool>("EnableSsl", ["typeProperties", "enableSsl"]);
+        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["typeProperties", "enableServerCertificateValidation"]);
+        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["typeProperties", "trustedCertPath"]);
+        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["typeProperties", "useSystemTrustStore"]);
+        _allowHostNameCNMismatch = DefineProperty<bool>("AllowHostNameCNMismatch", ["typeProperties", "allowHostNameCNMismatch"]);
+        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["typeProperties", "allowSelfSignedServerCert"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

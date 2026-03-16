@@ -39,6 +39,7 @@ public partial class CouchbaseSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "CouchbaseSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

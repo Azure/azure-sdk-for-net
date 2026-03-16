@@ -38,6 +38,7 @@ public partial class AzureSearchIndexSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<AzureSearchIndexWriteBehaviorType>("WriteBehavior", ["WriteBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureSearchIndexSink");
+        _writeBehavior = DefineProperty<AzureSearchIndexWriteBehaviorType>("WriteBehavior", ["writeBehavior"]);
     }
 }

@@ -50,7 +50,7 @@ public partial class AppendVariableActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _variableName = DefineProperty<string>("VariableName", ["VariableName"]);
-        _value = DefineProperty<BinaryData>("Value", ["Value"]);
+        _variableName = DefineProperty<string>("VariableName", ["typeProperties", "variableName"]);
+        _value = DefineProperty<BinaryData>("Value", ["typeProperties", "value"]);
     }
 }

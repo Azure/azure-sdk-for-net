@@ -106,12 +106,12 @@ public partial class GoogleBigQueryV2LinkedService : DataFactoryLinkedServicePro
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _projectId = DefineProperty<string>("ProjectId", ["ProjectId"]);
-        _authenticationType = DefineProperty<GoogleBigQueryV2AuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["RefreshToken"]);
-        _keyFileContent = DefineModelProperty<DataFactorySecret>("KeyFileContent", ["KeyFileContent"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _projectId = DefineProperty<string>("ProjectId", ["typeProperties", "projectId"]);
+        _authenticationType = DefineProperty<GoogleBigQueryV2AuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["typeProperties", "refreshToken"]);
+        _keyFileContent = DefineModelProperty<DataFactorySecret>("KeyFileContent", ["typeProperties", "keyFileContent"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

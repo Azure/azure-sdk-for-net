@@ -74,8 +74,8 @@ public partial class DatasetCompression : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _datasetCompressionType = DefineProperty<string>("DatasetCompressionType", ["DatasetCompressionType"]);
-        _level = DefineProperty<string>("Level", ["Level"]);
+        _datasetCompressionType = DefineProperty<string>("DatasetCompressionType", ["type"]);
+        _level = DefineProperty<string>("Level", ["level"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

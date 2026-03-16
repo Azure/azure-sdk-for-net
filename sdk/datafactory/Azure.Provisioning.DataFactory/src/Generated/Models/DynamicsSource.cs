@@ -65,7 +65,8 @@ public partial class DynamicsSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "DynamicsSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

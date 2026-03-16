@@ -27,5 +27,6 @@ public partial class FileServerWriteSettings : StoreWriteSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        DefineProperty<string>("type", ["type"], defaultValue: "FileServerWriteSettings");
     }
 }

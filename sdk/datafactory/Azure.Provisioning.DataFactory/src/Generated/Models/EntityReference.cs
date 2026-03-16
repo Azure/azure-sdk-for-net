@@ -48,7 +48,7 @@ public partial class EntityReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _integrationRuntimeEntityReferenceType = DefineProperty<IntegrationRuntimeEntityReferenceType>("IntegrationRuntimeEntityReferenceType", ["IntegrationRuntimeEntityReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
+        _integrationRuntimeEntityReferenceType = DefineProperty<IntegrationRuntimeEntityReferenceType>("IntegrationRuntimeEntityReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
     }
 }

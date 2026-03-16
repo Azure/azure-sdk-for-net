@@ -125,13 +125,13 @@ public partial class SharePointOnlineListLinkedService : DataFactoryLinkedServic
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _siteUri = DefineProperty<string>("SiteUri", ["SiteUri"]);
-        _tenantId = DefineProperty<string>("TenantId", ["TenantId"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["ServicePrincipalEmbeddedCert"]);
-        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["ServicePrincipalEmbeddedCertPassword"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _siteUri = DefineProperty<string>("SiteUri", ["typeProperties", "siteUrl"]);
+        _tenantId = DefineProperty<string>("TenantId", ["typeProperties", "tenantId"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["typeProperties", "servicePrincipalEmbeddedCert"]);
+        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["typeProperties", "servicePrincipalEmbeddedCertPassword"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

@@ -48,7 +48,7 @@ public partial class DatasetDataElement : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _columnName = DefineProperty<string>("ColumnName", ["ColumnName"]);
-        _columnType = DefineProperty<string>("ColumnType", ["ColumnType"]);
+        _columnName = DefineProperty<string>("ColumnName", ["name"]);
+        _columnType = DefineProperty<string>("ColumnType", ["type"]);
     }
 }

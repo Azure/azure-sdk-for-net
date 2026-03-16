@@ -40,6 +40,7 @@ public partial class SalesforceMarketingCloudSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceMarketingCloudSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

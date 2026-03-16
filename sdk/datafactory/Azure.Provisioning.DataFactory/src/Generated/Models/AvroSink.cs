@@ -61,7 +61,8 @@ public partial class AvroSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<AvroWriteSettings>("FormatSettings", ["FormatSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AvroSink");
+        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<AvroWriteSettings>("FormatSettings", ["formatSettings"]);
     }
 }

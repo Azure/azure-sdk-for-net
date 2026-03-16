@@ -62,8 +62,8 @@ public partial class MongoDBAtlasLinkedService : DataFactoryLinkedServicePropert
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _driverVersion = DefineProperty<string>("DriverVersion", ["DriverVersion"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _driverVersion = DefineProperty<string>("DriverVersion", ["typeProperties", "driverVersion"]);
     }
 }

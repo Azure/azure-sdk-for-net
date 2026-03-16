@@ -61,7 +61,8 @@ public partial class DelimitedTextSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<DelimitedTextWriteSettings>("FormatSettings", ["FormatSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "DelimitedTextSink");
+        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<DelimitedTextWriteSettings>("FormatSettings", ["formatSettings"]);
     }
 }

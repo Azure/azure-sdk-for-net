@@ -93,8 +93,9 @@ public partial class JsonSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<JsonReadSettings>("FormatSettings", ["FormatSettings"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "JsonSource");
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<JsonReadSettings>("FormatSettings", ["formatSettings"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

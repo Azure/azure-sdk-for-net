@@ -134,13 +134,13 @@ public partial class WebHookActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _policy = DefineModelProperty<SecureInputOutputPolicy>("Policy", ["Policy"]);
-        _method = DefineProperty<WebHookActivityMethod>("Method", ["Method"]);
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _timeout = DefineProperty<string>("Timeout", ["Timeout"]);
-        _requestHeaders = DefineDictionaryProperty<BinaryData>("RequestHeaders", ["RequestHeaders"]);
-        _body = DefineProperty<string>("Body", ["Body"]);
-        _authentication = DefineModelProperty<WebActivityAuthentication>("Authentication", ["Authentication"]);
-        _reportStatusOnCallBack = DefineProperty<bool>("ReportStatusOnCallBack", ["ReportStatusOnCallBack"]);
+        _policy = DefineModelProperty<SecureInputOutputPolicy>("Policy", ["policy"]);
+        _method = DefineProperty<WebHookActivityMethod>("Method", ["typeProperties", "method"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _timeout = DefineProperty<string>("Timeout", ["typeProperties", "timeout"]);
+        _requestHeaders = DefineDictionaryProperty<BinaryData>("RequestHeaders", ["typeProperties", "headers"]);
+        _body = DefineProperty<string>("Body", ["typeProperties", "body"]);
+        _authentication = DefineModelProperty<WebActivityAuthentication>("Authentication", ["typeProperties", "authentication"]);
+        _reportStatusOnCallBack = DefineProperty<bool>("ReportStatusOnCallBack", ["typeProperties", "reportStatusOnCallBack"]);
     }
 }

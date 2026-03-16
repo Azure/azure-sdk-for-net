@@ -86,10 +86,10 @@ public partial class DataFactoryBlobEventsTrigger : MultiplePipelineTrigger
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _blobPathBeginsWith = DefineProperty<string>("BlobPathBeginsWith", ["BlobPathBeginsWith"]);
-        _blobPathEndsWith = DefineProperty<string>("BlobPathEndsWith", ["BlobPathEndsWith"]);
-        _ignoreEmptyBlobs = DefineProperty<bool>("IgnoreEmptyBlobs", ["IgnoreEmptyBlobs"]);
-        _events = DefineListProperty<DataFactoryBlobEventType>("Events", ["Events"]);
-        _scope = DefineProperty<string>("Scope", ["Scope"]);
+        _blobPathBeginsWith = DefineProperty<string>("BlobPathBeginsWith", ["typeProperties", "blobPathBeginsWith"]);
+        _blobPathEndsWith = DefineProperty<string>("BlobPathEndsWith", ["typeProperties", "blobPathEndsWith"]);
+        _ignoreEmptyBlobs = DefineProperty<bool>("IgnoreEmptyBlobs", ["typeProperties", "ignoreEmptyBlobs"]);
+        _events = DefineListProperty<DataFactoryBlobEventType>("Events", ["typeProperties", "events"]);
+        _scope = DefineProperty<string>("Scope", ["typeProperties", "scope"]);
     }
 }

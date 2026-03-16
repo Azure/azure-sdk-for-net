@@ -62,7 +62,7 @@ public partial class DataFactoryGlobalParameterProperties : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _globalParameterType = DefineProperty<DataFactoryGlobalParameterType>("GlobalParameterType", ["GlobalParameterType"]);
-        _value = DefineProperty<BinaryData>("Value", ["Value"]);
+        _globalParameterType = DefineProperty<DataFactoryGlobalParameterType>("GlobalParameterType", ["type"]);
+        _value = DefineProperty<BinaryData>("Value", ["value"]);
     }
 }

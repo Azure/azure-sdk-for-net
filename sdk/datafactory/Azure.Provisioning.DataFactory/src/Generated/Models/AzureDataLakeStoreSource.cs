@@ -39,6 +39,7 @@ public partial class AzureDataLakeStoreSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureDataLakeStoreSource");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
     }
 }

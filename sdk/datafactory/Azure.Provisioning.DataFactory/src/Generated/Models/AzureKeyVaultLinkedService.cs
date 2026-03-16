@@ -50,7 +50,7 @@ public partial class AzureKeyVaultLinkedService : DataFactoryLinkedServiceProper
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _baseUri = DefineProperty<string>("BaseUri", ["BaseUri"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _baseUri = DefineProperty<string>("BaseUri", ["typeProperties", "baseUrl"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

@@ -39,6 +39,6 @@ public partial class DataFlowSource : DataFlowTransformation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _schemaLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("SchemaLinkedService", ["SchemaLinkedService"]);
+        _schemaLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("SchemaLinkedService", ["schemaLinkedService"]);
     }
 }

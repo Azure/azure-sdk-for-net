@@ -50,7 +50,7 @@ public partial class CustomActivityReferenceObject : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("LinkedServices", ["LinkedServices"]);
-        _datasets = DefineListProperty<DatasetReference>("Datasets", ["Datasets"]);
+        _linkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("LinkedServices", ["linkedServices"]);
+        _datasets = DefineListProperty<DatasetReference>("Datasets", ["datasets"]);
     }
 }

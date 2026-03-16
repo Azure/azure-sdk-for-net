@@ -93,8 +93,8 @@ public partial class DatasetLocation : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
-        _fileName = DefineProperty<string>("FileName", ["FileName"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["folderPath"]);
+        _fileName = DefineProperty<string>("FileName", ["fileName"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

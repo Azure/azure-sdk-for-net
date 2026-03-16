@@ -232,22 +232,23 @@ public partial class OracleLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _authenticationType = DefineProperty<OracleAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptionClient = DefineProperty<string>("EncryptionClient", ["EncryptionClient"]);
-        _encryptionTypesClient = DefineProperty<string>("EncryptionTypesClient", ["EncryptionTypesClient"]);
-        _cryptoChecksumClient = DefineProperty<string>("CryptoChecksumClient", ["CryptoChecksumClient"]);
-        _cryptoChecksumTypesClient = DefineProperty<string>("CryptoChecksumTypesClient", ["CryptoChecksumTypesClient"]);
-        _initialLobFetchSize = DefineProperty<int>("InitialLobFetchSize", ["InitialLobFetchSize"]);
-        _fetchSize = DefineProperty<int>("FetchSize", ["FetchSize"]);
-        _statementCacheSize = DefineProperty<int>("StatementCacheSize", ["StatementCacheSize"]);
-        _initializationString = DefineProperty<string>("InitializationString", ["InitializationString"]);
-        _enableBulkLoad = DefineProperty<bool>("EnableBulkLoad", ["EnableBulkLoad"]);
-        _supportV1DataTypes = DefineProperty<bool>("SupportV1DataTypes", ["SupportV1DataTypes"]);
-        _fetchTswtzAsTimestamp = DefineProperty<bool>("FetchTswtzAsTimestamp", ["FetchTswtzAsTimestamp"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Oracle");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _authenticationType = DefineProperty<OracleAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "password"]);
+        _encryptionClient = DefineProperty<string>("EncryptionClient", ["typeProperties", "encryptionClient"]);
+        _encryptionTypesClient = DefineProperty<string>("EncryptionTypesClient", ["typeProperties", "encryptionTypesClient"]);
+        _cryptoChecksumClient = DefineProperty<string>("CryptoChecksumClient", ["typeProperties", "cryptoChecksumClient"]);
+        _cryptoChecksumTypesClient = DefineProperty<string>("CryptoChecksumTypesClient", ["typeProperties", "cryptoChecksumTypesClient"]);
+        _initialLobFetchSize = DefineProperty<int>("InitialLobFetchSize", ["typeProperties", "initialLobFetchSize"]);
+        _fetchSize = DefineProperty<int>("FetchSize", ["typeProperties", "fetchSize"]);
+        _statementCacheSize = DefineProperty<int>("StatementCacheSize", ["typeProperties", "statementCacheSize"]);
+        _initializationString = DefineProperty<string>("InitializationString", ["typeProperties", "initializationString"]);
+        _enableBulkLoad = DefineProperty<bool>("EnableBulkLoad", ["typeProperties", "enableBulkLoad"]);
+        _supportV1DataTypes = DefineProperty<bool>("SupportV1DataTypes", ["typeProperties", "supportV1DataTypes"]);
+        _fetchTswtzAsTimestamp = DefineProperty<bool>("FetchTswtzAsTimestamp", ["typeProperties", "fetchTswtzAsTimestamp"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

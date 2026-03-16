@@ -89,8 +89,8 @@ public partial class DatabricksSparkPythonActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _pythonFile = DefineProperty<string>("PythonFile", ["PythonFile"]);
-        _parameters = DefineListProperty<BinaryData>("Parameters", ["Parameters"]);
-        _libraries = DefineListProperty<BicepDictionary<BinaryData>>("Libraries", ["Libraries"]);
+        _pythonFile = DefineProperty<string>("PythonFile", ["typeProperties", "pythonFile"]);
+        _parameters = DefineListProperty<BinaryData>("Parameters", ["typeProperties", "parameters"]);
+        _libraries = DefineListProperty<BicepDictionary<BinaryData>>("Libraries", ["typeProperties", "libraries"]);
     }
 }

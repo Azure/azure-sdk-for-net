@@ -50,7 +50,7 @@ public partial class SecureInputOutputPolicy : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isSecureInputEnabled = DefineProperty<bool>("IsSecureInputEnabled", ["IsSecureInputEnabled"]);
-        _isSecureOutputEnabled = DefineProperty<bool>("IsSecureOutputEnabled", ["IsSecureOutputEnabled"]);
+        _isSecureInputEnabled = DefineProperty<bool>("IsSecureInputEnabled", ["secureInput"]);
+        _isSecureOutputEnabled = DefineProperty<bool>("IsSecureOutputEnabled", ["secureOutput"]);
     }
 }

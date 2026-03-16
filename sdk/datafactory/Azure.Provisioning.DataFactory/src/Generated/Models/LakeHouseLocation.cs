@@ -27,5 +27,6 @@ public partial class LakeHouseLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        DefineProperty<string>("type", ["type"], defaultValue: "LakeHouseLocation");
     }
 }

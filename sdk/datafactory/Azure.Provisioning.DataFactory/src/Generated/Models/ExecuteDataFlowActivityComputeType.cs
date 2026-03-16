@@ -54,7 +54,7 @@ public partial class ExecuteDataFlowActivityComputeType : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _computeType = DefineProperty<string>("ComputeType", ["ComputeType"]);
-        _coreCount = DefineProperty<int>("CoreCount", ["CoreCount"]);
+        _computeType = DefineProperty<string>("ComputeType", ["computeType"]);
+        _coreCount = DefineProperty<int>("CoreCount", ["coreCount"]);
     }
 }

@@ -136,15 +136,15 @@ public partial class AmazonMwsLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _marketplaceId = DefineProperty<string>("MarketplaceId", ["MarketplaceId"]);
-        _sellerId = DefineProperty<string>("SellerId", ["SellerId"]);
-        _mwsAuthToken = DefineModelProperty<DataFactorySecret>("MwsAuthToken", ["MwsAuthToken"]);
-        _accessKeyId = DefineProperty<string>("AccessKeyId", ["AccessKeyId"]);
-        _secretKey = DefineModelProperty<DataFactorySecret>("SecretKey", ["SecretKey"]);
-        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["UseEncryptedEndpoints"]);
-        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["UseHostVerification"]);
-        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["UsePeerVerification"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _marketplaceId = DefineProperty<string>("MarketplaceId", ["typeProperties", "marketplaceID"]);
+        _sellerId = DefineProperty<string>("SellerId", ["typeProperties", "sellerID"]);
+        _mwsAuthToken = DefineModelProperty<DataFactorySecret>("MwsAuthToken", ["typeProperties", "mwsAuthToken"]);
+        _accessKeyId = DefineProperty<string>("AccessKeyId", ["typeProperties", "accessKeyId"]);
+        _secretKey = DefineModelProperty<DataFactorySecret>("SecretKey", ["typeProperties", "secretKey"]);
+        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["typeProperties", "useEncryptedEndpoints"]);
+        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["typeProperties", "useHostVerification"]);
+        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["typeProperties", "usePeerVerification"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

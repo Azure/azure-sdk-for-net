@@ -48,7 +48,7 @@ public partial class SynapseSparkJobReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sparkJobReferenceType = DefineProperty<SparkJobReferenceType>("SparkJobReferenceType", ["SparkJobReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
+        _sparkJobReferenceType = DefineProperty<SparkJobReferenceType>("SparkJobReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
     }
 }

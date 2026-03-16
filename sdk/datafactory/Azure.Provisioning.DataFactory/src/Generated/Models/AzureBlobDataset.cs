@@ -114,12 +114,12 @@ public partial class AzureBlobDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
-        _tableRootLocation = DefineProperty<string>("TableRootLocation", ["TableRootLocation"]);
-        _fileName = DefineProperty<string>("FileName", ["FileName"]);
-        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["ModifiedDatetimeStart"]);
-        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["ModifiedDatetimeEnd"]);
-        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["Format"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["typeProperties", "folderPath"]);
+        _tableRootLocation = DefineProperty<string>("TableRootLocation", ["typeProperties", "tableRootLocation"]);
+        _fileName = DefineProperty<string>("FileName", ["typeProperties", "fileName"]);
+        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["typeProperties", "modifiedDatetimeStart"]);
+        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["typeProperties", "modifiedDatetimeEnd"]);
+        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["typeProperties", "format"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

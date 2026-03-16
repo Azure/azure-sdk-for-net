@@ -60,8 +60,8 @@ public partial class SsisExecutionCredential : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _domain = DefineProperty<string>("Domain", ["Domain"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecretString>("Password", ["Password"]);
+        _domain = DefineProperty<string>("Domain", ["domain"]);
+        _userName = DefineProperty<string>("UserName", ["userName"]);
+        _password = DefineModelProperty<DataFactorySecretString>("Password", ["password"]);
     }
 }

@@ -110,10 +110,10 @@ public partial class RestResourceDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _relativeUri = DefineProperty<string>("RelativeUri", ["RelativeUri"]);
-        _requestMethod = DefineProperty<string>("RequestMethod", ["RequestMethod"]);
-        _requestBody = DefineProperty<string>("RequestBody", ["RequestBody"]);
-        _additionalHeaders = DefineDictionaryProperty<BinaryData>("AdditionalHeaders", ["AdditionalHeaders"]);
-        _paginationRules = DefineDictionaryProperty<BinaryData>("PaginationRules", ["PaginationRules"]);
+        _relativeUri = DefineProperty<string>("RelativeUri", ["typeProperties", "relativeUrl"]);
+        _requestMethod = DefineProperty<string>("RequestMethod", ["typeProperties", "requestMethod"]);
+        _requestBody = DefineProperty<string>("RequestBody", ["typeProperties", "requestBody"]);
+        _additionalHeaders = DefineDictionaryProperty<BinaryData>("AdditionalHeaders", ["typeProperties", "additionalHeaders"]);
+        _paginationRules = DefineDictionaryProperty<BinaryData>("PaginationRules", ["typeProperties", "paginationRules"]);
     }
 }

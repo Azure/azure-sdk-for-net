@@ -38,6 +38,6 @@ public partial class AzPowerShellSetup : CustomSetupBase
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _version = DefineProperty<string>("Version", ["Version"]);
+        _version = DefineProperty<string>("Version", ["typeProperties", "version"]);
     }
 }

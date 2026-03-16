@@ -69,9 +69,9 @@ public partial class DataFactoryExpressionV2 : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _v2Type = DefineProperty<DataFactoryExpressionV2Type>("V2Type", ["V2Type"]);
-        _v2Value = DefineProperty<string>("V2Value", ["V2Value"]);
-        _operators = DefineListProperty<string>("Operators", ["Operators"]);
-        _operands = DefineListProperty<DataFactoryExpressionV2>("Operands", ["Operands"]);
+        _v2Type = DefineProperty<DataFactoryExpressionV2Type>("V2Type", ["type"]);
+        _v2Value = DefineProperty<string>("V2Value", ["value"]);
+        _operators = DefineListProperty<string>("Operators", ["operators"]);
+        _operands = DefineListProperty<DataFactoryExpressionV2>("Operands", ["operands"]);
     }
 }

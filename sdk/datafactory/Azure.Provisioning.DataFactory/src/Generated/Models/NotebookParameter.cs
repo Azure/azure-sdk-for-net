@@ -49,7 +49,7 @@ public partial class NotebookParameter : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _value = DefineProperty<string>("Value", ["Value"]);
-        _parameterType = DefineProperty<NotebookParameterType>("ParameterType", ["ParameterType"]);
+        _value = DefineProperty<string>("Value", ["value"]);
+        _parameterType = DefineProperty<NotebookParameterType>("ParameterType", ["type"]);
     }
 }

@@ -90,10 +90,11 @@ public partial class SalesforceV2Source : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _soqlQuery = DefineProperty<string>("SoqlQuery", ["SoqlQuery"]);
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _includeDeletedObjects = DefineProperty<bool>("IncludeDeletedObjects", ["IncludeDeletedObjects"]);
-        _pageSize = DefineProperty<int>("PageSize", ["PageSize"]);
-        _partitionOption = DefineProperty<string>("PartitionOption", ["PartitionOption"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceV2Source");
+        _soqlQuery = DefineProperty<string>("SoqlQuery", ["SOQLQuery"]);
+        _query = DefineProperty<string>("Query", ["query"]);
+        _includeDeletedObjects = DefineProperty<bool>("IncludeDeletedObjects", ["includeDeletedObjects"]);
+        _pageSize = DefineProperty<int>("PageSize", ["pageSize"]);
+        _partitionOption = DefineProperty<string>("PartitionOption", ["partitionOption"]);
     }
 }

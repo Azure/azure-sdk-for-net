@@ -39,6 +39,6 @@ public partial class AzureSearchIndexDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _indexName = DefineProperty<string>("IndexName", ["IndexName"]);
+        _indexName = DefineProperty<string>("IndexName", ["typeProperties", "indexName"]);
     }
 }

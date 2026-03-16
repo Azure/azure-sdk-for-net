@@ -112,12 +112,12 @@ public partial class ScheduleTriggerRecurrence : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _frequency = DefineProperty<DataFactoryRecurrenceFrequency>("Frequency", ["Frequency"]);
-        _interval = DefineProperty<int>("Interval", ["Interval"]);
-        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["StartOn"]);
-        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["EndOn"]);
-        _timeZone = DefineProperty<string>("TimeZone", ["TimeZone"]);
-        _schedule = DefineModelProperty<DataFactoryRecurrenceSchedule>("Schedule", ["Schedule"]);
+        _frequency = DefineProperty<DataFactoryRecurrenceFrequency>("Frequency", ["frequency"]);
+        _interval = DefineProperty<int>("Interval", ["interval"]);
+        _startOn = DefineProperty<DateTimeOffset>("StartOn", ["startTime"]);
+        _endOn = DefineProperty<DateTimeOffset>("EndOn", ["endTime"]);
+        _timeZone = DefineProperty<string>("TimeZone", ["timeZone"]);
+        _schedule = DefineModelProperty<DataFactoryRecurrenceSchedule>("Schedule", ["schedule"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

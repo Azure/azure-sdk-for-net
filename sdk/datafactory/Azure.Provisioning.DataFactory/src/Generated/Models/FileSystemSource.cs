@@ -64,7 +64,8 @@ public partial class FileSystemSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "FileSystemSource");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

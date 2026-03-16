@@ -65,8 +65,8 @@ public partial class AzureSynapseArtifactsLinkedService : DataFactoryLinkedServi
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _authentication = DefineProperty<string>("Authentication", ["Authentication"]);
-        _workspaceResourceId = DefineProperty<string>("WorkspaceResourceId", ["WorkspaceResourceId"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _authentication = DefineProperty<string>("Authentication", ["typeProperties", "authentication"]);
+        _workspaceResourceId = DefineProperty<string>("WorkspaceResourceId", ["typeProperties", "workspaceResourceId"]);
     }
 }

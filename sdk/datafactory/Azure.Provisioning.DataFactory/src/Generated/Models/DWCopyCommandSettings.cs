@@ -56,7 +56,7 @@ public partial class DWCopyCommandSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _defaultValues = DefineListProperty<DWCopyCommandDefaultValue>("DefaultValues", ["DefaultValues"]);
-        _additionalOptions = DefineDictionaryProperty<string>("AdditionalOptions", ["AdditionalOptions"]);
+        _defaultValues = DefineListProperty<DWCopyCommandDefaultValue>("DefaultValues", ["defaultValues"]);
+        _additionalOptions = DefineDictionaryProperty<string>("AdditionalOptions", ["additionalOptions"]);
     }
 }

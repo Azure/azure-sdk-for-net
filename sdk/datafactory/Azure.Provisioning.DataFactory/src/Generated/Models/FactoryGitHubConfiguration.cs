@@ -58,8 +58,8 @@ public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _hostName = DefineProperty<string>("HostName", ["HostName"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<FactoryGitHubClientSecret>("ClientSecret", ["ClientSecret"]);
+        _hostName = DefineProperty<string>("HostName", ["hostName"]);
+        _clientId = DefineProperty<string>("ClientId", ["clientId"]);
+        _clientSecret = DefineModelProperty<FactoryGitHubClientSecret>("ClientSecret", ["clientSecret"]);
     }
 }

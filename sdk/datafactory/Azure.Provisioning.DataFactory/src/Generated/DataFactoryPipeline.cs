@@ -288,17 +288,17 @@ public partial class DataFactoryPipeline : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _activities = DefineListProperty<PipelineActivity>("Activities", ["Activities"]);
+        _activities = DefineListProperty<PipelineActivity>("Activities", ["properties", "activities"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
-        _annotations = DefineListProperty<BinaryData>("Annotations", ["Annotations"]);
-        _concurrency = DefineProperty<int>("Concurrency", ["Concurrency"]);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _elapsedTimeMetricDuration = DefineProperty<BinaryData>("ElapsedTimeMetricDuration", ["ElapsedTimeMetricDuration"]);
-        _folderName = DefineProperty<string>("FolderName", ["FolderName"]);
-        _parameters = DefineDictionaryProperty<EntityParameterSpecification>("Parameters", ["Parameters"]);
-        _runDimensions = DefineDictionaryProperty<BinaryData>("RunDimensions", ["RunDimensions"]);
-        _variables = DefineDictionaryProperty<PipelineVariableSpecification>("Variables", ["Variables"]);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
+        _annotations = DefineListProperty<BinaryData>("Annotations", ["properties", "annotations"]);
+        _concurrency = DefineProperty<int>("Concurrency", ["properties", "concurrency"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _elapsedTimeMetricDuration = DefineProperty<BinaryData>("ElapsedTimeMetricDuration", ["properties", "policy", "elapsedTimeMetric", "duration"]);
+        _folderName = DefineProperty<string>("FolderName", ["properties", "folder", "name"]);
+        _parameters = DefineDictionaryProperty<EntityParameterSpecification>("Parameters", ["properties", "parameters"]);
+        _runDimensions = DefineDictionaryProperty<BinaryData>("RunDimensions", ["properties", "runDimensions"]);
+        _variables = DefineDictionaryProperty<PipelineVariableSpecification>("Variables", ["properties", "variables"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DataFactoryService>("Parent", ["parent"], isRequired: true);

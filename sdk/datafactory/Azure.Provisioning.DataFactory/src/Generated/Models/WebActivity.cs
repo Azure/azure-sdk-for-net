@@ -165,16 +165,16 @@ public partial class WebActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _method = DefineProperty<WebActivityMethod>("Method", ["Method"]);
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _requestHeaders = DefineDictionaryProperty<BinaryData>("RequestHeaders", ["RequestHeaders"]);
-        _body = DefineProperty<string>("Body", ["Body"]);
-        _authentication = DefineModelProperty<WebActivityAuthentication>("Authentication", ["Authentication"]);
-        _disableCertValidation = DefineProperty<bool>("DisableCertValidation", ["DisableCertValidation"]);
-        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["HttpRequestTimeout"]);
-        _turnOffAsync = DefineProperty<bool>("TurnOffAsync", ["TurnOffAsync"]);
-        _datasets = DefineListProperty<DatasetReference>("Datasets", ["Datasets"]);
-        _linkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("LinkedServices", ["LinkedServices"]);
-        _connectVia = DefineModelProperty<IntegrationRuntimeReference>("ConnectVia", ["ConnectVia"]);
+        _method = DefineProperty<WebActivityMethod>("Method", ["typeProperties", "method"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _requestHeaders = DefineDictionaryProperty<BinaryData>("RequestHeaders", ["typeProperties", "headers"]);
+        _body = DefineProperty<string>("Body", ["typeProperties", "body"]);
+        _authentication = DefineModelProperty<WebActivityAuthentication>("Authentication", ["typeProperties", "authentication"]);
+        _disableCertValidation = DefineProperty<bool>("DisableCertValidation", ["typeProperties", "disableCertValidation"]);
+        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["typeProperties", "httpRequestTimeout"]);
+        _turnOffAsync = DefineProperty<bool>("TurnOffAsync", ["typeProperties", "turnOffAsync"]);
+        _datasets = DefineListProperty<DatasetReference>("Datasets", ["typeProperties", "datasets"]);
+        _linkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("LinkedServices", ["typeProperties", "linkedServices"]);
+        _connectVia = DefineModelProperty<IntegrationRuntimeReference>("ConnectVia", ["typeProperties", "connectVia"]);
     }
 }

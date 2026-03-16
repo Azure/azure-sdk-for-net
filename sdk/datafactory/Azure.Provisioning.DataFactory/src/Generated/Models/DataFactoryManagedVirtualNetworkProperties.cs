@@ -71,8 +71,8 @@ public partial class DataFactoryManagedVirtualNetworkProperties : ProvisionableC
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _vnetId = DefineProperty<Guid>("VnetId", ["VnetId"], isOutput: true);
-        _alias = DefineProperty<string>("Alias", ["Alias"], isOutput: true);
+        _vnetId = DefineProperty<Guid>("VnetId", ["vNetId"], isOutput: true);
+        _alias = DefineProperty<string>("Alias", ["alias"], isOutput: true);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

@@ -49,7 +49,7 @@ public partial class SynapseNotebookReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _notebookReferenceType = DefineProperty<NotebookReferenceType>("NotebookReferenceType", ["NotebookReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
+        _notebookReferenceType = DefineProperty<NotebookReferenceType>("NotebookReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
     }
 }

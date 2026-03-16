@@ -84,8 +84,8 @@ public partial class DataFactoryDataFlowProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _annotations = DefineListProperty<BinaryData>("Annotations", ["Annotations"]);
-        _folderName = DefineProperty<string>("FolderName", ["FolderName"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _annotations = DefineListProperty<BinaryData>("Annotations", ["annotations"]);
+        _folderName = DefineProperty<string>("FolderName", ["folder", "name"]);
     }
 }

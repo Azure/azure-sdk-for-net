@@ -118,9 +118,9 @@ public partial class ForEachActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isSequential = DefineProperty<bool>("IsSequential", ["IsSequential"]);
-        _batchCount = DefineProperty<int>("BatchCount", ["BatchCount"]);
-        _items = DefineModelProperty<DataFactoryExpression>("Items", ["Items"]);
-        _activities = DefineListProperty<PipelineActivity>("Activities", ["Activities"]);
+        _isSequential = DefineProperty<bool>("IsSequential", ["typeProperties", "isSequential"]);
+        _batchCount = DefineProperty<int>("BatchCount", ["typeProperties", "batchCount"]);
+        _items = DefineModelProperty<DataFactoryExpression>("Items", ["typeProperties", "items"]);
+        _activities = DefineListProperty<PipelineActivity>("Activities", ["typeProperties", "activities"]);
     }
 }

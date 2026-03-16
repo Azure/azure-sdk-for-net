@@ -52,7 +52,7 @@ public partial class AzureMLWebServiceFile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _filePath = DefineProperty<string>("FilePath", ["FilePath"]);
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
+        _filePath = DefineProperty<string>("FilePath", ["filePath"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["linkedServiceName"]);
     }
 }

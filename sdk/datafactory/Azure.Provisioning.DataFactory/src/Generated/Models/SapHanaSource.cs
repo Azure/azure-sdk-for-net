@@ -72,9 +72,10 @@ public partial class SapHanaSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _packetSize = DefineProperty<int>("PacketSize", ["PacketSize"]);
-        _partitionOption = DefineProperty<string>("PartitionOption", ["PartitionOption"]);
-        _partitionColumnName = DefineProperty<string>("PartitionColumnName", ["PartitionColumnName"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapHanaSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _packetSize = DefineProperty<int>("PacketSize", ["packetSize"]);
+        _partitionOption = DefineProperty<string>("PartitionOption", ["partitionOption"]);
+        _partitionColumnName = DefineProperty<string>("PartitionColumnName", ["partitionSettings", "partitionColumnName"]);
     }
 }

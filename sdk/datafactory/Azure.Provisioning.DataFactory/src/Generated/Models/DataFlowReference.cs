@@ -118,10 +118,10 @@ public partial class DataFlowReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceType = DefineProperty<DataFlowReferenceType>("ReferenceType", ["ReferenceType"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
-        _datasetParameters = DefineProperty<BinaryData>("DatasetParameters", ["DatasetParameters"]);
-        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["Parameters"]);
+        _referenceType = DefineProperty<DataFlowReferenceType>("ReferenceType", ["type"]);
+        _referenceName = DefineProperty<string>("ReferenceName", ["referenceName"]);
+        _datasetParameters = DefineProperty<BinaryData>("DatasetParameters", ["datasetParameters"]);
+        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["parameters"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

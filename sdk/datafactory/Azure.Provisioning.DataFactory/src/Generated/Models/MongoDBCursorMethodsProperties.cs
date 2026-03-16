@@ -102,10 +102,10 @@ public partial class MongoDBCursorMethodsProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _project = DefineProperty<string>("Project", ["Project"]);
-        _sort = DefineProperty<string>("Sort", ["Sort"]);
-        _skip = DefineProperty<int>("Skip", ["Skip"]);
-        _limit = DefineProperty<int>("Limit", ["Limit"]);
+        _project = DefineProperty<string>("Project", ["project"]);
+        _sort = DefineProperty<string>("Sort", ["sort"]);
+        _skip = DefineProperty<int>("Skip", ["skip"]);
+        _limit = DefineProperty<int>("Limit", ["limit"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

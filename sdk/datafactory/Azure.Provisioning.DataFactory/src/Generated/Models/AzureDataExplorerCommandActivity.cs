@@ -52,7 +52,7 @@ public partial class AzureDataExplorerCommandActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _command = DefineProperty<string>("Command", ["Command"]);
-        _commandTimeout = DefineProperty<string>("CommandTimeout", ["CommandTimeout"]);
+        _command = DefineProperty<string>("Command", ["typeProperties", "command"]);
+        _commandTimeout = DefineProperty<string>("CommandTimeout", ["typeProperties", "commandTimeout"]);
     }
 }

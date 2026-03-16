@@ -140,15 +140,16 @@ public partial class AzureBlobStorageReadSettings : StoreReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["WildcardFolderPath"]);
-        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["WildcardFileName"]);
-        _prefix = DefineProperty<string>("Prefix", ["Prefix"]);
-        _fileListPath = DefineProperty<string>("FileListPath", ["FileListPath"]);
-        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["EnablePartitionDiscovery"]);
-        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["PartitionRootPath"]);
-        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["DeleteFilesAfterCompletion"]);
-        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["ModifiedDatetimeStart"]);
-        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["ModifiedDatetimeEnd"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureBlobStorageReadSettings");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
+        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["wildcardFolderPath"]);
+        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["wildcardFileName"]);
+        _prefix = DefineProperty<string>("Prefix", ["prefix"]);
+        _fileListPath = DefineProperty<string>("FileListPath", ["fileListPath"]);
+        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["enablePartitionDiscovery"]);
+        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["partitionRootPath"]);
+        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["deleteFilesAfterCompletion"]);
+        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["modifiedDatetimeStart"]);
+        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["modifiedDatetimeEnd"]);
     }
 }

@@ -119,9 +119,9 @@ public partial class SnowflakeImportCopyCommand : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _additionalCopyOptions = DefineDictionaryProperty<BinaryData>("AdditionalCopyOptions", ["AdditionalCopyOptions"]);
-        _additionalFormatOptions = DefineDictionaryProperty<BinaryData>("AdditionalFormatOptions", ["AdditionalFormatOptions"]);
-        _storageIntegration = DefineProperty<string>("StorageIntegration", ["StorageIntegration"]);
+        _additionalCopyOptions = DefineDictionaryProperty<BinaryData>("AdditionalCopyOptions", ["additionalCopyOptions"]);
+        _additionalFormatOptions = DefineDictionaryProperty<BinaryData>("AdditionalFormatOptions", ["additionalFormatOptions"]);
+        _storageIntegration = DefineProperty<string>("StorageIntegration", ["storageIntegration"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

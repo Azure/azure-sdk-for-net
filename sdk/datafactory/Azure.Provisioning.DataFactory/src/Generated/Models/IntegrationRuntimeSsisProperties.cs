@@ -144,14 +144,14 @@ public partial class IntegrationRuntimeSsisProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _catalogInfo = DefineModelProperty<IntegrationRuntimeSsisCatalogInfo>("CatalogInfo", ["CatalogInfo"]);
-        _licenseType = DefineProperty<IntegrationRuntimeLicenseType>("LicenseType", ["LicenseType"]);
-        _customSetupScriptProperties = DefineModelProperty<IntegrationRuntimeCustomSetupScriptProperties>("CustomSetupScriptProperties", ["CustomSetupScriptProperties"]);
-        _dataProxyProperties = DefineModelProperty<IntegrationRuntimeDataProxyProperties>("DataProxyProperties", ["DataProxyProperties"]);
-        _edition = DefineProperty<IntegrationRuntimeEdition>("Edition", ["Edition"]);
-        _expressCustomSetupProperties = DefineListProperty<CustomSetupBase>("ExpressCustomSetupProperties", ["ExpressCustomSetupProperties"]);
-        _packageStores = DefineListProperty<DataFactoryPackageStore>("PackageStores", ["PackageStores"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _catalogInfo = DefineModelProperty<IntegrationRuntimeSsisCatalogInfo>("CatalogInfo", ["catalogInfo"]);
+        _licenseType = DefineProperty<IntegrationRuntimeLicenseType>("LicenseType", ["licenseType"]);
+        _customSetupScriptProperties = DefineModelProperty<IntegrationRuntimeCustomSetupScriptProperties>("CustomSetupScriptProperties", ["customSetupScriptProperties"]);
+        _dataProxyProperties = DefineModelProperty<IntegrationRuntimeDataProxyProperties>("DataProxyProperties", ["dataProxyProperties"]);
+        _edition = DefineProperty<IntegrationRuntimeEdition>("Edition", ["edition"]);
+        _expressCustomSetupProperties = DefineListProperty<CustomSetupBase>("ExpressCustomSetupProperties", ["expressCustomSetupProperties"]);
+        _packageStores = DefineListProperty<DataFactoryPackageStore>("PackageStores", ["packageStores"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["credential"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

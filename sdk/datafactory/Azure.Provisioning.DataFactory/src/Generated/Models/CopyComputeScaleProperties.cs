@@ -74,8 +74,8 @@ public partial class CopyComputeScaleProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataIntegrationUnit = DefineProperty<int>("DataIntegrationUnit", ["DataIntegrationUnit"]);
-        _timeToLive = DefineProperty<int>("TimeToLive", ["TimeToLive"]);
+        _dataIntegrationUnit = DefineProperty<int>("DataIntegrationUnit", ["dataIntegrationUnit"]);
+        _timeToLive = DefineProperty<int>("TimeToLive", ["timeToLive"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

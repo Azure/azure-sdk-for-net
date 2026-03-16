@@ -61,7 +61,8 @@ public partial class ParquetSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<ParquetWriteSettings>("FormatSettings", ["FormatSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ParquetSink");
+        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<ParquetWriteSettings>("FormatSettings", ["formatSettings"]);
     }
 }

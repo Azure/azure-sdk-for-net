@@ -95,8 +95,8 @@ public partial class DataFactoryCredential : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _annotations = DefineListProperty<BinaryData>("Annotations", ["Annotations"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _annotations = DefineListProperty<BinaryData>("Annotations", ["annotations"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

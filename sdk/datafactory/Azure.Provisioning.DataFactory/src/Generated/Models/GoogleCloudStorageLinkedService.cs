@@ -77,9 +77,10 @@ public partial class GoogleCloudStorageLinkedService : DataFactoryLinkedServiceP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _accessKeyId = DefineProperty<string>("AccessKeyId", ["AccessKeyId"]);
-        _secretAccessKey = DefineModelProperty<DataFactorySecret>("SecretAccessKey", ["SecretAccessKey"]);
-        _serviceUri = DefineProperty<string>("ServiceUri", ["ServiceUri"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "GoogleCloudStorage");
+        _accessKeyId = DefineProperty<string>("AccessKeyId", ["typeProperties", "accessKeyId"]);
+        _secretAccessKey = DefineModelProperty<DataFactorySecret>("SecretAccessKey", ["typeProperties", "secretAccessKey"]);
+        _serviceUri = DefineProperty<string>("ServiceUri", ["typeProperties", "serviceUrl"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

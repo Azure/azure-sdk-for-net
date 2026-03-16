@@ -58,7 +58,8 @@ public partial class DelimitedTextReadSettings : FormatReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _skipLineCount = DefineProperty<int>("SkipLineCount", ["SkipLineCount"]);
-        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["CompressionProperties"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "DelimitedTextReadSettings");
+        _skipLineCount = DefineProperty<int>("SkipLineCount", ["skipLineCount"]);
+        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["compressionProperties"]);
     }
 }

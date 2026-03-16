@@ -104,12 +104,12 @@ public partial class MarketoLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["UseEncryptedEndpoints"]);
-        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["UseHostVerification"]);
-        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["UsePeerVerification"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["typeProperties", "useEncryptedEndpoints"]);
+        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["typeProperties", "useHostVerification"]);
+        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["typeProperties", "usePeerVerification"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

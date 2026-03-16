@@ -61,8 +61,9 @@ public partial class AzureDataExplorerSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _ingestionMappingName = DefineProperty<string>("IngestionMappingName", ["IngestionMappingName"]);
-        _ingestionMappingAsJson = DefineProperty<string>("IngestionMappingAsJson", ["IngestionMappingAsJson"]);
-        _flushImmediately = DefineProperty<bool>("FlushImmediately", ["FlushImmediately"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureDataExplorerSink");
+        _ingestionMappingName = DefineProperty<string>("IngestionMappingName", ["ingestionMappingName"]);
+        _ingestionMappingAsJson = DefineProperty<string>("IngestionMappingAsJson", ["ingestionMappingAsJson"]);
+        _flushImmediately = DefineProperty<bool>("FlushImmediately", ["flushImmediately"]);
     }
 }

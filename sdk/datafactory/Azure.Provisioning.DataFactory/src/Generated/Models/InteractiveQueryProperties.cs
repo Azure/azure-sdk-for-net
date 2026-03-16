@@ -47,7 +47,7 @@ public partial class InteractiveQueryProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _status = DefineProperty<InteractiveCapabilityStatus>("Status", ["Status"], isOutput: true);
-        _autoTerminationMinutes = DefineProperty<int>("AutoTerminationMinutes", ["AutoTerminationMinutes"], isOutput: true);
+        _status = DefineProperty<InteractiveCapabilityStatus>("Status", ["status"], isOutput: true);
+        _autoTerminationMinutes = DefineProperty<int>("AutoTerminationMinutes", ["autoTerminationMinutes"], isOutput: true);
     }
 }

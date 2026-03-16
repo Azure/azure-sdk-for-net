@@ -118,13 +118,13 @@ public partial class JiraLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["UseEncryptedEndpoints"]);
-        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["UseHostVerification"]);
-        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["UsePeerVerification"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["typeProperties", "useEncryptedEndpoints"]);
+        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["typeProperties", "useHostVerification"]);
+        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["typeProperties", "usePeerVerification"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

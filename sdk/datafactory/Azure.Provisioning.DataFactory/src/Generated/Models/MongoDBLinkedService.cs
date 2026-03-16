@@ -140,15 +140,15 @@ public partial class MongoDBLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _authenticationType = DefineProperty<MongoDBAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _databaseName = DefineProperty<string>("DatabaseName", ["DatabaseName"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _authSource = DefineProperty<string>("AuthSource", ["AuthSource"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _enableSsl = DefineProperty<bool>("EnableSsl", ["EnableSsl"]);
-        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["AllowSelfSignedServerCert"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _authenticationType = DefineProperty<MongoDBAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _databaseName = DefineProperty<string>("DatabaseName", ["typeProperties", "databaseName"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _authSource = DefineProperty<string>("AuthSource", ["typeProperties", "authSource"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _enableSsl = DefineProperty<bool>("EnableSsl", ["typeProperties", "enableSsl"]);
+        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["typeProperties", "allowSelfSignedServerCert"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

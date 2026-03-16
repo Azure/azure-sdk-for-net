@@ -52,7 +52,8 @@ public partial class SftpWriteSettings : StoreWriteSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _operationTimeout = DefineProperty<string>("OperationTimeout", ["OperationTimeout"]);
-        _useTempFileRename = DefineProperty<bool>("UseTempFileRename", ["UseTempFileRename"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SftpWriteSettings");
+        _operationTimeout = DefineProperty<string>("OperationTimeout", ["operationTimeout"]);
+        _useTempFileRename = DefineProperty<bool>("UseTempFileRename", ["useTempFileRename"]);
     }
 }

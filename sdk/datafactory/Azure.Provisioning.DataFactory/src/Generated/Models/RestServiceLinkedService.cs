@@ -266,26 +266,26 @@ public partial class RestServiceLinkedService : DataFactoryLinkedServiceProperti
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["EnableServerCertificateValidation"]);
-        _authenticationType = DefineProperty<RestServiceAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _authHeaders = DefineProperty<BinaryData>("AuthHeaders", ["AuthHeaders"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _azureCloudType = DefineProperty<string>("AzureCloudType", ["AzureCloudType"]);
-        _aadResourceId = DefineProperty<string>("AadResourceId", ["AadResourceId"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _tokenEndpoint = DefineProperty<string>("TokenEndpoint", ["TokenEndpoint"]);
-        _resource = DefineProperty<string>("Resource", ["Resource"]);
-        _scope = DefineProperty<string>("Scope", ["Scope"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["ServicePrincipalEmbeddedCert"]);
-        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["ServicePrincipalEmbeddedCertPassword"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["typeProperties", "enableServerCertificateValidation"]);
+        _authenticationType = DefineProperty<RestServiceAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _authHeaders = DefineProperty<BinaryData>("AuthHeaders", ["typeProperties", "authHeaders"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _azureCloudType = DefineProperty<string>("AzureCloudType", ["typeProperties", "azureCloudType"]);
+        _aadResourceId = DefineProperty<string>("AadResourceId", ["typeProperties", "aadResourceId"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _tokenEndpoint = DefineProperty<string>("TokenEndpoint", ["typeProperties", "tokenEndpoint"]);
+        _resource = DefineProperty<string>("Resource", ["typeProperties", "resource"]);
+        _scope = DefineProperty<string>("Scope", ["typeProperties", "scope"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["typeProperties", "servicePrincipalEmbeddedCert"]);
+        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["typeProperties", "servicePrincipalEmbeddedCertPassword"]);
     }
 }

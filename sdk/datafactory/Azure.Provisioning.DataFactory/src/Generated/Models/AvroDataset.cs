@@ -79,8 +79,8 @@ public partial class AvroDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _avroCompressionCodec = DefineProperty<string>("AvroCompressionCodec", ["AvroCompressionCodec"]);
-        _avroCompressionLevel = DefineProperty<int>("AvroCompressionLevel", ["AvroCompressionLevel"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _avroCompressionCodec = DefineProperty<string>("AvroCompressionCodec", ["typeProperties", "avroCompressionCodec"]);
+        _avroCompressionLevel = DefineProperty<int>("AvroCompressionLevel", ["typeProperties", "avroCompressionLevel"]);
     }
 }

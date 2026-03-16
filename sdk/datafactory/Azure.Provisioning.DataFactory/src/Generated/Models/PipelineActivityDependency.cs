@@ -72,8 +72,8 @@ public partial class PipelineActivityDependency : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _activity = DefineProperty<string>("Activity", ["Activity"]);
-        _dependencyConditions = DefineListProperty<DependencyCondition>("DependencyConditions", ["DependencyConditions"]);
+        _activity = DefineProperty<string>("Activity", ["activity"]);
+        _dependencyConditions = DefineListProperty<DependencyCondition>("DependencyConditions", ["dependencyConditions"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

@@ -83,7 +83,8 @@ public partial class OrcSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "OrcSource");
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["storeSettings"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

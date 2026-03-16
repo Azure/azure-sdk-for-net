@@ -49,6 +49,6 @@ public partial class DataFactoryPackageStore : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _packageStoreLinkedService = DefineModelProperty<EntityReference>("PackageStoreLinkedService", ["PackageStoreLinkedService"]);
+        _packageStoreLinkedService = DefineModelProperty<EntityReference>("PackageStoreLinkedService", ["packageStoreLinkedService"]);
     }
 }

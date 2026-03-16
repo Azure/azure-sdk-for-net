@@ -92,9 +92,10 @@ public partial class SalesforceServiceCloudV2Source : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _soqlQuery = DefineProperty<string>("SoqlQuery", ["SoqlQuery"]);
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _includeDeletedObjects = DefineProperty<bool>("IncludeDeletedObjects", ["IncludeDeletedObjects"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceServiceCloudV2Source");
+        _soqlQuery = DefineProperty<string>("SoqlQuery", ["SOQLQuery"]);
+        _query = DefineProperty<string>("Query", ["query"]);
+        _includeDeletedObjects = DefineProperty<bool>("IncludeDeletedObjects", ["includeDeletedObjects"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

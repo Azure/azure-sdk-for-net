@@ -123,12 +123,13 @@ public partial class OracleSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _oracleReaderQuery = DefineProperty<string>("OracleReaderQuery", ["OracleReaderQuery"]);
-        _queryTimeout = DefineProperty<string>("QueryTimeout", ["QueryTimeout"]);
-        _partitionOption = DefineProperty<string>("PartitionOption", ["PartitionOption"]);
-        _partitionSettings = DefineModelProperty<OraclePartitionSettings>("PartitionSettings", ["PartitionSettings"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
-        _numberPrecision = DefineProperty<int>("NumberPrecision", ["NumberPrecision"]);
-        _numberScale = DefineProperty<int>("NumberScale", ["NumberScale"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "OracleSource");
+        _oracleReaderQuery = DefineProperty<string>("OracleReaderQuery", ["oracleReaderQuery"]);
+        _queryTimeout = DefineProperty<string>("QueryTimeout", ["queryTimeout"]);
+        _partitionOption = DefineProperty<string>("PartitionOption", ["partitionOption"]);
+        _partitionSettings = DefineModelProperty<OraclePartitionSettings>("PartitionSettings", ["partitionSettings"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
+        _numberPrecision = DefineProperty<int>("NumberPrecision", ["numberPrecision"]);
+        _numberScale = DefineProperty<int>("NumberScale", ["numberScale"]);
     }
 }

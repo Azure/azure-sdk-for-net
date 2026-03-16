@@ -61,7 +61,8 @@ public partial class IcebergSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<IcebergWriteSettings>("FormatSettings", ["FormatSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "IcebergSink");
+        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<IcebergWriteSettings>("FormatSettings", ["formatSettings"]);
     }
 }

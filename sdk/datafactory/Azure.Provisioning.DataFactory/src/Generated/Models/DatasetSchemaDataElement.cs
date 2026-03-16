@@ -74,8 +74,8 @@ public partial class DatasetSchemaDataElement : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _schemaColumnName = DefineProperty<string>("SchemaColumnName", ["SchemaColumnName"]);
-        _schemaColumnType = DefineProperty<string>("SchemaColumnType", ["SchemaColumnType"]);
+        _schemaColumnName = DefineProperty<string>("SchemaColumnName", ["name"]);
+        _schemaColumnType = DefineProperty<string>("SchemaColumnType", ["type"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

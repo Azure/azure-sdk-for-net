@@ -89,10 +89,11 @@ public partial class AmazonS3CompatibleLinkedService : DataFactoryLinkedServiceP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _accessKeyId = DefineProperty<string>("AccessKeyId", ["AccessKeyId"]);
-        _secretAccessKey = DefineModelProperty<DataFactorySecret>("SecretAccessKey", ["SecretAccessKey"]);
-        _serviceUri = DefineProperty<string>("ServiceUri", ["ServiceUri"]);
-        _forcePathStyle = DefineProperty<bool>("ForcePathStyle", ["ForcePathStyle"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AmazonS3Compatible");
+        _accessKeyId = DefineProperty<string>("AccessKeyId", ["typeProperties", "accessKeyId"]);
+        _secretAccessKey = DefineModelProperty<DataFactorySecret>("SecretAccessKey", ["typeProperties", "secretAccessKey"]);
+        _serviceUri = DefineProperty<string>("ServiceUri", ["typeProperties", "serviceUrl"]);
+        _forcePathStyle = DefineProperty<bool>("ForcePathStyle", ["typeProperties", "forcePathStyle"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

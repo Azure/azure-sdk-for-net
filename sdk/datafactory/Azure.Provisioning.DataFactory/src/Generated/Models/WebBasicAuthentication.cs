@@ -50,7 +50,7 @@ public partial class WebBasicAuthentication : WebLinkedServiceTypeProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
+        _username = DefineProperty<string>("Username", ["username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["password"]);
     }
 }

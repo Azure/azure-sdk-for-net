@@ -148,16 +148,17 @@ public partial class GreenplumLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _authenticationType = DefineProperty<GreenplumAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _sslMode = DefineProperty<int>("SslMode", ["SslMode"]);
-        _connectionTimeout = DefineProperty<int>("ConnectionTimeout", ["ConnectionTimeout"]);
-        _commandTimeout = DefineProperty<int>("CommandTimeout", ["CommandTimeout"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Greenplum");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "pwd"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _authenticationType = DefineProperty<GreenplumAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _sslMode = DefineProperty<int>("SslMode", ["typeProperties", "sslMode"]);
+        _connectionTimeout = DefineProperty<int>("ConnectionTimeout", ["typeProperties", "connectionTimeout"]);
+        _commandTimeout = DefineProperty<int>("CommandTimeout", ["typeProperties", "commandTimeout"]);
     }
 }

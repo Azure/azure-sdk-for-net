@@ -77,8 +77,8 @@ public partial class ParquetWriteSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _maxRowsPerFile = DefineProperty<int>("MaxRowsPerFile", ["MaxRowsPerFile"]);
-        _fileNamePrefix = DefineProperty<string>("FileNamePrefix", ["FileNamePrefix"]);
+        _maxRowsPerFile = DefineProperty<int>("MaxRowsPerFile", ["maxRowsPerFile"]);
+        _fileNamePrefix = DefineProperty<string>("FileNamePrefix", ["fileNamePrefix"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

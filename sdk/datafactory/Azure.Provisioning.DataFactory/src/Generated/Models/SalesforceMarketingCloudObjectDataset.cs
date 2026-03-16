@@ -39,6 +39,6 @@ public partial class SalesforceMarketingCloudObjectDataset : DataFactoryDatasetP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
     }
 }

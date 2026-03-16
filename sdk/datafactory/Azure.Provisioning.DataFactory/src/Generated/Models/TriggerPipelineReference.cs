@@ -62,7 +62,7 @@ public partial class TriggerPipelineReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _pipelineReference = DefineModelProperty<DataFactoryPipelineReference>("PipelineReference", ["PipelineReference"]);
-        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["Parameters"]);
+        _pipelineReference = DefineModelProperty<DataFactoryPipelineReference>("PipelineReference", ["pipelineReference"]);
+        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["parameters"]);
     }
 }

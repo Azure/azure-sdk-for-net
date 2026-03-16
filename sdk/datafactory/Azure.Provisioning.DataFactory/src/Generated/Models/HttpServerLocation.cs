@@ -39,6 +39,7 @@ public partial class HttpServerLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _relativeUri = DefineProperty<string>("RelativeUri", ["RelativeUri"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "HttpServerLocation");
+        _relativeUri = DefineProperty<string>("RelativeUri", ["relativeUrl"]);
     }
 }

@@ -167,12 +167,12 @@ public partial class CopySink : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBatchSize = DefineProperty<int>("WriteBatchSize", ["WriteBatchSize"]);
-        _writeBatchTimeout = DefineProperty<string>("WriteBatchTimeout", ["WriteBatchTimeout"]);
-        _sinkRetryCount = DefineProperty<int>("SinkRetryCount", ["SinkRetryCount"]);
-        _sinkRetryWait = DefineProperty<string>("SinkRetryWait", ["SinkRetryWait"]);
-        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["MaxConcurrentConnections"]);
-        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["DisableMetricsCollection"]);
+        _writeBatchSize = DefineProperty<int>("WriteBatchSize", ["writeBatchSize"]);
+        _writeBatchTimeout = DefineProperty<string>("WriteBatchTimeout", ["writeBatchTimeout"]);
+        _sinkRetryCount = DefineProperty<int>("SinkRetryCount", ["sinkRetryCount"]);
+        _sinkRetryWait = DefineProperty<string>("SinkRetryWait", ["sinkRetryWait"]);
+        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["maxConcurrentConnections"]);
+        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["disableMetricsCollection"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

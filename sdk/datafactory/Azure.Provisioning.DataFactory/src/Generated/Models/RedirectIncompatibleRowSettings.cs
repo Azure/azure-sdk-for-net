@@ -77,8 +77,8 @@ public partial class RedirectIncompatibleRowSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServiceName = DefineProperty<string>("LinkedServiceName", ["LinkedServiceName"]);
-        _path = DefineProperty<string>("Path", ["Path"]);
+        _linkedServiceName = DefineProperty<string>("LinkedServiceName", ["linkedServiceName"]);
+        _path = DefineProperty<string>("Path", ["path"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

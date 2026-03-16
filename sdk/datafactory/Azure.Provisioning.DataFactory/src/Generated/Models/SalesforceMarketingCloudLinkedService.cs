@@ -125,12 +125,13 @@ public partial class SalesforceMarketingCloudLinkedService : DataFactoryLinkedSe
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["ConnectionProperties"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["UseEncryptedEndpoints"]);
-        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["UseHostVerification"]);
-        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["UsePeerVerification"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceMarketingCloud");
+        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["typeProperties", "connectionProperties"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["typeProperties", "useEncryptedEndpoints"]);
+        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["typeProperties", "useHostVerification"]);
+        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["typeProperties", "usePeerVerification"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

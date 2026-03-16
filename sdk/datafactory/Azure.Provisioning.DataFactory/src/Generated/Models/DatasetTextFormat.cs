@@ -133,14 +133,15 @@ public partial class DatasetTextFormat : DatasetStorageFormat
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _columnDelimiter = DefineProperty<string>("ColumnDelimiter", ["ColumnDelimiter"]);
-        _rowDelimiter = DefineProperty<string>("RowDelimiter", ["RowDelimiter"]);
-        _escapeChar = DefineProperty<string>("EscapeChar", ["EscapeChar"]);
-        _quoteChar = DefineProperty<string>("QuoteChar", ["QuoteChar"]);
-        _nullValue = DefineProperty<string>("NullValue", ["NullValue"]);
-        _encodingName = DefineProperty<string>("EncodingName", ["EncodingName"]);
-        _treatEmptyAsNull = DefineProperty<bool>("TreatEmptyAsNull", ["TreatEmptyAsNull"]);
-        _skipLineCount = DefineProperty<int>("SkipLineCount", ["SkipLineCount"]);
-        _firstRowAsHeader = DefineProperty<bool>("FirstRowAsHeader", ["FirstRowAsHeader"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "TextFormat");
+        _columnDelimiter = DefineProperty<string>("ColumnDelimiter", ["columnDelimiter"]);
+        _rowDelimiter = DefineProperty<string>("RowDelimiter", ["rowDelimiter"]);
+        _escapeChar = DefineProperty<string>("EscapeChar", ["escapeChar"]);
+        _quoteChar = DefineProperty<string>("QuoteChar", ["quoteChar"]);
+        _nullValue = DefineProperty<string>("NullValue", ["nullValue"]);
+        _encodingName = DefineProperty<string>("EncodingName", ["encodingName"]);
+        _treatEmptyAsNull = DefineProperty<bool>("TreatEmptyAsNull", ["treatEmptyAsNull"]);
+        _skipLineCount = DefineProperty<int>("SkipLineCount", ["skipLineCount"]);
+        _firstRowAsHeader = DefineProperty<bool>("FirstRowAsHeader", ["firstRowAsHeader"]);
     }
 }

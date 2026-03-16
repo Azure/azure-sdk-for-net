@@ -111,9 +111,9 @@ public partial class GetDatasetMetadataActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["Dataset"]);
-        _fieldList = DefineListProperty<BinaryData>("FieldList", ["FieldList"]);
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<FormatReadSettings>("FormatSettings", ["FormatSettings"]);
+        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["typeProperties", "dataset"]);
+        _fieldList = DefineListProperty<BinaryData>("FieldList", ["typeProperties", "fieldList"]);
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["typeProperties", "storeSettings"]);
+        _formatSettings = DefineModelProperty<FormatReadSettings>("FormatSettings", ["typeProperties", "formatSettings"]);
     }
 }

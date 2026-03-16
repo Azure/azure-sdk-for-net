@@ -121,12 +121,12 @@ public partial class DataLakeAnalyticsUsqlActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _scriptPath = DefineProperty<string>("ScriptPath", ["ScriptPath"]);
-        _scriptLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ScriptLinkedService", ["ScriptLinkedService"]);
-        _degreeOfParallelism = DefineProperty<int>("DegreeOfParallelism", ["DegreeOfParallelism"]);
-        _priority = DefineProperty<int>("Priority", ["Priority"]);
-        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["Parameters"]);
-        _runtimeVersion = DefineProperty<string>("RuntimeVersion", ["RuntimeVersion"]);
-        _compilationMode = DefineProperty<string>("CompilationMode", ["CompilationMode"]);
+        _scriptPath = DefineProperty<string>("ScriptPath", ["typeProperties", "scriptPath"]);
+        _scriptLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ScriptLinkedService", ["typeProperties", "scriptLinkedService"]);
+        _degreeOfParallelism = DefineProperty<int>("DegreeOfParallelism", ["typeProperties", "degreeOfParallelism"]);
+        _priority = DefineProperty<int>("Priority", ["typeProperties", "priority"]);
+        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["typeProperties", "parameters"]);
+        _runtimeVersion = DefineProperty<string>("RuntimeVersion", ["typeProperties", "runtimeVersion"]);
+        _compilationMode = DefineProperty<string>("CompilationMode", ["typeProperties", "compilationMode"]);
     }
 }

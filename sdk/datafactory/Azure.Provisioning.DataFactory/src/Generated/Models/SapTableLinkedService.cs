@@ -208,21 +208,22 @@ public partial class SapTableLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _systemNumber = DefineProperty<string>("SystemNumber", ["SystemNumber"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _language = DefineProperty<string>("Language", ["Language"]);
-        _systemId = DefineProperty<string>("SystemId", ["SystemId"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _messageServer = DefineProperty<string>("MessageServer", ["MessageServer"]);
-        _messageServerService = DefineProperty<string>("MessageServerService", ["MessageServerService"]);
-        _sncFlag = DefineProperty<bool>("SncFlag", ["SncFlag"]);
-        _sncMyName = DefineProperty<string>("SncMyName", ["SncMyName"]);
-        _sncPartnerName = DefineProperty<string>("SncPartnerName", ["SncPartnerName"]);
-        _sncLibraryPath = DefineProperty<string>("SncLibraryPath", ["SncLibraryPath"]);
-        _sncQop = DefineProperty<string>("SncQop", ["SncQop"]);
-        _logonGroup = DefineProperty<string>("LogonGroup", ["LogonGroup"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapTable");
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _systemNumber = DefineProperty<string>("SystemNumber", ["typeProperties", "systemNumber"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _language = DefineProperty<string>("Language", ["typeProperties", "language"]);
+        _systemId = DefineProperty<string>("SystemId", ["typeProperties", "systemId"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _messageServer = DefineProperty<string>("MessageServer", ["typeProperties", "messageServer"]);
+        _messageServerService = DefineProperty<string>("MessageServerService", ["typeProperties", "messageServerService"]);
+        _sncFlag = DefineProperty<bool>("SncFlag", ["typeProperties", "sncMode"]);
+        _sncMyName = DefineProperty<string>("SncMyName", ["typeProperties", "sncMyName"]);
+        _sncPartnerName = DefineProperty<string>("SncPartnerName", ["typeProperties", "sncPartnerName"]);
+        _sncLibraryPath = DefineProperty<string>("SncLibraryPath", ["typeProperties", "sncLibraryPath"]);
+        _sncQop = DefineProperty<string>("SncQop", ["typeProperties", "sncQop"]);
+        _logonGroup = DefineProperty<string>("LogonGroup", ["typeProperties", "logonGroup"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

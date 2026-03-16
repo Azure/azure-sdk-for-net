@@ -103,11 +103,11 @@ public partial class DataFactoryRecurrenceSchedule : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _minutes = DefineListProperty<int>("Minutes", ["Minutes"]);
-        _hours = DefineListProperty<int>("Hours", ["Hours"]);
-        _weekDays = DefineListProperty<DataFactoryDayOfWeek>("WeekDays", ["WeekDays"]);
-        _monthDays = DefineListProperty<int>("MonthDays", ["MonthDays"]);
-        _monthlyOccurrences = DefineListProperty<DataFactoryRecurrenceScheduleOccurrence>("MonthlyOccurrences", ["MonthlyOccurrences"]);
+        _minutes = DefineListProperty<int>("Minutes", ["minutes"]);
+        _hours = DefineListProperty<int>("Hours", ["hours"]);
+        _weekDays = DefineListProperty<DataFactoryDayOfWeek>("WeekDays", ["weekDays"]);
+        _monthDays = DefineListProperty<int>("MonthDays", ["monthDays"]);
+        _monthlyOccurrences = DefineListProperty<DataFactoryRecurrenceScheduleOccurrence>("MonthlyOccurrences", ["monthlyOccurrences"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

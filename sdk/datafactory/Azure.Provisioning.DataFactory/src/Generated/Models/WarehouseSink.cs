@@ -85,10 +85,11 @@ public partial class WarehouseSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
-        _allowCopyCommand = DefineProperty<bool>("AllowCopyCommand", ["AllowCopyCommand"]);
-        _copyCommandSettings = DefineModelProperty<DWCopyCommandSettings>("CopyCommandSettings", ["CopyCommandSettings"]);
-        _tableOption = DefineProperty<string>("TableOption", ["TableOption"]);
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "WarehouseSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
+        _allowCopyCommand = DefineProperty<bool>("AllowCopyCommand", ["allowCopyCommand"]);
+        _copyCommandSettings = DefineModelProperty<DWCopyCommandSettings>("CopyCommandSettings", ["copyCommandSettings"]);
+        _tableOption = DefineProperty<string>("TableOption", ["tableOption"]);
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
     }
 }

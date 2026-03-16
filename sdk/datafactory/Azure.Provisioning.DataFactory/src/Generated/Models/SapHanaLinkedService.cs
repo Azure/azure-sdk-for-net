@@ -93,11 +93,12 @@ public partial class SapHanaLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _authenticationType = DefineProperty<SapHanaAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapHana");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _authenticationType = DefineProperty<SapHanaAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

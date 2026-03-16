@@ -51,7 +51,8 @@ public partial class SapCloudForCustomerSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<SapCloudForCustomerSinkWriteBehavior>("WriteBehavior", ["WriteBehavior"]);
-        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["HttpRequestTimeout"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapCloudForCustomerSink");
+        _writeBehavior = DefineProperty<SapCloudForCustomerSinkWriteBehavior>("WriteBehavior", ["writeBehavior"]);
+        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["httpRequestTimeout"]);
     }
 }

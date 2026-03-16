@@ -96,11 +96,11 @@ public partial class SapBWLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _systemNumber = DefineProperty<string>("SystemNumber", ["SystemNumber"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _systemNumber = DefineProperty<string>("SystemNumber", ["typeProperties", "systemNumber"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

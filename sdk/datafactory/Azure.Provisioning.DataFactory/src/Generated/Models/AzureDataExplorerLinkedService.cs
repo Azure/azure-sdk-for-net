@@ -96,11 +96,11 @@ public partial class AzureDataExplorerLinkedService : DataFactoryLinkedServicePr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

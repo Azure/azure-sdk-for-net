@@ -88,10 +88,10 @@ public partial class ValidationActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _timeout = DefineProperty<string>("Timeout", ["Timeout"]);
-        _sleep = DefineProperty<int>("Sleep", ["Sleep"]);
-        _minimumSize = DefineProperty<int>("MinimumSize", ["MinimumSize"]);
-        _childItems = DefineProperty<bool>("ChildItems", ["ChildItems"]);
-        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["Dataset"]);
+        _timeout = DefineProperty<string>("Timeout", ["typeProperties", "timeout"]);
+        _sleep = DefineProperty<int>("Sleep", ["typeProperties", "sleep"]);
+        _minimumSize = DefineProperty<int>("MinimumSize", ["typeProperties", "minimumSize"]);
+        _childItems = DefineProperty<bool>("ChildItems", ["typeProperties", "childItems"]);
+        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["typeProperties", "dataset"]);
     }
 }

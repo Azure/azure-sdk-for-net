@@ -98,8 +98,8 @@ public partial class DataFactoryPrivateEndpoint : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _properties = DefineModelProperty<DataFactoryPrivateEndpointProperties>("Properties", ["Properties"], isRequired: true);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
+        _properties = DefineModelProperty<DataFactoryPrivateEndpointProperties>("Properties", ["properties"], isRequired: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DataFactoryManagedVirtualNetwork>("Parent", ["parent"], isRequired: true);

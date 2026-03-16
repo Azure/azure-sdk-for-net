@@ -51,7 +51,7 @@ public partial class SalesforceServiceCloudV2ObjectDataset : DataFactoryDatasetP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _objectApiName = DefineProperty<string>("ObjectApiName", ["ObjectApiName"]);
-        _reportId = DefineProperty<string>("ReportId", ["ReportId"]);
+        _objectApiName = DefineProperty<string>("ObjectApiName", ["typeProperties", "objectApiName"]);
+        _reportId = DefineProperty<string>("ReportId", ["typeProperties", "reportId"]);
     }
 }

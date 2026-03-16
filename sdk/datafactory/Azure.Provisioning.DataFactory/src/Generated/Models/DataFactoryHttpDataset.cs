@@ -105,11 +105,11 @@ public partial class DataFactoryHttpDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _relativeUri = DefineProperty<string>("RelativeUri", ["RelativeUri"]);
-        _requestMethod = DefineProperty<string>("RequestMethod", ["RequestMethod"]);
-        _requestBody = DefineProperty<string>("RequestBody", ["RequestBody"]);
-        _additionalHeaders = DefineProperty<string>("AdditionalHeaders", ["AdditionalHeaders"]);
-        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["Format"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _relativeUri = DefineProperty<string>("RelativeUri", ["typeProperties", "relativeUrl"]);
+        _requestMethod = DefineProperty<string>("RequestMethod", ["typeProperties", "requestMethod"]);
+        _requestBody = DefineProperty<string>("RequestBody", ["typeProperties", "requestBody"]);
+        _additionalHeaders = DefineProperty<string>("AdditionalHeaders", ["typeProperties", "additionalHeaders"]);
+        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["typeProperties", "format"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

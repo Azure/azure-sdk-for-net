@@ -99,9 +99,10 @@ public partial class SapOdpSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _extractionMode = DefineProperty<string>("ExtractionMode", ["ExtractionMode"]);
-        _subscriberProcess = DefineProperty<string>("SubscriberProcess", ["SubscriberProcess"]);
-        _selection = DefineProperty<BinaryData>("Selection", ["Selection"]);
-        _projection = DefineProperty<BinaryData>("Projection", ["Projection"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapOdpSource");
+        _extractionMode = DefineProperty<string>("ExtractionMode", ["extractionMode"]);
+        _subscriberProcess = DefineProperty<string>("SubscriberProcess", ["subscriberProcess"]);
+        _selection = DefineProperty<BinaryData>("Selection", ["selection"]);
+        _projection = DefineProperty<BinaryData>("Projection", ["projection"]);
     }
 }

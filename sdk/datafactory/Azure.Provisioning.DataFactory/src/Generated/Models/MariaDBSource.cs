@@ -39,6 +39,7 @@ public partial class MariaDBSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MariaDBSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

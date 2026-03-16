@@ -406,22 +406,22 @@ public partial class CopyActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _inputs = DefineListProperty<DatasetReference>("Inputs", ["Inputs"]);
-        _outputs = DefineListProperty<DatasetReference>("Outputs", ["Outputs"]);
-        _source = DefineModelProperty<CopyActivitySource>("Source", ["Source"]);
-        _sink = DefineModelProperty<CopySink>("Sink", ["Sink"]);
-        _translator = DefineProperty<BinaryData>("Translator", ["Translator"]);
-        _enableStaging = DefineProperty<bool>("EnableStaging", ["EnableStaging"]);
-        _stagingSettings = DefineModelProperty<StagingSettings>("StagingSettings", ["StagingSettings"]);
-        _parallelCopies = DefineProperty<int>("ParallelCopies", ["ParallelCopies"]);
-        _dataIntegrationUnits = DefineProperty<int>("DataIntegrationUnits", ["DataIntegrationUnits"]);
-        _enableSkipIncompatibleRow = DefineProperty<bool>("EnableSkipIncompatibleRow", ["EnableSkipIncompatibleRow"]);
-        _redirectIncompatibleRowSettings = DefineModelProperty<RedirectIncompatibleRowSettings>("RedirectIncompatibleRowSettings", ["RedirectIncompatibleRowSettings"]);
-        _logStorageSettings = DefineModelProperty<LogStorageSettings>("LogStorageSettings", ["LogStorageSettings"]);
-        _logSettings = DefineModelProperty<DataFactoryLogSettings>("LogSettings", ["LogSettings"]);
-        _preserveRules = DefineListProperty<BinaryData>("PreserveRules", ["PreserveRules"]);
-        _preserve = DefineListProperty<BinaryData>("Preserve", ["Preserve"]);
-        _validateDataConsistency = DefineProperty<bool>("ValidateDataConsistency", ["ValidateDataConsistency"]);
-        _skipErrorFile = DefineModelProperty<SkipErrorFile>("SkipErrorFile", ["SkipErrorFile"]);
+        _inputs = DefineListProperty<DatasetReference>("Inputs", ["inputs"]);
+        _outputs = DefineListProperty<DatasetReference>("Outputs", ["outputs"]);
+        _source = DefineModelProperty<CopyActivitySource>("Source", ["typeProperties", "source"]);
+        _sink = DefineModelProperty<CopySink>("Sink", ["typeProperties", "sink"]);
+        _translator = DefineProperty<BinaryData>("Translator", ["typeProperties", "translator"]);
+        _enableStaging = DefineProperty<bool>("EnableStaging", ["typeProperties", "enableStaging"]);
+        _stagingSettings = DefineModelProperty<StagingSettings>("StagingSettings", ["typeProperties", "stagingSettings"]);
+        _parallelCopies = DefineProperty<int>("ParallelCopies", ["typeProperties", "parallelCopies"]);
+        _dataIntegrationUnits = DefineProperty<int>("DataIntegrationUnits", ["typeProperties", "dataIntegrationUnits"]);
+        _enableSkipIncompatibleRow = DefineProperty<bool>("EnableSkipIncompatibleRow", ["typeProperties", "enableSkipIncompatibleRow"]);
+        _redirectIncompatibleRowSettings = DefineModelProperty<RedirectIncompatibleRowSettings>("RedirectIncompatibleRowSettings", ["typeProperties", "redirectIncompatibleRowSettings"]);
+        _logStorageSettings = DefineModelProperty<LogStorageSettings>("LogStorageSettings", ["typeProperties", "logStorageSettings"]);
+        _logSettings = DefineModelProperty<DataFactoryLogSettings>("LogSettings", ["typeProperties", "logSettings"]);
+        _preserveRules = DefineListProperty<BinaryData>("PreserveRules", ["typeProperties", "preserveRules"]);
+        _preserve = DefineListProperty<BinaryData>("Preserve", ["typeProperties", "preserve"]);
+        _validateDataConsistency = DefineProperty<bool>("ValidateDataConsistency", ["typeProperties", "validateDataConsistency"]);
+        _skipErrorFile = DefineModelProperty<SkipErrorFile>("SkipErrorFile", ["typeProperties", "skipErrorFile"]);
     }
 }

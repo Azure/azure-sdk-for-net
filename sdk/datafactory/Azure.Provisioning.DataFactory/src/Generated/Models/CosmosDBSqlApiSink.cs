@@ -39,6 +39,7 @@ public partial class CosmosDBSqlApiSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "CosmosDbSqlApiSink");
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
     }
 }

@@ -50,7 +50,8 @@ public partial class AmazonS3CompatibleLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
-        _version = DefineProperty<string>("Version", ["Version"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AmazonS3CompatibleLocation");
+        _bucketName = DefineProperty<string>("BucketName", ["bucketName"]);
+        _version = DefineProperty<string>("Version", ["version"]);
     }
 }

@@ -38,6 +38,7 @@ public partial class SybaseSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SybaseSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

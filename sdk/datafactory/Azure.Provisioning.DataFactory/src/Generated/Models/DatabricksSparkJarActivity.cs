@@ -89,8 +89,8 @@ public partial class DatabricksSparkJarActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _mainClassName = DefineProperty<string>("MainClassName", ["MainClassName"]);
-        _parameters = DefineListProperty<BinaryData>("Parameters", ["Parameters"]);
-        _libraries = DefineListProperty<BicepDictionary<BinaryData>>("Libraries", ["Libraries"]);
+        _mainClassName = DefineProperty<string>("MainClassName", ["typeProperties", "mainClassName"]);
+        _parameters = DefineListProperty<BinaryData>("Parameters", ["typeProperties", "parameters"]);
+        _libraries = DefineListProperty<BicepDictionary<BinaryData>>("Libraries", ["typeProperties", "libraries"]);
     }
 }

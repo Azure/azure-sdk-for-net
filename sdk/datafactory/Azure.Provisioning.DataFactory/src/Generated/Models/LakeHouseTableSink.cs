@@ -75,8 +75,9 @@ public partial class LakeHouseTableSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableActionOption = DefineProperty<string>("TableActionOption", ["TableActionOption"]);
-        _partitionOption = DefineProperty<string>("PartitionOption", ["PartitionOption"]);
-        _partitionNameList = DefineProperty<BinaryData>("PartitionNameList", ["PartitionNameList"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "LakeHouseTableSink");
+        _tableActionOption = DefineProperty<string>("TableActionOption", ["tableActionOption"]);
+        _partitionOption = DefineProperty<string>("PartitionOption", ["partitionOption"]);
+        _partitionNameList = DefineProperty<BinaryData>("PartitionNameList", ["partitionNameList"]);
     }
 }

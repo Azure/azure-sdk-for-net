@@ -50,7 +50,8 @@ public partial class GoogleCloudStorageLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
-        _version = DefineProperty<string>("Version", ["Version"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "GoogleCloudStorageLocation");
+        _bucketName = DefineProperty<string>("BucketName", ["bucketName"]);
+        _version = DefineProperty<string>("Version", ["version"]);
     }
 }

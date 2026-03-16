@@ -50,7 +50,7 @@ public partial class ScriptActivityTypeLogSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _logDestination = DefineProperty<ScriptActivityLogDestination>("LogDestination", ["LogDestination"]);
-        _logLocationSettings = DefineModelProperty<LogLocationSettings>("LogLocationSettings", ["LogLocationSettings"]);
+        _logDestination = DefineProperty<ScriptActivityLogDestination>("LogDestination", ["logDestination"]);
+        _logLocationSettings = DefineModelProperty<LogLocationSettings>("LogLocationSettings", ["logLocationSettings"]);
     }
 }

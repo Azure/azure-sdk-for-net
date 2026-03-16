@@ -85,9 +85,9 @@ public partial class StagingSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _path = DefineProperty<string>("Path", ["Path"]);
-        _enableCompression = DefineProperty<bool>("EnableCompression", ["EnableCompression"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["linkedServiceName"]);
+        _path = DefineProperty<string>("Path", ["path"]);
+        _enableCompression = DefineProperty<bool>("EnableCompression", ["enableCompression"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

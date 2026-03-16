@@ -39,6 +39,7 @@ public partial class AzureBlobFSLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _fileSystem = DefineProperty<string>("FileSystem", ["FileSystem"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureBlobFSLocation");
+        _fileSystem = DefineProperty<string>("FileSystem", ["fileSystem"]);
     }
 }

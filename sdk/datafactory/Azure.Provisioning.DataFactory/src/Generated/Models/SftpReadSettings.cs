@@ -140,15 +140,16 @@ public partial class SftpReadSettings : StoreReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["WildcardFolderPath"]);
-        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["WildcardFileName"]);
-        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["EnablePartitionDiscovery"]);
-        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["PartitionRootPath"]);
-        _fileListPath = DefineProperty<string>("FileListPath", ["FileListPath"]);
-        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["DeleteFilesAfterCompletion"]);
-        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["ModifiedDatetimeStart"]);
-        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["ModifiedDatetimeEnd"]);
-        _disableChunking = DefineProperty<bool>("DisableChunking", ["DisableChunking"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SftpReadSettings");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
+        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["wildcardFolderPath"]);
+        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["wildcardFileName"]);
+        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["enablePartitionDiscovery"]);
+        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["partitionRootPath"]);
+        _fileListPath = DefineProperty<string>("FileListPath", ["fileListPath"]);
+        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["deleteFilesAfterCompletion"]);
+        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["modifiedDatetimeStart"]);
+        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["modifiedDatetimeEnd"]);
+        _disableChunking = DefineProperty<bool>("DisableChunking", ["disableChunking"]);
     }
 }

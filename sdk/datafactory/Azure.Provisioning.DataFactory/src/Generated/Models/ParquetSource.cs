@@ -93,8 +93,9 @@ public partial class ParquetSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<ParquetReadSettings>("FormatSettings", ["FormatSettings"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ParquetSource");
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<ParquetReadSettings>("FormatSettings", ["formatSettings"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

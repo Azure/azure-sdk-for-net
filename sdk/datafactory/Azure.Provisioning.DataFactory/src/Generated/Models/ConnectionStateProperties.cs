@@ -55,8 +55,8 @@ public partial class ConnectionStateProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _actionsRequired = DefineProperty<string>("ActionsRequired", ["ActionsRequired"], isOutput: true);
-        _description = DefineProperty<string>("Description", ["Description"], isOutput: true);
-        _status = DefineProperty<string>("Status", ["Status"], isOutput: true);
+        _actionsRequired = DefineProperty<string>("ActionsRequired", ["actionsRequired"], isOutput: true);
+        _description = DefineProperty<string>("Description", ["description"], isOutput: true);
+        _status = DefineProperty<string>("Status", ["status"], isOutput: true);
     }
 }

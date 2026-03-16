@@ -99,10 +99,11 @@ public partial class RestSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _requestMethod = DefineProperty<string>("RequestMethod", ["RequestMethod"]);
-        _additionalHeaders = DefineDictionaryProperty<string>("AdditionalHeaders", ["AdditionalHeaders"]);
-        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["HttpRequestTimeout"]);
-        _requestInterval = DefineProperty<BinaryData>("RequestInterval", ["RequestInterval"]);
-        _httpCompressionType = DefineProperty<string>("HttpCompressionType", ["HttpCompressionType"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "RestSink");
+        _requestMethod = DefineProperty<string>("RequestMethod", ["requestMethod"]);
+        _additionalHeaders = DefineDictionaryProperty<string>("AdditionalHeaders", ["additionalHeaders"]);
+        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["httpRequestTimeout"]);
+        _requestInterval = DefineProperty<BinaryData>("RequestInterval", ["requestInterval"]);
+        _httpCompressionType = DefineProperty<string>("HttpCompressionType", ["httpCompressionType"]);
     }
 }

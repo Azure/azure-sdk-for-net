@@ -61,8 +61,9 @@ public partial class DataFactoryBlobSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _treatEmptyAsNull = DefineProperty<bool>("TreatEmptyAsNull", ["TreatEmptyAsNull"]);
-        _skipHeaderLineCount = DefineProperty<int>("SkipHeaderLineCount", ["SkipHeaderLineCount"]);
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "BlobSource");
+        _treatEmptyAsNull = DefineProperty<bool>("TreatEmptyAsNull", ["treatEmptyAsNull"]);
+        _skipHeaderLineCount = DefineProperty<int>("SkipHeaderLineCount", ["skipHeaderLineCount"]);
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
     }
 }

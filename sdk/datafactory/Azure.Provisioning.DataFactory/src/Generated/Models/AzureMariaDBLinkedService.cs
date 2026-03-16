@@ -62,8 +62,9 @@ public partial class AzureMariaDBLinkedService : DataFactoryLinkedServicePropert
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureMariaDB");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "pwd"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

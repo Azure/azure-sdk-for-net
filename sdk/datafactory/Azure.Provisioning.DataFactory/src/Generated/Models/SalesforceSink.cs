@@ -67,8 +67,9 @@ public partial class SalesforceSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<SalesforceSinkWriteBehavior>("WriteBehavior", ["WriteBehavior"]);
-        _externalIdFieldName = DefineProperty<string>("ExternalIdFieldName", ["ExternalIdFieldName"]);
-        _ignoreNullValues = DefineProperty<bool>("IgnoreNullValues", ["IgnoreNullValues"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceSink");
+        _writeBehavior = DefineProperty<SalesforceSinkWriteBehavior>("WriteBehavior", ["writeBehavior"]);
+        _externalIdFieldName = DefineProperty<string>("ExternalIdFieldName", ["externalIdFieldName"]);
+        _ignoreNullValues = DefineProperty<bool>("IgnoreNullValues", ["ignoreNullValues"]);
     }
 }

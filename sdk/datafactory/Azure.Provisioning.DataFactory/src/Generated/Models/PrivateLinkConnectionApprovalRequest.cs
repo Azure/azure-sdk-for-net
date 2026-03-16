@@ -50,7 +50,7 @@ public partial class PrivateLinkConnectionApprovalRequest : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _privateLinkServiceConnectionState = DefineModelProperty<PrivateLinkConnectionState>("PrivateLinkServiceConnectionState", ["PrivateLinkServiceConnectionState"]);
-        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["PrivateEndpointId"]);
+        _privateLinkServiceConnectionState = DefineModelProperty<PrivateLinkConnectionState>("PrivateLinkServiceConnectionState", ["privateLinkServiceConnectionState"]);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["privateEndpoint", "id"]);
     }
 }

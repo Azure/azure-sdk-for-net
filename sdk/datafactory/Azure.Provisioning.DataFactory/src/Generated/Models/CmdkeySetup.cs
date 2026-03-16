@@ -58,8 +58,8 @@ public partial class CmdkeySetup : CustomSetupBase
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _targetName = DefineProperty<string>("TargetName", ["TargetName"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
+        _targetName = DefineProperty<string>("TargetName", ["typeProperties", "targetName"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
     }
 }

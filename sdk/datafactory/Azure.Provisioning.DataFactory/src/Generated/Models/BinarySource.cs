@@ -68,7 +68,8 @@ public partial class BinarySource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<BinaryReadSettings>("FormatSettings", ["FormatSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "BinarySource");
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<BinaryReadSettings>("FormatSettings", ["formatSettings"]);
     }
 }

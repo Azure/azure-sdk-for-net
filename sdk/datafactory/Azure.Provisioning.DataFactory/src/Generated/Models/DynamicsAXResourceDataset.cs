@@ -39,6 +39,6 @@ public partial class DynamicsAXResourceDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _path = DefineProperty<string>("Path", ["Path"]);
+        _path = DefineProperty<string>("Path", ["typeProperties", "path"]);
     }
 }

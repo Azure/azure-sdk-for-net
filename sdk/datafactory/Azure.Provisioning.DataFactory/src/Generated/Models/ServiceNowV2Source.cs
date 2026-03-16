@@ -50,7 +50,8 @@ public partial class ServiceNowV2Source : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _expression = DefineModelProperty<DataFactoryExpressionV2>("Expression", ["Expression"]);
-        _pageSize = DefineProperty<int>("PageSize", ["PageSize"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ServiceNowV2Source");
+        _expression = DefineModelProperty<DataFactoryExpressionV2>("Expression", ["expression"]);
+        _pageSize = DefineProperty<int>("PageSize", ["pageSize"]);
     }
 }

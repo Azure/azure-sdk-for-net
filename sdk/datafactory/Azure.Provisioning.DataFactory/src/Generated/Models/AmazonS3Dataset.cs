@@ -125,13 +125,13 @@ public partial class AmazonS3Dataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
-        _key = DefineProperty<string>("Key", ["Key"]);
-        _prefix = DefineProperty<string>("Prefix", ["Prefix"]);
-        _version = DefineProperty<string>("Version", ["Version"]);
-        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["ModifiedDatetimeStart"]);
-        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["ModifiedDatetimeEnd"]);
-        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["Format"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _bucketName = DefineProperty<string>("BucketName", ["typeProperties", "bucketName"]);
+        _key = DefineProperty<string>("Key", ["typeProperties", "key"]);
+        _prefix = DefineProperty<string>("Prefix", ["typeProperties", "prefix"]);
+        _version = DefineProperty<string>("Version", ["typeProperties", "version"]);
+        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["typeProperties", "modifiedDatetimeStart"]);
+        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["typeProperties", "modifiedDatetimeEnd"]);
+        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["typeProperties", "format"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

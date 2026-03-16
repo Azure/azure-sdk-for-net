@@ -46,6 +46,6 @@ public partial class WebLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _typeProperties = DefineModelProperty<WebLinkedServiceTypeProperties>("TypeProperties", ["TypeProperties"]);
+        _typeProperties = DefineModelProperty<WebLinkedServiceTypeProperties>("TypeProperties", ["typeProperties"]);
     }
 }

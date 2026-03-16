@@ -72,9 +72,10 @@ public partial class AzureTableSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _azureTableDefaultPartitionKeyValue = DefineProperty<string>("AzureTableDefaultPartitionKeyValue", ["AzureTableDefaultPartitionKeyValue"]);
-        _azureTablePartitionKeyName = DefineProperty<string>("AzureTablePartitionKeyName", ["AzureTablePartitionKeyName"]);
-        _azureTableRowKeyName = DefineProperty<string>("AzureTableRowKeyName", ["AzureTableRowKeyName"]);
-        _azureTableInsertType = DefineProperty<string>("AzureTableInsertType", ["AzureTableInsertType"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureTableSink");
+        _azureTableDefaultPartitionKeyValue = DefineProperty<string>("AzureTableDefaultPartitionKeyValue", ["azureTableDefaultPartitionKeyValue"]);
+        _azureTablePartitionKeyName = DefineProperty<string>("AzureTablePartitionKeyName", ["azureTablePartitionKeyName"]);
+        _azureTableRowKeyName = DefineProperty<string>("AzureTableRowKeyName", ["azureTableRowKeyName"]);
+        _azureTableInsertType = DefineProperty<string>("AzureTableInsertType", ["azureTableInsertType"]);
     }
 }

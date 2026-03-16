@@ -186,19 +186,19 @@ public partial class ODataLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _authenticationType = DefineProperty<ODataAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _authHeaders = DefineDictionaryProperty<string>("AuthHeaders", ["AuthHeaders"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _azureCloudType = DefineProperty<string>("AzureCloudType", ["AzureCloudType"]);
-        _aadResourceId = DefineProperty<string>("AadResourceId", ["AadResourceId"]);
-        _aadServicePrincipalCredentialType = DefineProperty<ODataAadServicePrincipalCredentialType>("AadServicePrincipalCredentialType", ["AadServicePrincipalCredentialType"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["ServicePrincipalEmbeddedCert"]);
-        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["ServicePrincipalEmbeddedCertPassword"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _authenticationType = DefineProperty<ODataAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _authHeaders = DefineDictionaryProperty<string>("AuthHeaders", ["typeProperties", "authHeaders"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _azureCloudType = DefineProperty<string>("AzureCloudType", ["typeProperties", "azureCloudType"]);
+        _aadResourceId = DefineProperty<string>("AadResourceId", ["typeProperties", "aadResourceId"]);
+        _aadServicePrincipalCredentialType = DefineProperty<ODataAadServicePrincipalCredentialType>("AadServicePrincipalCredentialType", ["typeProperties", "aadServicePrincipalCredentialType"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["typeProperties", "servicePrincipalEmbeddedCert"]);
+        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["typeProperties", "servicePrincipalEmbeddedCertPassword"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

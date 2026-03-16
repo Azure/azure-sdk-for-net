@@ -83,8 +83,8 @@ public partial class AzureMLBatchExecutionActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _globalParameters = DefineDictionaryProperty<BinaryData>("GlobalParameters", ["GlobalParameters"]);
-        _webServiceOutputs = DefineDictionaryProperty<AzureMLWebServiceFile>("WebServiceOutputs", ["WebServiceOutputs"]);
-        _webServiceInputs = DefineDictionaryProperty<AzureMLWebServiceFile>("WebServiceInputs", ["WebServiceInputs"]);
+        _globalParameters = DefineDictionaryProperty<BinaryData>("GlobalParameters", ["typeProperties", "globalParameters"]);
+        _webServiceOutputs = DefineDictionaryProperty<AzureMLWebServiceFile>("WebServiceOutputs", ["typeProperties", "webServiceOutputs"]);
+        _webServiceInputs = DefineDictionaryProperty<AzureMLWebServiceFile>("WebServiceInputs", ["typeProperties", "webServiceInputs"]);
     }
 }

@@ -49,7 +49,8 @@ public partial class AzureDataLakeStoreSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _copyBehavior = DefineProperty<string>("CopyBehavior", ["CopyBehavior"]);
-        _enableAdlsSingleFileParallel = DefineProperty<bool>("EnableAdlsSingleFileParallel", ["EnableAdlsSingleFileParallel"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureDataLakeStoreSink");
+        _copyBehavior = DefineProperty<string>("CopyBehavior", ["copyBehavior"]);
+        _enableAdlsSingleFileParallel = DefineProperty<bool>("EnableAdlsSingleFileParallel", ["enableAdlsSingleFileParallel"]);
     }
 }

@@ -52,7 +52,8 @@ public partial class AmazonRedshiftSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _redshiftUnloadSettings = DefineModelProperty<RedshiftUnloadSettings>("RedshiftUnloadSettings", ["RedshiftUnloadSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AmazonRedshiftSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _redshiftUnloadSettings = DefineModelProperty<RedshiftUnloadSettings>("RedshiftUnloadSettings", ["redshiftUnloadSettings"]);
     }
 }

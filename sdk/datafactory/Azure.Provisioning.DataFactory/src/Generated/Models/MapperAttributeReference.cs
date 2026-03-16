@@ -59,7 +59,7 @@ public partial class MapperAttributeReference : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _entity = DefineProperty<string>("Entity", ["Entity"]);
-        _entityConnectionReference = DefineModelProperty<MapperConnectionReference>("EntityConnectionReference", ["EntityConnectionReference"]);
+        _entity = DefineProperty<string>("Entity", ["entity"]);
+        _entityConnectionReference = DefineModelProperty<MapperConnectionReference>("EntityConnectionReference", ["entityConnectionReference"]);
     }
 }

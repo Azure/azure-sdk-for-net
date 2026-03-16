@@ -182,15 +182,15 @@ public partial class DataFactoryChangeDataCapture : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _policy = DefineModelProperty<MapperPolicy>("Policy", ["Policy"], isRequired: true);
-        _sourceConnectionsInfo = DefineListProperty<MapperSourceConnectionsInfo>("SourceConnectionsInfo", ["SourceConnectionsInfo"], isRequired: true);
-        _targetConnectionsInfo = DefineListProperty<MapperTargetConnectionsInfo>("TargetConnectionsInfo", ["TargetConnectionsInfo"], isRequired: true);
+        _policy = DefineModelProperty<MapperPolicy>("Policy", ["properties", "policy"], isRequired: true);
+        _sourceConnectionsInfo = DefineListProperty<MapperSourceConnectionsInfo>("SourceConnectionsInfo", ["properties", "sourceConnectionsInfo"], isRequired: true);
+        _targetConnectionsInfo = DefineListProperty<MapperTargetConnectionsInfo>("TargetConnectionsInfo", ["properties", "targetConnectionsInfo"], isRequired: true);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
-        _allowVnetOverride = DefineProperty<bool>("AllowVnetOverride", ["AllowVnetOverride"]);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _folderName = DefineProperty<string>("FolderName", ["FolderName"]);
-        _status = DefineProperty<string>("Status", ["Status"]);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
+        _allowVnetOverride = DefineProperty<bool>("AllowVnetOverride", ["properties", "allowVNetOverride"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _folderName = DefineProperty<string>("FolderName", ["properties", "folder", "name"]);
+        _status = DefineProperty<string>("Status", ["properties", "status"]);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DataFactoryService>("Parent", ["parent"], isRequired: true);

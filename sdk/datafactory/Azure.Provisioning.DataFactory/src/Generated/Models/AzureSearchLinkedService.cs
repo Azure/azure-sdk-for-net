@@ -61,8 +61,8 @@ public partial class AzureSearchLinkedService : DataFactoryLinkedServiceProperti
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _key = DefineModelProperty<DataFactorySecret>("Key", ["Key"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _key = DefineModelProperty<DataFactorySecret>("Key", ["typeProperties", "key"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

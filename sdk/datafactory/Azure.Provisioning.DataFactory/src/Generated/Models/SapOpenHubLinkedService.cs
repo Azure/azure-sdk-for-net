@@ -153,16 +153,17 @@ public partial class SapOpenHubLinkedService : DataFactoryLinkedServicePropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _systemNumber = DefineProperty<string>("SystemNumber", ["SystemNumber"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _language = DefineProperty<string>("Language", ["Language"]);
-        _systemId = DefineProperty<string>("SystemId", ["SystemId"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _messageServer = DefineProperty<string>("MessageServer", ["MessageServer"]);
-        _messageServerService = DefineProperty<string>("MessageServerService", ["MessageServerService"]);
-        _logonGroup = DefineProperty<string>("LogonGroup", ["LogonGroup"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapOpenHub");
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _systemNumber = DefineProperty<string>("SystemNumber", ["typeProperties", "systemNumber"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _language = DefineProperty<string>("Language", ["typeProperties", "language"]);
+        _systemId = DefineProperty<string>("SystemId", ["typeProperties", "systemId"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _messageServer = DefineProperty<string>("MessageServer", ["typeProperties", "messageServer"]);
+        _messageServerService = DefineProperty<string>("MessageServerService", ["typeProperties", "messageServerService"]);
+        _logonGroup = DefineProperty<string>("LogonGroup", ["typeProperties", "logonGroup"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

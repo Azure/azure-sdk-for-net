@@ -48,7 +48,7 @@ public partial class DataFactoryExpression : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _expressionType = DefineProperty<DataFactoryExpressionType>("ExpressionType", ["ExpressionType"]);
-        _value = DefineProperty<string>("Value", ["Value"]);
+        _expressionType = DefineProperty<DataFactoryExpressionType>("ExpressionType", ["type"]);
+        _value = DefineProperty<string>("Value", ["value"]);
     }
 }

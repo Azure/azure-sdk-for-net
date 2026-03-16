@@ -51,6 +51,6 @@ public partial class CustomDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _typeProperties = DefineProperty<BinaryData>("TypeProperties", ["TypeProperties"]);
+        _typeProperties = DefineProperty<BinaryData>("TypeProperties", ["typeProperties"]);
     }
 }

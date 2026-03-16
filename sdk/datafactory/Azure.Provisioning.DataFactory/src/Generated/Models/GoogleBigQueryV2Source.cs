@@ -39,6 +39,7 @@ public partial class GoogleBigQueryV2Source : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "GoogleBigQueryV2Source");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

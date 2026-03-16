@@ -100,11 +100,12 @@ public partial class SalesforceServiceCloudV2LinkedService : DataFactoryLinkedSe
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _environmentUri = DefineProperty<string>("EnvironmentUri", ["EnvironmentUri"]);
-        _authenticationType = DefineProperty<string>("AuthenticationType", ["AuthenticationType"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _apiVersion = DefineProperty<string>("ApiVersion", ["ApiVersion"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceServiceCloudV2");
+        _environmentUri = DefineProperty<string>("EnvironmentUri", ["typeProperties", "environmentUrl"]);
+        _authenticationType = DefineProperty<string>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _apiVersion = DefineProperty<string>("ApiVersion", ["typeProperties", "apiVersion"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

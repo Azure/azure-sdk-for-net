@@ -97,10 +97,11 @@ public partial class CosmosDBSqlApiSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _pageSize = DefineProperty<int>("PageSize", ["PageSize"]);
-        _preferredRegions = DefineListProperty<string>("PreferredRegions", ["PreferredRegions"]);
-        _detectDatetime = DefineProperty<bool>("DetectDatetime", ["DetectDatetime"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "CosmosDbSqlApiSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _pageSize = DefineProperty<int>("PageSize", ["pageSize"]);
+        _preferredRegions = DefineListProperty<string>("PreferredRegions", ["preferredRegions"]);
+        _detectDatetime = DefineProperty<bool>("DetectDatetime", ["detectDatetime"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

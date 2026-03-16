@@ -39,6 +39,7 @@ public partial class MicrosoftAccessSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MicrosoftAccessSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
     }
 }

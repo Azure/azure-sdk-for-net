@@ -86,9 +86,9 @@ public partial class PipelineExternalComputeScaleProperties : ProvisionableConst
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _timeToLive = DefineProperty<int>("TimeToLive", ["TimeToLive"]);
-        _numberOfPipelineNodes = DefineProperty<int>("NumberOfPipelineNodes", ["NumberOfPipelineNodes"]);
-        _numberOfExternalNodes = DefineProperty<int>("NumberOfExternalNodes", ["NumberOfExternalNodes"]);
+        _timeToLive = DefineProperty<int>("TimeToLive", ["timeToLive"]);
+        _numberOfPipelineNodes = DefineProperty<int>("NumberOfPipelineNodes", ["numberOfPipelineNodes"]);
+        _numberOfExternalNodes = DefineProperty<int>("NumberOfExternalNodes", ["numberOfExternalNodes"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

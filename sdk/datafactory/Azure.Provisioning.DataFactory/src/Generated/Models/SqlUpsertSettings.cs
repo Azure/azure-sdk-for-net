@@ -62,8 +62,8 @@ public partial class SqlUpsertSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _useTempDB = DefineProperty<bool>("UseTempDB", ["UseTempDB"]);
-        _interimSchemaName = DefineProperty<string>("InterimSchemaName", ["InterimSchemaName"]);
-        _keys = DefineListProperty<string>("Keys", ["Keys"]);
+        _useTempDB = DefineProperty<bool>("UseTempDB", ["useTempDB"]);
+        _interimSchemaName = DefineProperty<string>("InterimSchemaName", ["interimSchemaName"]);
+        _keys = DefineListProperty<string>("Keys", ["keys"]);
     }
 }

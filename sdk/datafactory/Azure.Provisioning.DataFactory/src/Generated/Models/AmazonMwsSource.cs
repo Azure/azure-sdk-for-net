@@ -39,6 +39,7 @@ public partial class AmazonMwsSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AmazonMWSSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

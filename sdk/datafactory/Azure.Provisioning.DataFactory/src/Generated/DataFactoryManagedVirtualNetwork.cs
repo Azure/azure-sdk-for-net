@@ -99,8 +99,8 @@ public partial class DataFactoryManagedVirtualNetwork : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _properties = DefineModelProperty<DataFactoryManagedVirtualNetworkProperties>("Properties", ["Properties"], isRequired: true);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
+        _properties = DefineModelProperty<DataFactoryManagedVirtualNetworkProperties>("Properties", ["properties"], isRequired: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DataFactoryService>("Parent", ["parent"], isRequired: true);

@@ -64,8 +64,8 @@ public partial class AzureMLUpdateResourceActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _trainedModelName = DefineProperty<string>("TrainedModelName", ["TrainedModelName"]);
-        _trainedModelLinkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("TrainedModelLinkedServiceName", ["TrainedModelLinkedServiceName"]);
-        _trainedModelFilePath = DefineProperty<string>("TrainedModelFilePath", ["TrainedModelFilePath"]);
+        _trainedModelName = DefineProperty<string>("TrainedModelName", ["typeProperties", "trainedModelName"]);
+        _trainedModelLinkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("TrainedModelLinkedServiceName", ["typeProperties", "trainedModelLinkedServiceName"]);
+        _trainedModelFilePath = DefineProperty<string>("TrainedModelFilePath", ["typeProperties", "trainedModelFilePath"]);
     }
 }

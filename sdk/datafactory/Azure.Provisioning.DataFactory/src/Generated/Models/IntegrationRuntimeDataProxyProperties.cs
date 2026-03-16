@@ -59,8 +59,8 @@ public partial class IntegrationRuntimeDataProxyProperties : ProvisionableConstr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectVia = DefineModelProperty<EntityReference>("ConnectVia", ["ConnectVia"]);
-        _stagingLinkedService = DefineModelProperty<EntityReference>("StagingLinkedService", ["StagingLinkedService"]);
-        _path = DefineProperty<string>("Path", ["Path"]);
+        _connectVia = DefineModelProperty<EntityReference>("ConnectVia", ["connectVia"]);
+        _stagingLinkedService = DefineModelProperty<EntityReference>("StagingLinkedService", ["stagingLinkedService"]);
+        _path = DefineProperty<string>("Path", ["path"]);
     }
 }

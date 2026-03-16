@@ -44,6 +44,6 @@ public partial class TriggerDependencyReference : DependencyReference
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceTrigger = DefineModelProperty<DataFactoryTriggerReference>("ReferenceTrigger", ["ReferenceTrigger"]);
+        _referenceTrigger = DefineModelProperty<DataFactoryTriggerReference>("ReferenceTrigger", ["referenceTrigger"]);
     }
 }

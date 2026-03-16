@@ -50,7 +50,8 @@ public partial class SnowflakeSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
-        _importSettings = DefineModelProperty<SnowflakeImportCopyCommand>("ImportSettings", ["ImportSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SnowflakeSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
+        _importSettings = DefineModelProperty<SnowflakeImportCopyCommand>("ImportSettings", ["importSettings"]);
     }
 }

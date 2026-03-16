@@ -75,8 +75,8 @@ public partial class AzureDatabricksDeltaLakeImportCommand : ProvisionableConstr
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dateFormat = DefineProperty<string>("DateFormat", ["DateFormat"]);
-        _timestampFormat = DefineProperty<string>("TimestampFormat", ["TimestampFormat"]);
+        _dateFormat = DefineProperty<string>("DateFormat", ["dateFormat"]);
+        _timestampFormat = DefineProperty<string>("TimestampFormat", ["timestampFormat"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

@@ -59,8 +59,8 @@ public partial class DataFactoryBlobTrigger : MultiplePipelineTrigger
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
-        _maxConcurrency = DefineProperty<int>("MaxConcurrency", ["MaxConcurrency"]);
-        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["LinkedService"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["typeProperties", "folderPath"]);
+        _maxConcurrency = DefineProperty<int>("MaxConcurrency", ["typeProperties", "maxConcurrency"]);
+        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["typeProperties", "linkedService"]);
     }
 }

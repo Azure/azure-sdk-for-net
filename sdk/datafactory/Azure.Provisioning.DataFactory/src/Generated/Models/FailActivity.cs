@@ -57,7 +57,7 @@ public partial class FailActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _message = DefineProperty<string>("Message", ["Message"]);
-        _errorCode = DefineProperty<string>("ErrorCode", ["ErrorCode"]);
+        _message = DefineProperty<string>("Message", ["typeProperties", "message"]);
+        _errorCode = DefineProperty<string>("ErrorCode", ["typeProperties", "errorCode"]);
     }
 }

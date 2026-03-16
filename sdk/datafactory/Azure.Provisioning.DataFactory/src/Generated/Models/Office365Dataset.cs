@@ -51,7 +51,7 @@ public partial class Office365Dataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
-        _predicate = DefineProperty<string>("Predicate", ["Predicate"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
+        _predicate = DefineProperty<string>("Predicate", ["typeProperties", "predicate"]);
     }
 }

@@ -38,6 +38,7 @@ public partial class AzureMySqlSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureMySqlSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

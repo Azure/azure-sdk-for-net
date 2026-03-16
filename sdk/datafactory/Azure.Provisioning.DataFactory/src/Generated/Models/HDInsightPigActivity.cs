@@ -104,11 +104,11 @@ public partial class HDInsightPigActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["StorageLinkedServices"]);
-        _arguments = DefineListProperty<string>("Arguments", ["Arguments"]);
-        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["GetDebugInfo"]);
-        _scriptPath = DefineProperty<string>("ScriptPath", ["ScriptPath"]);
-        _scriptLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ScriptLinkedService", ["ScriptLinkedService"]);
-        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["Defines"]);
+        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["typeProperties", "storageLinkedServices"]);
+        _arguments = DefineListProperty<string>("Arguments", ["typeProperties", "arguments"]);
+        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["typeProperties", "getDebugInfo"]);
+        _scriptPath = DefineProperty<string>("ScriptPath", ["typeProperties", "scriptPath"]);
+        _scriptLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ScriptLinkedService", ["typeProperties", "scriptLinkedService"]);
+        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["typeProperties", "defines"]);
     }
 }

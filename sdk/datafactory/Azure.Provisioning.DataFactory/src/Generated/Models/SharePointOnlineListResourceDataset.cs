@@ -40,6 +40,6 @@ public partial class SharePointOnlineListResourceDataset : DataFactoryDatasetPro
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _listName = DefineProperty<string>("ListName", ["ListName"]);
+        _listName = DefineProperty<string>("ListName", ["typeProperties", "listName"]);
     }
 }

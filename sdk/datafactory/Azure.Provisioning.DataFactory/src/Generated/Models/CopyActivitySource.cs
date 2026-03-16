@@ -204,10 +204,10 @@ public partial class CopyActivitySource : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sourceRetryCount = DefineProperty<int>("SourceRetryCount", ["SourceRetryCount"]);
-        _sourceRetryWait = DefineProperty<string>("SourceRetryWait", ["SourceRetryWait"]);
-        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["MaxConcurrentConnections"]);
-        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["DisableMetricsCollection"]);
+        _sourceRetryCount = DefineProperty<int>("SourceRetryCount", ["sourceRetryCount"]);
+        _sourceRetryWait = DefineProperty<string>("SourceRetryWait", ["sourceRetryWait"]);
+        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["maxConcurrentConnections"]);
+        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["disableMetricsCollection"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

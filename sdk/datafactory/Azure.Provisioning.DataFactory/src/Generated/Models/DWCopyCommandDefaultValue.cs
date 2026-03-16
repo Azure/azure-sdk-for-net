@@ -75,7 +75,7 @@ public partial class DWCopyCommandDefaultValue : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _columnName = DefineProperty<BinaryData>("ColumnName", ["ColumnName"]);
-        _defaultValue = DefineProperty<BinaryData>("DefaultValue", ["DefaultValue"]);
+        _columnName = DefineProperty<BinaryData>("ColumnName", ["columnName"]);
+        _defaultValue = DefineProperty<BinaryData>("DefaultValue", ["defaultValue"]);
     }
 }

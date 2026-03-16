@@ -274,27 +274,28 @@ public partial class AzurePostgreSqlLinkedService : DataFactoryLinkedServiceProp
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _sslMode = DefineProperty<int>("SslMode", ["SslMode"]);
-        _timeout = DefineProperty<int>("Timeout", ["Timeout"]);
-        _commandTimeout = DefineProperty<int>("CommandTimeout", ["CommandTimeout"]);
-        _trustServerCertificate = DefineProperty<bool>("TrustServerCertificate", ["TrustServerCertificate"]);
-        _readBufferSize = DefineProperty<int>("ReadBufferSize", ["ReadBufferSize"]);
-        _timezone = DefineProperty<string>("Timezone", ["Timezone"]);
-        _encoding = DefineProperty<string>("Encoding", ["Encoding"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["ServicePrincipalEmbeddedCert"]);
-        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["ServicePrincipalEmbeddedCertPassword"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _azureCloudType = DefineProperty<string>("AzureCloudType", ["AzureCloudType"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzurePostgreSql");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _sslMode = DefineProperty<int>("SslMode", ["typeProperties", "sslMode"]);
+        _timeout = DefineProperty<int>("Timeout", ["typeProperties", "timeout"]);
+        _commandTimeout = DefineProperty<int>("CommandTimeout", ["typeProperties", "commandTimeout"]);
+        _trustServerCertificate = DefineProperty<bool>("TrustServerCertificate", ["typeProperties", "trustServerCertificate"]);
+        _readBufferSize = DefineProperty<int>("ReadBufferSize", ["typeProperties", "readBufferSize"]);
+        _timezone = DefineProperty<string>("Timezone", ["typeProperties", "timezone"]);
+        _encoding = DefineProperty<string>("Encoding", ["typeProperties", "encoding"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["typeProperties", "servicePrincipalEmbeddedCert"]);
+        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["typeProperties", "servicePrincipalEmbeddedCertPassword"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _azureCloudType = DefineProperty<string>("AzureCloudType", ["typeProperties", "azureCloudType"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

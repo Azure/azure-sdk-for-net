@@ -168,17 +168,18 @@ public partial class CosmosDBLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _accountEndpoint = DefineProperty<string>("AccountEndpoint", ["AccountEndpoint"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _accountKey = DefineModelProperty<DataFactorySecret>("AccountKey", ["AccountKey"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["ServicePrincipalCredential"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _azureCloudType = DefineProperty<string>("AzureCloudType", ["AzureCloudType"]);
-        _connectionMode = DefineProperty<CosmosDBConnectionMode>("ConnectionMode", ["ConnectionMode"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "CosmosDb");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _accountEndpoint = DefineProperty<string>("AccountEndpoint", ["typeProperties", "accountEndpoint"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _accountKey = DefineModelProperty<DataFactorySecret>("AccountKey", ["typeProperties", "accountKey"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["typeProperties", "servicePrincipalCredential"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _azureCloudType = DefineProperty<string>("AzureCloudType", ["typeProperties", "azureCloudType"]);
+        _connectionMode = DefineProperty<CosmosDBConnectionMode>("ConnectionMode", ["typeProperties", "connectionMode"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

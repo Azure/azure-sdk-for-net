@@ -84,10 +84,10 @@ public partial class DynamicsSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<DynamicsSinkWriteBehavior>("WriteBehavior", ["WriteBehavior"]);
-        _ignoreNullValues = DefineProperty<bool>("IgnoreNullValues", ["IgnoreNullValues"]);
-        _alternateKeyName = DefineProperty<string>("AlternateKeyName", ["AlternateKeyName"]);
-        _bypassBusinessLogicExecution = DefineProperty<string>("BypassBusinessLogicExecution", ["BypassBusinessLogicExecution"]);
-        _bypassPowerAutomateFlows = DefineProperty<bool>("BypassPowerAutomateFlows", ["BypassPowerAutomateFlows"]);
+        _writeBehavior = DefineProperty<DynamicsSinkWriteBehavior>("WriteBehavior", ["writeBehavior"]);
+        _ignoreNullValues = DefineProperty<bool>("IgnoreNullValues", ["ignoreNullValues"]);
+        _alternateKeyName = DefineProperty<string>("AlternateKeyName", ["alternateKeyName"]);
+        _bypassBusinessLogicExecution = DefineProperty<string>("BypassBusinessLogicExecution", ["bypassBusinessLogicExecution"]);
+        _bypassPowerAutomateFlows = DefineProperty<bool>("BypassPowerAutomateFlows", ["bypassPowerAutomateFlows"]);
     }
 }

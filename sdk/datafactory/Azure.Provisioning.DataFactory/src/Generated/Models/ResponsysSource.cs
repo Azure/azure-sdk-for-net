@@ -39,6 +39,7 @@ public partial class ResponsysSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ResponsysSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

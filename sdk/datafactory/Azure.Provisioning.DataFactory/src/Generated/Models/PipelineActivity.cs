@@ -162,11 +162,11 @@ public partial class PipelineActivity : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _state = DefineProperty<PipelineActivityState>("State", ["State"]);
-        _onInactiveMarkAs = DefineProperty<ActivityOnInactiveMarkAs>("OnInactiveMarkAs", ["OnInactiveMarkAs"]);
-        _dependsOn = DefineListProperty<PipelineActivityDependency>("DependsOn", ["DependsOn"]);
-        _userProperties = DefineListProperty<PipelineActivityUserProperty>("UserProperties", ["UserProperties"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _state = DefineProperty<PipelineActivityState>("State", ["state"]);
+        _onInactiveMarkAs = DefineProperty<ActivityOnInactiveMarkAs>("OnInactiveMarkAs", ["onInactiveMarkAs"]);
+        _dependsOn = DefineListProperty<PipelineActivityDependency>("DependsOn", ["dependsOn"]);
+        _userProperties = DefineListProperty<PipelineActivityUserProperty>("UserProperties", ["userProperties"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

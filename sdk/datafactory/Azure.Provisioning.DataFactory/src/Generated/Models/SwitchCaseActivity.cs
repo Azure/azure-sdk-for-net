@@ -98,7 +98,7 @@ public partial class SwitchCaseActivity : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _value = DefineProperty<string>("Value", ["Value"]);
-        _activities = DefineListProperty<PipelineActivity>("Activities", ["Activities"]);
+        _value = DefineProperty<string>("Value", ["value"]);
+        _activities = DefineListProperty<PipelineActivity>("Activities", ["activities"]);
     }
 }

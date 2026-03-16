@@ -65,7 +65,7 @@ public partial class SqlServerStoredProcedureActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storedProcedureName = DefineProperty<string>("StoredProcedureName", ["StoredProcedureName"]);
-        _storedProcedureParameters = DefineProperty<BinaryData>("StoredProcedureParameters", ["StoredProcedureParameters"]);
+        _storedProcedureName = DefineProperty<string>("StoredProcedureName", ["typeProperties", "storedProcedureName"]);
+        _storedProcedureParameters = DefineProperty<BinaryData>("StoredProcedureParameters", ["typeProperties", "storedProcedureParameters"]);
     }
 }

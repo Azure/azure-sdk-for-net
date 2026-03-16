@@ -47,6 +47,7 @@ public partial class ParquetReadSettings : FormatReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["CompressionProperties"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ParquetReadSettings");
+        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["compressionProperties"]);
     }
 }

@@ -113,12 +113,12 @@ public partial class DataFactoryPrivateEndpointProperties : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionState = DefineModelProperty<ConnectionStateProperties>("ConnectionState", ["ConnectionState"]);
-        _fqdns = DefineListProperty<string>("Fqdns", ["Fqdns"]);
-        _groupId = DefineProperty<string>("GroupId", ["GroupId"]);
-        _isReserved = DefineProperty<bool>("IsReserved", ["IsReserved"], isOutput: true);
-        _privateLinkResourceId = DefineProperty<ResourceIdentifier>("PrivateLinkResourceId", ["PrivateLinkResourceId"]);
-        _provisioningState = DefineProperty<string>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _connectionState = DefineModelProperty<ConnectionStateProperties>("ConnectionState", ["connectionState"]);
+        _fqdns = DefineListProperty<string>("Fqdns", ["fqdns"]);
+        _groupId = DefineProperty<string>("GroupId", ["groupId"]);
+        _isReserved = DefineProperty<bool>("IsReserved", ["isReserved"], isOutput: true);
+        _privateLinkResourceId = DefineProperty<ResourceIdentifier>("PrivateLinkResourceId", ["privateLinkResourceId"]);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["provisioningState"], isOutput: true);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

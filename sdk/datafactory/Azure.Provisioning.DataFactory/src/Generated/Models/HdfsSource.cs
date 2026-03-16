@@ -49,7 +49,8 @@ public partial class HdfsSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _distcpSettings = DefineModelProperty<DistcpSettings>("DistcpSettings", ["DistcpSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "HdfsSource");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
+        _distcpSettings = DefineModelProperty<DistcpSettings>("DistcpSettings", ["distcpSettings"]);
     }
 }

@@ -93,8 +93,9 @@ public partial class XmlSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<XmlReadSettings>("FormatSettings", ["FormatSettings"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "XmlSource");
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<XmlReadSettings>("FormatSettings", ["formatSettings"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

@@ -251,13 +251,13 @@ public partial class DataFactoryDatasetProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _structure = DefineListProperty<DatasetDataElement>("Structure", ["Structure"]);
-        _schema = DefineListProperty<DatasetSchemaDataElement>("Schema", ["Schema"]);
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _parameters = DefineDictionaryProperty<EntityParameterSpecification>("Parameters", ["Parameters"]);
-        _annotations = DefineListProperty<BinaryData>("Annotations", ["Annotations"]);
-        _folderName = DefineProperty<string>("FolderName", ["FolderName"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _structure = DefineListProperty<DatasetDataElement>("Structure", ["structure"]);
+        _schema = DefineListProperty<DatasetSchemaDataElement>("Schema", ["schema"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["linkedServiceName"]);
+        _parameters = DefineDictionaryProperty<EntityParameterSpecification>("Parameters", ["parameters"]);
+        _annotations = DefineListProperty<BinaryData>("Annotations", ["annotations"]);
+        _folderName = DefineProperty<string>("FolderName", ["folder", "name"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

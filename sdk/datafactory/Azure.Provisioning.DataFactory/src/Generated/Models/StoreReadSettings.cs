@@ -93,8 +93,8 @@ public partial class StoreReadSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["MaxConcurrentConnections"]);
-        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["DisableMetricsCollection"]);
+        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["maxConcurrentConnections"]);
+        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["disableMetricsCollection"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

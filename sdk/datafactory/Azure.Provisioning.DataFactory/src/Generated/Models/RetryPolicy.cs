@@ -49,7 +49,7 @@ public partial class RetryPolicy : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _count = DefineProperty<int>("Count", ["Count"]);
-        _intervalInSeconds = DefineProperty<int>("IntervalInSeconds", ["IntervalInSeconds"]);
+        _count = DefineProperty<int>("Count", ["count"]);
+        _intervalInSeconds = DefineProperty<int>("IntervalInSeconds", ["intervalInSeconds"]);
     }
 }

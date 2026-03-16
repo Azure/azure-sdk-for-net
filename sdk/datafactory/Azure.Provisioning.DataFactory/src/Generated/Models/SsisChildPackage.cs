@@ -70,9 +70,9 @@ public partial class SsisChildPackage : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _packagePath = DefineProperty<string>("PackagePath", ["PackagePath"]);
-        _packageName = DefineProperty<string>("PackageName", ["PackageName"]);
-        _packageContent = DefineProperty<string>("PackageContent", ["PackageContent"]);
-        _packageLastModifiedDate = DefineProperty<string>("PackageLastModifiedDate", ["PackageLastModifiedDate"]);
+        _packagePath = DefineProperty<string>("PackagePath", ["packagePath"]);
+        _packageName = DefineProperty<string>("PackageName", ["packageName"]);
+        _packageContent = DefineProperty<string>("PackageContent", ["packageContent"]);
+        _packageLastModifiedDate = DefineProperty<string>("PackageLastModifiedDate", ["packageLastModifiedDate"]);
     }
 }

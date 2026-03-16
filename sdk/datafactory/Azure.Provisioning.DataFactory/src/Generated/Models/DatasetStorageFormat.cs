@@ -81,8 +81,8 @@ public partial class DatasetStorageFormat : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _serializer = DefineProperty<string>("Serializer", ["Serializer"]);
-        _deserializer = DefineProperty<string>("Deserializer", ["Deserializer"]);
+        _serializer = DefineProperty<string>("Serializer", ["serializer"]);
+        _deserializer = DefineProperty<string>("Deserializer", ["deserializer"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

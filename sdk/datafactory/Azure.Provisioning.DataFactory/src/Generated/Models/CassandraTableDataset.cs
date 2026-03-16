@@ -50,7 +50,7 @@ public partial class CassandraTableDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
-        _keyspace = DefineProperty<string>("Keyspace", ["Keyspace"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
+        _keyspace = DefineProperty<string>("Keyspace", ["typeProperties", "keyspace"]);
     }
 }

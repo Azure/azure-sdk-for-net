@@ -122,13 +122,13 @@ public partial class Office365LinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _office365TenantId = DefineProperty<string>("Office365TenantId", ["Office365TenantId"]);
-        _servicePrincipalTenantId = DefineProperty<string>("ServicePrincipalTenantId", ["ServicePrincipalTenantId"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["ServicePrincipalEmbeddedCert"]);
-        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["ServicePrincipalEmbeddedCertPassword"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _office365TenantId = DefineProperty<string>("Office365TenantId", ["typeProperties", "office365TenantId"]);
+        _servicePrincipalTenantId = DefineProperty<string>("ServicePrincipalTenantId", ["typeProperties", "servicePrincipalTenantId"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalEmbeddedCert = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCert", ["typeProperties", "servicePrincipalEmbeddedCert"]);
+        _servicePrincipalEmbeddedCertPassword = DefineModelProperty<DataFactorySecret>("ServicePrincipalEmbeddedCertPassword", ["typeProperties", "servicePrincipalEmbeddedCertPassword"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

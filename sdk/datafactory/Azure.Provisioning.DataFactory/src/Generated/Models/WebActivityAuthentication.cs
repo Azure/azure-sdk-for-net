@@ -107,12 +107,12 @@ public partial class WebActivityAuthentication : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _webActivityAuthenticationType = DefineProperty<string>("WebActivityAuthenticationType", ["WebActivityAuthenticationType"]);
-        _pfx = DefineModelProperty<DataFactorySecret>("Pfx", ["Pfx"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _resource = DefineProperty<string>("Resource", ["Resource"]);
-        _userTenant = DefineProperty<string>("UserTenant", ["UserTenant"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _webActivityAuthenticationType = DefineProperty<string>("WebActivityAuthenticationType", ["type"]);
+        _pfx = DefineModelProperty<DataFactorySecret>("Pfx", ["pfx"]);
+        _username = DefineProperty<string>("Username", ["username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["password"]);
+        _resource = DefineProperty<string>("Resource", ["resource"]);
+        _userTenant = DefineProperty<string>("UserTenant", ["userTenant"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["credential"]);
     }
 }

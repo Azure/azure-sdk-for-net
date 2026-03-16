@@ -119,13 +119,13 @@ public partial class AzureDataLakeAnalyticsLinkedService : DataFactoryLinkedServ
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _accountName = DefineProperty<string>("AccountName", ["AccountName"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _subscriptionId = DefineProperty<string>("SubscriptionId", ["SubscriptionId"]);
-        _resourceGroupName = DefineProperty<string>("ResourceGroupName", ["ResourceGroupName"]);
-        _dataLakeAnalyticsUri = DefineProperty<string>("DataLakeAnalyticsUri", ["DataLakeAnalyticsUri"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _accountName = DefineProperty<string>("AccountName", ["typeProperties", "accountName"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _subscriptionId = DefineProperty<string>("SubscriptionId", ["typeProperties", "subscriptionId"]);
+        _resourceGroupName = DefineProperty<string>("ResourceGroupName", ["typeProperties", "resourceGroupName"]);
+        _dataLakeAnalyticsUri = DefineProperty<string>("DataLakeAnalyticsUri", ["typeProperties", "dataLakeAnalyticsUri"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

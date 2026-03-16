@@ -152,13 +152,13 @@ public partial class HDInsightHiveActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["StorageLinkedServices"]);
-        _arguments = DefineListProperty<BinaryData>("Arguments", ["Arguments"]);
-        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["GetDebugInfo"]);
-        _scriptPath = DefineProperty<string>("ScriptPath", ["ScriptPath"]);
-        _scriptLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ScriptLinkedService", ["ScriptLinkedService"]);
-        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["Defines"]);
-        _variables = DefineDictionaryProperty<BinaryData>("Variables", ["Variables"]);
-        _queryTimeout = DefineProperty<int>("QueryTimeout", ["QueryTimeout"]);
+        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["typeProperties", "storageLinkedServices"]);
+        _arguments = DefineListProperty<BinaryData>("Arguments", ["typeProperties", "arguments"]);
+        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["typeProperties", "getDebugInfo"]);
+        _scriptPath = DefineProperty<string>("ScriptPath", ["typeProperties", "scriptPath"]);
+        _scriptLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("ScriptLinkedService", ["typeProperties", "scriptLinkedService"]);
+        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["typeProperties", "defines"]);
+        _variables = DefineDictionaryProperty<BinaryData>("Variables", ["typeProperties", "variables"]);
+        _queryTimeout = DefineProperty<int>("QueryTimeout", ["typeProperties", "queryTimeout"]);
     }
 }

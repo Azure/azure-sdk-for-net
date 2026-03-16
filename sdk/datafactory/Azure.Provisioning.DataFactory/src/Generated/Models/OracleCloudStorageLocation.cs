@@ -50,7 +50,8 @@ public partial class OracleCloudStorageLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
-        _version = DefineProperty<string>("Version", ["Version"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "OracleCloudStorageLocation");
+        _bucketName = DefineProperty<string>("BucketName", ["bucketName"]);
+        _version = DefineProperty<string>("Version", ["version"]);
     }
 }

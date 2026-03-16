@@ -39,6 +39,6 @@ public partial class SsisExecutionParameter : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _value = DefineProperty<string>("Value", ["Value"]);
+        _value = DefineProperty<string>("Value", ["value"]);
     }
 }

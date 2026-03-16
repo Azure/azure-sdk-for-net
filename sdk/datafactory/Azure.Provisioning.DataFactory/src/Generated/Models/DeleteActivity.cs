@@ -112,11 +112,11 @@ public partial class DeleteActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["MaxConcurrentConnections"]);
-        _enableLogging = DefineProperty<bool>("EnableLogging", ["EnableLogging"]);
-        _logStorageSettings = DefineModelProperty<LogStorageSettings>("LogStorageSettings", ["LogStorageSettings"]);
-        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["Dataset"]);
-        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["StoreSettings"]);
+        _recursive = DefineProperty<bool>("Recursive", ["typeProperties", "recursive"]);
+        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["typeProperties", "maxConcurrentConnections"]);
+        _enableLogging = DefineProperty<bool>("EnableLogging", ["typeProperties", "enableLogging"]);
+        _logStorageSettings = DefineModelProperty<LogStorageSettings>("LogStorageSettings", ["typeProperties", "logStorageSettings"]);
+        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["typeProperties", "dataset"]);
+        _storeSettings = DefineModelProperty<StoreReadSettings>("StoreSettings", ["typeProperties", "storeSettings"]);
     }
 }

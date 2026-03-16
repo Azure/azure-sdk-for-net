@@ -304,25 +304,25 @@ public partial class AzureDatabricksLinkedService : DataFactoryLinkedServiceProp
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _domain = DefineProperty<string>("Domain", ["Domain"]);
-        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["AccessToken"]);
-        _authentication = DefineProperty<string>("Authentication", ["Authentication"]);
-        _workspaceResourceId = DefineProperty<string>("WorkspaceResourceId", ["WorkspaceResourceId"]);
-        _existingClusterId = DefineProperty<string>("ExistingClusterId", ["ExistingClusterId"]);
-        _instancePoolId = DefineProperty<string>("InstancePoolId", ["InstancePoolId"]);
-        _newClusterVersion = DefineProperty<string>("NewClusterVersion", ["NewClusterVersion"]);
-        _newClusterNumOfWorker = DefineProperty<string>("NewClusterNumOfWorker", ["NewClusterNumOfWorker"]);
-        _newClusterNodeType = DefineProperty<string>("NewClusterNodeType", ["NewClusterNodeType"]);
-        _newClusterSparkConf = DefineDictionaryProperty<BinaryData>("NewClusterSparkConf", ["NewClusterSparkConf"]);
-        _newClusterSparkEnvVars = DefineDictionaryProperty<BinaryData>("NewClusterSparkEnvVars", ["NewClusterSparkEnvVars"]);
-        _newClusterCustomTags = DefineDictionaryProperty<BinaryData>("NewClusterCustomTags", ["NewClusterCustomTags"]);
-        _newClusterLogDestination = DefineProperty<string>("NewClusterLogDestination", ["NewClusterLogDestination"]);
-        _newClusterDriverNodeType = DefineProperty<string>("NewClusterDriverNodeType", ["NewClusterDriverNodeType"]);
-        _newClusterInitScripts = DefineListProperty<string>("NewClusterInitScripts", ["NewClusterInitScripts"]);
-        _newClusterEnableElasticDisk = DefineProperty<bool>("NewClusterEnableElasticDisk", ["NewClusterEnableElasticDisk"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _policyId = DefineProperty<string>("PolicyId", ["PolicyId"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
-        _dataSecurityMode = DefineProperty<string>("DataSecurityMode", ["DataSecurityMode"]);
+        _domain = DefineProperty<string>("Domain", ["typeProperties", "domain"]);
+        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["typeProperties", "accessToken"]);
+        _authentication = DefineProperty<string>("Authentication", ["typeProperties", "authentication"]);
+        _workspaceResourceId = DefineProperty<string>("WorkspaceResourceId", ["typeProperties", "workspaceResourceId"]);
+        _existingClusterId = DefineProperty<string>("ExistingClusterId", ["typeProperties", "existingClusterId"]);
+        _instancePoolId = DefineProperty<string>("InstancePoolId", ["typeProperties", "instancePoolId"]);
+        _newClusterVersion = DefineProperty<string>("NewClusterVersion", ["typeProperties", "newClusterVersion"]);
+        _newClusterNumOfWorker = DefineProperty<string>("NewClusterNumOfWorker", ["typeProperties", "newClusterNumOfWorker"]);
+        _newClusterNodeType = DefineProperty<string>("NewClusterNodeType", ["typeProperties", "newClusterNodeType"]);
+        _newClusterSparkConf = DefineDictionaryProperty<BinaryData>("NewClusterSparkConf", ["typeProperties", "newClusterSparkConf"]);
+        _newClusterSparkEnvVars = DefineDictionaryProperty<BinaryData>("NewClusterSparkEnvVars", ["typeProperties", "newClusterSparkEnvVars"]);
+        _newClusterCustomTags = DefineDictionaryProperty<BinaryData>("NewClusterCustomTags", ["typeProperties", "newClusterCustomTags"]);
+        _newClusterLogDestination = DefineProperty<string>("NewClusterLogDestination", ["typeProperties", "newClusterLogDestination"]);
+        _newClusterDriverNodeType = DefineProperty<string>("NewClusterDriverNodeType", ["typeProperties", "newClusterDriverNodeType"]);
+        _newClusterInitScripts = DefineListProperty<string>("NewClusterInitScripts", ["typeProperties", "newClusterInitScripts"]);
+        _newClusterEnableElasticDisk = DefineProperty<bool>("NewClusterEnableElasticDisk", ["typeProperties", "newClusterEnableElasticDisk"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _policyId = DefineProperty<string>("PolicyId", ["typeProperties", "policyId"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
+        _dataSecurityMode = DefineProperty<string>("DataSecurityMode", ["typeProperties", "dataSecurityMode"]);
     }
 }

@@ -89,9 +89,9 @@ public partial class AzureFunctionActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _method = DefineProperty<AzureFunctionActivityMethod>("Method", ["Method"]);
-        _functionName = DefineProperty<string>("FunctionName", ["FunctionName"]);
-        _requestHeaders = DefineDictionaryProperty<BinaryData>("RequestHeaders", ["RequestHeaders"]);
-        _body = DefineProperty<string>("Body", ["Body"]);
+        _method = DefineProperty<AzureFunctionActivityMethod>("Method", ["typeProperties", "method"]);
+        _functionName = DefineProperty<string>("FunctionName", ["typeProperties", "functionName"]);
+        _requestHeaders = DefineDictionaryProperty<BinaryData>("RequestHeaders", ["typeProperties", "headers"]);
+        _body = DefineProperty<string>("Body", ["typeProperties", "body"]);
     }
 }

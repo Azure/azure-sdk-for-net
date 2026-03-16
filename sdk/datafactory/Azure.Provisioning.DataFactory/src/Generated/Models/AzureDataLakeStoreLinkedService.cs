@@ -143,15 +143,15 @@ public partial class AzureDataLakeStoreLinkedService : DataFactoryLinkedServiceP
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLakeStoreUri = DefineProperty<string>("DataLakeStoreUri", ["DataLakeStoreUri"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _azureCloudType = DefineProperty<string>("AzureCloudType", ["AzureCloudType"]);
-        _accountName = DefineProperty<string>("AccountName", ["AccountName"]);
-        _subscriptionId = DefineProperty<string>("SubscriptionId", ["SubscriptionId"]);
-        _resourceGroupName = DefineProperty<string>("ResourceGroupName", ["ResourceGroupName"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _dataLakeStoreUri = DefineProperty<string>("DataLakeStoreUri", ["typeProperties", "dataLakeStoreUri"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _azureCloudType = DefineProperty<string>("AzureCloudType", ["typeProperties", "azureCloudType"]);
+        _accountName = DefineProperty<string>("AccountName", ["typeProperties", "accountName"]);
+        _subscriptionId = DefineProperty<string>("SubscriptionId", ["typeProperties", "subscriptionId"]);
+        _resourceGroupName = DefineProperty<string>("ResourceGroupName", ["typeProperties", "resourceGroupName"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

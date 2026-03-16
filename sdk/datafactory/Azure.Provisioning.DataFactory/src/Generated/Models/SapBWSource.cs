@@ -38,6 +38,7 @@ public partial class SapBWSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapBwSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

@@ -98,10 +98,10 @@ public partial class PolybaseSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _rejectType = DefineProperty<PolybaseSettingsRejectType>("RejectType", ["RejectType"]);
-        _rejectValue = DefineProperty<int>("RejectValue", ["RejectValue"]);
-        _rejectSampleValue = DefineProperty<int>("RejectSampleValue", ["RejectSampleValue"]);
-        _useTypeDefault = DefineProperty<bool>("UseTypeDefault", ["UseTypeDefault"]);
+        _rejectType = DefineProperty<PolybaseSettingsRejectType>("RejectType", ["rejectType"]);
+        _rejectValue = DefineProperty<int>("RejectValue", ["rejectValue"]);
+        _rejectSampleValue = DefineProperty<int>("RejectSampleValue", ["rejectSampleValue"]);
+        _useTypeDefault = DefineProperty<bool>("UseTypeDefault", ["useTypeDefault"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

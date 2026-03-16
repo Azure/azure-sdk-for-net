@@ -155,16 +155,16 @@ public partial class WarehouseLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _artifactId = DefineProperty<string>("ArtifactId", ["ArtifactId"]);
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _workspaceId = DefineProperty<string>("WorkspaceId", ["WorkspaceId"]);
-        _authenticationType = DefineProperty<WarehouseAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["ServicePrincipalCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _artifactId = DefineProperty<string>("ArtifactId", ["typeProperties", "artifactId"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _workspaceId = DefineProperty<string>("WorkspaceId", ["typeProperties", "workspaceId"]);
+        _authenticationType = DefineProperty<WarehouseAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["typeProperties", "servicePrincipalCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

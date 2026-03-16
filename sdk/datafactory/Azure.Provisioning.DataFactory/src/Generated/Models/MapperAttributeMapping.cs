@@ -95,10 +95,10 @@ public partial class MapperAttributeMapping : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _mappingType = DefineProperty<MappingType>("MappingType", ["MappingType"]);
-        _functionName = DefineProperty<string>("FunctionName", ["FunctionName"]);
-        _expression = DefineProperty<string>("Expression", ["Expression"]);
-        _attributeReference = DefineModelProperty<MapperAttributeReference>("AttributeReference", ["AttributeReference"]);
-        _attributeReferences = DefineListProperty<MapperAttributeReference>("AttributeReferences", ["AttributeReferences"]);
+        _mappingType = DefineProperty<MappingType>("MappingType", ["type"]);
+        _functionName = DefineProperty<string>("FunctionName", ["functionName"]);
+        _expression = DefineProperty<string>("Expression", ["expression"]);
+        _attributeReference = DefineModelProperty<MapperAttributeReference>("AttributeReference", ["attributeReference"]);
+        _attributeReferences = DefineListProperty<MapperAttributeReference>("AttributeReferences", ["attributeReferences"]);
     }
 }

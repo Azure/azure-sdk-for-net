@@ -39,6 +39,6 @@ public partial class SalesforceObjectDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _objectApiName = DefineProperty<string>("ObjectApiName", ["ObjectApiName"]);
+        _objectApiName = DefineProperty<string>("ObjectApiName", ["typeProperties", "objectApiName"]);
     }
 }

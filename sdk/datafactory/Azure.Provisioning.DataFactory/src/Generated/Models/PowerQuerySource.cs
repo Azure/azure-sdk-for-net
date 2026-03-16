@@ -38,6 +38,6 @@ public partial class PowerQuerySource : DataFlowSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _script = DefineProperty<string>("Script", ["Script"]);
+        _script = DefineProperty<string>("Script", ["script"]);
     }
 }

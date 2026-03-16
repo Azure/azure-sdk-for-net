@@ -64,8 +64,8 @@ public partial class ChainingTrigger : DataFactoryTriggerProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _pipeline = DefineModelProperty<TriggerPipelineReference>("Pipeline", ["Pipeline"]);
-        _dependsOn = DefineListProperty<DataFactoryPipelineReference>("DependsOn", ["DependsOn"]);
-        _runDimension = DefineProperty<string>("RunDimension", ["RunDimension"]);
+        _pipeline = DefineModelProperty<TriggerPipelineReference>("Pipeline", ["pipeline"]);
+        _dependsOn = DefineListProperty<DataFactoryPipelineReference>("DependsOn", ["typeProperties", "dependsOn"]);
+        _runDimension = DefineProperty<string>("RunDimension", ["typeProperties", "runDimension"]);
     }
 }

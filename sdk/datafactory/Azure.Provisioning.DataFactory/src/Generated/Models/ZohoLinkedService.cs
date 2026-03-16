@@ -118,12 +118,13 @@ public partial class ZohoLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["ConnectionProperties"]);
-        _endpoint = DefineProperty<string>("Endpoint", ["Endpoint"]);
-        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["AccessToken"]);
-        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["UseEncryptedEndpoints"]);
-        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["UseHostVerification"]);
-        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["UsePeerVerification"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Zoho");
+        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["typeProperties", "connectionProperties"]);
+        _endpoint = DefineProperty<string>("Endpoint", ["typeProperties", "endpoint"]);
+        _accessToken = DefineModelProperty<DataFactorySecret>("AccessToken", ["typeProperties", "accessToken"]);
+        _useEncryptedEndpoints = DefineProperty<bool>("UseEncryptedEndpoints", ["typeProperties", "useEncryptedEndpoints"]);
+        _useHostVerification = DefineProperty<bool>("UseHostVerification", ["typeProperties", "useHostVerification"]);
+        _usePeerVerification = DefineProperty<bool>("UsePeerVerification", ["typeProperties", "usePeerVerification"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

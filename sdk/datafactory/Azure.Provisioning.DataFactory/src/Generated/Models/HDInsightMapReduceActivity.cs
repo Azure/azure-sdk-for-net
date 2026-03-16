@@ -150,13 +150,13 @@ public partial class HDInsightMapReduceActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["StorageLinkedServices"]);
-        _arguments = DefineListProperty<BinaryData>("Arguments", ["Arguments"]);
-        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["GetDebugInfo"]);
-        _className = DefineProperty<string>("ClassName", ["ClassName"]);
-        _jarFilePath = DefineProperty<string>("JarFilePath", ["JarFilePath"]);
-        _jarLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("JarLinkedService", ["JarLinkedService"]);
-        _jarLibs = DefineListProperty<BinaryData>("JarLibs", ["JarLibs"]);
-        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["Defines"]);
+        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["typeProperties", "storageLinkedServices"]);
+        _arguments = DefineListProperty<BinaryData>("Arguments", ["typeProperties", "arguments"]);
+        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["typeProperties", "getDebugInfo"]);
+        _className = DefineProperty<string>("ClassName", ["typeProperties", "className"]);
+        _jarFilePath = DefineProperty<string>("JarFilePath", ["typeProperties", "jarFilePath"]);
+        _jarLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("JarLinkedService", ["typeProperties", "jarLinkedService"]);
+        _jarLibs = DefineListProperty<BinaryData>("JarLibs", ["typeProperties", "jarLibs"]);
+        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["typeProperties", "defines"]);
     }
 }

@@ -74,8 +74,9 @@ public partial class SalesforceServiceCloudSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _readBehavior = DefineProperty<string>("ReadBehavior", ["ReadBehavior"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SalesforceServiceCloudSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _readBehavior = DefineProperty<string>("ReadBehavior", ["readBehavior"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

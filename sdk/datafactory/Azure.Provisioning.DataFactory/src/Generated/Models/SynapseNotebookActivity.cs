@@ -167,15 +167,15 @@ public partial class SynapseNotebookActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _notebook = DefineModelProperty<SynapseNotebookReference>("Notebook", ["Notebook"]);
-        _sparkPool = DefineModelProperty<BigDataPoolParametrizationReference>("SparkPool", ["SparkPool"]);
-        _parameters = DefineDictionaryProperty<NotebookParameter>("Parameters", ["Parameters"]);
-        _executorSize = DefineProperty<string>("ExecutorSize", ["ExecutorSize"]);
-        _conf = DefineProperty<BinaryData>("Conf", ["Conf"]);
-        _driverSize = DefineProperty<string>("DriverSize", ["DriverSize"]);
-        _numExecutors = DefineProperty<int>("NumExecutors", ["NumExecutors"]);
-        _configurationType = DefineProperty<DataFactorySparkConfigurationType>("ConfigurationType", ["ConfigurationType"]);
-        _targetSparkConfiguration = DefineModelProperty<SparkConfigurationParametrizationReference>("TargetSparkConfiguration", ["TargetSparkConfiguration"]);
-        _sparkConfig = DefineDictionaryProperty<BinaryData>("SparkConfig", ["SparkConfig"]);
+        _notebook = DefineModelProperty<SynapseNotebookReference>("Notebook", ["typeProperties", "notebook"]);
+        _sparkPool = DefineModelProperty<BigDataPoolParametrizationReference>("SparkPool", ["typeProperties", "sparkPool"]);
+        _parameters = DefineDictionaryProperty<NotebookParameter>("Parameters", ["typeProperties", "parameters"]);
+        _executorSize = DefineProperty<string>("ExecutorSize", ["typeProperties", "executorSize"]);
+        _conf = DefineProperty<BinaryData>("Conf", ["typeProperties", "conf"]);
+        _driverSize = DefineProperty<string>("DriverSize", ["typeProperties", "driverSize"]);
+        _numExecutors = DefineProperty<int>("NumExecutors", ["typeProperties", "numExecutors"]);
+        _configurationType = DefineProperty<DataFactorySparkConfigurationType>("ConfigurationType", ["typeProperties", "configurationType"]);
+        _targetSparkConfiguration = DefineModelProperty<SparkConfigurationParametrizationReference>("TargetSparkConfiguration", ["typeProperties", "targetSparkConfiguration"]);
+        _sparkConfig = DefineDictionaryProperty<BinaryData>("SparkConfig", ["typeProperties", "sparkConfig"]);
     }
 }

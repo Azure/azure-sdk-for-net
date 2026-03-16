@@ -133,14 +133,14 @@ public partial class HttpLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _authenticationType = DefineProperty<HttpAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _authHeaders = DefineDictionaryProperty<string>("AuthHeaders", ["AuthHeaders"]);
-        _embeddedCertData = DefineProperty<string>("EmbeddedCertData", ["EmbeddedCertData"]);
-        _certThumbprint = DefineProperty<string>("CertThumbprint", ["CertThumbprint"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["EnableServerCertificateValidation"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _authenticationType = DefineProperty<HttpAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _authHeaders = DefineDictionaryProperty<string>("AuthHeaders", ["typeProperties", "authHeaders"]);
+        _embeddedCertData = DefineProperty<string>("EmbeddedCertData", ["typeProperties", "embeddedCertData"]);
+        _certThumbprint = DefineProperty<string>("CertThumbprint", ["typeProperties", "certThumbprint"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["typeProperties", "enableServerCertificateValidation"]);
     }
 }

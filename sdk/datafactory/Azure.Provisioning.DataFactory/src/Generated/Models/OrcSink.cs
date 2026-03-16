@@ -61,7 +61,8 @@ public partial class OrcSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["StoreSettings"]);
-        _formatSettings = DefineModelProperty<OrcWriteSettings>("FormatSettings", ["FormatSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "OrcSink");
+        _storeSettings = DefineModelProperty<StoreWriteSettings>("StoreSettings", ["storeSettings"]);
+        _formatSettings = DefineModelProperty<OrcWriteSettings>("FormatSettings", ["formatSettings"]);
     }
 }

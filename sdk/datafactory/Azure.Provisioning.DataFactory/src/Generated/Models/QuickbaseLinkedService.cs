@@ -61,8 +61,8 @@ public partial class QuickbaseLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<string>("Uri", ["Uri"]);
-        _userToken = DefineModelProperty<DataFactorySecret>("UserToken", ["UserToken"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _uri = DefineProperty<string>("Uri", ["typeProperties", "url"]);
+        _userToken = DefineModelProperty<DataFactorySecret>("UserToken", ["typeProperties", "userToken"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

@@ -68,7 +68,7 @@ public partial class BinaryDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

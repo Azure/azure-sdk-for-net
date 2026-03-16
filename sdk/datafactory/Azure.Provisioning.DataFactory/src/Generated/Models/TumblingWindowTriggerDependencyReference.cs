@@ -51,7 +51,7 @@ public partial class TumblingWindowTriggerDependencyReference : TriggerDependenc
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _offset = DefineProperty<string>("Offset", ["Offset"]);
-        _size = DefineProperty<string>("Size", ["Size"]);
+        _offset = DefineProperty<string>("Offset", ["offset"]);
+        _size = DefineProperty<string>("Size", ["size"]);
     }
 }

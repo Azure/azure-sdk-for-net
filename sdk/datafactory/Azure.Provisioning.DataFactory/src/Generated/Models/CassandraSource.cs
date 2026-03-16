@@ -55,7 +55,8 @@ public partial class CassandraSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _consistencyLevel = DefineProperty<CassandraSourceReadConsistencyLevel>("ConsistencyLevel", ["ConsistencyLevel"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "CassandraSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _consistencyLevel = DefineProperty<CassandraSourceReadConsistencyLevel>("ConsistencyLevel", ["consistencyLevel"]);
     }
 }

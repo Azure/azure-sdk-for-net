@@ -125,12 +125,12 @@ public partial class ExcelDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _sheetName = DefineProperty<string>("SheetName", ["SheetName"]);
-        _sheetIndex = DefineProperty<int>("SheetIndex", ["SheetIndex"]);
-        _range = DefineProperty<string>("Range", ["Range"]);
-        _firstRowAsHeader = DefineProperty<bool>("FirstRowAsHeader", ["FirstRowAsHeader"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
-        _nullValue = DefineProperty<string>("NullValue", ["NullValue"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _sheetName = DefineProperty<string>("SheetName", ["typeProperties", "sheetName"]);
+        _sheetIndex = DefineProperty<int>("SheetIndex", ["typeProperties", "sheetIndex"]);
+        _range = DefineProperty<string>("Range", ["typeProperties", "range"]);
+        _firstRowAsHeader = DefineProperty<bool>("FirstRowAsHeader", ["typeProperties", "firstRowAsHeader"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
+        _nullValue = DefineProperty<string>("NullValue", ["typeProperties", "nullValue"]);
     }
 }

@@ -51,7 +51,7 @@ public partial class MongoDBV2LinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
     }
 }

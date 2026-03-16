@@ -298,21 +298,21 @@ public partial class SynapseSparkJobDefinitionActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sparkJob = DefineModelProperty<SynapseSparkJobReference>("SparkJob", ["SparkJob"]);
-        _arguments = DefineListProperty<BinaryData>("Arguments", ["Arguments"]);
-        _file = DefineProperty<string>("File", ["File"]);
-        _scanFolder = DefineProperty<bool>("ScanFolder", ["ScanFolder"]);
-        _className = DefineProperty<string>("ClassName", ["ClassName"]);
-        _files = DefineListProperty<BinaryData>("Files", ["Files"]);
-        _pythonCodeReference = DefineListProperty<BinaryData>("PythonCodeReference", ["PythonCodeReference"]);
-        _filesV2 = DefineListProperty<BinaryData>("FilesV2", ["FilesV2"]);
-        _targetBigDataPool = DefineModelProperty<BigDataPoolParametrizationReference>("TargetBigDataPool", ["TargetBigDataPool"]);
-        _executorSize = DefineProperty<string>("ExecutorSize", ["ExecutorSize"]);
-        _conf = DefineProperty<BinaryData>("Conf", ["Conf"]);
-        _driverSize = DefineProperty<string>("DriverSize", ["DriverSize"]);
-        _numExecutors = DefineProperty<int>("NumExecutors", ["NumExecutors"]);
-        _configurationType = DefineProperty<DataFactorySparkConfigurationType>("ConfigurationType", ["ConfigurationType"]);
-        _targetSparkConfiguration = DefineModelProperty<SparkConfigurationParametrizationReference>("TargetSparkConfiguration", ["TargetSparkConfiguration"]);
-        _sparkConfig = DefineDictionaryProperty<BinaryData>("SparkConfig", ["SparkConfig"]);
+        _sparkJob = DefineModelProperty<SynapseSparkJobReference>("SparkJob", ["typeProperties", "sparkJob"]);
+        _arguments = DefineListProperty<BinaryData>("Arguments", ["typeProperties", "args"]);
+        _file = DefineProperty<string>("File", ["typeProperties", "file"]);
+        _scanFolder = DefineProperty<bool>("ScanFolder", ["typeProperties", "scanFolder"]);
+        _className = DefineProperty<string>("ClassName", ["typeProperties", "className"]);
+        _files = DefineListProperty<BinaryData>("Files", ["typeProperties", "files"]);
+        _pythonCodeReference = DefineListProperty<BinaryData>("PythonCodeReference", ["typeProperties", "pythonCodeReference"]);
+        _filesV2 = DefineListProperty<BinaryData>("FilesV2", ["typeProperties", "filesV2"]);
+        _targetBigDataPool = DefineModelProperty<BigDataPoolParametrizationReference>("TargetBigDataPool", ["typeProperties", "targetBigDataPool"]);
+        _executorSize = DefineProperty<string>("ExecutorSize", ["typeProperties", "executorSize"]);
+        _conf = DefineProperty<BinaryData>("Conf", ["typeProperties", "conf"]);
+        _driverSize = DefineProperty<string>("DriverSize", ["typeProperties", "driverSize"]);
+        _numExecutors = DefineProperty<int>("NumExecutors", ["typeProperties", "numExecutors"]);
+        _configurationType = DefineProperty<DataFactorySparkConfigurationType>("ConfigurationType", ["typeProperties", "configurationType"]);
+        _targetSparkConfiguration = DefineModelProperty<SparkConfigurationParametrizationReference>("TargetSparkConfiguration", ["typeProperties", "targetSparkConfiguration"]);
+        _sparkConfig = DefineDictionaryProperty<BinaryData>("SparkConfig", ["typeProperties", "sparkConfig"]);
     }
 }

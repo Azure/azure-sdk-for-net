@@ -75,8 +75,9 @@ public partial class LakeHouseTableSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _timestampAsOf = DefineProperty<string>("TimestampAsOf", ["TimestampAsOf"]);
-        _versionAsOf = DefineProperty<int>("VersionAsOf", ["VersionAsOf"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "LakeHouseTableSource");
+        _timestampAsOf = DefineProperty<string>("TimestampAsOf", ["timestampAsOf"]);
+        _versionAsOf = DefineProperty<int>("VersionAsOf", ["versionAsOf"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

@@ -50,7 +50,7 @@ public partial class IntegrationRuntimeCustomSetupScriptProperties : Provisionab
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _blobContainerUri = DefineProperty<Uri>("BlobContainerUri", ["BlobContainerUri"]);
-        _sasToken = DefineModelProperty<DataFactorySecretString>("SasToken", ["SasToken"]);
+        _blobContainerUri = DefineProperty<Uri>("BlobContainerUri", ["blobContainerUri"]);
+        _sasToken = DefineModelProperty<DataFactorySecretString>("SasToken", ["sasToken"]);
     }
 }

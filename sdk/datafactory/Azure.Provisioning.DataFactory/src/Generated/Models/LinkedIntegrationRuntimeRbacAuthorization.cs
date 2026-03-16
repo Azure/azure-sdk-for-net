@@ -51,7 +51,7 @@ public partial class LinkedIntegrationRuntimeRbacAuthorization : LinkedIntegrati
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["ResourceId"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["resourceId"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["credential"]);
     }
 }

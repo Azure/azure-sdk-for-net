@@ -49,7 +49,7 @@ public partial class MapperPolicyRecurrence : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _frequency = DefineProperty<MapperPolicyRecurrenceFrequencyType>("Frequency", ["Frequency"]);
-        _interval = DefineProperty<int>("Interval", ["Interval"]);
+        _frequency = DefineProperty<MapperPolicyRecurrenceFrequencyType>("Frequency", ["frequency"]);
+        _interval = DefineProperty<int>("Interval", ["interval"]);
     }
 }

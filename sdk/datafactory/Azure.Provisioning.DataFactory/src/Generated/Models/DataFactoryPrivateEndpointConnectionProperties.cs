@@ -58,8 +58,8 @@ public partial class DataFactoryPrivateEndpointConnectionProperties : Provisiona
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _provisioningState = DefineProperty<string>("ProvisioningState", ["ProvisioningState"], isOutput: true);
-        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["PrivateEndpointId"], isOutput: true);
-        _privateLinkServiceConnectionState = DefineModelProperty<PrivateLinkConnectionState>("PrivateLinkServiceConnectionState", ["PrivateLinkServiceConnectionState"]);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["provisioningState"], isOutput: true);
+        _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["privateEndpoint", "id"], isOutput: true);
+        _privateLinkServiceConnectionState = DefineModelProperty<PrivateLinkConnectionState>("PrivateLinkServiceConnectionState", ["privateLinkServiceConnectionState"]);
     }
 }

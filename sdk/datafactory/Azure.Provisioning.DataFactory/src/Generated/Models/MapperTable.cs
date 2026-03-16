@@ -60,7 +60,7 @@ public partial class MapperTable : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _schema = DefineListProperty<MapperTableSchema>("Schema", ["Schema"]);
-        _dslConnectorProperties = DefineListProperty<MapperDslConnectorProperties>("DslConnectorProperties", ["DslConnectorProperties"]);
+        _schema = DefineListProperty<MapperTableSchema>("Schema", ["properties", "schema"]);
+        _dslConnectorProperties = DefineListProperty<MapperDslConnectorProperties>("DslConnectorProperties", ["properties", "dslConnectorProperties"]);
     }
 }

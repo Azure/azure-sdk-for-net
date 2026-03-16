@@ -39,6 +39,7 @@ public partial class AzureBlobStorageLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _container = DefineProperty<string>("Container", ["Container"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureBlobStorageLocation");
+        _container = DefineProperty<string>("Container", ["container"]);
     }
 }

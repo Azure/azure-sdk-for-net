@@ -85,9 +85,9 @@ public partial class RerunTumblingWindowTrigger : DataFactoryTriggerProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _parentTrigger = DefineProperty<BinaryData>("ParentTrigger", ["ParentTrigger"]);
-        _requestedStartOn = DefineProperty<DateTimeOffset>("RequestedStartOn", ["RequestedStartOn"]);
-        _requestedEndOn = DefineProperty<DateTimeOffset>("RequestedEndOn", ["RequestedEndOn"]);
-        _rerunConcurrency = DefineProperty<int>("RerunConcurrency", ["RerunConcurrency"]);
+        _parentTrigger = DefineProperty<BinaryData>("ParentTrigger", ["typeProperties", "parentTrigger"]);
+        _requestedStartOn = DefineProperty<DateTimeOffset>("RequestedStartOn", ["typeProperties", "requestedStartTime"]);
+        _requestedEndOn = DefineProperty<DateTimeOffset>("RequestedEndOn", ["typeProperties", "requestedEndTime"]);
+        _rerunConcurrency = DefineProperty<int>("RerunConcurrency", ["typeProperties", "rerunConcurrency"]);
     }
 }

@@ -83,9 +83,9 @@ public partial class ExecutePipelineActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _policy = DefineModelProperty<ExecutePipelineActivityPolicy>("Policy", ["Policy"]);
-        _pipeline = DefineModelProperty<DataFactoryPipelineReference>("Pipeline", ["Pipeline"]);
-        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["Parameters"]);
-        _waitOnCompletion = DefineProperty<bool>("WaitOnCompletion", ["WaitOnCompletion"]);
+        _policy = DefineModelProperty<ExecutePipelineActivityPolicy>("Policy", ["policy"]);
+        _pipeline = DefineModelProperty<DataFactoryPipelineReference>("Pipeline", ["typeProperties", "pipeline"]);
+        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["typeProperties", "parameters"]);
+        _waitOnCompletion = DefineProperty<bool>("WaitOnCompletion", ["typeProperties", "waitOnCompletion"]);
     }
 }

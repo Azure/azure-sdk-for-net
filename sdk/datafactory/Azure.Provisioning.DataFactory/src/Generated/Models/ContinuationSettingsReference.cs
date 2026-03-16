@@ -59,8 +59,8 @@ public partial class ContinuationSettingsReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _continuationTtlInMinutes = DefineProperty<int>("ContinuationTtlInMinutes", ["ContinuationTtlInMinutes"]);
-        _idleCondition = DefineProperty<string>("IdleCondition", ["IdleCondition"]);
-        _customizedCheckpointKey = DefineProperty<string>("CustomizedCheckpointKey", ["CustomizedCheckpointKey"]);
+        _continuationTtlInMinutes = DefineProperty<int>("ContinuationTtlInMinutes", ["continuationTtlInMinutes"]);
+        _idleCondition = DefineProperty<string>("IdleCondition", ["idleCondition"]);
+        _customizedCheckpointKey = DefineProperty<string>("CustomizedCheckpointKey", ["customizedCheckpointKey"]);
     }
 }

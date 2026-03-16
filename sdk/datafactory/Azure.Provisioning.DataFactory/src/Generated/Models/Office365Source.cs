@@ -97,11 +97,12 @@ public partial class Office365Source : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _allowedGroups = DefineListProperty<string>("AllowedGroups", ["AllowedGroups"]);
-        _userScopeFilterUri = DefineProperty<string>("UserScopeFilterUri", ["UserScopeFilterUri"]);
-        _dateFilterColumn = DefineProperty<string>("DateFilterColumn", ["DateFilterColumn"]);
-        _startOn = DefineProperty<string>("StartOn", ["StartOn"]);
-        _endOn = DefineProperty<string>("EndOn", ["EndOn"]);
-        _outputColumns = DefineListProperty<Office365TableOutputColumn>("OutputColumns", ["OutputColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Office365Source");
+        _allowedGroups = DefineListProperty<string>("AllowedGroups", ["allowedGroups"]);
+        _userScopeFilterUri = DefineProperty<string>("UserScopeFilterUri", ["userScopeFilterUri"]);
+        _dateFilterColumn = DefineProperty<string>("DateFilterColumn", ["dateFilterColumn"]);
+        _startOn = DefineProperty<string>("StartOn", ["startTime"]);
+        _endOn = DefineProperty<string>("EndOn", ["endTime"]);
+        _outputColumns = DefineListProperty<Office365TableOutputColumn>("OutputColumns", ["outputColumns"]);
     }
 }

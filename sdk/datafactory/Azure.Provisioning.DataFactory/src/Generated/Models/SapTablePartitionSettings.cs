@@ -74,9 +74,9 @@ public partial class SapTablePartitionSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _partitionColumnName = DefineProperty<string>("PartitionColumnName", ["PartitionColumnName"]);
-        _partitionUpperBound = DefineProperty<string>("PartitionUpperBound", ["PartitionUpperBound"]);
-        _partitionLowerBound = DefineProperty<string>("PartitionLowerBound", ["PartitionLowerBound"]);
-        _maxPartitionsNumber = DefineProperty<int>("MaxPartitionsNumber", ["MaxPartitionsNumber"]);
+        _partitionColumnName = DefineProperty<string>("PartitionColumnName", ["partitionColumnName"]);
+        _partitionUpperBound = DefineProperty<string>("PartitionUpperBound", ["partitionUpperBound"]);
+        _partitionLowerBound = DefineProperty<string>("PartitionLowerBound", ["partitionLowerBound"]);
+        _maxPartitionsNumber = DefineProperty<int>("MaxPartitionsNumber", ["maxPartitionsNumber"]);
     }
 }

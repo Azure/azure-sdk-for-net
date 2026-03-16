@@ -51,7 +51,7 @@ public partial class SqlDWUpsertSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _interimSchemaName = DefineProperty<string>("InterimSchemaName", ["InterimSchemaName"]);
-        _keys = DefineListProperty<string>("Keys", ["Keys"]);
+        _interimSchemaName = DefineProperty<string>("InterimSchemaName", ["interimSchemaName"]);
+        _keys = DefineListProperty<string>("Keys", ["keys"]);
     }
 }

@@ -117,13 +117,13 @@ public partial class FtpServerLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _authenticationType = DefineProperty<FtpAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _enableSsl = DefineProperty<bool>("EnableSsl", ["EnableSsl"]);
-        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["EnableServerCertificateValidation"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _authenticationType = DefineProperty<FtpAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _enableSsl = DefineProperty<bool>("EnableSsl", ["typeProperties", "enableSsl"]);
+        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["typeProperties", "enableServerCertificateValidation"]);
     }
 }

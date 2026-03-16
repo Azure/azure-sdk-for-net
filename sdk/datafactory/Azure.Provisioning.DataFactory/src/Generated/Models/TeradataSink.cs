@@ -39,6 +39,7 @@ public partial class TeradataSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _importSettings = DefineModelProperty<TeradataImportCommand>("ImportSettings", ["ImportSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "TeradataSink");
+        _importSettings = DefineModelProperty<TeradataImportCommand>("ImportSettings", ["importSettings"]);
     }
 }

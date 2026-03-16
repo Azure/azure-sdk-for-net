@@ -132,7 +132,8 @@ public partial class TabularSource : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _queryTimeout = DefineProperty<string>("QueryTimeout", ["QueryTimeout"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "TabularSource");
+        _queryTimeout = DefineProperty<string>("QueryTimeout", ["queryTimeout"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

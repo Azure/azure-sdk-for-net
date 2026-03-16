@@ -127,14 +127,15 @@ public partial class SqlDWSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
-        _allowPolyBase = DefineProperty<bool>("AllowPolyBase", ["AllowPolyBase"]);
-        _polyBaseSettings = DefineModelProperty<PolybaseSettings>("PolyBaseSettings", ["PolyBaseSettings"]);
-        _allowCopyCommand = DefineProperty<bool>("AllowCopyCommand", ["AllowCopyCommand"]);
-        _copyCommandSettings = DefineModelProperty<DWCopyCommandSettings>("CopyCommandSettings", ["CopyCommandSettings"]);
-        _tableOption = DefineProperty<string>("TableOption", ["TableOption"]);
-        _sqlWriterUseTableLock = DefineProperty<bool>("SqlWriterUseTableLock", ["SqlWriterUseTableLock"]);
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
-        _upsertSettings = DefineModelProperty<SqlDWUpsertSettings>("UpsertSettings", ["UpsertSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SqlDWSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
+        _allowPolyBase = DefineProperty<bool>("AllowPolyBase", ["allowPolyBase"]);
+        _polyBaseSettings = DefineModelProperty<PolybaseSettings>("PolyBaseSettings", ["polyBaseSettings"]);
+        _allowCopyCommand = DefineProperty<bool>("AllowCopyCommand", ["allowCopyCommand"]);
+        _copyCommandSettings = DefineModelProperty<DWCopyCommandSettings>("CopyCommandSettings", ["copyCommandSettings"]);
+        _tableOption = DefineProperty<string>("TableOption", ["tableOption"]);
+        _sqlWriterUseTableLock = DefineProperty<bool>("SqlWriterUseTableLock", ["sqlWriterUseTableLock"]);
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
+        _upsertSettings = DefineModelProperty<SqlDWUpsertSettings>("UpsertSettings", ["upsertSettings"]);
     }
 }

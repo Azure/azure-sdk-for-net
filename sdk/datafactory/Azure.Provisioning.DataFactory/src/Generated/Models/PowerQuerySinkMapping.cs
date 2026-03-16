@@ -49,7 +49,7 @@ public partial class PowerQuerySinkMapping : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _queryName = DefineProperty<string>("QueryName", ["QueryName"]);
-        _dataflowSinks = DefineListProperty<PowerQuerySink>("DataflowSinks", ["DataflowSinks"]);
+        _queryName = DefineProperty<string>("QueryName", ["queryName"]);
+        _dataflowSinks = DefineListProperty<PowerQuerySink>("DataflowSinks", ["dataflowSinks"]);
     }
 }

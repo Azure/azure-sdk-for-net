@@ -76,9 +76,10 @@ public partial class SapOpenHubSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _excludeLastRequest = DefineProperty<bool>("ExcludeLastRequest", ["ExcludeLastRequest"]);
-        _baseRequestId = DefineProperty<int>("BaseRequestId", ["BaseRequestId"]);
-        _customRfcReadTableFunctionModule = DefineProperty<string>("CustomRfcReadTableFunctionModule", ["CustomRfcReadTableFunctionModule"]);
-        _sapDataColumnDelimiter = DefineProperty<string>("SapDataColumnDelimiter", ["SapDataColumnDelimiter"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SapOpenHubSource");
+        _excludeLastRequest = DefineProperty<bool>("ExcludeLastRequest", ["excludeLastRequest"]);
+        _baseRequestId = DefineProperty<int>("BaseRequestId", ["baseRequestId"]);
+        _customRfcReadTableFunctionModule = DefineProperty<string>("CustomRfcReadTableFunctionModule", ["customRfcReadTableFunctionModule"]);
+        _sapDataColumnDelimiter = DefineProperty<string>("SapDataColumnDelimiter", ["sapDataColumnDelimiter"]);
     }
 }

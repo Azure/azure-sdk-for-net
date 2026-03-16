@@ -85,10 +85,10 @@ public partial class DataFactoryScriptActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _scriptBlockExecutionTimeout = DefineProperty<string>("ScriptBlockExecutionTimeout", ["ScriptBlockExecutionTimeout"]);
-        _scripts = DefineListProperty<ScriptActivityScriptBlock>("Scripts", ["Scripts"]);
-        _logSettings = DefineModelProperty<ScriptActivityTypeLogSettings>("LogSettings", ["LogSettings"]);
-        _returnMultistatementResult = DefineProperty<bool>("ReturnMultistatementResult", ["ReturnMultistatementResult"]);
-        _treatDecimalAsString = DefineProperty<bool>("TreatDecimalAsString", ["TreatDecimalAsString"]);
+        _scriptBlockExecutionTimeout = DefineProperty<string>("ScriptBlockExecutionTimeout", ["typeProperties", "scriptBlockExecutionTimeout"]);
+        _scripts = DefineListProperty<ScriptActivityScriptBlock>("Scripts", ["typeProperties", "scripts"]);
+        _logSettings = DefineModelProperty<ScriptActivityTypeLogSettings>("LogSettings", ["typeProperties", "logSettings"]);
+        _returnMultistatementResult = DefineProperty<bool>("ReturnMultistatementResult", ["typeProperties", "returnMultistatementResult"]);
+        _treatDecimalAsString = DefineProperty<bool>("TreatDecimalAsString", ["typeProperties", "treatDecimalAsString"]);
     }
 }

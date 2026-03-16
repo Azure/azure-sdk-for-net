@@ -90,8 +90,8 @@ public partial class DatabricksNotebookActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _notebookPath = DefineProperty<string>("NotebookPath", ["NotebookPath"]);
-        _baseParameters = DefineDictionaryProperty<BinaryData>("BaseParameters", ["BaseParameters"]);
-        _libraries = DefineListProperty<BicepDictionary<BinaryData>>("Libraries", ["Libraries"]);
+        _notebookPath = DefineProperty<string>("NotebookPath", ["typeProperties", "notebookPath"]);
+        _baseParameters = DefineDictionaryProperty<BinaryData>("BaseParameters", ["typeProperties", "baseParameters"]);
+        _libraries = DefineListProperty<BicepDictionary<BinaryData>>("Libraries", ["typeProperties", "libraries"]);
     }
 }

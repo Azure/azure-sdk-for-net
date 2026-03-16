@@ -48,7 +48,7 @@ public partial class ComponentSetup : CustomSetupBase
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _componentName = DefineProperty<string>("ComponentName", ["ComponentName"]);
-        _licenseKey = DefineModelProperty<DataFactorySecret>("LicenseKey", ["LicenseKey"]);
+        _componentName = DefineProperty<string>("ComponentName", ["typeProperties", "componentName"]);
+        _licenseKey = DefineModelProperty<DataFactorySecret>("LicenseKey", ["typeProperties", "licenseKey"]);
     }
 }

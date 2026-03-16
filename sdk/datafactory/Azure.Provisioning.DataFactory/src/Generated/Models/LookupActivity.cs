@@ -182,9 +182,9 @@ public partial class LookupActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _source = DefineModelProperty<CopyActivitySource>("Source", ["Source"]);
-        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["Dataset"]);
-        _firstRowOnly = DefineProperty<bool>("FirstRowOnly", ["FirstRowOnly"]);
-        _treatDecimalAsString = DefineProperty<bool>("TreatDecimalAsString", ["TreatDecimalAsString"]);
+        _source = DefineModelProperty<CopyActivitySource>("Source", ["typeProperties", "source"]);
+        _dataset = DefineModelProperty<DatasetReference>("Dataset", ["typeProperties", "dataset"]);
+        _firstRowOnly = DefineProperty<bool>("FirstRowOnly", ["typeProperties", "firstRowOnly"]);
+        _treatDecimalAsString = DefineProperty<bool>("TreatDecimalAsString", ["typeProperties", "treatDecimalAsString"]);
     }
 }

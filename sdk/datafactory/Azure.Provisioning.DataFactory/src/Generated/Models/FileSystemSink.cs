@@ -38,6 +38,7 @@ public partial class FileSystemSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _copyBehavior = DefineProperty<string>("CopyBehavior", ["CopyBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "FileSystemSink");
+        _copyBehavior = DefineProperty<string>("CopyBehavior", ["copyBehavior"]);
     }
 }

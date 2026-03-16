@@ -160,15 +160,15 @@ public partial class DelimitedTextDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _columnDelimiter = DefineProperty<string>("ColumnDelimiter", ["ColumnDelimiter"]);
-        _rowDelimiter = DefineProperty<string>("RowDelimiter", ["RowDelimiter"]);
-        _encodingName = DefineProperty<string>("EncodingName", ["EncodingName"]);
-        _compressionCodec = DefineProperty<string>("CompressionCodec", ["CompressionCodec"]);
-        _compressionLevel = DefineProperty<string>("CompressionLevel", ["CompressionLevel"]);
-        _quoteChar = DefineProperty<string>("QuoteChar", ["QuoteChar"]);
-        _escapeChar = DefineProperty<string>("EscapeChar", ["EscapeChar"]);
-        _firstRowAsHeader = DefineProperty<bool>("FirstRowAsHeader", ["FirstRowAsHeader"]);
-        _nullValue = DefineProperty<string>("NullValue", ["NullValue"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _columnDelimiter = DefineProperty<string>("ColumnDelimiter", ["typeProperties", "columnDelimiter"]);
+        _rowDelimiter = DefineProperty<string>("RowDelimiter", ["typeProperties", "rowDelimiter"]);
+        _encodingName = DefineProperty<string>("EncodingName", ["typeProperties", "encodingName"]);
+        _compressionCodec = DefineProperty<string>("CompressionCodec", ["typeProperties", "compressionCodec"]);
+        _compressionLevel = DefineProperty<string>("CompressionLevel", ["typeProperties", "compressionLevel"]);
+        _quoteChar = DefineProperty<string>("QuoteChar", ["typeProperties", "quoteChar"]);
+        _escapeChar = DefineProperty<string>("EscapeChar", ["typeProperties", "escapeChar"]);
+        _firstRowAsHeader = DefineProperty<bool>("FirstRowAsHeader", ["typeProperties", "firstRowAsHeader"]);
+        _nullValue = DefineProperty<string>("NullValue", ["typeProperties", "nullValue"]);
     }
 }

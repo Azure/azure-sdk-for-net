@@ -39,6 +39,7 @@ public partial class ZipDeflateReadSettings : CompressionReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preserveZipFileNameAsFolder = DefineProperty<bool>("PreserveZipFileNameAsFolder", ["PreserveZipFileNameAsFolder"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ZipDeflateReadSettings");
+        _preserveZipFileNameAsFolder = DefineProperty<bool>("PreserveZipFileNameAsFolder", ["preserveZipFileNameAsFolder"]);
     }
 }

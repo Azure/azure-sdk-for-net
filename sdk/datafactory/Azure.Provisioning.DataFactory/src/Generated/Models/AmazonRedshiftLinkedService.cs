@@ -95,11 +95,11 @@ public partial class AmazonRedshiftLinkedService : DataFactoryLinkedServicePrope
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

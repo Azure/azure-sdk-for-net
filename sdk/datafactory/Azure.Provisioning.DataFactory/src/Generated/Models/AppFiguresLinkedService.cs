@@ -59,8 +59,8 @@ public partial class AppFiguresLinkedService : DataFactoryLinkedServicePropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _clientKey = DefineModelProperty<DataFactorySecret>("ClientKey", ["ClientKey"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _clientKey = DefineModelProperty<DataFactorySecret>("ClientKey", ["typeProperties", "clientKey"]);
     }
 }

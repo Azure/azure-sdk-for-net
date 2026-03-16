@@ -200,20 +200,20 @@ public partial class PrestoLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _serverVersion = DefineProperty<string>("ServerVersion", ["ServerVersion"]);
-        _catalog = DefineProperty<string>("Catalog", ["Catalog"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _authenticationType = DefineProperty<PrestoAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _enableSsl = DefineProperty<bool>("EnableSsl", ["EnableSsl"]);
-        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["EnableServerCertificateValidation"]);
-        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["TrustedCertPath"]);
-        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["UseSystemTrustStore"]);
-        _allowHostNameCNMismatch = DefineProperty<bool>("AllowHostNameCNMismatch", ["AllowHostNameCNMismatch"]);
-        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["AllowSelfSignedServerCert"]);
-        _timeZoneId = DefineProperty<string>("TimeZoneId", ["TimeZoneId"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _serverVersion = DefineProperty<string>("ServerVersion", ["typeProperties", "serverVersion"]);
+        _catalog = DefineProperty<string>("Catalog", ["typeProperties", "catalog"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _authenticationType = DefineProperty<PrestoAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _enableSsl = DefineProperty<bool>("EnableSsl", ["typeProperties", "enableSsl"]);
+        _enableServerCertificateValidation = DefineProperty<bool>("EnableServerCertificateValidation", ["typeProperties", "enableServerCertificateValidation"]);
+        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["typeProperties", "trustedCertPath"]);
+        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["typeProperties", "useSystemTrustStore"]);
+        _allowHostNameCNMismatch = DefineProperty<bool>("AllowHostNameCNMismatch", ["typeProperties", "allowHostNameCNMismatch"]);
+        _allowSelfSignedServerCert = DefineProperty<bool>("AllowSelfSignedServerCert", ["typeProperties", "allowSelfSignedServerCert"]);
+        _timeZoneId = DefineProperty<string>("TimeZoneId", ["typeProperties", "timeZoneID"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

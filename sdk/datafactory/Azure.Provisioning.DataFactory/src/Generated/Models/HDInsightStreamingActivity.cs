@@ -207,17 +207,17 @@ public partial class HDInsightStreamingActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["StorageLinkedServices"]);
-        _arguments = DefineListProperty<BinaryData>("Arguments", ["Arguments"]);
-        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["GetDebugInfo"]);
-        _mapper = DefineProperty<string>("Mapper", ["Mapper"]);
-        _reducer = DefineProperty<string>("Reducer", ["Reducer"]);
-        _input = DefineProperty<string>("Input", ["Input"]);
-        _output = DefineProperty<string>("Output", ["Output"]);
-        _filePaths = DefineListProperty<BinaryData>("FilePaths", ["FilePaths"]);
-        _fileLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("FileLinkedService", ["FileLinkedService"]);
-        _combiner = DefineProperty<string>("Combiner", ["Combiner"]);
-        _commandEnvironment = DefineListProperty<BinaryData>("CommandEnvironment", ["CommandEnvironment"]);
-        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["Defines"]);
+        _storageLinkedServices = DefineListProperty<DataFactoryLinkedServiceReference>("StorageLinkedServices", ["typeProperties", "storageLinkedServices"]);
+        _arguments = DefineListProperty<BinaryData>("Arguments", ["typeProperties", "arguments"]);
+        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["typeProperties", "getDebugInfo"]);
+        _mapper = DefineProperty<string>("Mapper", ["typeProperties", "mapper"]);
+        _reducer = DefineProperty<string>("Reducer", ["typeProperties", "reducer"]);
+        _input = DefineProperty<string>("Input", ["typeProperties", "input"]);
+        _output = DefineProperty<string>("Output", ["typeProperties", "output"]);
+        _filePaths = DefineListProperty<BinaryData>("FilePaths", ["typeProperties", "filePaths"]);
+        _fileLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("FileLinkedService", ["typeProperties", "fileLinkedService"]);
+        _combiner = DefineProperty<string>("Combiner", ["typeProperties", "combiner"]);
+        _commandEnvironment = DefineListProperty<BinaryData>("CommandEnvironment", ["typeProperties", "commandEnvironment"]);
+        _defines = DefineDictionaryProperty<BinaryData>("Defines", ["typeProperties", "defines"]);
     }
 }

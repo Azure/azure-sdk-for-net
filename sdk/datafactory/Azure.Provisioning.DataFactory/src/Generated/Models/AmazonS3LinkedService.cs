@@ -98,11 +98,12 @@ public partial class AmazonS3LinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _authenticationType = DefineProperty<string>("AuthenticationType", ["AuthenticationType"]);
-        _accessKeyId = DefineProperty<string>("AccessKeyId", ["AccessKeyId"]);
-        _secretAccessKey = DefineModelProperty<DataFactorySecret>("SecretAccessKey", ["SecretAccessKey"]);
-        _serviceUri = DefineProperty<string>("ServiceUri", ["ServiceUri"]);
-        _sessionToken = DefineModelProperty<DataFactorySecret>("SessionToken", ["SessionToken"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AmazonS3");
+        _authenticationType = DefineProperty<string>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _accessKeyId = DefineProperty<string>("AccessKeyId", ["typeProperties", "accessKeyId"]);
+        _secretAccessKey = DefineModelProperty<DataFactorySecret>("SecretAccessKey", ["typeProperties", "secretAccessKey"]);
+        _serviceUri = DefineProperty<string>("ServiceUri", ["typeProperties", "serviceUrl"]);
+        _sessionToken = DefineModelProperty<DataFactorySecret>("SessionToken", ["typeProperties", "sessionToken"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

@@ -40,6 +40,6 @@ public partial class MongoDBAtlasCollectionDataset : DataFactoryDatasetPropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _collection = DefineProperty<string>("Collection", ["Collection"]);
+        _collection = DefineProperty<string>("Collection", ["typeProperties", "collection"]);
     }
 }

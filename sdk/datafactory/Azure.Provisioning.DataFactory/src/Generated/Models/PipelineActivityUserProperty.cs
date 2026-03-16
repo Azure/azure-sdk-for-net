@@ -50,6 +50,6 @@ public partial class PipelineActivityUserProperty : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _value = DefineProperty<string>("Value", ["Value"]);
+        _value = DefineProperty<string>("Value", ["value"]);
     }
 }

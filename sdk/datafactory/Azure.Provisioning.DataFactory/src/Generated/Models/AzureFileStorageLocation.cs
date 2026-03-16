@@ -27,5 +27,6 @@ public partial class AzureFileStorageLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureFileStorageLocation");
     }
 }

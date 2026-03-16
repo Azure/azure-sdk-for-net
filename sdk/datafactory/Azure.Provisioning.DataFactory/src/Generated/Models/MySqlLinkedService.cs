@@ -215,22 +215,23 @@ public partial class MySqlLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _driverVersion = DefineProperty<string>("DriverVersion", ["DriverVersion"]);
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _sslMode = DefineProperty<int>("SslMode", ["SslMode"]);
-        _useSystemTrustStore = DefineProperty<int>("UseSystemTrustStore", ["UseSystemTrustStore"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _allowZeroDateTime = DefineProperty<bool>("AllowZeroDateTime", ["AllowZeroDateTime"]);
-        _connectionTimeout = DefineProperty<int>("ConnectionTimeout", ["ConnectionTimeout"]);
-        _convertZeroDateTime = DefineProperty<bool>("ConvertZeroDateTime", ["ConvertZeroDateTime"]);
-        _guidFormat = DefineProperty<string>("GuidFormat", ["GuidFormat"]);
-        _sslCert = DefineProperty<string>("SslCert", ["SslCert"]);
-        _sslKey = DefineProperty<string>("SslKey", ["SslKey"]);
-        _treatTinyAsBoolean = DefineProperty<bool>("TreatTinyAsBoolean", ["TreatTinyAsBoolean"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MySql");
+        _driverVersion = DefineProperty<string>("DriverVersion", ["typeProperties", "driverVersion"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _sslMode = DefineProperty<int>("SslMode", ["typeProperties", "sslMode"]);
+        _useSystemTrustStore = DefineProperty<int>("UseSystemTrustStore", ["typeProperties", "useSystemTrustStore"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _allowZeroDateTime = DefineProperty<bool>("AllowZeroDateTime", ["typeProperties", "allowZeroDateTime"]);
+        _connectionTimeout = DefineProperty<int>("ConnectionTimeout", ["typeProperties", "connectionTimeout"]);
+        _convertZeroDateTime = DefineProperty<bool>("ConvertZeroDateTime", ["typeProperties", "convertZeroDateTime"]);
+        _guidFormat = DefineProperty<string>("GuidFormat", ["typeProperties", "guidFormat"]);
+        _sslCert = DefineProperty<string>("SslCert", ["typeProperties", "sslCert"]);
+        _sslKey = DefineProperty<string>("SslKey", ["typeProperties", "sslKey"]);
+        _treatTinyAsBoolean = DefineProperty<bool>("TreatTinyAsBoolean", ["typeProperties", "treatTinyAsBoolean"]);
     }
 }

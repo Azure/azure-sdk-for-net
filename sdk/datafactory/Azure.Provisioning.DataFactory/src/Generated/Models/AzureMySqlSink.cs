@@ -39,6 +39,7 @@ public partial class AzureMySqlSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preCopyScript = DefineProperty<string>("PreCopyScript", ["PreCopyScript"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureMySqlSink");
+        _preCopyScript = DefineProperty<string>("PreCopyScript", ["preCopyScript"]);
     }
 }

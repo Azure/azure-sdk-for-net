@@ -47,6 +47,7 @@ public partial class BinaryReadSettings : FormatReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["CompressionProperties"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "BinaryReadSettings");
+        _compressionProperties = DefineModelProperty<CompressionReadSettings>("CompressionProperties", ["compressionProperties"]);
     }
 }

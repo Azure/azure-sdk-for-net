@@ -52,7 +52,8 @@ public partial class DynamicsAXSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["HttpRequestTimeout"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "DynamicsAXSource");
+        _query = DefineProperty<string>("Query", ["query"]);
+        _httpRequestTimeout = DefineProperty<string>("HttpRequestTimeout", ["httpRequestTimeout"]);
     }
 }

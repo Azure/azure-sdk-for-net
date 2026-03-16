@@ -38,6 +38,7 @@ public partial class OdbcSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "OdbcSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

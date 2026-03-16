@@ -38,6 +38,7 @@ public partial class PostgreSqlSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "PostgreSqlSource");
+        _query = DefineProperty<string>("Query", ["query"]);
     }
 }

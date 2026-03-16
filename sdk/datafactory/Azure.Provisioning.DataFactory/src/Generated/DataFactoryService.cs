@@ -219,19 +219,19 @@ public partial class DataFactoryService : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
-        _encryption = DefineModelProperty<DataFactoryEncryptionConfiguration>("Encryption", ["Encryption"]);
-        _globalParameters = DefineDictionaryProperty<DataFactoryGlobalParameterProperties>("GlobalParameters", ["GlobalParameters"]);
-        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["Identity"]);
-        _publicNetworkAccess = DefineProperty<DataFactoryPublicNetworkAccess>("PublicNetworkAccess", ["PublicNetworkAccess"]);
-        _purviewResourceId = DefineProperty<ResourceIdentifier>("PurviewResourceId", ["PurviewResourceId"]);
-        _repoConfiguration = DefineModelProperty<FactoryRepoConfiguration>("RepoConfiguration", ["RepoConfiguration"]);
+        _encryption = DefineModelProperty<DataFactoryEncryptionConfiguration>("Encryption", ["properties", "encryption"]);
+        _globalParameters = DefineDictionaryProperty<DataFactoryGlobalParameterProperties>("GlobalParameters", ["properties", "globalParameters"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _publicNetworkAccess = DefineProperty<DataFactoryPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _purviewResourceId = DefineProperty<ResourceIdentifier>("PurviewResourceId", ["properties", "purviewConfiguration", "purviewResourceId"]);
+        _repoConfiguration = DefineModelProperty<FactoryRepoConfiguration>("RepoConfiguration", ["properties", "repoConfiguration"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["CreatedOn"], isOutput: true);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createTime"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["eTag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _provisioningState = DefineProperty<string>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
-        _version = DefineProperty<string>("Version", ["Version"], isOutput: true);
+        _version = DefineProperty<string>("Version", ["properties", "version"], isOutput: true);
     }
 
     /// <summary>

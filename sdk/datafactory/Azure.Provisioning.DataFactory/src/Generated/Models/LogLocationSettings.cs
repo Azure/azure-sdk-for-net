@@ -50,7 +50,7 @@ public partial class LogLocationSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _path = DefineProperty<string>("Path", ["Path"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["linkedServiceName"]);
+        _path = DefineProperty<string>("Path", ["path"]);
     }
 }

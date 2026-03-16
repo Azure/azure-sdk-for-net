@@ -87,9 +87,9 @@ public partial class CustomEventsTrigger : MultiplePipelineTrigger
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _subjectBeginsWith = DefineProperty<string>("SubjectBeginsWith", ["SubjectBeginsWith"]);
-        _subjectEndsWith = DefineProperty<string>("SubjectEndsWith", ["SubjectEndsWith"]);
-        _events = DefineListProperty<BinaryData>("Events", ["Events"]);
-        _scope = DefineProperty<string>("Scope", ["Scope"]);
+        _subjectBeginsWith = DefineProperty<string>("SubjectBeginsWith", ["typeProperties", "subjectBeginsWith"]);
+        _subjectEndsWith = DefineProperty<string>("SubjectEndsWith", ["typeProperties", "subjectEndsWith"]);
+        _events = DefineListProperty<BinaryData>("Events", ["typeProperties", "events"]);
+        _scope = DefineProperty<string>("Scope", ["typeProperties", "scope"]);
     }
 }

@@ -50,7 +50,7 @@ public partial class SsisPropertyOverride : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _value = DefineProperty<string>("Value", ["Value"]);
-        _isSensitive = DefineProperty<bool>("IsSensitive", ["IsSensitive"]);
+        _value = DefineProperty<string>("Value", ["value"]);
+        _isSensitive = DefineProperty<bool>("IsSensitive", ["isSensitive"]);
     }
 }

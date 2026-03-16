@@ -71,9 +71,9 @@ public partial class SsisLogLocation : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _logPath = DefineProperty<string>("LogPath", ["LogPath"]);
-        _locationType = DefineProperty<SsisLogLocationType>("LocationType", ["LocationType"]);
-        _accessCredential = DefineModelProperty<SsisAccessCredential>("AccessCredential", ["AccessCredential"]);
-        _logRefreshInterval = DefineProperty<string>("LogRefreshInterval", ["LogRefreshInterval"]);
+        _logPath = DefineProperty<string>("LogPath", ["logPath"]);
+        _locationType = DefineProperty<SsisLogLocationType>("LocationType", ["type"]);
+        _accessCredential = DefineModelProperty<SsisAccessCredential>("AccessCredential", ["typeProperties", "accessCredential"]);
+        _logRefreshInterval = DefineProperty<string>("LogRefreshInterval", ["typeProperties", "logRefreshInterval"]);
     }
 }

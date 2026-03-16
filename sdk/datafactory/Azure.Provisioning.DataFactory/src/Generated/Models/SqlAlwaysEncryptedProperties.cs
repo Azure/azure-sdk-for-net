@@ -72,9 +72,9 @@ public partial class SqlAlwaysEncryptedProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _alwaysEncryptedAkvAuthType = DefineProperty<SqlAlwaysEncryptedAkvAuthType>("AlwaysEncryptedAkvAuthType", ["AlwaysEncryptedAkvAuthType"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _alwaysEncryptedAkvAuthType = DefineProperty<SqlAlwaysEncryptedAkvAuthType>("AlwaysEncryptedAkvAuthType", ["alwaysEncryptedAkvAuthType"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["servicePrincipalKey"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["credential"]);
     }
 }

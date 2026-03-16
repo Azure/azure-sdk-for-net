@@ -245,11 +245,11 @@ public partial class DataFactoryLinkedServiceProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServiceVersion = DefineProperty<string>("LinkedServiceVersion", ["LinkedServiceVersion"]);
-        _connectVia = DefineModelProperty<IntegrationRuntimeReference>("ConnectVia", ["ConnectVia"]);
-        _description = DefineProperty<string>("Description", ["Description"]);
-        _parameters = DefineDictionaryProperty<EntityParameterSpecification>("Parameters", ["Parameters"]);
-        _annotations = DefineListProperty<BinaryData>("Annotations", ["Annotations"]);
+        _linkedServiceVersion = DefineProperty<string>("LinkedServiceVersion", ["version"]);
+        _connectVia = DefineModelProperty<IntegrationRuntimeReference>("ConnectVia", ["connectVia"]);
+        _description = DefineProperty<string>("Description", ["description"]);
+        _parameters = DefineDictionaryProperty<EntityParameterSpecification>("Parameters", ["parameters"]);
+        _annotations = DefineListProperty<BinaryData>("Annotations", ["annotations"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

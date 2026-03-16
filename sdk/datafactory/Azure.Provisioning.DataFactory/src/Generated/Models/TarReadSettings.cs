@@ -39,6 +39,7 @@ public partial class TarReadSettings : CompressionReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _preserveCompressionFileNameAsFolder = DefineProperty<bool>("PreserveCompressionFileNameAsFolder", ["PreserveCompressionFileNameAsFolder"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "TarReadSettings");
+        _preserveCompressionFileNameAsFolder = DefineProperty<bool>("PreserveCompressionFileNameAsFolder", ["preserveCompressionFileNameAsFolder"]);
     }
 }

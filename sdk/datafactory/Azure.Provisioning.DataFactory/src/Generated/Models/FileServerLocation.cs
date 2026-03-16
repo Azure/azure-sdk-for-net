@@ -27,5 +27,6 @@ public partial class FileServerLocation : DatasetLocation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        DefineProperty<string>("type", ["type"], defaultValue: "FileServerLocation");
     }
 }

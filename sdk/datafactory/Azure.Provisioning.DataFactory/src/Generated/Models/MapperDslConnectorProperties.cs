@@ -62,6 +62,6 @@ public partial class MapperDslConnectorProperties : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _value = DefineProperty<BinaryData>("Value", ["Value"]);
+        _value = DefineProperty<BinaryData>("Value", ["value"]);
     }
 }

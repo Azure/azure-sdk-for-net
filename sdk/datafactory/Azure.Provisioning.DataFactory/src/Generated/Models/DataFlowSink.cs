@@ -49,7 +49,7 @@ public partial class DataFlowSink : DataFlowTransformation
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _schemaLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("SchemaLinkedService", ["SchemaLinkedService"]);
-        _rejectedDataLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("RejectedDataLinkedService", ["RejectedDataLinkedService"]);
+        _schemaLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("SchemaLinkedService", ["schemaLinkedService"]);
+        _rejectedDataLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("RejectedDataLinkedService", ["rejectedDataLinkedService"]);
     }
 }

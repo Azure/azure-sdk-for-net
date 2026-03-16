@@ -82,9 +82,9 @@ public partial class AzureDataLakeStoreDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
-        _fileName = DefineProperty<string>("FileName", ["FileName"]);
-        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["Format"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["typeProperties", "folderPath"]);
+        _fileName = DefineProperty<string>("FileName", ["typeProperties", "fileName"]);
+        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["typeProperties", "format"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

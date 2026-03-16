@@ -115,12 +115,12 @@ public partial class FileShareDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
-        _fileName = DefineProperty<string>("FileName", ["FileName"]);
-        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["ModifiedDatetimeStart"]);
-        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["ModifiedDatetimeEnd"]);
-        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["Format"]);
-        _fileFilter = DefineProperty<string>("FileFilter", ["FileFilter"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["typeProperties", "folderPath"]);
+        _fileName = DefineProperty<string>("FileName", ["typeProperties", "fileName"]);
+        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["typeProperties", "modifiedDatetimeStart"]);
+        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["typeProperties", "modifiedDatetimeEnd"]);
+        _format = DefineModelProperty<DatasetStorageFormat>("Format", ["typeProperties", "format"]);
+        _fileFilter = DefineProperty<string>("FileFilter", ["typeProperties", "fileFilter"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

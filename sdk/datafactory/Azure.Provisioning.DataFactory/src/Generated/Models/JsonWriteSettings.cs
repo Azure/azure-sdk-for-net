@@ -64,7 +64,7 @@ public partial class JsonWriteSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _filePattern = DefineProperty<string>("FilePattern", ["FilePattern"]);
+        _filePattern = DefineProperty<string>("FilePattern", ["filePattern"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

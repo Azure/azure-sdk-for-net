@@ -39,6 +39,6 @@ public partial class WaitActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _waitTimeInSeconds = DefineProperty<int>("WaitTimeInSeconds", ["WaitTimeInSeconds"]);
+        _waitTimeInSeconds = DefineProperty<int>("WaitTimeInSeconds", ["typeProperties", "waitTimeInSeconds"]);
     }
 }

@@ -161,8 +161,8 @@ public partial class IfConditionActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _expression = DefineModelProperty<DataFactoryExpression>("Expression", ["Expression"]);
-        _ifTrueActivities = DefineListProperty<PipelineActivity>("IfTrueActivities", ["IfTrueActivities"]);
-        _ifFalseActivities = DefineListProperty<PipelineActivity>("IfFalseActivities", ["IfFalseActivities"]);
+        _expression = DefineModelProperty<DataFactoryExpression>("Expression", ["typeProperties", "expression"]);
+        _ifTrueActivities = DefineListProperty<PipelineActivity>("IfTrueActivities", ["typeProperties", "ifTrueActivities"]);
+        _ifFalseActivities = DefineListProperty<PipelineActivity>("IfFalseActivities", ["typeProperties", "ifFalseActivities"]);
     }
 }

@@ -50,7 +50,7 @@ public partial class SnowflakeV2Source : CopyActivitySource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _query = DefineProperty<string>("Query", ["Query"]);
-        _exportSettings = DefineModelProperty<SnowflakeExportCopyCommand>("ExportSettings", ["ExportSettings"]);
+        _query = DefineProperty<string>("Query", ["query"]);
+        _exportSettings = DefineModelProperty<SnowflakeExportCopyCommand>("ExportSettings", ["exportSettings"]);
     }
 }

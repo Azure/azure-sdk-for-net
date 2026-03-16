@@ -140,13 +140,13 @@ public partial class HDInsightSparkActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _rootPath = DefineProperty<string>("RootPath", ["RootPath"]);
-        _entryFilePath = DefineProperty<string>("EntryFilePath", ["EntryFilePath"]);
-        _arguments = DefineListProperty<BinaryData>("Arguments", ["Arguments"]);
-        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["GetDebugInfo"]);
-        _sparkJobLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("SparkJobLinkedService", ["SparkJobLinkedService"]);
-        _className = DefineProperty<string>("ClassName", ["ClassName"]);
-        _proxyUser = DefineProperty<string>("ProxyUser", ["ProxyUser"]);
-        _sparkConfig = DefineDictionaryProperty<BinaryData>("SparkConfig", ["SparkConfig"]);
+        _rootPath = DefineProperty<string>("RootPath", ["typeProperties", "rootPath"]);
+        _entryFilePath = DefineProperty<string>("EntryFilePath", ["typeProperties", "entryFilePath"]);
+        _arguments = DefineListProperty<BinaryData>("Arguments", ["typeProperties", "arguments"]);
+        _getDebugInfo = DefineProperty<HDInsightActivityDebugInfoOptionSetting>("GetDebugInfo", ["typeProperties", "getDebugInfo"]);
+        _sparkJobLinkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("SparkJobLinkedService", ["typeProperties", "sparkJobLinkedService"]);
+        _className = DefineProperty<string>("ClassName", ["typeProperties", "className"]);
+        _proxyUser = DefineProperty<string>("ProxyUser", ["typeProperties", "proxyUser"]);
+        _sparkConfig = DefineDictionaryProperty<BinaryData>("SparkConfig", ["typeProperties", "sparkConfig"]);
     }
 }

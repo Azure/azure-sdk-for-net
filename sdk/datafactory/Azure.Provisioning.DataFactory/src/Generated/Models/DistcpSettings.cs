@@ -63,8 +63,8 @@ public partial class DistcpSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _resourceManagerEndpoint = DefineProperty<string>("ResourceManagerEndpoint", ["ResourceManagerEndpoint"]);
-        _tempScriptPath = DefineProperty<string>("TempScriptPath", ["TempScriptPath"]);
-        _distcpOptions = DefineProperty<string>("DistcpOptions", ["DistcpOptions"]);
+        _resourceManagerEndpoint = DefineProperty<string>("ResourceManagerEndpoint", ["resourceManagerEndpoint"]);
+        _tempScriptPath = DefineProperty<string>("TempScriptPath", ["tempScriptPath"]);
+        _distcpOptions = DefineProperty<string>("DistcpOptions", ["distcpOptions"]);
     }
 }

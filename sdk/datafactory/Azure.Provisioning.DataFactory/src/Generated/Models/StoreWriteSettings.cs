@@ -106,10 +106,10 @@ public partial class StoreWriteSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["MaxConcurrentConnections"]);
-        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["DisableMetricsCollection"]);
-        _copyBehavior = DefineProperty<string>("CopyBehavior", ["CopyBehavior"]);
-        _metadata = DefineListProperty<DataFactoryMetadataItemInfo>("Metadata", ["Metadata"]);
+        _maxConcurrentConnections = DefineProperty<int>("MaxConcurrentConnections", ["maxConcurrentConnections"]);
+        _disableMetricsCollection = DefineProperty<bool>("DisableMetricsCollection", ["disableMetricsCollection"]);
+        _copyBehavior = DefineProperty<string>("CopyBehavior", ["copyBehavior"]);
+        _metadata = DefineListProperty<DataFactoryMetadataItemInfo>("Metadata", ["metadata"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

@@ -83,8 +83,8 @@ public partial class JsonDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["DataLocation"]);
-        _encodingName = DefineProperty<string>("EncodingName", ["EncodingName"]);
-        _compression = DefineModelProperty<DatasetCompression>("Compression", ["Compression"]);
+        _dataLocation = DefineModelProperty<DatasetLocation>("DataLocation", ["typeProperties", "location"]);
+        _encodingName = DefineProperty<string>("EncodingName", ["typeProperties", "encodingName"]);
+        _compression = DefineModelProperty<DatasetCompression>("Compression", ["typeProperties", "compression"]);
     }
 }

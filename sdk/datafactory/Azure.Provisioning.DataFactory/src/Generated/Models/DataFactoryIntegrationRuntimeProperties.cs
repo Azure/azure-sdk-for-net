@@ -71,7 +71,7 @@ public partial class DataFactoryIntegrationRuntimeProperties : ProvisionableCons
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _description = DefineProperty<string>("Description", ["Description"]);
+        _description = DefineProperty<string>("Description", ["description"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

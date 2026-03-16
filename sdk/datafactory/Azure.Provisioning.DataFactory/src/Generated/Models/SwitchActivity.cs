@@ -113,8 +113,8 @@ public partial class SwitchActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _on = DefineModelProperty<DataFactoryExpression>("On", ["On"]);
-        _cases = DefineListProperty<SwitchCaseActivity>("Cases", ["Cases"]);
-        _defaultActivities = DefineListProperty<PipelineActivity>("DefaultActivities", ["DefaultActivities"]);
+        _on = DefineModelProperty<DataFactoryExpression>("On", ["typeProperties", "on"]);
+        _cases = DefineListProperty<SwitchCaseActivity>("Cases", ["typeProperties", "cases"]);
+        _defaultActivities = DefineListProperty<PipelineActivity>("DefaultActivities", ["typeProperties", "defaultActivities"]);
     }
 }

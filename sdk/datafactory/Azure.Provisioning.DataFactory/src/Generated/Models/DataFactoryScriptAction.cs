@@ -82,8 +82,8 @@ public partial class DataFactoryScriptAction : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
-        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
-        _roles = DefineProperty<BinaryData>("Roles", ["Roles"]);
-        _parameters = DefineProperty<string>("Parameters", ["Parameters"]);
+        _uri = DefineProperty<Uri>("Uri", ["uri"]);
+        _roles = DefineProperty<BinaryData>("Roles", ["roles"]);
+        _parameters = DefineProperty<string>("Parameters", ["parameters"]);
     }
 }

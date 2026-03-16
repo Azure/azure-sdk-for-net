@@ -42,6 +42,7 @@ public partial class AzureDataLakeStoreWriteSettings : StoreWriteSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _expiryDateTime = DefineProperty<string>("ExpiryDateTime", ["ExpiryDateTime"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureDataLakeStoreWriteSettings");
+        _expiryDateTime = DefineProperty<string>("ExpiryDateTime", ["expiryDateTime"]);
     }
 }

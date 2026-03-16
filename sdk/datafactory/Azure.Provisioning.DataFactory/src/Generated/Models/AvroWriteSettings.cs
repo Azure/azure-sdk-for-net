@@ -97,10 +97,10 @@ public partial class AvroWriteSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recordName = DefineProperty<string>("RecordName", ["RecordName"]);
-        _recordNamespace = DefineProperty<string>("RecordNamespace", ["RecordNamespace"]);
-        _maxRowsPerFile = DefineProperty<int>("MaxRowsPerFile", ["MaxRowsPerFile"]);
-        _fileNamePrefix = DefineProperty<string>("FileNamePrefix", ["FileNamePrefix"]);
+        _recordName = DefineProperty<string>("RecordName", ["recordName"]);
+        _recordNamespace = DefineProperty<string>("RecordNamespace", ["recordNamespace"]);
+        _maxRowsPerFile = DefineProperty<int>("MaxRowsPerFile", ["maxRowsPerFile"]);
+        _fileNamePrefix = DefineProperty<string>("FileNamePrefix", ["fileNamePrefix"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

@@ -161,17 +161,18 @@ public partial class AzureFileStorageLinkedService : DataFactoryLinkedServicePro
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _userId = DefineProperty<string>("UserId", ["UserId"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _accountKey = DefineModelProperty<DataFactoryKeyVaultSecret>("AccountKey", ["AccountKey"]);
-        _sasUri = DefineProperty<string>("SasUri", ["SasUri"]);
-        _sasToken = DefineModelProperty<DataFactoryKeyVaultSecret>("SasToken", ["SasToken"]);
-        _fileShare = DefineProperty<string>("FileShare", ["FileShare"]);
-        _snapshot = DefineProperty<string>("Snapshot", ["Snapshot"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _serviceEndpoint = DefineProperty<string>("ServiceEndpoint", ["ServiceEndpoint"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureFileStorage");
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _userId = DefineProperty<string>("UserId", ["typeProperties", "userId"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _accountKey = DefineModelProperty<DataFactoryKeyVaultSecret>("AccountKey", ["typeProperties", "accountKey"]);
+        _sasUri = DefineProperty<string>("SasUri", ["typeProperties", "sasUri"]);
+        _sasToken = DefineModelProperty<DataFactoryKeyVaultSecret>("SasToken", ["typeProperties", "sasToken"]);
+        _fileShare = DefineProperty<string>("FileShare", ["typeProperties", "fileShare"]);
+        _snapshot = DefineProperty<string>("Snapshot", ["typeProperties", "snapshot"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _serviceEndpoint = DefineProperty<string>("ServiceEndpoint", ["typeProperties", "serviceEndpoint"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

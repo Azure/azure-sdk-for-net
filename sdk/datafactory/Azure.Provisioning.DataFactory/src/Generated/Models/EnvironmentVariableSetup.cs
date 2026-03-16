@@ -48,7 +48,7 @@ public partial class EnvironmentVariableSetup : CustomSetupBase
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _variableName = DefineProperty<string>("VariableName", ["VariableName"]);
-        _variableValue = DefineProperty<string>("VariableValue", ["VariableValue"]);
+        _variableName = DefineProperty<string>("VariableName", ["typeProperties", "variableName"]);
+        _variableValue = DefineProperty<string>("VariableValue", ["typeProperties", "variableValue"]);
     }
 }

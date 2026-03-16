@@ -93,10 +93,10 @@ public partial class DataMapperMapping : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _targetEntityName = DefineProperty<string>("TargetEntityName", ["TargetEntityName"]);
-        _sourceEntityName = DefineProperty<string>("SourceEntityName", ["SourceEntityName"]);
-        _sourceConnectionReference = DefineModelProperty<MapperConnectionReference>("SourceConnectionReference", ["SourceConnectionReference"]);
-        _attributeMappings = DefineListProperty<MapperAttributeMapping>("AttributeMappings", ["AttributeMappings"]);
-        _sourceDenormalizeInfo = DefineProperty<BinaryData>("SourceDenormalizeInfo", ["SourceDenormalizeInfo"]);
+        _targetEntityName = DefineProperty<string>("TargetEntityName", ["targetEntityName"]);
+        _sourceEntityName = DefineProperty<string>("SourceEntityName", ["sourceEntityName"]);
+        _sourceConnectionReference = DefineModelProperty<MapperConnectionReference>("SourceConnectionReference", ["sourceConnectionReference"]);
+        _attributeMappings = DefineListProperty<MapperAttributeMapping>("AttributeMappings", ["attributeMappingInfo", "attributeMappings"]);
+        _sourceDenormalizeInfo = DefineProperty<BinaryData>("SourceDenormalizeInfo", ["sourceDenormalizeInfo"]);
     }
 }

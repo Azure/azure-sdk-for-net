@@ -104,12 +104,12 @@ public partial class SybaseLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _schema = DefineProperty<string>("Schema", ["Schema"]);
-        _authenticationType = DefineProperty<SybaseAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _username = DefineProperty<string>("Username", ["Username"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _schema = DefineProperty<string>("Schema", ["typeProperties", "schema"]);
+        _authenticationType = DefineProperty<SybaseAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _username = DefineProperty<string>("Username", ["typeProperties", "username"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

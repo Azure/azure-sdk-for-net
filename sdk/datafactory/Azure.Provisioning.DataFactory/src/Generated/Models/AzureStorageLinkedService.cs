@@ -84,10 +84,11 @@ public partial class AzureStorageLinkedService : DataFactoryLinkedServicePropert
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _accountKey = DefineModelProperty<DataFactoryKeyVaultSecret>("AccountKey", ["AccountKey"]);
-        _sasUri = DefineProperty<string>("SasUri", ["SasUri"]);
-        _sasToken = DefineModelProperty<DataFactoryKeyVaultSecret>("SasToken", ["SasToken"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureStorage");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _accountKey = DefineModelProperty<DataFactoryKeyVaultSecret>("AccountKey", ["typeProperties", "accountKey"]);
+        _sasUri = DefineProperty<string>("SasUri", ["typeProperties", "sasUri"]);
+        _sasToken = DefineModelProperty<DataFactoryKeyVaultSecret>("SasToken", ["typeProperties", "sasToken"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

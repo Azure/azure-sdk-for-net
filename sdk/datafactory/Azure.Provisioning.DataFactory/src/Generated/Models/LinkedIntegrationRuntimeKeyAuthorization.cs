@@ -39,6 +39,6 @@ public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegratio
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _key = DefineModelProperty<DataFactorySecretString>("Key", ["Key"]);
+        _key = DefineModelProperty<DataFactorySecretString>("Key", ["key"]);
     }
 }

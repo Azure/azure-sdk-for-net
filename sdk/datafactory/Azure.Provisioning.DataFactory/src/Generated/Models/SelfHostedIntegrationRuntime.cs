@@ -59,7 +59,8 @@ public partial class SelfHostedIntegrationRuntime : DataFactoryIntegrationRuntim
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedInfo = DefineModelProperty<LinkedIntegrationRuntimeType>("LinkedInfo", ["LinkedInfo"]);
-        _isSelfContainedInteractiveAuthoringEnabled = DefineProperty<bool>("IsSelfContainedInteractiveAuthoringEnabled", ["IsSelfContainedInteractiveAuthoringEnabled"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "SelfHosted");
+        _linkedInfo = DefineModelProperty<LinkedIntegrationRuntimeType>("LinkedInfo", ["typeProperties", "linkedInfo"]);
+        _isSelfContainedInteractiveAuthoringEnabled = DefineProperty<bool>("IsSelfContainedInteractiveAuthoringEnabled", ["typeProperties", "selfContainedInteractiveAuthoringEnabled"]);
     }
 }

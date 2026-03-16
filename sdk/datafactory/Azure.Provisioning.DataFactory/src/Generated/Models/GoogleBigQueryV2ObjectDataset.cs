@@ -51,7 +51,7 @@ public partial class GoogleBigQueryV2ObjectDataset : DataFactoryDatasetPropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _table = DefineProperty<string>("Table", ["Table"]);
-        _dataset = DefineProperty<string>("Dataset", ["Dataset"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
+        _dataset = DefineProperty<string>("Dataset", ["typeProperties", "dataset"]);
     }
 }

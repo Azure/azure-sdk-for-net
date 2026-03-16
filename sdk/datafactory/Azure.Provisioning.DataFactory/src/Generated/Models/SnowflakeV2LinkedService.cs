@@ -210,22 +210,22 @@ public partial class SnowflakeV2LinkedService : DataFactoryLinkedServiceProperti
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _accountIdentifier = DefineProperty<string>("AccountIdentifier", ["AccountIdentifier"]);
-        _user = DefineProperty<string>("User", ["User"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _warehouse = DefineProperty<string>("Warehouse", ["Warehouse"]);
-        _authenticationType = DefineProperty<SnowflakeAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _tenantId = DefineProperty<string>("TenantId", ["TenantId"]);
-        _scope = DefineProperty<string>("Scope", ["Scope"]);
-        _privateKey = DefineModelProperty<DataFactorySecret>("PrivateKey", ["PrivateKey"]);
-        _privateKeyPassphrase = DefineModelProperty<DataFactorySecret>("PrivateKeyPassphrase", ["PrivateKeyPassphrase"]);
-        _role = DefineProperty<string>("Role", ["Role"]);
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _schema = DefineProperty<string>("Schema", ["Schema"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _useUtcTimestamps = DefineProperty<bool>("UseUtcTimestamps", ["UseUtcTimestamps"]);
+        _accountIdentifier = DefineProperty<string>("AccountIdentifier", ["typeProperties", "accountIdentifier"]);
+        _user = DefineProperty<string>("User", ["typeProperties", "user"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _warehouse = DefineProperty<string>("Warehouse", ["typeProperties", "warehouse"]);
+        _authenticationType = DefineProperty<SnowflakeAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _tenantId = DefineProperty<string>("TenantId", ["typeProperties", "tenantId"]);
+        _scope = DefineProperty<string>("Scope", ["typeProperties", "scope"]);
+        _privateKey = DefineModelProperty<DataFactorySecret>("PrivateKey", ["typeProperties", "privateKey"]);
+        _privateKeyPassphrase = DefineModelProperty<DataFactorySecret>("PrivateKeyPassphrase", ["typeProperties", "privateKeyPassphrase"]);
+        _role = DefineProperty<string>("Role", ["typeProperties", "role"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _schema = DefineProperty<string>("Schema", ["typeProperties", "schema"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _useUtcTimestamps = DefineProperty<bool>("UseUtcTimestamps", ["typeProperties", "useUtcTimestamps"]);
     }
 }

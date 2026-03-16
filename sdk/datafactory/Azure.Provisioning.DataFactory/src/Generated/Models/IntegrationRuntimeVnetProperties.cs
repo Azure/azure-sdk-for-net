@@ -96,10 +96,10 @@ public partial class IntegrationRuntimeVnetProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _vnetId = DefineProperty<Guid>("VnetId", ["VnetId"]);
-        _subnet = DefineProperty<string>("Subnet", ["Subnet"]);
-        _publicIPs = DefineListProperty<string>("PublicIPs", ["PublicIPs"]);
-        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["SubnetId"]);
+        _vnetId = DefineProperty<Guid>("VnetId", ["vNetId"]);
+        _subnet = DefineProperty<string>("Subnet", ["subnet"]);
+        _publicIPs = DefineListProperty<string>("PublicIPs", ["publicIPs"]);
+        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["subnetId"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

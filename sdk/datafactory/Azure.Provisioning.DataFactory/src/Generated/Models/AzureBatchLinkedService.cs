@@ -104,12 +104,12 @@ public partial class AzureBatchLinkedService : DataFactoryLinkedServicePropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _accountName = DefineProperty<string>("AccountName", ["AccountName"]);
-        _accessKey = DefineModelProperty<DataFactorySecret>("AccessKey", ["AccessKey"]);
-        _batchUri = DefineProperty<string>("BatchUri", ["BatchUri"]);
-        _poolName = DefineProperty<string>("PoolName", ["PoolName"]);
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        _accountName = DefineProperty<string>("AccountName", ["typeProperties", "accountName"]);
+        _accessKey = DefineModelProperty<DataFactorySecret>("AccessKey", ["typeProperties", "accessKey"]);
+        _batchUri = DefineProperty<string>("BatchUri", ["typeProperties", "batchUri"]);
+        _poolName = DefineProperty<string>("PoolName", ["typeProperties", "poolName"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["typeProperties", "linkedServiceName"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

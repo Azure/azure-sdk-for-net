@@ -144,15 +144,16 @@ public partial class LakeHouseLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _workspaceId = DefineProperty<string>("WorkspaceId", ["WorkspaceId"]);
-        _artifactId = DefineProperty<string>("ArtifactId", ["ArtifactId"]);
-        _authenticationType = DefineProperty<LakehouseAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["ServicePrincipalCredentialType"]);
-        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["ServicePrincipalCredential"]);
-        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["Credential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Lakehouse");
+        _workspaceId = DefineProperty<string>("WorkspaceId", ["typeProperties", "workspaceId"]);
+        _artifactId = DefineProperty<string>("ArtifactId", ["typeProperties", "artifactId"]);
+        _authenticationType = DefineProperty<LakehouseAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactorySecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _servicePrincipalCredentialType = DefineProperty<string>("ServicePrincipalCredentialType", ["typeProperties", "servicePrincipalCredentialType"]);
+        _servicePrincipalCredential = DefineModelProperty<DataFactorySecret>("ServicePrincipalCredential", ["typeProperties", "servicePrincipalCredential"]);
+        _credential = DefineModelProperty<DataFactoryCredentialReference>("Credential", ["typeProperties", "credential"]);
     }
 }

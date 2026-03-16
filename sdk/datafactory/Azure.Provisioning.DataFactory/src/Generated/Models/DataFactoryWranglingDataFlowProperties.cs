@@ -60,8 +60,9 @@ public partial class DataFactoryWranglingDataFlowProperties : DataFactoryDataFlo
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _sources = DefineListProperty<PowerQuerySource>("Sources", ["Sources"]);
-        _script = DefineProperty<string>("Script", ["Script"]);
-        _documentLocale = DefineProperty<string>("DocumentLocale", ["DocumentLocale"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "WranglingDataFlow");
+        _sources = DefineListProperty<PowerQuerySource>("Sources", ["typeProperties", "sources"]);
+        _script = DefineProperty<string>("Script", ["typeProperties", "script"]);
+        _documentLocale = DefineProperty<string>("DocumentLocale", ["typeProperties", "documentLocale"]);
     }
 }

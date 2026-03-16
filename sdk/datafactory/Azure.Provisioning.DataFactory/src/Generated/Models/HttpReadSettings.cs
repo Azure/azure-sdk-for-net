@@ -97,10 +97,11 @@ public partial class HttpReadSettings : StoreReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _requestMethod = DefineProperty<string>("RequestMethod", ["RequestMethod"]);
-        _requestBody = DefineProperty<string>("RequestBody", ["RequestBody"]);
-        _additionalHeaders = DefineProperty<string>("AdditionalHeaders", ["AdditionalHeaders"]);
-        _requestTimeout = DefineProperty<string>("RequestTimeout", ["RequestTimeout"]);
-        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["AdditionalColumns"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "HttpReadSettings");
+        _requestMethod = DefineProperty<string>("RequestMethod", ["requestMethod"]);
+        _requestBody = DefineProperty<string>("RequestBody", ["requestBody"]);
+        _additionalHeaders = DefineProperty<string>("AdditionalHeaders", ["additionalHeaders"]);
+        _requestTimeout = DefineProperty<string>("RequestTimeout", ["requestTimeout"]);
+        _additionalColumns = DefineProperty<BinaryData>("AdditionalColumns", ["additionalColumns"]);
     }
 }

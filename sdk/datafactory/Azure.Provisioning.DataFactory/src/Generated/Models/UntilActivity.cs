@@ -111,8 +111,8 @@ public partial class UntilActivity : ControlActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _expression = DefineModelProperty<DataFactoryExpression>("Expression", ["Expression"]);
-        _timeout = DefineProperty<string>("Timeout", ["Timeout"]);
-        _activities = DefineListProperty<PipelineActivity>("Activities", ["Activities"]);
+        _expression = DefineModelProperty<DataFactoryExpression>("Expression", ["typeProperties", "expression"]);
+        _timeout = DefineProperty<string>("Timeout", ["typeProperties", "timeout"]);
+        _activities = DefineListProperty<PipelineActivity>("Activities", ["typeProperties", "activities"]);
     }
 }

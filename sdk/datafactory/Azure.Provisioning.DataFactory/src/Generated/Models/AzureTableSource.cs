@@ -50,7 +50,8 @@ public partial class AzureTableSource : TabularSource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _azureTableSourceQuery = DefineProperty<string>("AzureTableSourceQuery", ["AzureTableSourceQuery"]);
-        _azureTableSourceIgnoreTableNotFound = DefineProperty<bool>("AzureTableSourceIgnoreTableNotFound", ["AzureTableSourceIgnoreTableNotFound"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AzureTableSource");
+        _azureTableSourceQuery = DefineProperty<string>("AzureTableSourceQuery", ["azureTableSourceQuery"]);
+        _azureTableSourceIgnoreTableNotFound = DefineProperty<bool>("AzureTableSourceIgnoreTableNotFound", ["azureTableSourceIgnoreTableNotFound"]);
     }
 }

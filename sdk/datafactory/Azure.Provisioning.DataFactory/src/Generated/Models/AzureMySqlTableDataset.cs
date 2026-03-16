@@ -50,7 +50,7 @@ public partial class AzureMySqlTableDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _tableName = DefineProperty<string>("TableName", ["TableName"]);
-        _table = DefineProperty<string>("Table", ["Table"]);
+        _tableName = DefineProperty<string>("TableName", ["typeProperties", "tableName"]);
+        _table = DefineProperty<string>("Table", ["typeProperties", "table"]);
     }
 }

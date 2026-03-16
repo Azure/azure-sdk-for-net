@@ -41,6 +41,7 @@ public partial class MongoDBV2Sink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "MongoDbV2Sink");
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
     }
 }

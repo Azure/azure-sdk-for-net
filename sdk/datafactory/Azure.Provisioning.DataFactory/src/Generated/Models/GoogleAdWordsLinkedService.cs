@@ -231,21 +231,22 @@ public partial class GoogleAdWordsLinkedService : DataFactoryLinkedServiceProper
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["ConnectionProperties"]);
-        _clientCustomerId = DefineProperty<string>("ClientCustomerId", ["ClientCustomerId"]);
-        _developerToken = DefineModelProperty<DataFactorySecret>("DeveloperToken", ["DeveloperToken"]);
-        _authenticationType = DefineProperty<GoogleAdWordsAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["RefreshToken"]);
-        _clientId = DefineProperty<string>("ClientId", ["ClientId"]);
-        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["ClientSecret"]);
-        _email = DefineProperty<string>("Email", ["Email"]);
-        _keyFilePath = DefineProperty<string>("KeyFilePath", ["KeyFilePath"]);
-        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["TrustedCertPath"]);
-        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["UseSystemTrustStore"]);
-        _privateKey = DefineModelProperty<DataFactorySecret>("PrivateKey", ["PrivateKey"]);
-        _loginCustomerId = DefineProperty<string>("LoginCustomerId", ["LoginCustomerId"]);
-        _googleAdsApiVersion = DefineProperty<string>("GoogleAdsApiVersion", ["GoogleAdsApiVersion"]);
-        _supportLegacyDataTypes = DefineProperty<bool>("SupportLegacyDataTypes", ["SupportLegacyDataTypes"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "GoogleAdWords");
+        _connectionProperties = DefineProperty<BinaryData>("ConnectionProperties", ["typeProperties", "connectionProperties"]);
+        _clientCustomerId = DefineProperty<string>("ClientCustomerId", ["typeProperties", "clientCustomerID"]);
+        _developerToken = DefineModelProperty<DataFactorySecret>("DeveloperToken", ["typeProperties", "developerToken"]);
+        _authenticationType = DefineProperty<GoogleAdWordsAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _refreshToken = DefineModelProperty<DataFactorySecret>("RefreshToken", ["typeProperties", "refreshToken"]);
+        _clientId = DefineProperty<string>("ClientId", ["typeProperties", "clientId"]);
+        _clientSecret = DefineModelProperty<DataFactorySecret>("ClientSecret", ["typeProperties", "clientSecret"]);
+        _email = DefineProperty<string>("Email", ["typeProperties", "email"]);
+        _keyFilePath = DefineProperty<string>("KeyFilePath", ["typeProperties", "keyFilePath"]);
+        _trustedCertPath = DefineProperty<string>("TrustedCertPath", ["typeProperties", "trustedCertPath"]);
+        _useSystemTrustStore = DefineProperty<bool>("UseSystemTrustStore", ["typeProperties", "useSystemTrustStore"]);
+        _privateKey = DefineModelProperty<DataFactorySecret>("PrivateKey", ["typeProperties", "privateKey"]);
+        _loginCustomerId = DefineProperty<string>("LoginCustomerId", ["typeProperties", "loginCustomerID"]);
+        _googleAdsApiVersion = DefineProperty<string>("GoogleAdsApiVersion", ["typeProperties", "googleAdsApiVersion"]);
+        _supportLegacyDataTypes = DefineProperty<bool>("SupportLegacyDataTypes", ["typeProperties", "supportLegacyDataTypes"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

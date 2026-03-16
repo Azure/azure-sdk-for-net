@@ -50,7 +50,7 @@ public partial class DataFlowStagingInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["LinkedService"]);
-        _folderPath = DefineProperty<string>("FolderPath", ["FolderPath"]);
+        _linkedService = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedService", ["linkedService"]);
+        _folderPath = DefineProperty<string>("FolderPath", ["folderPath"]);
     }
 }

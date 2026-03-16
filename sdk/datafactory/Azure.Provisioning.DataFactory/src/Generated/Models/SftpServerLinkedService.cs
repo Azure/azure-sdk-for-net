@@ -155,16 +155,16 @@ public partial class SftpServerLinkedService : DataFactoryLinkedServicePropertie
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _host = DefineProperty<string>("Host", ["Host"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _authenticationType = DefineProperty<SftpAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _privateKeyPath = DefineProperty<string>("PrivateKeyPath", ["PrivateKeyPath"]);
-        _privateKeyContent = DefineModelProperty<DataFactorySecret>("PrivateKeyContent", ["PrivateKeyContent"]);
-        _passPhrase = DefineModelProperty<DataFactorySecret>("PassPhrase", ["PassPhrase"]);
-        _skipHostKeyValidation = DefineProperty<bool>("SkipHostKeyValidation", ["SkipHostKeyValidation"]);
-        _hostKeyFingerprint = DefineProperty<string>("HostKeyFingerprint", ["HostKeyFingerprint"]);
+        _host = DefineProperty<string>("Host", ["typeProperties", "host"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _authenticationType = DefineProperty<SftpAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _privateKeyPath = DefineProperty<string>("PrivateKeyPath", ["typeProperties", "privateKeyPath"]);
+        _privateKeyContent = DefineModelProperty<DataFactorySecret>("PrivateKeyContent", ["typeProperties", "privateKeyContent"]);
+        _passPhrase = DefineModelProperty<DataFactorySecret>("PassPhrase", ["typeProperties", "passPhrase"]);
+        _skipHostKeyValidation = DefineProperty<bool>("SkipHostKeyValidation", ["typeProperties", "skipHostKeyValidation"]);
+        _hostKeyFingerprint = DefineProperty<string>("HostKeyFingerprint", ["typeProperties", "hostKeyFingerprint"]);
     }
 }

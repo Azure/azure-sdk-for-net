@@ -153,17 +153,17 @@ public partial class ExecuteSsisPackageActivity : ExecutionActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _packageLocation = DefineModelProperty<SsisPackageLocation>("PackageLocation", ["PackageLocation"]);
-        _runtime = DefineProperty<string>("Runtime", ["Runtime"]);
-        _loggingLevel = DefineProperty<string>("LoggingLevel", ["LoggingLevel"]);
-        _environmentPath = DefineProperty<string>("EnvironmentPath", ["EnvironmentPath"]);
-        _executionCredential = DefineModelProperty<SsisExecutionCredential>("ExecutionCredential", ["ExecutionCredential"]);
-        _connectVia = DefineModelProperty<IntegrationRuntimeReference>("ConnectVia", ["ConnectVia"]);
-        _projectParameters = DefineDictionaryProperty<SsisExecutionParameter>("ProjectParameters", ["ProjectParameters"]);
-        _packageParameters = DefineDictionaryProperty<SsisExecutionParameter>("PackageParameters", ["PackageParameters"]);
-        _projectConnectionManagers = DefineDictionaryProperty<BicepDictionary<SsisExecutionParameter>>("ProjectConnectionManagers", ["ProjectConnectionManagers"]);
-        _packageConnectionManagers = DefineDictionaryProperty<BicepDictionary<SsisExecutionParameter>>("PackageConnectionManagers", ["PackageConnectionManagers"]);
-        _propertyOverrides = DefineDictionaryProperty<SsisPropertyOverride>("PropertyOverrides", ["PropertyOverrides"]);
-        _logLocation = DefineModelProperty<SsisLogLocation>("LogLocation", ["LogLocation"]);
+        _packageLocation = DefineModelProperty<SsisPackageLocation>("PackageLocation", ["typeProperties", "packageLocation"]);
+        _runtime = DefineProperty<string>("Runtime", ["typeProperties", "runtime"]);
+        _loggingLevel = DefineProperty<string>("LoggingLevel", ["typeProperties", "loggingLevel"]);
+        _environmentPath = DefineProperty<string>("EnvironmentPath", ["typeProperties", "environmentPath"]);
+        _executionCredential = DefineModelProperty<SsisExecutionCredential>("ExecutionCredential", ["typeProperties", "executionCredential"]);
+        _connectVia = DefineModelProperty<IntegrationRuntimeReference>("ConnectVia", ["typeProperties", "connectVia"]);
+        _projectParameters = DefineDictionaryProperty<SsisExecutionParameter>("ProjectParameters", ["typeProperties", "projectParameters"]);
+        _packageParameters = DefineDictionaryProperty<SsisExecutionParameter>("PackageParameters", ["typeProperties", "packageParameters"]);
+        _projectConnectionManagers = DefineDictionaryProperty<BicepDictionary<SsisExecutionParameter>>("ProjectConnectionManagers", ["typeProperties", "projectConnectionManagers"]);
+        _packageConnectionManagers = DefineDictionaryProperty<BicepDictionary<SsisExecutionParameter>>("PackageConnectionManagers", ["typeProperties", "packageConnectionManagers"]);
+        _propertyOverrides = DefineDictionaryProperty<SsisPropertyOverride>("PropertyOverrides", ["typeProperties", "propertyOverrides"]);
+        _logLocation = DefineModelProperty<SsisLogLocation>("LogLocation", ["typeProperties", "logLocation"]);
     }
 }

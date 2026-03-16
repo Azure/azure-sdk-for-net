@@ -139,15 +139,16 @@ public partial class HdfsReadSettings : StoreReadSettings
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _recursive = DefineProperty<bool>("Recursive", ["Recursive"]);
-        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["WildcardFolderPath"]);
-        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["WildcardFileName"]);
-        _fileListPath = DefineProperty<string>("FileListPath", ["FileListPath"]);
-        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["EnablePartitionDiscovery"]);
-        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["PartitionRootPath"]);
-        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["ModifiedDatetimeStart"]);
-        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["ModifiedDatetimeEnd"]);
-        _distcpSettings = DefineModelProperty<DistcpSettings>("DistcpSettings", ["DistcpSettings"]);
-        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["DeleteFilesAfterCompletion"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "HdfsReadSettings");
+        _recursive = DefineProperty<bool>("Recursive", ["recursive"]);
+        _wildcardFolderPath = DefineProperty<string>("WildcardFolderPath", ["wildcardFolderPath"]);
+        _wildcardFileName = DefineProperty<string>("WildcardFileName", ["wildcardFileName"]);
+        _fileListPath = DefineProperty<string>("FileListPath", ["fileListPath"]);
+        _enablePartitionDiscovery = DefineProperty<bool>("EnablePartitionDiscovery", ["enablePartitionDiscovery"]);
+        _partitionRootPath = DefineProperty<string>("PartitionRootPath", ["partitionRootPath"]);
+        _modifiedDatetimeStart = DefineProperty<string>("ModifiedDatetimeStart", ["modifiedDatetimeStart"]);
+        _modifiedDatetimeEnd = DefineProperty<string>("ModifiedDatetimeEnd", ["modifiedDatetimeEnd"]);
+        _distcpSettings = DefineModelProperty<DistcpSettings>("DistcpSettings", ["distcpSettings"]);
+        _deleteFilesAfterCompletion = DefineProperty<bool>("DeleteFilesAfterCompletion", ["deleteFilesAfterCompletion"]);
     }
 }

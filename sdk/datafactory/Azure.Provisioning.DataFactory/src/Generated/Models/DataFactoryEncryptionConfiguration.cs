@@ -71,9 +71,9 @@ public partial class DataFactoryEncryptionConfiguration : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _keyName = DefineProperty<string>("KeyName", ["KeyName"]);
-        _vaultBaseUri = DefineProperty<Uri>("VaultBaseUri", ["VaultBaseUri"]);
-        _keyVersion = DefineProperty<string>("KeyVersion", ["KeyVersion"]);
-        _userAssignedIdentity = DefineProperty<string>("UserAssignedIdentity", ["UserAssignedIdentity"]);
+        _keyName = DefineProperty<string>("KeyName", ["keyName"]);
+        _vaultBaseUri = DefineProperty<Uri>("VaultBaseUri", ["vaultBaseUrl"]);
+        _keyVersion = DefineProperty<string>("KeyVersion", ["keyVersion"]);
+        _userAssignedIdentity = DefineProperty<string>("UserAssignedIdentity", ["identity", "userAssignedIdentity"]);
     }
 }

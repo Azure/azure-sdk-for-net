@@ -59,8 +59,9 @@ public partial class ServicePrincipalCredential : DataFactoryCredential
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["ServicePrincipalId"]);
-        _servicePrincipalKey = DefineModelProperty<DataFactoryKeyVaultSecret>("ServicePrincipalKey", ["ServicePrincipalKey"]);
-        _tenant = DefineProperty<string>("Tenant", ["Tenant"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ServicePrincipal");
+        _servicePrincipalId = DefineProperty<string>("ServicePrincipalId", ["typeProperties", "servicePrincipalId"]);
+        _servicePrincipalKey = DefineModelProperty<DataFactoryKeyVaultSecret>("ServicePrincipalKey", ["typeProperties", "servicePrincipalKey"]);
+        _tenant = DefineProperty<string>("Tenant", ["typeProperties", "tenant"]);
     }
 }

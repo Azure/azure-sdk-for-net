@@ -158,17 +158,17 @@ public partial class ExecuteWranglingDataflowActivity : PipelineActivity
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _policy = DefineModelProperty<PipelineActivityPolicy>("Policy", ["Policy"]);
-        _dataFlow = DefineModelProperty<DataFlowReference>("DataFlow", ["DataFlow"]);
-        _staging = DefineModelProperty<DataFlowStagingInfo>("Staging", ["Staging"]);
-        _integrationRuntime = DefineModelProperty<IntegrationRuntimeReference>("IntegrationRuntime", ["IntegrationRuntime"]);
-        _continuationSettings = DefineModelProperty<ContinuationSettingsReference>("ContinuationSettings", ["ContinuationSettings"]);
-        _compute = DefineModelProperty<ExecuteDataFlowActivityComputeType>("Compute", ["Compute"]);
-        _traceLevel = DefineProperty<string>("TraceLevel", ["TraceLevel"]);
-        _continueOnError = DefineProperty<bool>("ContinueOnError", ["ContinueOnError"]);
-        _runConcurrently = DefineProperty<bool>("RunConcurrently", ["RunConcurrently"]);
-        _sourceStagingConcurrency = DefineProperty<int>("SourceStagingConcurrency", ["SourceStagingConcurrency"]);
-        _sinks = DefineDictionaryProperty<PowerQuerySink>("Sinks", ["Sinks"]);
-        _queries = DefineListProperty<PowerQuerySinkMapping>("Queries", ["Queries"]);
+        _policy = DefineModelProperty<PipelineActivityPolicy>("Policy", ["policy"]);
+        _dataFlow = DefineModelProperty<DataFlowReference>("DataFlow", ["typeProperties", "dataFlow"]);
+        _staging = DefineModelProperty<DataFlowStagingInfo>("Staging", ["typeProperties", "staging"]);
+        _integrationRuntime = DefineModelProperty<IntegrationRuntimeReference>("IntegrationRuntime", ["typeProperties", "integrationRuntime"]);
+        _continuationSettings = DefineModelProperty<ContinuationSettingsReference>("ContinuationSettings", ["typeProperties", "continuationSettings"]);
+        _compute = DefineModelProperty<ExecuteDataFlowActivityComputeType>("Compute", ["typeProperties", "compute"]);
+        _traceLevel = DefineProperty<string>("TraceLevel", ["typeProperties", "traceLevel"]);
+        _continueOnError = DefineProperty<bool>("ContinueOnError", ["typeProperties", "continueOnError"]);
+        _runConcurrently = DefineProperty<bool>("RunConcurrently", ["typeProperties", "runConcurrently"]);
+        _sourceStagingConcurrency = DefineProperty<int>("SourceStagingConcurrency", ["typeProperties", "sourceStagingConcurrency"]);
+        _sinks = DefineDictionaryProperty<PowerQuerySink>("Sinks", ["typeProperties", "sinks"]);
+        _queries = DefineListProperty<PowerQuerySinkMapping>("Queries", ["typeProperties", "queries"]);
     }
 }

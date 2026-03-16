@@ -331,30 +331,31 @@ public partial class AmazonRdsForSqlServerLinkedService : DataFactoryLinkedServi
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _encrypt = DefineProperty<string>("Encrypt", ["Encrypt"]);
-        _trustServerCertificate = DefineProperty<bool>("TrustServerCertificate", ["TrustServerCertificate"]);
-        _hostNameInCertificate = DefineProperty<string>("HostNameInCertificate", ["HostNameInCertificate"]);
-        _applicationIntent = DefineProperty<string>("ApplicationIntent", ["ApplicationIntent"]);
-        _connectTimeout = DefineProperty<int>("ConnectTimeout", ["ConnectTimeout"]);
-        _connectRetryCount = DefineProperty<int>("ConnectRetryCount", ["ConnectRetryCount"]);
-        _connectRetryInterval = DefineProperty<int>("ConnectRetryInterval", ["ConnectRetryInterval"]);
-        _loadBalanceTimeout = DefineProperty<int>("LoadBalanceTimeout", ["LoadBalanceTimeout"]);
-        _commandTimeout = DefineProperty<int>("CommandTimeout", ["CommandTimeout"]);
-        _integratedSecurity = DefineProperty<bool>("IntegratedSecurity", ["IntegratedSecurity"]);
-        _failoverPartner = DefineProperty<string>("FailoverPartner", ["FailoverPartner"]);
-        _maxPoolSize = DefineProperty<int>("MaxPoolSize", ["MaxPoolSize"]);
-        _minPoolSize = DefineProperty<int>("MinPoolSize", ["MinPoolSize"]);
-        _multipleActiveResultSets = DefineProperty<bool>("MultipleActiveResultSets", ["MultipleActiveResultSets"]);
-        _multiSubnetFailover = DefineProperty<bool>("MultiSubnetFailover", ["MultiSubnetFailover"]);
-        _packetSize = DefineProperty<int>("PacketSize", ["PacketSize"]);
-        _pooling = DefineProperty<bool>("Pooling", ["Pooling"]);
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _authenticationType = DefineProperty<AmazonRdsForSqlAuthenticationType>("AuthenticationType", ["AuthenticationType"]);
-        _userName = DefineProperty<string>("UserName", ["UserName"]);
-        _password = DefineModelProperty<DataFactorySecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
-        _alwaysEncryptedSettings = DefineModelProperty<SqlAlwaysEncryptedProperties>("AlwaysEncryptedSettings", ["AlwaysEncryptedSettings"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "AmazonRdsForSqlServer");
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _encrypt = DefineProperty<string>("Encrypt", ["typeProperties", "encrypt"]);
+        _trustServerCertificate = DefineProperty<bool>("TrustServerCertificate", ["typeProperties", "trustServerCertificate"]);
+        _hostNameInCertificate = DefineProperty<string>("HostNameInCertificate", ["typeProperties", "hostNameInCertificate"]);
+        _applicationIntent = DefineProperty<string>("ApplicationIntent", ["typeProperties", "applicationIntent"]);
+        _connectTimeout = DefineProperty<int>("ConnectTimeout", ["typeProperties", "connectTimeout"]);
+        _connectRetryCount = DefineProperty<int>("ConnectRetryCount", ["typeProperties", "connectRetryCount"]);
+        _connectRetryInterval = DefineProperty<int>("ConnectRetryInterval", ["typeProperties", "connectRetryInterval"]);
+        _loadBalanceTimeout = DefineProperty<int>("LoadBalanceTimeout", ["typeProperties", "loadBalanceTimeout"]);
+        _commandTimeout = DefineProperty<int>("CommandTimeout", ["typeProperties", "commandTimeout"]);
+        _integratedSecurity = DefineProperty<bool>("IntegratedSecurity", ["typeProperties", "integratedSecurity"]);
+        _failoverPartner = DefineProperty<string>("FailoverPartner", ["typeProperties", "failoverPartner"]);
+        _maxPoolSize = DefineProperty<int>("MaxPoolSize", ["typeProperties", "maxPoolSize"]);
+        _minPoolSize = DefineProperty<int>("MinPoolSize", ["typeProperties", "minPoolSize"]);
+        _multipleActiveResultSets = DefineProperty<bool>("MultipleActiveResultSets", ["typeProperties", "multipleActiveResultSets"]);
+        _multiSubnetFailover = DefineProperty<bool>("MultiSubnetFailover", ["typeProperties", "multiSubnetFailover"]);
+        _packetSize = DefineProperty<int>("PacketSize", ["typeProperties", "packetSize"]);
+        _pooling = DefineProperty<bool>("Pooling", ["typeProperties", "pooling"]);
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _authenticationType = DefineProperty<AmazonRdsForSqlAuthenticationType>("AuthenticationType", ["typeProperties", "authenticationType"]);
+        _userName = DefineProperty<string>("UserName", ["typeProperties", "userName"]);
+        _password = DefineModelProperty<DataFactorySecret>("Password", ["typeProperties", "password"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
+        _alwaysEncryptedSettings = DefineModelProperty<SqlAlwaysEncryptedProperties>("AlwaysEncryptedSettings", ["typeProperties", "alwaysEncryptedSettings"]);
     }
 }

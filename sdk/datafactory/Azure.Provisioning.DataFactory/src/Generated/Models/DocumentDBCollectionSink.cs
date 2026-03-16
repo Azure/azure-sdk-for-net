@@ -50,7 +50,8 @@ public partial class DocumentDBCollectionSink : CopySink
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _nestingSeparator = DefineProperty<string>("NestingSeparator", ["NestingSeparator"]);
-        _writeBehavior = DefineProperty<string>("WriteBehavior", ["WriteBehavior"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "DocumentDbCollectionSink");
+        _nestingSeparator = DefineProperty<string>("NestingSeparator", ["nestingSeparator"]);
+        _writeBehavior = DefineProperty<string>("WriteBehavior", ["writeBehavior"]);
     }
 }

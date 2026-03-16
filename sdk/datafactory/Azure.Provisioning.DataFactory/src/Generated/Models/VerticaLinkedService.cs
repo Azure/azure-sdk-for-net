@@ -102,12 +102,13 @@ public partial class VerticaLinkedService : DataFactoryLinkedServiceProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _connectionString = DefineProperty<string>("ConnectionString", ["ConnectionString"]);
-        _server = DefineProperty<string>("Server", ["Server"]);
-        _port = DefineProperty<int>("Port", ["Port"]);
-        _uid = DefineProperty<string>("Uid", ["Uid"]);
-        _database = DefineProperty<string>("Database", ["Database"]);
-        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["Password"]);
-        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["EncryptedCredential"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "Vertica");
+        _connectionString = DefineProperty<string>("ConnectionString", ["typeProperties", "connectionString"]);
+        _server = DefineProperty<string>("Server", ["typeProperties", "server"]);
+        _port = DefineProperty<int>("Port", ["typeProperties", "port"]);
+        _uid = DefineProperty<string>("Uid", ["typeProperties", "uid"]);
+        _database = DefineProperty<string>("Database", ["typeProperties", "database"]);
+        _password = DefineModelProperty<DataFactoryKeyVaultSecret>("Password", ["typeProperties", "pwd"]);
+        _encryptedCredential = DefineProperty<string>("EncryptedCredential", ["typeProperties", "encryptedCredential"]);
     }
 }

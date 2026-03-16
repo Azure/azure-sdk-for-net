@@ -59,6 +59,6 @@ public partial class IcebergDataset : DataFactoryDatasetProperties
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _location = DefineModelProperty<DatasetLocation>("Location", ["Location"]);
+        _location = DefineModelProperty<DatasetLocation>("Location", ["typeProperties", "location"]);
     }
 }

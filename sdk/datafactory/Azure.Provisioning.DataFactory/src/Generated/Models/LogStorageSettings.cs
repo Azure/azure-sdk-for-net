@@ -95,10 +95,10 @@ public partial class LogStorageSettings : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["LinkedServiceName"]);
-        _path = DefineProperty<string>("Path", ["Path"]);
-        _logLevel = DefineProperty<string>("LogLevel", ["LogLevel"]);
-        _enableReliableLogging = DefineProperty<bool>("EnableReliableLogging", ["EnableReliableLogging"]);
+        _linkedServiceName = DefineModelProperty<DataFactoryLinkedServiceReference>("LinkedServiceName", ["linkedServiceName"]);
+        _path = DefineProperty<string>("Path", ["path"]);
+        _logLevel = DefineProperty<string>("LogLevel", ["logLevel"]);
+        _enableReliableLogging = DefineProperty<bool>("EnableReliableLogging", ["enableReliableLogging"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

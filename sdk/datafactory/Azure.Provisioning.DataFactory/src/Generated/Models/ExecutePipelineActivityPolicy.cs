@@ -64,7 +64,7 @@ public partial class ExecutePipelineActivityPolicy : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isSecureInputEnabled = DefineProperty<bool>("IsSecureInputEnabled", ["IsSecureInputEnabled"]);
+        _isSecureInputEnabled = DefineProperty<bool>("IsSecureInputEnabled", ["secureInput"]);
         _additionalProperties = DefineDictionaryProperty<BinaryData>("AdditionalProperties", ["AdditionalProperties"]);
     }
 }

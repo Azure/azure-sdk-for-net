@@ -39,6 +39,7 @@ public partial class DataFactoryManagedIdentityCredentialProperties : DataFactor
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["ResourceId"]);
+        DefineProperty<string>("type", ["type"], defaultValue: "ManagedIdentity");
+        _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["typeProperties", "resourceId"]);
     }
 }
