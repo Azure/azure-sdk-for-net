@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            string azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             string organizationId = default;
             NewRelicPlanDetails planData = default;
             string userEmail = default;
@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 if (prop.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("organizationId"u8))

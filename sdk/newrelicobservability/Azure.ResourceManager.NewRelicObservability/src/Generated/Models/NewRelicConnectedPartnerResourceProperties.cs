@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
         /// <param name="location"> The location of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicConnectedPartnerResourceProperties(string accountName, string accountId, string azureResourceId, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicConnectedPartnerResourceProperties(string accountName, string accountId, string azureResourceId, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
             AccountId = accountId;
@@ -46,6 +47,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string AzureResourceId { get; }
 
         /// <summary> The location of the deployment. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

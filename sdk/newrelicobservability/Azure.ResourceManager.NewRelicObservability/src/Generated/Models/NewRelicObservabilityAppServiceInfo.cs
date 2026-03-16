@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilityAppServiceInfo(string azureResourceId, string agentVersion, string agentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId, string agentVersion, string agentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             AgentVersion = agentVersion;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure App service resource ID. </summary>
-        public string AzureResourceId { get; }
+        public ResourceIdentifier AzureResourceId { get; }
 
         /// <summary> Version of the NewRelic agent installed on the App service. </summary>
         public string AgentVersion { get; }

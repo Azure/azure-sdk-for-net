@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 writer.WritePropertyName("vmIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in VmIds)
+                foreach (ResourceIdentifier item in VmIds)
                 {
                     if (item == null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            IList<string> vmIds = default;
+            IList<ResourceIdentifier> vmIds = default;
             string userEmail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     vmIds = array;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NewRelicHostsGetContent(vmIds ?? new ChangeTrackingList<string>(), userEmail, additionalBinaryDataProperties);
+            return new NewRelicHostsGetContent(vmIds ?? new ChangeTrackingList<ResourceIdentifier>(), userEmail, additionalBinaryDataProperties);
         }
     }
 }

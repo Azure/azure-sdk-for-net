@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            AzureResourceIds = new ChangeTrackingList<string>();
+            AzureResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;
         }
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicAppServicesGetContent(IList<string> azureResourceIds, string userEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicAppServicesGetContent(IList<ResourceIdentifier> azureResourceIds, string userEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureResourceIds = azureResourceIds;
             UserEmail = userEmail;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure resource IDs. </summary>
-        public IList<string> AzureResourceIds { get; }
+        public IList<ResourceIdentifier> AzureResourceIds { get; }
 
         /// <summary> Reusable representation of an email address. </summary>
         public string UserEmail { get; }

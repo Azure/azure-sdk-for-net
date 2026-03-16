@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Region where New Relic account is present. </summary>
-        public string Region
+        public AzureLocation? Region
         {
             get
             {

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         private readonly string _value;
         /// <summary> Org is created from LIFTR. </summary>
-        private const string LIFTRValue = "LIFTR";
+        private const string LiftrValue = "LIFTR";
         /// <summary> Org is created from NEWRELIC. </summary>
-        private const string NEWRELICValue = "NEWRELIC";
+        private const string NewrelicValue = "NEWRELIC";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrgCreationSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Org is created from LIFTR. </summary>
-        public static NewRelicObservabilityOrgCreationSource LIFTR { get; } = new NewRelicObservabilityOrgCreationSource(LIFTRValue);
+        public static NewRelicObservabilityOrgCreationSource Liftr { get; } = new NewRelicObservabilityOrgCreationSource(LiftrValue);
 
         /// <summary> Org is created from NEWRELIC. </summary>
-        public static NewRelicObservabilityOrgCreationSource NEWRELIC { get; } = new NewRelicObservabilityOrgCreationSource(NEWRELICValue);
+        public static NewRelicObservabilityOrgCreationSource Newrelic { get; } = new NewRelicObservabilityOrgCreationSource(NewrelicValue);
 
         /// <summary> Determines if two <see cref="NewRelicObservabilityOrgCreationSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

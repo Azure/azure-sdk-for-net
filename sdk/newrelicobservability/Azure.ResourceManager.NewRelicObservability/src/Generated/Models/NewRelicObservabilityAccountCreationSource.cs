@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         private readonly string _value;
         /// <summary> Account is created from LIFTR. </summary>
-        private const string LIFTRValue = "LIFTR";
+        private const string LiftrValue = "LIFTR";
         /// <summary> Account is created from NEWRELIC. </summary>
-        private const string NEWRELICValue = "NEWRELIC";
+        private const string NewrelicValue = "NEWRELIC";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountCreationSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Account is created from LIFTR. </summary>
-        public static NewRelicObservabilityAccountCreationSource LIFTR { get; } = new NewRelicObservabilityAccountCreationSource(LIFTRValue);
+        public static NewRelicObservabilityAccountCreationSource Liftr { get; } = new NewRelicObservabilityAccountCreationSource(LiftrValue);
 
         /// <summary> Account is created from NEWRELIC. </summary>
-        public static NewRelicObservabilityAccountCreationSource NEWRELIC { get; } = new NewRelicObservabilityAccountCreationSource(NEWRELICValue);
+        public static NewRelicObservabilityAccountCreationSource Newrelic { get; } = new NewRelicObservabilityAccountCreationSource(NewrelicValue);
 
         /// <summary> Determines if two <see cref="NewRelicObservabilityAccountCreationSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

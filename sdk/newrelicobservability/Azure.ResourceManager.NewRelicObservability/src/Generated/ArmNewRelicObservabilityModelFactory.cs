@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicAppServicesGetContent"/> instance for mocking. </returns>
-        public static NewRelicAppServicesGetContent NewRelicAppServicesGetContent(IEnumerable<string> azureResourceIds = default, string userEmail = default)
+        public static NewRelicAppServicesGetContent NewRelicAppServicesGetContent(IEnumerable<ResourceIdentifier> azureResourceIds = default, string userEmail = default)
         {
-            azureResourceIds ??= new ChangeTrackingList<string>();
+            azureResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NewRelicAppServicesGetContent(azureResourceIds.ToList(), userEmail, additionalBinaryDataProperties: null);
         }
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilityAppServiceInfo"/> instance for mocking. </returns>
-        public static NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(string azureResourceId = default, string agentVersion = default, string agentStatus = default)
+        public static NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(ResourceIdentifier azureResourceId = default, string agentVersion = default, string agentStatus = default)
         {
             return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus, additionalBinaryDataProperties: null);
         }
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="planData"> Plan details. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicSwitchBillingContent"/> instance for mocking. </returns>
-        public static NewRelicSwitchBillingContent NewRelicSwitchBillingContent(string azureResourceId = default, string organizationId = default, NewRelicPlanDetails planData = default, string userEmail = default)
+        public static NewRelicSwitchBillingContent NewRelicSwitchBillingContent(ResourceIdentifier azureResourceId = default, string organizationId = default, NewRelicPlanDetails planData = default, string userEmail = default)
         {
             return new NewRelicSwitchBillingContent(azureResourceId, organizationId, planData, userEmail, additionalBinaryDataProperties: null);
         }
@@ -247,9 +247,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="vmIds"> VM resource IDs. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicHostsGetContent"/> instance for mocking. </returns>
-        public static NewRelicHostsGetContent NewRelicHostsGetContent(IEnumerable<string> vmIds = default, string userEmail = default)
+        public static NewRelicHostsGetContent NewRelicHostsGetContent(IEnumerable<ResourceIdentifier> vmIds = default, string userEmail = default)
         {
-            vmIds ??= new ChangeTrackingList<string>();
+            vmIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new NewRelicHostsGetContent(vmIds.ToList(), userEmail, additionalBinaryDataProperties: null);
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilityVmInfo"/> instance for mocking. </returns>
-        public static NewRelicObservabilityVmInfo NewRelicObservabilityVmInfo(string vmId = default, string agentVersion = default, string agentStatus = default)
+        public static NewRelicObservabilityVmInfo NewRelicObservabilityVmInfo(ResourceIdentifier vmId = default, string agentVersion = default, string agentStatus = default)
         {
             return new NewRelicObservabilityVmInfo(vmId, agentVersion, agentStatus, additionalBinaryDataProperties: null);
         }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
         /// <returns> A new <see cref="Models.NewRelicResourceMonitorResult"/> instance for mocking. </returns>
-        public static NewRelicResourceMonitorResult NewRelicResourceMonitorResult(string id = default, NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default, string reasonForMetricsStatus = default, NewRelicObservabilitySendingLogsStatus? sendingLogs = default, string reasonForLogsStatus = default)
+        public static NewRelicResourceMonitorResult NewRelicResourceMonitorResult(ResourceIdentifier id = default, NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default, string reasonForMetricsStatus = default, NewRelicObservabilitySendingLogsStatus? sendingLogs = default, string reasonForLogsStatus = default)
         {
             return new NewRelicResourceMonitorResult(
                 id,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
         /// <param name="location"> The location of the deployment. </param>
         /// <returns> A new <see cref="Models.NewRelicConnectedPartnerResourceProperties"/> instance for mocking. </returns>
-        public static NewRelicConnectedPartnerResourceProperties NewRelicConnectedPartnerResourceProperties(string accountName = default, string accountId = default, string azureResourceId = default, string location = default)
+        public static NewRelicConnectedPartnerResourceProperties NewRelicConnectedPartnerResourceProperties(string accountName = default, string accountId = default, string azureResourceId = default, AzureLocation? location = default)
         {
             return new NewRelicConnectedPartnerResourceProperties(accountName, accountId, azureResourceId, location, additionalBinaryDataProperties: null);
         }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountName"> account name. </param>
         /// <param name="region"> Region where New Relic account is present. </param>
         /// <returns> A new <see cref="Models.NewRelicAccountResourceData"/> instance for mocking. </returns>
-        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string organizationId = default, string accountId = default, string accountName = default, string region = default)
+        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string organizationId = default, string accountId = default, string accountName = default, AzureLocation? region = default)
         {
             return new NewRelicAccountResourceData(
                 id,

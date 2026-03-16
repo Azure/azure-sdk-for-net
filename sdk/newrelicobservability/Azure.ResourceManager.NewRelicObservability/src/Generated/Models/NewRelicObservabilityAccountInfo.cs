@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="ingestionKey"> Credential string. </param>
         /// <param name="region"> Region where New Relic account is present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, string region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicObservabilityAccountInfo(string accountId, string ingestionKey, AzureLocation? region, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountId = accountId;
             IngestionKey = ingestionKey;
@@ -41,6 +42,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string IngestionKey { get; set; }
 
         /// <summary> Region where New Relic account is present. </summary>
-        public string Region { get; set; }
+        public AzureLocation? Region { get; set; }
     }
 }

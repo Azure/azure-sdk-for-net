@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="singleSignOnUri"> The login URL specific to this NewRelic Organization. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicSingleSignOnProperties(NewRelicSingleSignOnState? singleSignOnState, string enterpriseAppId, string singleSignOnUri, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicSingleSignOnProperties(NewRelicSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string EnterpriseAppId { get; set; }
 
         /// <summary> The login URL specific to this NewRelic Organization. </summary>
-        public string SingleSignOnUri { get; set; }
+        public Uri SingleSignOnUri { get; set; }
 
         /// <summary> Provisioning state. </summary>
         public NewRelicProvisioningState? ProvisioningState { get; set; }

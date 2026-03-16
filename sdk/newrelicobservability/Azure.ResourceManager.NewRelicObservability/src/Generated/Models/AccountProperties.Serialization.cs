@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                writer.WriteStringValue(Region.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string organizationId = default;
             string accountId = default;
             string accountName = default;
-            string region = default;
+            AzureLocation? region = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +161,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (prop.NameEquals("region"u8))
                 {
-                    region = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    region = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="planData"> Plan details. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicSwitchBillingContent(string azureResourceId, string organizationId, NewRelicPlanDetails planData, string userEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicSwitchBillingContent(ResourceIdentifier azureResourceId, string organizationId, NewRelicPlanDetails planData, string userEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureResourceId = azureResourceId;
             OrganizationId = organizationId;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure resource Id. </summary>
-        public string AzureResourceId { get; set; }
+        public ResourceIdentifier AzureResourceId { get; set; }
 
         /// <summary> Organization id. </summary>
         public string OrganizationId { get; set; }

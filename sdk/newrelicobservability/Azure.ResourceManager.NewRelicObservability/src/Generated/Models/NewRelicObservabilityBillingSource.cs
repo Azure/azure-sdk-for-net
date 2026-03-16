@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         private readonly string _value;
         /// <summary> Billing source is Azure. </summary>
-        private const string AZUREValue = "AZURE";
-        private const string NEWRELICValue = "NEWRELIC";
+        private const string AzureValue = "AZURE";
+        private const string NewrelicValue = "NEWRELIC";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityBillingSource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Billing source is Azure. </summary>
-        public static NewRelicObservabilityBillingSource AZURE { get; } = new NewRelicObservabilityBillingSource(AZUREValue);
+        public static NewRelicObservabilityBillingSource Azure { get; } = new NewRelicObservabilityBillingSource(AzureValue);
 
-        /// <summary> Gets the NEWRELIC. </summary>
-        public static NewRelicObservabilityBillingSource NEWRELIC { get; } = new NewRelicObservabilityBillingSource(NEWRELICValue);
+        /// <summary> Gets the Newrelic. </summary>
+        public static NewRelicObservabilityBillingSource Newrelic { get; } = new NewRelicObservabilityBillingSource(NewrelicValue);
 
         /// <summary> Determines if two <see cref="NewRelicObservabilityBillingSource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

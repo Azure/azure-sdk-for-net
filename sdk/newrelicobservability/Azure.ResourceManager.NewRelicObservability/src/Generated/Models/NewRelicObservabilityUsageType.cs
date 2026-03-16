@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         private readonly string _value;
         /// <summary> Usage type is PAYG. </summary>
-        private const string PAYGValue = "PAYG";
+        private const string PaygValue = "PAYG";
         /// <summary> Usage type is COMMITTED. </summary>
-        private const string COMMITTEDValue = "COMMITTED";
+        private const string CommittedValue = "COMMITTED";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityUsageType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Usage type is PAYG. </summary>
-        public static NewRelicObservabilityUsageType PAYG { get; } = new NewRelicObservabilityUsageType(PAYGValue);
+        public static NewRelicObservabilityUsageType Payg { get; } = new NewRelicObservabilityUsageType(PaygValue);
 
         /// <summary> Usage type is COMMITTED. </summary>
-        public static NewRelicObservabilityUsageType COMMITTED { get; } = new NewRelicObservabilityUsageType(COMMITTEDValue);
+        public static NewRelicObservabilityUsageType Committed { get; } = new NewRelicObservabilityUsageType(CommittedValue);
 
         /// <summary> Determines if two <see cref="NewRelicObservabilityUsageType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

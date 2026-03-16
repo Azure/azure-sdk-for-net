@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="sendingLogs"> Flag indicating if resource is sending logs to NewRelic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicResourceMonitorResult(string id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicResourceMonitorResult(ResourceIdentifier id, NewRelicObservabilitySendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, NewRelicObservabilitySendingLogsStatus? sendingLogs, string reasonForLogsStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SendingMetrics = sendingMetrics;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The ARM id of the resource. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Flag indicating if resource is sending metrics to NewRelic. </summary>
         public NewRelicObservabilitySendingMetricsStatus? SendingMetrics { get; }

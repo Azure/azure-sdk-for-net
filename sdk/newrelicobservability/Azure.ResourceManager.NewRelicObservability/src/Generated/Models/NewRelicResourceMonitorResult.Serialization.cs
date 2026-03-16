@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default;
             string reasonForMetricsStatus = default;
             NewRelicObservabilitySendingLogsStatus? sendingLogs = default;
@@ -151,7 +152,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sendingMetrics"u8))

@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.ActivateSaaSParameterContent ActivateSaaSParameterContent(string saasGuid = null, string publisherId = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.LinkedResource LinkedResource(string id = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = null, string marketplaceSubscriptionName = null, string marketplaceResourceId = null, string marketplaceStatus = null, string billedAzureSubscriptionId = null, string publisherId = null, string offerId = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData NewRelicAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, string region = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent NewRelicAppServicesGetContent(System.Collections.Generic.IEnumerable<string> azureResourceIds = null, string userEmail = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData NewRelicAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string accountId = null, string accountName = null, Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent NewRelicAppServicesGetContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> azureResourceIds = null, string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicBillingInfoResult NewRelicBillingInfoResult(Azure.ResourceManager.NewRelicObservability.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, Azure.ResourceManager.NewRelicObservability.Models.PartnerBillingEntity partnerBillingEntity = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicConnectedPartnerResourceInfo NewRelicConnectedPartnerResourceInfo(Azure.ResourceManager.NewRelicObservability.Models.NewRelicConnectedPartnerResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicConnectedPartnerResourceProperties NewRelicConnectedPartnerResourceProperties(string accountName = null, string accountId = null, string azureResourceId = null, string location = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent NewRelicHostsGetContent(System.Collections.Generic.IEnumerable<string> vmIds = null, string userEmail = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicConnectedPartnerResourceProperties NewRelicConnectedPartnerResourceProperties(string accountName = null, string accountId = null, string azureResourceId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent NewRelicHostsGetContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> vmIds = null, string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsContent NewRelicMetricsContent(string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusContent NewRelicMetricsStatusContent(System.Collections.Generic.IEnumerable<string> azureResourceIds = null, string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMetricsStatusResult NewRelicMetricsStatusResult(System.Collections.Generic.IEnumerable<string> azureResourceIds = null) { throw null; }
@@ -301,18 +301,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitoringTagRules NewRelicMonitoringTagRules(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules logRules = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules metricRules = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceData NewRelicMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMonitoringStatus?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMarketplaceSubscriptionStatus?), string marketplaceSubscriptionId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties newRelicAccountProperties = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo userInfo = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory?), int? liftrResourcePreference = default(int?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource?), string subscriptionState = null, string saaSAzureSubscriptionStatus = null, string saaSResourceId = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicMonitorResourcePatch NewRelicMonitorResourcePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountProperties newRelicAccountProperties = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUserInfo userInfo = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource?), string saaSResourceId = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(string azureResourceId = null, string agentVersion = null, string agentStatus = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo NewRelicObservabilityAppServiceInfo(Azure.Core.ResourceIdentifier azureResourceId = null, string agentVersion = null, string agentStatus = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLatestLinkedSaaSResult NewRelicObservabilityLatestLinkedSaaSResult(string saaSResourceId = null, bool? isHiddenSaaS = default(bool?)) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules NewRelicObservabilityLogRules(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus? sendAadLogs = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendAadLogsStatus?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus? sendSubscriptionLogs = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendSubscriptionLogsStatus?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus? sendActivityLogs = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendActivityLogsStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag> filteringTags = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules NewRelicObservabilityMetricRules(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus? sendMetrics = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendMetricsStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityFilteringTag> filteringTags = null, string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySaaSResourceDetailsResult NewRelicObservabilitySaaSResourceDetailsResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string saasId = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleData NewRelicObservabilityTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? provisioningState = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityLogRules logRules = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityMetricRules metricRules = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmExtensionPayload NewRelicObservabilityVmExtensionPayload(string ingestionKey = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo NewRelicObservabilityVmInfo(string vmId = null, string agentVersion = null, string agentStatus = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo NewRelicObservabilityVmInfo(Azure.Core.ResourceIdentifier vmId = null, string agentVersion = null, string agentStatus = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData NewRelicOrganizationResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string organizationId = null, string organizationName = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource? billingSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource?)) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData NewRelicPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource? orgCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource?), Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? accountCreationSource = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource?)) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult NewRelicResourceMonitorResult(string id = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus?), string reasonForMetricsStatus = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus? sendingLogs = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus?), string reasonForLogsStatus = null) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent NewRelicSwitchBillingContent(string azureResourceId = null, string organizationId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, string userEmail = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult NewRelicResourceMonitorResult(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus? sendingMetrics = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingMetricsStatus?), string reasonForMetricsStatus = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus? sendingLogs = default(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus?), string reasonForLogsStatus = null) { throw null; }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent NewRelicSwitchBillingContent(Azure.Core.ResourceIdentifier azureResourceId = null, string organizationId = null, Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails planData = null, string userEmail = null) { throw null; }
         public static Azure.ResourceManager.NewRelicObservability.Models.PartnerBillingEntity PartnerBillingEntity(string organizationId = null, string organizationName = null) { throw null; }
     }
     public partial class LinkedResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.LinkedResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.LinkedResource>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string AccountId { get { throw null; } }
         public string AccountName { get { throw null; } }
         public string OrganizationId { get { throw null; } }
-        public string Region { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public partial class NewRelicAppServicesGetContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent>
     {
         public NewRelicAppServicesGetContent(string userEmail) { }
-        public System.Collections.Generic.IList<string> AzureResourceIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> AzureResourceIds { get { throw null; } }
         public string UserEmail { get { throw null; } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicAppServicesGetContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string AccountId { get { throw null; } }
         public string AccountName { get { throw null; } }
         public string AzureResourceId { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicConnectedPartnerResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicConnectedPartnerResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         public NewRelicHostsGetContent(string userEmail) { }
         public string UserEmail { get { throw null; } }
-        public System.Collections.Generic.IList<string> VmIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> VmIds { get { throw null; } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicHostsGetContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -650,8 +650,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NewRelicObservabilityAccountCreationSource(string value) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource LIFTR { get { throw null; } }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource NEWRELIC { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource Liftr { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource Newrelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public NewRelicObservabilityAccountInfo() { }
         public string AccountId { get { throw null; } set { } }
         public string IngestionKey { get { throw null; } set { } }
-        public string Region { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         internal NewRelicObservabilityAppServiceInfo() { }
         public string AgentStatus { get { throw null; } }
         public string AgentVersion { get { throw null; } }
-        public string AzureResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAppServiceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -716,8 +716,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NewRelicObservabilityBillingSource(string value) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource AZURE { get { throw null; } }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource NEWRELIC { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource Azure { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource Newrelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityBillingSource other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -831,8 +831,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NewRelicObservabilityOrgCreationSource(string value) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource LIFTR { get { throw null; } }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource NEWRELIC { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource Liftr { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource Newrelic { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityOrgCreationSource other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1010,8 +1010,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public NewRelicObservabilityUsageType(string value) { throw null; }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType COMMITTED { get { throw null; } }
-        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType PAYG { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType Committed { get { throw null; } }
+        public static Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType Payg { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityUsageType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         internal NewRelicObservabilityVmInfo() { }
         public string AgentStatus { get { throw null; } }
         public string AgentVersion { get { throw null; } }
-        public string VmId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VmId { get { throw null; } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityVmInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public partial class NewRelicResourceMonitorResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicResourceMonitorResult>
     {
         internal NewRelicResourceMonitorResult() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public string ReasonForMetricsStatus { get { throw null; } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilitySendingLogsStatus? SendingLogs { get { throw null; } }
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public string EnterpriseAppId { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
-        public string SingleSignOnUri { get { throw null; } set { } }
+        public System.Uri SingleSignOnUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NewRelicObservability.Models.NewRelicSingleSignOnProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public partial class NewRelicSwitchBillingContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NewRelicObservability.Models.NewRelicSwitchBillingContent>
     {
         public NewRelicSwitchBillingContent(string userEmail) { }
-        public string AzureResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AzureResourceId { get { throw null; } set { } }
         public string OrganizationId { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanDetails PlanData { get { throw null; } set { } }
         public string UserEmail { get { throw null; } }

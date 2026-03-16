@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(SingleSignOnUri))
             {
                 writer.WritePropertyName("singleSignOnUrl"u8);
-                writer.WriteStringValue(SingleSignOnUri);
+                writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
             NewRelicSingleSignOnState? singleSignOnState = default;
             string enterpriseAppId = default;
-            string singleSignOnUri = default;
+            Uri singleSignOnUri = default;
             NewRelicProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (prop.NameEquals("singleSignOnUrl"u8))
                 {
-                    singleSignOnUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    singleSignOnUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
