@@ -731,14 +731,23 @@ namespace Azure.Generator.Provisioning.Providers
 
                 foreach (var version in _apiVersions.Reverse())
                 {
-                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_');
+                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
+
+                    // Preview API versions are hidden from IntelliSense via [EditorBrowsable(EditorBrowsableState.Never)]
+                    var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+                    var attributes = isPreview
+                        ? [new AttributeStatement(typeof(EditorBrowsableAttribute),
+                            [new MemberExpression(typeof(EditorBrowsableState), nameof(EditorBrowsableState.Never))])]
+                        : Array.Empty<AttributeStatement>();
+
                     fields.Add(new FieldProvider(
                         FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly,
                         typeof(string),
                         fieldName,
                         this,
                         description: $"API version \"{version}\".",
-                        initializationValue: Literal(version)));
+                        initializationValue: Literal(version),
+                        attributes: attributes));
                 }
 
                 return [.. fields];

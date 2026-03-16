@@ -23,5 +23,6 @@ namespace ProvisioningTypeSpec {
   enum Versions {
     v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
+    v2025_01_01_preview: "2025-01-01-preview",
   }
 }
