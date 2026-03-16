@@ -32,6 +32,21 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AgentsClient
 {
+    /// <summary> Initializes a new instance of AgentsClient from a <see cref="AgentsClientSettings"/>. </summary>
+    /// <param name="settings"> The settings for AgentsClient. </param>
+    [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+    public AgentsClient(AgentsClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Options)
+    {
+    }
+
+    internal AgentsClient(AuthenticationPolicy authenticationPolicy, AgentsClientOptions options)
+    {
+        options ??= new AgentsClientOptions();
+        _endpoint = options.Endpoint;
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+        _apiVersion = options.ApiVersion;
+    }
+
     public AgentsClient(AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
     {
         Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
