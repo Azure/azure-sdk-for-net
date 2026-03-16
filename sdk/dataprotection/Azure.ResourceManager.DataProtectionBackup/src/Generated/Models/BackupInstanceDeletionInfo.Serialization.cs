@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstanceDeletionInfo : IUtf8JsonSerializable, IJsonModel<BackupInstanceDeletionInfo>
+    /// <summary> Deletion Info. </summary>
+    public partial class BackupInstanceDeletionInfo : IJsonModel<BackupInstanceDeletionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupInstanceDeletionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupInstanceDeletionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBackupInstanceDeletionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupInstanceDeletionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupInstanceDeletionInfo IPersistableModel<BackupInstanceDeletionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupInstanceDeletionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupInstanceDeletionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(DeleteOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
@@ -54,15 +94,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("deleteActivityID"u8);
                 writer.WriteStringValue(DeleteActivityId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,104 +111,76 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        BackupInstanceDeletionInfo IJsonModel<BackupInstanceDeletionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupInstanceDeletionInfo IJsonModel<BackupInstanceDeletionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BackupInstanceDeletionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupInstanceDeletionInfo(document.RootElement, options);
         }
 
-        internal static BackupInstanceDeletionInfo DeserializeBackupInstanceDeletionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BackupInstanceDeletionInfo DeserializeBackupInstanceDeletionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? deletionTime = default;
-            DateTimeOffset? billingEndDate = default;
-            DateTimeOffset? scheduledPurgeTime = default;
+            DateTimeOffset? deleteOn = default;
+            DateTimeOffset? billingEndOn = default;
+            DateTimeOffset? scheduledPurgeOn = default;
             string deleteActivityId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deletionTime"u8))
+                if (prop.NameEquals("deletionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deletionTime = property.Value.GetDateTimeOffset("O");
+                    deleteOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("billingEndDate"u8))
+                if (prop.NameEquals("billingEndDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    billingEndDate = property.Value.GetDateTimeOffset("O");
+                    billingEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduledPurgeTime"u8))
+                if (prop.NameEquals("scheduledPurgeTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledPurgeTime = property.Value.GetDateTimeOffset("O");
+                    scheduledPurgeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("deleteActivityID"u8))
+                if (prop.NameEquals("deleteActivityID"u8))
                 {
-                    deleteActivityId = property.Value.GetString();
+                    deleteActivityId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BackupInstanceDeletionInfo(deletionTime, billingEndDate, scheduledPurgeTime, deleteActivityId, serializedAdditionalRawData);
+            return new BackupInstanceDeletionInfo(deleteOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BackupInstanceDeletionInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BackupInstanceDeletionInfo IPersistableModel<BackupInstanceDeletionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBackupInstanceDeletionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BackupInstanceDeletionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

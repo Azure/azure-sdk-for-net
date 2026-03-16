@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,41 +15,67 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct WorkloadRuntime : IEquatable<WorkloadRuntime>
     {
         private readonly string _value;
+        /// <summary> Nodes will use Kubelet to run standard OCI container workloads. </summary>
+        private const string OciContainerValue = "OCIContainer";
+        /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
+        private const string WasmWasiValue = "WasmWasi";
+        /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods (Preview). Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. This naming convention will be deprecated in future releases in favor of KataVmIsolation. </summary>
+        private const string KataMshvVmIsolationValue = "KataMshvVmIsolation";
+        /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods. Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. </summary>
+        private const string KataVmIsolationValue = "KataVmIsolation";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadRuntime"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadRuntime(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OciContainerValue = "OCIContainer";
-        private const string WasmWasiValue = "WasmWasi";
-        private const string KataVmIsolationValue = "KataVmIsolation";
+            _value = value;
+        }
 
         /// <summary> Nodes will use Kubelet to run standard OCI container workloads. </summary>
         public static WorkloadRuntime OciContainer { get; } = new WorkloadRuntime(OciContainerValue);
+
         /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
         public static WorkloadRuntime WasmWasi { get; } = new WorkloadRuntime(WasmWasiValue);
+
+        /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods (Preview). Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. This naming convention will be deprecated in future releases in favor of KataVmIsolation. </summary>
+        public static WorkloadRuntime KataMshvVmIsolation { get; } = new WorkloadRuntime(KataMshvVmIsolationValue);
+
         /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods. Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. </summary>
         public static WorkloadRuntime KataVmIsolation { get; } = new WorkloadRuntime(KataVmIsolationValue);
+
         /// <summary> Determines if two <see cref="WorkloadRuntime"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadRuntime left, WorkloadRuntime right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadRuntime"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadRuntime left, WorkloadRuntime right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadRuntime"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadRuntime"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadRuntime(string value) => new WorkloadRuntime(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadRuntime"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadRuntime?(string value) => value == null ? null : new WorkloadRuntime(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadRuntime other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadRuntime other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
