@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Support
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _top, _filter, _context) : _client.CreateGetAllRequest(_top, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSupportTenantResource.GetTenantSupportTickets");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TenantSupportTicketCollection.GetAll");
             scope.Start();
             try
             {

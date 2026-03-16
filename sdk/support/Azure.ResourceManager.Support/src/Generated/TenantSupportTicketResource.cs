@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Support
     /// <summary>
     /// A class representing a TenantSupportTicket along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantSupportTicketResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTenantSupportTickets method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantSupportTickets method.
     /// </summary>
     public partial class TenantSupportTicketResource : ArmResource
     {

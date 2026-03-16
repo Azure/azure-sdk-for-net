@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Support
 {
     // Suppress the generated internal parameterless constructor, replace with public
+    [CodeGenSuppress("FileWorkspaceDetailData")]
     public partial class FileWorkspaceDetailData
     {
         /// <summary> Initializes a new instance of <see cref="FileWorkspaceDetailData"/>. </summary>

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,10 +21,10 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A class representing a collection of <see cref="TenantSupportTicketResource"/> and their operations.
-    /// Each <see cref="TenantSupportTicketResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="TenantSupportTicketCollection"/> instance call the GetTenantSupportTickets method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="TenantSupportTicketResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantSupportTicketCollection"/> instance call the GetTenantSupportTickets method from an instance of <see cref="TenantResource"/>.
     /// </summary>
-    public partial class TenantSupportTicketCollection : ArmCollection
+    public partial class TenantSupportTicketCollection : ArmCollection, IEnumerable<TenantSupportTicketResource>, IAsyncEnumerable<TenantSupportTicketResource>
     {
         private readonly ClientDiagnostics _tenantSupportTicketClientDiagnostics;
         private readonly TenantSupportTicket _tenantSupportTicketRestClient;
@@ -44,6 +47,16 @@ namespace Azure.ResourceManager.Support
             _supportTicketNoSubCommunicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantSupportTicketResource.ResourceType.Namespace, Diagnostics);
             _supportTicketNoSubCommunicationRestClient = new SupportTicketNoSubCommunication(_supportTicketNoSubCommunicationClientDiagnostics, Pipeline, Endpoint, tenantSupportTicketApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != TenantResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+            }
         }
 
         /// <summary>
@@ -258,6 +271,66 @@ namespace Azure.ResourceManager.Support
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists all the support tickets. &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by <i>Status</i>, <i>CreatedDate</i>, , <i>ServiceId</i>, and <i>ProblemClassificationId</i> using the $filter parameter. Output will be a paged result with <i>nextLink</i>, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SupportTicketsNoSubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. &lt;a target='_blank' href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn more&lt;/a&gt; &lt;br/&gt;<i>Status</i> , <i>ServiceId</i>, and <i>ProblemClassificationId</i> filters can only be used with 'eq' operator. For <i>CreatedDate</i> filter, the supported operators are 'gt' and 'ge'. When using both filters, combine them using the logical 'AND'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TenantSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TenantSupportTicketResource> GetAllAsync(int? top = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllAsyncCollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context), data => new TenantSupportTicketResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the support tickets. &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by <i>Status</i>, <i>CreatedDate</i>, , <i>ServiceId</i>, and <i>ProblemClassificationId</i> using the $filter parameter. Output will be a paged result with <i>nextLink</i>, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/supportTickets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SupportTicketsNoSubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. &lt;a target='_blank' href='https://docs.microsoft.com/odata/concepts/queryoptions-overview'&gt;Learn more&lt;/a&gt; &lt;br/&gt;<i>Status</i> , <i>ServiceId</i>, and <i>ProblemClassificationId</i> filters can only be used with 'eq' operator. For <i>CreatedDate</i> filter, the supported operators are 'gt' and 'ge'. When using both filters, combine them using the logical 'AND'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TenantSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantSupportTicketResource> GetAll(int? top = default, string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllCollectionResultOfT(_tenantSupportTicketRestClient, top, filter, context), data => new TenantSupportTicketResource(Client, data));
         }
 
         /// <summary>
@@ -494,6 +567,22 @@ namespace Azure.ResourceManager.Support
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<TenantSupportTicketResource> IEnumerable<TenantSupportTicketResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<TenantSupportTicketResource> IAsyncEnumerable<TenantSupportTicketResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

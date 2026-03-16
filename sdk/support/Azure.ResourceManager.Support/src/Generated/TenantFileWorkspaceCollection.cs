@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +19,8 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A class representing a collection of <see cref="TenantFileWorkspaceResource"/> and their operations.
-    /// Each <see cref="TenantFileWorkspaceResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="TenantFileWorkspaceCollection"/> instance call the GetTenantFileWorkspaces method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="TenantFileWorkspaceResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantFileWorkspaceCollection"/> instance call the GetTenantFileWorkspaces method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantFileWorkspaceCollection : ArmCollection
     {
@@ -40,6 +41,16 @@ namespace Azure.ResourceManager.Support
             _tenantFileWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantFileWorkspaceResource.ResourceType.Namespace, Diagnostics);
             _tenantFileWorkspaceRestClient = new TenantFileWorkspace(_tenantFileWorkspaceClientDiagnostics, Pipeline, Endpoint, tenantFileWorkspaceApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != TenantResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+            }
         }
 
         /// <summary>
