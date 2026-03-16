@@ -79,16 +79,16 @@ namespace Azure.Generator.Visitors
             foreach (var ctor in constructors)
             {
                 if (ctor.Signature.Parameters.Count == 1 &&
-                    ctor.Signature.Parameters[0].Type.Name.EndsWith("Settings"))
+                    ctor.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings?.Type))
                 {
                     bool hasTokenCredCtor = constructors.Any(c =>
                         c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                        c.Signature.Parameters.Any(p => p.Type.Name == nameof(TokenCredential)) &&
+                        c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential))) &&
                         c.Signature.Parameters.Count >= 3);
 
                     bool hasKeyCredCtor = constructors.Any(c =>
                         c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                        c.Signature.Parameters.Any(p => p.Type.Name == nameof(AzureKeyCredential)) &&
+                        c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AzureKeyCredential))) &&
                         c.Signature.Parameters.Count >= 3);
 
                     if (hasTokenCredCtor || hasKeyCredCtor)
