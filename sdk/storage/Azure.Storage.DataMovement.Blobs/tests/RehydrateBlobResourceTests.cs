@@ -51,7 +51,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private static BlobSourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointDetails();
+            return new BlobSourceCheckpointDetails(
+                snapshot: null,
+                versionId: null);
         }
 
         private static BlobDestinationCheckpointDetails GetPopulatedDestinationCheckpointDetails(

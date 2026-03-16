@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -195,6 +196,16 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             StorageResourceCheckpointDetails checkpointDetails = properties.GetCheckpointDetails(getSource);
 
+            // Deserialize source checkpoint details for snapshot/version information
+            BlobSourceCheckpointDetails sourceCheckpointDetails = null;
+            if (getSource && properties.SourceCheckpointDetails?.Length > 0)
+            {
+                using (MemoryStream stream = new(properties.SourceCheckpointDetails))
+                {
+                    sourceCheckpointDetails = BlobSourceCheckpointDetails.Deserialize(stream);
+                }
+            }
+
             ResourceType type = GetType(checkpointDetails, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
             IBlobResourceRehydrator rehydrator = getSource ?
@@ -211,23 +222,27 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 CredentialType.None => rehydrator.Rehydrate(
                     properties,
+                    sourceCheckpointDetails,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
                     cancellationToken),
                 CredentialType.SharedKey => rehydrator.Rehydrate(
                     properties,
+                    sourceCheckpointDetails,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
                     await _getStorageSharedKeyCredential(uri, cancellationToken).ConfigureAwait(false),
                     cancellationToken),
                 CredentialType.Token => rehydrator.Rehydrate(
                     properties,
+                    sourceCheckpointDetails,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
                     _tokenCredential,
                     cancellationToken),
                 CredentialType.Sas => rehydrator.Rehydrate(
                     properties,
+                    sourceCheckpointDetails,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
                     await _getAzureSasCredential(uri, cancellationToken).ConfigureAwait(false),
@@ -323,6 +338,11 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            // Parse snapshot/version from URI if present
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blobUri);
+            options = ParseSnapshotAndVersionFromUri(uriBuilder, options);
+
             BlobClientOptions clientOptions = GetUserAgentClientOptions();
             if (options is BlockBlobStorageResourceOptions)
             {
@@ -467,23 +487,27 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
@@ -526,6 +550,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
@@ -535,6 +560,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
@@ -545,6 +571,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
@@ -555,6 +582,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
@@ -564,48 +592,84 @@ namespace Azure.Storage.DataMovement.Blobs
                     GetOptions(properties, destinationCheckpointDetails, isSource));
         }
 
+        /// <summary>
+        /// Helper method to apply snapshot or version to a blob client based on source checkpoint details.
+        /// </summary>
+        private static T ApplySnapshotOrVersion<T>(T client, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+            where T : BlobBaseClient
+        {
+            if (isSource && sourceCheckpointDetails != null)
+            {
+                if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                {
+                    return (T)client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                }
+                else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                {
+                    return (T)client.WithVersion(sourceCheckpointDetails.VersionId);
+                }
+            }
+            return client;
+        }
+
         private class BlockBlobResourceRehydrator : IBlobResourceRehydrator
         {
             private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
+            private BlockBlobClient GetClient(Uri uri, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new BlockBlobClient(uri), sourceCheckpointDetails, isSource);
+
+            private BlockBlobClient GetClient(Uri uri, StorageSharedKeyCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new BlockBlobClient(uri, credential), sourceCheckpointDetails, isSource);
+
+            private BlockBlobClient GetClient(Uri uri, TokenCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new BlockBlobClient(uri, credential), sourceCheckpointDetails, isSource);
+
+            private BlockBlobClient GetClient(Uri uri, AzureSasCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new BlockBlobClient(uri, credential), sourceCheckpointDetails, isSource);
+
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
-                    new BlockBlobClient(GetUri(properties, isSource)),
+                    GetClient(GetUri(properties, isSource), sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
-                    new BlockBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
-                    new BlockBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new BlockBlobStorageResource(
-                    new BlockBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetBlockBlobResourceOptions() : default);
         }
 
@@ -614,43 +678,59 @@ namespace Azure.Storage.DataMovement.Blobs
             private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
+            private PageBlobClient GetClient(Uri uri, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new PageBlobClient(uri), sourceCheckpointDetails, isSource);
+
+            private PageBlobClient GetClient(Uri uri, StorageSharedKeyCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new PageBlobClient(uri, credential), sourceCheckpointDetails, isSource);
+
+            private PageBlobClient GetClient(Uri uri, TokenCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new PageBlobClient(uri, credential), sourceCheckpointDetails, isSource);
+
+            private PageBlobClient GetClient(Uri uri, AzureSasCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+                => ApplySnapshotOrVersion(new PageBlobClient(uri, credential), sourceCheckpointDetails, isSource);
+
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
-                    new PageBlobClient(GetUri(properties, isSource)),
+                    GetClient(GetUri(properties, isSource), sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
-                    new PageBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
-                    new PageBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new PageBlobStorageResource(
-                    new PageBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetPageBlobResourceOptions() : default);
         }
 
@@ -659,44 +739,171 @@ namespace Azure.Storage.DataMovement.Blobs
             private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
+            private AppendBlobClient GetClient(Uri uri, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+            {
+                AppendBlobClient client = new AppendBlobClient(uri);
+                if (isSource && sourceCheckpointDetails != null)
+                {
+                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                    {
+                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                    }
+                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                    {
+                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
+                    }
+                }
+                return client;
+            }
+
+            private AppendBlobClient GetClient(Uri uri, StorageSharedKeyCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+            {
+                AppendBlobClient client = new AppendBlobClient(uri, credential);
+                if (isSource && sourceCheckpointDetails != null)
+                {
+                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                    {
+                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                    }
+                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                    {
+                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
+                    }
+                }
+                return client;
+            }
+
+            private AppendBlobClient GetClient(Uri uri, TokenCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+            {
+                AppendBlobClient client = new AppendBlobClient(uri, credential);
+                if (isSource && sourceCheckpointDetails != null)
+                {
+                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                    {
+                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                    }
+                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                    {
+                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
+                    }
+                }
+                return client;
+            }
+
+            private AppendBlobClient GetClient(Uri uri, AzureSasCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+            {
+                AppendBlobClient client = new AppendBlobClient(uri, credential);
+                if (isSource && sourceCheckpointDetails != null)
+                {
+                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                    {
+                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                    }
+                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                    {
+                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
+                    }
+                }
+                return client;
+            }
+
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
-                    new AppendBlobClient(GetUri(properties, isSource)),
+                    GetClient(GetUri(properties, isSource), sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
-                    new AppendBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
-                    new AppendBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
+                BlobSourceCheckpointDetails sourceCheckpointDetails,
                 BlobDestinationCheckpointDetails destinationCheckpointDetails,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
                 => new AppendBlobStorageResource(
-                    new AppendBlobClient(GetUri(properties, isSource), credential),
+                    GetClient(GetUri(properties, isSource), credential, sourceCheckpointDetails, isSource),
                     !isSource ? destinationCheckpointDetails.GetAppendBlobResourceOptions() : default);
+        }
+        #endregion
+
+        #region Helper Methods
+        /// <summary>
+        /// Parses snapshot and version information from the URI and updates or validates the options.
+        /// </summary>
+        private static BlobStorageResourceOptions ParseSnapshotAndVersionFromUri(
+            BlobUriBuilder uriBuilder,
+            BlobStorageResourceOptions options)
+        {
+            string uriSnapshot = uriBuilder.Snapshot;
+            string uriVersionId = uriBuilder.VersionId;
+
+            // If neither is in the URI, no need to modify options
+            if (string.IsNullOrEmpty(uriSnapshot) && string.IsNullOrEmpty(uriVersionId))
+            {
+                return options;
+            }
+
+            // If options is null, create new one with URI values
+            if (options == null)
+            {
+                options = new BlobStorageResourceOptions();
+                if (!string.IsNullOrEmpty(uriSnapshot))
+                {
+                    options.Snapshot = uriSnapshot;
+                }
+                if (!string.IsNullOrEmpty(uriVersionId))
+                {
+                    options.VersionId = uriVersionId;
+                }
+                return options;
+            }
+
+            // Validate that URI and options don't conflict
+            if (!string.IsNullOrEmpty(uriSnapshot))
+            {
+                if (!string.IsNullOrEmpty(options.Snapshot) && options.Snapshot != uriSnapshot)
+                {
+                    throw Errors.SnapshotMismatch(uriSnapshot, options.Snapshot);
+                }
+                options.Snapshot = uriSnapshot;
+            }
+
+            if (!string.IsNullOrEmpty(uriVersionId))
+            {
+                if (!string.IsNullOrEmpty(options.VersionId) && options.VersionId != uriVersionId)
+                {
+                    throw Errors.VersionIdMismatch(uriVersionId, options.VersionId);
+                }
+                options.VersionId = uriVersionId;
+            }
+
+            return options;
         }
         #endregion
 

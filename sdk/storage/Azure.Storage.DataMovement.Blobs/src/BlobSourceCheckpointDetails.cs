@@ -19,14 +19,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Snapshot identifier for the source blob.
         /// </summary>
         public string Snapshot;
-        public bool IsSnapshotSet;
         public byte[] SnapshotBytes;
 
         /// <summary>
         /// Version identifier for the source blob.
         /// </summary>
         public string VersionId;
-        public bool IsVersionIdSet;
         public byte[] VersionIdBytes;
 
         public override int Length => CalculateLength();
@@ -36,9 +34,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public BlobSourceCheckpointDetails(BlobStorageResourceOptions options)
             : this(
-                isSnapshotSet: options?._isSnapshotSet ?? false,
                 snapshot: options?.Snapshot,
-                isVersionIdSet: options?._isVersionIdSet ?? false,
                 versionId: options?.VersionId)
         { }
 
@@ -46,18 +42,13 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Constructor for deserialization.
         /// </summary>
         public BlobSourceCheckpointDetails(
-            bool isSnapshotSet,
             string snapshot,
-            bool isVersionIdSet,
             string versionId)
         {
             Version = DataMovementBlobConstants.SourceCheckpointDetails.SchemaVersion;
-
-            IsSnapshotSet = isSnapshotSet;
             Snapshot = snapshot;
             SnapshotBytes = snapshot != default ? Encoding.UTF8.GetBytes(snapshot) : Array.Empty<byte>();
 
-            IsVersionIdSet = isVersionIdSet;
             VersionId = versionId;
             VersionIdBytes = versionId != default ? Encoding.UTF8.GetBytes(versionId) : Array.Empty<byte>();
         }
@@ -72,38 +63,18 @@ namespace Azure.Storage.DataMovement.Blobs
             // Version
             writer.Write(Version);
 
-            // Snapshot
-            writer.Write(IsSnapshotSet);
-            if (IsSnapshotSet)
-            {
-                // Snapshot offset/length
-                writer.WriteVariableLengthFieldInfo(SnapshotBytes.Length, ref currentVariableLengthIndex);
-            }
-            else
-            {
-                // Padding
-                writer.WriteEmptyLengthOffset();
-            }
+            // Snapshot offset/length
+            writer.WriteVariableLengthFieldInfo(SnapshotBytes.Length, ref currentVariableLengthIndex);
 
-            // VersionId
-            writer.Write(IsVersionIdSet);
-            if (IsVersionIdSet)
-            {
-                // VersionId offset/length
-                writer.WriteVariableLengthFieldInfo(VersionIdBytes.Length, ref currentVariableLengthIndex);
-            }
-            else
-            {
-                // Padding
-                writer.WriteEmptyLengthOffset();
-            }
+            // VersionId offset/length
+            writer.WriteVariableLengthFieldInfo(VersionIdBytes.Length, ref currentVariableLengthIndex);
 
             // Write variable-length data
-            if (IsSnapshotSet)
+            if (SnapshotBytes.Length > 0)
             {
                 writer.Write(SnapshotBytes);
             }
-            if (IsVersionIdSet)
+            if (VersionIdBytes.Length > 0)
             {
                 writer.Write(VersionIdBytes);
             }
@@ -114,12 +85,11 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(stream, nameof(stream));
 
             // Handle empty stream (legacy/old checkpoints)
-            if (stream.Length == 0)
+            long streamLength = stream.Length;
+            if (streamLength == 0)
             {
                 return new BlobSourceCheckpointDetails(
-                    isSnapshotSet: false,
                     snapshot: null,
-                    isVersionIdSet: false,
                     versionId: null);
             }
 
@@ -133,12 +103,10 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Snapshot
-            bool isSnapshotSet = reader.ReadBoolean();
             int snapshotOffset = reader.ReadInt32();
             int snapshotLength = reader.ReadInt32();
 
             // VersionId
-            bool isVersionIdSet = reader.ReadBoolean();
             int versionIdOffset = reader.ReadInt32();
             int versionIdLength = reader.ReadInt32();
 
@@ -146,7 +114,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string snapshot = null;
             if (snapshotOffset > 0)
             {
-                // TODO: CheckpointerExtensions.ValidateOffsetsAndLength(snapshotOffset, snapshotLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(snapshotOffset, snapshotLength, streamLength);
                 reader.BaseStream.Position = snapshotOffset;
                 snapshot = reader.ReadBytes(snapshotLength).AsString();
             }
@@ -154,29 +122,22 @@ namespace Azure.Storage.DataMovement.Blobs
             string versionId = null;
             if (versionIdOffset > 0)
             {
-                // TODO: CheckpointerExtensions.ValidateOffsetsAndLength(versionIdOffset, versionIdLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(versionIdOffset, versionIdLength, streamLength);
                 reader.BaseStream.Position = versionIdOffset;
                 versionId = reader.ReadBytes(versionIdLength).AsString();
             }
 
             return new BlobSourceCheckpointDetails(
-                isSnapshotSet: isSnapshotSet,
                 snapshot: snapshot,
-                isVersionIdSet: isVersionIdSet,
                 versionId: versionId);
         }
 
         private int CalculateLength()
         {
             int length = DataMovementBlobConstants.SourceCheckpointDetails.VariableLengthStartIndex;
-            if (IsSnapshotSet)
-            {
-                length += SnapshotBytes.Length;
-            }
-            if (IsVersionIdSet)
-            {
-                length += VersionIdBytes.Length;
-            }
+            length += SnapshotBytes.Length;
+            length += VersionIdBytes.Length;
+
             return length;
         }
     }

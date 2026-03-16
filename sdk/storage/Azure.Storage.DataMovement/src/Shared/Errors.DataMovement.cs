@@ -128,5 +128,13 @@ namespace Azure.Storage
         public static InvalidDataException InvalidCheckpointOffsetLength(int offset, int length, long streamLength)
             => new InvalidDataException(
                 $"Invalid checkpoint file: offset {offset} plus length {length} exceeds stream length {streamLength}.");
+
+        public static ArgumentException SnapshotMismatch(string uriSnapshot, string optionsSnapshot)
+            => new ArgumentException(
+                $"Snapshot mismatch: URI contains snapshot '{uriSnapshot}' but options contains snapshot '{optionsSnapshot}'.");
+
+        public static ArgumentException VersionIdMismatch(string uriVersionId, string optionsVersionId)
+            => new ArgumentException(
+                $"VersionId mismatch: URI contains versionId '{uriVersionId}' but options contains versionId '{optionsVersionId}'.");
     }
 }
