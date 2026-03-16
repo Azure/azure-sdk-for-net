@@ -26,10 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppService.Tests", "Azure.Provisioning.AppService\tests\Azure.Provisioning.AppService.Tests.csproj", "{76098A77-CF29-421E-AC8A-BF94239B56C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CognitiveServices", "Azure.Provisioning.CognitiveServices\src\Azure.Provisioning.CognitiveServices.csproj", "{583F8981-103F-4E13-837E-A02BBEABBA3F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CognitiveServices.Tests", "Azure.Provisioning.CognitiveServices\tests\Azure.Provisioning.CognitiveServices.Tests.csproj", "{F1850EE3-261C-4F63-9EA5-0A2D336A2A59}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Communication", "Azure.Provisioning.Communication\src\Azure.Provisioning.Communication.csproj", "{09FE6279-9FA8-419B-AD1F-DD2C3862FC5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Communication.Tests", "Azure.Provisioning.Communication\tests\Azure.Provisioning.Communication.Tests.csproj", "{AACFC256-69EB-4ACD-A19D-026C82AA2DD2}"
@@ -42,17 +38,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Containe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerService.Tests", "Azure.Provisioning.ContainerService\tests\Azure.Provisioning.ContainerService.Tests.csproj", "{182DB588-C4D2-439F-AAD1-BDFB26AB59CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CosmosDB", "Azure.Provisioning.CosmosDB\src\Azure.Provisioning.CosmosDB.csproj", "{876C8F7E-5B88-4735-8EBE-93841B8CFDBB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CosmosDB.Tests", "Azure.Provisioning.CosmosDB\tests\Azure.Provisioning.CosmosDB.Tests.csproj", "{8BE9B823-D00F-4A51-AD2E-DCE9DCD20E5B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventGrid", "Azure.Provisioning.EventGrid\src\Azure.Provisioning.EventGrid.csproj", "{2A49BD8F-E064-4D18-9B0D-6C2DEAD74A09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventGrid.Tests", "Azure.Provisioning.EventGrid\tests\Azure.Provisioning.EventGrid.Tests.csproj", "{8E4491BA-B8B9-4C43-AB7C-3EF8E2D4097E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs", "Azure.Provisioning.EventHubs\src\Azure.Provisioning.EventHubs.csproj", "{93B327CF-8FAD-4112-8193-D20026BC76B1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs.Tests", "Azure.Provisioning.EventHubs\tests\Azure.Provisioning.EventHubs.Tests.csproj", "{B3F7B4D6-4D4E-42AF-944A-5D10AA3A0BEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernetes", "Azure.Provisioning.Kubernetes\src\Azure.Provisioning.Kubernetes.csproj", "{ED3BF558-C208-4245-A310-1C95936C2030}"
 EndProject
@@ -85,10 +73,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment", "Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj", "{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment.Tests", "Azure.Provisioning.Deployment\tests\Azure.Provisioning.Deployment.Tests.csproj", "{0D2C464F-C246-4069-90B2-33D637BE18BF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.RedisEnterprise", "Azure.Provisioning.RedisEnterprise\src\Azure.Provisioning.RedisEnterprise.csproj", "{034CCC84-C335-6B93-061F-CCD580D2E4BA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.RedisEnterprise.Tests", "Azure.Provisioning.RedisEnterprise\tests\Azure.Provisioning.RedisEnterprise.Tests.csproj", "{CD3A7E8D-6EC8-65A5-E2CF-71242B4177D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kusto", "Azure.Provisioning.Kusto\src\Azure.Provisioning.Kusto.csproj", "{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}"
 EndProject

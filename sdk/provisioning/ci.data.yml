@@ -11,12 +11,8 @@ trigger:
     - sdk/provisioning/ci.data.yml
     - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.CognitiveServices
-    - sdk/provisioning/Azure.Provisioning.CosmosDB
-    - sdk/provisioning/Azure.Provisioning.EventHubs
     - sdk/provisioning/Azure.Provisioning.FrontDoor
     - sdk/provisioning/Azure.Provisioning.Kusto
-    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.Sql
@@ -29,28 +25,12 @@ parameters:
     displayName: 'Azure.Provisioning'
     type: boolean
     default: false
-  - name: release_Azure_Provisioning_CognitiveServices
-    displayName: 'Azure.Provisioning.CognitiveServices'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_CosmosDB
-    displayName: 'Azure.Provisioning.CosmosDB'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_EventHubs
-    displayName: 'Azure.Provisioning.EventHubs'
-    type: boolean
-    default: false
   - name: release_Azure_Provisioning_FrontDoor
     displayName: 'Azure.Provisioning.FrontDoor'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Kusto
     displayName: 'Azure.Provisioning.Kusto'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_RedisEnterprise
-    displayName: 'Azure.Provisioning.RedisEnterprise'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Search
@@ -80,24 +60,12 @@ extends:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
       createReleaseStage: ${{ parameters.release_Azure_Provisioning }}
-    - name: Azure.Provisioning.CognitiveServices
-      safeName: AzureProvisioningCognitiveServices
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_CognitiveServices }}
-    - name: Azure.Provisioning.CosmosDB
-      safeName: AzureProvisioningCosmosDB
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_CosmosDB }}
-    - name: Azure.Provisioning.EventHubs
-      safeName: AzureProvisioningEventHubs
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_EventHubs }}
     - name: Azure.Provisioning.FrontDoor
       safeName: AzureProvisioningFrontDoor
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_FrontDoor }}
     - name: Azure.Provisioning.Kusto
       safeName: AzureProvisioningKusto
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
-    - name: Azure.Provisioning.RedisEnterprise
-      safeName: AzureProvisioningRedisEnterprise
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_RedisEnterprise }}
     - name: Azure.Provisioning.Search
       safeName: AzureProvisioningSearch
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Search }}
