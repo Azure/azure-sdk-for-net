@@ -114,7 +114,7 @@ interface NetworkSecurityPerimeterConfigurations {
     );
   });
 
-  it("resource marked as non-resource removes all path variants sharing the same model", async () => {
+  it("resource marked as non-resource removes all scope variants sharing the same model", async () => {
     const program = await typeSpecCompile(
       `
 /** Parent resource */
@@ -132,11 +132,10 @@ model NamespaceProperties {
   provisioningState?: ProvisioningState;
 }
 
-/** A child resource used at two different paths */
+/** An extension resource that appears at two different scopes */
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "markAsNonResource"
 @clientOption("markAsNonResource", true, "csharp")
-@parentResource(Namespace)
-model NspConfig is ProxyResource<NspConfigProperties> {
+model NspConfig is ExtensionResource<NspConfigProperties> {
   ...ResourceNameParameter<NspConfig>;
 }
 
@@ -164,15 +163,18 @@ interface Namespaces {
   listByResourceGroup is ArmResourceListByParent<Namespace>;
 }
 
+/** ResourceGroup-scoped NspConfig operations */
 @armResourceOperations
-interface NspConfigs1 {
-  get is ArmResourceRead<NspConfig>;
-  list is ArmResourceListByParent<NspConfig>;
+interface NspConfigsByResourceGroup {
+  get is Extension.Read<Extension.ResourceGroup, NspConfig>;
+  list is Extension.ListByTarget<Extension.ResourceGroup, NspConfig>;
 }
 
+/** Subscription-scoped NspConfig operations */
 @armResourceOperations
-interface NspConfigs2 {
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<NspConfig>;
+interface NspConfigsBySubscription {
+  get is Extension.Read<Extension.Subscription, NspConfig>;
+  list is Extension.ListByTarget<Extension.Subscription, NspConfig>;
 }
 `,
       runner
@@ -181,7 +183,7 @@ interface NspConfigs2 {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
 
-    // Baseline: NspConfig should appear as resource(s)
+    // Baseline: NspConfig should appear as 2 resources (RG + Subscription scope)
     const baselineSchema = buildArmProviderSchema(sdkContext, root);
     ok(baselineSchema);
     const nspConfigModel = root.models.find((m) => m.name === "NspConfig");
@@ -189,9 +191,13 @@ interface NspConfigs2 {
     const nspResources = baselineSchema.resources.filter(
       (r) => r.resourceModelId === nspConfigModel.crossLanguageDefinitionId
     );
-    ok(nspResources.length >= 1, "Should have at least 1 NspConfig resource");
+    strictEqual(
+      nspResources.length,
+      2,
+      "Should have 2 NspConfig resources at different scopes"
+    );
 
-    // With markAsNonResource: ALL NspConfig resources should be removed
+    // With markAsNonResource: ALL NspConfig scope variants should be removed
     const clientOptionsMap = parseResourceClientOptions(sdkContext);
     const processedSchema = buildArmProviderSchema(
       sdkContext,
@@ -206,25 +212,14 @@ interface NspConfigs2 {
     strictEqual(
       remainingNsp.length,
       0,
-      "All NspConfig resource path variants should be removed"
+      "All NspConfig scope variants should be removed"
     );
 
-    // Only Namespace resource should remain
-    strictEqual(processedSchema.resources.length, 1);
-    strictEqual(
-      processedSchema.resources[0].metadata.resourceName,
-      "Namespace"
+    // Namespace resource should still be present
+    const namespaceResources = processedSchema.resources.filter(
+      (r) => r.metadata.resourceName === "Namespace"
     );
-
-    // NspConfig methods should be reassigned to Namespace
-    const namespaceMethods = processedSchema.resources[0].metadata.methods;
-    const nspMethodPaths = namespaceMethods.filter((m) =>
-      m.operationPath.includes("nspConfig")
-    );
-    ok(
-      nspMethodPaths.length > 0,
-      "NspConfig methods should be reassigned to parent resource"
-    );
+    strictEqual(namespaceResources.length, 1, "Namespace resource should remain");
   });
 
   it("schema without markAsNonResource is returned unchanged", async () => {

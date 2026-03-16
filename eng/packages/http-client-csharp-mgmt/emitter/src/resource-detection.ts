@@ -77,14 +77,17 @@ export async function updateClients(
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
-  // Parse all @clientOption decorators once, early in the pipeline.
-  const clientOptionsMap = parseResourceClientOptions(sdkContext);
-
   let armProviderSchema: ArmProviderSchema;
 
   if (options?.["use-legacy-resource-detection"] === false) {
+    // TODO: markAsNonResource is not yet supported in the non-legacy path.
+    // resolveArmResources uses the ARM library's own resource resolution and
+    // would need a different post-hoc filtering approach.
     armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
   } else {
+    // Parse @clientOption decorators to find models marked as non-resource.
+    // This is only applicable to the legacy resource detection path.
+    const clientOptionsMap = parseResourceClientOptions(sdkContext);
     armProviderSchema = buildArmProviderSchema(
       sdkContext,
       codeModel,
