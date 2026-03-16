@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
@@ -24,74 +25,89 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// </summary>
     public partial class DataProtectionBackupInstanceCollection : ArmCollection, IEnumerable<DataProtectionBackupInstanceResource>, IAsyncEnumerable<DataProtectionBackupInstanceResource>
     {
-        private readonly ClientDiagnostics _dataProtectionBackupInstanceBackupInstancesClientDiagnostics;
-        private readonly BackupInstancesRestOperations _dataProtectionBackupInstanceBackupInstancesRestClient;
+        private readonly ClientDiagnostics _backupInstanceResourcesClientDiagnostics;
+        private readonly BackupInstanceResources _backupInstanceResourcesRestClient;
+        private readonly ClientDiagnostics _backupInstancesClientDiagnostics;
+        private readonly BackupInstances _backupInstancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupInstanceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataProtectionBackupInstanceCollection for mocking. </summary>
         protected DataProtectionBackupInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataProtectionBackupInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataProtectionBackupInstanceBackupInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupInstanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataProtectionBackupInstanceResource.ResourceType, out string dataProtectionBackupInstanceBackupInstancesApiVersion);
-            _dataProtectionBackupInstanceBackupInstancesRestClient = new BackupInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupInstanceBackupInstancesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataProtectionBackupInstanceResource.ResourceType, out string dataProtectionBackupInstanceApiVersion);
+            _backupInstanceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupInstanceResource.ResourceType.Namespace, Diagnostics);
+            _backupInstanceResourcesRestClient = new BackupInstanceResources(_backupInstanceResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2025-09-01");
+            _backupInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupInstanceResource.ResourceType.Namespace, Diagnostics);
+            _backupInstancesRestClient = new BackupInstances(_backupInstancesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupInstanceApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataProtectionBackupVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a backup instance in a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="data"> Request body for operation. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, data, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceOperationSource(Client), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, data, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
+                    new DataProtectionBackupInstanceOperationSource(Client),
+                    _backupInstanceResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,43 +121,52 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Create or update a backup instance in a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="data"> Request body for operation. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
+        /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataProtectionBackupInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DataProtectionBackupInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, data, xMsAuthorizationAuxiliary, cancellationToken);
-                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(new DataProtectionBackupInstanceOperationSource(Client), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, _dataProtectionBackupInstanceBackupInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, data, xMsAuthorizationAuxiliary).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
+                    new DataProtectionBackupInstanceOperationSource(Client),
+                    _backupInstanceResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -155,38 +180,42 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a backup instance with name in a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataProtectionBackupInstanceResource>> GetAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Get");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,38 +229,42 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a backup instance with name in a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataProtectionBackupInstanceResource> Get(string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Get");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,50 +278,44 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a backup instances belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstances_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupInstanceResource(Client, DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e)), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, "DataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllAsyncCollectionResultOfT(_backupInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Gets a backup instances belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstances_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,45 +323,61 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupInstanceBackupInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupInstanceResource(Client, DataProtectionBackupInstanceData.DeserializeDataProtectionBackupInstanceData(e)), _dataProtectionBackupInstanceBackupInstancesClientDiagnostics, Pipeline, "DataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesGetAllCollectionResultOfT(_backupInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Exists");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataProtectionBackupInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataProtectionBackupInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -348,36 +391,50 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Exists");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataProtectionBackupInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataProtectionBackupInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,38 +448,54 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataProtectionBackupInstanceResource>> GetIfExistsAsync(string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataProtectionBackupInstanceBackupInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataProtectionBackupInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataProtectionBackupInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataProtectionBackupInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,38 +509,54 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstanceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataProtectionBackupInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupInstanceName"> The name of the BackupInstanceResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataProtectionBackupInstanceResource> GetIfExists(string backupInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupInstanceName, nameof(backupInstanceName));
 
-            using var scope = _dataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _backupInstanceResourcesClientDiagnostics.CreateScope("DataProtectionBackupInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataProtectionBackupInstanceBackupInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupInstanceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupInstanceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataProtectionBackupInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataProtectionBackupInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataProtectionBackupInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -487,6 +576,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataProtectionBackupInstanceResource> IAsyncEnumerable<DataProtectionBackupInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

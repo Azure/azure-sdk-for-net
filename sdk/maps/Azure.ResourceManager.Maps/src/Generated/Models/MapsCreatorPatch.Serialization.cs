@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mapsCreatorPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(mapsCreatorPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

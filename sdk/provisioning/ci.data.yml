@@ -16,7 +16,6 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
     - sdk/provisioning/Azure.Provisioning.FrontDoor
-    - sdk/provisioning/Azure.Provisioning.KeyVault
     - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
@@ -25,7 +24,6 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.SignalR
     - sdk/provisioning/Azure.Provisioning.Sql
-    - sdk/provisioning/Azure.Provisioning.Storage
     - sdk/provisioning/Azure.Provisioning.WebPubSub
     exclude:
     - sdk/provisioning/Generator/
@@ -53,10 +51,6 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_FrontDoor
     displayName: 'Azure.Provisioning.FrontDoor'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_KeyVault
-    displayName: 'Azure.Provisioning.KeyVault'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Kusto
@@ -91,10 +85,6 @@ parameters:
     displayName: 'Azure.Provisioning.Sql'
     type: boolean
     default: false
-  - name: release_Azure_Provisioning_Storage
-    displayName: 'Azure.Provisioning.Storage'
-    type: boolean
-    default: false
   - name: release_Azure_Provisioning_WebPubSub
     displayName: 'Azure.Provisioning.WebPubSub'
     type: boolean
@@ -125,9 +115,6 @@ extends:
     - name: Azure.Provisioning.FrontDoor
       safeName: AzureProvisioningFrontDoor
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_FrontDoor }}
-    - name: Azure.Provisioning.KeyVault
-      safeName: AzureProvisioningKeyVault
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}
     - name: Azure.Provisioning.Kusto
       safeName: AzureProvisioningKusto
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
@@ -152,9 +139,6 @@ extends:
     - name: Azure.Provisioning.Sql
       safeName: AzureProvisioningSql
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Sql }}
-    - name: Azure.Provisioning.Storage
-      safeName: AzureProvisioningStorage
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Storage }}
     - name: Azure.Provisioning.WebPubSub
       safeName: AzureProvisioningWebPubSub
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_WebPubSub }}
