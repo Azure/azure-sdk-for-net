@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
+        [WirePath("properties")]
         public NewRelicMonitoredSubscriptionProperties Properties { get; set; }
     }
 }

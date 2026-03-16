@@ -38,15 +38,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The updatable properties of the NewRelicMonitorResource. </summary>
+        [WirePath("properties")]
         internal NewRelicMonitorResourceUpdateProperties Properties { get; set; }
 
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
+        [WirePath("properties.newRelicAccountProperties")]
         public NewRelicAccountProperties NewRelicAccountProperties
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> User Info. </summary>
+        [WirePath("properties.userInfo")]
         public NewRelicObservabilityUserInfo UserInfo
         {
             get
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData
         {
             get
@@ -98,6 +104,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Source of org creation. </summary>
+        [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource
         {
             get
@@ -115,6 +122,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Source of account creation. </summary>
+        [WirePath("properties.accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource
         {
             get
@@ -132,6 +140,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> SaaS resource id. </summary>
+        [WirePath("properties.saaSData.saaSResourceId")]
         public string SaaSResourceId
         {
             get

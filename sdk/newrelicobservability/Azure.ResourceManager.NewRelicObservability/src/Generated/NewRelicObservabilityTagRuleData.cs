@@ -33,9 +33,11 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal NewRelicMonitoringTagRules Properties { get; set; }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NewRelicProvisioningState? ProvisioningState
         {
             get
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        [WirePath("properties.logRules")]
         public NewRelicObservabilityLogRules LogRules
         {
             get
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        [WirePath("properties.metricRules")]
         public NewRelicObservabilityMetricRules MetricRules
         {
             get

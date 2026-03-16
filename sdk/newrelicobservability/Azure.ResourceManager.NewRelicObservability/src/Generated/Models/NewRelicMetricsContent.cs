@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Reusable representation of an email address. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; }
     }
 }

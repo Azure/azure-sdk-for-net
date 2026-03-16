@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal PlanDataProperties Properties { get; }
 
         /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Source of org creation. </summary>
+        [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Source of account creation. </summary>
+        [WirePath("properties.accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource
         {
             get

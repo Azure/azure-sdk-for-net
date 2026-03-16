@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The operation for the patch on the resource. </summary>
+        [WirePath("patchOperation")]
         public MonitoredSubscriptionPatchOperation? PatchOperation { get; set; }
 
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
+        [WirePath("monitoredSubscriptionList")]
         public IList<NewRelicMonitoredSubscriptionInfo> MonitoredSubscriptionList { get; }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
     }
 }

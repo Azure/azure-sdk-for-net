@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Id of the Marketplace SaaS Resource. </summary>
+        [WirePath("saasId")]
         public string SaasId { get; }
     }
 }

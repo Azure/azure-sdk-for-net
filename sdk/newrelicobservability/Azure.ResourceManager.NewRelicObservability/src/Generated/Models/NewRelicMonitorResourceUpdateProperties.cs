@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -41,24 +42,31 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
+        [WirePath("newRelicAccountProperties")]
         public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
 
         /// <summary> User Info. </summary>
+        [WirePath("userInfo")]
         public NewRelicObservabilityUserInfo UserInfo { get; set; }
 
         /// <summary> Plan details. </summary>
+        [WirePath("planData")]
         public NewRelicPlanDetails PlanData { get; set; }
 
         /// <summary> SaaS details. </summary>
+        [WirePath("saaSData")]
         internal NewRelicObservabilitySaaSInfo SaaSData { get; set; }
 
         /// <summary> Source of org creation. </summary>
+        [WirePath("orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
 
         /// <summary> Source of account creation. </summary>
+        [WirePath("accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
 
         /// <summary> SaaS resource id. </summary>
+        [WirePath("saaSData.saaSResourceId")]
         public string SaaSResourceId
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        [WirePath("logRules")]
         public NewRelicObservabilityLogRules LogRules { get; set; }
 
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        [WirePath("metricRules")]
         public NewRelicObservabilityMetricRules MetricRules { get; set; }
     }
 }

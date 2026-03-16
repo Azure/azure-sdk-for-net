@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
+        [WirePath("saasGuid")]
         public string SaasGuid { get; }
 
         /// <summary> Publisher Id for NewRelic resource. </summary>
+        [WirePath("publisherId")]
         public string PublisherId { get; }
     }
 }

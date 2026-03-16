@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Flag specifying if metrics should be sent for the Monitor resource. </summary>
+        [WirePath("sendMetrics")]
         public NewRelicObservabilitySendMetricsStatus? SendMetrics { get; set; }
 
         /// <summary> List of filtering tags to be used for capturing metrics. </summary>
+        [WirePath("filteringTags")]
         public IList<NewRelicObservabilityFilteringTag> FilteringTags { get; }
 
         /// <summary> Reusable representation of an email address. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; set; }
     }
 }

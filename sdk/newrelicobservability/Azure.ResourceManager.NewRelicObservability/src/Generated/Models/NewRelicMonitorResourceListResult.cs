@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The NewRelicMonitorResource items on this page. </summary>
+        [WirePath("value")]
         public IList<NewRelicMonitorResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

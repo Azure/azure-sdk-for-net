@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> First name. </summary>
+        [WirePath("firstName")]
         public string FirstName { get; set; }
 
         /// <summary> Last name. </summary>
+        [WirePath("lastName")]
         public string LastName { get; set; }
 
         /// <summary> Reusable representation of an email address. </summary>
+        [WirePath("emailAddress")]
         public string EmailAddress { get; set; }
 
         /// <summary> Contact phone number. </summary>
+        [WirePath("phoneNumber")]
         public string PhoneNumber { get; set; }
 
         /// <summary> country if user. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
     }
 }

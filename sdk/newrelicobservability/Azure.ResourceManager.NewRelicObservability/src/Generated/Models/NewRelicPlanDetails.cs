@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Different usage type like PAYG/COMMITTED. this could be enum. </summary>
+        [WirePath("usageType")]
         public NewRelicObservabilityUsageType? UsageType { get; set; }
 
         /// <summary> Different billing cycles like Monthly/Weekly. </summary>
+        [WirePath("billingCycle")]
         public string NewRelicPlanBillingCycle { get; set; }
 
         /// <summary> plan id as published by NewRelic. </summary>
+        [WirePath("planDetails")]
         public string PlanDetails { get; set; }
 
         /// <summary> date when plan was applied. </summary>
+        [WirePath("effectiveDate")]
         public DateTimeOffset? EffectiveOn { get; set; }
     }
 }

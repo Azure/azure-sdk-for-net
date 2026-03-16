@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -40,18 +41,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The ARM id of the resource. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
 
         /// <summary> Flag indicating if resource is sending metrics to NewRelic. </summary>
+        [WirePath("sendingMetrics")]
         public NewRelicObservabilitySendingMetricsStatus? SendingMetrics { get; }
 
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
+        [WirePath("reasonForMetricsStatus")]
         public string ReasonForMetricsStatus { get; }
 
         /// <summary> Flag indicating if resource is sending logs to NewRelic. </summary>
+        [WirePath("sendingLogs")]
         public NewRelicObservabilitySendingLogsStatus? SendingLogs { get; }
 
         /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
+        [WirePath("reasonForLogsStatus")]
         public string ReasonForLogsStatus { get; }
     }
 }

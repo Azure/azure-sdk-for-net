@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal MonitorProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NewRelicProvisioningState? ProvisioningState
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> MonitoringStatus of the resource. </summary>
+        [WirePath("properties.monitoringStatus")]
         public NewRelicObservabilityMonitoringStatus? MonitoringStatus
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> NewRelic Organization properties of the resource. </summary>
+        [WirePath("properties.marketplaceSubscriptionStatus")]
         public NewRelicObservabilityMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Marketplace Subscription Id. </summary>
+        [WirePath("properties.marketplaceSubscriptionId")]
         public string MarketplaceSubscriptionId
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
+        [WirePath("properties.newRelicAccountProperties")]
         public NewRelicAccountProperties NewRelicAccountProperties
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> User Info. </summary>
+        [WirePath("properties.userInfo")]
         public NewRelicObservabilityUserInfo UserInfo
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
         public NewRelicPlanDetails PlanData
         {
             get
@@ -137,6 +146,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Liftr resource category. </summary>
+        [WirePath("properties.liftrResourceCategory")]
         public NewRelicLiftrResourceCategory? LiftrResourceCategory
         {
             get
@@ -146,6 +156,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Liftr resource preference. The priority of the resource. </summary>
+        [WirePath("properties.liftrResourcePreference")]
         public int? LiftrResourcePreference
         {
             get
@@ -155,6 +166,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Source of org creation. </summary>
+        [WirePath("properties.orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource
         {
             get
@@ -172,6 +184,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Source of account creation. </summary>
+        [WirePath("properties.accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource
         {
             get
@@ -189,6 +202,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> State of the Azure Subscription containing the monitor resource. </summary>
+        [WirePath("properties.subscriptionState")]
         public string SubscriptionState
         {
             get
@@ -206,6 +220,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> Status of Azure Subscription where Marketplace SaaS is located. </summary>
+        [WirePath("properties.saaSAzureSubscriptionStatus")]
         public string SaaSAzureSubscriptionStatus
         {
             get
@@ -223,6 +238,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         }
 
         /// <summary> SaaS resource id. </summary>
+        [WirePath("properties.saaSData.saaSResourceId")]
         public string SaaSResourceId
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Organization id. </summary>
+        [WirePath("organizationId")]
         public string OrganizationId { get; set; }
     }
 }

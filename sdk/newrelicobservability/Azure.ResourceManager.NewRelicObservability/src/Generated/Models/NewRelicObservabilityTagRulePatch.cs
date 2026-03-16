@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The updatable properties of the TagRule. </summary>
+        [WirePath("properties")]
         internal TagRuleUpdateProperties Properties { get; set; }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        [WirePath("properties.logRules")]
         public NewRelicObservabilityLogRules LogRules
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        [WirePath("properties.metricRules")]
         public NewRelicObservabilityMetricRules MetricRules
         {
             get

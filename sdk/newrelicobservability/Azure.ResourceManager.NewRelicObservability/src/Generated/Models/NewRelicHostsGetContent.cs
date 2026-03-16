@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> VM resource IDs. </summary>
+        [WirePath("vmIds")]
         public IList<ResourceIdentifier> VmIds { get; }
 
         /// <summary> Reusable representation of an email address. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; }
     }
 }

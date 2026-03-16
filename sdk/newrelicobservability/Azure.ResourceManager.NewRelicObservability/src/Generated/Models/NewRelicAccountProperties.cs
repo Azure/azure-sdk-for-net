@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> User id. </summary>
+        [WirePath("userId")]
         public string UserId { get; set; }
 
         /// <summary> NewRelic Account Information. </summary>
+        [WirePath("accountInfo")]
         public NewRelicObservabilityAccountInfo AccountInfo { get; set; }
 
         /// <summary> NewRelic Organization Information. </summary>
+        [WirePath("organizationInfo")]
         internal NewRelicObservabilityOrganizationInfo OrganizationInfo { get; set; }
 
         /// <summary> date when plan was applied. </summary>
+        [WirePath("singleSignOnProperties")]
         public NewRelicSingleSignOnProperties SingleSignOnProperties { get; set; }
 
         /// <summary> Organization id. </summary>
+        [WirePath("organizationInfo.organizationId")]
         public string OrganizationId
         {
             get

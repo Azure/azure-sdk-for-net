@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The LinkedResource items on this page. </summary>
+        [WirePath("value")]
         public IList<LinkedResource> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

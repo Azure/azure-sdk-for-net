@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Azure App service resource ID. </summary>
+        [WirePath("azureResourceId")]
         public ResourceIdentifier AzureResourceId { get; }
 
         /// <summary> Version of the NewRelic agent installed on the App service. </summary>
+        [WirePath("agentVersion")]
         public string AgentVersion { get; }
 
         /// <summary> Status of the NewRelic agent installed on the App service. </summary>
+        [WirePath("agentStatus")]
         public string AgentStatus { get; }
     }
 }

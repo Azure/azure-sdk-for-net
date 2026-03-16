@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The name (also known as the key) of the tag. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The value of the tag. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </summary>
+        [WirePath("action")]
         public NewRelicObservabilityTagAction? Action { get; set; }
     }
 }

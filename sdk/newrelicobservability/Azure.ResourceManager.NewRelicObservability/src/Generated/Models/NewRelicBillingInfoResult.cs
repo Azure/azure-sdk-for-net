@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Marketplace Subscription details. </summary>
+        [WirePath("marketplaceSaasInfo")]
         public MarketplaceSaaSInfo MarketplaceSaasInfo { get; }
 
         /// <summary> Partner Billing Entity details: Organization Info. </summary>
+        [WirePath("partnerBillingEntity")]
         public PartnerBillingEntity PartnerBillingEntity { get; }
     }
 }

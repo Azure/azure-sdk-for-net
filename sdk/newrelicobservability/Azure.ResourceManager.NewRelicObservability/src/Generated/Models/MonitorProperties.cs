@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -57,48 +58,63 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Provisioning State of the resource. </summary>
+        [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }
 
         /// <summary> MonitoringStatus of the resource. </summary>
+        [WirePath("monitoringStatus")]
         public NewRelicObservabilityMonitoringStatus? MonitoringStatus { get; }
 
         /// <summary> NewRelic Organization properties of the resource. </summary>
+        [WirePath("marketplaceSubscriptionStatus")]
         public NewRelicObservabilityMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
 
         /// <summary> Marketplace Subscription Id. </summary>
+        [WirePath("marketplaceSubscriptionId")]
         public string MarketplaceSubscriptionId { get; }
 
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
+        [WirePath("newRelicAccountProperties")]
         public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
 
         /// <summary> User Info. </summary>
+        [WirePath("userInfo")]
         public NewRelicObservabilityUserInfo UserInfo { get; set; }
 
         /// <summary> Plan details. </summary>
+        [WirePath("planData")]
         public NewRelicPlanDetails PlanData { get; set; }
 
         /// <summary> SaaS details. </summary>
+        [WirePath("saaSData")]
         internal NewRelicObservabilitySaaSInfo SaaSData { get; set; }
 
         /// <summary> Liftr resource category. </summary>
+        [WirePath("liftrResourceCategory")]
         public NewRelicLiftrResourceCategory? LiftrResourceCategory { get; }
 
         /// <summary> Liftr resource preference. The priority of the resource. </summary>
+        [WirePath("liftrResourcePreference")]
         public int? LiftrResourcePreference { get; }
 
         /// <summary> Source of org creation. </summary>
+        [WirePath("orgCreationSource")]
         public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
 
         /// <summary> Source of account creation. </summary>
+        [WirePath("accountCreationSource")]
         public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
 
         /// <summary> State of the Azure Subscription containing the monitor resource. </summary>
+        [WirePath("subscriptionState")]
         public string SubscriptionState { get; set; }
 
         /// <summary> Status of Azure Subscription where Marketplace SaaS is located. </summary>
+        [WirePath("saaSAzureSubscriptionStatus")]
         public string SaaSAzureSubscriptionStatus { get; set; }
 
         /// <summary> SaaS resource id. </summary>
+        [WirePath("saaSData.saaSResourceId")]
         public string SaaSResourceId
         {
             get

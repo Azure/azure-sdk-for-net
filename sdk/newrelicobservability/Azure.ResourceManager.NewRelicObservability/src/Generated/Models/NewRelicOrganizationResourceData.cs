@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal OrganizationProperties Properties { get; }
 
         /// <summary> organization id. </summary>
+        [WirePath("properties.organizationId")]
         public string OrganizationId
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> organization name. </summary>
+        [WirePath("properties.organizationName")]
         public string OrganizationName
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Billing source. </summary>
+        [WirePath("properties.billingSource")]
         public NewRelicObservabilityBillingSource? BillingSource
         {
             get

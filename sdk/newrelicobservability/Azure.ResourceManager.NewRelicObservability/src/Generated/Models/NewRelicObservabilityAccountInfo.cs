@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Account id. </summary>
+        [WirePath("accountId")]
         public string AccountId { get; set; }
 
         /// <summary> Credential string. </summary>
+        [WirePath("ingestionKey")]
         public string IngestionKey { get; set; }
 
         /// <summary> Region where New Relic account is present. </summary>
+        [WirePath("region")]
         public AzureLocation? Region { get; set; }
     }
 }

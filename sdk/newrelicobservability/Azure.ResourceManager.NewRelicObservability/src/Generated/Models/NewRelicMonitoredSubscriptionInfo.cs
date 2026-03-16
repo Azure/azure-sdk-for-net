@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The subscriptionId to be monitored. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary> The state of monitoring. </summary>
+        [WirePath("status")]
         public NewRelicMonitoringStatus? Status { get; set; }
 
         /// <summary> The reason of not monitoring the subscription. </summary>
+        [WirePath("error")]
         public string Error { get; set; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("tagRules")]
         public NewRelicMonitoringTagRules TagRules { get; set; }
     }
 }

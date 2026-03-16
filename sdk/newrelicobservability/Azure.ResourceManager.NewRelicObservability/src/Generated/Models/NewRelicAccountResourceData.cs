@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal AccountProperties Properties { get; }
 
         /// <summary> organization id. </summary>
+        [WirePath("properties.organizationId")]
         public string OrganizationId
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> account id. </summary>
+        [WirePath("properties.accountId")]
         public string AccountId
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> account name. </summary>
+        [WirePath("properties.accountName")]
         public string AccountName
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Region where New Relic account is present. </summary>
+        [WirePath("properties.region")]
         public AzureLocation? Region
         {
             get

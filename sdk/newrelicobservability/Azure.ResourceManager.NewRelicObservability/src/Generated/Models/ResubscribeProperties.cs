@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Newly selected plan Id to create the new Marketplace subscription for Resubscribe. </summary>
+        [WirePath("planId")]
         public string PlanId { get; set; }
 
         /// <summary> Newly selected term Id to create the new Marketplace subscription for Resubscribe. </summary>
+        [WirePath("termId")]
         public string TermId { get; set; }
 
         /// <summary> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; set; }
 
         /// <summary> Organization Id of the NewRelic Organization that needs to be resubscribed. </summary>
+        [WirePath("organizationId")]
         public string OrganizationId { get; set; }
 
         /// <summary> Publisher Id of the NewRelic offer that needs to be resubscribed. </summary>
+        [WirePath("publisherId")]
         public string PublisherId { get; set; }
 
         /// <summary> Offer Id of the NewRelic offer that needs to be resubscribed. </summary>
+        [WirePath("offerId")]
         public string OfferId { get; set; }
     }
 }
