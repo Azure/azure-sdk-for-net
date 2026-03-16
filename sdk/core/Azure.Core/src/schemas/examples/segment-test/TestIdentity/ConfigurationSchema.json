@@ -7,7 +7,6 @@
         "CredentialSource": {
           "description": "The credential type to use for authentication.",
           "enum": [
-            "ApiKeyCredential",
             "AzureCliCredential",
             "AzurePowerShellCredential",
             "AzureDeveloperCliCredential",
@@ -28,39 +27,6 @@
         "CredentialSource"
       ],
       "allOf": [
-        {
-          "if": {
-            "properties": {
-              "CredentialSource": {
-                "const": "ApiKeyCredential"
-              }
-            },
-            "required": [
-              "CredentialSource"
-            ]
-          },
-          "then": {
-            "allOf": [
-              {
-                "if": {
-                  "required": [
-                    "Key"
-                  ]
-                },
-                "then": {
-                  "title": "Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead.",
-                  "description": "Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
-                  "properties": {
-                    "Key": {
-                      "not": {},
-                      "description": "Do NOT put API keys in appsettings.json. Use environment variables or Key Vault secrets instead."
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
         {
           "if": {
             "properties": {

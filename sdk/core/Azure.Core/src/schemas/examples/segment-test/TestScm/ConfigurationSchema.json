@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "scmCredential": {
+    "credential": {
       "type": "object",
       "description": "Credential configuration for System.ClientModel clients.",
       "properties": {
@@ -8,10 +8,6 @@
           "type": "string",
           "description": "The credential type to use for authentication.",
           "enum": ["ApiKeyCredential"]
-        },
-        "AdditionalProperties": {
-          "type": "object",
-          "description": "Additional credential properties."
         }
       },
       "required": ["CredentialSource"],
@@ -63,7 +59,7 @@
       "additionalProperties": {
         "type": "object",
         "properties": {
-          "Credential": { "$ref": "#/definitions/scmCredential" },
+          "Credential": { "$ref": "#/definitions/credential" },
           "Options": { "$ref": "#/definitions/options" }
         },
         "additionalProperties": true

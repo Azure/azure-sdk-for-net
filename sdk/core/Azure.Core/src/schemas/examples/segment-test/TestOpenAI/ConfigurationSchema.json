@@ -29,7 +29,7 @@
           "description": "Configuration for OpenAI ChatClient (ChatClientSettings).",
           "properties": {
             "Model": { "$ref": "#/definitions/openAIModels" },
-            "Credential": { "$ref": "#/definitions/scmCredential" },
+            "Credential": { "$ref": "#/definitions/credential" },
             "Options": {
               "allOf": [
                 { "$ref": "#/definitions/options" },

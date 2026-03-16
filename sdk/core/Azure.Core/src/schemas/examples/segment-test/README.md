@@ -25,12 +25,12 @@ ThirdPartyApp (console app)
 
 | Package | Simulates | Schema Content |
 |---------|-----------|---------------|
-| **TestScm** | System.ClientModel | `ClientSdk` section with `scmCredential` (ApiKeyCredential only), pipeline `options`, `clientLoggingOptions` definitions |
+| **TestScm** | System.ClientModel | `ClientSdk` section with `credential` (ApiKeyCredential only), pipeline `options`, `clientLoggingOptions` definitions |
 | **TestCore** | Azure.Core | `AzureSdk` section with `retry`, `diagnostics`, `azureOptions` definitions |
 | **TestIdentity** | Azure.Identity | `credential` definition with 13 credential types + conditional properties per type |
 | **TestBlob** | Azure.Storage.Blobs | `BlobServiceClient` well-known name under `AzureSdk`, extends `azureOptions` with `EnableTenantDiscovery` |
 | **TestArm** | Azure.ResourceManager | `ArmClient` well-known name under `AzureSdk`, extends `azureOptions` with `AuxiliaryTenantIds` |
-| **TestOpenAI** | OpenAI .NET SDK | `ChatClient` well-known name under `ClientSdk` with `Model` (extensible enum), `openAIOptions` (Endpoint, OrganizationId, ProjectId, UserAgentApplicationId). Only `ApiKeyCredential` via SCM credential. |
+| **TestOpenAI** | OpenAI .NET SDK | `ChatClient` well-known name under `ClientSdk` with `Model` (extensible enum), `openAIOptions` (Endpoint, OrganizationId, ProjectId, UserAgentApplicationId). Uses shared `credential` definition — `ApiKeyCredential` only by default, enriched with all credential types when TestIdentity is present. |
 | **TestAzureOpenAI** | Azure.AI.OpenAI | `ChatClient` well-known name under `AzureSdk` with same `Model` + `openAIOptions`, but uses full Azure.Identity `credential` (all 13 types) and Azure.Core `azureOptions` |
 
 ### Key Design Points
@@ -99,7 +99,7 @@ dotnet build
 
 4. **`ClientSdk` section** — type `"ClientSdk": { "MyClient": { } }` and trigger IntelliSense
    - Should show `Credential` + `Options` (from TestScm, 3 levels transitive)
-   - `Credential` → `CredentialSource` should only show `"ApiKeyCredential"` (SCM credential)
+   - `Credential` → `CredentialSource` should show all credential types (shared `credential` definition is enriched by TestIdentity)
 
 ### OpenAI Test (add TestOpenAI + TestAzureOpenAI refs to ThirdPartyApp)
 
@@ -107,7 +107,7 @@ dotnet build
 2. Run `dotnet restore --force`, close and reopen the solution in VS
 
 3. **`ClientSdk` → `ChatClient`** — should show `Model` (extensible enum with gpt-4o, gpt-4.1, etc.), `Credential`, `Options`
-   - `Credential` → `CredentialSource` should only show `"ApiKeyCredential"` (SCM credential, since this is under ClientSdk)
+   - `Credential` → `CredentialSource` should show all credential types (shared `credential` definition merged from TestScm + TestIdentity)
    - `Options` should show both SCM pipeline options (NetworkTimeout, etc.) and OpenAI-specific options (Endpoint, OrganizationId, ProjectId, UserAgentApplicationId)
 
 4. **`AzureSdk` → `ChatClient`** — should show same `Model` + `Options`, but:
