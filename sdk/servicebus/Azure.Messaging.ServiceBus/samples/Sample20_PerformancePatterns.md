@@ -15,6 +15,9 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 await using ServiceBusSender sender = client.CreateSender(queueName);
 
+// The Queue is used here for illustration. In practice, you can
+// build the batch incrementally — there is no need to buffer all
+// messages up front before batching.
 var messages = new Queue<ServiceBusMessage>();
 for (int i = 0; i < 1000; i++)
 {
