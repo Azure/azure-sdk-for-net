@@ -155,7 +155,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">
-    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" />
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" Link="schema/ConfigurationSchema.json" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">

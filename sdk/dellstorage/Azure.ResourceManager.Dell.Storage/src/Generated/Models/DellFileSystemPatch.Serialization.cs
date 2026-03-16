@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dellFileSystemPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dellFileSystemPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

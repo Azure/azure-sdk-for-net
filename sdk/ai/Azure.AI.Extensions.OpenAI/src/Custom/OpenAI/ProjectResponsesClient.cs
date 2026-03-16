@@ -245,6 +245,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
+        options.StreamingEnabled = true;
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {
@@ -311,6 +312,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
+        options.StreamingEnabled = true;
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {

@@ -68,7 +68,7 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseResult response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
-5 Write out the output of a response, raise the exception if the request was not successful.
+4. Write out the output of a response, raise the exception if the request was not successful.
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForResponse_CodeInterpreter_Sync
@@ -82,7 +82,7 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```
 
-6. Clean up resources by deleting conversations and the Agent.
+5. Clean up resources by deleting the Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_CodeInterpreter_Sync
