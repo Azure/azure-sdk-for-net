@@ -32,7 +32,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Replace with the path to your local document file.
             string filePath = "<localDocumentFilePath>";
 #else
-            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");
 #endif
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
@@ -203,7 +203,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
-            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
@@ -213,7 +213,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "prebuilt-documentSearch",
                 binaryData);
             DocumentContent fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
-            Assert.AreEqual(4, fullDoc.Pages!.Count, "Full document should return all 4 pages");
+            Assert.AreEqual(10, fullDoc.Pages!.Count, "Full document should return all 10 pages");
 
             #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
             // Analyze only pages 3 onward.
@@ -234,9 +234,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             DocumentContent rangeDoc = (DocumentContent)rangeResult.Contents!.First();
 
             // Verify the range-limited result returns only pages 3-4
-            Assert.AreEqual(2, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 2 pages");
+            Assert.AreEqual(8, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 8 pages");
             Assert.AreEqual(3, rangeDoc.StartPageNumber, "PagesFrom(3) should start at page 3");
-            Assert.AreEqual(4, rangeDoc.EndPageNumber, "PagesFrom(3) should end at page 4");
+            Assert.AreEqual(10, rangeDoc.EndPageNumber, "PagesFrom(3) should end at page 10");
 
             // Compare full (4 pages) vs range-limited (2 pages): full should have more content
             Assert.IsTrue(fullDoc.Pages!.Count > rangeDoc.Pages.Count,
@@ -268,8 +268,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(combineRangeResult, "Combine range result should not be null");
             Assert.IsNotNull(combineRangeResult.Contents, "Combine range result contents should not be null");
             DocumentContent combineRangeDoc = (DocumentContent)combineRangeResult.Contents!.First();
-            Assert.IsTrue(combineRangeDoc.Pages!.Count > 0,
-                "Combine(Pages(1,3), Page(5), PagesFrom(9)) should return at least one page");
+            Assert.AreEqual(6, combineRangeDoc.Pages!.Count,
+                "Combine(Pages(1,3), Page(5), PagesFrom(9)) should return exactly 6 pages");
+            var combineRangePageNumbers = combineRangeDoc.Pages.Select(p => p.PageNumber).OrderBy(n => n).ToList();
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 5, 9, 10 }, combineRangePageNumbers,
+                "Combine(Pages(1,3), Page(5), PagesFrom(9)) should extract pages 1, 2, 3, 5, 9, 10");
             Assert.IsTrue(fullDoc.Markdown!.Length >= combineRangeDoc.Markdown!.Length,
                 $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineRangeDoc.Markdown.Length} chars)");
             Console.WriteLine($"Combine(Pages(1,3), Page(5), PagesFrom(9)): {combineRangeDoc.Pages.Count} pages, {combineRangeDoc.Markdown.Length} chars");
@@ -310,10 +313,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     ContentRange.Page(1),
                     ContentRange.Pages(3, 4)));
             DocumentContent combineDoc = (DocumentContent)combineOperation.Value.Contents!.First();
-            Assert.IsTrue(combineDoc.Pages!.Count >= 2,
-                $"Combine(Page(1), Pages(3,4)) should return at least 2 pages, got {combineDoc.Pages.Count}");
+            Assert.AreEqual(3, combineDoc.Pages!.Count,
+                "Combine(Page(1), Pages(3,4)) should return exactly 3 pages");
+            var combinePageNumbers = combineDoc.Pages.Select(p => p.PageNumber).OrderBy(n => n).ToList();
+            CollectionAssert.AreEqual(new[] { 1, 3, 4 }, combinePageNumbers,
+                "Combine(Page(1), Pages(3,4)) should extract pages 1, 3, 4");
             Assert.AreEqual(1, combineDoc.StartPageNumber, "Combine should start at page 1");
-            Assert.IsTrue(combineDoc.EndPageNumber >= 4, "Combine should end at page 4 or beyond");
+            Assert.AreEqual(4, combineDoc.EndPageNumber, "Combine should end at page 4");
             Assert.IsTrue(fullDoc.Markdown!.Length >= combineDoc.Markdown!.Length,
                 $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineDoc.Markdown.Length} chars)");
 
@@ -354,9 +360,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 binaryData,
                 contentRange: new ContentRange("3-"));
             DocumentContent rawPagesFrom3Doc = (DocumentContent)rawPagesFrom3Operation.Value.Contents!.First();
-            Assert.AreEqual(2, rawPagesFrom3Doc.Pages!.Count, "Raw ContentRange('3-') should return 2 pages (pages 3-4)");
+            Assert.AreEqual(8, rawPagesFrom3Doc.Pages!.Count, "Raw ContentRange('3-') should return 8 pages (pages 3-10)");
             Assert.AreEqual(3, rawPagesFrom3Doc.StartPageNumber, "Raw ContentRange('3-') should start at page 3");
-            Assert.AreEqual(4, rawPagesFrom3Doc.EndPageNumber, "Raw ContentRange('3-') should end at page 4");
+            Assert.AreEqual(10, rawPagesFrom3Doc.EndPageNumber, "Raw ContentRange('3-') should end at page 10");
             DocumentContent rangeFromDoc = (DocumentContent)rangeOperation.Value.Contents!.First();
             Assert.AreEqual(rangeFromDoc.Markdown!.Length, rawPagesFrom3Doc.Markdown!.Length,
                 $"Raw ContentRange('3-') should return same markdown length as PagesFrom(3) ({rangeFromDoc.Markdown.Length})");
