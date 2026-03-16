@@ -4,21 +4,52 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    // Backward-compat wrapper properties that expose Status and ProvisioningState
-    // as custom enums instead of the generated readonly structs.
     public partial class SharedSearchServicePrivateLinkResourceProperties
     {
-        /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>
+        /// <summary> Status of the shared private link resource. </summary>
         [WirePath("status")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public SearchServiceSharedPrivateLinkResourceStatus? Status { get; set; }
 
-        /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
+        /// <summary> The provisioning state of the shared private link resource. </summary>
+        [WirePath("provisioningState")]
+        public SearchServiceSharedPrivateLinkResourceProvisioningState? ProvisioningState { get; set; }
+
+        /// <summary> Status of the shared private link resource (backward compat alias). </summary>
+        [WirePath("status")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public SearchServiceSharedPrivateLinkResourceStatus? SharedPrivateLinkResourceStatus
+        {
+            get => Status;
+            set => Status = value;
+        }
+
+        /// <summary> The provisioning state of the shared private link resource (backward compat alias). </summary>
         [WirePath("provisioningState")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public SearchServiceSharedPrivateLinkResourceProvisioningState? ProvisioningState { get; set; }
+        public SearchServiceSharedPrivateLinkResourceProvisioningState? SharedPrivateLinkResourceProvisioningState
+        {
+            get => ProvisioningState;
+            set => ProvisioningState = value;
+        }
+
+        /// <summary> The resource ID of the resource the shared private link resource is for. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier PrivateLinkResourceIdentifier
+        {
+            get => PrivateLinkResourceId != null ? new ResourceIdentifier(PrivateLinkResourceId) : null;
+            set => PrivateLinkResourceId = value?.ToString();
+        }
+
+        /// <summary> Optional. Can be used to specify the Azure Resource Manager location of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureLocation? ResourceAzureLocation
+        {
+            get => ResourceRegion != null ? new AzureLocation(ResourceRegion) : null;
+            set => ResourceRegion = value?.ToString();
+        }
     }
 }
