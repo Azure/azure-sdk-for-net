@@ -821,6 +821,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var fullSegments = fullOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(fullSegments.Count > 0, "Full video should return segments");
             Assert.IsTrue(fullSegments.All(s => s.EndTime > s.StartTime), "Full video segments should have EndTime > StartTime");
+            Assert.AreEqual(TimeSpan.Zero, fullSegments.First().StartTime, "Full video first segment should start at 0 ms");
+            // TODO: Assert exact segment count and total duration after re-recording
 
             // ContentRange.TimeRange(0, 5s) — first 5 seconds only
             Operation<AnalysisResult> range0to5Operation = await client.AnalyzeAsync(
@@ -830,12 +832,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             var range0to5Segments = range0to5Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(range0to5Segments.Count > 0, "0-5s range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range0to5Segments.Count, "...");
+            Assert.AreEqual(TimeSpan.Zero, range0to5Segments.First().StartTime,
+                $"TimeRange(0,5s) first segment should start at exactly 0 ms, actual: {range0to5Segments.First().StartTime.TotalMilliseconds} ms");
             Assert.IsTrue(range0to5Segments.All(s => s.EndTime > s.StartTime), "0-5s segments should have EndTime > StartTime");
             Assert.IsTrue(range0to5Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "0-5s segments should have markdown");
-            Assert.IsTrue(range0to5Segments.All(s => s.StartTime >= TimeSpan.Zero),
-                $"Range(0-5s) all segments should start at >= 0 ms, but found segment starting at {range0to5Segments.Min(s => s.StartTime).TotalMilliseconds} ms");
             Assert.IsTrue(range0to5Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(5)),
-                $"Range(0-5s) all segments should end at <= 5000 ms, but found segment ending at {range0to5Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
+                $"Range(0-5s) last segment should end at <= 5000 ms, actual: {range0to5Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
 
             // ContentRange.TimeRange(10s, 20s) — middle of the video
             Operation<AnalysisResult> range10to20Operation = await client.AnalyzeAsync(
@@ -845,12 +849,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             var range10to20Segments = range10to20Operation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(range10to20Segments.Count > 0, "10-20s range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, range10to20Segments.Count, "...");
+            Assert.AreEqual(TimeSpan.FromSeconds(10), range10to20Segments.First().StartTime,
+                $"TimeRange(10s,20s) first segment should start at exactly 10000 ms, actual: {range10to20Segments.First().StartTime.TotalMilliseconds} ms");
             Assert.IsTrue(range10to20Segments.All(s => s.EndTime > s.StartTime), "10-20s segments should have EndTime > StartTime");
             Assert.IsTrue(range10to20Segments.All(s => !string.IsNullOrEmpty(s.Markdown)), "10-20s segments should have markdown");
-            Assert.IsTrue(range10to20Segments.All(s => s.StartTime >= TimeSpan.FromSeconds(10)),
-                $"Range(10-20s) all segments should start at >= 10000 ms, but found segment starting at {range10to20Segments.Min(s => s.StartTime).TotalMilliseconds} ms");
             Assert.IsTrue(range10to20Segments.All(s => s.EndTime <= TimeSpan.FromSeconds(20)),
-                $"Range(10-20s) all segments should end at <= 20000 ms, but found segment ending at {range10to20Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
+                $"Range(10-20s) last segment should end at <= 20000 ms, actual: {range10to20Segments.Max(s => s.EndTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
         }
 
         /// <summary>
@@ -870,8 +876,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 "prebuilt-audioSearch",
                 inputs: new[] { new AnalysisInput { Uri = audioUrl } });
 
+            Assert.AreEqual(1, fullOperation.Value.Contents!.Count, "Full audio should return exactly 1 content");
             var fullAudio = (AudioVisualContent)fullOperation.Value.Contents!.First();
             Assert.IsTrue(fullAudio.EndTime > fullAudio.StartTime, "Full audio should have EndTime > StartTime");
+            Assert.AreEqual(TimeSpan.Zero, fullAudio.StartTime, "Full audio should start at exactly 0 ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromMilliseconds(N), fullAudio.EndTime, "...");
             Assert.IsNotNull(fullAudio.Markdown, "Full audio should have markdown");
             Assert.IsTrue(fullAudio.Markdown!.Length > 0, "Full audio markdown should not be empty");
 
@@ -881,14 +890,16 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 "prebuilt-audioSearch",
                 inputs: new[] { new AnalysisInput { Uri = audioUrl, ContentRange = ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(10)) } });
 
+            Assert.AreEqual(1, range0to10Operation.Value.Contents!.Count, "TimeRange(0,10s) audio should return exactly 1 content");
             var range0to10Audio = (AudioVisualContent)range0to10Operation.Value.Contents!.First();
             Assert.IsTrue(range0to10Audio.EndTime > range0to10Audio.StartTime, "0-10s range should have EndTime > StartTime");
             Assert.IsNotNull(range0to10Audio.Markdown, "0-10s range should have markdown");
             Assert.IsTrue(range0to10Audio.Markdown!.Length > 0, "0-10s range markdown should not be empty");
-            Assert.IsTrue(range0to10Audio.StartTime >= TimeSpan.Zero,
-                $"Range(0-10s) audio StartTime ({range0to10Audio.StartTime.TotalMilliseconds} ms) should be >= 0 ms");
+            Assert.AreEqual(TimeSpan.Zero, range0to10Audio.StartTime,
+                $"TimeRange(0,10s) audio should start at exactly 0 ms, actual: {range0to10Audio.StartTime.TotalMilliseconds} ms");
             Assert.IsTrue(range0to10Audio.EndTime <= TimeSpan.FromSeconds(10),
-                $"Range(0-10s) audio EndTime ({range0to10Audio.EndTime.TotalMilliseconds} ms) should be <= 10000 ms");
+                $"TimeRange(0,10s) audio EndTime ({range0to10Audio.EndTime.TotalMilliseconds} ms) should be <= 10000 ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromSeconds(10), range0to10Audio.EndTime, "...");
 
             // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward
             Operation<AnalysisResult> rangeFrom10Operation = await client.AnalyzeAsync(
@@ -896,12 +907,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 "prebuilt-audioSearch",
                 inputs: new[] { new AnalysisInput { Uri = audioUrl, ContentRange = ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10)) } });
 
+            Assert.AreEqual(1, rangeFrom10Operation.Value.Contents!.Count, "TimeRangeFrom(10s) audio should return exactly 1 content");
             var rangeFrom10Audio = (AudioVisualContent)rangeFrom10Operation.Value.Contents!.First();
             Assert.IsTrue(rangeFrom10Audio.EndTime > rangeFrom10Audio.StartTime, "10s-onward range should have EndTime > StartTime");
             Assert.IsNotNull(rangeFrom10Audio.Markdown, "10s-onward range should have markdown");
             Assert.IsTrue(rangeFrom10Audio.Markdown!.Length > 0, "10s-onward range markdown should not be empty");
-            Assert.IsTrue(rangeFrom10Audio.StartTime >= TimeSpan.FromSeconds(10),
-                $"TimeRangeFrom(10s) audio StartTime ({rangeFrom10Audio.StartTime.TotalMilliseconds} ms) should be >= 10000 ms");
+            Assert.AreEqual(TimeSpan.FromSeconds(10), rangeFrom10Audio.StartTime,
+                $"TimeRangeFrom(10s) audio should start at exactly 10000 ms, actual: {rangeFrom10Audio.StartTime.TotalMilliseconds} ms");
+            // TODO: Assert exact EndTime after re-recording: Assert.AreEqual(TimeSpan.FromMilliseconds(N), rangeFrom10Audio.EndTime, "...");
         }
 
         /// <summary>

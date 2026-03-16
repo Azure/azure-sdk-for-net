@@ -370,13 +370,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(fullMarkdownLength > 0, "Full video markdown should not be empty");
             Assert.IsTrue(rangeMarkdownLength > 0, "Range video markdown should not be empty");
 
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, rangeSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.Zero, rangeSegments.First().StartTime,
+                $"TimeRange(0,5s) first segment should start at exactly 0 ms, actual: {rangeSegments.First().StartTime.TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
+
             // Verify range segments are well-formed and fall within the requested 0-5s window
             foreach (var seg in rangeSegments)
             {
                 Assert.IsTrue(seg.EndTime > seg.StartTime,
                     $"Range segment should have EndTime > StartTime");
-                Assert.IsTrue(seg.StartTime >= TimeSpan.Zero,
-                    $"Range(0-5s) segment StartTime ({seg.StartTime.TotalMilliseconds} ms) should be >= 0 ms");
                 Assert.IsTrue(seg.EndTime <= TimeSpan.FromSeconds(5),
                     $"Range(0-5s) segment EndTime ({seg.EndTime.TotalMilliseconds} ms) should be <= 5000 ms");
             }
@@ -399,12 +402,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 });
             var rangeFromSegments = rangeFromOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(rangeFromSegments.Count > 0, "TimeRangeFrom(10s) should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, rangeFromSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.FromSeconds(10), rangeFromSegments.First().StartTime,
+                $"TimeRangeFrom(10s) first segment should start at exactly 10000 ms, actual: {rangeFromSegments.First().StartTime.TotalMilliseconds} ms");
             Assert.IsTrue(rangeFromSegments.All(s => s.EndTime > s.StartTime),
                 "TimeRangeFrom segments should have EndTime > StartTime");
             Assert.IsTrue(rangeFromSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
                 "TimeRangeFrom segments should have markdown");
-            Assert.IsTrue(rangeFromSegments.All(s => s.StartTime >= TimeSpan.FromSeconds(10)),
-                $"TimeRangeFrom(10s) all segments should start at >= 10000 ms, but found segment starting at {rangeFromSegments.Min(s => s.StartTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
 
             // ContentRange.TimeRange with sub-second precision (wire format: "1200-3651")
             Operation<AnalysisResult> subSecondOperation = await client.AnalyzeAsync(
@@ -422,12 +427,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 });
             var subSecondSegments = subSecondOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(subSecondSegments.Count > 0, "Sub-second TimeRange should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, subSecondSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1200), subSecondSegments.First().StartTime,
+                $"TimeRange(1.2s,3.651s) first segment should start at exactly 1200 ms, actual: {subSecondSegments.First().StartTime.TotalMilliseconds} ms");
             Assert.IsTrue(subSecondSegments.All(s => s.EndTime > s.StartTime),
                 "Sub-second segments should have EndTime > StartTime");
-            Assert.IsTrue(subSecondSegments.All(s => s.StartTime >= TimeSpan.FromMilliseconds(1200)),
-                $"TimeRange(1.2s-3.651s) all segments should start at >= 1200 ms, but found segment starting at {subSecondSegments.Min(s => s.StartTime).TotalMilliseconds} ms");
             Assert.IsTrue(subSecondSegments.All(s => s.EndTime <= TimeSpan.FromMilliseconds(3651)),
-                $"TimeRange(1.2s-3.651s) all segments should end at <= 3651 ms, but found segment ending at {subSecondSegments.Max(s => s.EndTime).TotalMilliseconds} ms");
+                $"TimeRange(1.2s-3.651s) last segment should end at <= 3651 ms, actual: {subSecondSegments.Max(s => s.EndTime).TotalMilliseconds} ms");
+            // TODO: Assert exact last segment EndTime after re-recording
 
             // ContentRange.Combine — combined time ranges (wire format: "0-3000,30000-")
             Operation<AnalysisResult> combineVideoOperation = await client.AnalyzeAsync(
@@ -445,6 +452,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 });
             var combineVideoSegments = combineVideoOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
             Assert.IsTrue(combineVideoSegments.Count > 0, "Combine time range should return segments");
+            // TODO: Assert exact segment count after re-recording: Assert.AreEqual(N, combineVideoSegments.Count, "...");
+            Assert.AreEqual(TimeSpan.Zero, combineVideoSegments.First().StartTime,
+                $"Combine(0-3s, 30s-) first segment should start at exactly 0 ms, actual: {combineVideoSegments.First().StartTime.TotalMilliseconds} ms");
             Assert.IsTrue(combineVideoSegments.All(s => s.EndTime > s.StartTime),
                 "Combine segments should have EndTime > StartTime");
             Assert.IsTrue(combineVideoSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
@@ -493,6 +503,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var rawVideoSegments = rawRangeResult.Contents.Cast<AudioVisualContent>().ToList();
             Assert.AreEqual(rangeSegments.Count, rawVideoSegments.Count,
                 $"Raw ContentRange('0-5000') should return same segment count as TimeRange equivalent ({rangeSegments.Count})");
+            Assert.AreEqual(TimeSpan.Zero, rawVideoSegments.First().StartTime,
+                $"Raw ContentRange('0-5000') first segment should start at exactly 0 ms, actual: {rawVideoSegments.First().StartTime.TotalMilliseconds} ms");
             Console.WriteLine($"Raw ContentRange('0-5000'): {rawVideoSegments.Count} segment(s)");
             #endregion
         }
@@ -578,6 +590,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 });
             AudioVisualContent audioContent = (AudioVisualContent)fullOperation.Value.Contents!.First();
             double fullDurationMs = (audioContent.EndTime - audioContent.StartTime).TotalMilliseconds;
+            Assert.AreEqual(1, fullOperation.Value.Contents!.Count, "Full audio should return exactly 1 content");
+            Assert.AreEqual(TimeSpan.Zero, audioContent.StartTime, "Full audio should start at exactly 0 ms");
+            // TODO: Assert exact full audio EndTime after re-recording
 
             #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
             // Analyze audio from 5 seconds onward.
@@ -605,12 +620,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(rangeOperation.HasCompleted);
             Assert.IsNotNull(rangeResult);
             Assert.IsNotNull(rangeResult.Contents);
-            Assert.IsTrue(rangeResult.Contents.Count > 0);
+            Assert.AreEqual(1, rangeResult.Contents.Count, "TimeRangeFrom(5s) audio should return exactly 1 content");
             Assert.IsInstanceOf<AudioVisualContent>(rangeAudioContent);
 
-            // Verify returned content starts at or after the requested 5s offset
-            Assert.IsTrue(rangeAudioContent.StartTime >= TimeSpan.FromSeconds(5),
-                $"TimeRangeFrom(5s) audio StartTime ({rangeAudioContent.StartTime.TotalMilliseconds} ms) should be >= 5000 ms");
+            // Verify returned content starts at exactly the requested 5s offset
+            Assert.AreEqual(TimeSpan.FromSeconds(5), rangeAudioContent.StartTime,
+                $"TimeRangeFrom(5s) audio should start at exactly 5000 ms, actual: {rangeAudioContent.StartTime.TotalMilliseconds} ms");
+            // TODO: Assert exact EndTime after re-recording
 
             Assert.IsTrue(audioContent.Markdown!.Length >= rangeAudioContent.Markdown!.Length,
                 $"Full audio markdown ({audioContent.Markdown.Length} chars) should be >= range-limited ({rangeAudioContent.Markdown.Length} chars)");
@@ -642,15 +658,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             TimeSpan.FromSeconds(8))
                     }
                 });
+            Assert.AreEqual(1, audioWindowOperation.Value.Contents!.Count, "TimeRange(2s,8s) audio should return exactly 1 content");
             AudioVisualContent audioWindowContent = (AudioVisualContent)audioWindowOperation.Value.Contents!.First();
             Assert.IsTrue(audioWindowContent.EndTime > audioWindowContent.StartTime,
                 "TimeRange(2s,8s) should have EndTime > StartTime");
             Assert.IsNotNull(audioWindowContent.Markdown, "TimeRange(2s,8s) should have markdown");
             Assert.IsTrue(audioWindowContent.Markdown!.Length > 0, "TimeRange(2s,8s) markdown should not be empty");
-            Assert.IsTrue(audioWindowContent.StartTime >= TimeSpan.FromSeconds(2),
-                $"TimeRange(2s,8s) audio StartTime ({audioWindowContent.StartTime.TotalMilliseconds} ms) should be >= 2000 ms");
-            Assert.IsTrue(audioWindowContent.EndTime <= TimeSpan.FromSeconds(8),
-                $"TimeRange(2s,8s) audio EndTime ({audioWindowContent.EndTime.TotalMilliseconds} ms) should be <= 8000 ms");
+            Assert.AreEqual(TimeSpan.FromSeconds(2), audioWindowContent.StartTime,
+                $"TimeRange(2s,8s) audio should start at exactly 2000 ms, actual: {audioWindowContent.StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(TimeSpan.FromSeconds(8), audioWindowContent.EndTime,
+                $"TimeRange(2s,8s) audio should end at exactly 8000 ms, actual: {audioWindowContent.EndTime.TotalMilliseconds} ms");
             Assert.IsTrue(fullDurationMs >= (audioWindowContent.EndTime - audioWindowContent.StartTime).TotalMilliseconds,
                 "Full audio duration should be >= time-windowed duration");
 
@@ -671,15 +688,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                             TimeSpan.FromMilliseconds(3651))
                     }
                 });
+            Assert.AreEqual(1, audioSubSecondOperation.Value.Contents!.Count, "TimeRange(1.2s,3.651s) audio should return exactly 1 content");
             AudioVisualContent audioSubSecondContent = (AudioVisualContent)audioSubSecondOperation.Value.Contents!.First();
             Assert.IsTrue(audioSubSecondContent.EndTime > audioSubSecondContent.StartTime,
                 "TimeRange(1.2s,3.651s) should have EndTime > StartTime");
             Assert.IsNotNull(audioSubSecondContent.Markdown, "TimeRange(1.2s,3.651s) should have markdown");
             Assert.IsTrue(audioSubSecondContent.Markdown!.Length > 0, "TimeRange(1.2s,3.651s) markdown should not be empty");
-            Assert.IsTrue(audioSubSecondContent.StartTime >= TimeSpan.FromMilliseconds(1200),
-                $"TimeRange(1.2s,3.651s) audio StartTime ({audioSubSecondContent.StartTime.TotalMilliseconds} ms) should be >= 1200 ms");
-            Assert.IsTrue(audioSubSecondContent.EndTime <= TimeSpan.FromMilliseconds(3651),
-                $"TimeRange(1.2s,3.651s) audio EndTime ({audioSubSecondContent.EndTime.TotalMilliseconds} ms) should be <= 3651 ms");
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1200), audioSubSecondContent.StartTime,
+                $"TimeRange(1.2s,3.651s) audio should start at exactly 1200 ms, actual: {audioSubSecondContent.StartTime.TotalMilliseconds} ms");
+            Assert.AreEqual(TimeSpan.FromMilliseconds(3651), audioSubSecondContent.EndTime,
+                $"TimeRange(1.2s,3.651s) audio should end at exactly 3651 ms, actual: {audioSubSecondContent.EndTime.TotalMilliseconds} ms");
             Assert.IsTrue(fullDurationMs >= (audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds,
                 "Full audio duration should be >= sub-second time-windowed duration");
 
@@ -711,12 +729,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(rawRangeOperation.HasCompleted, "Raw range audio operation should be completed");
             Assert.IsNotNull(rawRangeResult, "Raw range audio result should not be null");
             Assert.IsNotNull(rawRangeResult.Contents, "Raw range audio result contents should not be null");
-            Assert.IsTrue(rawRangeResult.Contents.Count > 0, "Raw range audio should return content");
+            Assert.AreEqual(1, rawRangeResult.Contents.Count, "Raw ContentRange('5000-') audio should return exactly 1 content");
 
             // The raw string "5000-" should produce identical results to
             // ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
-            Assert.IsTrue(rawAudioContent.StartTime >= TimeSpan.FromSeconds(5),
-                $"Raw ContentRange('5000-') audio StartTime ({rawAudioContent.StartTime.TotalMilliseconds} ms) should be >= 5000 ms");
+            Assert.AreEqual(TimeSpan.FromSeconds(5), rawAudioContent.StartTime,
+                $"Raw ContentRange('5000-') audio should start at exactly 5000 ms, actual: {rawAudioContent.StartTime.TotalMilliseconds} ms");
             Assert.AreEqual(rangeAudioContent.Markdown!.Length, rawAudioContent.Markdown!.Length,
                 $"Raw ContentRange('5000-') should return same markdown length as TimeRangeFrom equivalent ({rangeAudioContent.Markdown.Length})");
             Console.WriteLine($"Raw ContentRange('5000-'): {rawAudioContent.Markdown.Length} chars, starts at {rawAudioContent.StartTime.TotalMilliseconds} ms");
