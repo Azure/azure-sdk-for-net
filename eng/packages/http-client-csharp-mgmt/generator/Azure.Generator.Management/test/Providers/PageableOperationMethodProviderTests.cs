@@ -197,8 +197,7 @@ namespace Azure.Generator.Management.Tests.Providers
                 "listConfigurations",
                 listConfigsOp,
                 parameters: [serverNameMethodParam, subsIdMethodParam, rgMethodParam],
-                pagingMetadata: pagingMetadata,
-                crossLanguageDefinitionId: "Microsoft.Test.Servers.listConfigurations");
+                pagingMetadata: pagingMetadata);
 
             // ===== Build ARM provider schema =====
             var serverResourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/servers/{serverName}";

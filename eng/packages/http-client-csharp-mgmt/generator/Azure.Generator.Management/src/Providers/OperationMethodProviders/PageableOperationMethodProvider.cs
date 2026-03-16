@@ -42,7 +42,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             ResourceClientProvider? explicitResourceClient = null,
-            bool skipResourceWrapping = false)
+            bool isResourceAction = false)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
@@ -57,7 +57,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _actualItemType!,
                 ref _itemResourceClient,
                 explicitResourceClient,
-                skipResourceWrapping
+                isResourceAction
             );
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
@@ -69,11 +69,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
             ResourceClientProvider? explicitResourceClient = null,
-            bool skipResourceWrapping = false
+            bool isResourceAction = false
             )
         {
             actualItemType = itemType;
-            if (skipResourceWrapping)
+            if (isResourceAction)
             {
                 return;
             }
