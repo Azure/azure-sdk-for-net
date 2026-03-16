@@ -1099,6 +1099,17 @@ namespace Azure.AI.Projects
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
         }
 
+        /// <summary> Paged collection of Insight items. </summary>
+        /// <param name="value"> The Insight items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Core.PagedInsight"/> instance for mocking. </returns>
+        public static PagedInsight PagedInsight(IEnumerable<Insight> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<Insight>();
+
+            return new PagedInsight(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Schedule model. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="displayName"> Name of the schedule. </param>

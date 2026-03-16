@@ -56,14 +56,45 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseResult response = await responseClient.CreateResponseAsync("Show me the latest London Underground service updates");
 ```
 
-4. Create the response and throw an exception if the response contains the error.
+4. To get the formatted annotation we will use the `GetFormattedAnnotation` method.
+
+```C# Snippet:Sample_FormatReference_WebSearch
+private static string GetFormattedAnnotation(ResponseResult results)
+{
+    StringBuilder references = new();
+    foreach (ResponseItem item in results.OutputItems)
+    {
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        references.Append($"[{uriAnnotation.Title}]({uriAnnotation.Uri}),");
+                    }
+                }
+            }
+        }
+    }
+    if (references.Length > 0)
+    {
+        // Remove the last comma.
+        references.Remove(references.Length - 1, 1);
+    }
+    return references.ToString();
+}
+```
+
+5. Create the response and throw an exception if the response contains the error.
 
 ```C# Snippet:Sample_WaitForResponse_WebSearch
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-Console.WriteLine(response.GetOutputText());
+Console.WriteLine($"{response.GetOutputText()} {GetFormattedAnnotation(response)}");
 ```
 
-5. Finally, delete all the resources we have created in this sample.
+6. Finally, delete all the resources we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearch_Sync
