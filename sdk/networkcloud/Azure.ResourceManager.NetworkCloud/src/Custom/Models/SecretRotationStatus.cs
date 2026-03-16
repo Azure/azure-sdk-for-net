@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Generator workaround: shim for generated code referencing Models.Models.SecretRotationStatus deserialization helper.
+
 #nullable disable
 
 using System.Text.Json;
