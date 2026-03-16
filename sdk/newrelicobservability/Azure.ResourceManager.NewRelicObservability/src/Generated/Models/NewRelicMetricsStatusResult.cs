@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicMetricsStatusResult(IList<string> azureResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AzureResourceIds = azureResourceIds;
+            AzureResourceIds = (IReadOnlyList<string>)azureResourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource IDs. </summary>
         [WirePath("azureResourceIds")]
-        public IList<string> AzureResourceIds { get; }
+        public IReadOnlyList<string> AzureResourceIds { get; }
     }
 }

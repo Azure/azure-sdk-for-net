@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrganizationId;
             }
+            set { }
         }
 
         /// <summary> account id. </summary>
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.AccountId;
             }
+            set { }
         }
 
         /// <summary> account name. </summary>
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.AccountName;
             }
+            set { }
         }
 
         /// <summary> Region where New Relic account is present. </summary>
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.Region;
             }
+            set { }
         }
     }
 }

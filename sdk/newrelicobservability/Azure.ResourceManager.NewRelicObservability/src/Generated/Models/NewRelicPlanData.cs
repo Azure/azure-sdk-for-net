@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.PlanData;
             }
+            set { }
         }
 
         /// <summary> Source of org creation. </summary>
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrgCreationSource;
             }
+            set { }
         }
 
         /// <summary> Source of account creation. </summary>
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.AccountCreationSource;
             }
+            set { }
         }
     }
 }

@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrganizationId;
             }
+            set { }
         }
 
         /// <summary> organization name. </summary>
@@ -59,6 +60,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrganizationName;
             }
+            set { }
         }
 
         /// <summary> Billing source. </summary>
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.BillingSource;
             }
+            set { }
         }
     }
 }
