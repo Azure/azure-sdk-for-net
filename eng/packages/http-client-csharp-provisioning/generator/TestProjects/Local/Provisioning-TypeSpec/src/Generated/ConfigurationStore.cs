@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -157,7 +158,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         public static partial class ResourceVersions
         {
             /// <summary> API version "2025-01-01-preview". </summary>
-            [EditorBrowsable(EditorBrowsableState.Never)]
+            [Experimental("AZPROVISION001")]
             public static readonly string V2025_01_01_PREVIEW = "2025-01-01-preview";
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";

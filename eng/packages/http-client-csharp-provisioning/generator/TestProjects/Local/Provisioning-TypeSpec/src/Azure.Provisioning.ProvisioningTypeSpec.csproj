@@ -6,4 +6,9 @@
     <PackageTags>Azure.Provisioning.ProvisioningTypeSpec</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <!-- Polyfill for ExperimentalAttribute on netstandard2.0 -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>

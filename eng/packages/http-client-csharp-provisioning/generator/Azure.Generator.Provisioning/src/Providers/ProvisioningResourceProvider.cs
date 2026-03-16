@@ -16,6 +16,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -733,11 +734,10 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
 
-                    // Preview API versions are hidden from IntelliSense via [EditorBrowsable(EditorBrowsableState.Never)]
+                    // Preview API versions are marked with [Experimental] to signal they may change or be removed.
                     var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
                     var attributes = isPreview
-                        ? [new AttributeStatement(typeof(EditorBrowsableAttribute),
-                            [new MemberExpression(typeof(EditorBrowsableState), nameof(EditorBrowsableState.Never))])]
+                        ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
                         : Array.Empty<AttributeStatement>();
 
                     fields.Add(new FieldProvider(
