@@ -189,7 +189,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         // Should not reach here.
                         _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
                     };
-                    responseBodyString = JsonSerializer.Serialize(responseBody);
+                    responseBodyString = JsonSerializer.Serialize(responseBody, responseBody.GetType());
                 }
                 else
                 {
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                         // Should not reach here.
                         _ => throw new NotSupportedException($"MQTT protocol version {mqttConnect.Mqtt.ProtocolVersion} is not supported.")
                     };
-                    responseBodyString = JsonSerializer.Serialize(responseBody);
+                    responseBodyString = JsonSerializer.Serialize(responseBody, responseBody.GetType());
                 }
                 else
                 {
