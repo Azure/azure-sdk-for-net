@@ -140,13 +140,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="NewRelicAccountResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRelicAccountResourceData> GetNewRelicAccountsAsync(string userEmail, string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NewRelicAccountResourceData> GetNewRelicAccountsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userEmail, nameof(userEmail));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             RequestContext context = new RequestContext
             {
@@ -175,13 +174,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="NewRelicAccountResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRelicAccountResourceData> GetNewRelicAccounts(string userEmail, string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<NewRelicAccountResourceData> GetNewRelicAccounts(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userEmail, nameof(userEmail));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             RequestContext context = new RequestContext
             {
@@ -210,13 +208,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="NewRelicOrganizationResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(string userEmail, string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userEmail, nameof(userEmail));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             RequestContext context = new RequestContext
             {
@@ -245,13 +242,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> or <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userEmail"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="NewRelicOrganizationResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRelicOrganizationResourceData> GetNewRelicOrganizations(string userEmail, string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<NewRelicOrganizationResourceData> GetNewRelicOrganizations(string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userEmail, nameof(userEmail));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             RequestContext context = new RequestContext
             {

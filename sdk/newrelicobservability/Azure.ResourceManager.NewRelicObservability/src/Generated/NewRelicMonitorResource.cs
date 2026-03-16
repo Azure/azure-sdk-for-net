@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NewRelicObservability.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
@@ -965,13 +966,13 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="body"> Email Id of the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NewRelicConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NewRelicConnectedPartnerResourceInfo> GetAllAsync(string body = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NewRelicConnectedPartnerResourceInfo> GetConnectedPartnerResourcesAsync(string body = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ConnectedPartnerResourcesGetAllAsyncCollectionResultOfT(
+            return new ConnectedPartnerResourcesGetConnectedPartnerResourcesAsyncCollectionResultOfT(
                 _connectedPartnerResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1004,13 +1005,13 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="body"> Email Id of the user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NewRelicConnectedPartnerResourceInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NewRelicConnectedPartnerResourceInfo> GetAll(string body = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<NewRelicConnectedPartnerResourceInfo> GetConnectedPartnerResources(string body = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ConnectedPartnerResourcesGetAllCollectionResultOfT(
+            return new ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT(
                 _connectedPartnerResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1209,8 +1210,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LinkedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LinkedResource> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubResource> GetLinkedResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1241,8 +1242,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LinkedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LinkedResource> GetLinkedResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubResource> GetLinkedResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

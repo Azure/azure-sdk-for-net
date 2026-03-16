@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly Organizations _client;
         private readonly string _subscriptionId;
         private readonly string _userEmail;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="userEmail"> User Email. </param>
         /// <param name="location"> Location for NewRelic. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT(Organizations client, string subscriptionId, string userEmail, string location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public OrganizationsGetNewRelicOrganizationsAsyncCollectionResultOfT(Organizations client, string subscriptionId, string userEmail, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

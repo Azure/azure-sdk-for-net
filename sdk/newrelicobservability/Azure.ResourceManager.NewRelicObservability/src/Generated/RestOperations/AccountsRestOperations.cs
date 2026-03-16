@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetNewRelicAccountsRequest(string subscriptionId, string userEmail, string location, RequestContext context)
+        internal HttpMessage CreateGetNewRelicAccountsRequest(string subscriptionId, string userEmail, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("userEmail", userEmail, true);
-            uri.AppendQuery("location", location, true);
+            uri.AppendQuery("location", TypeFormatters.ConvertToString(location), true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             return message;
         }
 
-        internal HttpMessage CreateNextGetNewRelicAccountsRequest(Uri nextPage, string subscriptionId, string userEmail, string location, RequestContext context)
+        internal HttpMessage CreateNextGetNewRelicAccountsRequest(Uri nextPage, string subscriptionId, string userEmail, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

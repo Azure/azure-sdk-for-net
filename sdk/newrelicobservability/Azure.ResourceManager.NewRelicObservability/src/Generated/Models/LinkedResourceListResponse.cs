@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
         /// <param name="value"> The LinkedResource items on this page. </param>
-        internal LinkedResourceListResponse(IEnumerable<LinkedResource> value)
+        internal LinkedResourceListResponse(IEnumerable<SubResource> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="value"> The LinkedResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedResourceListResponse(IList<LinkedResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinkedResourceListResponse(IList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         /// <summary> The LinkedResource items on this page. </summary>
         [WirePath("value")]
-        public IList<LinkedResource> Value { get; }
+        public IList<SubResource> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

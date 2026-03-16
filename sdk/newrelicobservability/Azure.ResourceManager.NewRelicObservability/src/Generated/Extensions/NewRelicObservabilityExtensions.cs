@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccountsAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccountsAsync(string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicAccountResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NewRelicAccountResourceData> GetNewRelicAccountsAsync(this SubscriptionResource subscriptionResource, string userEmail, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NewRelicAccountResourceData> GetNewRelicAccountsAsync(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Lists all the New Relic accounts linked to your email address, helping you understand the existing accounts that have been created
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts(string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicAccountResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NewRelicAccountResourceData> GetNewRelicAccounts(this SubscriptionResource subscriptionResource, string userEmail, string location, CancellationToken cancellationToken = default)
+        public static Pageable<NewRelicAccountResourceData> GetNewRelicAccounts(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Lists all the New Relic organizations linked to your email address, helping you understand the existing organizations that have been created
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizationsAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizationsAsync(string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicOrganizationResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(this SubscriptionResource subscriptionResource, string userEmail, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Lists all the New Relic organizations linked to your email address, helping you understand the existing organizations that have been created
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations(string, AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NewRelicOrganizationResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NewRelicOrganizationResourceData> GetNewRelicOrganizations(this SubscriptionResource subscriptionResource, string userEmail, string location, CancellationToken cancellationToken = default)
+        public static Pageable<NewRelicOrganizationResourceData> GetNewRelicOrganizations(this SubscriptionResource subscriptionResource, string userEmail, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

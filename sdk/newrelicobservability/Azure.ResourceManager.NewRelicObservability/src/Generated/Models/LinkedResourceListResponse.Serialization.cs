@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -89,9 +91,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LinkedResource item in Value)
+            foreach (SubResource item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -141,17 +148,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            IList<LinkedResource> value = default;
+            IList<SubResource> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LinkedResource> array = new List<LinkedResource>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LinkedResource.DeserializeLinkedResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNewRelicObservabilityContext.Default));
+                        }
                     }
                     value = array;
                     continue;

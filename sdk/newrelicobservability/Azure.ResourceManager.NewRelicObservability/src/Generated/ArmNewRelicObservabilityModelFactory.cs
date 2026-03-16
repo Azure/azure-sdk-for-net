@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -280,14 +281,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 sendingLogs,
                 reasonForLogsStatus,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The definition of a linked resource. </summary>
-        /// <param name="id"> The ARM id of the linked resource. </param>
-        /// <returns> A new <see cref="Models.LinkedResource"/> instance for mocking. </returns>
-        public static LinkedResource LinkedResource(string id = default)
-        {
-            return new LinkedResource(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response of payload to be passed while installing VM agent. </summary>

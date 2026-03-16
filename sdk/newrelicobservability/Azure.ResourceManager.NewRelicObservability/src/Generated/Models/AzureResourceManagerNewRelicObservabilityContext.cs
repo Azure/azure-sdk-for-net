@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
     [ModelReaderWriterBuildable(typeof(AppServicesListResponse))]
     [ModelReaderWriterBuildable(typeof(ConnectedPartnerResourcesListResponse))]
-    [ModelReaderWriterBuildable(typeof(LinkedResource))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     [ModelReaderWriterBuildable(typeof(PlanDataProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResubscribeProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagRuleListResult))]
     [ModelReaderWriterBuildable(typeof(TagRuleUpdateProperties))]

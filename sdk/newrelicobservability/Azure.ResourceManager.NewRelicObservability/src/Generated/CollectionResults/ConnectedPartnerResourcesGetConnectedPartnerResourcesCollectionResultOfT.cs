@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    internal partial class ConnectedPartnerResourcesGetAllAsyncCollectionResultOfT : AsyncPageable<NewRelicConnectedPartnerResourceInfo>
+    internal partial class ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT : Pageable<NewRelicConnectedPartnerResourceInfo>
     {
         private readonly ConnectedPartnerResources _client;
         private readonly string _subscriptionId;
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly RequestContent _content;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ConnectedPartnerResourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConnectedPartnerResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ConnectedPartnerResourcesGetAllAsyncCollectionResultOfT(ConnectedPartnerResources client, string subscriptionId, string resourceGroupName, string monitorName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT(ConnectedPartnerResources client, string subscriptionId, string resourceGroupName, string monitorName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,16 +40,16 @@ namespace Azure.ResourceManager.NewRelicObservability
             _context = context;
         }
 
-        /// <summary> Gets the pages of ConnectedPartnerResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConnectedPartnerResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NewRelicConnectedPartnerResourceInfo>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ConnectedPartnerResourcesGetConnectedPartnerResourcesCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<NewRelicConnectedPartnerResourceInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -68,14 +67,14 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _content, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _monitorName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NewRelicMonitorResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetConnectedPartnerResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _content, _context) : _client.CreateGetConnectedPartnerResourcesRequest(_subscriptionId, _resourceGroupName, _monitorName, _content, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NewRelicMonitorResource.GetConnectedPartnerResources");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
