@@ -1,5 +1,26 @@
 # Release History
 
+## 2.9.0-beta.1 (2026-03-13)
+
+This update restores compatibility with the latest `2.9.*` release of `OpenAI` and enables access to the latest features. For details, please see the full [OpenAI 2.9.0](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#290-2026-02-27) and [OpenAI 2.9.1](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#291-2026-03-02) release notes.
+
+> [!NOTE]
+> Consider removing the Azure OpenAI SDK from your application in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see the full release notes, linked above, for details.
+
+### Breaking Changes
+
+**`[Experimental]` Realtime Migration**
+
+Previous support in `Azure.AI.OpenAI` for `RealtimeClient` was based on the Realtime API Beta that has been [deprecated by OpenAI](https://developers.openai.com/api/docs/deprecations) in favor of the newer Realtime surface. With this change, the additional logic in `Azure.AI.OpenAI` is no longer applicable and incompatible with the general availability API. In deference to this, direct, experimental support from `Azure.AI.OpenAI` for Realtime Beta is removed in favor of contemporary `OpenAI` library use. Please migrate to the latest `OpenAI` library for these new features and continuing API compatibility.
+
+**`[Experimental]` Responses**
+
+A number of breaking changes, including the removal of model-/deployment-based client constructor variants in favor of `CreateResponseOptions` having a `Model` property, are propagated from the `OpenAI` release. Please see the `OpenAI` release notes for full details.
+
 ## 2.8.0-beta.1 (2025-12-12)
 
 This update restores compatibility with the latest `2.8.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.8.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#280-2025-12-11).

@@ -44,6 +44,18 @@ export enum ResourceScope {
   Extension = "Extension"
 }
 
+/**
+ * Constraints on the resource name from TypeSpec @pattern, @minLength, @maxLength decorators.
+ */
+export interface NameConstraints {
+  /** The regex pattern constraint for the resource name, from @pattern decorator */
+  pattern?: string;
+  /** The minimum length constraint for the resource name, from @minLength decorator */
+  minLength?: number;
+  /** The maximum length constraint for the resource name, from @maxLength decorator */
+  maxLength?: number;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern: string;
   resourceType: string;
@@ -53,6 +65,10 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** The name constraints for the resource, from TypeSpec decorators */
+  nameConstraints: NameConstraints;
+  /** The API versions that this resource is available in */
+  apiVersions: string[];
 }
 
 export function convertResourceMetadataToArguments(
@@ -121,6 +137,27 @@ export enum ResourceOperationKind {
   Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Resolves the API versions for a resource from its methods.
+ * Uses the Create method's versions if available, otherwise falls back to the Read method's versions.
+ * @param methods - The resource's methods
+ * @param methodApiVersionsMap - A map from methodId to its API versions
+ * @returns The API versions for the resource
+ */
+export function resolveResourceApiVersions(
+  methods: ResourceMethod[],
+  methodApiVersionsMap: Map<string, string[]>
+): string[] {
+  const createMethod = methods.find(
+    (m) => m.kind === ResourceOperationKind.Create
+  );
+  const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
+  const primaryMethod = createMethod ?? readMethod;
+  return primaryMethod
+    ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
+    : [];
 }
 
 /**
@@ -214,7 +251,9 @@ export function convertArmProviderSchemaToArguments(
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
-      resourceName: r.metadata.resourceName
+      resourceName: r.metadata.resourceName,
+      nameConstraints: r.metadata.nameConstraints,
+      apiVersions: r.metadata.apiVersions
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,

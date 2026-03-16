@@ -46,6 +46,7 @@ namespace MgmtTypeSpec {
 
   /** The available API versions. */
   enum Versions {
+    v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
   }
 
