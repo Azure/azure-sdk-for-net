@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Maps
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mapsCreatorData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(mapsCreatorData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MapsCreatorData"/> from. </param>

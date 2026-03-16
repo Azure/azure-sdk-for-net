@@ -85,9 +85,6 @@ namespace Azure.Generator.Management.Providers
             return [baseType];
         }
 
-        /// <summary>
-        /// Converts a parameter name to a valid C# field name.
-        /// </summary>
         private static string ToFieldName(string paramName) => $"_{paramName.ToVariableName()}";
 
         protected override FieldProvider[] BuildFields()
