@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //regenerate key and verify the key's change
             StorageAccountRegenerateKeyContent keyParameters = new StorageAccountRegenerateKeyContent("key2");
-            var regenKeys = (await account1.RegenerateKeyAsync(keyParameters)).Value.Keys;
+            var regenKeys = await account1.RegenerateKeyAsync(keyParameters).ToEnumerableAsync();
             StorageAccountKey regenKey2 = regenKeys.First(
                 t => t.KeyName.Equals("key2", StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(regenKey2);

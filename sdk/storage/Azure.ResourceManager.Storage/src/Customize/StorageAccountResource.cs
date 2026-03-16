@@ -20,9 +20,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Storage.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Storage
 {
+    [CodeGenSuppress("RegenerateKeyAsync", typeof(StorageAccountRegenerateKeyContent), typeof(CancellationToken))]
+    [CodeGenSuppress("RegenerateKey", typeof(StorageAccountRegenerateKeyContent), typeof(CancellationToken))]
     public partial class StorageAccountResource
     {
         /// <summary> Failover with no failoverType parameter. Backward-compatible overload. </summary>
@@ -118,14 +121,68 @@ namespace Azure.ResourceManager.Storage
         }
 #pragma warning restore AZC0107
 
-        // NOTE: RegenerateKey/RegenerateKeyAsync cannot return Pageable<StorageAccountKey> (prior GA)
-        // because the parameter types match the generated methods — only the return type differs,
-        // and C# does not allow overloading by return type alone.
-        // @@markAsPageable is in client.tsp but the mgmt generator does not support it for action
-        // operations (ArmResourceActionSync) with non-standard response shapes — listKeys and
-        // regenerateKey return StorageAccountListKeysResult with a "keys" array, not the standard
-        // "value" array used by list operations.
-        // These 2 violations must remain in the ApiCompat baseline.
+        // Justification: Prior GA returned Pageable<StorageAccountKey>; generated code returns
+        // Response<StorageAccountListKeysResult>. Cannot overload by return type alone, so suppress
+        // generated methods and replace with Pageable wrappers to preserve backward compatibility.
+
+        /// <summary>
+        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
+        /// </summary>
+        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _storageAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountRegenerateKeyContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                var response = StorageAccountListKeysResult.FromResponse(result);
+                return new SinglePagePageable<StorageAccountKey>(response.Keys.ToList(), result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
+        /// </summary>
+        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+#pragma warning disable AZC0107 // async wrapper with pageable return
+        public virtual AsyncPageable<StorageAccountKey> RegenerateKeyAsync(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new DeferredAsyncPageable<StorageAccountKey>(async () =>
+            {
+                using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.RegenerateKey");
+                scope.Start();
+                try
+                {
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    HttpMessage message = _storageAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountRegenerateKeyContent.ToRequestContent(content), context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    var response = StorageAccountListKeysResult.FromResponse(result);
+                    return (response.Keys.ToList(), result);
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            });
+        }
+#pragma warning restore AZC0107
 
         /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
