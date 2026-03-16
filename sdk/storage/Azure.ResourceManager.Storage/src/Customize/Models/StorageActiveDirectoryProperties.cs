@@ -39,20 +39,20 @@ namespace Azure.ResourceManager.Storage.Models
         public Guid DomainGuid
         {
             get => ActiveDirectoryDomainGuid ?? Guid.Empty;
-            set => ActiveDirectoryDomainGuid = value == Guid.Empty ? null : (Guid?)value;
+            set => ActiveDirectoryDomainGuid = value == Guid.Empty ? null : value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeNullableGuid(JsonProperty property, ref Guid? domainGuid)
         {
-            string guidString = property.Value.GetString();
-            if (!string.IsNullOrWhiteSpace(guidString) && Guid.TryParse(guidString, out Guid parsedGuid))
+            var str = property.Value.GetString();
+            if (string.IsNullOrWhiteSpace(str) || !Guid.TryParse(str, out var parsed))
             {
-                domainGuid = parsedGuid;
+                domainGuid = null;
             }
             else
             {
-                domainGuid = null;
+                domainGuid = parsed;
             }
         }
     }

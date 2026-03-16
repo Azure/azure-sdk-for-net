@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location) : this(sku, kind, location, default, new ChangeTrackingList<string>(), default, new ChangeTrackingDictionary<string, string>(), default, default, default)
+        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location) : this(sku, kind, location.ToString(), default, new ChangeTrackingList<string>(), default, new ChangeTrackingDictionary<string, string>(), default, default, default)
         {
         }
     }

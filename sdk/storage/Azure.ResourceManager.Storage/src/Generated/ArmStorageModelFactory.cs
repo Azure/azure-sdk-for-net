@@ -570,6 +570,9 @@ namespace Azure.ResourceManager.Storage.Models
                 additionalBinaryDataProperties: null);
         }
 
+        // Removed: StoragePrivateEndpointConnectionData factory method that used internal StoragePrivateEndpointConnectionProperties.
+        // Backward-compat overload is provided in Customize/ArmStorageModelFactory.cs
+
         /// <summary> Blob restore status. </summary>
         /// <param name="status"> The status of blob restore progress. Possible values are: - InProgress: Indicates that blob restore is ongoing. - Complete: Indicates that blob restore has been completed successfully. - Failed: Indicates that blob restore is failed. </param>
         /// <param name="failureReason"> Failure reason when blob restore is failed. </param>

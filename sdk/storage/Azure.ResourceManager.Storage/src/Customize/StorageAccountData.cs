@@ -42,27 +42,27 @@ namespace Azure.ResourceManager.Storage
         [WirePath("properties.accountMigrationInProgress")]
         public bool? IsAccountMigrationInProgress { get => Properties?.IsAccountMigrationInProgress; }
 
-        /// <summary> Backward-compatible alias for DefaultToOAuthAuthentication. </summary>
+        /// <summary> Backward-compatible alias for IsDefaultToOAuthAuthentication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.defaultToOAuthAuthentication")]
         public bool? IsDefaultToOAuthAuthentication { get => Properties?.IsDefaultToOAuthAuthentication; set { } }
 
-        /// <summary> Backward-compatible alias for EnableExtendedGroups. </summary>
+        /// <summary> Backward-compatible alias for IsExtendedGroupEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.enableExtendedGroups")]
         public bool? IsExtendedGroupEnabled { get => Properties?.IsExtendedGroupEnabled; set { } }
 
-        /// <summary> Backward-compatible alias for FailoverInProgress. </summary>
+        /// <summary> Backward-compatible alias for IsFailoverInProgress. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.failoverInProgress")]
         public bool? IsFailoverInProgress { get => Properties?.IsFailoverInProgress; }
 
-        /// <summary> Backward-compatible alias for PublishIpv6Endpoint. </summary>
+        /// <summary> Backward-compatible alias for IsIPv6EndpointToBePublished. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
         public bool? IsIPv6EndpointToBePublished { get => Properties?.IsIPv6EndpointToBePublished; set { } }
 
-        /// <summary> Backward-compatible alias for EnableNfsV3. </summary>
+        /// <summary> Backward-compatible alias for IsNfsV3Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.isNfsV3Enabled")]
         public bool? IsNfsV3Enabled { get => Properties?.IsNfsV3Enabled; set { } }

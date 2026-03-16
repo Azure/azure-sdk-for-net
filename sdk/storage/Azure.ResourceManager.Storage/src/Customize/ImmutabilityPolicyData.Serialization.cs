@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ImmutabilityPolicyProperty properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    eTag = prop.Value.GetString();
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Storage
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                eTag != null ? new ETag(eTag) : default(ETag?));
+                eTag);
         }
     }
 }

@@ -184,11 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("domainGuid"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    activeDirectoryDomainGuid = new Guid(prop.Value.GetString());
+                    DeserializeNullableGuid(prop, ref activeDirectoryDomainGuid);
                     continue;
                 }
                 if (prop.NameEquals("domainSid"u8))

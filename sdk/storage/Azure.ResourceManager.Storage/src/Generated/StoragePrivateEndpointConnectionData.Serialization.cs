@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue<StoragePrivateEndpointConnectionProperties>(Properties, options);
             }
         }
 
