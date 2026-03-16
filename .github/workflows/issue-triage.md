@@ -143,7 +143,7 @@ Analyze the issue title and body to determine appropriate labels
 
 ### Label Identification
 
-Labels are distinguished by color. Actively inspect label colors when examining repository labels and previous issues:
+Labels classification is distinguished by color. Actively inspect label colors when examining repository labels and previous issues:
 
 - **Category label** (color #ffeb77): Exactly one of "Client", "Service", "Mgmt", or "Provisioning"
   - "Client" for issues with SDK code or behavior
