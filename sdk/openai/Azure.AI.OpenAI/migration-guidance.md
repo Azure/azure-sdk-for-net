@@ -40,7 +40,7 @@ dotnet add package Azure.Identity --version <Azure.Identity version>
 ## 2. Understand the key differences
 
 | Area | Azure.AI.OpenAI | OpenAI SDK |
-|---|---|---|
+| ---- | ---- | ---- |
 | Primary entry point | `AzureOpenAIClient` then scenario client | Scenario clients directly (for example `ChatClient`) |
 | Endpoint format | Resource endpoint and Azure-specific routing `https://<resource>.cognitiveservices.azure.com/?api-version=version` | `https://<resource>.openai.azure.com/openai/v1/` |
 | Model/deployment | Often passed when creating sub-client | Required as `model` (your deployment name) |
@@ -239,4 +239,3 @@ If your audio scenarios are already stable on standard v1 routing, prefer the si
 ## Final note
 
 Do not leave both SDKs referenced unless you are intentionally running a short, staged migration. For most apps, the cleanest path is a direct move to `OpenAI` and removal of `Azure.AI.OpenAI`.
-
