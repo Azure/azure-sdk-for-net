@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
     [ModelReaderWriterBuildable(typeof(AadBasedSecurityPrincipal))]
     [ModelReaderWriterBuildable(typeof(CertBasedSecurityPrincipal))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerData))]
-    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerFilesExport))]
+    [ModelReaderWriterBuildable(typeof(ConfidentialLedgerFilesExportContent))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerFilesExportResult))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerList))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerNameAvailabilityContent))]

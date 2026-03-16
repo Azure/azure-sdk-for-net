@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>
         /// <param name="restoreRegion"> The region where the exported ledger files will eventually be restored to. </param>
         /// <param name="uri"> SAS URI used to access the Fileshare for exporting ledger files. </param>
-        /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExport"/> instance for mocking. </returns>
-        public static ConfidentialLedgerFilesExport ConfidentialLedgerFilesExport(string restoreRegion = default, Uri uri = default)
+        /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportContent"/> instance for mocking. </returns>
+        public static ConfidentialLedgerFilesExportContent ConfidentialLedgerFilesExportContent(string restoreRegion = default, Uri uri = default)
         {
-            return new ConfidentialLedgerFilesExport(restoreRegion, uri, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Object representing the files export response of a Confidential Ledger Resource. </summary>

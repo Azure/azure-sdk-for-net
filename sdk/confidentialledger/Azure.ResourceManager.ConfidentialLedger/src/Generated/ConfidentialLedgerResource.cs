@@ -427,12 +427,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="confidentialLedger"> Confidential Ledger Files Export Request Body. </param>
+        /// <param name="content"> Confidential Ledger Files Export Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidentialLedger"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfidentialLedgerFilesExportResult>> FilesExportAsync(WaitUntil waitUntil, ConfidentialLedgerFilesExport confidentialLedger, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfidentialLedgerFilesExportResult>> FilesExportAsync(WaitUntil waitUntil, ConfidentialLedgerFilesExportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(confidentialLedger, nameof(confidentialLedger));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _ledgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.FilesExport");
             scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExport.ToRequestContent(confidentialLedger), context);
+                HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult>(
                     new ConfidentialLedgerFilesExportResultOperationSource(),
@@ -486,12 +486,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="confidentialLedger"> Confidential Ledger Files Export Request Body. </param>
+        /// <param name="content"> Confidential Ledger Files Export Request Body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="confidentialLedger"/> is null. </exception>
-        public virtual ArmOperation<ConfidentialLedgerFilesExportResult> FilesExport(WaitUntil waitUntil, ConfidentialLedgerFilesExport confidentialLedger, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConfidentialLedgerFilesExportResult> FilesExport(WaitUntil waitUntil, ConfidentialLedgerFilesExportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(confidentialLedger, nameof(confidentialLedger));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _ledgerClientDiagnostics.CreateScope("ConfidentialLedgerResource.FilesExport");
             scope.Start();
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExport.ToRequestContent(confidentialLedger), context);
+                HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult>(
                     new ConfidentialLedgerFilesExportResultOperationSource(),

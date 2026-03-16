@@ -1,4 +1,4 @@
 directory: specification/confidentialledger/resource-manager/Microsoft.ConfidentialLedger/ConfidentialLedger
-commit: b1834575fc85560849a12db2a1eaea9b26d1066f
-repo: Azure/azure-rest-api-specs
+commit: aac47d2cc6b4f92fff4e6b7f84b1316ca3b53e93
+repo: haiyuazhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

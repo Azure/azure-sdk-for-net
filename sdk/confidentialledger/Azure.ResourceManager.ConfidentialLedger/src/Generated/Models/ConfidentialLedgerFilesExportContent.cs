@@ -12,26 +12,26 @@ using Azure.ResourceManager.ConfidentialLedger;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>
-    public partial class ConfidentialLedgerFilesExport
+    public partial class ConfidentialLedgerFilesExportContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerFilesExport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerFilesExportContent"/>. </summary>
         /// <param name="uri"> SAS URI used to access the Fileshare for exporting ledger files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ConfidentialLedgerFilesExport(Uri uri)
+        public ConfidentialLedgerFilesExportContent(Uri uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerFilesExport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerFilesExportContent"/>. </summary>
         /// <param name="restoreRegion"> The region where the exported ledger files will eventually be restored to. </param>
         /// <param name="uri"> SAS URI used to access the Fileshare for exporting ledger files. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialLedgerFilesExport(string restoreRegion, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfidentialLedgerFilesExportContent(string restoreRegion, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RestoreRegion = restoreRegion;
             Uri = uri;

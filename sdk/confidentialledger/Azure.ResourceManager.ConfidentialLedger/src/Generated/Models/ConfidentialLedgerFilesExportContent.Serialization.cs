@@ -15,66 +15,66 @@ using Azure.ResourceManager.ConfidentialLedger;
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>
-    public partial class ConfidentialLedgerFilesExport : IJsonModel<ConfidentialLedgerFilesExport>
+    public partial class ConfidentialLedgerFilesExportContent : IJsonModel<ConfidentialLedgerFilesExportContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerFilesExport"/> for deserialization. </summary>
-        internal ConfidentialLedgerFilesExport()
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerFilesExportContent"/> for deserialization. </summary>
+        internal ConfidentialLedgerFilesExportContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfidentialLedgerFilesExport PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConfidentialLedgerFilesExportContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfidentialLedgerFilesExport(document.RootElement, options);
+                        return DeserializeConfidentialLedgerFilesExportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExport)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExportContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExport)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfidentialLedgerFilesExport>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfidentialLedgerFilesExportContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfidentialLedgerFilesExport IPersistableModel<ConfidentialLedgerFilesExport>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfidentialLedgerFilesExportContent IPersistableModel<ConfidentialLedgerFilesExportContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfidentialLedgerFilesExport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfidentialLedgerFilesExportContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="confidentialLedgerFilesExport"> The <see cref="ConfidentialLedgerFilesExport"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConfidentialLedgerFilesExport confidentialLedgerFilesExport)
+        /// <param name="confidentialLedgerFilesExportContent"> The <see cref="ConfidentialLedgerFilesExportContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConfidentialLedgerFilesExportContent confidentialLedgerFilesExportContent)
         {
-            if (confidentialLedgerFilesExport == null)
+            if (confidentialLedgerFilesExportContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(confidentialLedgerFilesExport, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(confidentialLedgerFilesExportContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfidentialLedgerFilesExport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfidentialLedgerFilesExportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExport)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExportContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(RestoreRegion))
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfidentialLedgerFilesExport IJsonModel<ConfidentialLedgerFilesExport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfidentialLedgerFilesExportContent IJsonModel<ConfidentialLedgerFilesExportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfidentialLedgerFilesExport JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConfidentialLedgerFilesExportContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerFilesExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExport)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerFilesExportContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfidentialLedgerFilesExport(document.RootElement, options);
+            return DeserializeConfidentialLedgerFilesExportContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConfidentialLedgerFilesExport DeserializeConfidentialLedgerFilesExport(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfidentialLedgerFilesExportContent DeserializeConfidentialLedgerFilesExportContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConfidentialLedgerFilesExport(restoreRegion, uri, additionalBinaryDataProperties);
+            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, additionalBinaryDataProperties);
         }
     }
 }
