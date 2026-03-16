@@ -1,5 +1,5 @@
 directory: specification/newrelic/NewRelicObservability.Management
-commit: e3c3d499bb149d03b49e899e7f640a42fef44a53
-repo: Azure/azure-rest-api-specs
+commit: 8f5141e34016873568b13f5e893890dd0165ba56
+repo: live1206/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
