@@ -137,6 +137,9 @@ Console.WriteLine(completion.Content[0].Text);
 ### Streaming
 
 ```csharp
+using System.ClientModel;
+using OpenAI.Chat;
+
 CollectionResult<StreamingChatCompletionUpdate> updates = chatClient.CompleteChatStreaming(
 	new UserChatMessage("Write a short onboarding message for our migration."));
 
