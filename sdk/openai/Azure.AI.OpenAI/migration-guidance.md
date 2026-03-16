@@ -206,6 +206,8 @@ AudioClient audioClient = new(
 Example policy implementation:
 
 ```csharp
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.ClientModel.Primitives;
 
 internal sealed class ApiVersionPipelinePolicy : PipelinePolicy
