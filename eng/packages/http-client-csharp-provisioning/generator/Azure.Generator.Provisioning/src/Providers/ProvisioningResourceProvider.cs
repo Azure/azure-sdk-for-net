@@ -329,7 +329,7 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         /// <summary>
-        /// Recursively collects serialized names of writable properties from a model and its base chain.
+        /// Collects serialized names of writable properties from a model and its base model chain.
         /// </summary>
         private static void CollectWritableProperties(InputModelType model, HashSet<string> result)
         {
