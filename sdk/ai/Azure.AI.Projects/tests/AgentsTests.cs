@@ -41,7 +41,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
@@ -96,7 +96,7 @@ public class AgentsTests : AgentsTestBase
         {
             for (int i = ids.Count; i < agentLimit; i++)
             {
-                AgentDefinition definition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
+                AgentDefinition definition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
                 AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync($"MyAgent{i}", new AgentVersionCreationOptions(definition));
                 ids.Add(agent.Id);
             }
@@ -126,7 +126,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestResponses()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         ResponseResult response = await client.CreateResponseAsync("What is steam reactor?");
         response = await WaitForRun(client, response);
         Assert.That(response.GetOutputText(), Is.Not.Null.Or.Empty);
@@ -136,7 +136,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestResponsesStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         bool isCreated = false;
         bool textReceived = false;
         await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
@@ -315,7 +315,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -343,7 +343,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: useDefaultEndpoint);
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -362,7 +362,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestConversationNoInput()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -422,7 +422,7 @@ public class AgentsTests : AgentsTestBase
                 jsonSchema: calendatSchema
             )
         };
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                            "and returns it in the desired structured output format.",
@@ -576,7 +576,7 @@ public class AgentsTests : AgentsTestBase
         }
         catch { }
         // Create
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         // Read
         MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(store.Id, Is.EqualTo(result.Id));
@@ -619,7 +619,7 @@ public class AgentsTests : AgentsTestBase
             await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
         memoryDefinitions.Options = new(true, true);
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
@@ -909,7 +909,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             new AgentVersionCreationOptions(
-                new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+                new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
                 {
                     Instructions = "Always greet the user by name when possible.",
                     Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
@@ -1261,7 +1261,7 @@ public class AgentsTests : AgentsTestBase
 
         if (agentIsPresent)
         {
-            AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+            AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
             {
                 Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
             };
@@ -1274,7 +1274,7 @@ public class AgentsTests : AgentsTestBase
         }
         else
         {
-            responseOptions.Model = TestEnvironment.MODELDEPLOYMENTNAME;
+            responseOptions.Model = TestEnvironment.FOUNDRY_MODEL_NAME;
         }
 
         if (agentIsPresent)
@@ -1305,7 +1305,7 @@ public class AgentsTests : AgentsTestBase
 
         CancellationTokenSource cts = new(TimeSpan.FromSeconds(60));
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate.",
             Tools =
@@ -1401,7 +1401,7 @@ public class AgentsTests : AgentsTestBase
                 { }
             }),
             PipelinePosition.BeforeTransport);
-        AIProjectClient client = CreateProxyFromClient(new AIProjectClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), TestEnvironment.Credential, options));
+        AIProjectClient client = CreateProxyFromClient(new AIProjectClient(new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options));
 
         RequestOptions protocolRequestOptions = new();
         protocolRequestOptions.AddHeader("User-Agent", "DotnetTestMyProtocolUserAgent");
@@ -1410,7 +1410,7 @@ public class AgentsTests : AgentsTestBase
             BinaryContent.Create(
                 BinaryData.FromString($$"""
                     {
-                      "model": "{{TestEnvironment.MODELDEPLOYMENTNAME}}",
+                      "model": "{{TestEnvironment.FOUNDRY_MODEL_NAME}}",
                       "input": [{"type":"message","role":"user","content":"hello, model!"}]
                     }
                     """)),
@@ -1423,7 +1423,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestHostedAgentCreation()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        Uri uriEndpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
@@ -1436,10 +1436,10 @@ public class AgentsTests : AgentsTestBase
             Image = TestEnvironment.AGENT_DOCKER_IMAGE,
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },
+                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME },
                 // Optional variables, used for logging
                 { "APPLICATIONINSIGHTS_CONNECTION_STRING", TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING },
-                { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.PROJECT_ENDPOINT },
+                { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -1457,7 +1457,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        PromptAgentDefinition agentDefinition = new(TestEnvironment.MODELDEPLOYMENTNAME)
+        PromptAgentDefinition agentDefinition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that uses tools to answer questions.",
         };

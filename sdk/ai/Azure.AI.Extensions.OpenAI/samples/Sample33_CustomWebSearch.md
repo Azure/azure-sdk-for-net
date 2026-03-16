@@ -9,8 +9,8 @@ To enable your Agent to use Web Search with Custom Bing instance, we need to set
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_WebSearchCustomStreaming
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CUSTOM_BING_CONNECTION_NAME");
 var customInstanceName = System.Environment.GetEnvironmentVariable("BING_CUSTOM_SEARCH_INSTANCE_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());

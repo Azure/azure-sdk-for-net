@@ -49,15 +49,15 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateClient_StructuredOutput
 #if SNIPPET
-        string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-            ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT")
-            ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
 #else
-        string RAW_PROJECT_ENDPOINT = TestEnvironment.PROJECT_ENDPOINT;
-        string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new DefaultAzureCredential());
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_StructuredOutput_Async
         var textOptions = new ResponseTextOptions()
@@ -100,15 +100,15 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-            ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT")
-            ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+        string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+            ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
 #else
-        string RAW_PROJECT_ENDPOINT = TestEnvironment.PROJECT_ENDPOINT;
-        string MODEL_DEPLOYMENT = TestEnvironment.MODELDEPLOYMENTNAME;
+        string RAW_FOUNDRY_PROJECT_ENDPOINT = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        string MODEL_DEPLOYMENT = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new DefaultAzureCredential());
+        AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_StructuredOutput_Sync
         var textOptions = new ResponseTextOptions()
         {

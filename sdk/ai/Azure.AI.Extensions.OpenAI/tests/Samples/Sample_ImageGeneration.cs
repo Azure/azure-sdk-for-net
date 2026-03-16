@@ -44,12 +44,12 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateClient_ImageGeneration
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var imageGenerationModelName = System.Environment.GetEnvironmentVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var imageGenerationModelName = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
 #endif
         AIProjectClientOptions projectOptions = new();
@@ -106,12 +106,12 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var imageGenerationModelName = System.Environment.GetEnvironmentVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var imageGenerationModelName = TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME;
 #endif
         AIProjectClientOptions projectOptions = new();
