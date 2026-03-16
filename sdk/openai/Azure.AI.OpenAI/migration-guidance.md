@@ -111,7 +111,7 @@ string deployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_DEPLOY
 
 OpenAIClientOptions options = new()
 {
- Endpoint = new Uri($"{endpoint.TrimEnd('/')}/openai/v1/")
+ Endpoint = new Uri(endpoint)
 };
 
 ChatClient chatClient = new(
