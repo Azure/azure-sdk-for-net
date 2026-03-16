@@ -432,11 +432,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The RP-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="DeviceRegistry.PolicyData"/> instance for mocking. </returns>
-        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PolicyProperties properties = default)
+        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyProperties properties = default, IDictionary<string, string> tags = default, string location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                properties,
                 tags,
-                location,
-                properties);
+                location);
         }
 
         /// <summary> Details of the Credential Policy. </summary>

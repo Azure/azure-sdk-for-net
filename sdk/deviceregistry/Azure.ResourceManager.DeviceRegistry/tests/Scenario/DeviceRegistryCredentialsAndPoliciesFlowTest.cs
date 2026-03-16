@@ -14,72 +14,48 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 {
     public class DeviceRegistryCredentialsAndPoliciesFlowTest : DeviceRegistryManagementTestBase
     {
+        // This allows running tests with specified test modes without needing to set env vars locally (e.g. in Visual Studio Test Explorer).
+        static DeviceRegistryCredentialsAndPoliciesFlowTest()
+        {
+            var testModeEnvVar = Environment.GetEnvironmentVariable("AZURE_TEST_MODE") ?? "(not set → defaults to Playback)";
+            Console.WriteLine($"\n  AZURE_TEST_MODE = {testModeEnvVar}");
+            // Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "PLAYBACK");  //Comment this out before committing
+        }
+
+        // Iteration number appended to the suffix for resource name uniqueness.
+        // Change this when you need fresh resources (e.g., after a failed run).
+        // Must match the -Iteration parameter used with the setup/teardown scripts.
+        private const string Iteration = "1";  // e.g., "2", "3", etc. Empty string = no iteration.
+
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly AzureLocation _region;
         private readonly string _namespaceName;
         private readonly string _policyName;
 
-        //PREREQUISITES:  Create RG, MI, IoT Hub, DPS with ADR Integration first.
-        // Make sure to check the RG Activity Log to ensure that the operations have completed.
+        // PREREQUISITES
+        // =============
+        // Create RG, UAMI, ADR Namespace, IoT Hub, and DPS with ADR Integration BEFORE running in Record/Live mode.
+        // Use the helper scripts in tests/Scripts/:
+        //   Setup:    .\tests\Scripts\Setup-CmsTestPrerequisites.ps1 -Suffix both -Iteration <N> -NoPrompt
+        //   Teardown: .\tests\Scripts\Teardown-CmsTestPrerequisites.ps1 -Suffix both -Iteration <N> -Force
         //
-        //$suffix="sync"       //$suffix="async"
-        //$SubscriptionId="53cd450b-b108-4e6e-b048-f63c1dcc8c8f"
-        //$ResourceGroup = "adr-sdk-test-cms-"+$suffix
-        //$Location="eastus2euap"
-        //$UserIdentity="cms-test-uami-"+$suffix
-        //$NamespaceName="cms-test-namespace-"+$suffix
-        //$HubLocation="eastus2euap"
-        //$HubName="adr-sdk-cms-test-hub-"+$suffix
-        //$DpsName="adr-sdk-cms-test-dps-"+$suffix
-
-        // $rgScope = "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroup"
-        // #create RG
-        // az group create --name $ResourceGroup --location $Location
-        // az role assignment create --assignee 89d10474-74af-4874-99a7-c23c2f643083 --role Contributor --scope $rgScope
-        // #create UAMI
-        // az identity create --name $UserIdentity --resource-group $ResourceGroup --location $Location
-        // #create ADR Namespace
-        // az iot adr ns create --name $NamespaceName --resource-group $ResourceGroup --location $Location
-        // $NamespaceResourceId = az iot adr ns show --name $NamespaceName --resource-group $ResourceGroup --query id -o tsv --only-show-errors
-        // #Assign Azure Device Registry Contributor Role to UAMI on Namespace
-        // $UamiResourceId = az identity show --name $UserIdentity --resource-group $ResourceGroup --query id -o tsv --only-show-errors
-        // $UamiPrincipalId = az identity show --name $UserIdentity --resource-group $ResourceGroup --query principalId -o tsv --only-show-errors
-        // az role assignment create --assignee "$UamiPrincipalId" --role "a5c3590a-3a1a-4cd4-9648-ea0a32b15137" --scope "$NamespaceResourceId"
-        // az role assignment create --assignee "$UamiPrincipalId" --role "547f7f0a-69c0-4807-bd9e-0321dfb66a84" --scope "$NamespaceResourceId"
-        // # Create IoT Hub with ADR Integration
-        // $HubResource = az iot hub create `
-        //         --name "$HubName" `
-        //         --resource-group "$ResourceGroup" `
-        //         --location "$HubLocation" `
-        //         --sku GEN2 `
-        //         --mi-user-assigned "$UamiResourceId" `
-        //         --ns-resource-id "$NamespaceResourceId" `
-        //         --ns-identity-id "$UamiResourceId"
-        // $HubResourceId = ($HubResource | ConvertFrom-Json).Id
-        // # Manual Role Assignments on Hub for ADR Principal
-        // $AdrPrincipalId = az iot adr ns show --name "$NamespaceName" --resource-group "$ResourceGroup" --query "identity.principalId" -o tsv --only-show-error
-        // #az role assignment create --assignee "$AdrPrincipalId" --role "Contributor" --scope "$HubResourceId"
-        // #az role assignment create --assignee "$AdrPrincipalId" --role "IoT Hub Registry Contributor" --scope "$HubResourceId"
-        // # Create DPS with ADR Integration
-        // az iot dps create `
-        //         --name "$DpsName" `
-        //         --resource-group "$ResourceGroup" `
-        //         --location "$Location" `
-        //         --mi-user-assigned "$UamiResourceId" `
-        //         --ns-resource-id "$NamespaceResourceId" `
-        //         --ns-identity-id "$UamiResourceId" `
-        //         --only-show-errors
-        // # Link Hub to DPS
-        // az iot dps linked-hub create --dps-name "$DpsName" --resource-group "$ResourceGroup" --hub-name "$HubName"
+        // The scripts create these resources for each suffix (sync/async):
+        //   Resource Group:    adr-sdk-test-cms-{suffix}{iteration}
+        //   Managed Identity:  cms-test-uami-{suffix}{iteration}
+        //   ADR Namespace:     cms-test-namespace-{suffix}{iteration}
+        //   IoT Hub (GEN2):    adr-sdk-cms-test-hub-{suffix}{iteration}
+        //   DPS:               adr-sdk-cms-test-dps-{suffix}{iteration}
+        //
+        // The test itself creates and deletes Credential and Policy resources during execution.
 
         public DeviceRegistryCredentialsAndPoliciesFlowTest(bool isAsync) : base(isAsync)
         {
             _subscriptionId = "53cd450b-b108-4e6e-b048-f63c1dcc8c8f";
             _region = new AzureLocation("eastus2euap");
 
-            // Append suffix to distinguish between async and sync test runs
-            string suffix = isAsync ? "async" : "sync";
+            // Suffix distinguishes async vs sync test runs; iteration allows fresh resource sets.
+            string suffix = (isAsync ? "async" : "sync") + Iteration;
 
             _resourceGroupName = $"adr-sdk-test-cms-{suffix}";
             _namespaceName = $"cms-test-namespace-{suffix}";
@@ -89,9 +65,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         [RecordedTest]
         public async Task TestCredentialAndPolicyFlow()
         {
+            // Log test mode — AZURE_TEST_MODE env var controls this.
+            // Default is Playback (replays recorded sessions). Set to Record to re-record.
+            //   PowerShell:  $env:AZURE_TEST_MODE = "Record"
+            //   CMD:         set AZURE_TEST_MODE=Record
+            // NOTE: Visual Studio requires restart after setting env vars.
+            var testModeEnvVar = Environment.GetEnvironmentVariable("AZURE_TEST_MODE") ?? "(not set → defaults to Playback)";
+            Console.WriteLine($"\n  AZURE_TEST_MODE = {testModeEnvVar}");
+            Console.WriteLine($"  Effective Mode  = {Mode}\n");
+
             var sw = System.Diagnostics.Stopwatch.StartNew();
             Console.WriteLine($"\n{'=' * 60}");
-            Console.WriteLine($"TEST STARTED at {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            Console.WriteLine($"TEST STARTED at {DateTime.Now:yyyy-MM-dd HH:mm:ss}  [Mode={Mode}]");
             Console.WriteLine($"{'=' * 60}\n");
 
             // Setup: Get resource group
@@ -167,8 +152,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     leafCertificateConfig.ValidityPeriodInDays);
 
                 // Create policy data with certificate configuration
-                var policyData = new PolicyData(_region)
+                var policyData = new PolicyData()
                 {
+                    Location = _region.Name,
                     Properties = new PolicyProperties()
                     {
                         Certificate = certificateConfig
@@ -183,7 +169,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     CancellationToken.None);
                 policyResource = policyOperation.Value;
                 Assert.IsNotNull(policyResource);
-                Assert.AreEqual(policyResource.Data.Location, _region);
+                Assert.AreEqual(policyResource.Data.Location, _region.Name);
                 Assert.AreEqual(policyResource.Data.Name, _policyName);
                 Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Policy created successfully\n");
 
@@ -202,7 +188,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             // Verify policy was created or retrieved successfully
             Assert.IsNotNull(policyResource.Data);
-            Assert.AreEqual(policyResource.Data.Location, _region);
+            Assert.AreEqual(policyResource.Data.Location, _region.Name);
             Assert.IsNotNull(policyResource.Data.Properties);
             Assert.IsNotNull(policyResource.Data.Properties.Certificate);
 
