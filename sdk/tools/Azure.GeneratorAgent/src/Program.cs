@@ -4,6 +4,7 @@
 using System.CommandLine;
 using Azure.GeneratorAgent.Commands;
 using Azure.GeneratorAgent.Configuration;
+using Azure.GeneratorAgent.Mcp;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,12 @@ public static class GeneratorAgentProgram
     /// <returns>Exit code.</returns>
     public static async Task<int> Main(string[] args)
     {
+        // Early exit: MCP server mode
+        if (args.Contains("--mcp-server", StringComparer.OrdinalIgnoreCase))
+        {
+            return await McpServerHost.RunAsync(args).ConfigureAwait(false);
+        }
+
         ILogger? logger = null;
         try
         {

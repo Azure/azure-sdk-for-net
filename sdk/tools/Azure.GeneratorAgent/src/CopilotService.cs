@@ -326,39 +326,19 @@ public sealed class CopilotService : IAsyncDisposable
     }
 
     /// <summary>
-    /// Executes a build-fix cycle using Copilot to analyze build errors and suggest fixes until the project builds successfully.
+    /// Executes a build-fix cycle using Copilot to analyze pre-classified build errors that require reasoning.
+    /// Deterministic fixes are already applied by the orchestrator before this is called.
     /// </summary>
-    public async Task HandleBuildFixCycleAsync(string projectPath, CancellationToken cancellationToken = default)
+    public async Task HandleBuildFixCycleAsync(string projectPath, string preClassifiedErrors, CancellationToken cancellationToken = default)
     {
         ObjectDisposedException.ThrowIf(_isDisposed, this);
 
         _logger.LogInformation("Starting build-fix cycle for project: {ProjectPath}", projectPath);
 
-        var prompt = CopilotPrompts.BuildAndFixCyclePrompt(projectPath);
+        var prompt = CopilotPrompts.FocusedBuildFixPrompt(projectPath, preClassifiedErrors);
         await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Build-fix cycle completed");
-    }
-
-    /// <summary>
-    /// Handles the local specs commit iteration workflow: iterates through commits trying code generation,
-    /// falling back to modifying tspconfig.yaml if all commits fail.
-    /// </summary>
-    public async Task HandleLocalSpecsCommitIterationAsync(
-        string sdkProjectPath,
-        string tspLocationPath,
-        string specsRelativeDirectory,
-        string localSpecsPath,
-        CancellationToken cancellationToken = default)
-    {
-        ObjectDisposedException.ThrowIf(_isDisposed, this);
-
-        _logger.LogInformation("Starting local specs commit iteration for: {LocalSpecsPath}", localSpecsPath);
-
-        var prompt = CopilotPrompts.LocalSpecsCommitIterationPrompt(sdkProjectPath, tspLocationPath, specsRelativeDirectory, localSpecsPath);
-        await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
-
-        _logger.LogInformation("Local specs commit iteration completed");
     }
 
     private async Task<string?> SendPromptAndGetResponseAsync(string prompt, CancellationToken cancellationToken)

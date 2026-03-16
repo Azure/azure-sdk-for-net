@@ -565,6 +565,74 @@ When there are many errors (20+), fix them in batches to avoid unnecessary regen
    b. Regenerate and rebuild after each fix
 ```
 
+### MCP Tools for Automated Fixes [DPG only]
+
+The `generator-agent` MCP server (located at `sdk/tools/Azure.GeneratorAgent`) provides tools that automate deterministic build-error fixes. When connected via `.vscode/mcp.json`, Copilot can call these tools directly instead of applying fixes manually.
+
+**Start the MCP server**: `dotnet run --project sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj --framework net10.0 -- --mcp-server`
+
+#### Available Tools
+
+| Tool | Purpose |
+|------|---------|
+| `build_and_classify` | Run `dotnet build`, parse output, classify each error as deterministic or requires-reasoning |
+| `batch_fix` | Apply multiple deterministic fixes in one call |
+| `regex_replacement` | Regex find/replace in a file (field renames, type patterns, namespace fixes) |
+| `add_using_directive` | Add a missing `using` directive (33 known type→namespace mappings) |
+| `remove_using_directive` | Remove `using` directives matching a pattern (e.g., `*.Rest` namespaces) |
+| `nullable_annotation_fix` | Add `?` nullable annotation for CS8625/CS8600 errors |
+| `rename_codegen_type` | Fix mismatched `[CodeGenType]` attributes (ModelFactory, ClientBuilderExtensions) |
+| `fetch_to_fromlro` | Replace legacy `Fetch()` with `FromLroResponse()` |
+| `parse_build_output` | Parse raw MSBuild output into structured error objects |
+| `classify_error` / `classify_errors` | Classify errors against the deterministic fix registry |
+| `run_code_generation` | Run `dotnet build /t:generateCode` |
+| `validate_tsp_config` | Validate/fix `tspconfig.yaml` emitter configuration |
+| `pregen_cleanup` | Remove `IncludeAutorestDependency` from `.csproj` files |
+| `migrate_test_samples` | Move test samples from `Generated/Samples/` to `Samples/` |
+| `finalize_migration` | Run `Export-API.ps1` and `Update-Snippets.ps1` |
+
+#### Deterministic Fix Registry (27 rules)
+
+The registry maps error code + message pattern → tool + args. Key patterns:
+
+| Error Pattern | Tool | Fix |
+|--------------|------|-----|
+| CS1061/CS0103: `_pipeline` | `regex_replacement` | `_pipeline` → `Pipeline` |
+| CS1061/CS0103: `_clientDiagnostics` | `regex_replacement` | `_clientDiagnostics` → `ClientDiagnostics` |
+| CS1061/CS0103: `_restClient`, `_endpoint`, `_credential`, `_apiVersion`, `_subscriptionId`, `_diagnostics` | `regex_replacement` | Remove `_` prefix, capitalize |
+| CS0246: known type (e.g., `HttpPipeline`) | `add_using_directive` | Add `using Azure.Core.Pipeline;` (etc.) |
+| CS0246: `*.Rest.*` pattern | `remove_using_directive` | Remove obsolete `*.Rest` namespaces |
+| CS0246: `ResponseWithHeaders` | `regex_replacement` | `ResponseWithHeaders<T,H>` → `Response<T>` |
+| CS0246: `Models.Models` | `regex_replacement` | `Models.Models.X` → `Models.X` |
+| CS8625/CS8600 | `nullable_annotation_fix` | Add `?` to type |
+| CS0103: `ToRequestContent` | `regex_replacement` | Remove `.ToRequestContent()` |
+| CS0103: `FromCancellationToken` | `regex_replacement` | → `.ToRequestContext()` |
+| CS0103/CS1061: `FromResponse` | `regex_replacement` | `Type.FromResponse(r)` → `(Type)r` |
+| CS0103: `Fetch` | `fetch_to_fromlro` | `Fetch(r)` → `Model.FromLroResponse(r)` |
+| CS0246: `*ModelFactory` mismatch | `rename_codegen_type` | Update `[CodeGenType]` attribute |
+| CS0246: `*ClientBuilderExtensions` mismatch | `rename_codegen_type` | Update `[CodeGenType]` attribute |
+
+#### Automated Workflow
+
+When using the MCP tools, the build-fix cycle becomes:
+
+```
+LOOP:
+  1. Call build_and_classify → get structured, classified errors
+  2. IF zero errors → EXIT
+  3. Deterministic errors → call batch_fix (applied instantly)
+  4. Rebuild to verify deterministic fixes
+  5. Remaining errors → requires LLM reasoning (apply manually or via Copilot)
+  6. GOTO 1
+```
+
+#### Adding New Rules
+
+To add a new deterministic fix pattern, edit `sdk/tools/Azure.GeneratorAgent/src/Mcp/DeterministicFixRegistry.cs`:
+1. Add a new `FixRule` object to the `BuildRules()` method
+2. Specific rules (matching exact error messages) must come BEFORE generic catch-all rules
+3. Add a test in `tests/DeterministicFixRegistryTests.cs`
+
 ### Customization Patterns
 
 - **Partial classes** — Extend generated types without editing `Generated/`.

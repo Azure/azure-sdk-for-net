@@ -1,0 +1,81 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.ComponentModel;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using ModelContextProtocol.Server;
+
+namespace Azure.GeneratorAgent.Mcp.Tools;
+
+/// <summary>
+/// MCP tool that performs regex-based replacements in source files.
+/// Handles field renames, type pattern replacements, namespace prefix removal, and duplicate namespace fixes.
+/// </summary>
+[McpServerToolType]
+public static class RegexReplacementTool
+{
+    [McpServerTool(Name = "regex_replacement"), Description("Perform a regex replacement in a source file. Used for field renames, type pattern replacements, namespace prefix removal, and duplicate namespace fixes.")]
+    public static string Execute(
+        [Description("Absolute path to the file to modify")] string filePath,
+        [Description("Regex pattern to search for")] string pattern,
+        [Description("Replacement string (may include $1, $2 capture group references)")] string replacement)
+    {
+        try
+        {
+            var normalizedPath = Path.GetFullPath(filePath);
+            if (!File.Exists(normalizedPath))
+            {
+                return JsonSerializer.Serialize(new { success = false, error = $"File not found: {normalizedPath}" });
+            }
+
+            var content = File.ReadAllText(normalizedPath);
+            var regex = new Regex(pattern, RegexOptions.Compiled);
+            var newContent = regex.Replace(content, replacement);
+
+            if (string.Equals(content, newContent, StringComparison.Ordinal))
+            {
+                return JsonSerializer.Serialize(new { success = true, modified = false, message = "No matches found" });
+            }
+
+            File.WriteAllText(normalizedPath, newContent);
+            var matchCount = regex.Matches(content).Count;
+            return JsonSerializer.Serialize(new { success = true, modified = true, replacements = matchCount });
+        }
+        catch (Exception ex)
+        {
+            return JsonSerializer.Serialize(new { success = false, error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// In-process execution for use by the orchestrator (avoids MCP serialization overhead).
+    /// </summary>
+    public static (bool Success, int ReplacementCount, string? Error) ExecuteInProcess(string filePath, string pattern, string replacement)
+    {
+        try
+        {
+            var normalizedPath = Path.GetFullPath(filePath);
+            if (!File.Exists(normalizedPath))
+            {
+                return (false, 0, $"File not found: {normalizedPath}");
+            }
+
+            var content = File.ReadAllText(normalizedPath);
+            var regex = new Regex(pattern, RegexOptions.Compiled);
+            var matchCount = regex.Matches(content).Count;
+            if (matchCount == 0)
+            {
+                return (true, 0, null);
+            }
+
+            var newContent = regex.Replace(content, replacement);
+            File.WriteAllText(normalizedPath, newContent);
+            return (true, matchCount, null);
+        }
+        catch (Exception ex)
+        {
+            return (false, 0, ex.Message);
+        }
+    }
+}

@@ -3,6 +3,7 @@
 
 using System.CommandLine;
 using Azure.GeneratorAgent;
+using Azure.GeneratorAgent.Orchestration;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent.Commands;
@@ -24,6 +25,8 @@ public class RootCommandFactory
     private readonly GitService _gitService;
     private readonly FileService _fileService;
     private readonly AppSettings _settings;
+    private readonly MigrationOrchestrator _orchestrator;
+    private readonly CommitIterationOrchestrator _commitIterationOrchestrator;
     private readonly Task<CopilotService>? _copilotServiceTask;
     private readonly ILogger<RootCommandFactory> _logger;
 
@@ -34,14 +37,18 @@ public class RootCommandFactory
     /// <param name="gitService">Git service.</param>
     /// <param name="fileService">File service.</param>
     /// <param name="settings">Application settings.</param>
+    /// <param name="orchestrator">Migration orchestrator for build-fix cycles.</param>
+    /// <param name="commitIterationOrchestrator">Commit iteration orchestrator for finding valid TypeSpec commits.</param>
     /// <param name="logger">Logger instance.</param>
     /// <param name="copilotServiceTask">Optional task that resolves to the initialized CopilotService singleton.</param>
-    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, AppSettings settings, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
+    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, AppSettings settings, MigrationOrchestrator orchestrator, CommitIterationOrchestrator commitIterationOrchestrator, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
     {
         _validator = validator;
         _gitService = gitService;
         _fileService = fileService;
         _settings = settings;
+        _orchestrator = orchestrator;
+        _commitIterationOrchestrator = commitIterationOrchestrator;
         _copilotServiceTask = copilotServiceTask;
         _logger = logger;
     }
@@ -151,14 +158,14 @@ public class RootCommandFactory
                 _logger.LogDebug("Step 7: Updating emitterPackageJsonPath in tsp-location.yaml");
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
-                // Step 8: Delegate commit iteration to Copilot (uses local specs repo)
-                _logger.LogDebug("Step 8: Delegating local specs commit iteration to Copilot");
-                await copilotService.HandleLocalSpecsCommitIterationAsync(
+                // Step 8: Deterministic commit iteration (replaces LLM-based LocalSpecsCommitIterationPrompt)
+                _logger.LogDebug("Step 8: Running deterministic commit iteration");
+                await _commitIterationOrchestrator.ExecuteAsync(
                     validatedSdkPath, tspLocationPath, specsRelativeDirectory, validatedSpecsPath, cancellationToken).ConfigureAwait(false);
 
-                // Step 9: Build-fix cycle
-                _logger.LogDebug("Step 9: Delegating build-fix cycle to Copilot");
-                await copilotService.HandleBuildFixCycleAsync(validatedSdkPath, cancellationToken).ConfigureAwait(false);
+                // Step 9: Full migration pipeline (pregen cleanup → codegen → build-fix → sample migration → finalization)
+                _logger.LogDebug("Step 9: Running full migration pipeline");
+                await _orchestrator.RunFullPipelineAsync(validatedSdkPath, copilotService, cancellationToken).ConfigureAwait(false);
 
                 _logger.LogInformation("Migration completed: {SdkPath}", sdkPath);
             }

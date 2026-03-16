@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="GitHub.Copilot.SDK"/>
+    <PackageReference Include="ModelContextProtocol" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Http" />
