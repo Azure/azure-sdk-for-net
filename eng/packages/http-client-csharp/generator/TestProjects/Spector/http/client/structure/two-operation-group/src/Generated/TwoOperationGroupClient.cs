@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Client.Structure.Service;
 
@@ -17,7 +19,10 @@ namespace Client.Structure.TwoOperationGroup
 
         public TwoOperationGroupClient(Uri endpoint, ClientType client) : this(endpoint, client, new TwoOperationGroupClientOptions()) => throw null;
 
-        public TwoOperationGroupClient(Uri endpoint, ClientType client, TwoOperationGroupClientOptions options) => throw null;
+        public TwoOperationGroupClient(Uri endpoint, ClientType client, TwoOperationGroupClientOptions options) : this(null, endpoint, client, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public TwoOperationGroupClient(TwoOperationGroupClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

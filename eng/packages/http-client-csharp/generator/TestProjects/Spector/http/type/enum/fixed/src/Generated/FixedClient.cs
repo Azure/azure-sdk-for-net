@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace _Type._Enum.Fixed
@@ -14,7 +16,10 @@ namespace _Type._Enum.Fixed
     {
         public FixedClient() : this(new Uri("http://localhost:3000"), new FixedClientOptions()) => throw null;
 
-        public FixedClient(Uri endpoint, FixedClientOptions options) => throw null;
+        public FixedClient(Uri endpoint, FixedClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public FixedClient(FixedClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

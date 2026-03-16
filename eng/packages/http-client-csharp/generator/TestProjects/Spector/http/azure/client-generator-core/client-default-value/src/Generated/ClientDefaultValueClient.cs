@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +20,10 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
     {
         public ClientDefaultValueClient() : this(new Uri("http://localhost:3000"), new ClientDefaultValueClientOptions()) => throw null;
 
-        public ClientDefaultValueClient(Uri endpoint, ClientDefaultValueClientOptions options) => throw null;
+        public ClientDefaultValueClient(Uri endpoint, ClientDefaultValueClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public ClientDefaultValueClient(ClientDefaultValueClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

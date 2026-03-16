@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +19,10 @@ namespace Azure.SpecialHeaders.XmsClientRequestId
     {
         public XmsClientRequestIdClient() : this(new Uri("http://localhost:3000"), new XmsClientRequestIdClientOptions()) => throw null;
 
-        public XmsClientRequestIdClient(Uri endpoint, XmsClientRequestIdClientOptions options) => throw null;
+        public XmsClientRequestIdClient(Uri endpoint, XmsClientRequestIdClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public XmsClientRequestIdClient(XmsClientRequestIdClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

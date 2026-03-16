@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +21,10 @@ namespace Server.Versions.NotVersioned
 
         public NotVersionedClient(Uri endpoint) : this(endpoint, new NotVersionedClientOptions()) => throw null;
 
-        public NotVersionedClient(Uri endpoint, NotVersionedClientOptions options) => throw null;
+        public NotVersionedClient(Uri endpoint, NotVersionedClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public NotVersionedClient(NotVersionedClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +20,10 @@ namespace Client.Overload
     {
         public OverloadClient() : this(new Uri("http://localhost:3000"), new OverloadClientOptions()) => throw null;
 
-        public OverloadClient(Uri endpoint, OverloadClientOptions options) => throw null;
+        public OverloadClient(Uri endpoint, OverloadClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public OverloadClient(OverloadClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

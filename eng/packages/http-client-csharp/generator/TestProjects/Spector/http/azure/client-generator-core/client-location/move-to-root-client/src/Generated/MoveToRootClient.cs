@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +19,10 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
     {
         public MoveToRootClient() : this(new Uri("http://localhost:3000"), new MoveToRootClientOptions()) => throw null;
 
-        public MoveToRootClient(Uri endpoint, MoveToRootClientOptions options) => throw null;
+        public MoveToRootClient(Uri endpoint, MoveToRootClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public MoveToRootClient(MoveToRootClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,10 @@ namespace Client.Structure.MultiClient
 
         public ClientBClient(Uri endpoint, ClientType client) : this(endpoint, client, new ClientBClientOptions()) => throw null;
 
-        public ClientBClient(Uri endpoint, ClientType client, ClientBClientOptions options) => throw null;
+        public ClientBClient(Uri endpoint, ClientType client, ClientBClientOptions options) : this(null, endpoint, client, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public ClientBClient(ClientBClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
