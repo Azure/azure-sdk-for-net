@@ -8,6 +8,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
+    // Backward compatibility: The BillingCycle enum in the TypeSpec spec uses string values
+    // like "YEARLY", "MONTHLY", "WEEKLY". The previous SDK exposed a custom strongly-typed
+    // struct with case-insensitive comparison. This struct is preserved to avoid breaking
+    // existing callers that depend on the NewRelicObservabilityBillingCycle type.
     /// <summary> Different usage type like YEARLY/MONTHLY. </summary>
     public readonly partial struct NewRelicObservabilityBillingCycle : IEquatable<NewRelicObservabilityBillingCycle>
     {

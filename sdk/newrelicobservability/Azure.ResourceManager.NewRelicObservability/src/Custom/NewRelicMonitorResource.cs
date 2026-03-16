@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// from an instance of <see cref="ArmClient"/> using the GetNewRelicMonitorResource method.
     /// Otherwise you can get one from its parent resource <see cref="Azure.ResourceManager.Resources.ResourceGroupResource"/> using the GetNewRelicMonitorResource method.
     /// </summary>
+    // Backward compatibility: The generated Update operation is a long-running operation (LRO),
+    // but the previous SDK exposed convenience overloads that wait for completion and return
+    // Response<NewRelicMonitorResource> directly (without WaitUntil). These overloads are
+    // preserved here to avoid breaking existing callers.
     public partial class NewRelicMonitorResource : ArmResource
     {
         /// <summary>
