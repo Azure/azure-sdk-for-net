@@ -17,8 +17,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private readonly string _value;
         /// <summary> Default behavior: Worst child health state is propagated. </summary>
         private const string WorstOfValue = "WorstOf";
-        /// <summary> Based on configurable thresholds. </summary>
-        private const string ThresholdsValue = "Thresholds";
+        /// <summary> Healthy if the count/percentage of healthy children meets the threshold. </summary>
+        private const string MinHealthyValue = "MinHealthy";
+        /// <summary> Healthy if the count/percentage of not-healthy children stays below the threshold. </summary>
+        private const string MaxNotHealthyValue = "MaxNotHealthy";
 
         /// <summary> Initializes a new instance of <see cref="DependenciesAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,8 +35,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Default behavior: Worst child health state is propagated. </summary>
         public static DependenciesAggregationType WorstOf { get; } = new DependenciesAggregationType(WorstOfValue);
 
-        /// <summary> Based on configurable thresholds. </summary>
-        public static DependenciesAggregationType Thresholds { get; } = new DependenciesAggregationType(ThresholdsValue);
+        /// <summary> Healthy if the count/percentage of healthy children meets the threshold. </summary>
+        public static DependenciesAggregationType MinHealthy { get; } = new DependenciesAggregationType(MinHealthyValue);
+
+        /// <summary> Healthy if the count/percentage of not-healthy children stays below the threshold. </summary>
+        public static DependenciesAggregationType MaxNotHealthy { get; } = new DependenciesAggregationType(MaxNotHealthyValue);
 
         /// <summary> Determines if two <see cref="DependenciesAggregationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

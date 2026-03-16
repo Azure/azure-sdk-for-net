@@ -33,11 +33,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="signalGroups"> Signal groups which are assigned to this entity. </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </param>
-        /// <param name="deletedOn"> Date when the entity was (soft-)deleted. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> tags, SignalGroups signalGroups, string discoveredBy, DateTimeOffset? deletedOn, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> tags, SignalGroups signalGroups, string discoveredBy, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             Tags = tags;
             SignalGroups = signalGroups;
             DiscoveredBy = discoveredBy;
-            DeletedOn = deletedOn;
             HealthState = healthState;
             Alerts = alerts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -80,9 +78,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }
-
-        /// <summary> Date when the entity was (soft-)deleted. </summary>
-        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> Health state of this entity. </summary>
         public EntityHealthState? HealthState { get; }

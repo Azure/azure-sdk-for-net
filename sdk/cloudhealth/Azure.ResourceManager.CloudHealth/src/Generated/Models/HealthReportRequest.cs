@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="healthState"> Health state to report for the signal. </param>
         /// <param name="value"> Reported value of the signal. </param>
         /// <param name="evaluationRules"> Evaluation rules that were used to determine the reported health state. </param>
-        /// <param name="expiresIn"> Number of minutes until the health report expires. Defaults to 60 (1 hour) if not specified. </param>
+        /// <param name="expiresInMinutes"> Number of minutes until the health report expires. Defaults to 60 (1 hour) if not specified. </param>
         /// <param name="additionalContext"> Optional additional context or description for the health report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportRequest(string signalName, EntityHealthState healthState, double? value, HealthReportEvaluationRule evaluationRules, int? expiresIn, string additionalContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthReportRequest(string signalName, EntityHealthState healthState, double? value, HealthReportEvaluationRule evaluationRules, int? expiresInMinutes, string additionalContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalName = signalName;
             HealthState = healthState;
             Value = value;
             EvaluationRules = evaluationRules;
-            ExpiresIn = expiresIn;
+            ExpiresInMinutes = expiresInMinutes;
             AdditionalContext = additionalContext;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public HealthReportEvaluationRule EvaluationRules { get; set; }
 
         /// <summary> Number of minutes until the health report expires. Defaults to 60 (1 hour) if not specified. </summary>
-        public int? ExpiresIn { get; set; }
+        public int? ExpiresInMinutes { get; set; }
 
         /// <summary> Optional additional context or description for the health report. </summary>
         public string AdditionalContext { get; set; }

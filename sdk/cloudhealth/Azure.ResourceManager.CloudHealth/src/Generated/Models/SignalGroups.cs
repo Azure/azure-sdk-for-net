@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dependencies"> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </param>
         /// <param name="external"> List of signals which have been externally submitted for this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalGroups(AzureResourceSignals azureResource, LogAnalyticsSignals azureLogAnalytics, AzureMonitorWorkspaceSignals azureMonitorWorkspace, DependenciesSignalGroup dependencies, ExternalSignalGroup external, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalGroups(AzureResourceSignals azureResource, LogAnalyticsSignals azureLogAnalytics, AzureMonitorWorkspaceSignals azureMonitorWorkspace, DependenciesSignalGroupV2 dependencies, ExternalSignalGroup external, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureResource = azureResource;
             AzureLogAnalytics = azureLogAnalytics;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public AzureMonitorWorkspaceSignals AzureMonitorWorkspace { get; set; }
 
         /// <summary> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </summary>
-        public DependenciesSignalGroup Dependencies { get; set; }
+        public DependenciesSignalGroupV2 Dependencies { get; set; }
 
         /// <summary> List of signals which have been externally submitted for this entity. </summary>
         internal ExternalSignalGroup External { get; }

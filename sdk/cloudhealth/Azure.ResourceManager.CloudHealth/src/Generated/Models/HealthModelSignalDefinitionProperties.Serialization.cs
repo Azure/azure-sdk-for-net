@@ -122,11 +122,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             writer.WritePropertyName("evaluationRules"u8);
             writer.WriteObjectValue(EvaluationRules, options);
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

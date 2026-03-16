@@ -84,9 +84,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <returns> A new <see cref="Models.HealthModelSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string signalKind = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default)
+        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string signalKind = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags,
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -109,7 +107,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="metricNamespace"> Metric namespace. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
@@ -117,7 +114,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dimension"> Optional: Dimension to split by. </param>
         /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
         /// <returns> A new <see cref="Models.ResourceMetricSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default, string metricNamespace = default, string metricName = default, string timeGrain = default, MetricAggregationType aggregationType = default, string dimension = default, string dimensionFilter = default)
+        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string metricNamespace = default, string metricName = default, string timeGrain = default, MetricAggregationType aggregationType = default, string dimension = default, string dimensionFilter = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -129,7 +126,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags,
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties: null,
                 metricNamespace,
                 metricName,
@@ -146,12 +142,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> instance for mocking. </returns>
-        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default, string queryText = default, string timeGrain = default, string valueColumnName = default)
+        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string queryText = default, string timeGrain = default, string valueColumnName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -163,7 +158,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags,
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties: null,
                 queryText,
                 timeGrain,
@@ -177,11 +171,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="queryText"> Query text in PromQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <returns> A new <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, DateTimeOffset? deletedOn = default, string queryText = default, string timeGrain = default)
+        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string queryText = default, string timeGrain = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -193,7 +186,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags,
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties: null,
                 queryText,
                 timeGrain);
@@ -268,11 +260,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="signalGroups"> Signal groups which are assigned to this entity. </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </param>
-        /// <param name="deletedOn"> Date when the entity was (soft-)deleted. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <returns> A new <see cref="Models.HealthModelEntityProperties"/> instance for mocking. </returns>
-        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntityCoordinates canvasPosition = default, EntityIcon icon = default, float? healthObjective = default, EntityImpact? impact = default, IDictionary<string, string> tags = default, SignalGroups signalGroups = default, string discoveredBy = default, DateTimeOffset? deletedOn = default, EntityHealthState? healthState = default, EntityAlerts alerts = default)
+        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntityCoordinates canvasPosition = default, EntityIcon icon = default, float? healthObjective = default, EntityImpact? impact = default, IDictionary<string, string> tags = default, SignalGroups signalGroups = default, string discoveredBy = default, EntityHealthState? healthState = default, EntityAlerts alerts = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -286,7 +277,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags,
                 signalGroups,
                 discoveredBy,
-                deletedOn,
                 healthState,
                 alerts,
                 additionalBinaryDataProperties: null);
@@ -298,7 +288,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dependencies"> Settings for dependency signals to control how the health state of child entities influences the health state of the parent entity. </param>
         /// <param name="externalSignals"> Signals assigned to this signal group. </param>
         /// <returns> A new <see cref="Models.SignalGroups"/> instance for mocking. </returns>
-        public static SignalGroups SignalGroups(AzureResourceSignals azureResource = default, LogAnalyticsSignals azureLogAnalytics = default, AzureMonitorWorkspaceSignals azureMonitorWorkspace = default, DependenciesSignalGroup dependencies = default, IEnumerable<ExternalSignal> externalSignals = default)
+        public static SignalGroups SignalGroups(AzureResourceSignals azureResource = default, LogAnalyticsSignals azureLogAnalytics = default, AzureMonitorWorkspaceSignals azureMonitorWorkspace = default, DependenciesSignalGroupV2 dependencies = default, IEnumerable<ExternalSignal> externalSignals = default)
         {
             return new SignalGroups(
                 azureResource,
@@ -551,17 +541,17 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="healthState"> Health state to report for the signal. </param>
         /// <param name="value"> Reported value of the signal. </param>
         /// <param name="evaluationRules"> Evaluation rules that were used to determine the reported health state. </param>
-        /// <param name="expiresIn"> Number of minutes until the health report expires. Defaults to 60 (1 hour) if not specified. </param>
+        /// <param name="expiresInMinutes"> Number of minutes until the health report expires. Defaults to 60 (1 hour) if not specified. </param>
         /// <param name="additionalContext"> Optional additional context or description for the health report. </param>
         /// <returns> A new <see cref="Models.HealthReportRequest"/> instance for mocking. </returns>
-        public static HealthReportRequest HealthReportRequest(string signalName = default, EntityHealthState healthState = default, double? value = default, HealthReportEvaluationRule evaluationRules = default, int? expiresIn = default, string additionalContext = default)
+        public static HealthReportRequest HealthReportRequest(string signalName = default, EntityHealthState healthState = default, double? value = default, HealthReportEvaluationRule evaluationRules = default, int? expiresInMinutes = default, string additionalContext = default)
         {
             return new HealthReportRequest(
                 signalName,
                 healthState,
                 value,
                 evaluationRules,
-                expiresIn,
+                expiresInMinutes,
                 additionalContext,
                 additionalBinaryDataProperties: null);
         }
@@ -600,9 +590,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="childEntityName"> Resource name of the child entity. </param>
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
-        /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
         /// <returns> A new <see cref="Models.HealthModelRelationshipProperties"/> instance for mocking. </returns>
-        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string parentEntityName = default, string childEntityName = default, IDictionary<string, string> tags = default, string discoveredBy = default, DateTimeOffset? deletedOn = default)
+        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string parentEntityName = default, string childEntityName = default, IDictionary<string, string> tags = default, string discoveredBy = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -613,7 +602,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 childEntityName,
                 tags,
                 discoveredBy,
-                deletedOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -642,11 +630,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="discoverRelationships"> Whether to create relationships between the discovered entities based on a set of built-in rules. These relationships cannot be manually deleted. </param>
         /// <param name="addRecommendedSignals"> Whether to add all recommended signals to the discovered entities. </param>
         /// <param name="specification"> Specification of the discovery rule defining how entities are discovered. </param>
-        /// <param name="deletedOn"> Date when the discovery rule was (soft-)deleted. </param>
         /// <param name="error"> Error details if the last discovery operation failed. </param>
         /// <param name="entityName"> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </param>
         /// <returns> A new <see cref="Models.HealthModelDiscoveryRuleProperties"/> instance for mocking. </returns>
-        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string authenticationSetting = default, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DiscoveryRuleSpecification specification = default, DateTimeOffset? deletedOn = default, DiscoveryError error = default, string entityName = default)
+        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, string authenticationSetting = default, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DiscoveryRuleSpecification specification = default, DiscoveryError error = default, string entityName = default)
         {
             return new HealthModelDiscoveryRuleProperties(
                 provisioningState,
@@ -655,7 +642,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 discoverRelationships,
                 addRecommendedSignals,
                 specification,
-                deletedOn,
                 error,
                 entityName,
                 additionalBinaryDataProperties: null);

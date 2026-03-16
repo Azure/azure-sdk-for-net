@@ -114,11 +114,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("discoveredBy"u8);
                 writer.WriteStringValue(DiscoveredBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -167,7 +162,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string childEntityName = default;
             IDictionary<string, string> tags = default;
             string discoveredBy = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -221,15 +215,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     discoveredBy = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -242,7 +227,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 childEntityName,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 discoveredBy,
-                deletedOn,
                 additionalBinaryDataProperties);
         }
     }

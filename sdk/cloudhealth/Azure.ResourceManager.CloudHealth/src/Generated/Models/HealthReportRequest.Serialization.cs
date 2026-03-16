@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("evaluationRules"u8);
                 writer.WriteObjectValue(EvaluationRules, options);
             }
-            if (Optional.IsDefined(ExpiresIn))
+            if (Optional.IsDefined(ExpiresInMinutes))
             {
-                writer.WritePropertyName("expiresIn"u8);
-                writer.WriteNumberValue(ExpiresIn.Value);
+                writer.WritePropertyName("expiresInMinutes"u8);
+                writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
             if (Optional.IsDefined(AdditionalContext))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             EntityHealthState healthState = default;
             double? value = default;
             HealthReportEvaluationRule evaluationRules = default;
-            int? expiresIn = default;
+            int? expiresInMinutes = default;
             string additionalContext = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -195,13 +195,13 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     evaluationRules = HealthReportEvaluationRule.DeserializeHealthReportEvaluationRule(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("expiresIn"u8))
+                if (prop.NameEquals("expiresInMinutes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiresIn = prop.Value.GetInt32();
+                    expiresInMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("additionalContext"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 healthState,
                 value,
                 evaluationRules,
-                expiresIn,
+                expiresInMinutes,
                 additionalContext,
                 additionalBinaryDataProperties);
         }

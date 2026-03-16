@@ -34,12 +34,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
-        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, tags, dataUnit, evaluationRules, deletedOn, additionalBinaryDataProperties)
+        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, tags, dataUnit, evaluationRules, additionalBinaryDataProperties)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;

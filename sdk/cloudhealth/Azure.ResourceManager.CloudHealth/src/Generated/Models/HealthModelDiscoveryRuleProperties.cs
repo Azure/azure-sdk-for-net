@@ -41,11 +41,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="discoverRelationships"> Whether to create relationships between the discovered entities based on a set of built-in rules. These relationships cannot be manually deleted. </param>
         /// <param name="addRecommendedSignals"> Whether to add all recommended signals to the discovered entities. </param>
         /// <param name="specification"> Specification of the discovery rule defining how entities are discovered. </param>
-        /// <param name="deletedOn"> Date when the discovery rule was (soft-)deleted. </param>
         /// <param name="error"> Error details if the last discovery operation failed. </param>
         /// <param name="entityName"> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState, string displayName, string authenticationSetting, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, DiscoveryRuleSpecification specification, DateTimeOffset? deletedOn, DiscoveryError error, string entityName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState, string displayName, string authenticationSetting, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals, DiscoveryRuleSpecification specification, DiscoveryError error, string entityName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DiscoverRelationships = discoverRelationships;
             AddRecommendedSignals = addRecommendedSignals;
             Specification = specification;
-            DeletedOn = deletedOn;
             Error = error;
             EntityName = entityName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -76,9 +74,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Specification of the discovery rule defining how entities are discovered. </summary>
         public DiscoveryRuleSpecification Specification { get; set; }
-
-        /// <summary> Date when the discovery rule was (soft-)deleted. </summary>
-        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> Error details if the last discovery operation failed. </summary>
         public DiscoveryError Error { get; }

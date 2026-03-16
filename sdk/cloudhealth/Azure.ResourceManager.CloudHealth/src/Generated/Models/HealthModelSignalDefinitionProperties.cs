@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
-        /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -49,7 +48,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             Tags = tags;
             DataUnit = dataUnit;
             EvaluationRules = evaluationRules;
-            DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,8 +71,5 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Evaluation rules for the signal definition. </summary>
         public EntitySignalEvaluationRule EvaluationRules { get; set; }
-
-        /// <summary> Date when the signal definition was (soft-)deleted. </summary>
-        public DateTimeOffset? DeletedOn { get; }
     }
 }

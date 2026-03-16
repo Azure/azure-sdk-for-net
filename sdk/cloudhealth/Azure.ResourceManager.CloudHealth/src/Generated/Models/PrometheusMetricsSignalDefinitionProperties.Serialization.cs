@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             IDictionary<string, string> tags = default;
             string dataUnit = default;
             EntitySignalEvaluationRule evaluationRules = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string queryText = default;
             string timeGrain = default;
@@ -186,15 +185,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (prop.NameEquals("queryText"u8))
                 {
                     queryText = prop.Value.GetString();
@@ -218,7 +208,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties,
                 queryText,
                 timeGrain);

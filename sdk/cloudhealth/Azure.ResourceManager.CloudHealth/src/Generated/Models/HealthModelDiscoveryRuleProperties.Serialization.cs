@@ -97,11 +97,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(AddRecommendedSignals.ToString());
             writer.WritePropertyName("specification"u8);
             writer.WriteObjectValue(Specification, options);
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -160,7 +155,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default;
             DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default;
             DiscoveryRuleSpecification specification = default;
-            DateTimeOffset? deletedOn = default;
             DiscoveryError error = default;
             string entityName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -200,15 +194,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     specification = DiscoveryRuleSpecification.DeserializeDiscoveryRuleSpecification(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -235,7 +220,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 discoverRelationships,
                 addRecommendedSignals,
                 specification,
-                deletedOn,
                 error,
                 entityName,
                 additionalBinaryDataProperties);

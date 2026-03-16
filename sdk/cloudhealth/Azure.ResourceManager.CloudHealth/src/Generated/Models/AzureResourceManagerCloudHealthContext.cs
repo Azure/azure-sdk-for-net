@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(AzureMonitorWorkspaceSignals))]
     [ModelReaderWriterBuildable(typeof(AzureResourceSignal))]
     [ModelReaderWriterBuildable(typeof(AzureResourceSignals))]
-    [ModelReaderWriterBuildable(typeof(DependenciesSignalGroup))]
+    [ModelReaderWriterBuildable(typeof(DependenciesSignalGroupV2))]
     [ModelReaderWriterBuildable(typeof(DiscoveryError))]
     [ModelReaderWriterBuildable(typeof(DiscoveryRuleListResult))]
     [ModelReaderWriterBuildable(typeof(DiscoveryRuleSpecification))]

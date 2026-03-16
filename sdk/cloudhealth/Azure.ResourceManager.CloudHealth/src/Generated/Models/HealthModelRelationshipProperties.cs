@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="childEntityName"> Resource name of the child entity. </param>
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
-        /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState, string displayName, string parentEntityName, string childEntityName, IDictionary<string, string> tags, string discoveredBy, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState, string displayName, string parentEntityName, string childEntityName, IDictionary<string, string> tags, string discoveredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -48,7 +47,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             ChildEntityName = childEntityName;
             Tags = tags;
             DiscoveredBy = discoveredBy;
-            DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,8 +67,5 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }
-
-        /// <summary> Date when the relationship was (soft-)deleted. </summary>
-        public DateTimeOffset? DeletedOn { get; }
     }
 }

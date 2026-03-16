@@ -130,11 +130,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("discoveredBy"u8);
                 writer.WriteStringValue(DiscoveredBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
-            {
-                writer.WritePropertyName("deletionDate"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
@@ -196,7 +191,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             IDictionary<string, string> tags = default;
             SignalGroups signalGroups = default;
             string discoveredBy = default;
-            DateTimeOffset? deletedOn = default;
             EntityHealthState? healthState = default;
             EntityAlerts alerts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -287,15 +281,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     discoveredBy = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (prop.NameEquals("healthState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -329,7 +314,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 signalGroups,
                 discoveredBy,
-                deletedOn,
                 healthState,
                 alerts,
                 additionalBinaryDataProperties);
