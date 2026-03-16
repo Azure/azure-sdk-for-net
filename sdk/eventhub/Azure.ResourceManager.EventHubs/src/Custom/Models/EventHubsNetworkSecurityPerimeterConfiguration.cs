@@ -13,11 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary>
-    /// Network Security Perimeter related configurations of a given namespace.
-    /// This type is preserved for backward compatibility with the 1.2.x API surface.
-    /// New code should use <see cref="EventHubsNetworkSecurityPerimeterConfigurationData"/> instead.
-    /// </summary>
+    /*
+     * Network Security Perimeter related configurations of a given namespace.
+     * This type is preserved for backward compatibility with the 1.2.x API surface.
+     * New code should use <see cref="EventHubsNetworkSecurityPerimeterConfigurationData"/> instead.
+     */
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class EventHubsNetworkSecurityPerimeterConfiguration : ResourceData,
         IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>,

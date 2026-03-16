@@ -10,13 +10,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    // Custom code to preserve [Obsolete] attribute on MessageRetentionInDays for ApiCompat with 1.2.1.
-    [CodeGenSuppress("MessageRetentionInDays")]
     public partial class EventHubData
     {
         /// <summary> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [CodeGenMember("MessageRetentionInDays")]
         [WirePath("properties.messageRetentionInDays")]
         public long? MessageRetentionInDays
         {

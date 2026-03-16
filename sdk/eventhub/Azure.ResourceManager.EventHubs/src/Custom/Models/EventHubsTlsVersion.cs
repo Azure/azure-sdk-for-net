@@ -7,19 +7,19 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    [CodeGenSuppress("Tls10")]
-    [CodeGenSuppress("Tls11")]
-    [CodeGenSuppress("Tls12")]
-    [CodeGenSuppress("Tls13")]
     public readonly partial struct EventHubsTlsVersion
     {
         /// <summary> TLS 1.0. </summary>
-        public static EventHubsTlsVersion Tls1_0 { get; } = new EventHubsTlsVersion(Tls10Value);
+        [CodeGenMember("_10")]
+        public static EventHubsTlsVersion Tls1_0 { get; } = new EventHubsTlsVersion(_10Value);
         /// <summary> TLS 1.1. </summary>
-        public static EventHubsTlsVersion Tls1_1 { get; } = new EventHubsTlsVersion(Tls11Value);
+        [CodeGenMember("_11")]
+        public static EventHubsTlsVersion Tls1_1 { get; } = new EventHubsTlsVersion(_11Value);
         /// <summary> TLS 1.2. </summary>
-        public static EventHubsTlsVersion Tls1_2 { get; } = new EventHubsTlsVersion(Tls12Value);
+        [CodeGenMember("_12")]
+        public static EventHubsTlsVersion Tls1_2 { get; } = new EventHubsTlsVersion(_12Value);
         /// <summary> TLS 1.3. </summary>
-        public static EventHubsTlsVersion Tls1_3 { get; } = new EventHubsTlsVersion(Tls13Value);
+        [CodeGenMember("_13")]
+        public static EventHubsTlsVersion Tls1_3 { get; } = new EventHubsTlsVersion(_13Value);
     }
 }

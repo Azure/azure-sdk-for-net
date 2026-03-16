@@ -8,10 +8,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    [CodeGenSuppress("PlatformCapabilitiesConfidentialComputeMode")]
     public partial class EventHubsClusterData
     {
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
+        [CodeGenMember("PlatformCapabilitiesConfidentialComputeMode")]
         public EventHubsConfidentialComputeMode? ConfidentialComputeMode
         {
             get

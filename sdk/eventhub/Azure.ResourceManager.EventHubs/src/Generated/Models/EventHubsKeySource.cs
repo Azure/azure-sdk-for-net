@@ -11,7 +11,7 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary></summary>
+    /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
     public readonly partial struct EventHubsKeySource : IEquatable<EventHubsKeySource>
     {
         private readonly string _value;
