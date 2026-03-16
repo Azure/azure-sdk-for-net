@@ -3108,7 +3108,10 @@
                 "resourceName": "ConfigurationStore",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                }
+                },
+                "apiVersions": [
+                  "2024-05-01"
+                ]
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.KeyValue",
@@ -3153,7 +3156,10 @@
                 "resourceName": "KeyValue",
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
-                }
+                },
+                "apiVersions": [
+                  "2024-05-01"
+                ]
               }
             ],
             "nonResourceMethods": [
