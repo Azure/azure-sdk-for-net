@@ -11,18 +11,14 @@ trigger:
     - sdk/provisioning/ci.data.yml
     - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.AppConfiguration
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
     - sdk/provisioning/Azure.Provisioning.FrontDoor
     - sdk/provisioning/Azure.Provisioning.Kusto
-    - sdk/provisioning/Azure.Provisioning.PostgreSql
-    - sdk/provisioning/Azure.Provisioning.Redis
     - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
-    - sdk/provisioning/Azure.Provisioning.SignalR
     - sdk/provisioning/Azure.Provisioning.Sql
     - sdk/provisioning/Azure.Provisioning.WebPubSub
     exclude:
@@ -31,10 +27,6 @@ trigger:
 parameters:
   - name: release_Azure_Provisioning
     displayName: 'Azure.Provisioning'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_AppConfiguration
-    displayName: 'Azure.Provisioning.AppConfiguration'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_CognitiveServices
@@ -57,14 +49,6 @@ parameters:
     displayName: 'Azure.Provisioning.Kusto'
     type: boolean
     default: false
-  - name: release_Azure_Provisioning_PostgreSql
-    displayName: 'Azure.Provisioning.PostgreSql'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_Redis
-    displayName: 'Azure.Provisioning.Redis'
-    type: boolean
-    default: false
   - name: release_Azure_Provisioning_RedisEnterprise
     displayName: 'Azure.Provisioning.RedisEnterprise'
     type: boolean
@@ -75,10 +59,6 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_ServiceBus
     displayName: 'Azure.Provisioning.ServiceBus'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_SignalR
-    displayName: 'Azure.Provisioning.SignalR'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Sql
@@ -100,9 +80,6 @@ extends:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
       createReleaseStage: ${{ parameters.release_Azure_Provisioning }}
-    - name: Azure.Provisioning.AppConfiguration
-      safeName: AzureProvisioningAppConfiguration
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_AppConfiguration }}
     - name: Azure.Provisioning.CognitiveServices
       safeName: AzureProvisioningCognitiveServices
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_CognitiveServices }}
@@ -118,12 +95,6 @@ extends:
     - name: Azure.Provisioning.Kusto
       safeName: AzureProvisioningKusto
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
-    - name: Azure.Provisioning.PostgreSql
-      safeName: AzureProvisioningPostgreSql
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_PostgreSql }}
-    - name: Azure.Provisioning.Redis
-      safeName: AzureProvisioningRedis
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Redis }}
     - name: Azure.Provisioning.RedisEnterprise
       safeName: AzureProvisioningRedisEnterprise
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_RedisEnterprise }}
@@ -133,9 +104,6 @@ extends:
     - name: Azure.Provisioning.ServiceBus
       safeName: AzureProvisioningServiceBus
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_ServiceBus }}
-    - name: Azure.Provisioning.SignalR
-      safeName: AzureProvisioningSignalR
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_SignalR }}
     - name: Azure.Provisioning.Sql
       safeName: AzureProvisioningSql
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Sql }}
