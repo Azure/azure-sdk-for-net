@@ -2547,17 +2547,16 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
-        public async Task StorageAccountNoneGuidFormatDomainGuid()
+        public async Task StorageAccountNonGuidFormatDomainGuid()
         {
+            // E2E test for issue https://github.com/Azure/azure-sdk-for-net/issues/56903
             //create storage account
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(namePrefix);
 
-
-            // This E2E test for issue https://github.com/Azure/azure-sdk-for-net/issues/56903
             // With domainName = " ", domainId = Guid.Empty, can create a storage account which server returns domainId as " ".
             // If re-record this case, need check the record file to make sure server still return domainId as " ".
-            // We still don't find a way to set domainId to other none GUID value on server with .net SDK, but has unit test to cover other value in test class StorageActiveDirectoryPropertiesSerializationTests.
+            // We still don't find a way to set domainId to other non-GUID value on server with .net SDK, but has unit test to cover other value in test class StorageActiveDirectoryPropertiesSerializationTests.
             string domainName = " ";
             var domainId = Guid.Empty;
             var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadkerb)
@@ -2577,12 +2576,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
             // Get  storage account
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
             Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
             // Update storage account
             var updateParameters = new StorageAccountPatch
@@ -2593,12 +2594,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
             // Get  storage account again
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
             Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
         }
 
         [Test]
