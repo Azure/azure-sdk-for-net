@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Support
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(supportFileDetailData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(supportFileDetailData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SupportFileDetailData"/> from. </param>

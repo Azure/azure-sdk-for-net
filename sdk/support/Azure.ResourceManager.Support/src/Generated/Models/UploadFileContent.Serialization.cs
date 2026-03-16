@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(uploadFileContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(uploadFileContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
