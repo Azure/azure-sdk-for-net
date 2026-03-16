@@ -990,6 +990,9 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @atastrophic @rohankhandelwal
 
+# PRLabel: %App Services %Mgmt
+/sdk/domainregistration/Azure.ResourceManager.*/                   @antcp @AzureAppServiceCLI
+
 # PRLabel: %Durable Task Scheduler %Mgmt
 /sdk/durabletask/Azure.ResourceManager.*/                          @berndverst @kaibocai @torosent @philliphoff @cgillum
 

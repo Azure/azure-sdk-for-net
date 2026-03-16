@@ -2883,10 +2883,7 @@ interface Employees {
     ok(resolvedSchema);
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
-    deepStrictEqual(
-      resolvedResource.metadata.nameConstraints,
-      constraints
-    );
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
   });
 
   it("name constraints with minLength and maxLength decorators", async () => {
@@ -2941,10 +2938,7 @@ interface Widgets {
     ok(resolvedSchema);
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
-    deepStrictEqual(
-      resolvedResource.metadata.nameConstraints,
-      constraints
-    );
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
   });
 
   it("name constraints are empty when no decorators are applied", async () => {
@@ -2996,10 +2990,7 @@ interface Gadgets {
     ok(resolvedSchema);
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
-    deepStrictEqual(
-      resolvedResource.metadata.nameConstraints,
-      constraints
-    );
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
   });
 
   it("name constraints with only pattern via NamePattern", async () => {
@@ -3052,9 +3043,167 @@ interface Items {
     ok(resolvedSchema);
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
-    deepStrictEqual(
-      resolvedResource.metadata.nameConstraints,
-      constraints
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("api versions populated for single version resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+`,
+      runner
     );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+    deepStrictEqual(armProviderSchema.resources[0].metadata.apiVersions, [
+      "2021-10-01-preview"
+    ]);
+
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    deepStrictEqual(resolvedSchema.resources[0].metadata.apiVersions, [
+      "2021-10-01-preview"
+    ]);
+  });
+
+  it("api versions populated for multi-version resources", async () => {
+    const fileContent = `
+    import "@typespec/http";
+    import "@typespec/rest";
+    import "@typespec/versioning";
+    import "@azure-tools/typespec-azure-core";
+    import "@azure-tools/typespec-azure-resource-manager";
+    import "@azure-tools/typespec-client-generator-core";
+    using TypeSpec.Http;
+    using TypeSpec.Rest;
+    using TypeSpec.Versioning;
+    using Azure.Core;
+    using Azure.ResourceManager;
+    using Azure.ClientGenerator.Core;
+
+    @armProviderNamespace
+    @service(#{ title: "Azure Management emitter Testing" })
+    @versioned(Versions)
+    namespace Microsoft.ContosoProviderHub;
+
+    /** api versions */
+    enum Versions {
+      @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+      \`2024-04-01\`,
+      @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+      \`2024-05-01\`,
+    }
+
+    /** Widget properties */
+    model WidgetProperties {
+      /** Color of widget */
+      color?: string;
+    }
+
+    /** A Widget resource - available in all versions */
+    model Widget is TrackedResource<WidgetProperties> {
+      ...ResourceNameParameter<Widget>;
+    }
+
+    /** Gadget properties */
+    model GadgetProperties {
+      /** Size of gadget */
+      size?: int32;
+    }
+
+    /** A Gadget resource - added in second version only */
+    @added(Versions.\`2024-05-01\`)
+    @parentResource(Widget)
+    model Gadget is ProxyResource<GadgetProperties> {
+      ...ResourceNameParameter<Gadget>;
+    }
+
+    interface Operations extends Azure.ResourceManager.Operations {}
+
+    @armResourceOperations
+    interface Widgets {
+      get is ArmResourceRead<Widget>;
+      createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+    }
+
+    @added(Versions.\`2024-05-01\`)
+    @armResourceOperations
+    interface Gadgets {
+      get is ArmResourceRead<Gadget>;
+      createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+    }
+    `;
+    runner.addTypeSpecFile("main.tsp", fileContent);
+    await runner.compile("./", { warningAsError: false });
+    const program = runner.program;
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Test buildArmProviderSchema (legacy path)
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 2);
+
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+    ok(widgetResource);
+    deepStrictEqual(widgetResource.metadata.apiVersions, [
+      "2024-04-01",
+      "2024-05-01"
+    ]);
+
+    const gadgetResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/widgets/gadgets"
+    );
+    ok(gadgetResource);
+    deepStrictEqual(gadgetResource.metadata.apiVersions, ["2024-05-01"]);
+
+    // Test resolveArmResources (new path)
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    const resolvedWidget = resolvedSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+    ok(resolvedWidget);
+    deepStrictEqual(resolvedWidget.metadata.apiVersions, [
+      "2024-04-01",
+      "2024-05-01"
+    ]);
+
+    const resolvedGadget = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/widgets/gadgets"
+    );
+    ok(resolvedGadget);
+    deepStrictEqual(resolvedGadget.metadata.apiVersions, ["2024-05-01"]);
   });
 });

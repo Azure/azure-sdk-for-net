@@ -48,7 +48,8 @@ import {
   postProcessArmResources,
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
-  calculateResourceTypeFromPath
+  calculateResourceTypeFromPath,
+  resolveResourceApiVersions
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
@@ -90,6 +91,20 @@ export function resolveArmResources(
     ArmResourceSchema,
     ResolvedResource
   >();
+
+  // Build a lookup map from methodId (crossLanguageDefinitionId) to apiVersions
+  // so that we can efficiently resolve per-resource API versions
+  const methodApiVersionsMap = new Map<string, string[]>();
+  for (const client of getAllSdkClients(sdkContext)) {
+    for (const method of client.methods) {
+      if (!methodApiVersionsMap.has(method.crossLanguageDefinitionId)) {
+        methodApiVersionsMap.set(
+          method.crossLanguageDefinitionId,
+          method.apiVersions
+        );
+      }
+    }
+  }
 
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
@@ -246,6 +261,15 @@ export function resolveArmResources(
   // move it into that resource as an Action (longest prefix wins).
   assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
 
+  // Compute per-resource API versions after all post-processing is complete,
+  // so that merged/moved methods are reflected in the final version set.
+  for (const resource of filteredResources) {
+    resource.metadata.apiVersions = resolveResourceApiVersions(
+      resource.metadata.methods,
+      methodApiVersionsMap
+    );
+  }
+
   return {
     resources: filteredResources,
     nonResourceMethods
@@ -395,6 +419,9 @@ function convertResolvedResourceToMetadata(
     maxLength: nameProperty ? getMaxLength(program, nameProperty) : undefined
   };
 
+  // API versions will be computed after post-processing when methods are finalized
+  const apiVersions: string[] = [];
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -409,7 +436,8 @@ function convertResolvedResourceToMetadata(
       resolvedResource.resourceInstancePath
     ),
     resourceName: resourceName,
-    nameConstraints
+    nameConstraints,
+    apiVersions
   };
 }
 
