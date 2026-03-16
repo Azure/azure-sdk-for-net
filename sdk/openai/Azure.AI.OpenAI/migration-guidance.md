@@ -55,11 +55,11 @@ using Azure;
 using Azure.AI.OpenAI;
 
 string endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
 string apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
 string deployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_DEPLOYMENT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_CHAT_DEPLOYMENT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_CHAT_DEPLOYMENT");
 
 AzureOpenAIClient azureClient = new(new Uri(endpoint), new ApiKeyCredential(apiKey));
 ChatClient chatClient = azureClient.GetChatClient(deployment);
@@ -73,21 +73,21 @@ using OpenAI.Chat;
 using System.ClientModel;
 
 string endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
 string apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
 string deployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_DEPLOYMENT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_CHAT_DEPLOYMENT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_CHAT_DEPLOYMENT");
 
 OpenAIClientOptions options = new()
 {
-	Endpoint = new Uri(endpoint)
+ Endpoint = new Uri(endpoint)
 };
 
 ChatClient chatClient = new(
-	model: deployment,
-	credential: new ApiKeyCredential(apiKey),
-	options: options);
+ model: deployment,
+ credential: new ApiKeyCredential(apiKey),
+ options: options);
 ```
 
 ### After (OpenAI SDK, Entra ID)
@@ -100,24 +100,24 @@ using System.ClientModel.Primitives;
 
 #pragma warning disable OPENAI001
 BearerTokenPolicy tokenPolicy = new(
-	new DefaultAzureCredential(),
-	"https://ai.azure.com/.default");
+ new DefaultAzureCredential(),
+ "https://ai.azure.com/.default");
 #pragma warning restore OPENAI001
 
 string endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
 string deployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_CHAT_DEPLOYMENT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_CHAT_DEPLOYMENT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_CHAT_DEPLOYMENT");
 
 OpenAIClientOptions options = new()
 {
-	Endpoint = new Uri($"{endpoint.TrimEnd('/')}/openai/v1/")
+ Endpoint = new Uri($"{endpoint.TrimEnd('/')}/openai/v1/")
 };
 
 ChatClient chatClient = new(
-	model: deployment,
-	authenticationPolicy: tokenPolicy,
-	options: options);
+ model: deployment,
+ authenticationPolicy: tokenPolicy,
+ options: options);
 ```
 
 ## 4. Update common calls
@@ -128,8 +128,8 @@ ChatClient chatClient = new(
 using OpenAI.Chat;
 
 ChatCompletion completion = chatClient.CompleteChat(
-	new SystemChatMessage("You are a concise assistant."),
-	new UserChatMessage("Summarize this migration in one sentence."));
+ new SystemChatMessage("You are a concise assistant."),
+ new UserChatMessage("Summarize this migration in one sentence."));
 
 Console.WriteLine(completion.Content[0].Text);
 ```
@@ -141,14 +141,14 @@ using System.ClientModel;
 using OpenAI.Chat;
 
 CollectionResult<StreamingChatCompletionUpdate> updates = chatClient.CompleteChatStreaming(
-	new UserChatMessage("Write a short onboarding message for our migration."));
+ new UserChatMessage("Write a short onboarding message for our migration."));
 
 foreach (StreamingChatCompletionUpdate update in updates)
 {
-	foreach (ChatMessageContentPart part in update.ContentUpdate)
-	{
-		Console.Write(part.Text);
-	}
+ foreach (ChatMessageContentPart part in update.ContentUpdate)
+ {
+  Console.Write(part.Text);
+ }
 }
 ```
 
@@ -180,27 +180,27 @@ using OpenAI.Audio;
 using System.ClientModel.Primitives;
 
 string endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_ENDPOINT");
 string audioDeployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_AUDIO_DEPLOYMENT")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_AUDIO_DEPLOYMENT");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_AUDIO_DEPLOYMENT");
 string apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY")
-	?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
+ ?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
 
 Uri audioEndpoint = new(
-	endpoint
-		.Replace("openai.azure.com/openai/v1/", $"cognitiveservices.azure.com/openai/deployments/{audioDeployment}/"));
+ endpoint
+  .Replace("openai.azure.com/openai/v1/", $"cognitiveservices.azure.com/openai/deployments/{audioDeployment}/"));
 
 OpenAIClientOptions audioOptions = new()
 {
-	Endpoint = audioEndpoint
+ Endpoint = audioEndpoint
 };
 
 audioOptions.AddPolicy(new ApiVersionPipelinePolicy("2025-03-01-preview"), PipelinePosition.BeforeTransport);
 
 AudioClient audioClient = new(
-	model: audioDeployment,
-	credential: new ApiKeyCredential(apiKey),
-	options: audioOptions);
+ model: audioDeployment,
+ credential: new ApiKeyCredential(apiKey),
+ options: audioOptions);
 ```
 
 Example policy implementation:
@@ -212,25 +212,25 @@ using System.ClientModel.Primitives;
 
 internal sealed class ApiVersionPipelinePolicy : PipelinePolicy
 {
-	private readonly string _version;
+ private readonly string _version;
 
-	public ApiVersionPipelinePolicy(string version = "2025-03-01-preview")
-	{
-		ArgumentException.ThrowIfNullOrEmpty(version);
-		_version = version;
-	}
+ public ApiVersionPipelinePolicy(string version = "2025-03-01-preview")
+ {
+  ArgumentException.ThrowIfNullOrEmpty(version);
+  _version = version;
+ }
 
-	public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-	{
-		message.Request.Uri = new(message.Request.Uri, $"?api-version={_version}");
-		ProcessNext(message, pipeline, currentIndex);
-	}
+ public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+ {
+  message.Request.Uri = new(message.Request.Uri, $"?api-version={_version}");
+  ProcessNext(message, pipeline, currentIndex);
+ }
 
-	public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-	{
-		message.Request.Uri = new(message.Request.Uri, $"?api-version={_version}");
-		await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-	}
+ public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+ {
+  message.Request.Uri = new(message.Request.Uri, $"?api-version={_version}");
+  await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+ }
 }
 ```
 
