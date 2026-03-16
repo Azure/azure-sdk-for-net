@@ -39,6 +39,7 @@ namespace Azure.Generator.Visitors
         private static readonly CSharpType TokenCredentialType = typeof(TokenCredential);
         private static readonly CSharpType AzureKeyCredentialType = typeof(AzureKeyCredential);
         private static readonly CSharpType HttpPipelinePolicyType = typeof(HttpPipelinePolicy);
+        private readonly HashSet<ClientOptionsProvider> _visitedOptions = new();
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
@@ -47,7 +48,7 @@ namespace Azure.Generator.Visitors
                 return base.Visit(client, clientProvider);
             }
 
-            if (clientProvider.ClientOptions != null)
+            if (clientProvider.ClientOptions != null && _visitedOptions.Add(clientProvider.ClientOptions))
             {
                 UpdateClientOptions(clientProvider.ClientOptions);
             }
