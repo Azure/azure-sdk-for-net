@@ -75,13 +75,26 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            foreach (var prop in _inputModel.Properties)
-            {
-                if (prop.IsDiscriminator) continue;
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-                var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(prop, this);
-                if (property != null)
-                    properties.Add(property);
+            // Collect properties from the model and its base chain.
+            // Non-discriminated models use ProvisionableConstruct as C# base (not the TypeSpec base),
+            // so inherited properties must be explicitly collected here.
+            var model = _inputModel;
+            while (model != null)
+            {
+                foreach (var prop in model.Properties)
+                {
+                    if (prop.IsDiscriminator) continue;
+                    if (!seen.Add(prop.Name)) continue;
+
+                    var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(prop, this);
+                    if (property != null)
+                        properties.Add(property);
+                }
+                // Discriminated types use C# inheritance, so only collect own properties
+                if (_inputModel.DiscriminatorValue != null) break;
+                model = model.BaseModel;
             }
             return [.. properties];
         }

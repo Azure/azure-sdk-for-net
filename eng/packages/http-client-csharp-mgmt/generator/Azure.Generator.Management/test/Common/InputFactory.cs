@@ -516,7 +516,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty,
+                Guid.NewGuid().ToString(),
                 pagingMetadata ?? PagingMetadata([], null, null));
         }
 

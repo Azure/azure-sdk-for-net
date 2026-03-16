@@ -8,4 +8,7 @@
     <ProjectReference Include="..\src\Azure.Provisioning.KeyVault.csproj" />
     <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
 </Project>
