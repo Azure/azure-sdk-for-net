@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
@@ -14,7 +16,10 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToNewSubClient
     {
         public MoveToNewSubClient() : this(new Uri("http://localhost:3000"), new MoveToNewSubClientOptions()) => throw null;
 
-        public MoveToNewSubClient(Uri endpoint, MoveToNewSubClientOptions options) => throw null;
+        public MoveToNewSubClient(Uri endpoint, MoveToNewSubClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public MoveToNewSubClient(MoveToNewSubClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

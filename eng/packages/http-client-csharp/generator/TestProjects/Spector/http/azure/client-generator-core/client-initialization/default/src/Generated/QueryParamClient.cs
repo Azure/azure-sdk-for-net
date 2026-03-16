@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,7 +23,10 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 
         public QueryParamClient(string blobName, QueryParamClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        public QueryParamClient(Uri endpoint, string blobName, QueryParamClientOptions options) => throw null;
+        public QueryParamClient(Uri endpoint, string blobName, QueryParamClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public QueryParamClient(QueryParamClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

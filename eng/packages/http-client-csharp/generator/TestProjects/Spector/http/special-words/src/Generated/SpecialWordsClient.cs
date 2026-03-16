@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using SpecialWords._ModelProperties;
 using SpecialWords._Models;
@@ -16,7 +18,10 @@ namespace SpecialWords
     {
         public SpecialWordsClient() : this(new Uri("http://localhost:3000"), new SpecialWordsClientOptions()) => throw null;
 
-        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) => throw null;
+        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public SpecialWordsClient(SpecialWordsClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

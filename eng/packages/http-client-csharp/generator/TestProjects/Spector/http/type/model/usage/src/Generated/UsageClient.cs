@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,7 +20,10 @@ namespace _Type.Model.Usage
     {
         public UsageClient() : this(new Uri("http://localhost:3000"), new UsageClientOptions()) => throw null;
 
-        public UsageClient(Uri endpoint, UsageClientOptions options) => throw null;
+        public UsageClient(Uri endpoint, UsageClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public UsageClient(UsageClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,10 @@ namespace Versioning.ReturnTypeChangedFrom
 
         public ReturnTypeChangedFromClient(Uri endpoint) : this(endpoint, new ReturnTypeChangedFromClientOptions()) => throw null;
 
-        public ReturnTypeChangedFromClient(Uri endpoint, ReturnTypeChangedFromClientOptions options) => throw null;
+        public ReturnTypeChangedFromClient(Uri endpoint, ReturnTypeChangedFromClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public ReturnTypeChangedFromClient(ReturnTypeChangedFromClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

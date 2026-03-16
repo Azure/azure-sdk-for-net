@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Serialization.EncodedName.Json._Property;
 
@@ -15,7 +17,10 @@ namespace Serialization.EncodedName.Json
     {
         public JsonClient() : this(new Uri("http://localhost:3000"), new JsonClientOptions()) => throw null;
 
-        public JsonClient(Uri endpoint, JsonClientOptions options) => throw null;
+        public JsonClient(Uri endpoint, JsonClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public JsonClient(JsonClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

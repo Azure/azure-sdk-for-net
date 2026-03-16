@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Client.Naming.EnumConflict
@@ -14,7 +16,10 @@ namespace Client.Naming.EnumConflict
     {
         public EnumConflictClient() : this(new Uri("http://localhost:3000"), new EnumConflictClientOptions()) => throw null;
 
-        public EnumConflictClient(Uri endpoint, EnumConflictClientOptions options) => throw null;
+        public EnumConflictClient(Uri endpoint, EnumConflictClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public EnumConflictClient(EnumConflictClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

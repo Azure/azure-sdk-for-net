@@ -6,9 +6,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Authentication.Http.Custom
@@ -21,7 +24,10 @@ namespace Authentication.Http.Custom
 
         public CustomClient(AzureKeyCredential credential, CustomClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
 
-        public CustomClient(Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) => throw null;
+        public CustomClient(Uri endpoint, AzureKeyCredential credential, CustomClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix), endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public CustomClient(CustomClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
