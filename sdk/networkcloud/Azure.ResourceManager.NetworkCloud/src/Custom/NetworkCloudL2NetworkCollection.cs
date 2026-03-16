@@ -73,6 +73,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, l2NetworkName, data, matchConditions: default, cancellationToken: cancellationToken);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, l2NetworkName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, l2NetworkName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of layer 2 (L2) networks in the provided resource group.
         /// <list type="bullet">

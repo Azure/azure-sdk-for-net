@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -159,6 +159,22 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, CancellationToken cancellationToken)
+            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => Delete(waitUntil, matchConditions: default, cancellationToken: cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await DeleteAsync(waitUntil, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
             => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

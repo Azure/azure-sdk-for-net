@@ -73,6 +73,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, volumeName, data, matchConditions: default, cancellationToken: cancellationToken);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, volumeName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, volumeName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of volumes in the provided resource group.
         /// <list type="bullet">

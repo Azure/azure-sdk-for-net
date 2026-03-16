@@ -72,6 +72,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, agentPoolName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, agentPoolName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, agentPoolName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of agent pools for the provided Kubernetes cluster.
         /// <list type="bullet">

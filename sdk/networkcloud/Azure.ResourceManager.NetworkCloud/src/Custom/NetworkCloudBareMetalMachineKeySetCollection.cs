@@ -72,6 +72,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of bare metal machine key sets for the provided cluster.
         /// <list type="bullet">

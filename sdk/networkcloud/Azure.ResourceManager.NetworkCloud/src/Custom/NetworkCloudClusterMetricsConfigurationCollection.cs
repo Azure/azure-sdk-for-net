@@ -72,6 +72,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of metrics configurations for the provided cluster.
         /// <list type="bullet">

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -159,5 +159,21 @@ namespace Azure.ResourceManager.NetworkCloud
             var operation = Delete(waitUntil, matchConditions: default, cancellationToken: cancellationToken);
             return new CustomNetworkCloudArmOperationWrapper<NetworkCloudOperationStatusResult>(operation);
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => Delete(waitUntil, matchConditions: default, cancellationToken: cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await DeleteAsync(waitUntil, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetworkCloudL2NetworkResource> Update(NetworkCloudL2NetworkPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => Update(patch, matchConditions: default, cancellationToken: cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetworkCloudL2NetworkResource>> UpdateAsync(NetworkCloudL2NetworkPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await UpdateAsync(patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

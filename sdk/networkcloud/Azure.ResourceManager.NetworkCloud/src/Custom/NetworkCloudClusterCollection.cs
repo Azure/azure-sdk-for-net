@@ -73,6 +73,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation<NetworkCloudClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, clusterName, data, matchConditions: default, cancellationToken: cancellationToken);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, clusterName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, NetworkCloudClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, clusterName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of clusters in the provided resource group.
         /// <list type="bullet">

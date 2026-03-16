@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation<NetworkCloudL3NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, l3NetworkName, data, matchConditions: default, cancellationToken: cancellationToken);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudL3NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, l3NetworkName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l3NetworkName, NetworkCloudL3NetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, l3NetworkName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of layer 3 (L3) networks in the provided resource group.
         /// <list type="bullet">

@@ -73,6 +73,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual ArmOperation<NetworkCloudVirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, virtualMachineName, data, matchConditions: default, cancellationToken: cancellationToken);
 
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudVirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, virtualMachineName, data, matchConditions: default, cancellationToken: cancellationToken);
+
+        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, virtualMachineName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         /// Get a list of virtual machines in the provided resource group.
         /// <list type="bullet">
