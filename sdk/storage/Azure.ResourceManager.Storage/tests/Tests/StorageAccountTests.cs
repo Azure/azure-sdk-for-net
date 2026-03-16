@@ -2596,8 +2596,16 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
             Assert.IsNull(account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.ActiveDirectoryDomainGuid);
 
-            // Get  storage account again
-            account = (await storageAccountCollection.GetAsync(accountName)).Value;
+            // List storage account
+            account = null;
+            await foreach (StorageAccountResource account1 in _resourceGroup.GetStorageAccounts().GetAllAsync())
+            {
+                if (account1.Id.Name == accountName)
+                {
+                    account = account1;
+                }
+            }
+            Assert.IsNotNull(account);
             Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
