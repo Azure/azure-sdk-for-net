@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsTlsVersion : IEquatable<EventHubsTlsVersion>
     {
         private readonly string _value;
-        private const string _10Value = "1.0";
-        private const string _11Value = "1.1";
-        private const string _12Value = "1.2";
-        private const string _13Value = "1.3";
+        private const string Tls10Value = "1.0";
+        private const string Tls11Value = "1.1";
+        private const string Tls12Value = "1.2";
+        private const string Tls13Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="EventHubsTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
