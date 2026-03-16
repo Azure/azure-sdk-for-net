@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -11,39 +10,37 @@ namespace Azure.Provisioning.DataFactory.Tests;
 
 public class BasicDataFactoryTests
 {
-    [Test]
-    public async Task CreateDataFactoryWithLinkedService()
+    internal static Trycep CreateDataFactoryWithLinkedServiceTest()
     {
-        await using Trycep test = new Trycep().Define(
+        return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:DataFactoryBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter connectionString =
                     new(nameof(connectionString), typeof(string))
                     {
-                        Description = "The connection string for the Azure Blob Storage account.",
+                        Description = "The connection string for the storage account.",
                         IsSecure = true
                     };
                 infra.Add(connectionString);
 
-                DataFactoryService adf =
-                    new(nameof(adf), DataFactoryService.ResourceVersions.V2018_06_01)
+                DataFactoryService dataFactory =
+                    new(nameof(dataFactory), DataFactoryService.ResourceVersions.V2018_06_01)
                     {
                         Identity = new ManagedServiceIdentity
                         {
                             ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
-                        },
-                        PublicNetworkAccess = DataFactoryPublicNetworkAccess.Disabled,
-                        Tags = { { "environment", "test" } }
+                        }
                     };
-                infra.Add(adf);
+                infra.Add(dataFactory);
 
                 DataFactoryLinkedService linkedService =
                     new(nameof(linkedService), DataFactoryLinkedService.ResourceVersions.V2018_06_01)
                     {
-                        Parent = adf,
-                        Name = "blobStorage",
+                        Parent = dataFactory,
+                        Name = "ArmtemplateStorageLinkedService",
                         Properties = new AzureBlobStorageLinkedService
                         {
                             ConnectionString = connectionString
@@ -51,93 +48,50 @@ public class BasicDataFactoryTests
                     };
                 infra.Add(linkedService);
 
-                infra.Add(new ProvisioningOutput("factoryName", typeof(string)) { Value = adf.Name });
-                infra.Add(new ProvisioningOutput("factoryId", typeof(string)) { Value = adf.Id });
+                infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = dataFactory.Name });
+                infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = dataFactory.Id });
+                #endregion
 
                 return infra;
             });
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.datafactory/data-factory-v2-blob-to-blob-copy/main.bicep")]
+    public async Task CreateDataFactoryWithLinkedService()
+    {
+        await using Trycep test = CreateDataFactoryWithLinkedServiceTest();
         test.Compare(
             """
             @secure()
-            @description('The connection string for the Azure Blob Storage account.')
+            @description('The connection string for the storage account.')
             param connectionString string
 
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource adf 'Microsoft.DataFactory/factories@2018-06-01' = {
-              name: take('adf-${uniqueString(resourceGroup().id)}', 63)
+            resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
+              name: take('dataFactory-${uniqueString(resourceGroup().id)}', 63)
               location: location
               identity: {
                 type: 'SystemAssigned'
               }
-              properties: {
-                publicNetworkAccess: 'Disabled'
-              }
-              tags: {
-                environment: 'test'
-              }
             }
 
             resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-              name: 'blobStorage'
+              name: 'ArmtemplateStorageLinkedService'
               properties: {
                 type: 'AzureBlobStorage'
                 typeProperties: {
                   connectionString: connectionString
                 }
               }
-              parent: adf
+              parent: dataFactory
             }
 
-            output factoryName string = adf.name
+            output name string = dataFactory.name
 
-            output factoryId string = adf.id
-            """);
-    }
-
-    [Test]
-    public async Task CreateDataFactoryWithPipeline()
-    {
-        await using Trycep test = new Trycep().Define(
-            ctx =>
-            {
-                Infrastructure infra = new();
-
-                DataFactoryService adf =
-                    new(nameof(adf), DataFactoryService.ResourceVersions.V2018_06_01);
-                infra.Add(adf);
-
-                DataFactoryPipeline pipeline =
-                    new(nameof(pipeline), DataFactoryPipeline.ResourceVersions.V2018_06_01)
-                    {
-                        Parent = adf,
-                        Name = "copyPipeline",
-                        Description = "A sample pipeline",
-                        Concurrency = 1
-                    };
-                infra.Add(pipeline);
-
-                return infra;
-            });
-        test.Compare(
-            """
-            @description('The location for the resource(s) to be deployed.')
-            param location string = resourceGroup().location
-
-            resource adf 'Microsoft.DataFactory/factories@2018-06-01' = {
-              name: take('adf-${uniqueString(resourceGroup().id)}', 63)
-              location: location
-            }
-
-            resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
-              name: 'copyPipeline'
-              properties: {
-                concurrency: 1
-                description: 'A sample pipeline'
-              }
-              parent: adf
-            }
+            output resourceId string = dataFactory.id
             """);
     }
 }
