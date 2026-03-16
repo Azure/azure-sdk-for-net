@@ -4,6 +4,7 @@ import "@azure-tools/typespec-azure-resource-manager";
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Foundations;
 using Azure.Core;
 
 namespace ProvisioningTypeSpec;
@@ -43,7 +44,7 @@ model ItemAttributes extends BaseItemAttributes {
 /** An item in a configuration store. */
 @parentResource(ConfigurationStore)
 @resource("items")
-model Item is ProxyResource<ItemProperties> {
+model Item is Azure.ResourceManager.ProxyResource<ItemProperties> {
   ...ResourceNameParameter<Item, SegmentName = "items">;
 
   /** Tags assigned to the item. */
@@ -81,8 +82,8 @@ interface Items {
   get is ArmResourceRead<Item>;
 
   @armResourceCreateOrUpdate(Item)
-  createOrUpdate is Azure.ResourceManager.Foundations.ArmCreateOperation<
-    ResourceInstanceParameters<Item, Azure.ResourceManager.Foundations.DefaultBaseParameters<Item>>,
+  createOrUpdate is ArmCreateOperation<
+    ResourceInstanceParameters<Item>,
     ItemCreateOrUpdateParameters,
     Response = ArmResponse<Item> | ArmResourceCreatedSyncResponse<Item>,
     ErrorResponse = ErrorResponse
