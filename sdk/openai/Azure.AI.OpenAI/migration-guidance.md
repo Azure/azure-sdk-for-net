@@ -177,6 +177,7 @@ One practical workaround is:
 ```csharp
 using OpenAI;
 using OpenAI.Audio;
+using System;
 using System.ClientModel.Primitives;
 
 string endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT")
@@ -186,9 +187,17 @@ string audioDeployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_AUDIO_
 string apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY")
 	?? throw new InvalidOperationException("Missing AZURE_OPENAI_API_KEY");
 
-Uri audioEndpoint = new(
-	endpoint
-		.Replace("openai.azure.com/openai/v1/", $"cognitiveservices.azure.com/openai/deployments/{audioDeployment}/"));
+Uri baseEndpointUri = new(endpoint);
+UriBuilder audioEndpointBuilder = new(baseEndpointUri)
+{
+	Host = baseEndpointUri.Host.Replace(
+		".openai.azure.com",
+		".cognitiveservices.azure.com",
+		StringComparison.OrdinalIgnoreCase),
+	Path = $"openai/deployments/{audioDeployment}/",
+	Query = string.Empty
+};
+Uri audioEndpoint = audioEndpointBuilder.Uri;
 
 OpenAIClientOptions audioOptions = new()
 {
