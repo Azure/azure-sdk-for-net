@@ -59,7 +59,44 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
-            return base.CreateClientCore(inputClient);
+            var client = base.CreateClientCore(inputClient);
+            if (client is null)
+            {
+                return null;
+            }
+
+            // Workaround for base generator bug: multi-service clients (combined via
+            // @client({ service: [...] })) produce duplicate API version fields because
+            // the field naming uses the C# namespace segment, and all sub-services share
+            // the same namespace. Deduplicate fields by name before BuildMethods calls
+            // Fields.ToDictionary() which would throw on duplicate keys.
+            var fields = client.Fields;
+            var seen = new HashSet<string>();
+            var hasDuplicates = false;
+            foreach (var f in fields)
+            {
+                if (!seen.Add(f.Name))
+                {
+                    hasDuplicates = true;
+                    break;
+                }
+            }
+
+            if (hasDuplicates)
+            {
+                seen.Clear();
+                var uniqueFields = new List<FieldProvider>();
+                foreach (var f in fields)
+                {
+                    if (seen.Add(f.Name))
+                    {
+                        uniqueFields.Add(f);
+                    }
+                }
+                client.Update(fields: uniqueFields.ToArray());
+            }
+
+            return client;
         }
 
         /// <inheritdoc/>

@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -46,9 +47,29 @@ internal class RestClientVisitor : ScmLibraryVisitor
 
     private void UpdateRootClient(ClientProvider rootClient)
     {
-        // fields
-        var apiVersionField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_apiVersion", rootClient);
-        var endpointField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(Uri), "_endpoint", rootClient);
+        // Reuse the ClientProvider's own FieldProvider objects. REST client
+        // methods reference these objects by identity, so creating new ones
+        // with different names (e.g., _apiVersion vs _serviceTestsApiVersion)
+        // causes unresolved references in the generated code.
+        var endpointField = rootClient.EndpointField;
+
+        // Collect API version fields from the client's existing fields.
+        // In multi-service clients the base generator uses namespace-derived
+        // names (e.g., _serviceTestsApiVersion) that the request builders reference.
+        var apiVersionFields = rootClient.Fields
+            .Where(f => f != endpointField && f.Name.IndexOf("apiVersion", StringComparison.OrdinalIgnoreCase) >= 0)
+            .ToList();
+
+        var fields = new System.Collections.Generic.List<FieldProvider> { endpointField };
+        if (apiVersionFields.Count > 0)
+        {
+            fields.AddRange(apiVersionFields);
+        }
+        else
+        {
+            // Fallback for clients with no API version fields
+            fields.Add(new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_apiVersion", rootClient));
+        }
 
         // properties
         var pipelineProperty = new PropertyProvider(
@@ -66,25 +87,31 @@ internal class RestClientVisitor : ScmLibraryVisitor
             body: new AutoPropertyBody(false),
             enclosingType: rootClient);
 
-        // constructor
+        // constructor — accepts a single apiVersion string and assigns it to
+        // all API version fields (which may differ only in name across services).
         var clientDiagnosticsParam = new ParameterProvider("clientDiagnostics", $"The ClientDiagnostics is used to provide tracing support for the client library.", typeof(ClientDiagnostics));
         var pipelineParam = new ParameterProvider("pipeline", $"The HTTP pipeline for sending and receiving REST requests and responses.", typeof(HttpPipeline));
         var endpointParam = new ParameterProvider("endpoint", $"Service endpoint.", typeof(Uri), null);
         var apiVersionParam = new ParameterProvider("apiVersion", $"The API version to use for this client.", typeof(string));
-        var ctorBody = new MethodBodyStatement[]
+
+        // Build constructor body: assign all fields from the corresponding parameters
+        var apiVersionFieldsOnly = fields.Where(f => f != endpointField).ToArray();
+        var assignments = new MethodBodyStatement[3 + apiVersionFieldsOnly.Length];
+        assignments[0] = clientDiagnosticsProperty.Assign(clientDiagnosticsParam).Terminate();
+        assignments[1] = endpointField.Assign(endpointParam).Terminate();
+        assignments[2] = pipelineProperty.Assign(pipelineParam).Terminate();
+        for (int i = 0; i < apiVersionFieldsOnly.Length; i++)
         {
-            clientDiagnosticsProperty.Assign(clientDiagnosticsParam).Terminate(),
-            endpointField.Assign(endpointParam).Terminate(),
-            pipelineProperty.Assign(pipelineParam).Terminate(),
-            apiVersionField.Assign(apiVersionParam).Terminate(),
-        };
+            assignments[3 + i] = apiVersionFieldsOnly[i].Assign(apiVersionParam).Terminate();
+        }
+
         var ctor = new ConstructorProvider(
             new ConstructorSignature(rootClient.Type, null, MethodSignatureModifiers.Public, [clientDiagnosticsParam, pipelineParam, endpointParam, apiVersionParam]),
-            ctorBody,
+            assignments,
             rootClient);
 
         rootClient.Update(
-            fields:[apiVersionField, endpointField],
+            fields: [.. fields],
             methods: [.. rootClient.RestClient.Methods], // put create request methods to client directly
             modifiers: TransformPublicModifiersToInternal(rootClient),
             relativeFilePath: TransformRelativeFilePathForClient(rootClient),

@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "MgmtTypeSpec": "2024-05-01",
+    "MgmtTypeSpecSecond": "2024-06-01"
+  }
+}
