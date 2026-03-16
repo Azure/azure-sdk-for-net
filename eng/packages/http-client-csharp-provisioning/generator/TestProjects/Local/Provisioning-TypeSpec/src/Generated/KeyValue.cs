@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Creates a new KeyValue. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public KeyValue(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/keyValues", resourceVersion ?? "2024-05-01")
+        public KeyValue(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/keyValues", resourceVersion)
         {
         }
 
@@ -123,12 +123,5 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 24, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
-
-        /// <summary></summary>
-        public static partial class ResourceVersions
-        {
-            /// <summary> API version "2024-05-01". </summary>
-            public static readonly string V2024_05_01 = "2024-05-01";
-        }
     }
 }
