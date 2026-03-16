@@ -20,7 +20,24 @@ namespace Azure.ResourceManager.Batch.Models
         {
             get => EndpointConfiguration is null ? default : EndpointConfiguration.InboundNatPools;
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set => EndpointConfiguration = new PoolEndpointConfiguration(value);
+            set 
+            {
+                if (value is null)
+                {
+                   EndpointConfiguration = null;
+                }
+                else
+                {
+                    if (EndpointConfiguration is null)
+                    {
+                        EndpointConfiguration = new PoolEndpointConfiguration(value);
+                    }
+                     else
+                    {
+                     EndpointConfiguration.InboundNatPools = value;
+                    }
+                }
+            }
         }
     }
 }
