@@ -23,7 +23,7 @@ namespace Azure.Generator.Management.Tests.Providers
         [TestCase]
         public void PagingAction_DoesNotResourceWrap_ReturnType()
         {
-            var (ServerModel, ConfigModel) = SetupPagingActionScenario(out var plugin);
+            SetupPagingActionScenario(out var plugin);
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
             Assert.NotNull(outputLibrary);
 
@@ -33,11 +33,12 @@ namespace Azure.Generator.Management.Tests.Providers
                 .FirstOrDefault(p => p.Name == "ServerResource");
             Assert.NotNull(serverResourceProvider, "ServerResource provider should exist");
 
-            // Find the paging action method (listConfigurations / listConfigurationsAsync)
+            // Find the sync paging action method, explicitly excluding Async variants
             var listConfigMethod = serverResourceProvider!.Methods
-                .FirstOrDefault(m => m.Signature.Name.StartsWith("GetConfigurations", StringComparison.OrdinalIgnoreCase)
-                    || m.Signature.Name.StartsWith("listConfigurations", StringComparison.OrdinalIgnoreCase));
-            Assert.NotNull(listConfigMethod, "Paging action method should exist on ServerResource");
+                .FirstOrDefault(m => !m.Signature.Name.EndsWith("Async", StringComparison.OrdinalIgnoreCase)
+                    && (m.Signature.Name.StartsWith("GetConfigurations", StringComparison.OrdinalIgnoreCase)
+                        || m.Signature.Name.StartsWith("listConfigurations", StringComparison.OrdinalIgnoreCase)));
+            Assert.NotNull(listConfigMethod, "Sync paging action method should exist on ServerResource");
 
             var returnType = listConfigMethod!.Signature.ReturnType;
             Assert.NotNull(returnType);
@@ -61,7 +62,7 @@ namespace Azure.Generator.Management.Tests.Providers
         [TestCase]
         public void PagingAction_DoesNotResourceWrap_AsyncReturnType()
         {
-            var (ServerModel, ConfigModel) = SetupPagingActionScenario(out var plugin);
+            SetupPagingActionScenario(out var plugin);
             var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
             Assert.NotNull(outputLibrary);
 
@@ -97,7 +98,7 @@ namespace Azure.Generator.Management.Tests.Providers
         /// This models the real-world case from the issue: listByServer is an action on ClusterServer
         /// that returns ServerConfiguration items.
         /// </summary>
-        private static (InputModelType ServerModel, InputModelType ConfigModel) SetupPagingActionScenario(
+        private static void SetupPagingActionScenario(
             out Moq.Mock<ManagementClientGenerator> plugin)
         {
             // Create the child resource model (Configuration) - this is what the paging action returns
@@ -236,8 +237,6 @@ namespace Azure.Generator.Management.Tests.Providers
             plugin = ManagementMockHelpers.LoadMockPlugin(
                 inputModels: () => [serverModel, configModel, pageModel],
                 clients: () => [client]);
-
-            return (serverModel, configModel);
         }
 
         private static InputDecoratorInfo BuildArmProviderSchema(
