@@ -30,3 +30,4 @@ description: Samples for the Azure.Messaging.ServiceBus client library
 - [Cross-receiver message settlement](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample16_CrossReceiverMessageSettlement.md)
 - [Batch delete](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample17_BatchDelete.md)
 - [Long-running processing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample18_LongRunningProcessing.md)
+- [Distributed tracing and monitoring](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample19_DistributedTracing.md)

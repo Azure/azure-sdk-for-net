@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpDiagnosticResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpDiagnosticResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 

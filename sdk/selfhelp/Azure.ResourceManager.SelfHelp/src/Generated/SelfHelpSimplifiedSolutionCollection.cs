@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SelfHelpSimplifiedSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpSimplifiedSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SelfHelpSimplifiedSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpSimplifiedSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string simplifiedSolutionsResourceName, SelfHelpSimplifiedSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
 

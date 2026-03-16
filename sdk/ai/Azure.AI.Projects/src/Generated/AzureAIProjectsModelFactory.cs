@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
-using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
@@ -1100,6 +1099,17 @@ namespace Azure.AI.Projects
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
         }
 
+        /// <summary> Paged collection of Insight items. </summary>
+        /// <param name="value"> The Insight items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Core.PagedInsight"/> instance for mocking. </returns>
+        public static PagedInsight PagedInsight(IEnumerable<Insight> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<Insight>();
+
+            return new PagedInsight(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Schedule model. </summary>
         /// <param name="id"> Identifier of the schedule. </param>
         /// <param name="displayName"> Name of the schedule. </param>
@@ -1389,16 +1399,16 @@ namespace Azure.AI.Projects
         /// <param name="fileId"></param>
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
-        /// <param name="fileUrl"></param>
+        /// <param name="fileUri"></param>
         /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUrl = default)
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default)
         {
             return new InputFileContentParam(
                 "input_file",
                 fileId,
                 filename,
                 fileData,
-                fileUrl,
+                fileUri,
                 additionalBinaryDataProperties: null);
         }
 

@@ -94,6 +94,8 @@ public class ClientLoggingOptions
         {
             MessageContentSizeLimit = messageContentSizeLimit;
         }
+
+        BindStringListProperties(section);
     }
 
     /// <summary>
@@ -334,6 +336,38 @@ public class ClientLoggingOptions
             && EnableMessageContentLogging == true)
         {
             throw new InvalidOperationException("HTTP Message content logging cannot be enabled when HTTP message logging is disabled.");
+        }
+    }
+
+    private const string AdditionalAllowedHeaderNamesKey = "AdditionalAllowedHeaderNames";
+    private const string AdditionalAllowedQueryParametersKey = "AdditionalAllowedQueryParameters";
+
+    private void BindStringListProperties(IConfigurationSection section)
+    {
+        IConfigurationSection additionalHeaders = section.GetSection(AdditionalAllowedHeaderNamesKey);
+        if (additionalHeaders.Exists())
+        {
+            HashSet<string> existing = new(AllowedHeaderNames, StringComparer.OrdinalIgnoreCase);
+            foreach (IConfigurationSection child in additionalHeaders.GetChildren())
+            {
+                if (child.Value is not null && existing.Add(child.Value))
+                {
+                    AllowedHeaderNames.Add(child.Value);
+                }
+            }
+        }
+
+        IConfigurationSection additionalQueryParams = section.GetSection(AdditionalAllowedQueryParametersKey);
+        if (additionalQueryParams.Exists())
+        {
+            HashSet<string> existing = new(AllowedQueryParameters, StringComparer.OrdinalIgnoreCase);
+            foreach (IConfigurationSection child in additionalQueryParams.GetChildren())
+            {
+                if (child.Value is not null && existing.Add(child.Value))
+                {
+                    AllowedQueryParameters.Add(child.Value);
+                }
+            }
         }
     }
 

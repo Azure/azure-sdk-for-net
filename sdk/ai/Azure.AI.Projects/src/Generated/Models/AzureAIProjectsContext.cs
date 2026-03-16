@@ -4,7 +4,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.Core;
-using Azure.Core.Foundations;
 using OpenAI;
 
 namespace Azure.AI.Projects

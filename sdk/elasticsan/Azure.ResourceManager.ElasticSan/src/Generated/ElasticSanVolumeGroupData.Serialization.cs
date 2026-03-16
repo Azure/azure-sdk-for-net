@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticSanVolumeGroupData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticSanVolumeGroupData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticSanVolumeGroupData"/> from. </param>
