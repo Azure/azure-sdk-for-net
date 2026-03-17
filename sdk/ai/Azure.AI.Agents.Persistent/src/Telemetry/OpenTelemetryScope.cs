@@ -1290,12 +1290,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             {
                 toolCall.ToRequestContent().WriteTo(memStream, default);
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException) when (toolCall is RunStepOpenAPIToolCall c && c.OpenAPI is null)
             {
                 // Some tool call types may have null properties when partially deserialized
                 // during streaming. Return empty details rather than crashing telemetry.
                 return toolDetails;
             }
+
             // Reset stream position to the beginning.
             memStream.Position = 0;
             using var tempDoc = JsonDocument.Parse(memStream);
