@@ -516,7 +516,7 @@ namespace Azure.Generator.Management.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty,
+                Guid.NewGuid().ToString(),
                 pagingMetadata ?? PagingMetadata([], null, null));
         }
 
@@ -663,8 +663,9 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="parent"></param>
         /// <param name="decorators"></param>
         /// <param name="crossLanguageDefinitionId"></param>
+        /// <param name="apiVersions"></param>
         /// <returns></returns>
-        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputServiceMethod>? methods = null, IEnumerable<InputParameter>? parameters = null, InputClient? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null, string? crossLanguageDefinitionId = null, IReadOnlyList<string>? apiVersions = null)
         {
             // when this client has parent, we add the constructed client into the `children` list of the parent
             var clientChildren = new List<InputClient>();
@@ -679,7 +680,7 @@ namespace Azure.Generator.Management.Tests.Common
                 parameters is null ? [] : [.. parameters],
                 parent,
                 clientChildren,
-                []
+                apiVersions ?? ["2023-01-01"]
                 );
             _childClientsCache[client] = clientChildren;
             // when we have a parent, we need to find the children list of this parent client and update accordingly.

@@ -53,8 +53,8 @@ dotnet add package Azure.AI.Extensions.OpenAI --prerelease
 To be able to create, update and delete Agents, please use `AgentsClient`. It is a good practice to only allow this operation for users with elevated permissions, for example, administrators.
 
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AgentsClientOptions options = new()
 {
     Endpoint = new Uri(projectEndpoint)

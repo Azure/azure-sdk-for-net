@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Quota
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(subscriptionQuotaAllocationsListData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(subscriptionQuotaAllocationsListData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SubscriptionQuotaAllocationsListData"/> from. </param>

@@ -9,8 +9,8 @@ In this example we will use the Agent to perform the web search in given locatio
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_WebSearch
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -56,14 +56,45 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseResult response = await responseClient.CreateResponseAsync("Show me the latest London Underground service updates");
 ```
 
-4. Create the response and throw an exception if the response contains the error.
+4. To get the formatted annotation we will use the `GetFormattedAnnotation` method.
+
+```C# Snippet:Sample_FormatReference_WebSearch
+private static string GetFormattedAnnotation(ResponseResult results)
+{
+    StringBuilder references = new();
+    foreach (ResponseItem item in results.OutputItems)
+    {
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        references.Append($"[{uriAnnotation.Title}]({uriAnnotation.Uri}),");
+                    }
+                }
+            }
+        }
+    }
+    if (references.Length > 0)
+    {
+        // Remove the last comma.
+        references.Remove(references.Length - 1, 1);
+    }
+    return references.ToString();
+}
+```
+
+5. Create the response and throw an exception if the response contains the error.
 
 ```C# Snippet:Sample_WaitForResponse_WebSearch
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-Console.WriteLine(response.GetOutputText());
+Console.WriteLine($"{response.GetOutputText()} {GetFormattedAnnotation(response)}");
 ```
 
-5. Finally, delete all the resources we have created in this sample.
+6. Finally, delete all the resources we have created in this sample.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearch_Sync

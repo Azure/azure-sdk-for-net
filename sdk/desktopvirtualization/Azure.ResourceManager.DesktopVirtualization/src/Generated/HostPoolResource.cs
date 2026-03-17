@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HostPoolResource> Update(HostPoolPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolResource> Update(HostPoolPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Update");
             scope.Start();

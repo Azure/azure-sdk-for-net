@@ -9,14 +9,738 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmConfluentModelFactory
     {
+        /// <param name="kind"> Type of api key. </param>
+        /// <param name="id"> Id of the api key. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="spec"> Specification of the API Key. </param>
+        /// <returns> A new <see cref="Models.ConfluentApiKeyRecord"/> instance for mocking. </returns>
+        public static ConfluentApiKeyRecord ConfluentApiKeyRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, ApiKeySpecEntity spec = default)
+        {
+            return new ConfluentApiKeyRecord(kind, id, metadata is null && spec is null ? default : new APIKeyProperties(metadata, spec, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Spec of the API Key record. </summary>
+        /// <param name="description"> The description of the API Key. </param>
+        /// <param name="name"> The name of the API Key. </param>
+        /// <param name="secret"> API Key Secret. </param>
+        /// <param name="resource"> Specification of the cluster. </param>
+        /// <param name="owner"> Specification of the cluster. </param>
+        /// <returns> A new <see cref="Models.ApiKeySpecEntity"/> instance for mocking. </returns>
+        public static ApiKeySpecEntity ApiKeySpecEntity(string description = default, string name = default, string secret = default, ApiKeyResourceEntity resource = default, ApiKeyOwnerEntity owner = default)
+        {
+            return new ApiKeySpecEntity(
+                description,
+                name,
+                secret,
+                resource,
+                owner,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> API Key Resource details which can be kafka cluster or schema registry cluster. </summary>
+        /// <param name="id"> Id of the resource. </param>
+        /// <param name="environment"> The environment of the api key. </param>
+        /// <param name="related"> API URL for accessing or modifying the api key resource object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <param name="kind"> Type of the owner which can be service or user account. </param>
+        /// <returns> A new <see cref="Models.ApiKeyResourceEntity"/> instance for mocking. </returns>
+        public static ApiKeyResourceEntity ApiKeyResourceEntity(string id = default, string environment = default, string related = default, string resourceName = default, string kind = default)
+        {
+            return new ApiKeyResourceEntity(
+                id,
+                environment,
+                related,
+                resourceName,
+                kind,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> API Key Owner details which can be a user or service account. </summary>
+        /// <param name="id"> API Key owner id. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <param name="kind"> Type of the owner service or user account. </param>
+        /// <returns> A new <see cref="Models.ApiKeyOwnerEntity"/> instance for mocking. </returns>
+        public static ApiKeyOwnerEntity ApiKeyOwnerEntity(string id = default, string related = default, string resourceName = default, string kind = default)
+        {
+            return new ApiKeyOwnerEntity(id, related, resourceName, kind, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="createdOn"> The creation time of the resource. </param>
+        /// <param name="provisioningState"> Provision states for confluent RP. </param>
+        /// <param name="organizationId"> Id of the Confluent organization. </param>
+        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
+        /// <param name="offerDetail"> Confluent offer detail. </param>
+        /// <param name="userDetail"> Subscriber detail. </param>
+        /// <param name="linkOrganizationToken"> User auth token. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
+        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                    createdOn,
+                    provisioningState,
+                    organizationId,
+                    ssoUri,
+                    offerDetail,
+                    userDetail,
+                    new LinkOrganization(linkOrganizationToken, null),
+                    null));
+        }
+
+        /// <summary> Confluent Offer detail. </summary>
+        /// <param name="publisherId"> Publisher Id. </param>
+        /// <param name="id"> Offer Id. </param>
+        /// <param name="planId"> Offer Plan Id. </param>
+        /// <param name="planName"> Offer Plan Name. </param>
+        /// <param name="termUnit"> Offer Plan Term unit. </param>
+        /// <param name="termId"> Offer Plan Term Id. </param>
+        /// <param name="privateOfferId"> Private Offer Id. </param>
+        /// <param name="privateOfferIds"> Array of Private Offer Ids. </param>
+        /// <param name="status"> SaaS Offer Status. </param>
+        /// <returns> A new <see cref="Models.ConfluentOfferDetail"/> instance for mocking. </returns>
+        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId = default, string id = default, string planId = default, string planName = default, string termUnit = default, string termId = default, string privateOfferId = default, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
+        {
+            privateOfferIds ??= new ChangeTrackingList<string>();
+
+            return new ConfluentOfferDetail(
+                publisherId,
+                id,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                privateOfferId,
+                privateOfferIds.ToList(),
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Organization Resource update. </summary>
+        /// <param name="tags"> ARM resource tags. </param>
+        /// <returns> A new <see cref="Models.ConfluentOrganizationPatch"/> instance for mocking. </returns>
+        public static ConfluentOrganizationPatch ConfluentOrganizationPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfluentOrganizationPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List Access Request Model. </summary>
+        /// <param name="searchFilters"> Search filters for the request. </param>
+        /// <returns> A new <see cref="Models.AccessListContent"/> instance for mocking. </returns>
+        public static AccessListContent AccessListContent(IDictionary<string, string> searchFilters = default)
+        {
+            searchFilters ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AccessListContent(searchFilters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of POST request to list regions supported by confluent. </summary>
+        /// <param name="data"> List of regions supported by confluent. </param>
+        /// <returns> A new <see cref="Models.ConfluentRegionListResult"/> instance for mocking. </returns>
+        public static ConfluentRegionListResult ConfluentRegionListResult(IEnumerable<ConfluentRegionRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<ConfluentRegionRecord>();
+
+            return new ConfluentRegionListResult(data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="kind"> Kind of the cluster. </param>
+        /// <param name="id"> Id of the cluster. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="spec"> Specification of the region. </param>
+        /// <returns> A new <see cref="Models.ConfluentRegionRecord"/> instance for mocking. </returns>
+        public static ConfluentRegionRecord ConfluentRegionRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, RegionSpecEntity spec = default)
+        {
+            return new ConfluentRegionRecord(kind, id, metadata is null && spec is null ? default : new RegionProperties(metadata, spec, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Region spec details. </summary>
+        /// <param name="name"> Display Name of the region. </param>
+        /// <param name="cloud"> Cloud provider name. </param>
+        /// <param name="regionName"> Region name. </param>
+        /// <param name="packages"></param>
+        /// <returns> A new <see cref="Models.RegionSpecEntity"/> instance for mocking. </returns>
+        public static RegionSpecEntity RegionSpecEntity(string name = default, string cloud = default, string regionName = default, IEnumerable<string> packages = default)
+        {
+            packages ??= new ChangeTrackingList<string>();
+
+            return new RegionSpecEntity(name, cloud, regionName, packages.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List users success response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the list. </param>
+        /// <param name="data"> Data of the users list. </param>
+        /// <returns> A new <see cref="Models.AccessUserListResult"/> instance for mocking. </returns>
+        public static AccessUserListResult AccessUserListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<AccessUserRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<AccessUserRecord>();
+
+            return new AccessUserListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metadata of the list. </summary>
+        /// <param name="first"> First page of the list. </param>
+        /// <param name="last"> Last page of the list. </param>
+        /// <param name="prev"> Previous page of the list. </param>
+        /// <param name="next"> Next page of the list. </param>
+        /// <param name="totalSize"> Total size of the list. </param>
+        /// <returns> A new <see cref="Models.ConfluentListMetadata"/> instance for mocking. </returns>
+        public static ConfluentListMetadata ConfluentListMetadata(string first = default, string last = default, string prev = default, string next = default, int? totalSize = default)
+        {
+            return new ConfluentListMetadata(
+                first,
+                last,
+                prev,
+                next,
+                totalSize,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Record of the user. </summary>
+        /// <param name="kind"> Type of account. </param>
+        /// <param name="id"> Id of the user. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="email"> Email of the user. </param>
+        /// <param name="fullName"> Name of the user. </param>
+        /// <param name="authType"> Auth type of the user. </param>
+        /// <returns> A new <see cref="Models.AccessUserRecord"/> instance for mocking. </returns>
+        public static AccessUserRecord AccessUserRecord(string kind = default, string id = default, MetadataEntity metadata = default, string email = default, string fullName = default, string authType = default)
+        {
+            return new AccessUserRecord(
+                kind,
+                id,
+                metadata,
+                email,
+                fullName,
+                authType,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metadata of the data record. </summary>
+        /// <param name="self"> Self lookup url. </param>
+        /// <param name="resourceName"> Resource name of the record. </param>
+        /// <param name="createdOn"> Created Date Time. </param>
+        /// <param name="updatedOn"> Updated Date time. </param>
+        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <returns> A new <see cref="Models.MetadataEntity"/> instance for mocking. </returns>
+        public static MetadataEntity MetadataEntity(string self = default, string resourceName = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, DateTimeOffset? deletedOn = default)
+        {
+            return new MetadataEntity(
+                self,
+                resourceName,
+                createdOn,
+                updatedOn,
+                deletedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List service accounts success response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the list. </param>
+        /// <param name="data"> Data of the service accounts list. </param>
+        /// <returns> A new <see cref="Models.AccessServiceAccountListResult"/> instance for mocking. </returns>
+        public static AccessServiceAccountListResult AccessServiceAccountListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<AccessServiceAccountRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<AccessServiceAccountRecord>();
+
+            return new AccessServiceAccountListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Record of the service account. </summary>
+        /// <param name="kind"> Type of account. </param>
+        /// <param name="id"> Id of the service account. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="displayName"> Name of the service account. </param>
+        /// <param name="description"> Description of the service account. </param>
+        /// <returns> A new <see cref="Models.AccessServiceAccountRecord"/> instance for mocking. </returns>
+        public static AccessServiceAccountRecord AccessServiceAccountRecord(string kind = default, string id = default, MetadataEntity metadata = default, string displayName = default, string description = default)
+        {
+            return new AccessServiceAccountRecord(
+                kind,
+                id,
+                metadata,
+                displayName,
+                description,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> List invitations success response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the list. </param>
+        /// <param name="data"> Data of the invitations list. </param>
+        /// <returns> A new <see cref="Models.AccessInvitationListResult"/> instance for mocking. </returns>
+        public static AccessInvitationListResult AccessInvitationListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<AccessInvitationRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<AccessInvitationRecord>();
+
+            return new AccessInvitationListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Record of the invitation. </summary>
+        /// <param name="kind"> Type of account. </param>
+        /// <param name="id"> Id of the invitation. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="email"> Email of the user. </param>
+        /// <param name="authType"> Auth type of the user. </param>
+        /// <param name="status"> Status of the invitation. </param>
+        /// <param name="acceptedOn"> Accepted date time of the invitation. </param>
+        /// <param name="expireOn"> Expiration date time of the invitation. </param>
+        /// <returns> A new <see cref="Models.AccessInvitationRecord"/> instance for mocking. </returns>
+        public static AccessInvitationRecord AccessInvitationRecord(string kind = default, string id = default, MetadataEntity metadata = default, string email = default, string authType = default, string status = default, DateTimeOffset? acceptedOn = default, DateTimeOffset? expireOn = default)
+        {
+            return new AccessInvitationRecord(
+                kind,
+                id,
+                metadata,
+                email,
+                authType,
+                status,
+                acceptedOn,
+                expireOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the environments returned on successful response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the  environment list. </param>
+        /// <param name="data"> Environment list data. </param>
+        /// <returns> A new <see cref="Models.AccessEnvironmentListResult"/> instance for mocking. </returns>
+        public static AccessEnvironmentListResult AccessEnvironmentListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<AccessEnvironmentRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<AccessEnvironmentRecord>();
+
+            return new AccessEnvironmentListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details about environment name, metadata and environment id of an environment. </summary>
+        /// <param name="kind"> Type of environment. </param>
+        /// <param name="id"> Id of the environment. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="displayName"> Display name of the user. </param>
+        /// <returns> A new <see cref="Models.AccessEnvironmentRecord"/> instance for mocking. </returns>
+        public static AccessEnvironmentRecord AccessEnvironmentRecord(string kind = default, string id = default, MetadataEntity metadata = default, string displayName = default)
+        {
+            return new AccessEnvironmentRecord(kind, id, metadata, displayName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the clusters returned on successful response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the list. </param>
+        /// <param name="data"> List of clusters. </param>
+        /// <returns> A new <see cref="Models.AccessClusterListResult"/> instance for mocking. </returns>
+        public static AccessClusterListResult AccessClusterListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<AccessClusterRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<AccessClusterRecord>();
+
+            return new AccessClusterListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of cluster record. </summary>
+        /// <param name="kind"> Type of cluster. </param>
+        /// <param name="id"> Id of the cluster. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="displayName"> Display name of the cluster. </param>
+        /// <param name="spec"> Specification of the cluster. </param>
+        /// <param name="status"> Specification of the cluster. </param>
+        /// <returns> A new <see cref="Models.AccessClusterRecord"/> instance for mocking. </returns>
+        public static AccessClusterRecord AccessClusterRecord(string kind = default, string id = default, MetadataEntity metadata = default, string displayName = default, ClusterSpecEntity spec = default, ClusterStatusEntity status = default)
+        {
+            return new AccessClusterRecord(
+                kind,
+                id,
+                metadata,
+                displayName,
+                spec,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="displayName"> The name of the cluster. </param>
+        /// <param name="availability"> The availability zone configuration of the cluster. </param>
+        /// <param name="cloud"> The cloud service provider. </param>
+        /// <param name="zone"> type of zone availability. </param>
+        /// <param name="region"> The cloud service provider region. </param>
+        /// <param name="kafkaBootstrapEndpoint"> The bootstrap endpoint used by Kafka clients to connect to the cluster. </param>
+        /// <param name="httpEndpoint"> The cluster HTTP request URL. </param>
+        /// <param name="apiEndpoint"> The Kafka API cluster endpoint. </param>
+        /// <param name="configKind"> The lifecycle phase of the cluster. </param>
+        /// <param name="environment"> Specification of the cluster. </param>
+        /// <param name="network"> Specification of the cluster. </param>
+        /// <param name="byok"> Specification of the cluster. </param>
+        /// <returns> A new <see cref="Models.ClusterSpecEntity"/> instance for mocking. </returns>
+        public static ClusterSpecEntity ClusterSpecEntity(string displayName = default, string availability = default, string cloud = default, string zone = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, ClusterEnvironmentEntity environment = default, ClusterNetworkEntity network = default, ClusterByokEntity byok = default)
+        {
+            return new ClusterSpecEntity(
+                displayName,
+                availability,
+                cloud,
+                zone,
+                region,
+                kafkaBootstrapEndpoint,
+                httpEndpoint,
+                apiEndpoint,
+                configKind is null ? default : new ClusterConfigEntity(configKind, null),
+                environment,
+                network,
+                byok,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The environment to which cluster belongs. </summary>
+        /// <param name="id"> ID of the referred resource. </param>
+        /// <param name="environment"> Environment of the referred resource. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <returns> A new <see cref="Models.ClusterEnvironmentEntity"/> instance for mocking. </returns>
+        public static ClusterEnvironmentEntity ClusterEnvironmentEntity(string id = default, string environment = default, string related = default, string resourceName = default)
+        {
+            return new ClusterEnvironmentEntity(id, environment, related, resourceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The network associated with this object. </summary>
+        /// <param name="id"> ID of the referred resource. </param>
+        /// <param name="environment"> Environment of the referred resource. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <returns> A new <see cref="Models.ClusterNetworkEntity"/> instance for mocking. </returns>
+        public static ClusterNetworkEntity ClusterNetworkEntity(string id = default, string environment = default, string related = default, string resourceName = default)
+        {
+            return new ClusterNetworkEntity(id, environment, related, resourceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The network associated with this object. </summary>
+        /// <param name="id"> ID of the referred resource. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <returns> A new <see cref="Models.ClusterByokEntity"/> instance for mocking. </returns>
+        public static ClusterByokEntity ClusterByokEntity(string id = default, string related = default, string resourceName = default)
+        {
+            return new ClusterByokEntity(id, related, resourceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the role bindings returned on successful response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the list. </param>
+        /// <param name="data"> List of role binding. </param>
+        /// <returns> A new <see cref="Models.AccessRoleBindingListResult"/> instance for mocking. </returns>
+        public static AccessRoleBindingListResult AccessRoleBindingListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<AccessRoleBindingRecord> data = default)
+        {
+            data ??= new ChangeTrackingList<AccessRoleBindingRecord>();
+
+            return new AccessRoleBindingListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details on principal, role name and crn pattern of a role binding. </summary>
+        /// <param name="kind"> The type of the resource. </param>
+        /// <param name="id"> Id of the role binding. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="principal"> The principal User or Group to bind the role to. </param>
+        /// <param name="roleName"> The name of the role to bind to the principal. </param>
+        /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
+        /// <returns> A new <see cref="Models.AccessRoleBindingRecord"/> instance for mocking. </returns>
+        public static AccessRoleBindingRecord AccessRoleBindingRecord(string kind = default, string id = default, MetadataEntity metadata = default, string principal = default, string roleName = default, string crnPattern = default)
+        {
+            return new AccessRoleBindingRecord(
+                kind,
+                id,
+                metadata,
+                principal,
+                roleName,
+                crnPattern,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of the role binding names returned on successful response. </summary>
+        /// <param name="kind"> Type of response. </param>
+        /// <param name="metadata"> Metadata of the list. </param>
+        /// <param name="data"> List of role binding names. </param>
+        /// <returns> A new <see cref="Models.AccessRoleBindingNameListResult"/> instance for mocking. </returns>
+        public static AccessRoleBindingNameListResult AccessRoleBindingNameListResult(string kind = default, ConfluentListMetadata metadata = default, IEnumerable<string> data = default)
+        {
+            data ??= new ChangeTrackingList<string>();
+
+            return new AccessRoleBindingNameListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Type of environment. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="streamGovernanceConfigPackage"> Stream governance configuration. </param>
+        /// <returns> A new <see cref="Confluent.SCEnvironmentRecordData"/> instance for mocking. </returns>
+        public static SCEnvironmentRecordData SCEnvironmentRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, ConfluentPackage? streamGovernanceConfigPackage = default)
+        {
+            return new SCEnvironmentRecordData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                kind,
+                metadata is null && streamGovernanceConfigPackage is null ? default : new EnvironmentProperties(new StreamGovernanceConfig(streamGovernanceConfigPackage, null), metadata, null));
+        }
+
+        /// <param name="kind"> Kind of the cluster. </param>
+        /// <param name="id"> Id of the cluster. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="spec"> Specification of the schema registry cluster. </param>
+        /// <param name="statusPhase"> The lifecycle phase of the cluster. </param>
+        /// <returns> A new <see cref="Models.SchemaRegistryClusterRecord"/> instance for mocking. </returns>
+        public static SchemaRegistryClusterRecord SchemaRegistryClusterRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, SchemaRegistryClusterSpecEntity spec = default, string statusPhase = default)
+        {
+            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, new SchemaRegistryClusterStatusEntity(statusPhase, null), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of schema registry cluster spec. </summary>
+        /// <param name="name"> Name of the schema registry cluster. </param>
+        /// <param name="httpEndpoint"> Http endpoint of the cluster. </param>
+        /// <param name="package"> Type of the cluster package Advanced, essentials. </param>
+        /// <param name="region"> Region details of the schema registry cluster. </param>
+        /// <param name="environment"> Environment details of the schema registry cluster. </param>
+        /// <param name="cloud"> The cloud service provider. </param>
+        /// <returns> A new <see cref="Models.SchemaRegistryClusterSpecEntity"/> instance for mocking. </returns>
+        public static SchemaRegistryClusterSpecEntity SchemaRegistryClusterSpecEntity(string name = default, string httpEndpoint = default, string package = default, SchemaRegistryClusterEnvironmentRegionEntity region = default, SchemaRegistryClusterEnvironmentRegionEntity environment = default, string cloud = default)
+        {
+            return new SchemaRegistryClusterSpecEntity(
+                name,
+                httpEndpoint,
+                package,
+                region,
+                environment,
+                cloud,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The environment associated with this object. </summary>
+        /// <param name="id"> ID of the referred resource. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <returns> A new <see cref="Models.SchemaRegistryClusterEnvironmentRegionEntity"/> instance for mocking. </returns>
+        public static SchemaRegistryClusterEnvironmentRegionEntity SchemaRegistryClusterEnvironmentRegionEntity(string id = default, string related = default, string resourceName = default)
+        {
+            return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Type of cluster. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="spec"> Specification of the cluster. </param>
+        /// <param name="status"> Specification of the cluster status. </param>
+        /// <returns> A new <see cref="Confluent.SCClusterRecordData"/> instance for mocking. </returns>
+        public static SCClusterRecordData SCClusterRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, SCClusterSpecEntity spec = default, ClusterStatusEntity status = default)
+        {
+            return new SCClusterRecordData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                kind,
+                metadata is null && spec is null && status is null ? default : new ClusterProperties(metadata, spec, status, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectorBasicInfo"> Connector Info Base. </param>
+        /// <param name="connectorServiceTypeInfo"> Connector Service type info base properties. </param>
+        /// <param name="partnerConnectorInfo"> The connection information consumed by applications. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentConnectorData"/> instance for mocking. </returns>
+        public static ConfluentConnectorData ConfluentConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectorInfoBase connectorBasicInfo = default, ConnectorServiceTypeInfoBase connectorServiceTypeInfo = default, PartnerInfoBase partnerConnectorInfo = default)
+        {
+            return new ConfluentConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, null));
+        }
+
+        /// <summary> The partner connector type is KafkaAzureBlobStorageSink. </summary>
+        /// <param name="authType"> Kafka Auth Type. </param>
+        /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
+        /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
+        /// <param name="apiKey"> Kafka API Key. </param>
+        /// <param name="apiSecret"> Kafka API Key Secret. </param>
+        /// <param name="serviceAccountId"> Kafka Service Account Id. </param>
+        /// <param name="serviceAccountName"> Kafka Service Account Name. </param>
+        /// <param name="topics"> Kafka topics list. </param>
+        /// <param name="topicsDir"> Kafka topics directory. </param>
+        /// <param name="flushSize"> Flush size. </param>
+        /// <param name="maxTasks"> Maximum Tasks. </param>
+        /// <param name="timeInterval"> Time Interval. </param>
+        /// <returns> A new <see cref="Models.KafkaAzureBlobStorageSinkConnectorInfo"/> instance for mocking. </returns>
+        public static KafkaAzureBlobStorageSinkConnectorInfo KafkaAzureBlobStorageSinkConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
+        {
+            topics ??= new ChangeTrackingList<string>();
+
+            return new KafkaAzureBlobStorageSinkConnectorInfo(
+                PartnerConnectorType.KafkaAzureBlobStorageSink,
+                additionalBinaryDataProperties: null,
+                authType,
+                inputFormat,
+                outputFormat,
+                apiKey,
+                apiSecret,
+                serviceAccountId,
+                serviceAccountName,
+                topics.ToList(),
+                topicsDir,
+                flushSize,
+                maxTasks,
+                timeInterval);
+        }
+
+        /// <summary> The partner connector type is KafkaAzureCosmosDBSink. </summary>
+        /// <param name="authType"> Kafka Auth Type. </param>
+        /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
+        /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
+        /// <param name="apiKey"> Kafka API Key. </param>
+        /// <param name="apiSecret"> Kafka API Key Secret. </param>
+        /// <param name="serviceAccountId"> Kafka Service Account Id. </param>
+        /// <param name="serviceAccountName"> Kafka Service Account Name. </param>
+        /// <param name="topics"> Kafka topics list. </param>
+        /// <param name="topicsDir"> Kafka topics directory. </param>
+        /// <param name="flushSize"> Flush size. </param>
+        /// <param name="maxTasks"> Maximum Tasks. </param>
+        /// <param name="timeInterval"> Time Interval. </param>
+        /// <returns> A new <see cref="Models.KafkaAzureCosmosDBSinkConnectorInfo"/> instance for mocking. </returns>
+        public static KafkaAzureCosmosDBSinkConnectorInfo KafkaAzureCosmosDBSinkConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
+        {
+            topics ??= new ChangeTrackingList<string>();
+
+            return new KafkaAzureCosmosDBSinkConnectorInfo(
+                PartnerConnectorType.KafkaAzureCosmosDBSink,
+                additionalBinaryDataProperties: null,
+                authType,
+                inputFormat,
+                outputFormat,
+                apiKey,
+                apiSecret,
+                serviceAccountId,
+                serviceAccountName,
+                topics.ToList(),
+                topicsDir,
+                flushSize,
+                maxTasks,
+                timeInterval);
+        }
+
+        /// <summary> The partner connector type is KafkaAzureSynapseAnalyticsSink. </summary>
+        /// <param name="authType"> Kafka Auth Type. </param>
+        /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
+        /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
+        /// <param name="apiKey"> Kafka API Key. </param>
+        /// <param name="apiSecret"> Kafka API Key Secret. </param>
+        /// <param name="serviceAccountId"> Kafka Service Account Id. </param>
+        /// <param name="serviceAccountName"> Kafka Service Account Name. </param>
+        /// <param name="topics"> Kafka topics list. </param>
+        /// <param name="topicsDir"> Kafka topics directory. </param>
+        /// <param name="flushSize"> Flush size. </param>
+        /// <param name="maxTasks"> Maximum Tasks. </param>
+        /// <param name="timeInterval"> Time Interval. </param>
+        /// <returns> A new <see cref="Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo"/> instance for mocking. </returns>
+        public static KafkaAzureSynapseAnalyticsSinkConnectorInfo KafkaAzureSynapseAnalyticsSinkConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
+        {
+            topics ??= new ChangeTrackingList<string>();
+
+            return new KafkaAzureSynapseAnalyticsSinkConnectorInfo(
+                PartnerConnectorType.KafkaAzureSynapseAnalyticsSink,
+                additionalBinaryDataProperties: null,
+                authType,
+                inputFormat,
+                outputFormat,
+                apiKey,
+                apiSecret,
+                serviceAccountId,
+                serviceAccountName,
+                topics.ToList(),
+                topicsDir,
+                flushSize,
+                maxTasks,
+                timeInterval);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Type of topic. </param>
+        /// <param name="topicId"> Topic Id returned by Confluent. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="inputConfigs"> Input Config Specification of the topic. </param>
+        /// <param name="partitionsCount"> Partition count of the topic. </param>
+        /// <param name="replicationFactor"> Replication factor of the topic. </param>
+        /// <param name="partitionsRelated"> Relationship of the topic. </param>
+        /// <param name="configsRelated"> Relationship of the topic. </param>
+        /// <param name="partitionsReassignmentsRelated"> Relationship of the topic. </param>
+        /// <returns> A new <see cref="Confluent.TopicRecordData"/> instance for mocking. </returns>
+        public static TopicRecordData TopicRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string topicId = default, TopicMetadataEntity metadata = default, IEnumerable<TopicsInputConfig> inputConfigs = default, string partitionsCount = default, string replicationFactor = default, string partitionsRelated = default, string configsRelated = default, string partitionsReassignmentsRelated = default)
+        {
+            return new TopicRecordData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                kind is null && topicId is null && metadata is null && inputConfigs is null && partitionsCount is null && replicationFactor is null && partitionsRelated is null && configsRelated is null && partitionsReassignmentsRelated is null ? default : new TopicProperties(
+                    kind,
+                    topicId,
+                    metadata,
+                    new TopicsRelatedLink(partitionsRelated, null),
+                    new TopicsRelatedLink(configsRelated, null),
+                    (inputConfigs ?? new ChangeTrackingList<TopicsInputConfig>()).ToList(),
+                    new TopicsRelatedLink(partitionsReassignmentsRelated, null),
+                    partitionsCount,
+                    replicationFactor,
+                    null));
+        }
+
+        /// <summary> Validation response from the provider. </summary>
+        /// <param name="info"> Info from the response. </param>
+        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
+        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = default)
+        {
+            info ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfluentOrganizationValidationResult(info, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ConfluentAgreement"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -31,385 +755,25 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="signature"> Terms signature. </param>
         /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
         /// <returns> A new <see cref="Models.ConfluentAgreement"/> instance for mocking. </returns>
-        public static ConfluentAgreement ConfluentAgreement(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string product = null, string plan = null, string licenseTextLink = null, string privacyPolicyLink = null, DateTimeOffset? retrieveOn = null, string signature = null, bool? isAccepted = null)
+        public static ConfluentAgreement ConfluentAgreement(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string product = default, string plan = default, string licenseTextLink = default, string privacyPolicyLink = default, DateTimeOffset? retrieveOn = default, string signature = default, bool? isAccepted = default)
         {
             return new ConfluentAgreement(
                 id,
-                name,
                 resourceType,
-                systemData,
-                publisher,
-                product,
-                plan,
-                licenseTextLink,
-                privacyPolicyLink,
-                retrieveOn,
-                signature,
-                isAccepted,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Confluent.ConfluentOrganizationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="createdOn"> The creation time of the resource. </param>
-        /// <param name="provisioningState"> Provision states for confluent RP. </param>
-        /// <param name="organizationId"> Id of the Confluent organization. </param>
-        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
-        /// <param name="offerDetail"> Confluent offer detail. </param>
-        /// <param name="userDetail"> Subscriber detail. </param>
-        /// <param name="linkOrganizationToken"> Link an existing Confluent organization. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
-        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, ConfluentProvisionState? provisioningState = null, Guid? organizationId = null, Uri ssoUri = null, ConfluentOfferDetail offerDetail = null, ConfluentUserDetail userDetail = null, string linkOrganizationToken = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ConfluentOrganizationData(
-                id,
+                additionalBinaryDataProperties: null,
                 name,
-                resourceType,
                 systemData,
-                tags,
-                location,
-                createdOn,
-                provisioningState,
-                organizationId,
-                ssoUri,
-                offerDetail,
-                userDetail,
-                linkOrganizationToken != null ? new LinkOrganization(linkOrganizationToken, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfluentOrganizationValidationResult"/>. </summary>
-        /// <param name="info"> Info from the response. </param>
-        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
-        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = null)
-        {
-            info ??= new Dictionary<string, string>();
-
-            return new ConfluentOrganizationValidationResult(info, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessUserListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> Data of the users list. </param>
-        /// <returns> A new <see cref="Models.AccessUserListResult"/> instance for mocking. </returns>
-        public static AccessUserListResult AccessUserListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessUserRecord> data = null)
-        {
-            data ??= new List<AccessUserRecord>();
-
-            return new AccessUserListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfluentListMetadata"/>. </summary>
-        /// <param name="first"> First page of the list. </param>
-        /// <param name="last"> Last page of the list. </param>
-        /// <param name="prev"> Previous page of the list. </param>
-        /// <param name="next"> Next page of the list. </param>
-        /// <param name="totalSize"> Total size of the list. </param>
-        /// <returns> A new <see cref="Models.ConfluentListMetadata"/> instance for mocking. </returns>
-        public static ConfluentListMetadata ConfluentListMetadata(string first = null, string last = null, string prev = null, string next = null, int? totalSize = null)
-        {
-            return new ConfluentListMetadata(
-                first,
-                last,
-                prev,
-                next,
-                totalSize,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessUserRecord"/>. </summary>
-        /// <param name="kind"> Type of account. </param>
-        /// <param name="id"> Id of the user. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="email"> Email of the user. </param>
-        /// <param name="fullName"> Name of the user. </param>
-        /// <param name="authType"> Auth type of the user. </param>
-        /// <returns> A new <see cref="Models.AccessUserRecord"/> instance for mocking. </returns>
-        public static AccessUserRecord AccessUserRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string fullName = null, string authType = null)
-        {
-            return new AccessUserRecord(
-                kind,
-                id,
-                metadata,
-                email,
-                fullName,
-                authType,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
-        /// <returns> A new <see cref="Models.MetadataEntity"/> instance for mocking. </returns>
-        public static MetadataEntity MetadataEntity(string self = null, string resourceName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? deletedOn = null)
-        {
-            return new MetadataEntity(
-                self,
-                resourceName,
-                createdOn,
-                updatedOn,
-                deletedOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessServiceAccountListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> Data of the service accounts list. </param>
-        /// <returns> A new <see cref="Models.AccessServiceAccountListResult"/> instance for mocking. </returns>
-        public static AccessServiceAccountListResult AccessServiceAccountListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessServiceAccountRecord> data = null)
-        {
-            data ??= new List<AccessServiceAccountRecord>();
-
-            return new AccessServiceAccountListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessServiceAccountRecord"/>. </summary>
-        /// <param name="kind"> Type of account. </param>
-        /// <param name="id"> Id of the service account. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="displayName"> Name of the service account. </param>
-        /// <param name="description"> Description of the service account. </param>
-        /// <returns> A new <see cref="Models.AccessServiceAccountRecord"/> instance for mocking. </returns>
-        public static AccessServiceAccountRecord AccessServiceAccountRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, string description = null)
-        {
-            return new AccessServiceAccountRecord(
-                kind,
-                id,
-                metadata,
-                displayName,
-                description,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessInvitationListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> Data of the invitations list. </param>
-        /// <returns> A new <see cref="Models.AccessInvitationListResult"/> instance for mocking. </returns>
-        public static AccessInvitationListResult AccessInvitationListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessInvitationRecord> data = null)
-        {
-            data ??= new List<AccessInvitationRecord>();
-
-            return new AccessInvitationListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessInvitationRecord"/>. </summary>
-        /// <param name="kind"> Type of account. </param>
-        /// <param name="id"> Id of the invitation. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="email"> Email of the user. </param>
-        /// <param name="authType"> Auth type of the user. </param>
-        /// <param name="status"> Status of the invitation. </param>
-        /// <param name="acceptedOn"> Accepted date time of the invitation. </param>
-        /// <param name="expireOn"> Expiration date time of the invitation. </param>
-        /// <returns> A new <see cref="Models.AccessInvitationRecord"/> instance for mocking. </returns>
-        public static AccessInvitationRecord AccessInvitationRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string authType = null, string status = null, DateTimeOffset? acceptedOn = null, DateTimeOffset? expireOn = null)
-        {
-            return new AccessInvitationRecord(
-                kind,
-                id,
-                metadata,
-                email,
-                authType,
-                status,
-                acceptedOn,
-                expireOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessEnvironmentListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the  environment list. </param>
-        /// <param name="data"> Environment list data. </param>
-        /// <returns> A new <see cref="Models.AccessEnvironmentListResult"/> instance for mocking. </returns>
-        public static AccessEnvironmentListResult AccessEnvironmentListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessEnvironmentRecord> data = null)
-        {
-            data ??= new List<AccessEnvironmentRecord>();
-
-            return new AccessEnvironmentListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessEnvironmentRecord"/>. </summary>
-        /// <param name="kind"> Type of environment. </param>
-        /// <param name="id"> Id of the environment. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="displayName"> Display name of the user. </param>
-        /// <returns> A new <see cref="Models.AccessEnvironmentRecord"/> instance for mocking. </returns>
-        public static AccessEnvironmentRecord AccessEnvironmentRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null)
-        {
-            return new AccessEnvironmentRecord(kind, id, metadata, displayName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessClusterListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> List of clusters. </param>
-        /// <returns> A new <see cref="Models.AccessClusterListResult"/> instance for mocking. </returns>
-        public static AccessClusterListResult AccessClusterListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessClusterRecord> data = null)
-        {
-            data ??= new List<AccessClusterRecord>();
-
-            return new AccessClusterListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessClusterRecord"/>. </summary>
-        /// <param name="kind"> Type of cluster. </param>
-        /// <param name="id"> Id of the cluster. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="displayName"> Display name of the cluster. </param>
-        /// <param name="spec"> Specification of the cluster. </param>
-        /// <param name="status"> Specification of the cluster. </param>
-        /// <returns> A new <see cref="Models.AccessClusterRecord"/> instance for mocking. </returns>
-        public static AccessClusterRecord AccessClusterRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, ClusterSpecEntity spec = null, ClusterStatusEntity status = null)
-        {
-            return new AccessClusterRecord(
-                kind,
-                id,
-                metadata,
-                displayName,
-                spec,
-                status,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterSpecEntity"/>. </summary>
-        /// <param name="displayName"> The name of the cluster. </param>
-        /// <param name="availability"> The availability zone configuration of the cluster. </param>
-        /// <param name="cloud"> The cloud service provider. </param>
-        /// <param name="zone"> type of zone availability. </param>
-        /// <param name="region"> The cloud service provider region. </param>
-        /// <param name="kafkaBootstrapEndpoint"> The bootstrap endpoint used by Kafka clients to connect to the cluster. </param>
-        /// <param name="httpEndpoint"> The cluster HTTP request URL. </param>
-        /// <param name="apiEndpoint"> The Kafka API cluster endpoint. </param>
-        /// <param name="configKind"> Specification of the cluster. </param>
-        /// <param name="environment"> Specification of the cluster. </param>
-        /// <param name="network"> Specification of the cluster. </param>
-        /// <param name="byok"> Specification of the cluster. </param>
-        /// <returns> A new <see cref="Models.ClusterSpecEntity"/> instance for mocking. </returns>
-        public static ClusterSpecEntity ClusterSpecEntity(string displayName = null, string availability = null, string cloud = null, string zone = null, string region = null, string kafkaBootstrapEndpoint = null, string httpEndpoint = null, string apiEndpoint = null, string configKind = null, ClusterEnvironmentEntity environment = null, ClusterNetworkEntity network = null, ClusterByokEntity byok = null)
-        {
-            return new ClusterSpecEntity(
-                displayName,
-                availability,
-                cloud,
-                zone,
-                region,
-                kafkaBootstrapEndpoint,
-                httpEndpoint,
-                apiEndpoint,
-                configKind != null ? new ClusterConfigEntity(configKind, serializedAdditionalRawData: null) : null,
-                environment,
-                network,
-                byok,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterEnvironmentEntity"/>. </summary>
-        /// <param name="id"> ID of the referred resource. </param>
-        /// <param name="environment"> Environment of the referred resource. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <returns> A new <see cref="Models.ClusterEnvironmentEntity"/> instance for mocking. </returns>
-        public static ClusterEnvironmentEntity ClusterEnvironmentEntity(string id = null, string environment = null, string related = null, string resourceName = null)
-        {
-            return new ClusterEnvironmentEntity(id, environment, related, resourceName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterNetworkEntity"/>. </summary>
-        /// <param name="id"> ID of the referred resource. </param>
-        /// <param name="environment"> Environment of the referred resource. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <returns> A new <see cref="Models.ClusterNetworkEntity"/> instance for mocking. </returns>
-        public static ClusterNetworkEntity ClusterNetworkEntity(string id = null, string environment = null, string related = null, string resourceName = null)
-        {
-            return new ClusterNetworkEntity(id, environment, related, resourceName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterByokEntity"/>. </summary>
-        /// <param name="id"> ID of the referred resource. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <returns> A new <see cref="Models.ClusterByokEntity"/> instance for mocking. </returns>
-        public static ClusterByokEntity ClusterByokEntity(string id = null, string related = null, string resourceName = null)
-        {
-            return new ClusterByokEntity(id, related, resourceName, serializedAdditionalRawData: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterStatusEntity"/>. </summary>
         /// <param name="phase"> The lifecycle phase of the cluster. </param>
         /// <param name="cku"> The number of Confluent Kafka Units. </param>
         /// <returns> A new <see cref="Models.ClusterStatusEntity"/> instance for mocking. </returns>
-        public static ClusterStatusEntity ClusterStatusEntity(string phase = null, int? cku = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ClusterStatusEntity ClusterStatusEntity(string phase, int? cku)
         {
-            return new ClusterStatusEntity(phase, cku, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> List of role binding. </param>
-        /// <returns> A new <see cref="Models.AccessRoleBindingListResult"/> instance for mocking. </returns>
-        public static AccessRoleBindingListResult AccessRoleBindingListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<AccessRoleBindingRecord> data = null)
-        {
-            data ??= new List<AccessRoleBindingRecord>();
-
-            return new AccessRoleBindingListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingRecord"/>. </summary>
-        /// <param name="kind"> The type of the resource. </param>
-        /// <param name="id"> Id of the role binding. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="principal"> The principal User or Group to bind the role to. </param>
-        /// <param name="roleName"> The name of the role to bind to the principal. </param>
-        /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
-        /// <returns> A new <see cref="Models.AccessRoleBindingRecord"/> instance for mocking. </returns>
-        public static AccessRoleBindingRecord AccessRoleBindingRecord(string kind = null, string id = null, MetadataEntity metadata = null, string principal = null, string roleName = null, string crnPattern = null)
-        {
-            return new AccessRoleBindingRecord(
-                kind,
-                id,
-                metadata,
-                principal,
-                roleName,
-                crnPattern,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingNameListResult"/>. </summary>
-        /// <param name="kind"> Type of response. </param>
-        /// <param name="metadata"> Metadata of the list. </param>
-        /// <param name="data"> List of role binding names. </param>
-        /// <returns> A new <see cref="Models.AccessRoleBindingNameListResult"/> instance for mocking. </returns>
-        public static AccessRoleBindingNameListResult AccessRoleBindingNameListResult(string kind = null, ConfluentListMetadata metadata = null, IEnumerable<string> data = null)
-        {
-            data ??= new List<string>();
-
-            return new AccessRoleBindingNameListResult(kind, metadata, data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SCEnvironmentRecord"/>. </summary>
-        /// <param name="kind"> Type of environment. </param>
-        /// <param name="id"> Id of the environment. </param>
-        /// <param name="name"> Display name of the environment. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <returns> A new <see cref="Models.SCEnvironmentRecord"/> instance for mocking. </returns>
-        public static SCEnvironmentRecord SCEnvironmentRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null)
-        {
-            return new SCEnvironmentRecord(kind, id, name, metadata, serializedAdditionalRawData: null);
+            return new ClusterStatusEntity(phase, cku, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCMetadataEntity"/>. </summary>
@@ -419,7 +783,8 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="updatedOn"> Updated Date time. </param>
         /// <param name="deletedOn"> Deleted Date time. </param>
         /// <returns> A new <see cref="Models.SCMetadataEntity"/> instance for mocking. </returns>
-        public static SCMetadataEntity SCMetadataEntity(string self = null, string resourceName = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, DateTimeOffset? deletedOn = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SCMetadataEntity SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn)
         {
             return new SCMetadataEntity(
                 self,
@@ -427,27 +792,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 createdOn,
                 updatedOn,
                 deletedOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SCClusterRecord"/>. </summary>
-        /// <param name="kind"> Type of cluster. </param>
-        /// <param name="id"> Id of the cluster. </param>
-        /// <param name="name"> Display name of the cluster. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="spec"> Specification of the cluster. </param>
-        /// <param name="status"> Specification of the cluster status. </param>
-        /// <returns> A new <see cref="Models.SCClusterRecord"/> instance for mocking. </returns>
-        public static SCClusterRecord SCClusterRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null, SCClusterSpecEntity spec = null, ClusterStatusEntity status = null)
-        {
-            return new SCClusterRecord(
-                kind,
-                id,
-                name,
-                metadata,
-                spec,
-                status,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterSpecEntity"/>. </summary>
@@ -464,22 +809,24 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name = null, string availability = null, string cloud = null, string zone = null, string region = null, string kafkaBootstrapEndpoint = null, string httpEndpoint = null, string apiEndpoint = null, string configKind = null, SCClusterNetworkEnvironmentEntity environment = null, SCClusterNetworkEnvironmentEntity network = null, SCClusterByokEntity byok = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
         {
             return new SCClusterSpecEntity(
                 name,
                 availability,
                 cloud,
                 zone,
+                default,
                 region,
                 kafkaBootstrapEndpoint,
                 httpEndpoint,
                 apiEndpoint,
-                configKind != null ? new ClusterConfigEntity(configKind, serializedAdditionalRawData: null) : null,
+                default,
                 environment,
                 network,
                 byok,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterNetworkEnvironmentEntity"/>. </summary>
@@ -488,9 +835,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
         /// <returns> A new <see cref="Models.SCClusterNetworkEnvironmentEntity"/> instance for mocking. </returns>
-        public static SCClusterNetworkEnvironmentEntity SCClusterNetworkEnvironmentEntity(string id = null, string environment = null, string related = null, string resourceName = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SCClusterNetworkEnvironmentEntity SCClusterNetworkEnvironmentEntity(string id, string environment, string related, string resourceName)
         {
-            return new SCClusterNetworkEnvironmentEntity(id, environment, related, resourceName, serializedAdditionalRawData: null);
+            return new SCClusterNetworkEnvironmentEntity(id, environment, related, resourceName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterByokEntity"/>. </summary>
@@ -498,149 +846,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
         /// <returns> A new <see cref="Models.SCClusterByokEntity"/> instance for mocking. </returns>
-        public static SCClusterByokEntity SCClusterByokEntity(string id = null, string related = null, string resourceName = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SCClusterByokEntity SCClusterByokEntity(string id, string related, string resourceName)
         {
-            return new SCClusterByokEntity(id, related, resourceName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaRegistryClusterRecord"/>. </summary>
-        /// <param name="kind"> Kind of the cluster. </param>
-        /// <param name="id"> Id of the cluster. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="spec"> Specification of the schema registry cluster. </param>
-        /// <param name="statusPhase"> Specification of the cluster status. </param>
-        /// <returns> A new <see cref="Models.SchemaRegistryClusterRecord"/> instance for mocking. </returns>
-        public static SchemaRegistryClusterRecord SchemaRegistryClusterRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, SchemaRegistryClusterSpecEntity spec = null, string statusPhase = null)
-        {
-            return new SchemaRegistryClusterRecord(
-                kind,
-                id,
-                metadata,
-                spec,
-                statusPhase != null ? new SchemaRegistryClusterStatusEntity(statusPhase, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaRegistryClusterSpecEntity"/>. </summary>
-        /// <param name="name"> Name of the schema registry cluster. </param>
-        /// <param name="httpEndpoint"> Http endpoint of the cluster. </param>
-        /// <param name="package"> Type of the cluster package Advanced, essentials. </param>
-        /// <param name="region"> Region details of the schema registry cluster. </param>
-        /// <param name="environment"> Environment details of the schema registry cluster. </param>
-        /// <param name="cloud"> The cloud service provider. </param>
-        /// <returns> A new <see cref="Models.SchemaRegistryClusterSpecEntity"/> instance for mocking. </returns>
-        public static SchemaRegistryClusterSpecEntity SchemaRegistryClusterSpecEntity(string name = null, string httpEndpoint = null, string package = null, SchemaRegistryClusterEnvironmentRegionEntity region = null, SchemaRegistryClusterEnvironmentRegionEntity environment = null, string cloud = null)
-        {
-            return new SchemaRegistryClusterSpecEntity(
-                name,
-                httpEndpoint,
-                package,
-                region,
-                environment,
-                cloud,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaRegistryClusterEnvironmentRegionEntity"/>. </summary>
-        /// <param name="id"> ID of the referred resource. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <returns> A new <see cref="Models.SchemaRegistryClusterEnvironmentRegionEntity"/> instance for mocking. </returns>
-        public static SchemaRegistryClusterEnvironmentRegionEntity SchemaRegistryClusterEnvironmentRegionEntity(string id = null, string related = null, string resourceName = null)
-        {
-            return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfluentRegionListResult"/>. </summary>
-        /// <param name="data"> List of regions supported by confluent. </param>
-        /// <returns> A new <see cref="Models.ConfluentRegionListResult"/> instance for mocking. </returns>
-        public static ConfluentRegionListResult ConfluentRegionListResult(IEnumerable<ConfluentRegionRecord> data = null)
-        {
-            data ??= new List<ConfluentRegionRecord>();
-
-            return new ConfluentRegionListResult(data?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfluentRegionRecord"/>. </summary>
-        /// <param name="kind"> Kind of the cluster. </param>
-        /// <param name="id"> Id of the cluster. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="spec"> Specification of the region. </param>
-        /// <returns> A new <see cref="Models.ConfluentRegionRecord"/> instance for mocking. </returns>
-        public static ConfluentRegionRecord ConfluentRegionRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, RegionSpecEntity spec = null)
-        {
-            return new ConfluentRegionRecord(kind, id, metadata, spec, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RegionSpecEntity"/>. </summary>
-        /// <param name="name"> Display Name of the region. </param>
-        /// <param name="cloud"> Cloud provider name. </param>
-        /// <param name="regionName"> Region name. </param>
-        /// <param name="packages"></param>
-        /// <returns> A new <see cref="Models.RegionSpecEntity"/> instance for mocking. </returns>
-        public static RegionSpecEntity RegionSpecEntity(string name = null, string cloud = null, string regionName = null, IEnumerable<string> packages = null)
-        {
-            packages ??= new List<string>();
-
-            return new RegionSpecEntity(name, cloud, regionName, packages?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfluentApiKeyRecord"/>. </summary>
-        /// <param name="kind"> Type of api key. </param>
-        /// <param name="id"> Id of the api key. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="spec"> Specification of the API Key. </param>
-        /// <returns> A new <see cref="Models.ConfluentApiKeyRecord"/> instance for mocking. </returns>
-        public static ConfluentApiKeyRecord ConfluentApiKeyRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, ApiKeySpecEntity spec = null)
-        {
-            return new ConfluentApiKeyRecord(kind, id, metadata, spec, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiKeySpecEntity"/>. </summary>
-        /// <param name="description"> The description of the API Key. </param>
-        /// <param name="name"> The name of the API Key. </param>
-        /// <param name="secret"> API Key Secret. </param>
-        /// <param name="resource"> Specification of the cluster. </param>
-        /// <param name="owner"> Specification of the cluster. </param>
-        /// <returns> A new <see cref="Models.ApiKeySpecEntity"/> instance for mocking. </returns>
-        public static ApiKeySpecEntity ApiKeySpecEntity(string description = null, string name = null, string secret = null, ApiKeyResourceEntity resource = null, ApiKeyOwnerEntity owner = null)
-        {
-            return new ApiKeySpecEntity(
-                description,
-                name,
-                secret,
-                resource,
-                owner,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyResourceEntity"/>. </summary>
-        /// <param name="id"> Id of the resource. </param>
-        /// <param name="environment"> The environment of the api key. </param>
-        /// <param name="related"> API URL for accessing or modifying the api key resource object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <param name="kind"> Type of the owner which can be service or user account. </param>
-        /// <returns> A new <see cref="Models.ApiKeyResourceEntity"/> instance for mocking. </returns>
-        public static ApiKeyResourceEntity ApiKeyResourceEntity(string id = null, string environment = null, string related = null, string resourceName = null, string kind = null)
-        {
-            return new ApiKeyResourceEntity(
-                id,
-                environment,
-                related,
-                resourceName,
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ApiKeyOwnerEntity"/>. </summary>
-        /// <param name="id"> API Key owner id. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <param name="kind"> Type of the owner service or user account. </param>
-        /// <returns> A new <see cref="Models.ApiKeyOwnerEntity"/> instance for mocking. </returns>
-        public static ApiKeyOwnerEntity ApiKeyOwnerEntity(string id = null, string related = null, string resourceName = null, string kind = null)
-        {
-            return new ApiKeyOwnerEntity(id, related, resourceName, kind, serializedAdditionalRawData: null);
+            return new SCClusterByokEntity(id, related, resourceName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
@@ -656,11 +865,11 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Confluent.ConfluentOrganizationData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail)
         {
-            return ConfluentOrganizationData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, createdOn: createdOn, provisioningState: provisioningState, organizationId: organizationId, ssoUri: ssoUri, offerDetail: offerDetail, userDetail: userDetail, linkOrganizationToken: default);
+            return ConfluentOrganizationData(id, name, resourceType, systemData, tags, location, createdOn, provisioningState, organizationId, ssoUri, offerDetail, userDetail, linkOrganizationToken: default);
         }
     }
 }

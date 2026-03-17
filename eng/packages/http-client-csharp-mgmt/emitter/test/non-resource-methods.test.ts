@@ -990,10 +990,12 @@ interface ChildResources {
 
     const resources: ArmResourceSchema[] = [
       {
-        resourceModelId: "Microsoft.GuestConfiguration.GuestConfigurationAssignment",
+        resourceModelId:
+          "Microsoft.GuestConfiguration.GuestConfigurationAssignment",
         metadata: {
           resourceName: "GuestConfigurationVmAssignment",
-          resourceType: "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+          resourceType:
+            "Microsoft.GuestConfiguration/guestConfigurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
           resourceScope: ResourceScope.ResourceGroup,
