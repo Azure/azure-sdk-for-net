@@ -101,11 +101,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 throw new FormatException($"The model {nameof(EnvelopePropertyTestData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -209,10 +206,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = EnvelopePropertyTestProperties.DeserializeEnvelopePropertyTestProperties(prop.Value, options);
                     continue;
                 }

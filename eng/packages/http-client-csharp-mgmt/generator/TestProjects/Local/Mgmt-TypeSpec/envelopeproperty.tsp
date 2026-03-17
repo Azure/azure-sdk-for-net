@@ -1,4 +1,5 @@
 import "@azure-tools/typespec-azure-resource-manager";
+import "@azure-tools/typespec-client-generator-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
@@ -7,9 +8,11 @@ using Azure.ResourceManager;
 namespace MgmtTypeSpec;
 
 // Test: TrackedResource with direct identity envelope property (using #suppress)
-// This is the pattern that triggers the wrong base class bug described in issue #57148.
+// and flattenProperty — matching the NewRelic pattern that triggers a wrong base
+// class (ArmResource instead of TrackedResourceData) in the published npm package.
+// See issue #57148.
 model EnvelopePropertyTest
-  is Azure.ResourceManager.TrackedResource<EnvelopePropertyTestProperties> {
+  is Azure.ResourceManager.TrackedResource<EnvelopePropertyTestProperties, false> {
   ...ResourceNameParameter<
     Resource = EnvelopePropertyTest,
     KeyName = "envelopePropertyTestName",
@@ -34,3 +37,6 @@ interface EnvelopePropertyTests {
   listByResourceGroup is ArmResourceListByParent<EnvelopePropertyTest>;
   listBySubscription is ArmListBySubscription<EnvelopePropertyTest>;
 }
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Back compatibility"
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(EnvelopePropertyTest.properties);

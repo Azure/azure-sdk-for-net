@@ -23,6 +23,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The geo-location where the resource lives. </param>
         public EnvelopePropertyTestData(AzureLocation location) : base(location)
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="EnvelopePropertyTestData"/>. </summary>
@@ -44,10 +45,46 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public EnvelopePropertyTestProperties Properties { get; set; }
+        internal EnvelopePropertyTestProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> Gets or sets the ProvisioningState. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EnvelopePropertyTestProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DisplayName. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EnvelopePropertyTestProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
     }
 }

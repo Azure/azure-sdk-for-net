@@ -1464,17 +1464,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new SharedConfigProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> Gets or sets the ProvisioningState. </param>
+        /// <param name="displayName"> Gets or sets the DisplayName. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Tests.EnvelopePropertyTestData"/> instance for mocking. </returns>
-        public static EnvelopePropertyTestData EnvelopePropertyTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EnvelopePropertyTestProperties properties = default, ManagedServiceIdentity identity = default)
+        public static EnvelopePropertyTestData EnvelopePropertyTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string displayName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1486,7 +1486,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties,
+                provisioningState is null && displayName is null ? default : new EnvelopePropertyTestProperties(provisioningState, displayName, null),
                 identity);
         }
 

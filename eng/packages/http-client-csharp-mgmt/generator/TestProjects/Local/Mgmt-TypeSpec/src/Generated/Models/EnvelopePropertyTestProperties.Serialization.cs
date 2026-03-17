@@ -14,7 +14,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The EnvelopePropertyTestProperties. </summary>
-    public partial class EnvelopePropertyTestProperties : IJsonModel<EnvelopePropertyTestProperties>
+    internal partial class EnvelopePropertyTestProperties : IJsonModel<EnvelopePropertyTestProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

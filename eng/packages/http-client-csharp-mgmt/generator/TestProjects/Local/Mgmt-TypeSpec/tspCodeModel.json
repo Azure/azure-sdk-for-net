@@ -21456,11 +21456,16 @@
               }
             ]
           },
-          "optional": true,
+          "optional": false,
           "readOnly": false,
           "discriminator": false,
-          "flatten": false,
-          "decorators": [],
+          "flatten": true,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@flattenProperty",
+              "arguments": {}
+            }
+          ],
           "crossLanguageDefinitionId": "MgmtTypeSpec.EnvelopePropertyTest.properties",
           "serializationOptions": {
             "json": {
