@@ -524,5 +524,23 @@ namespace Azure.ResourceManager.Nginx.Models
                 applyingState,
                 additionalBinaryDataProperties: null);
         }
+
+        /// <param name="status"> The status of the analysis. The possible values can be arbitrary. </param>
+        /// <param name="dataErrors"> List of errors found during analysis. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyAnalysisResponse"/> instance for mocking. </returns>
+        public static NginxDeploymentWafPolicyAnalysisResponse NginxDeploymentWafPolicyAnalysisResponse(string status = default, IEnumerable<NginxDeploymentWafPolicyError> dataErrors = default)
+        {
+            return new NginxDeploymentWafPolicyAnalysisResponse(status, dataErrors is null ? default : new NginxDeploymentWafPolicyAnalysisData((dataErrors ?? new ChangeTrackingList<NginxDeploymentWafPolicyError>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Nginx Deployment Waf Policy Error. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="field"> Field that caused the error. </param>
+        /// <param name="message"> Error message. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyError"/> instance for mocking. </returns>
+        public static NginxDeploymentWafPolicyError NginxDeploymentWafPolicyError(string code = default, string @field = default, string message = default)
+        {
+            return new NginxDeploymentWafPolicyError(code, @field, message, additionalBinaryDataProperties: null);
+        }
     }
 }
