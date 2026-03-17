@@ -1,0 +1,55 @@
+{
+  "name": "AgentServer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13-bookworm",
+
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "8.0,9.0"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "workspaceFolder": "/workspaces/azure-sdk-for-net/sdk/agentserver",
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "git config --global --add safe.directory /workspaces/azure-sdk-for-net",
+
+  "forwardPorts": [5000, 5001],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "editorconfig.editorconfig",
+        "mhutchie.git-graph"
+      ],
+      "settings": {
+        "chat.promptFiles.recommended": {
+          ".specify/commands/speckit.constitution.md": true,
+          ".specify/commands/speckit.specify.md": true,
+          ".specify/commands/speckit.plan.md": true,
+          ".specify/commands/speckit.tasks.md": true,
+          ".specify/commands/speckit.implement.md": true,
+          ".specify/commands/speckit.clarify.md": true,
+          ".specify/commands/speckit.analyze.md": true,
+          ".specify/commands/speckit.checklist.md": true
+        },
+        "terminal.integrated.allowedLinkSchemes": [
+          "file",
+          "vscode",
+          "vscode-insiders",
+          "http",
+          "https"
+        ]
+      }
+    }
+  }
+}
