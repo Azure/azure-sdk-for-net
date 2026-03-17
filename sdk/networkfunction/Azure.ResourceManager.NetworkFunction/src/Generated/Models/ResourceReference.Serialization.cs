@@ -15,7 +15,7 @@ using Azure.ResourceManager.NetworkFunction;
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     /// <summary> Resource reference properties. </summary>
-    public partial class ResourceReference : IJsonModel<ResourceReference>
+    internal partial class ResourceReference : IJsonModel<ResourceReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

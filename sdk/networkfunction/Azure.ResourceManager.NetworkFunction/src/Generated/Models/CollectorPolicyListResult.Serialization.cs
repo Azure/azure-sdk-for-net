@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CollectorPolicyData item in Value)
+            foreach (NetworkFunctionCollectorPolicyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            IList<CollectorPolicyData> value = default;
+            IList<NetworkFunctionCollectorPolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CollectorPolicyData> array = new List<CollectorPolicyData>();
+                    List<NetworkFunctionCollectorPolicyData> array = new List<NetworkFunctionCollectorPolicyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item, options));
+                        array.Add(NetworkFunctionCollectorPolicyData.DeserializeNetworkFunctionCollectorPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -15,35 +15,35 @@ using Azure.ResourceManager.NetworkFunction.Models;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary> Collector policy resource. </summary>
-    public partial class CollectorPolicyData : TrackedResourceData
+    public partial class NetworkFunctionCollectorPolicyData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public CollectorPolicyData(AzureLocation location) : base(location)
+        public NetworkFunctionCollectorPolicyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the Collector Policy. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CollectorPolicyPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFunctionCollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CollectorPolicyPropertiesFormat properties, SystemData systemData, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Properties of the Collector Policy. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         internal CollectorPolicyPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

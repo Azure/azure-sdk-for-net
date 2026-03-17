@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -21,36 +22,28 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
         /// <param name="virtualHubId"> Resource ID. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="NetworkFunction.AzureTrafficCollectorData"/> instance for mocking. </returns>
-        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ResourceReference> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, ResourceIdentifier virtualHubId = default, ETag? etag = default)
+        /// <returns> A new <see cref="NetworkFunction.NetworkFunctionAzureTrafficCollectorData"/> instance for mocking. </returns>
+        public static NetworkFunctionAzureTrafficCollectorData NetworkFunctionAzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<SubResource> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, ResourceIdentifier virtualHubId = default, SystemData systemData = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AzureTrafficCollectorData(
+            return new NetworkFunctionAzureTrafficCollectorData(
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                collectorPolicies is null && provisioningState is null && virtualHubId is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<ResourceReference>()).ToList(), new ResourceReference(virtualHubId, null), provisioningState, null),
+                collectorPolicies is null && provisioningState is null && virtualHubId is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, null), provisioningState, null),
+                systemData,
                 etag);
-        }
-
-        /// <summary> Resource reference properties. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
-        public static ResourceReference ResourceReference(ResourceIdentifier id = default)
-        {
-            return new ResourceReference(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tags object for patch operations. </summary>
@@ -66,27 +59,27 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
-        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, ETag? etag = default)
+        /// <returns> A new <see cref="NetworkFunction.NetworkFunctionCollectorPolicyData"/> instance for mocking. </returns>
+        public static NetworkFunctionCollectorPolicyData NetworkFunctionCollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, IDictionary<string, string> tags = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, SystemData systemData = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CollectorPolicyData(
+            return new NetworkFunctionCollectorPolicyData(
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
                 ingestionPolicy is null && emissionPolicies is null && provisioningState is null ? default : new CollectorPolicyPropertiesFormat(ingestionPolicy, (emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>()).ToList(), provisioningState, null),
+                systemData,
                 etag);
         }
 

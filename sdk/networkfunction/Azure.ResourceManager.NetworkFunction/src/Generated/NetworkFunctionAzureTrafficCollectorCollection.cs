@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureTrafficCollectorResource"/> and their operations.
-    /// Each <see cref="AzureTrafficCollectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AzureTrafficCollectorCollection"/> instance call the GetAzureTrafficCollectors method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="NetworkFunctionAzureTrafficCollectorResource"/> and their operations.
+    /// Each <see cref="NetworkFunctionAzureTrafficCollectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NetworkFunctionAzureTrafficCollectorCollection"/> instance call the GetNetworkFunctionAzureTrafficCollectors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AzureTrafficCollectorCollection : ArmCollection, IEnumerable<AzureTrafficCollectorResource>, IAsyncEnumerable<AzureTrafficCollectorResource>
+    public partial class NetworkFunctionAzureTrafficCollectorCollection : ArmCollection, IEnumerable<NetworkFunctionAzureTrafficCollectorResource>, IAsyncEnumerable<NetworkFunctionAzureTrafficCollectorResource>
     {
         private readonly ClientDiagnostics _azureTrafficCollectorsClientDiagnostics;
         private readonly AzureTrafficCollectors _azureTrafficCollectorsRestClient;
@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.NetworkFunction
         private readonly ClientDiagnostics _azureTrafficCollectorsByResourceGroupClientDiagnostics;
         private readonly AzureTrafficCollectorsByResourceGroup _azureTrafficCollectorsByResourceGroupRestClient;
 
-        /// <summary> Initializes a new instance of AzureTrafficCollectorCollection for mocking. </summary>
-        protected AzureTrafficCollectorCollection()
+        /// <summary> Initializes a new instance of NetworkFunctionAzureTrafficCollectorCollection for mocking. </summary>
+        protected NetworkFunctionAzureTrafficCollectorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionAzureTrafficCollectorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AzureTrafficCollectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkFunctionAzureTrafficCollectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AzureTrafficCollectorResource.ResourceType, out string azureTrafficCollectorApiVersion);
-            _azureTrafficCollectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", AzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
-            _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
-            _azureTrafficCollectorsBySubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", AzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
-            _azureTrafficCollectorsBySubscriptionRestClient = new AzureTrafficCollectorsBySubscription(_azureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
-            _azureTrafficCollectorsByResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", AzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
-            _azureTrafficCollectorsByResourceGroupRestClient = new AzureTrafficCollectorsByResourceGroup(_azureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
+            TryGetApiVersion(NetworkFunctionAzureTrafficCollectorResource.ResourceType, out string networkFunctionAzureTrafficCollectorApiVersion);
+            _azureTrafficCollectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", NetworkFunctionAzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
+            _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Endpoint, networkFunctionAzureTrafficCollectorApiVersion ?? "2022-11-01");
+            _azureTrafficCollectorsBySubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", NetworkFunctionAzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
+            _azureTrafficCollectorsBySubscriptionRestClient = new AzureTrafficCollectorsBySubscription(_azureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Endpoint, networkFunctionAzureTrafficCollectorApiVersion ?? "2022-11-01");
+            _azureTrafficCollectorsByResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", NetworkFunctionAzureTrafficCollectorResource.ResourceType.Namespace, Diagnostics);
+            _azureTrafficCollectorsByResourceGroupRestClient = new AzureTrafficCollectorsByResourceGroup(_azureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, Endpoint, networkFunctionAzureTrafficCollectorApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AzureTrafficCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureTrafficCollectorName, AzureTrafficCollectorData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkFunctionAzureTrafficCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureTrafficCollectorName, NetworkFunctionAzureTrafficCollectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, NetworkFunctionAzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
-                    new AzureTrafficCollectorOperationSource(Client),
+                NetworkFunctionArmOperation<NetworkFunctionAzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<NetworkFunctionAzureTrafficCollectorResource>(
+                    new NetworkFunctionAzureTrafficCollectorOperationSource(Client),
                     _azureTrafficCollectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AzureTrafficCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string azureTrafficCollectorName, AzureTrafficCollectorData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkFunctionAzureTrafficCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string azureTrafficCollectorName, NetworkFunctionAzureTrafficCollectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, NetworkFunctionAzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
-                    new AzureTrafficCollectorOperationSource(Client),
+                NetworkFunctionArmOperation<NetworkFunctionAzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<NetworkFunctionAzureTrafficCollectorResource>(
+                    new NetworkFunctionAzureTrafficCollectorOperationSource(Client),
                     _azureTrafficCollectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AzureTrafficCollectorResource>> GetAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFunctionAzureTrafficCollectorResource>> GetAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Get");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.Get");
             scope.Start();
             try
             {
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 };
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                Response<NetworkFunctionAzureTrafficCollectorData> response = Response.FromValue(NetworkFunctionAzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionAzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AzureTrafficCollectorResource> Get(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFunctionAzureTrafficCollectorResource> Get(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Get");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.Get");
             scope.Start();
             try
             {
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 };
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                Response<NetworkFunctionAzureTrafficCollectorData> response = Response.FromValue(NetworkFunctionAzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionAzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -295,14 +295,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureTrafficCollectorResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFunctionAzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkFunctionAzureTrafficCollectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllAsyncCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AzureTrafficCollectorResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFunctionAzureTrafficCollectorData, NetworkFunctionAzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllAsyncCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new NetworkFunctionAzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -323,14 +323,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureTrafficCollectorResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFunctionAzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkFunctionAzureTrafficCollectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AzureTrafficCollectorResource(Client, data));
+            return new PageableWrapper<NetworkFunctionAzureTrafficCollectorData, NetworkFunctionAzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new NetworkFunctionAzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Exists");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.Exists");
             scope.Start();
             try
             {
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AzureTrafficCollectorData> response = default;
+                Response<NetworkFunctionAzureTrafficCollectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionAzureTrafficCollectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureTrafficCollectorData)null, result);
+                        response = Response.FromValue((NetworkFunctionAzureTrafficCollectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.Exists");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.Exists");
             scope.Start();
             try
             {
@@ -426,14 +426,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AzureTrafficCollectorData> response = default;
+                Response<NetworkFunctionAzureTrafficCollectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionAzureTrafficCollectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureTrafficCollectorData)null, result);
+                        response = Response.FromValue((NetworkFunctionAzureTrafficCollectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AzureTrafficCollectorResource>> GetIfExistsAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkFunctionAzureTrafficCollectorResource>> GetIfExistsAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.GetIfExists");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,23 +483,23 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AzureTrafficCollectorData> response = default;
+                Response<NetworkFunctionAzureTrafficCollectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionAzureTrafficCollectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureTrafficCollectorData)null, result);
+                        response = Response.FromValue((NetworkFunctionAzureTrafficCollectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AzureTrafficCollectorResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkFunctionAzureTrafficCollectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionAzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -529,11 +529,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AzureTrafficCollectorResource> GetIfExists(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkFunctionAzureTrafficCollectorResource> GetIfExists(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.GetIfExists");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,23 +544,23 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AzureTrafficCollectorData> response = default;
+                Response<NetworkFunctionAzureTrafficCollectorData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionAzureTrafficCollectorData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AzureTrafficCollectorData)null, result);
+                        response = Response.FromValue((NetworkFunctionAzureTrafficCollectorData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AzureTrafficCollectorResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkFunctionAzureTrafficCollectorResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionAzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        IEnumerator<AzureTrafficCollectorResource> IEnumerable<AzureTrafficCollectorResource>.GetEnumerator()
+        IEnumerator<NetworkFunctionAzureTrafficCollectorResource> IEnumerable<NetworkFunctionAzureTrafficCollectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AzureTrafficCollectorResource> IAsyncEnumerable<AzureTrafficCollectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkFunctionAzureTrafficCollectorResource> IAsyncEnumerable<NetworkFunctionAzureTrafficCollectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

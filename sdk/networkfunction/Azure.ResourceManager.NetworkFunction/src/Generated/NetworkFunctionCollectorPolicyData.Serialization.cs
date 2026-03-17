@@ -18,10 +18,10 @@ using Azure.ResourceManager.NetworkFunction.Models;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary> Collector policy resource. </summary>
-    public partial class CollectorPolicyData : TrackedResourceData, IJsonModel<CollectorPolicyData>
+    public partial class NetworkFunctionCollectorPolicyData : TrackedResourceData, IJsonModel<NetworkFunctionCollectorPolicyData>
     {
-        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/> for deserialization. </summary>
-        internal CollectorPolicyData()
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyData"/> for deserialization. </summary>
+        internal NetworkFunctionCollectorPolicyData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCollectorPolicyData(document.RootElement, options);
+                        return DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CollectorPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkFunctionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CollectorPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CollectorPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetworkFunctionCollectorPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CollectorPolicyData IPersistableModel<CollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CollectorPolicyData)PersistableModelCreateCore(data, options);
+        NetworkFunctionCollectorPolicyData IPersistableModel<NetworkFunctionCollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFunctionCollectorPolicyData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkFunctionCollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="collectorPolicyData"> The <see cref="CollectorPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CollectorPolicyData collectorPolicyData)
+        /// <param name="networkFunctionCollectorPolicyData"> The <see cref="NetworkFunctionCollectorPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkFunctionCollectorPolicyData networkFunctionCollectorPolicyData)
         {
-            if (collectorPolicyData == null)
+            if (networkFunctionCollectorPolicyData == null)
             {
                 return null;
             }
-            return RequestContent.Create(collectorPolicyData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(networkFunctionCollectorPolicyData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CollectorPolicyData"/> from. </param>
-        internal static CollectorPolicyData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkFunctionCollectorPolicyData"/> from. </param>
+        internal static NetworkFunctionCollectorPolicyData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CollectorPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkFunctionCollectorPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectorPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CollectorPolicyData IJsonModel<CollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CollectorPolicyData)JsonModelCreateCore(ref reader, options);
+        NetworkFunctionCollectorPolicyData IJsonModel<NetworkFunctionCollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFunctionCollectorPolicyData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectorPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCollectorPolicyData(document.RootElement, options);
+            return DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CollectorPolicyData DeserializeCollectorPolicyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkFunctionCollectorPolicyData DeserializeNetworkFunctionCollectorPolicyData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.NetworkFunction
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             CollectorPolicyPropertiesFormat properties = default;
+            SystemData systemData = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,15 +170,6 @@ namespace Azure.ResourceManager.NetworkFunction
                         continue;
                     }
                     resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkFunctionContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -216,6 +207,15 @@ namespace Azure.ResourceManager.NetworkFunction
                     properties = CollectorPolicyPropertiesFormat.DeserializeCollectorPolicyPropertiesFormat(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkFunctionContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -230,15 +230,15 @@ namespace Azure.ResourceManager.NetworkFunction
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CollectorPolicyData(
+            return new NetworkFunctionCollectorPolicyData(
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                systemData,
                 eTag);
         }
     }

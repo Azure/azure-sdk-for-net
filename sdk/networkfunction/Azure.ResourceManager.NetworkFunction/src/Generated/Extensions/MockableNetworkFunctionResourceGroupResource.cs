@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         {
         }
 
-        /// <summary> Gets a collection of AzureTrafficCollectors in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AzureTrafficCollectors and their operations over a AzureTrafficCollectorResource. </returns>
-        public virtual AzureTrafficCollectorCollection GetAzureTrafficCollectors()
+        /// <summary> Gets a collection of NetworkFunctionAzureTrafficCollectors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkFunctionAzureTrafficCollectors and their operations over a NetworkFunctionAzureTrafficCollectorResource. </returns>
+        public virtual NetworkFunctionAzureTrafficCollectorCollection GetNetworkFunctionAzureTrafficCollectors()
         {
-            return GetCachedClient(client => new AzureTrafficCollectorCollection(client, Id));
+            return GetCachedClient(client => new NetworkFunctionAzureTrafficCollectorCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFunctionAzureTrafficCollectorResource>> GetNetworkFunctionAzureTrafficCollectorAsync(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            return await GetAzureTrafficCollectors().GetAsync(azureTrafficCollectorName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkFunctionAzureTrafficCollectors().GetAsync(azureTrafficCollectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureTrafficCollectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureTrafficCollectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AzureTrafficCollectorResource> GetAzureTrafficCollector(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFunctionAzureTrafficCollectorResource> GetNetworkFunctionAzureTrafficCollector(string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureTrafficCollectorName, nameof(azureTrafficCollectorName));
 
-            return GetAzureTrafficCollectors().Get(azureTrafficCollectorName, cancellationToken);
+            return GetNetworkFunctionAzureTrafficCollectors().Get(azureTrafficCollectorName, cancellationToken);
         }
     }
 }

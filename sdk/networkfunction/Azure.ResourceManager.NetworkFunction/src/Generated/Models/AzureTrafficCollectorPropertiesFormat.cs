@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkFunction;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorPropertiesFormat"/>. </summary>
         public AzureTrafficCollectorPropertiesFormat()
         {
-            CollectorPolicies = new ChangeTrackingList<ResourceReference>();
+            CollectorPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorPropertiesFormat"/>. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureTrafficCollectorPropertiesFormat(IReadOnlyList<ResourceReference> collectorPolicies, ResourceReference virtualHub, CollectorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureTrafficCollectorPropertiesFormat(IReadOnlyList<SubResource> collectorPolicies, ResourceReference virtualHub, CollectorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectorPolicies = collectorPolicies;
             VirtualHub = virtualHub;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         }
 
         /// <summary> Collector Policies for Azure Traffic Collector. </summary>
-        public IReadOnlyList<ResourceReference> CollectorPolicies { get; } = new ChangeTrackingList<ResourceReference>();
+        public IReadOnlyList<SubResource> CollectorPolicies { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> The virtualHub to which the Azure Traffic Collector belongs. </summary>
         internal ResourceReference VirtualHub { get; set; }

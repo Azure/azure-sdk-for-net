@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.NetworkFunction;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -78,9 +80,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 writer.WritePropertyName("collectorPolicies"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in CollectorPolicies)
+                foreach (SubResource item in CollectorPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +143,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceReference> collectorPolicies = default;
+            IReadOnlyList<SubResource> collectorPolicies = default;
             ResourceReference virtualHub = default;
             CollectorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,10 +155,17 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkFunctionContext.Default));
+                        }
                     }
                     collectorPolicies = array;
                     continue;
@@ -179,7 +193,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureTrafficCollectorPropertiesFormat(collectorPolicies ?? new ChangeTrackingList<ResourceReference>(), virtualHub, provisioningState, additionalBinaryDataProperties);
+            return new AzureTrafficCollectorPropertiesFormat(collectorPolicies ?? new ChangeTrackingList<SubResource>(), virtualHub, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

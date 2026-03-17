@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CollectorPolicyResource"/> and their operations.
-    /// Each <see cref="CollectorPolicyResource"/> in the collection will belong to the same instance of <see cref="AzureTrafficCollectorResource"/>.
-    /// To get a <see cref="CollectorPolicyCollection"/> instance call the GetCollectorPolicies method from an instance of <see cref="AzureTrafficCollectorResource"/>.
+    /// A class representing a collection of <see cref="NetworkFunctionCollectorPolicyResource"/> and their operations.
+    /// Each <see cref="NetworkFunctionCollectorPolicyResource"/> in the collection will belong to the same instance of <see cref="NetworkFunctionAzureTrafficCollectorResource"/>.
+    /// To get a <see cref="NetworkFunctionCollectorPolicyCollection"/> instance call the GetNetworkFunctionCollectorPolicies method from an instance of <see cref="NetworkFunctionAzureTrafficCollectorResource"/>.
     /// </summary>
-    public partial class CollectorPolicyCollection : ArmCollection, IEnumerable<CollectorPolicyResource>, IAsyncEnumerable<CollectorPolicyResource>
+    public partial class NetworkFunctionCollectorPolicyCollection : ArmCollection, IEnumerable<NetworkFunctionCollectorPolicyResource>, IAsyncEnumerable<NetworkFunctionCollectorPolicyResource>
     {
         private readonly ClientDiagnostics _collectorPoliciesClientDiagnostics;
         private readonly CollectorPolicies _collectorPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of CollectorPolicyCollection for mocking. </summary>
-        protected CollectorPolicyCollection()
+        /// <summary> Initializes a new instance of NetworkFunctionCollectorPolicyCollection for mocking. </summary>
+        protected NetworkFunctionCollectorPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CollectorPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CollectorPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkFunctionCollectorPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CollectorPolicyResource.ResourceType, out string collectorPolicyApiVersion);
-            _collectorPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", CollectorPolicyResource.ResourceType.Namespace, Diagnostics);
-            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
+            TryGetApiVersion(NetworkFunctionCollectorPolicyResource.ResourceType, out string networkFunctionCollectorPolicyApiVersion);
+            _collectorPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", NetworkFunctionCollectorPolicyResource.ResourceType.Namespace, Diagnostics);
+            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Endpoint, networkFunctionCollectorPolicyApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.NetworkFunction
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AzureTrafficCollectorResource.ResourceType)
+            if (id.ResourceType != NetworkFunctionAzureTrafficCollectorResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AzureTrafficCollectorResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkFunctionAzureTrafficCollectorResource.ResourceType), id);
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CollectorPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectorPolicyName, CollectorPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkFunctionCollectorPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectorPolicyName, NetworkFunctionCollectorPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, CollectorPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, NetworkFunctionCollectorPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkFunctionArmOperation<CollectorPolicyResource> operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(
-                    new CollectorPolicyOperationSource(Client),
+                NetworkFunctionArmOperation<NetworkFunctionCollectorPolicyResource> operation = new NetworkFunctionArmOperation<NetworkFunctionCollectorPolicyResource>(
+                    new NetworkFunctionCollectorPolicyOperationSource(Client),
                     _collectorPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CollectorPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string collectorPolicyName, CollectorPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkFunctionCollectorPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string collectorPolicyName, NetworkFunctionCollectorPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, CollectorPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, NetworkFunctionCollectorPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkFunctionArmOperation<CollectorPolicyResource> operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(
-                    new CollectorPolicyOperationSource(Client),
+                NetworkFunctionArmOperation<NetworkFunctionCollectorPolicyResource> operation = new NetworkFunctionArmOperation<NetworkFunctionCollectorPolicyResource>(
+                    new NetworkFunctionCollectorPolicyOperationSource(Client),
                     _collectorPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CollectorPolicyResource>> GetAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFunctionCollectorPolicyResource>> GetAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.Get");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 };
                 HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CollectorPolicyData> response = Response.FromValue(CollectorPolicyData.FromResponse(result), result);
+                Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CollectorPolicyResource> Get(string collectorPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFunctionCollectorPolicyResource> Get(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.Get");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 };
                 HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CollectorPolicyData> response = Response.FromValue(CollectorPolicyData.FromResponse(result), result);
+                Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,14 +286,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CollectorPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CollectorPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFunctionCollectorPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkFunctionCollectorPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new CollectorPolicyResource(Client, data));
+            return new AsyncPageableWrapper<NetworkFunctionCollectorPolicyData, NetworkFunctionCollectorPolicyResource>(new CollectorPoliciesGetAllAsyncCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NetworkFunctionCollectorPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -314,14 +314,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CollectorPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CollectorPolicyResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFunctionCollectorPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkFunctionCollectorPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CollectorPolicyData, CollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new CollectorPolicyResource(Client, data));
+            return new PageableWrapper<NetworkFunctionCollectorPolicyData, NetworkFunctionCollectorPolicyResource>(new CollectorPoliciesGetAllCollectionResultOfT(_collectorPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NetworkFunctionCollectorPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.Exists");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -360,14 +360,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CollectorPolicyData> response = default;
+                Response<NetworkFunctionCollectorPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CollectorPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CollectorPolicyData)null, result);
+                        response = Response.FromValue((NetworkFunctionCollectorPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.Exists");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -417,14 +417,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CollectorPolicyData> response = default;
+                Response<NetworkFunctionCollectorPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CollectorPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CollectorPolicyData)null, result);
+                        response = Response.FromValue((NetworkFunctionCollectorPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CollectorPolicyResource>> GetIfExistsAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkFunctionCollectorPolicyResource>> GetIfExistsAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -474,23 +474,23 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CollectorPolicyData> response = default;
+                Response<NetworkFunctionCollectorPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CollectorPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CollectorPolicyData)null, result);
+                        response = Response.FromValue((NetworkFunctionCollectorPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CollectorPolicyResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkFunctionCollectorPolicyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -520,11 +520,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CollectorPolicyResource> GetIfExists(string collectorPolicyName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkFunctionCollectorPolicyResource> GetIfExists(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("CollectorPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -535,23 +535,23 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CollectorPolicyData> response = default;
+                Response<NetworkFunctionCollectorPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CollectorPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CollectorPolicyData)null, result);
+                        response = Response.FromValue((NetworkFunctionCollectorPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CollectorPolicyResource>(response.GetRawResponse());
+                    return new NoValueResponse<NetworkFunctionCollectorPolicyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        IEnumerator<CollectorPolicyResource> IEnumerable<CollectorPolicyResource>.GetEnumerator()
+        IEnumerator<NetworkFunctionCollectorPolicyResource> IEnumerable<NetworkFunctionCollectorPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<CollectorPolicyResource> IAsyncEnumerable<CollectorPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkFunctionCollectorPolicyResource> IAsyncEnumerable<NetworkFunctionCollectorPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

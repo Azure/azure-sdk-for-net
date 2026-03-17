@@ -11,46 +11,47 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary> Azure Traffic Collector resource. </summary>
-    public partial class AzureTrafficCollectorData : TrackedResourceData
+    public partial class NetworkFunctionAzureTrafficCollectorData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionAzureTrafficCollectorData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public AzureTrafficCollectorData(AzureLocation location) : base(location)
+        public NetworkFunctionAzureTrafficCollectorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionAzureTrafficCollectorData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the Azure Traffic Collector. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AzureTrafficCollectorPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFunctionAzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AzureTrafficCollectorPropertiesFormat properties, SystemData systemData, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Properties of the Azure Traffic Collector. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         internal AzureTrafficCollectorPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
 
         /// <summary> Collector Policies for Azure Traffic Collector. </summary>
-        public IReadOnlyList<ResourceReference> CollectorPolicies
+        public IReadOnlyList<SubResource> CollectorPolicies
         {
             get
             {
