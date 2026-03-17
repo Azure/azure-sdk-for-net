@@ -1291,6 +1291,43 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         );
     }
 
+    [Test]
+    public void GetToolCallAttributes_WithNullOpenAPI_ReturnsEmptyDictionary()
+    {
+        // Simulate a partially deserialized RunStepOpenAPIToolCall where the "openapi" key
+        // was missing from the JSON, leaving OpenAPI as null. This is the scenario reported
+        // in issue #57183.
+        string json = """{"type":"openapi","id":"call_123"}""";
+        using var doc = JsonDocument.Parse(json);
+        var toolCall = RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(doc.RootElement);
+
+        Assert.IsNull(toolCall.OpenAPI);
+
+        // GetToolCallAttributes should not throw; it should return an empty dictionary.
+        var result = Telemetry.OpenTelemetryScope.GetToolCallAttributes(toolCall);
+        Assert.IsNotNull(result);
+        Assert.AreEqual(0, result.Count);
+    }
+
+    [Test]
+    public void GetToolCallAttributes_WithValidOpenAPI_DoesNotThrow()
+    {
+        // Even with a fully populated OpenAPI tool call, GetToolCallAttributes returns an
+        // empty dictionary because the camelCase conversion of "openapi" yields "Openapi",
+        // which does not match the class-derived attribute name "OpenAPI". This is fine
+        // because ProcessToolCalls handles RunStepOpenAPIToolCall via an explicit case
+        // branch and never reaches GetToolCallAttributes for this type.
+        string json = """{"type":"openapi","id":"call_456","openapi":{"url":"https://example.com","method":"GET"}}""";
+        using var doc = JsonDocument.Parse(json);
+        var toolCall = RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(doc.RootElement);
+
+        Assert.IsNotNull(toolCall.OpenAPI);
+
+        var result = Telemetry.OpenTelemetryScope.GetToolCallAttributes(toolCall);
+        Assert.IsNotNull(result);
+        Assert.AreEqual(0, result.Count);
+    }
+
     #region Helpers
     private void CheckCreateAgentEvent(Activity createAgentSpan, string modelName, string agentName, string content)
     {
