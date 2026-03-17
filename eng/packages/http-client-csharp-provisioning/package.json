@@ -42,19 +42,6 @@
     "@azure-typespec/http-client-csharp": "^1.0.0-alpha",
     "@typespec/http-client-csharp": "^1.0.0-alpha"
   },
-  "azure-sdk/emitter-package-json-pinning": [
-    "@azure-tools/typespec-autorest",
-    "@azure-tools/typespec-azure-core",
-    "@azure-tools/typespec-azure-resource-manager",
-    "@azure-tools/typespec-azure-rulesets",
-    "@azure-tools/typespec-client-generator-core",
-    "@azure-tools/typespec-liftr-base",
-    "@typespec/compiler",
-    "@typespec/http",
-    "@typespec/openapi",
-    "@typespec/rest",
-    "@typespec/versioning"
-  ],
   "devDependencies": {
     "@azure-tools/typespec-autorest": "0.66.0",
     "@azure-tools/typespec-azure-core": "0.66.0",
@@ -77,5 +64,18 @@
     "typescript": "~5.8.2",
     "typescript-eslint": "^7.8.0",
     "vitest": "^3.0.5"
-  }
+  },
+  "azure-sdk/emitter-package-json-pinning": [
+    "@azure-tools/typespec-autorest",
+    "@azure-tools/typespec-azure-core",
+    "@azure-tools/typespec-azure-resource-manager",
+    "@azure-tools/typespec-azure-rulesets",
+    "@azure-tools/typespec-client-generator-core",
+    "@azure-tools/typespec-liftr-base",
+    "@typespec/compiler",
+    "@typespec/http",
+    "@typespec/openapi",
+    "@typespec/rest",
+    "@typespec/versioning"
+  ]
 }
