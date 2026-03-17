@@ -593,20 +593,57 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// Helper method to apply snapshot or version to a blob client based on source checkpoint details.
+        /// Helper method to apply snapshot or version to a BlockBlobClient based on source checkpoint details.
         /// </summary>
-        private static T ApplySnapshotOrVersion<T>(T client, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
-            where T : BlobBaseClient
+        private static BlockBlobClient ApplySnapshotOrVersion(BlockBlobClient client, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
         {
             if (isSource && sourceCheckpointDetails != null)
             {
                 if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
                 {
-                    return (T)client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                    return client.WithSnapshot(sourceCheckpointDetails.Snapshot);
                 }
                 else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
                 {
-                    return (T)client.WithVersion(sourceCheckpointDetails.VersionId);
+                    return client.WithVersion(sourceCheckpointDetails.VersionId);
+                }
+            }
+            return client;
+        }
+
+        /// <summary>
+        /// Helper method to apply snapshot or version to a PageBlobClient based on source checkpoint details.
+        /// </summary>
+        private static PageBlobClient ApplySnapshotOrVersion(PageBlobClient client, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+        {
+            if (isSource && sourceCheckpointDetails != null)
+            {
+                if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                {
+                    return client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                }
+                else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                {
+                    return client.WithVersion(sourceCheckpointDetails.VersionId);
+                }
+            }
+            return client;
+        }
+
+        /// <summary>
+        /// Helper method to apply snapshot or version to an AppendBlobClient based on source checkpoint details.
+        /// </summary>
+        private static AppendBlobClient ApplySnapshotOrVersion(AppendBlobClient client, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
+        {
+            if (isSource && sourceCheckpointDetails != null)
+            {
+                if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
+                {
+                    return client.WithSnapshot(sourceCheckpointDetails.Snapshot);
+                }
+                else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
+                {
+                    return client.WithVersion(sourceCheckpointDetails.VersionId);
                 }
             }
             return client;
@@ -740,72 +777,16 @@ namespace Azure.Storage.DataMovement.Blobs
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             private AppendBlobClient GetClient(Uri uri, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
-            {
-                AppendBlobClient client = new AppendBlobClient(uri);
-                if (isSource && sourceCheckpointDetails != null)
-                {
-                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
-                    {
-                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
-                    }
-                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
-                    {
-                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
-                    }
-                }
-                return client;
-            }
+                => ApplySnapshotOrVersion(new AppendBlobClient(uri), sourceCheckpointDetails, isSource);
 
             private AppendBlobClient GetClient(Uri uri, StorageSharedKeyCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
-            {
-                AppendBlobClient client = new AppendBlobClient(uri, credential);
-                if (isSource && sourceCheckpointDetails != null)
-                {
-                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
-                    {
-                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
-                    }
-                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
-                    {
-                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
-                    }
-                }
-                return client;
-            }
+                => ApplySnapshotOrVersion(new AppendBlobClient(uri, credential), sourceCheckpointDetails, isSource);
 
             private AppendBlobClient GetClient(Uri uri, TokenCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
-            {
-                AppendBlobClient client = new AppendBlobClient(uri, credential);
-                if (isSource && sourceCheckpointDetails != null)
-                {
-                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
-                    {
-                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
-                    }
-                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
-                    {
-                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
-                    }
-                }
-                return client;
-            }
+                => ApplySnapshotOrVersion(new AppendBlobClient(uri, credential), sourceCheckpointDetails, isSource);
 
             private AppendBlobClient GetClient(Uri uri, AzureSasCredential credential, BlobSourceCheckpointDetails sourceCheckpointDetails, bool isSource)
-            {
-                AppendBlobClient client = new AppendBlobClient(uri, credential);
-                if (isSource && sourceCheckpointDetails != null)
-                {
-                    if (!string.IsNullOrEmpty(sourceCheckpointDetails.Snapshot))
-                    {
-                        client = client.WithSnapshot(sourceCheckpointDetails.Snapshot);
-                    }
-                    else if (!string.IsNullOrEmpty(sourceCheckpointDetails.VersionId))
-                    {
-                        client = client.WithVersion(sourceCheckpointDetails.VersionId);
-                    }
-                }
-                return client;
-            }
+                => ApplySnapshotOrVersion(new AppendBlobClient(uri, credential), sourceCheckpointDetails, isSource);
 
             public StorageResource Rehydrate(
                 TransferProperties properties,
