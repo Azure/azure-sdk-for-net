@@ -9,7 +9,6 @@ using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 

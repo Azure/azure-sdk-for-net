@@ -73,12 +73,9 @@ public class Sample_HostedAgent : SamplesBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
+        AgentsClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
@@ -112,12 +109,9 @@ public class Sample_HostedAgent : SamplesBase
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
+        AgentsClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,

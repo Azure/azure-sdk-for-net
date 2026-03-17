@@ -29,6 +29,27 @@ namespace Azure.AI.Projects.Agents
             _apiVersion = apiVersion;
         }
 
+        /// <summary> Initializes a new instance of AgentsClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AgentsClient(Uri endpoint) : this(endpoint, new AgentsClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AgentsClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AgentsClient(Uri endpoint, AgentsClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AgentsClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+        }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
     }

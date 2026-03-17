@@ -7,13 +7,14 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class InternalProjectsClientOptions : ClientPipelineOptions
+    /// <summary> Client options for <see cref="InternalProjectsClient"/>. </summary>
+    public partial class AgentsClientOptions : ClientPipelineOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of InternalProjectsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public InternalProjectsClientOptions(ServiceVersion version = LatestVersion)
+        public AgentsClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -25,7 +26,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        internal enum ServiceVersion
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
         {
             /// <summary> Microsoft Foundry API version v1. </summary>
             V1 = 1

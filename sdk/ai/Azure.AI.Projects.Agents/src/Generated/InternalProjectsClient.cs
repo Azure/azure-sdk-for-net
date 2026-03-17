@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new InternalProjectsClientOptions())
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentsClientOptions())
         {
         }
 
@@ -43,9 +43,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options)
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
         {
-            options ??= new InternalProjectsClientOptions();
+            options ??= new AgentsClientOptions();
 
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;

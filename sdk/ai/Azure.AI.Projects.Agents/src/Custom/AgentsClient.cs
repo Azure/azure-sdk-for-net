@@ -32,7 +32,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AgentsClient
 {
-    public AgentsClient(AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
+    public AgentsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new()){}
+    public AgentsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
     {
         Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
@@ -42,9 +43,10 @@ public partial class AgentsClient
                 { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
-        _endpoint = options.Endpoint;
-        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());;
-        _apiVersion = options.ApiVersion;
+        _endpoint = endpoint;
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+        ;
+        _apiVersion = options.Version;
     }
 
     /// <summary> Retrieves the agent. </summary>
