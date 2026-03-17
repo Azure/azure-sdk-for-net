@@ -25,7 +25,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The maximum number of inbound NAT pools per Batch pool is 5. If the maximum number of inbound NAT pools is exceeded the request fails with HTTP status code 400. This cannot be specified if the IPAddressProvisioningType is NoPublicIPAddresses. </summary>
         public IList<BatchInboundNatPool> EndpointInboundNatPools
         {
-            get => EndpointConfiguration is null ? default : EndpointConfiguration.InboundNatPools;
+            get 
+            {
+                if (EndpointConfiguration is null)
+                {
+                    EndpointConfiguration = new PoolEndpointConfiguration([]);
+                }
+                return EndpointConfiguration.InboundNatPools;
+            }
             [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
@@ -35,7 +42,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 else
                 {
-                    EndpointConfiguration = new PoolEndpointConfiguration(value);
+                    if (EndpointConfiguration == null)
+                    {
+                        EndpointConfiguration = new PoolEndpointConfiguration([]);
+                    }
+                    else
+                    {
+                        EndpointConfiguration.InboundNatPools.Clear();
+                    }
+                    EndpointConfiguration.InboundNatPools.AddRange(value);
                 }
             }
         }
