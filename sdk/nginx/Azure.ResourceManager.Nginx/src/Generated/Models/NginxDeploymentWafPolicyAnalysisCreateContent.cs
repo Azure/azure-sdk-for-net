@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Nginx Deployment Waf Policy Analysis Create Request. </summary>
-    public partial class NginxDeploymentWafPolicyAnalysisCreateRequest
+    public partial class NginxDeploymentWafPolicyAnalysisCreateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisCreateRequest"/>. </summary>
-        public NginxDeploymentWafPolicyAnalysisCreateRequest()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisCreateContent"/>. </summary>
+        public NginxDeploymentWafPolicyAnalysisCreateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisCreateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisCreateContent"/>. </summary>
         /// <param name="content"> The byte content of the policy. </param>
         /// <param name="filepath"> The absolute file path of the policy as in the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentWafPolicyAnalysisCreateRequest(BinaryData content, string filepath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NginxDeploymentWafPolicyAnalysisCreateContent(BinaryData content, string filepath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Filepath = filepath;
