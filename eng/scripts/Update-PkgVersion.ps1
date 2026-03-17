@@ -128,7 +128,7 @@ else {
     # entry must not be downgraded.
     function Test-ShouldUpdateCpm([string]$Content, [string]$Pattern, [string]$NewVersion) {
       $m = [regex]::Match($Content, $Pattern)
-      if (-not $m.Success) { return $true }  # no existing entry — allow insert
+      if (-not $m.Success) { return $true }  # no existing entry to compare — allow update attempt
       $existingVer = $m.Groups[2].Value
       $existingSemVer = [AzureEngSemanticVersion]::ParseVersionString($existingVer)
       $newSemVer = [AzureEngSemanticVersion]::ParseVersionString($NewVersion)
