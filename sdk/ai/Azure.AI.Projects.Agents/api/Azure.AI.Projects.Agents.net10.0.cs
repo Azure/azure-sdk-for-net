@@ -126,8 +126,7 @@ namespace Azure.AI.Projects.Agents
         protected AgentsClient() { }
         public AgentsClient(System.Uri endpoint) { }
         public AgentsClient(System.Uri endpoint, Azure.AI.Projects.Agents.AgentsClientOptions options) { }
-        public AgentsClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) { }
-        public AgentsClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.Agents.AgentsClientOptions options) { }
+        public AgentsClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.Agents.AgentsClientOptions options = null) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult CreateAgent(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
