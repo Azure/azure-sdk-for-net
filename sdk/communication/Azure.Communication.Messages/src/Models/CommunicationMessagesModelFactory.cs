@@ -6,10 +6,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary> Model factory for models. </summary>
+    [CodeGenType("MessagesModelFactory")]
     public static partial class CommunicationMessagesModelFactory
     {
         /// <summary> A request to send an audio notification. </summary>
@@ -19,7 +22,11 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="AudioNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AudioNotificationContent AudioNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri)
-            => MessagesModelFactory.AudioNotificationContent(channelRegistrationId, to, mediaUri);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new AudioNotificationContent(channelRegistrationId, to.ToList(), CommunicationMessageKind.Audio, additionalBinaryDataProperties: null, mediaUri);
+        }
 
         /// <summary> A request to send a document notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -30,7 +37,18 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="DocumentNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DocumentNotificationContent DocumentNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string caption, string fileName, Uri mediaUri)
-            => MessagesModelFactory.DocumentNotificationContent(channelRegistrationId, to, caption, fileName, mediaUri);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new DocumentNotificationContent(
+                channelRegistrationId,
+                to.ToList(),
+                CommunicationMessageKind.Document,
+                additionalBinaryDataProperties: null,
+                caption,
+                fileName,
+                mediaUri);
+        }
 
         /// <summary> A request to send an image notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -40,7 +58,17 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="ImageNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ImageNotificationContent ImageNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string caption, Uri mediaUri)
-            => MessagesModelFactory.ImageNotificationContent(channelRegistrationId, to, caption, mediaUri);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new ImageNotificationContent(
+                channelRegistrationId,
+                to.ToList(),
+                CommunicationMessageKind.Image,
+                additionalBinaryDataProperties: null,
+                caption,
+                mediaUri);
+        }
 
         /// <summary> @deprecated A request to send an image notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -60,7 +88,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageReceipt"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageReceipt MessageReceipt(string messageId, string to)
-            => MessagesModelFactory.MessageReceipt(messageId, to);
+            => new MessageReceipt(messageId, to, additionalBinaryDataProperties: null);
 
         /// <summary> The template object used to create templates. </summary>
         /// <param name="name"> Name of the template. </param>
@@ -70,7 +98,11 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplate"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplate MessageTemplate(string name, string language, IEnumerable<MessageTemplateValue> values, MessageTemplateBindings bindings)
-            => MessagesModelFactory.MessageTemplate(name, language, values, bindings);
+        {
+            values ??= new ChangeTrackingList<MessageTemplateValue>();
+
+            return new MessageTemplate(name, language, values.ToList(), bindings, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> The message template's document value information. </summary>
         /// <param name="name"> Template binding reference name. </param>
@@ -80,7 +112,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateDocument"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateDocument MessageTemplateDocument(string name, Uri uri, string caption, string fileName)
-            => MessagesModelFactory.MessageTemplateDocument(name, uri, caption, fileName);
+            => new MessageTemplateDocument(name, MessageTemplateValueKind.Document, additionalBinaryDataProperties: null, uri, caption, fileName);
 
         /// <summary> The message template's image value information. </summary>
         /// <param name="name"> Template binding reference name. </param>
@@ -90,7 +122,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateImage"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateImage MessageTemplateImage(string name, Uri uri, string caption, string fileName)
-            => MessagesModelFactory.MessageTemplateImage(name, uri, caption, fileName);
+            => new MessageTemplateImage(name, MessageTemplateValueKind.Image, additionalBinaryDataProperties: null, uri, caption, fileName);
 
         /// <summary> The message template as returned from the service. </summary>
         /// <param name="name"> The template's name. </param>
@@ -100,7 +132,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateItem MessageTemplateItem(string name, string language, MessageTemplateStatus status, string kind)
-            => MessagesModelFactory.MessageTemplateItem(name, language, status, kind);
+            => new UnknownMessageTemplateItem(name, language, status, new CommunicationMessagesChannel(kind), additionalBinaryDataProperties: null);
 
         /// <summary> The message template's quick action value information. </summary>
         /// <param name="name"> Template binding reference name. </param>
@@ -109,7 +141,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateQuickAction"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateQuickAction MessageTemplateQuickAction(string name, string text, string payload)
-            => MessagesModelFactory.MessageTemplateQuickAction(name, text, payload);
+            => new MessageTemplateQuickAction(name, MessageTemplateValueKind.QuickAction, additionalBinaryDataProperties: null, text, payload);
 
         /// <summary> The message template's text value information. </summary>
         /// <param name="name"> Template binding reference name. </param>
@@ -117,7 +149,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateText"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateText MessageTemplateText(string name, string text)
-            => MessagesModelFactory.MessageTemplateText(name, text);
+            => new MessageTemplateText(name, MessageTemplateValueKind.Text, additionalBinaryDataProperties: null, text);
 
         /// <summary> The class describes a parameter of a template. </summary>
         /// <param name="name"> Template binding reference name. </param>
@@ -125,7 +157,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateValue"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateValue MessageTemplateValue(string name, string kind)
-            => MessagesModelFactory.MessageTemplateValue(name, kind);
+            => new UnknownMessageTemplateValue(name, new MessageTemplateValueKind(kind), additionalBinaryDataProperties: null);
 
         /// <summary> The message template's video value information. </summary>
         /// <param name="name"> Template binding reference name. </param>
@@ -135,7 +167,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.MessageTemplateVideo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MessageTemplateVideo MessageTemplateVideo(string name, Uri uri, string caption, string fileName)
-            => MessagesModelFactory.MessageTemplateVideo(name, uri, caption, fileName);
+            => new MessageTemplateVideo(name, MessageTemplateValueKind.Video, additionalBinaryDataProperties: null, uri, caption, fileName);
 
         /// <summary> Details of the message to send. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -144,14 +176,22 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.NotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NotificationContent NotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string kind)
-            => MessagesModelFactory.NotificationContent(channelRegistrationId, to, kind);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new UnknownNotificationContent(channelRegistrationId, to.ToList(), new CommunicationMessageKind(kind), additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Result of the send message operation. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <returns> A new <see cref="Messages.SendMessageResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SendMessageResult SendMessageResult(IEnumerable<MessageReceipt> receipts)
-            => MessagesModelFactory.SendMessageResult(receipts);
+        {
+            receipts ??= new ChangeTrackingList<MessageReceipt>();
+
+            return new SendMessageResult(receipts.ToList(), additionalBinaryDataProperties: null);
+        }
 
         /// <summary> A request to send a template notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -160,7 +200,11 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.TemplateNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TemplateNotificationContent TemplateNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplate template)
-            => MessagesModelFactory.TemplateNotificationContent(channelRegistrationId, to, template);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new TemplateNotificationContent(channelRegistrationId, to.ToList(), CommunicationMessageKind.Template, additionalBinaryDataProperties: null, template);
+        }
 
         /// <summary> A request to send a text notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -169,7 +213,11 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.TextNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TextNotificationContent TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content)
-            => MessagesModelFactory.TextNotificationContent(channelRegistrationId, to, content);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new TextNotificationContent(channelRegistrationId, to.ToList(), CommunicationMessageKind.Text, additionalBinaryDataProperties: null, content);
+        }
 
         /// <summary> A request to send a video notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
@@ -179,7 +227,17 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.VideoNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VideoNotificationContent VideoNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string caption, Uri mediaUri)
-            => MessagesModelFactory.VideoNotificationContent(channelRegistrationId, to, caption, mediaUri);
+        {
+            to ??= new ChangeTrackingList<string>();
+
+            return new VideoNotificationContent(
+                channelRegistrationId,
+                to.ToList(),
+                CommunicationMessageKind.Video,
+                additionalBinaryDataProperties: null,
+                caption,
+                mediaUri);
+        }
 
         /// <summary> The WhatsApp-specific template response contract. </summary>
         /// <param name="name"> The template's name. </param>

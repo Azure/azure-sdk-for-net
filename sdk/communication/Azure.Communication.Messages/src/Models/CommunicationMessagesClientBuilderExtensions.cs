@@ -7,16 +7,17 @@ using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Communication.Messages;
 using Azure.Core.Extensions;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
     /// Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>.
-    /// This type is provided for backward compatibility; use <see cref="MessagesClientBuilderExtensions"/> instead.
+    /// This type is provided for backward compatibility.
     /// </summary>
+    [CodeGenType("MessagesClientBuilderExtensions")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("Use MessagesClientBuilderExtensions instead.")]
-    public static class CommunicationMessagesClientBuilderExtensions
+    public static partial class CommunicationMessagesClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> client. </summary>
         /// <param name="builder"> The builder to register with. </param>

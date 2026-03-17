@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
+    /// <summary> Model factory for compatibility helpers. </summary>
     [CodeGenSuppress("MediaNotificationContent", typeof(Guid), typeof(IEnumerable<string>), typeof(string), typeof(Uri))]
     public static partial class MessagesModelFactory
     {
