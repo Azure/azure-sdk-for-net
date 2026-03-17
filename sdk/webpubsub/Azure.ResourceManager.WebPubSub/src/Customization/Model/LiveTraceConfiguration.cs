@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>

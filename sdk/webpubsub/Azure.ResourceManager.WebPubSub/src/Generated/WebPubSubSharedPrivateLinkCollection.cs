@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SharedPrivateLinkResource"/> and their operations.
-    /// Each <see cref="SharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="WebPubSubReplicaResource"/>.
-    /// To get a <see cref="SharedPrivateLinkResourceCollection"/> instance call the GetSharedPrivateLinkResources method from an instance of <see cref="WebPubSubReplicaResource"/>.
+    /// A class representing a collection of <see cref="WebPubSubSharedPrivateLinkResource"/> and their operations.
+    /// Each <see cref="WebPubSubSharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
+    /// To get a <see cref="WebPubSubSharedPrivateLinkCollection"/> instance call the GetWebPubSubSharedPrivateLinkResources method from an instance of <see cref="WebPubSubResource"/>.
     /// </summary>
-    public partial class SharedPrivateLinkResourceCollection : ArmCollection, IEnumerable<SharedPrivateLinkResource>, IAsyncEnumerable<SharedPrivateLinkResource>
+    public partial class WebPubSubSharedPrivateLinkCollection : ArmCollection, IEnumerable<WebPubSubSharedPrivateLinkResource>, IAsyncEnumerable<WebPubSubSharedPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _sharedPrivateLinkResourcesClientDiagnostics;
-        private readonly SharedPrivateLinkResources _sharedPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _webPubSubSharedPrivateLinkResourcesClientDiagnostics;
+        private readonly WebPubSubSharedPrivateLinkResources _webPubSubSharedPrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceCollection for mocking. </summary>
-        protected SharedPrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of WebPubSubSharedPrivateLinkCollection for mocking. </summary>
+        protected WebPubSubSharedPrivateLinkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SharedPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebPubSubSharedPrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SharedPrivateLinkResource.ResourceType, out string sharedPrivateLinkResourceApiVersion);
-            _sharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", SharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, sharedPrivateLinkResourceApiVersion ?? "2025-08-01-preview");
+            TryGetApiVersion(WebPubSubSharedPrivateLinkResource.ResourceType, out string webPubSubSharedPrivateLinkResourceApiVersion);
+            _webPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _webPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResources(_webPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubSharedPrivateLinkResourceApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.WebPubSub
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebPubSubReplicaResource.ResourceType)
+            if (id.ResourceType != WebPubSubResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubReplicaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubResource.ResourceType), id);
             }
         }
 
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_CreateOrUpdate. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SharedPrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubSharedPrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebPubSubArmOperation<SharedPrivateLinkResource> operation = new WebPubSubArmOperation<SharedPrivateLinkResource>(
-                    new SharedPrivateLinkResourceOperationSource(Client),
-                    _sharedPrivateLinkResourcesClientDiagnostics,
+                WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(
+                    new WebPubSubSharedPrivateLinkResourceOperationSource(Client),
+                    _webPubSubSharedPrivateLinkResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_CreateOrUpdate. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SharedPrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubSharedPrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebPubSubArmOperation<SharedPrivateLinkResource> operation = new WebPubSubArmOperation<SharedPrivateLinkResource>(
-                    new SharedPrivateLinkResourceOperationSource(Client),
-                    _sharedPrivateLinkResourcesClientDiagnostics,
+                WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(
+                    new WebPubSubSharedPrivateLinkResourceOperationSource(Client),
+                    _webPubSubSharedPrivateLinkResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SharedPrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubSharedPrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.Get");
             scope.Start();
             try
             {
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubSharedPrivateLinkData> response = Response.FromValue(WebPubSubSharedPrivateLinkData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SharedPrivateLinkResource> Get(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubSharedPrivateLinkResource> Get(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.Get");
             scope.Start();
             try
             {
@@ -252,14 +252,14 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubSharedPrivateLinkData> response = Response.FromValue(WebPubSubSharedPrivateLinkData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_List. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -286,20 +286,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SharedPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubSharedPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, SharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
-                _sharedPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context), data => new SharedPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_webPubSubSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -307,11 +301,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_List. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -320,20 +314,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SharedPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubSharedPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubSharedPrivateLinkData, SharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetAllCollectionResultOfT(
-                _sharedPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context), data => new SharedPrivateLinkResource(Client, data));
+            return new PageableWrapper<WebPubSubSharedPrivateLinkData, WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourcesGetAllCollectionResultOfT(_webPubSubSharedPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WebPubSubSharedPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -341,11 +329,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -361,7 +349,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -369,7 +357,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -398,11 +386,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -418,7 +406,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
@@ -426,7 +414,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -455,11 +443,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -471,11 +459,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SharedPrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<WebPubSubSharedPrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,7 +471,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -500,9 +488,9 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SharedPrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<WebPubSubSharedPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -516,11 +504,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <description> WebPubSubSharedPrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -532,11 +520,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SharedPrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<WebPubSubSharedPrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _webPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,7 +532,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                HttpMessage message = _webPubSubSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -561,9 +549,9 @@ namespace Azure.ResourceManager.WebPubSub
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SharedPrivateLinkResource>(response.GetRawResponse());
+                    return new NoValueResponse<WebPubSubSharedPrivateLinkResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +560,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        IEnumerator<SharedPrivateLinkResource> IEnumerable<SharedPrivateLinkResource>.GetEnumerator()
+        IEnumerator<WebPubSubSharedPrivateLinkResource> IEnumerable<WebPubSubSharedPrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +571,7 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<SharedPrivateLinkResource> IAsyncEnumerable<SharedPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebPubSubSharedPrivateLinkResource> IAsyncEnumerable<WebPubSubSharedPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

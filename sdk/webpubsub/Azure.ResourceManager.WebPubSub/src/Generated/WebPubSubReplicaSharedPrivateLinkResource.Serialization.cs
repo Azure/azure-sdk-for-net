@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary></summary>
-    public partial class SharedPrivateLinkResource : IJsonModel<WebPubSubSharedPrivateLinkData>
+    public partial class WebPubSubReplicaSharedPrivateLinkResource : IJsonModel<WebPubSubSharedPrivateLinkData>
     {
         private static IJsonModel<WebPubSubSharedPrivateLinkData> s_dataDeserializationInstance;
 

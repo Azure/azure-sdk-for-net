@@ -858,11 +858,11 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Gets a collection of SharedPrivateLinkResources in the <see cref="WebPubSubReplicaResource"/>. </summary>
-        /// <returns> An object representing collection of SharedPrivateLinkResources and their operations over a SharedPrivateLinkResource. </returns>
-        public virtual SharedPrivateLinkResourceCollection GetSharedPrivateLinkResources()
+        /// <summary> Gets a collection of WebPubSubReplicaSharedPrivateLinkResources in the <see cref="WebPubSubReplicaResource"/>. </summary>
+        /// <returns> An object representing collection of WebPubSubReplicaSharedPrivateLinkResources and their operations over a WebPubSubReplicaSharedPrivateLinkResource. </returns>
+        public virtual WebPubSubReplicaSharedPrivateLinkCollection GetWebPubSubReplicaSharedPrivateLinkResources()
         {
-            return GetCachedClient(client => new SharedPrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new WebPubSubReplicaSharedPrivateLinkCollection(client, Id));
         }
 
         /// <summary> Get the specified shared private link resource. </summary>
@@ -871,11 +871,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SharedPrivateLinkResource>> GetSharedPrivateLinkResourceAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaSharedPrivateLinkResource>> GetWebPubSubReplicaSharedPrivateLinkResourceAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            return await GetSharedPrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetWebPubSubReplicaSharedPrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the specified shared private link resource. </summary>
@@ -884,11 +884,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SharedPrivateLinkResource> GetSharedPrivateLinkResource(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaSharedPrivateLinkResource> GetWebPubSubReplicaSharedPrivateLinkResource(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            return GetSharedPrivateLinkResources().Get(sharedPrivateLinkResourceName, cancellationToken);
+            return GetWebPubSubReplicaSharedPrivateLinkResources().Get(sharedPrivateLinkResourceName, cancellationToken);
         }
     }
 }

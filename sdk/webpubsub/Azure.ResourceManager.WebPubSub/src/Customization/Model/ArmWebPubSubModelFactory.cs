@@ -10,6 +10,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.WebPubSub.Models
 {
 }

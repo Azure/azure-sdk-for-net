@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             return new WebPubSubReplicaResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource"/> object. </returns>
-        public virtual SharedPrivateLinkResource GetSharedPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> object. </returns>
+        public virtual WebPubSubReplicaSharedPrivateLinkResource GetWebPubSubReplicaSharedPrivateLinkResource(ResourceIdentifier id)
         {
-            SharedPrivateLinkResource.ValidateResourceId(id);
-            return new SharedPrivateLinkResource(Client, id);
+            WebPubSubReplicaSharedPrivateLinkResource.ValidateResourceId(id);
+            return new WebPubSubReplicaSharedPrivateLinkResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebPubSubSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>

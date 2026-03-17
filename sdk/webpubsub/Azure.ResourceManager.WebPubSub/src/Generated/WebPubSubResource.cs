@@ -587,30 +587,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuList>> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubAvailableSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SkuList> response = Response.FromValue(SkuList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new WebPubSubResourcesGetSkusAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -635,30 +619,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuList> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubAvailableSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SkuList> response = Response.FromValue(SkuList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new WebPubSubResourcesGetSkusCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1318,9 +1286,9 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Gets a collection of WebPubSubSharedPrivateLinkResources in the <see cref="WebPubSubResource"/>. </summary>
         /// <returns> An object representing collection of WebPubSubSharedPrivateLinkResources and their operations over a WebPubSubSharedPrivateLinkResource. </returns>
-        public virtual WebPubSubSharedPrivateLinkResourceCollection GetWebPubSubSharedPrivateLinkResources()
+        public virtual WebPubSubSharedPrivateLinkCollection GetWebPubSubSharedPrivateLinkResources()
         {
-            return GetCachedClient(client => new WebPubSubSharedPrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new WebPubSubSharedPrivateLinkCollection(client, Id));
         }
 
         /// <summary> Get the specified shared private link resource. </summary>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> The list skus operation response. </summary>
-    public partial class SkuList : IJsonModel<SkuList>
+    internal partial class SkuList : IJsonModel<SkuList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
