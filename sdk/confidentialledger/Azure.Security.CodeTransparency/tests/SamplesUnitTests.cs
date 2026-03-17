@@ -280,7 +280,7 @@ namespace Azure.Security.CodeTransparency.Tests
                     AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
                     UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
                 };
-                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
                 Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
             }
             catch (Exception e)
