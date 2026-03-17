@@ -101,6 +101,7 @@ public class BasicDataFactoryTests
         return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:DataFactoryGitConfigManagedVnet
                 Infrastructure infra = new();
 
                 ProvisioningParameter gitAccountName =
@@ -166,6 +167,7 @@ public class BasicDataFactoryTests
 
                 infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = dataFactory.Name });
                 infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = dataFactory.Id });
+                #endregion
 
                 return infra;
             });

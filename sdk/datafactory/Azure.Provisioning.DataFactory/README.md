@@ -22,6 +22,121 @@ dotnet add package Azure.Provisioning.DataFactory --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a Data Factory with a Linked Service
+
+This example demonstrates how to create an Azure Data Factory with system-assigned managed identity and an Azure Blob Storage linked service.
+
+```C# Snippet:DataFactoryBasic
+Infrastructure infra = new();
+
+ProvisioningParameter connectionString =
+    new(nameof(connectionString), typeof(string))
+    {
+        Description = "The connection string for the storage account.",
+        IsSecure = true
+    };
+infra.Add(connectionString);
+
+DataFactoryService dataFactory =
+    new(nameof(dataFactory), DataFactoryService.ResourceVersions.V2018_06_01)
+    {
+        Identity = new ManagedServiceIdentity
+        {
+            ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
+        }
+    };
+infra.Add(dataFactory);
+
+DataFactoryLinkedService linkedService =
+    new(nameof(linkedService), DataFactoryLinkedService.ResourceVersions.V2018_06_01)
+    {
+        Parent = dataFactory,
+        Name = "ArmtemplateStorageLinkedService",
+        Properties = new AzureBlobStorageLinkedService
+        {
+            ConnectionString = connectionString
+        }
+    };
+infra.Add(linkedService);
+
+infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = dataFactory.Name });
+infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = dataFactory.Id });
+```
+
+### Create a Data Factory with Git Config and Managed Virtual Network
+
+This example demonstrates a more advanced setup with GitHub repository configuration, a managed virtual network, and a managed integration runtime.
+
+```C# Snippet:DataFactoryGitConfigManagedVnet
+Infrastructure infra = new();
+
+ProvisioningParameter gitAccountName =
+    new(nameof(gitAccountName), typeof(string))
+    {
+        Description = "Git account name."
+    };
+infra.Add(gitAccountName);
+
+ProvisioningParameter gitRepositoryName =
+    new(nameof(gitRepositoryName), typeof(string))
+    {
+        Description = "Git repository name."
+    };
+infra.Add(gitRepositoryName);
+
+DataFactoryService dataFactory =
+    new(nameof(dataFactory), DataFactoryService.ResourceVersions.V2018_06_01)
+    {
+        Identity = new ManagedServiceIdentity
+        {
+            ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
+        },
+        PublicNetworkAccess = DataFactoryPublicNetworkAccess.Disabled,
+        RepoConfiguration = new FactoryGitHubConfiguration
+        {
+            AccountName = gitAccountName,
+            RepositoryName = gitRepositoryName,
+            CollaborationBranch = "main",
+            RootFolder = "/"
+        }
+    };
+infra.Add(dataFactory);
+
+DataFactoryManagedVirtualNetwork managedVnet =
+    new(nameof(managedVnet), DataFactoryManagedVirtualNetwork.ResourceVersions.V2018_06_01)
+    {
+        Parent = dataFactory,
+        Name = "default",
+        Properties = new DataFactoryManagedVirtualNetworkProperties()
+    };
+infra.Add(managedVnet);
+
+DataFactoryIntegrationRuntime integrationRuntime =
+    new(nameof(integrationRuntime), DataFactoryIntegrationRuntime.ResourceVersions.V2018_06_01)
+    {
+        Parent = dataFactory,
+        Name = "AutoResolveIntegrationRuntime",
+        Properties = new ManagedIntegrationRuntime
+        {
+            ManagedVirtualNetwork = new ManagedVirtualNetworkReference
+            {
+                ReferenceName = "default",
+                ReferenceType = ManagedVirtualNetworkReferenceType.ManagedVirtualNetworkReference
+            },
+            ComputeProperties = new IntegrationRuntimeComputeProperties
+            {
+                Location = new AzureLocation("AutoResolve")
+            }
+        }
+    };
+infra.Add(integrationRuntime);
+
+infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = dataFactory.Name });
+infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = dataFactory.Id });
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
