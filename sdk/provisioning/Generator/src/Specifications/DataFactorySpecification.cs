@@ -11,7 +11,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class DataFactorySpecification() :
-    Specification("DataFactory", typeof(DataFactoryExtensions))
+    Specification("DataFactory", typeof(DataFactoryExtensions), ignorePropertiesWithoutPath: true)
 {
     protected override IReadOnlyList<Assembly> AdditionalAllowedAssemblies { get; } =
         [typeof(DataFactoryLinkedServiceReference).Assembly];

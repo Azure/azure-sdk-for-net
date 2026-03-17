@@ -5,9 +5,7 @@
 
 #nullable enable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using System;
 
 namespace Azure.Provisioning.DataFactory;
 
@@ -16,36 +14,6 @@ namespace Azure.Provisioning.DataFactory;
 /// </summary>
 public partial class DataFactoryLinkedServiceReference : ProvisionableConstruct
 {
-    /// <summary>
-    /// Gets or sets the ReferenceKind.
-    /// </summary>
-    public BicepValue<DataFactoryLinkedServiceReferenceKind> ReferenceKind 
-    {
-        get { Initialize(); return _referenceKind!; }
-        set { Initialize(); _referenceKind!.Assign(value); }
-    }
-    private BicepValue<DataFactoryLinkedServiceReferenceKind>? _referenceKind;
-
-    /// <summary>
-    /// Gets or sets the ReferenceName.
-    /// </summary>
-    public BicepValue<string> ReferenceName 
-    {
-        get { Initialize(); return _referenceName!; }
-        set { Initialize(); _referenceName!.Assign(value); }
-    }
-    private BicepValue<string>? _referenceName;
-
-    /// <summary>
-    /// Gets or sets the Parameters.
-    /// </summary>
-    public BicepDictionary<BinaryData> Parameters 
-    {
-        get { Initialize(); return _parameters!; }
-        set { Initialize(); _parameters!.Assign(value); }
-    }
-    private BicepDictionary<BinaryData>? _parameters;
-
     /// <summary>
     /// Creates a new DataFactoryLinkedServiceReference.
     /// </summary>
@@ -60,8 +28,5 @@ public partial class DataFactoryLinkedServiceReference : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _referenceKind = DefineProperty<DataFactoryLinkedServiceReferenceKind>("ReferenceKind", ["ReferenceKind"]);
-        _referenceName = DefineProperty<string>("ReferenceName", ["ReferenceName"]);
-        _parameters = DefineDictionaryProperty<BinaryData>("Parameters", ["Parameters"]);
     }
 }

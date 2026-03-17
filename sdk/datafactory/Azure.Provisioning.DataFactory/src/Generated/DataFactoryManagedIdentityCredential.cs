@@ -5,7 +5,6 @@
 
 #nullable enable
 
-using Azure;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -27,25 +26,6 @@ public partial class DataFactoryManagedIdentityCredential : ProvisionableResourc
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
-
-    /// <summary>
-    /// Managed Identity Credential properties.
-    /// </summary>
-    public DataFactoryManagedIdentityCredentialProperties Properties 
-    {
-        get { Initialize(); return _properties!; }
-        set { Initialize(); AssignOrReplace(ref _properties, value); }
-    }
-    private DataFactoryManagedIdentityCredentialProperties? _properties;
-
-    /// <summary>
-    /// Etag identifies change in the resource.
-    /// </summary>
-    public BicepValue<ETag> ETag 
-    {
-        get { Initialize(); return _eTag!; }
-    }
-    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Gets the Id.
@@ -98,8 +78,6 @@ public partial class DataFactoryManagedIdentityCredential : ProvisionableResourc
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _properties = DefineModelProperty<DataFactoryManagedIdentityCredentialProperties>("Properties", ["Properties"], isRequired: true);
-        _eTag = DefineProperty<ETag>("ETag", ["ETag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<DataFactoryService>("Parent", ["parent"], isRequired: true);

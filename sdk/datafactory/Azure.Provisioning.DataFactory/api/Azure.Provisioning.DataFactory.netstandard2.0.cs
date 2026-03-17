@@ -1859,9 +1859,6 @@ namespace Azure.Provisioning.DataFactory
     public partial class DataFactoryKeyVaultSecret : Azure.Provisioning.DataFactory.DataFactorySecret
     {
         public DataFactoryKeyVaultSecret() { }
-        public Azure.Provisioning.BicepValue<string> SecretName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SecretVersion { get { throw null; } set { } }
-        public Azure.Provisioning.DataFactory.DataFactoryLinkedServiceReference Store { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DataFactoryLinkedService : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1894,9 +1891,6 @@ namespace Azure.Provisioning.DataFactory
     public partial class DataFactoryLinkedServiceReference : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DataFactoryLinkedServiceReference() { }
-        public Azure.Provisioning.BicepDictionary<System.BinaryData> Parameters { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DataFactory.DataFactoryLinkedServiceReferenceKind> ReferenceKind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ReferenceName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DataFactoryLinkedServiceReferenceKind
@@ -1914,11 +1908,9 @@ namespace Azure.Provisioning.DataFactory
     public partial class DataFactoryManagedIdentityCredential : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DataFactoryManagedIdentityCredential(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.DataFactory.DataFactoryService? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.DataFactory.DataFactoryManagedIdentityCredentialProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.DataFactory.DataFactoryManagedIdentityCredential FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -2142,7 +2134,6 @@ namespace Azure.Provisioning.DataFactory
     public partial class DataFactorySecretString : Azure.Provisioning.DataFactory.DataFactorySecret
     {
         public DataFactorySecretString() { }
-        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DataFactoryService : Azure.Provisioning.Primitives.ProvisionableResource

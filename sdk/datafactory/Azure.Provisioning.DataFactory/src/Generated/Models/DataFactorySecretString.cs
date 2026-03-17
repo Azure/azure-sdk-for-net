@@ -6,7 +6,6 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
-using System;
 
 namespace Azure.Provisioning.DataFactory;
 
@@ -15,16 +14,6 @@ namespace Azure.Provisioning.DataFactory;
 /// </summary>
 public partial class DataFactorySecretString : DataFactorySecret
 {
-    /// <summary>
-    /// Gets or sets the Value.
-    /// </summary>
-    public BicepValue<string> Value 
-    {
-        get { Initialize(); return _value!; }
-        set { Initialize(); _value!.Assign(value); }
-    }
-    private BicepValue<string>? _value;
-
     /// <summary>
     /// Creates a new DataFactorySecretString.
     /// </summary>
@@ -38,6 +27,5 @@ public partial class DataFactorySecretString : DataFactorySecret
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _value = DefineProperty<string>("Value", ["Value"]);
     }
 }

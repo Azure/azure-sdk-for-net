@@ -6,7 +6,6 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
-using System;
 
 namespace Azure.Provisioning.DataFactory;
 

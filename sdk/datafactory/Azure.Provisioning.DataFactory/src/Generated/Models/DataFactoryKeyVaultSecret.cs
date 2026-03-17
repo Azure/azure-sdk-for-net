@@ -5,9 +5,7 @@
 
 #nullable enable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using System;
 
 namespace Azure.Provisioning.DataFactory;
 
@@ -16,36 +14,6 @@ namespace Azure.Provisioning.DataFactory;
 /// </summary>
 public partial class DataFactoryKeyVaultSecret : DataFactorySecret
 {
-    /// <summary>
-    /// Gets or sets the Store.
-    /// </summary>
-    public DataFactoryLinkedServiceReference Store 
-    {
-        get { Initialize(); return _store!; }
-        set { Initialize(); AssignOrReplace(ref _store, value); }
-    }
-    private DataFactoryLinkedServiceReference? _store;
-
-    /// <summary>
-    /// Gets or sets the SecretName.
-    /// </summary>
-    public BicepValue<string> SecretName 
-    {
-        get { Initialize(); return _secretName!; }
-        set { Initialize(); _secretName!.Assign(value); }
-    }
-    private BicepValue<string>? _secretName;
-
-    /// <summary>
-    /// Gets or sets the SecretVersion.
-    /// </summary>
-    public BicepValue<string> SecretVersion 
-    {
-        get { Initialize(); return _secretVersion!; }
-        set { Initialize(); _secretVersion!.Assign(value); }
-    }
-    private BicepValue<string>? _secretVersion;
-
     /// <summary>
     /// Creates a new DataFactoryKeyVaultSecret.
     /// </summary>
@@ -59,8 +27,5 @@ public partial class DataFactoryKeyVaultSecret : DataFactorySecret
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _store = DefineModelProperty<DataFactoryLinkedServiceReference>("Store", ["Store"]);
-        _secretName = DefineProperty<string>("SecretName", ["SecretName"]);
-        _secretVersion = DefineProperty<string>("SecretVersion", ["SecretVersion"]);
     }
 }
