@@ -257,6 +257,17 @@ namespace Azure.Provisioning.KeyVault
         public static Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_06_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2018_02_14;
+            public static readonly string V2019_09_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
@@ -335,6 +346,17 @@ namespace Azure.Provisioning.KeyVault
         public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_06_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2018_02_14;
+            public static readonly string V2019_09_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
@@ -351,6 +373,17 @@ namespace Azure.Provisioning.KeyVault
         public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_06_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2018_02_14;
+            public static readonly string V2019_09_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
@@ -394,6 +427,13 @@ namespace Azure.Provisioning.KeyVault
         public static Azure.Provisioning.KeyVault.ManagedHsm FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
@@ -470,6 +510,13 @@ namespace Azure.Provisioning.KeyVault
         public static Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
