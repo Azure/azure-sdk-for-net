@@ -16,6 +16,6 @@ namespace Parameters.Basic
         public BasicClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal BasicClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal BasicClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

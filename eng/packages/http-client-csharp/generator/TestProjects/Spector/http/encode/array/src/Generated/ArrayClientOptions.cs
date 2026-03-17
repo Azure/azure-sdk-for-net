@@ -16,6 +16,6 @@ namespace Encode._Array
         public ArrayClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ArrayClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ArrayClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

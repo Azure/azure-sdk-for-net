@@ -16,6 +16,6 @@ namespace Encode.Datetime
         public DatetimeClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal DatetimeClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal DatetimeClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

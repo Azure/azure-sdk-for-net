@@ -16,6 +16,6 @@ namespace Serialization.EncodedName.Json
         public JsonClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal JsonClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal JsonClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

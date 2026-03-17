@@ -16,6 +16,6 @@ namespace Server.Path.Single
         public SingleClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal SingleClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal SingleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

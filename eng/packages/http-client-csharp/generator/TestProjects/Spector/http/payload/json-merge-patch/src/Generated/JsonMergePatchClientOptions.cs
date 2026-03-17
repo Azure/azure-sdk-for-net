@@ -16,6 +16,6 @@ namespace Payload.JsonMergePatch
         public JsonMergePatchClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal JsonMergePatchClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal JsonMergePatchClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

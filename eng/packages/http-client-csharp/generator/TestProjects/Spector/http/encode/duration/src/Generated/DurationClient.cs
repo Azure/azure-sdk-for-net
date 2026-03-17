@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Encode.Duration._Header;
@@ -19,10 +18,12 @@ namespace Encode.Duration
     {
         public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions()) => throw null;
 
+        internal DurationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DurationClientOptions options) => throw null;
+
         public DurationClient(Uri endpoint, DurationClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public DurationClient(DurationClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public DurationClient(DurationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

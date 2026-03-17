@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +20,12 @@ namespace Server.Path.Multiple
 
         public MultipleClient(Uri endpoint) : this(endpoint, new MultipleClientOptions()) => throw null;
 
+        internal MultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MultipleClientOptions options) => throw null;
+
         public MultipleClient(Uri endpoint, MultipleClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public MultipleClient(MultipleClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public MultipleClient(MultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

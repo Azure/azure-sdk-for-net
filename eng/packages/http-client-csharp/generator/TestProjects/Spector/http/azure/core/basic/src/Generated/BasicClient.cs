@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -21,10 +20,12 @@ namespace Specs.Azure.Core.Basic
     {
         public BasicClient() : this(new Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
 
+        internal BasicClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BasicClientOptions options) => throw null;
+
         public BasicClient(Uri endpoint, BasicClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public BasicClient(BasicClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public BasicClient(BasicClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

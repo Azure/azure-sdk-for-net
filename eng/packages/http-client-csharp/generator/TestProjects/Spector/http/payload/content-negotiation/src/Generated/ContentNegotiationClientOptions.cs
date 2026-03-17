@@ -16,6 +16,6 @@ namespace Payload.ContentNegotiation
         public ContentNegotiationClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ContentNegotiationClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ContentNegotiationClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

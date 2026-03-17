@@ -16,6 +16,6 @@ namespace Client.Structure.Service
         public ServiceClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ServiceClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ServiceClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

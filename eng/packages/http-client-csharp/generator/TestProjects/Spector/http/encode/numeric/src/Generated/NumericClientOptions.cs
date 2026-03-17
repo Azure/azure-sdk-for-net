@@ -16,6 +16,6 @@ namespace Encode.Numeric
         public NumericClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal NumericClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal NumericClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

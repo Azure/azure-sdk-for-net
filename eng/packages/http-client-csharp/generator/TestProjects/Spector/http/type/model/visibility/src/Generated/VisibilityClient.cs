@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +19,12 @@ namespace _Type.Model.Visibility
     {
         public VisibilityClient() : this(new Uri("http://localhost:3000"), new VisibilityClientOptions()) => throw null;
 
+        internal VisibilityClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, VisibilityClientOptions options) => throw null;
+
         public VisibilityClient(Uri endpoint, VisibilityClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public VisibilityClient(VisibilityClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public VisibilityClient(VisibilityClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -18,7 +18,7 @@ namespace Resiliency.ServiceDriven
         public ResiliencyServiceDrivenClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal ResiliencyServiceDrivenClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ResiliencyServiceDrivenClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

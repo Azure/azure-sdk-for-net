@@ -18,7 +18,7 @@ namespace Versioning.TypeChangedFrom
         public TypeChangedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal TypeChangedFromClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal TypeChangedFromClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

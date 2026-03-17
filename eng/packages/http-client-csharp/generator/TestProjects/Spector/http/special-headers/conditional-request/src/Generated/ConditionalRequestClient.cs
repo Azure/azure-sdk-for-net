@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,10 +18,12 @@ namespace SpecialHeaders.ConditionalRequest
     {
         public ConditionalRequestClient() : this(new Uri("http://localhost:3000"), new ConditionalRequestClientOptions()) => throw null;
 
+        internal ConditionalRequestClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ConditionalRequestClientOptions options) => throw null;
+
         public ConditionalRequestClient(Uri endpoint, ConditionalRequestClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public ConditionalRequestClient(ConditionalRequestClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public ConditionalRequestClient(ConditionalRequestClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +19,12 @@ namespace Client.Clientnamespace
     {
         public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
 
+        internal ClientNamespaceFirstClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
+
         public ClientNamespaceFirstClient(Uri endpoint, ClientClientNamespaceClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public ClientNamespaceFirstClient(ClientNamespaceFirstClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public ClientNamespaceFirstClient(ClientNamespaceFirstClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

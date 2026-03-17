@@ -106,7 +106,7 @@ ProjectOpenAIClient agentClient = projectClient.OpenAI;
 For operations based on OpenAI APIs like `/responses`, `/files`, and `/vector_stores`, you can retrieve `ResponsesClient`, `OpenAIFileClient` and `VectorStoreClient` through the appropriate helper methods:
 
 ```C# Snippet:GetOpenAIClientsFromProjects
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("AGENT_NAME");
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("FOUNDRY_AGENT_NAME");
 OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
 ```
@@ -159,14 +159,14 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `PromptAgentDefinition`:
 
 ```C# Snippet:CreateAPromptAgent
-string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_PROJECT_ENDPOINT")
-    ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_PROJECT_ENDPOINT'");
+string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_FOUNDRY_PROJECT_ENDPOINT'");
 string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_MODEL_DEPLOYMENT")
     ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_MODEL_DEPLOYMENT'");
-string AGENT_NAME = Environment.GetEnvironmentVariable("AZURE_AI_FOUNDRY_AGENT_NAME")
-    ?? throw new InvalidOperationException("Missing environment variable 'AZURE_AI_FOUNDRY_AGENT_NAME'");
+string FOUNDRY_AGENT_NAME = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_AGENT_NAME'");
 
-AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential());
+AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
 
 AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
 {
@@ -174,7 +174,7 @@ AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
 };
 
 AgentVersion newAgentVersion = await projectClient.Agents.CreateAgentVersionAsync(
-    agentName: AGENT_NAME,
+    agentName: FOUNDRY_AGENT_NAME,
     options: new(agentDefinition));
 Console.WriteLine($"Created new agent version: {newAgentVersion.Name}");
 ```
@@ -282,7 +282,7 @@ set the conversation parameter while calling `GetProjectResponsesClientForAgent`
 CreateResponseOptions CreateResponseOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
 ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
 ```
 
 Conversations may be deleted to clean up the resources.
@@ -312,7 +312,7 @@ _ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync
 //
 // Use the agent and conversation in a response
 //
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME);
 CreateResponseOptions responseOptions = new()
 {
     AgentConversationId = EXISTING_CONVERSATION_ID,
@@ -420,13 +420,13 @@ containing  `LoggingPolicy`, inform the pipeline to execute this policy by call
 and set the option while instantiating `AIProjectClient` that we will consequently use.
 
 ```C# Snippet:Sample_CreateClient_AgentsLogging
-string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-    ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME")
-    ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
 AIProjectClientOptions options = new();
 options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
-AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
+AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
 ```
 
 ### Published Agents
@@ -1429,8 +1429,8 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
 AIProjectClientOptions options = new()
 {

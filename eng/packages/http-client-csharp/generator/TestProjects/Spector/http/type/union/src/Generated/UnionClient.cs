@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
@@ -16,10 +15,12 @@ namespace _Type.Union
     {
         public UnionClient() : this(new Uri("http://localhost:3000"), new UnionClientOptions()) => throw null;
 
+        internal UnionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, UnionClientOptions options) => throw null;
+
         public UnionClient(Uri endpoint, UnionClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public UnionClient(UnionClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public UnionClient(UnionClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

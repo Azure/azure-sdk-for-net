@@ -16,6 +16,6 @@ namespace _Type.Model.Inheritance.NotDiscriminated
         public NotDiscriminatedClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal NotDiscriminatedClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal NotDiscriminatedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

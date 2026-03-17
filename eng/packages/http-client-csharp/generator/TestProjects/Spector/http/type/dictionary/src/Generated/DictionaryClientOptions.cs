@@ -16,6 +16,6 @@ namespace _Type.Dictionary
         public DictionaryClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal DictionaryClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal DictionaryClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

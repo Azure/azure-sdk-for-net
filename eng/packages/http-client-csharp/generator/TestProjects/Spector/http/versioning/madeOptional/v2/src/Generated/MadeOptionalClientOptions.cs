@@ -18,7 +18,7 @@ namespace Versioning.MadeOptional
         public MadeOptionalClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal MadeOptionalClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal MadeOptionalClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

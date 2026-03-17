@@ -18,7 +18,7 @@ namespace Client.AlternateApiVersion.Service.Query
         public QueryClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal QueryClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal QueryClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

@@ -18,7 +18,7 @@ namespace Specs.Azure.Core.Model
         public ModelClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal ModelClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ModelClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

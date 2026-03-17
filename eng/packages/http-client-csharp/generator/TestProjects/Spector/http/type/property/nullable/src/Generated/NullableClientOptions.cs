@@ -16,6 +16,6 @@ namespace _Type.Property.Nullable
         public NullableClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal NullableClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal NullableClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

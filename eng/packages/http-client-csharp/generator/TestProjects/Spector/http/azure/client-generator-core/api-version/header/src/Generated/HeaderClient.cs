@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,10 +18,12 @@ namespace Client.AlternateApiVersion.Service.Header
     {
         public HeaderClient() : this(new Uri("http://localhost:3000"), new HeaderClientOptions()) => throw null;
 
+        internal HeaderClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, HeaderClientOptions options) => throw null;
+
         public HeaderClient(Uri endpoint, HeaderClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public HeaderClient(HeaderClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public HeaderClient(HeaderClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

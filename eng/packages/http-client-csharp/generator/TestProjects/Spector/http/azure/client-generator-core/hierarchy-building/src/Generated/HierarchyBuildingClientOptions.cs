@@ -16,6 +16,6 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
         public HierarchyBuildingClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal HierarchyBuildingClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal HierarchyBuildingClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

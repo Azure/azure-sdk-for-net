@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +20,12 @@ namespace Server.Path.Single
 
         public SingleClient(Uri endpoint) : this(endpoint, new SingleClientOptions()) => throw null;
 
+        internal SingleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SingleClientOptions options) => throw null;
+
         public SingleClient(Uri endpoint, SingleClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public SingleClient(SingleClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public SingleClient(SingleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

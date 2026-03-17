@@ -16,6 +16,6 @@ namespace _Type.Property.ValueTypes
         public ValueTypesClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ValueTypesClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ValueTypesClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

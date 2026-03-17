@@ -16,6 +16,6 @@ namespace Parameters.CollectionFormat
         public CollectionFormatClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal CollectionFormatClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal CollectionFormatClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

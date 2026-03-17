@@ -16,6 +16,6 @@ namespace _Type._Enum.Extensible
         public ExtensibleClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ExtensibleClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ExtensibleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

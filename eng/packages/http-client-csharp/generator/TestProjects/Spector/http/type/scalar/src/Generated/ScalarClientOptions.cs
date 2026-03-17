@@ -16,6 +16,6 @@ namespace _Type.Scalar
         public ScalarClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ScalarClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ScalarClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

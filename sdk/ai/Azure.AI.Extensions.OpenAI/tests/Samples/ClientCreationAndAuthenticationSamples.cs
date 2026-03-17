@@ -45,7 +45,7 @@ public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
             tokenProvider: new AzureCliCredential());
 
         #region Snippet:GetOpenAIClientsFromProjects
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("AGENT_NAME");
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("FOUNDRY_AGENT_NAME");
         OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
         VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient();
         #endregion

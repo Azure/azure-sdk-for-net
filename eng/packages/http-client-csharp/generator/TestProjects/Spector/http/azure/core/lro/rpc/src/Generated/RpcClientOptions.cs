@@ -18,7 +18,7 @@ namespace Specs.Azure.Core.Lro.Rpc
         public RpcClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal RpcClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal RpcClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

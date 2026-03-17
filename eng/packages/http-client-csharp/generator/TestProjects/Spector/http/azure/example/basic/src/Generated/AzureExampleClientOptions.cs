@@ -18,7 +18,7 @@ namespace AzureExampleBasicClient
         public AzureExampleClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal AzureExampleClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal AzureExampleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

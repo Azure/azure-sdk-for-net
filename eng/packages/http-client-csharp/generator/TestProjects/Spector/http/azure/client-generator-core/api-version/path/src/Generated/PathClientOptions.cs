@@ -18,7 +18,7 @@ namespace Client.AlternateApiVersion.Service.Path
         public PathClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal PathClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal PathClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

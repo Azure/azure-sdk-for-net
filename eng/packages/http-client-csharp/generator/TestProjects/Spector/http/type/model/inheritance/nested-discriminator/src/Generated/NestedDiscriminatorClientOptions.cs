@@ -16,6 +16,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
         public NestedDiscriminatorClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal NestedDiscriminatorClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal NestedDiscriminatorClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

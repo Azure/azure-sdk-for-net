@@ -18,7 +18,7 @@ namespace Specs.Azure.Core.Basic
         public BasicClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal BasicClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal BasicClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

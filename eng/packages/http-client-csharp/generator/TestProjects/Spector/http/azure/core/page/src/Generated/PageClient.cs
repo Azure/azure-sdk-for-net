@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
@@ -19,10 +18,12 @@ namespace Specs.Azure.Core.Page
     {
         public PageClient() : this(new Uri("http://localhost:3000"), new PageClientOptions()) => throw null;
 
+        internal PageClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageClientOptions options) => throw null;
+
         public PageClient(Uri endpoint, PageClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public PageClient(PageClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public PageClient(PageClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -16,6 +16,6 @@ namespace Encode.Duration
         public DurationClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal DurationClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal DurationClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

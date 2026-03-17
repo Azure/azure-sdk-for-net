@@ -18,7 +18,7 @@ namespace Client.AlternateApiVersion.Service.Header
         public HeaderClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal HeaderClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal HeaderClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

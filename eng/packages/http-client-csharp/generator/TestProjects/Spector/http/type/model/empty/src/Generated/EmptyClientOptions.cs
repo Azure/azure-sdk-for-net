@@ -16,6 +16,6 @@ namespace _Type.Model.Empty
         public EmptyClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal EmptyClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal EmptyClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

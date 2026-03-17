@@ -16,6 +16,6 @@ namespace Client.Naming
         public NamingClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal NamingClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal NamingClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

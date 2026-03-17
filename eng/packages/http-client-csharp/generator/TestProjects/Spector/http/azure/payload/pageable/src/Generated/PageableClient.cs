@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
@@ -18,10 +17,12 @@ namespace Specs.Azure.Payload.Pageable
     {
         public PageableClient() : this(new Uri("http://localhost:3000"), new PageableClientOptions()) => throw null;
 
+        internal PageableClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageableClientOptions options) => throw null;
+
         public PageableClient(Uri endpoint, PageableClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public PageableClient(PageableClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public PageableClient(PageableClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

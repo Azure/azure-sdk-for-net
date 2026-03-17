@@ -18,7 +18,7 @@ namespace Specs.Azure.Core.Traits
         public TraitsClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal TraitsClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal TraitsClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

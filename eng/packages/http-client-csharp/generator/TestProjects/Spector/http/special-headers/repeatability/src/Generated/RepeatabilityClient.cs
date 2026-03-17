@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,10 +18,12 @@ namespace SpecialHeaders.Repeatability
     {
         public RepeatabilityClient() : this(new Uri("http://localhost:3000"), new RepeatabilityClientOptions()) => throw null;
 
+        internal RepeatabilityClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RepeatabilityClientOptions options) => throw null;
+
         public RepeatabilityClient(Uri endpoint, RepeatabilityClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public RepeatabilityClient(RepeatabilityClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public RepeatabilityClient(RepeatabilityClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

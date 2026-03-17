@@ -18,7 +18,7 @@ namespace Server.Path.Multiple
         public MultipleClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal MultipleClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal MultipleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

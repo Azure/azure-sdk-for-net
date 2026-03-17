@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +19,12 @@ namespace Specs.Azure.Core.Lro.Standard
     {
         public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions()) => throw null;
 
+        internal StandardClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, StandardClientOptions options) => throw null;
+
         public StandardClient(Uri endpoint, StandardClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public StandardClient(StandardClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public StandardClient(StandardClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

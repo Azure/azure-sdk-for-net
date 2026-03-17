@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -51,7 +50,7 @@ namespace BasicTypeSpec
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal BasicTypeSpecClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, BasicTypeSpecClientOptions options)
+        internal BasicTypeSpecClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BasicTypeSpecClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
@@ -83,7 +82,7 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClient from a <see cref="BasicTypeSpecClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BasicTypeSpecClient. </param>
         [Experimental("SCME0002")]
-        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.BasicTypeSpecUrl, settings?.Options)
+        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(settings?.BasicTypeSpecUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 

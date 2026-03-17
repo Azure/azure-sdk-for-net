@@ -18,7 +18,7 @@ namespace Versioning.ReturnTypeChangedFrom
         public ReturnTypeChangedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal ReturnTypeChangedFromClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ReturnTypeChangedFromClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

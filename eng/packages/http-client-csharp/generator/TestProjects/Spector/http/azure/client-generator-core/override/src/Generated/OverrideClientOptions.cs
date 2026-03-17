@@ -16,6 +16,6 @@ namespace Specs.Azure.ClientGenerator.Core.Override
         public OverrideClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal OverrideClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal OverrideClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

@@ -16,6 +16,6 @@ namespace Parameters.Query
         public QueryClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal QueryClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal QueryClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

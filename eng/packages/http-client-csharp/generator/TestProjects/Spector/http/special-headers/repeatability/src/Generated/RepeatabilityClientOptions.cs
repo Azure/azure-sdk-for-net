@@ -16,6 +16,6 @@ namespace SpecialHeaders.Repeatability
         public RepeatabilityClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal RepeatabilityClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal RepeatabilityClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

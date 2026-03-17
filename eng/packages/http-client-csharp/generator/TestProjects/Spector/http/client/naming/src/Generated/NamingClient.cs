@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,10 +22,12 @@ namespace Client.Naming
     {
         public NamingClient() : this(new Uri("http://localhost:3000"), new NamingClientOptions()) => throw null;
 
+        internal NamingClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NamingClientOptions options) => throw null;
+
         public NamingClient(Uri endpoint, NamingClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public NamingClient(NamingClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public NamingClient(NamingClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

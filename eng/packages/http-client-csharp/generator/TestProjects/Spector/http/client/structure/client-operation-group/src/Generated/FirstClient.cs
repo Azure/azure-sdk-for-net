@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +21,12 @@ namespace Client.Structure.ClientOperationGroup
 
         public FirstClient(Uri endpoint, ClientType client) : this(endpoint, client, new FirstClientOptions()) => throw null;
 
+        internal FirstClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientType client, FirstClientOptions options) => throw null;
+
         public FirstClient(Uri endpoint, ClientType client, FirstClientOptions options) : this(null, endpoint, client, options) => throw null;
 
         [Experimental("SCME0002")]
-        public FirstClient(FirstClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
+        public FirstClient(FirstClientSettings settings) : this(null, settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

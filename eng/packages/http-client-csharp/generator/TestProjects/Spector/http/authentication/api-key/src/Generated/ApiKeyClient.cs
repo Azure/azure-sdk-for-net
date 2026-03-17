@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,16 +17,20 @@ namespace Authentication.ApiKey
 {
     public partial class ApiKeyClient
     {
+        private const string AuthorizationHeader = "x-ms-api-key";
+
         protected ApiKeyClient() => throw null;
 
         public ApiKeyClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new ApiKeyClientOptions()) => throw null;
 
         public ApiKeyClient(AzureKeyCredential credential, ApiKeyClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
 
+        internal ApiKeyClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ApiKeyClientOptions options) => throw null;
+
         public ApiKeyClient(Uri endpoint, AzureKeyCredential credential, ApiKeyClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public ApiKeyClient(ApiKeyClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public ApiKeyClient(ApiKeyClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -19,7 +19,7 @@ namespace Service.MultiService.Combined
         public CombinedClientOptions(ServiceAVersion serviceAVersion = LatestServiceAVersion, ServiceBVersion serviceBVersion = LatestServiceBVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal CombinedClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal CombinedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceAVersion
         {

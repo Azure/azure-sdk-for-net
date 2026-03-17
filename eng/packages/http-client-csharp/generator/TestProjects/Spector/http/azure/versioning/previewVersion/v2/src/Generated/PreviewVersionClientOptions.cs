@@ -18,7 +18,7 @@ namespace Specs.Azure.Versioning.PreviewVersion
         public PreviewVersionClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal PreviewVersionClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal PreviewVersionClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

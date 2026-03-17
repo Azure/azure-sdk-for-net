@@ -16,6 +16,6 @@ namespace Payload.MediaType
         public MediaTypeClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal MediaTypeClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal MediaTypeClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

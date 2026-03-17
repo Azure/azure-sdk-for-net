@@ -16,6 +16,6 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
         public ClientDefaultValueClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal ClientDefaultValueClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal ClientDefaultValueClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

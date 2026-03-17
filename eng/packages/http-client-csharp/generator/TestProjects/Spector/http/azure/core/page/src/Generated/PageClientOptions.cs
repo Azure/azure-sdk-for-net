@@ -18,7 +18,7 @@ namespace Specs.Azure.Core.Page
         public PageClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal PageClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal PageClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

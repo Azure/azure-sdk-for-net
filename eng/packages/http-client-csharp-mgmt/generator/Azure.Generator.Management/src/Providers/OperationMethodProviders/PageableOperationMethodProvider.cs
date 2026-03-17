@@ -41,8 +41,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InputPagingServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null,
-            bool isResourceAction = false)
+            ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
@@ -56,8 +55,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _itemType,
                 ref _actualItemType!,
                 ref _itemResourceClient,
-                explicitResourceClient,
-                isResourceAction
+                explicitResourceClient
             );
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
@@ -68,15 +66,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             CSharpType itemType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
-            ResourceClientProvider? explicitResourceClient = null,
-            bool isResourceAction = false
+            ResourceClientProvider? explicitResourceClient = null
             )
         {
             actualItemType = itemType;
-            if (isResourceAction)
-            {
-                return;
-            }
             // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
             if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
             {

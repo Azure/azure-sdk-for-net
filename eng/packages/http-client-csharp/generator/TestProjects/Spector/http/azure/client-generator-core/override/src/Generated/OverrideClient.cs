@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
@@ -16,10 +15,12 @@ namespace Specs.Azure.ClientGenerator.Core.Override
     {
         public OverrideClient() : this(new Uri("http://localhost:3000"), new OverrideClientOptions()) => throw null;
 
+        internal OverrideClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, OverrideClientOptions options) => throw null;
+
         public OverrideClient(Uri endpoint, OverrideClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public OverrideClient(OverrideClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public OverrideClient(OverrideClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

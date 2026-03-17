@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +21,12 @@ namespace Versioning.Added
 
         public AddedClient(Uri endpoint) : this(endpoint, new AddedClientOptions()) => throw null;
 
+        internal AddedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AddedClientOptions options) => throw null;
+
         public AddedClient(Uri endpoint, AddedClientOptions options) : this(null, endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public AddedClient(AddedClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
+        public AddedClient(AddedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -16,6 +16,6 @@ namespace _Type.Model.Visibility
         public VisibilityClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal VisibilityClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal VisibilityClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

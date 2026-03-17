@@ -16,6 +16,6 @@ namespace Server.Endpoint.NotDefined
         public NotDefinedClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal NotDefinedClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal NotDefinedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

@@ -18,7 +18,7 @@ namespace Server.Versions.Versioned
         public VersionedClientOptions(ServiceVersion version = LatestVersion) => throw null;
 
         [Experimental("SCME0002")]
-        internal VersionedClientOptions(IConfigurationSection section) : base(section) => throw null;
+        internal VersionedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {
