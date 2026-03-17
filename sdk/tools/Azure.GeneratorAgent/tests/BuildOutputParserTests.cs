@@ -146,4 +146,91 @@ public class BuildOutputParserTests
         Assert.That(result, Has.Count.EqualTo(1));
         Assert.That(result[0].IsGenerated, Is.True);
     }
+
+    // --- AZC error code tests (3-letter codes) ---
+
+    [Test]
+    public void Parse_AZC0002_ThreeLetterCode_IsParsed()
+    {
+        var output = @"C:\src\Client.cs(85,57): error AZC0002: Client method should have an optional CancellationToken";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("AZC0002"));
+            Assert.That(result[0].Message, Does.Contain("CancellationToken"));
+            Assert.That(result[0].FilePath, Does.Contain("Client.cs"));
+            Assert.That(result[0].Line, Is.EqualTo(85));
+        });
+    }
+
+    [Test]
+    public void Parse_AZC0020_ThreeLetterCode_IsParsed()
+    {
+        var output = @"C:\src\Client.cs(127,141): error AZC0020: Method 'StartTranslation' accepts a CancellationToken but does not propagate it to the RequestContext.";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("AZC0020"));
+            Assert.That(result[0].Message, Does.Contain("StartTranslation"));
+        });
+    }
+
+    [Test]
+    public void Parse_AZC0014_ThreeLetterCode_IsParsed()
+    {
+        var output = @"C:\src\Generated\ModelFactory.cs(112,267): error AZC0014: Types from System.Text.Json should not be exposed as part of public API surface.";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("AZC0014"));
+            Assert.That(result[0].IsGenerated, Is.True);
+        });
+    }
+
+    [Test]
+    public void Parse_MSB3492_ThreeLetterCode_IsParsed()
+    {
+        var output = @"C:\src\project.csproj(10,5): error MSB3492: Could not write state file 'obj\Debug\project.AssemblyInfoInputs.cache'.";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.That(result[0].Code, Is.EqualTo("MSB3492"));
+    }
+
+    [Test]
+    public void Parse_MixedTwoAndThreeLetterCodes_AllParsed()
+    {
+        var output = """
+            C:\src\A.cs(1,1): error CS0246: The type 'Something' could not be found
+            C:\src\B.cs(5,10): error AZC0002: Client method should have optional CancellationToken
+            C:\src\C.cs(8,3): warning CS8625: Cannot convert null literal
+            C:\src\D.cs(10,5): error AZC0020: Method 'Foo' accepts a CancellationToken
+            """;
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(4));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result[0].Code, Is.EqualTo("CS0246"));
+            Assert.That(result[1].Code, Is.EqualTo("AZC0002"));
+            Assert.That(result[2].Code, Is.EqualTo("CS8625"));
+            Assert.That(result[3].Code, Is.EqualTo("AZC0020"));
+        });
+    }
+
+    [Test]
+    public void Parse_ProjectLevelAZCError_IsParsed()
+    {
+        var output = "  error AZC0002: Client method should have optional CancellationToken";
+        var result = BuildOutputParser.Parse(output);
+
+        Assert.That(result, Has.Count.EqualTo(1));
+        Assert.That(result[0].Code, Is.EqualTo("AZC0002"));
+    }
 }

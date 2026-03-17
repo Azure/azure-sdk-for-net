@@ -63,6 +63,7 @@ public static class DeterministicFixRegistry
         ["ResourceIdentifier"] = "Azure.Core",
         ["AzureLocation"] = "Azure.Core",
         ["RequestContext"] = "Azure.Core",
+        ["ModelSerializationExtensions"] = "Azure.Core",
 
         // Azure
         ["Response"] = "Azure",
@@ -73,6 +74,7 @@ public static class DeterministicFixRegistry
         ["ETag"] = "Azure",
         ["Operation"] = "Azure",
         ["NullableResponse"] = "Azure",
+        ["WaitUntil"] = "Azure",
 
         // System.ClientModel
         ["ClientResult"] = "System.ClientModel",
@@ -90,11 +92,23 @@ public static class DeterministicFixRegistry
         ["ClientPipeline"] = "System.ClientModel.Primitives",
         ["PipelinePolicy"] = "System.ClientModel.Primitives",
         ["PipelineMessage"] = "System.ClientModel.Primitives",
+        ["ModelReaderWriterOptions"] = "System.ClientModel.Primitives",
+        ["ModelReaderWriter"] = "System.ClientModel.Primitives",
+        ["IJsonModel"] = "System.ClientModel.Primitives",
+        ["IPersistableModel"] = "System.ClientModel.Primitives",
 
         // Azure.ResourceManager
         ["ArmOperation"] = "Azure.ResourceManager",
         ["ArmResource"] = "Azure.ResourceManager",
         ["ArmClient"] = "Azure.ResourceManager",
+
+        // Microsoft.TypeSpec.Generator.Customizations (CodeGen attributes)
+        ["CodeGenType"] = "Microsoft.TypeSpec.Generator.Customizations",
+        ["CodeGenMember"] = "Microsoft.TypeSpec.Generator.Customizations",
+        ["CodeGenSuppress"] = "Microsoft.TypeSpec.Generator.Customizations",
+        ["CodeGenSerialization"] = "Microsoft.TypeSpec.Generator.Customizations",
+        ["CodeGenVisibility"] = "Microsoft.TypeSpec.Generator.Customizations",
+        ["CodeGenClient"] = "Microsoft.TypeSpec.Generator.Customizations",
     };
 
     /// <summary>
@@ -110,6 +124,7 @@ public static class DeterministicFixRegistry
         ["_apiVersion"] = "ApiVersion",
         ["_subscriptionId"] = "SubscriptionId",
         ["_diagnostics"] = "Diagnostics",
+        ["_serializedAdditionalRawData"] = "_additionalBinaryDataProperties",
     };
 
     /// <summary>
@@ -229,6 +244,74 @@ public static class DeterministicFixRegistry
             }
         });
 
+        // --- CodeGenModel → CodeGenType attribute rename (must be before generic CS0246) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0246",
+            MessagePattern = new Regex(
+                @"type or namespace name 'CodeGenModel(?:Attribute)?'",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Rename CodeGenModel attribute to CodeGenType",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"\bCodeGenModel\b",
+                ["replacement"] = "CodeGenType"
+            }
+        });
+
+        // --- MultipartFormDataRequestContent → MultiPartFormDataRequestContent (capitalization fix) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0246",
+            MessagePattern = new Regex(
+                @"type or namespace name 'MultipartFormDataRequestContent'",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Fix MultipartFormDataRequestContent capitalization → MultiPartFormDataRequestContent",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"\bMultipartFormDataRequestContent\b",
+                ["replacement"] = "MultiPartFormDataRequestContent"
+            }
+        });
+
+        // --- CanceledValue → CancelledValue (British spelling in generated enums) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = null,
+            MessagePattern = new Regex(
+                @"'CanceledValue'|does not contain a definition for 'CanceledValue'",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Fix American spelling CanceledValue → CancelledValue",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"\bCanceledValue\b",
+                ["replacement"] = "CancelledValue"
+            }
+        });
+
+        // --- CancelingValue → CancellingValue (British spelling in generated enums) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = null,
+            MessagePattern = new Regex(
+                @"'CancelingValue'|does not contain a definition for 'CancelingValue'",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Fix American spelling CancelingValue → CancellingValue",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"\bCancelingValue\b",
+                ["replacement"] = "CancellingValue"
+            }
+        });
+
         // --- Mismatched ModelFactory type names (must be before generic CS0246 rule) ---
         rules.Add(new FixRule
         {
@@ -258,6 +341,23 @@ public static class DeterministicFixRegistry
             {
                 ["projectPath"] = Path.GetDirectoryName(Path.GetDirectoryName(err.FilePath)) ?? err.FilePath,
                 ["typeSuffix"] = "ClientBuilderExtensions"
+            }
+        });
+
+        // --- Obsolete Autorest using directives (CS0246: type 'Autorest' not found) ---
+        // NOTE: Must come BEFORE the generic CS0246 add_using rule.
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0246",
+            MessagePattern = new Regex(
+                @"type or namespace name 'Autorest'",
+                RegexOptions.Compiled),
+            ToolName = "remove_using_directive",
+            Description = "Remove obsolete Autorest using directive",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["namespacePattern"] = @"Autorest(?:\.\w+)*"
             }
         });
 
@@ -371,6 +471,22 @@ public static class DeterministicFixRegistry
             }
         });
 
+        // --- Obsolete Autorest.CSharp.* using directives ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0234",
+            MessagePattern = new Regex(
+                @"does not exist in the namespace '(?<ns>Autorest(?:\.CSharp[^']*)?)'",
+                RegexOptions.Compiled),
+            ToolName = "remove_using_directive",
+            Description = "Remove obsolete Autorest.CSharp.* using directive",
+            ExtractArgs = (err, m) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["namespacePattern"] = $@"Autorest(?:\.CSharp[^;]*)?"
+            }
+        });
+
         // --- Nullable annotation CS8625 (Cannot convert null literal to non-nullable reference type) ---
         rules.Add(new FixRule
         {
@@ -434,6 +550,49 @@ public static class DeterministicFixRegistry
                 ["filePath"] = err.FilePath,
                 ["pattern"] = @"(\w+)\.FromResponse\((\w+)\)",
                 ["replacement"] = "($1)$2"
+            }
+        });
+
+        // --- AZC0020: CancellationToken not propagated to RequestContext ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "AZC0020",
+            MessagePattern = new Regex(
+                @"Method '(?<method>\w+)' accepts a CancellationToken but does not propagate it to the RequestContext",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Propagate CancellationToken to RequestContext in method call",
+            ExtractArgs = (err, _) => new Dictionary<string, string>
+            {
+                ["filePath"] = err.FilePath,
+                ["pattern"] = @"new RequestContext\(\)",
+                ["replacement"] = "new RequestContext { CancellationToken = cancellationToken }"
+            }
+        });
+
+        // --- CS0104: Ambiguous reference (prefer System.* over Azure.Core shared sources) ---
+        rules.Add(new FixRule
+        {
+            ErrorCode = "CS0104",
+            MessagePattern = new Regex(
+                @"'(?<type>\w+)' is an ambiguous reference between '(?<ns1>[^']+)' and '(?<ns2>[^']+)'",
+                RegexOptions.Compiled),
+            ToolName = "regex_replacement",
+            Description = "Resolve ambiguous type reference by fully qualifying",
+            ExtractArgs = (err, m) =>
+            {
+                var type = m.Groups["type"].Value;
+                var ns1 = m.Groups["ns1"].Value;
+                var ns2 = m.Groups["ns2"].Value;
+                // Prefer System.* namespace over Azure.Core shared source types
+                var preferredFqn = ns1.StartsWith("System", StringComparison.Ordinal) ? ns1 :
+                                   ns2.StartsWith("System", StringComparison.Ordinal) ? ns2 : ns1;
+                return new Dictionary<string, string>
+                {
+                    ["filePath"] = err.FilePath,
+                    ["pattern"] = $@"(?<![.\w]){Regex.Escape(type)}(?!\w)",
+                    ["replacement"] = preferredFqn
+                };
             }
         });
 

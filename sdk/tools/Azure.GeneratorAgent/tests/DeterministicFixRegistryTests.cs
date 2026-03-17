@@ -437,4 +437,341 @@ public class DeterministicFixRegistryTests
             Assert.That(result.ToolArgs!["pattern"], Does.Contain("FromResponse"));
         });
     }
+
+    // --- New rules: CodeGenModel → CodeGenType attribute rename ---
+
+    [Test]
+    public void Classify_CodeGenModelAttribute_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 5,
+            Code = "CS0246",
+            Message = "The type or namespace name 'CodeGenModel' could not be found (are you missing a using directive?)",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["pattern"], Does.Contain("CodeGenModel"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("CodeGenType"));
+        });
+    }
+
+    [Test]
+    public void Classify_CodeGenModelAttribute_WithAttributeSuffix_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 5,
+            Code = "CS0246",
+            Message = "The type or namespace name 'CodeGenModelAttribute' could not be found",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("CodeGenType"));
+        });
+    }
+
+    // --- New rules: CodeGen* types → Microsoft.TypeSpec.Generator.Customizations ---
+
+    [TestCase("CodeGenType", "Microsoft.TypeSpec.Generator.Customizations")]
+    [TestCase("CodeGenMember", "Microsoft.TypeSpec.Generator.Customizations")]
+    [TestCase("CodeGenSuppress", "Microsoft.TypeSpec.Generator.Customizations")]
+    [TestCase("CodeGenSerialization", "Microsoft.TypeSpec.Generator.Customizations")]
+    [TestCase("CodeGenVisibility", "Microsoft.TypeSpec.Generator.Customizations")]
+    [TestCase("CodeGenClient", "Microsoft.TypeSpec.Generator.Customizations")]
+    public void Classify_CodeGenAttributes_CS0246_IsDeterministic(string typeName, string expectedNamespace)
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 3,
+            Code = "CS0246",
+            Message = $"The type or namespace name '{typeName}' could not be found (are you missing a using directive?)",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("add_using_directive"));
+            Assert.That(result.ToolArgs, Does.ContainKey("namespace"));
+            Assert.That(result.ToolArgs!["namespace"], Is.EqualTo(expectedNamespace));
+        });
+    }
+
+    // --- New rules: Additional type-to-namespace mappings ---
+
+    [TestCase("ModelSerializationExtensions", "Azure.Core")]
+    [TestCase("WaitUntil", "Azure")]
+    [TestCase("ModelReaderWriterOptions", "System.ClientModel.Primitives")]
+    [TestCase("ModelReaderWriter", "System.ClientModel.Primitives")]
+    [TestCase("IJsonModel", "System.ClientModel.Primitives")]
+    [TestCase("IPersistableModel", "System.ClientModel.Primitives")]
+    public void Classify_NewTypeMappings_CS0246_IsDeterministic(string typeName, string expectedNamespace)
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 10,
+            Code = "CS0246",
+            Message = $"The type or namespace name '{typeName}' could not be found",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("add_using_directive"));
+            Assert.That(result.ToolArgs!["namespace"], Is.EqualTo(expectedNamespace));
+        });
+    }
+
+    // --- New rules: _serializedAdditionalRawData field rename ---
+
+    [Test]
+    public void Classify_SerializedAdditionalRawData_FieldRename_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 20,
+            Code = "CS0103",
+            Message = "The name '_serializedAdditionalRawData' does not exist in the current context",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.That(result.IsDeterministic, Is.True);
+    }
+
+    [Test]
+    public void Classify_SerializedAdditionalRawData_CS1061_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Customizations\MyModel.cs",
+            Line = 20,
+            Code = "CS1061",
+            Message = "'MyModel' does not contain a definition for '_serializedAdditionalRawData'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("_additionalBinaryDataProperties"));
+        });
+    }
+
+    // --- New rules: Autorest.CSharp.* removal ---
+
+    [Test]
+    public void Classify_AutorestCSharpCore_CS0234_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 2,
+            Code = "CS0234",
+            Message = "The type or namespace name 'Core' does not exist in the namespace 'Autorest.CSharp' (are you missing an assembly reference?)",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("remove_using_directive"));
+        });
+    }
+
+    [Test]
+    public void Classify_AutorestNamespace_CS0246_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 2,
+            Code = "CS0246",
+            Message = "The type or namespace name 'Autorest' could not be found",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("remove_using_directive"));
+        });
+    }
+
+    // --- New rules: MultipartFormDataRequestContent capitalization ---
+
+    [Test]
+    public void Classify_MultipartFormDataRequestContent_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Serialization.cs",
+            Line = 15,
+            Code = "CS0246",
+            Message = "The type or namespace name 'MultipartFormDataRequestContent' could not be found",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("MultiPartFormDataRequestContent"));
+        });
+    }
+
+    // --- New rules: CanceledValue/CancelingValue spelling ---
+
+    [Test]
+    public void Classify_CanceledValue_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Models\Status.cs",
+            Line = 30,
+            Code = "CS0117",
+            Message = "'TranslationStatus' does not contain a definition for 'CanceledValue'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("CancelledValue"));
+        });
+    }
+
+    [Test]
+    public void Classify_CancelingValue_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Models\Status.cs",
+            Line = 31,
+            Code = "CS0117",
+            Message = "'TranslationStatus' does not contain a definition for 'CancelingValue'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("CancellingValue"));
+        });
+    }
+
+    // --- New rules: AZC0020 CancellationToken propagation ---
+
+    [Test]
+    public void Classify_AZC0020_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Client.cs",
+            Line = 85,
+            Code = "AZC0020",
+            Message = "Method 'StartTranslation' accepts a CancellationToken but does not propagate it to the RequestContext",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Does.Contain("CancellationToken = cancellationToken"));
+        });
+    }
+
+    // --- New rules: CS0104 ambiguous reference ---
+
+    [Test]
+    public void Classify_CS0104_AmbiguousReference_IsDeterministic()
+    {
+        var error = new BuildError
+        {
+            FilePath = @"C:\src\Generated\Internal\MultiPart.cs",
+            Line = 10,
+            Code = "CS0104",
+            Message = "'MultipartFormDataContent' is an ambiguous reference between 'Azure.Core.MultipartFormDataContent' and 'System.Net.Http.MultipartFormDataContent'",
+            Severity = "error"
+        };
+
+        var result = DeterministicFixRegistry.Classify(error);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsDeterministic, Is.True);
+            Assert.That(result.ToolName, Is.EqualTo("regex_replacement"));
+            Assert.That(result.ToolArgs!["replacement"], Is.EqualTo("System.Net.Http.MultipartFormDataContent"));
+        });
+    }
+
+    // --- FieldRenames includes _serializedAdditionalRawData ---
+
+    [Test]
+    public void FieldRenames_ContainsSerializedAdditionalRawData()
+    {
+        Assert.That(DeterministicFixRegistry.FieldRenames, Does.ContainKey("_serializedAdditionalRawData"));
+        Assert.That(DeterministicFixRegistry.FieldRenames["_serializedAdditionalRawData"], Is.EqualTo("_additionalBinaryDataProperties"));
+    }
+
+    // --- TypeToNamespace includes CodeGen types ---
+
+    [Test]
+    public void TypeToNamespace_ContainsCodeGenTypes()
+    {
+        var mapping = DeterministicFixRegistry.TypeToNamespace;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(mapping, Does.ContainKey("CodeGenType"));
+            Assert.That(mapping, Does.ContainKey("CodeGenMember"));
+            Assert.That(mapping, Does.ContainKey("CodeGenSuppress"));
+            Assert.That(mapping, Does.ContainKey("CodeGenSerialization"));
+            Assert.That(mapping, Does.ContainKey("CodeGenVisibility"));
+            Assert.That(mapping, Does.ContainKey("ModelSerializationExtensions"));
+            Assert.That(mapping, Does.ContainKey("ModelReaderWriterOptions"));
+        });
+    }
 }

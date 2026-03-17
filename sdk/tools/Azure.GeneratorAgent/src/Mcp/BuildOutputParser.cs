@@ -12,20 +12,21 @@ public static class BuildOutputParser
 {
     // Matches MSBuild error/warning format:
     // path(line,col): error CS1234: message
+    // Also handles 3+ letter codes like AZC0002, MSB3492, NU1234
     private static readonly Regex s_msbuildErrorRegex = new(
-        @"^(?<file>[^(]+)\((?<line>\d+),(?<col>\d+)\):\s+(?<severity>error|warning)\s+(?<code>[A-Z]{2}\d+):\s+(?<message>.+)$",
+        @"^(?<file>[^(]+)\((?<line>\d+),(?<col>\d+)\):\s+(?<severity>error|warning)\s+(?<code>[A-Z]{2,}\d+):\s+(?<message>.+)$",
         RegexOptions.Compiled | RegexOptions.Multiline);
 
     // Matches simpler MSBuild format without column:
     // path(line): error CS1234: message
     private static readonly Regex s_msbuildErrorNoColRegex = new(
-        @"^(?<file>[^(]+)\((?<line>\d+)\):\s+(?<severity>error|warning)\s+(?<code>[A-Z]{2}\d+):\s+(?<message>.+)$",
+        @"^(?<file>[^(]+)\((?<line>\d+)\):\s+(?<severity>error|warning)\s+(?<code>[A-Z]{2,}\d+):\s+(?<message>.+)$",
         RegexOptions.Compiled | RegexOptions.Multiline);
 
     // Matches project-level errors:
     // error CS1234: message
     private static readonly Regex s_projectLevelErrorRegex = new(
-        @"^\s*(?<severity>error|warning)\s+(?<code>[A-Z]{2}\d+):\s+(?<message>.+)$",
+        @"^\s*(?<severity>error|warning)\s+(?<code>[A-Z]{2,}\d+):\s+(?<message>.+)$",
         RegexOptions.Compiled | RegexOptions.Multiline);
 
     private static readonly Regex s_generatedPathRegex = new(

@@ -116,8 +116,8 @@ internal static class CopilotPrompts
 
     /// <summary>
     /// Builds a focused prompt for the LLM when deterministic fixes have already been applied
-    /// and only non-deterministic errors remain. This is the primary prompt used by the
-    /// MigrationOrchestrator's build-fix cycle.
+    /// and only non-deterministic errors remain. This is used by the skill-driven build-fix
+    /// workflow when the LLM needs to reason about remaining errors.
     /// </summary>
     public static string FocusedBuildFixPrompt(string projectPath, string preClassifiedErrors)
     {

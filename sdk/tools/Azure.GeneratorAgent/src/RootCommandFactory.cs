@@ -3,7 +3,7 @@
 
 using System.CommandLine;
 using Azure.GeneratorAgent;
-using Azure.GeneratorAgent.Orchestration;
+using Azure.GeneratorAgent.Mcp.Tools;
 using Microsoft.Extensions.Logging;
 
 namespace Azure.GeneratorAgent.Commands;
@@ -25,8 +25,6 @@ public class RootCommandFactory
     private readonly GitService _gitService;
     private readonly FileService _fileService;
     private readonly AppSettings _settings;
-    private readonly MigrationOrchestrator _orchestrator;
-    private readonly CommitIterationOrchestrator _commitIterationOrchestrator;
     private readonly Task<CopilotService>? _copilotServiceTask;
     private readonly ILogger<RootCommandFactory> _logger;
 
@@ -37,18 +35,14 @@ public class RootCommandFactory
     /// <param name="gitService">Git service.</param>
     /// <param name="fileService">File service.</param>
     /// <param name="settings">Application settings.</param>
-    /// <param name="orchestrator">Migration orchestrator for build-fix cycles.</param>
-    /// <param name="commitIterationOrchestrator">Commit iteration orchestrator for finding valid TypeSpec commits.</param>
     /// <param name="logger">Logger instance.</param>
     /// <param name="copilotServiceTask">Optional task that resolves to the initialized CopilotService singleton.</param>
-    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, AppSettings settings, MigrationOrchestrator orchestrator, CommitIterationOrchestrator commitIterationOrchestrator, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
+    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, AppSettings settings, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
     {
         _validator = validator;
         _gitService = gitService;
         _fileService = fileService;
         _settings = settings;
-        _orchestrator = orchestrator;
-        _commitIterationOrchestrator = commitIterationOrchestrator;
         _copilotServiceTask = copilotServiceTask;
         _logger = logger;
     }
@@ -158,16 +152,43 @@ public class RootCommandFactory
                 _logger.LogDebug("Step 7: Updating emitterPackageJsonPath in tsp-location.yaml");
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
-                // Step 8: Deterministic commit iteration (replaces LLM-based LocalSpecsCommitIterationPrompt)
-                _logger.LogDebug("Step 8: Running deterministic commit iteration");
-                await _commitIterationOrchestrator.ExecuteAsync(
+                // Step 8: Deterministic commit iteration via MCP tool
+                _logger.LogDebug("Step 8: Running commit iteration to find valid tspconfig commit");
+                var (commitSuccess, commitMessage) = await CommitIterationTool.ExecuteInProcessAsync(
                     validatedSdkPath, tspLocationPath, specsRelativeDirectory, validatedSpecsPath, cancellationToken).ConfigureAwait(false);
+                if (!commitSuccess)
+                {
+                    _logger.LogWarning("Commit iteration: {Message}", commitMessage);
+                }
+                else
+                {
+                    _logger.LogInformation("Commit iteration: {Message}", commitMessage);
+                }
 
-                // Step 9: Full migration pipeline (pregen cleanup → codegen → build-fix → sample migration → finalization)
-                _logger.LogDebug("Step 9: Running full migration pipeline");
-                await _orchestrator.RunFullPipelineAsync(validatedSdkPath, copilotService, cancellationToken).ConfigureAwait(false);
+                // Step 9: Pre-generation cleanup via MCP tool
+                _logger.LogDebug("Step 9: Running pre-generation cleanup");
+                PreGenCleanupTool.ExecuteInProcess(validatedSdkPath);
 
-                _logger.LogInformation("Migration completed: {SdkPath}", sdkPath);
+                // Step 10: Code generation via MCP tool
+                _logger.LogDebug("Step 10: Running code generation");
+                var (codegenSuccess, codegenOutput, codegenError) = await CodeGenerationTool.ExecuteInProcessAsync(validatedSdkPath).ConfigureAwait(false);
+                if (!codegenSuccess)
+                {
+                    _logger.LogWarning("Code generation failed — the skill-driven build-fix loop will handle remaining errors");
+                }
+
+                // Step 11: Initial build to surface errors for the skill
+                _logger.LogDebug("Step 11: Running initial build");
+                var (buildResult, classified) = await BuildAndClassifyTool.ExecuteInProcessAsync(validatedSdkPath).ConfigureAwait(false);
+
+                _logger.LogInformation("Migration setup complete. Build {Status} ({ErrorCount} errors, {DeterministicCount} deterministic).",
+                    buildResult.Success ? "succeeded" : "found errors",
+                    buildResult.Errors.Count,
+                    classified.Count(c => c.IsDeterministic));
+                _logger.LogInformation("The MCP tools are now available for the skill to drive the build-fix cycle.");
+                _logger.LogInformation("Use 'build_and_classify_errors' to build, 'classify_errors' to triage, and fix tools to apply corrections.");
+
+                _logger.LogInformation("Migration setup completed: {SdkPath}", sdkPath);
             }
             catch (OperationCanceledException) when (appCancellationToken.IsCancellationRequested)
             {

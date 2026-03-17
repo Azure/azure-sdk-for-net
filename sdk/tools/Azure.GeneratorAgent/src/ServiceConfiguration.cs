@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.GeneratorAgent.Commands;
-using Azure.GeneratorAgent.Orchestration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -39,8 +38,6 @@ public static class ServiceConfiguration
         services.AddSingleton<FileService>();
 
         services.AddSingleton<AppSettings>();
-        services.AddSingleton<MigrationOrchestrator>();
-        services.AddSingleton<CommitIterationOrchestrator>();
 
         if (!string.IsNullOrEmpty(projectPath))
         {
