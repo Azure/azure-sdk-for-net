@@ -14,6 +14,8 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Bugs Fixed
 
+- Fixed a race condition in `AmqpSender` where concurrent calls to `CreateMessageBatchAsync` during initial AMQP link creation could observe an inconsistent `MaxBatchSize`, causing a spurious `ArgumentOutOfRangeException`. ([#56301](https://github.com/Azure/azure-sdk-for-net/issues/56301))
+
 ### Other Changes
 
 - Several areas of the AMQP transport integration have been cleaned up, modernized, and made more efficient.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_

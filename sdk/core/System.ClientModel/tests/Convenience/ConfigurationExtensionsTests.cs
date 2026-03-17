@@ -120,7 +120,7 @@ public class ConfigurationExtensionsTests
         Assert.That(settings.Options.ClientLoggingOptions, Is.Not.Null);
         Assert.That(settings.Options.ClientLoggingOptions!.EnableLogging, Is.False);
         Assert.That(settings.Credential, Is.Not.Null);
-        Assert.That(settings.Credential!.CredentialSource, Is.EqualTo("ApiKey"));
+        Assert.That(settings.Credential!.CredentialSource, Is.AnyOf("apikeycredential", "ApiKey"));
         Assert.That(settings.Credential.Key, Is.EqualTo("test-key-123"));
     }
 

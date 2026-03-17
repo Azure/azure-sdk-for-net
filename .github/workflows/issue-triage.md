@@ -20,6 +20,8 @@ safe-outputs:
     max: 7
   add-comment:
     max: 2
+  noop:
+    report-as-issue: false
 
 tools:
   web-fetch:
@@ -139,6 +141,10 @@ Note: Azure organization members are expected to have public membership per the 
 
 Analyze the issue title and body to determine appropriate labels
 
+### Label Identification
+
+Labels classification is distinguished by color. Actively inspect label colors when examining repository labels and previous issues:
+
 - **Category label** (color #ffeb77): Exactly one of "Client", "Service", "Mgmt", or "Provisioning"
   - "Client" for issues with SDK code or behavior
   - "Service" for issues with the REST API or Azure service behavior outside SDK control
@@ -149,19 +155,34 @@ Analyze the issue title and body to determine appropriate labels
   - Example: Azure.Identity → "Azure.Identity"
   - Example: Azure.Provisioning.Storage → category "Provisioning", service "Storage"
   - Example: Azure.Provisioning (base library) → category "Provisioning", service "Provisioning"
-  - Non-service issues such as engineering systems, scripts, workflows, or pipelines in /eng folder in this repository → "Central-EngSys"
+
+### Excluded Service Labels
+
+The following service labels require human judgment and are never assigned by automatic triage:
+- **"Central-EngSys"** (color #e99695): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder. If "Central-EngSys" is the most confident service prediction, treat the prediction as low confidence and fall back to "needs-triage"
+
+### Using Previous Issues as Reference
 
 When selecting labels, use repository context and previously seen issues for guidance; do not run `gh label list` and only use labels that already exist in this repository
 
 You may use `search_issues` or `list_issues` to find similar issues for reference; if you find a very close match to an OPEN issue, consider also adding the "duplicate" label
 
+For a previous issue to serve as a quality reference for label prediction, it must have ALL of:
+- Exactly 1 category label (color #ffeb77) — never more than one
+- Exactly 1 service label (color #e99695) — never more than one
+- The "customer-reported" label
+- The "issue-addressed" label
+
+Other labels on the issue (routing labels, "question", "duplicate", etc.) are fine, but skip any issue that has more than 1 category or more than 1 service label, or is missing "customer-reported" or "issue-addressed"
+
 ### Confidence Criteria
 
 A prediction is confident — targeting 96% accuracy — when ALL of the following are true:
 - The issue clearly names or references a specific Azure SDK package, service, or `/sdk/` path
-- There is no ambiguity between multiple services
-- The category (Client/Service/Mgmt/Provisioning) is clearly implied by the issue content
-- The prediction aligns with patterns seen in previously resolved issues; those with "customer-reported" and "issue-addressed" labels are good indicators of correct labeling
+- There is no ambiguity between multiple services; if multiple service labels are plausible and you cannot confidently narrow to exactly one, confidence is not met
+- The category (Client/Service/Mgmt/Provisioning) is clearly implied by the issue content; if multiple categories are plausible and you cannot confidently narrow to exactly one, confidence is not met
+- The predicted service label is not "Central-EngSys"
+- The prediction aligns with patterns seen in quality reference issues (see criteria above)
 - There is no reasonable doubt about either label
 
 When the above criteria cannot be met, prefer applying "needs-triage" for manual review over risking an incorrect assignment
