@@ -6,7 +6,7 @@ Azure.Provisioning.DataFactory simplifies declarative resource provisioning in .
 
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Provisioning.DataFactory --prerelease
