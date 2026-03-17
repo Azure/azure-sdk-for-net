@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary></summary>
-    public partial class WebPubSubResource : IJsonModel<WebPubSubData>
+    public partial class WebPubSubResource : ArmResource, IJsonModel<WebPubSubData>
     {
         private static IJsonModel<WebPubSubData> s_dataDeserializationInstance;
 

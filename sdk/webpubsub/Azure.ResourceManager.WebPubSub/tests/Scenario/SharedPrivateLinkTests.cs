@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
             //3 create SharedPrivateLink
             //TODO: Creating a SharedPrivateLink inevitably requires manual approval on the portal.
-            var container = _webPubSub.GetWebPubSubSharedPrivateLinkResources();
+            var container = _webPubSub.GetWebPubSubSharedPrivateLinks();
             WebPubSubSharedPrivateLinkData data = new WebPubSubSharedPrivateLinkData()
             {
                 PrivateLinkResourceId = new ResourceIdentifier($"{_resourceGroupIdentifier}/providers/Microsoft.Web/sites/{WebAppName}/sharedPrivateLinkResources/{LinkName}"),
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GetAll()
         {
             _webPubSub = await CreateDefaultWebPubSub(_webPubSubName, DefaultLocation, _resourceGroup);
-            var list = await _webPubSub.GetWebPubSubSharedPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _webPubSub.GetWebPubSubSharedPrivateLinks().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }
     }

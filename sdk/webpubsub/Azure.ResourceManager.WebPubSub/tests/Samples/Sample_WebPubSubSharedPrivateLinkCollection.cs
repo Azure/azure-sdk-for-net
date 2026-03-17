@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
             // get the collection of this WebPubSubSharedPrivateLinkResource
-            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinkResources();
+            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinks();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
             // get the collection of this WebPubSubSharedPrivateLinkResource
-            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinkResources();
+            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinks();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
             // get the collection of this WebPubSubSharedPrivateLinkResource
-            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinkResources();
+            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinks();
 
             // invoke the operation and iterate over the result
             await foreach (WebPubSubSharedPrivateLinkResource item in collection.GetAllAsync())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
             // get the collection of this WebPubSubSharedPrivateLinkResource
-            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinkResources();
+            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinks();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
             // get the collection of this WebPubSubSharedPrivateLinkResource
-            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinkResources();
+            WebPubSubSharedPrivateLinkCollection collection = webPubSub.GetWebPubSubSharedPrivateLinks();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";

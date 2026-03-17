@@ -273,7 +273,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WebPubSubPrivateLink item in webPubSub.GetWebPubSubPrivateLinksAsync())
+            await foreach (WebPubSubPrivateLink item in webPubSub.GetWebPubSubPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
