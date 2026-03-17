@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary></summary>
-    internal partial class NetworkFunctionCollectorPolicyOperationSource : IOperationSource<NetworkFunctionCollectorPolicyResource>
+    internal partial class CollectorPolicyOperationSource : IOperationSource<CollectorPolicyResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkFunctionCollectorPolicyOperationSource(ArmClient client)
+        internal CollectorPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkFunctionCollectorPolicyResource IOperationSource<NetworkFunctionCollectorPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CollectorPolicyResource IOperationSource<CollectorPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkFunctionCollectorPolicyData data = NetworkFunctionCollectorPolicyData.DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFunctionCollectorPolicyResource(_client, data);
+            CollectorPolicyData data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CollectorPolicyResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkFunctionCollectorPolicyResource> IOperationSource<NetworkFunctionCollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CollectorPolicyResource> IOperationSource<CollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkFunctionCollectorPolicyData data = NetworkFunctionCollectorPolicyData.DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFunctionCollectorPolicyResource(_client, data);
+            CollectorPolicyData data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CollectorPolicyResource(_client, data);
         }
     }
 }

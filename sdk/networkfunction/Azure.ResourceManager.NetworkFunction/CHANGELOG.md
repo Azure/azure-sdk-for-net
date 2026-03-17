@@ -8,9 +8,7 @@
 
 ### Breaking Changes
 
-- `AzureTrafficCollectorData.CollectorPolicies` property type changed from `IReadOnlyList<SubResource>` to `IReadOnlyList<ResourceReference>`.
-- `ResourceReference.Id` property type changed from `string` to `ResourceIdentifier`.
-- `ArmNetworkFunctionModelFactory.AzureTrafficCollectorData()` and `CollectorPolicyData()` factory method signatures updated.
+- `ArmNetworkFunctionModelFactory.AzureTrafficCollectorData()` and `CollectorPolicyData()` factory method parameter order updated.
 
 ### Bugs Fixed
 

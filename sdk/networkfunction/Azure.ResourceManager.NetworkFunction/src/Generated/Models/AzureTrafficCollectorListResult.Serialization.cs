@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NetworkFunctionAzureTrafficCollectorData item in Value)
+            foreach (AzureTrafficCollectorData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            IList<NetworkFunctionAzureTrafficCollectorData> value = default;
+            IList<AzureTrafficCollectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NetworkFunctionAzureTrafficCollectorData> array = new List<NetworkFunctionAzureTrafficCollectorData>();
+                    List<AzureTrafficCollectorData> array = new List<AzureTrafficCollectorData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFunctionAzureTrafficCollectorData.DeserializeNetworkFunctionAzureTrafficCollectorData(item, options));
+                        array.Add(AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(item, options));
                     }
                     value = array;
                     continue;

@@ -20,40 +20,48 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary>
-    /// A class representing a NetworkFunctionCollectorPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFunctionCollectorPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkFunctionAzureTrafficCollectorResource"/> using the GetNetworkFunctionCollectorPolicies method.
+    /// A class representing a AzureTrafficCollector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AzureTrafficCollectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAzureTrafficCollectors method.
     /// </summary>
-    public partial class NetworkFunctionCollectorPolicyResource : ArmResource
+    public partial class AzureTrafficCollectorResource : ArmResource
     {
-        private readonly ClientDiagnostics _collectorPoliciesClientDiagnostics;
-        private readonly CollectorPolicies _collectorPoliciesRestClient;
-        private readonly NetworkFunctionCollectorPolicyData _data;
+        private readonly ClientDiagnostics _azureTrafficCollectorsClientDiagnostics;
+        private readonly AzureTrafficCollectors _azureTrafficCollectorsRestClient;
+        private readonly ClientDiagnostics _azureTrafficCollectorsBySubscriptionClientDiagnostics;
+        private readonly AzureTrafficCollectorsBySubscription _azureTrafficCollectorsBySubscriptionRestClient;
+        private readonly ClientDiagnostics _azureTrafficCollectorsByResourceGroupClientDiagnostics;
+        private readonly AzureTrafficCollectorsByResourceGroup _azureTrafficCollectorsByResourceGroupRestClient;
+        private readonly AzureTrafficCollectorData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors/collectorPolicies";
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors";
 
-        /// <summary> Initializes a new instance of NetworkFunctionCollectorPolicyResource for mocking. </summary>
-        protected NetworkFunctionCollectorPolicyResource()
+        /// <summary> Initializes a new instance of AzureTrafficCollectorResource for mocking. </summary>
+        protected AzureTrafficCollectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkFunctionCollectorPolicyResource(ArmClient client, NetworkFunctionCollectorPolicyData data) : this(client, data.Id)
+        internal AzureTrafficCollectorResource(ArmClient client, AzureTrafficCollectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkFunctionCollectorPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AzureTrafficCollectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkFunctionCollectorPolicyApiVersion);
-            _collectorPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
-            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Endpoint, networkFunctionCollectorPolicyApiVersion ?? "2022-11-01");
+            TryGetApiVersion(ResourceType, out string azureTrafficCollectorApiVersion);
+            _azureTrafficCollectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
+            _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
+            _azureTrafficCollectorsBySubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
+            _azureTrafficCollectorsBySubscriptionRestClient = new AzureTrafficCollectorsBySubscription(_azureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
+            _azureTrafficCollectorsByResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
+            _azureTrafficCollectorsByResourceGroupRestClient = new AzureTrafficCollectorsByResourceGroup(_azureTrafficCollectorsByResourceGroupClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +69,7 @@ namespace Azure.ResourceManager.NetworkFunction
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NetworkFunctionCollectorPolicyData Data
+        public virtual AzureTrafficCollectorData Data
         {
             get
             {
@@ -77,10 +85,9 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="azureTrafficCollectorName"> The azureTrafficCollectorName. </param>
-        /// <param name="collectorPolicyName"> The collectorPolicyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureTrafficCollectorName, string collectorPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureTrafficCollectorName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,15 +102,15 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Gets the collector policy in a specified Traffic Collector
+        /// Gets the specified Azure Traffic Collector in a specified resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CollectorPolicies_Get. </description>
+        /// <description> AzureTrafficCollectors_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,14 +118,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkFunctionCollectorPolicyResource"/>. </description>
+        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkFunctionCollectorPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureTrafficCollectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.Get");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Get");
             scope.Start();
             try
             {
@@ -126,14 +133,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
+                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,15 +150,15 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Gets the collector policy in a specified Traffic Collector
+        /// Gets the specified Azure Traffic Collector in a specified resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CollectorPolicies_Get. </description>
+        /// <description> AzureTrafficCollectors_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -159,14 +166,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkFunctionCollectorPolicyResource"/>. </description>
+        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkFunctionCollectorPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AzureTrafficCollectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.Get");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Get");
             scope.Start();
             try
             {
@@ -174,14 +181,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
+                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -191,15 +198,15 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Updates the specified Collector Policy tags.
+        /// Updates the specified Azure Traffic Collector tags.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CollectorPolicies_UpdateTags. </description>
+        /// <description> AzureTrafficCollectors_UpdateTags. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,18 +214,18 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkFunctionCollectorPolicyResource"/>. </description>
+        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> The resource properties to be updated. </param>
+        /// <param name="tagsObject"> Parameters supplied to update Azure Traffic Collector tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<NetworkFunctionCollectorPolicyResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureTrafficCollectorResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.Update");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
             scope.Start();
             try
             {
@@ -226,14 +233,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
+                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,15 +250,15 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Updates the specified Collector Policy tags.
+        /// Updates the specified Azure Traffic Collector tags.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CollectorPolicies_UpdateTags. </description>
+        /// <description> AzureTrafficCollectors_UpdateTags. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -259,18 +266,18 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkFunctionCollectorPolicyResource"/>. </description>
+        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> The resource properties to be updated. </param>
+        /// <param name="tagsObject"> Parameters supplied to update Azure Traffic Collector tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<NetworkFunctionCollectorPolicyResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public virtual Response<AzureTrafficCollectorResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.Update");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
             scope.Start();
             try
             {
@@ -278,14 +285,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
+                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -295,15 +302,15 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Deletes a specified Collector Policy resource.
+        /// Deletes a specified Azure Traffic Collector resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CollectorPolicies_Delete. </description>
+        /// <description> AzureTrafficCollectors_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -311,7 +318,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkFunctionCollectorPolicyResource"/>. </description>
+        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +326,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.Delete");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Delete");
             scope.Start();
             try
             {
@@ -327,9 +334,9 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkFunctionArmOperation operation = new NetworkFunctionArmOperation(_collectorPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                NetworkFunctionArmOperation operation = new NetworkFunctionArmOperation(_azureTrafficCollectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -344,15 +351,15 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Deletes a specified Collector Policy resource.
+        /// Deletes a specified Azure Traffic Collector resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CollectorPolicies_Delete. </description>
+        /// <description> AzureTrafficCollectors_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -360,7 +367,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkFunctionCollectorPolicyResource"/>. </description>
+        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,7 +375,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.Delete");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Delete");
             scope.Start();
             try
             {
@@ -376,9 +383,9 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _collectorPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _azureTrafficCollectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkFunctionArmOperation operation = new NetworkFunctionArmOperation(_collectorPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                NetworkFunctionArmOperation operation = new NetworkFunctionArmOperation(_azureTrafficCollectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -397,12 +404,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<NetworkFunctionCollectorPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureTrafficCollectorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.AddTag");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.AddTag");
             scope.Start();
             try
             {
@@ -415,21 +422,21 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NetworkFunctionCollectorPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AzureTrafficCollectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     TagsObject patch = new TagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<NetworkFunctionCollectorPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<AzureTrafficCollectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -445,12 +452,12 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<NetworkFunctionCollectorPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AzureTrafficCollectorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.AddTag");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.AddTag");
             scope.Start();
             try
             {
@@ -463,21 +470,21 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NetworkFunctionCollectorPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AzureTrafficCollectorData current = Get(cancellationToken: cancellationToken).Value.Data;
                     TagsObject patch = new TagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<NetworkFunctionCollectorPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<AzureTrafficCollectorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -492,11 +499,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<NetworkFunctionCollectorPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureTrafficCollectorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.SetTags");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.SetTags");
             scope.Start();
             try
             {
@@ -510,17 +517,17 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NetworkFunctionCollectorPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AzureTrafficCollectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     TagsObject patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<NetworkFunctionCollectorPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<AzureTrafficCollectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -535,11 +542,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<NetworkFunctionCollectorPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AzureTrafficCollectorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.SetTags");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.SetTags");
             scope.Start();
             try
             {
@@ -553,17 +560,17 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NetworkFunctionCollectorPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AzureTrafficCollectorData current = Get(cancellationToken: cancellationToken).Value.Data;
                     TagsObject patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<NetworkFunctionCollectorPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<AzureTrafficCollectorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -578,11 +585,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<NetworkFunctionCollectorPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureTrafficCollectorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.RemoveTag");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.RemoveTag");
             scope.Start();
             try
             {
@@ -595,21 +602,21 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NetworkFunctionCollectorPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AzureTrafficCollectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     TagsObject patch = new TagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<NetworkFunctionCollectorPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<AzureTrafficCollectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -624,11 +631,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<NetworkFunctionCollectorPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AzureTrafficCollectorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _collectorPoliciesClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyResource.RemoveTag");
+            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.RemoveTag");
             scope.Start();
             try
             {
@@ -641,21 +648,21 @@ namespace Azure.ResourceManager.NetworkFunction
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _collectorPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NetworkFunctionCollectorPolicyData> response = Response.FromValue(NetworkFunctionCollectorPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new NetworkFunctionCollectorPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NetworkFunctionCollectorPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AzureTrafficCollectorData current = Get(cancellationToken: cancellationToken).Value.Data;
                     TagsObject patch = new TagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<NetworkFunctionCollectorPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<AzureTrafficCollectorResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -664,6 +671,39 @@ namespace Azure.ResourceManager.NetworkFunction
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of CollectorPolicies in the <see cref="AzureTrafficCollectorResource"/>. </summary>
+        /// <returns> An object representing collection of CollectorPolicies and their operations over a CollectorPolicyResource. </returns>
+        public virtual CollectorPolicyCollection GetCollectorPolicies()
+        {
+            return GetCachedClient(client => new CollectorPolicyCollection(client, Id));
+        }
+
+        /// <summary> Gets the collector policy in a specified Traffic Collector. </summary>
+        /// <param name="collectorPolicyName"> Collector Policy Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CollectorPolicyResource>> GetCollectorPolicyAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
+
+            return await GetCollectorPolicies().GetAsync(collectorPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the collector policy in a specified Traffic Collector. </summary>
+        /// <param name="collectorPolicyName"> Collector Policy Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CollectorPolicyResource> GetCollectorPolicy(string collectorPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
+
+            return GetCollectorPolicies().Get(collectorPolicyName, cancellationToken);
         }
     }
 }

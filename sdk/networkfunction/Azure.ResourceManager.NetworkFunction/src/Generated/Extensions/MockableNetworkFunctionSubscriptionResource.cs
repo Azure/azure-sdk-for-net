@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFunctionAzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkFunctionAzureTrafficCollectorResource> GetNetworkFunctionAzureTrafficCollectorsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkFunctionAzureTrafficCollectorData, NetworkFunctionAzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context), data => new NetworkFunctionAzureTrafficCollectorResource(Client, data));
+            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFunctionAzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkFunctionAzureTrafficCollectorResource> GetNetworkFunctionAzureTrafficCollectors(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkFunctionAzureTrafficCollectorData, NetworkFunctionAzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context), data => new NetworkFunctionAzureTrafficCollectorResource(Client, data));
+            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context), data => new AzureTrafficCollectorResource(Client, data));
         }
     }
 }

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="NetworkFunctionAzureTrafficCollectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AzureTrafficCollectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionAzureTrafficCollectorResource"/> object. </returns>
-        public virtual NetworkFunctionAzureTrafficCollectorResource GetNetworkFunctionAzureTrafficCollectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureTrafficCollectorResource"/> object. </returns>
+        public virtual AzureTrafficCollectorResource GetAzureTrafficCollectorResource(ResourceIdentifier id)
         {
-            NetworkFunctionAzureTrafficCollectorResource.ValidateResourceId(id);
-            return new NetworkFunctionAzureTrafficCollectorResource(Client, id);
+            AzureTrafficCollectorResource.ValidateResourceId(id);
+            return new AzureTrafficCollectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NetworkFunctionCollectorPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CollectorPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionCollectorPolicyResource"/> object. </returns>
-        public virtual NetworkFunctionCollectorPolicyResource GetNetworkFunctionCollectorPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CollectorPolicyResource"/> object. </returns>
+        public virtual CollectorPolicyResource GetCollectorPolicyResource(ResourceIdentifier id)
         {
-            NetworkFunctionCollectorPolicyResource.ValidateResourceId(id);
-            return new NetworkFunctionCollectorPolicyResource(Client, id);
+            CollectorPolicyResource.ValidateResourceId(id);
+            return new CollectorPolicyResource(Client, id);
         }
     }
 }

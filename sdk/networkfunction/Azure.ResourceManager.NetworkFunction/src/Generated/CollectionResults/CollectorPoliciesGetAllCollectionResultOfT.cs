@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkFunction.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    internal partial class CollectorPoliciesGetAllCollectionResultOfT : Pageable<NetworkFunctionCollectorPolicyData>
+    internal partial class CollectorPoliciesGetAllCollectionResultOfT : Pageable<CollectorPolicyData>
     {
         private readonly CollectorPolicies _client;
         private readonly string _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CollectorPoliciesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetworkFunctionCollectorPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CollectorPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     yield break;
                 }
                 CollectorPolicyListResult result = CollectorPolicyListResult.FromResponse(response);
-                yield return Page<NetworkFunctionCollectorPolicyData>.FromValues((IReadOnlyList<NetworkFunctionCollectorPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CollectorPolicyData>.FromValues((IReadOnlyList<CollectorPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkFunction
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _azureTrafficCollectorName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _azureTrafficCollectorName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetworkFunctionCollectorPolicyCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CollectorPolicyCollection.GetAll");
             scope.Start();
             try
             {

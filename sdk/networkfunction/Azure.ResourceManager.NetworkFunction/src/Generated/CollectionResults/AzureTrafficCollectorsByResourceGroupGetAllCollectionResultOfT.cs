@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkFunction.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    internal partial class AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT : Pageable<NetworkFunctionAzureTrafficCollectorData>
+    internal partial class AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT : Pageable<AzureTrafficCollectorData>
     {
         private readonly AzureTrafficCollectorsByResourceGroup _client;
         private readonly string _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetworkFunctionAzureTrafficCollectorData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AzureTrafficCollectorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     yield break;
                 }
                 AzureTrafficCollectorListResult result = AzureTrafficCollectorListResult.FromResponse(response);
-                yield return Page<NetworkFunctionAzureTrafficCollectorData>.FromValues((IReadOnlyList<NetworkFunctionAzureTrafficCollectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AzureTrafficCollectorData>.FromValues((IReadOnlyList<AzureTrafficCollectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkFunction
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetworkFunctionAzureTrafficCollectorCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AzureTrafficCollectorCollection.GetAll");
             scope.Start();
             try
             {

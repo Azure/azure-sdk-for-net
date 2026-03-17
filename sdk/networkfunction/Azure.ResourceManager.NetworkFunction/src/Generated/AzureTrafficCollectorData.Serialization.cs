@@ -17,11 +17,11 @@ using Azure.ResourceManager.NetworkFunction.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    /// <summary> Collector policy resource. </summary>
-    public partial class NetworkFunctionCollectorPolicyData : TrackedResourceData, IJsonModel<NetworkFunctionCollectorPolicyData>
+    /// <summary> Azure Traffic Collector resource. </summary>
+    public partial class AzureTrafficCollectorData : TrackedResourceData, IJsonModel<AzureTrafficCollectorData>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkFunctionCollectorPolicyData"/> for deserialization. </summary>
-        internal NetworkFunctionCollectorPolicyData()
+        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorData"/> for deserialization. </summary>
+        internal AzureTrafficCollectorData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, options);
+                        return DeserializeAzureTrafficCollectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkFunctionContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkFunctionCollectorPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkFunctionCollectorPolicyData IPersistableModel<NetworkFunctionCollectorPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFunctionCollectorPolicyData)PersistableModelCreateCore(data, options);
+        AzureTrafficCollectorData IPersistableModel<AzureTrafficCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureTrafficCollectorData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkFunctionCollectorPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureTrafficCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="networkFunctionCollectorPolicyData"> The <see cref="NetworkFunctionCollectorPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetworkFunctionCollectorPolicyData networkFunctionCollectorPolicyData)
+        /// <param name="azureTrafficCollectorData"> The <see cref="AzureTrafficCollectorData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AzureTrafficCollectorData azureTrafficCollectorData)
         {
-            if (networkFunctionCollectorPolicyData == null)
+            if (azureTrafficCollectorData == null)
             {
                 return null;
             }
-            return RequestContent.Create(networkFunctionCollectorPolicyData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(azureTrafficCollectorData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkFunctionCollectorPolicyData"/> from. </param>
-        internal static NetworkFunctionCollectorPolicyData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureTrafficCollectorData"/> from. </param>
+        internal static AzureTrafficCollectorData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAzureTrafficCollectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetworkFunctionCollectorPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureTrafficCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkFunctionCollectorPolicyData IJsonModel<NetworkFunctionCollectorPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFunctionCollectorPolicyData)JsonModelCreateCore(ref reader, options);
+        AzureTrafficCollectorData IJsonModel<AzureTrafficCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureTrafficCollectorData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionCollectorPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionCollectorPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkFunctionCollectorPolicyData(document.RootElement, options);
+            return DeserializeAzureTrafficCollectorData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkFunctionCollectorPolicyData DeserializeNetworkFunctionCollectorPolicyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.NetworkFunction
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            CollectorPolicyPropertiesFormat properties = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
+            AzureTrafficCollectorPropertiesFormat properties = default;
+            IDictionary<string, string> tags = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,6 +172,29 @@ namespace Azure.ResourceManager.NetworkFunction
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkFunctionContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = AzureTrafficCollectorPropertiesFormat.DeserializeAzureTrafficCollectorPropertiesFormat(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -193,29 +216,6 @@ namespace Azure.ResourceManager.NetworkFunction
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = CollectorPolicyPropertiesFormat.DeserializeCollectorPolicyPropertiesFormat(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkFunctionContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -230,15 +230,15 @@ namespace Azure.ResourceManager.NetworkFunction
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkFunctionCollectorPolicyData(
+            return new AzureTrafficCollectorData(
                 id,
                 name,
                 resourceType,
+                systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 eTag);
         }
     }
