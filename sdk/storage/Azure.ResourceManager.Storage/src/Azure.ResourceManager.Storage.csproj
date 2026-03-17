@@ -11,30 +11,18 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Exclude generated files that are replaced by customizations in Customize/ -->
-    <Compile Remove="Generated/Models/StoragePublicAccessType.cs" />
-    <Compile Remove="Generated/Models/StorageTaskAssignmentReport.cs" />
-    <Compile Remove="Generated/Models/StorageTaskAssignmentReport.Serialization.cs" />
     <!-- Replace generated files to change internal parameterless constructors to public (CannotSealType fix) -->
-    <Compile Remove="Generated/DeletedAccountData.cs" />
-    <Compile Remove="Generated/FileServiceUsageData.cs" />
-    <Compile Remove="Generated/ImmutabilityPolicyData.Serialization.cs" />
-    <Compile Remove="Generated/StoragePrivateEndpointConnectionData.cs" />
-    <Compile Remove="Generated/Models/StorageAccountSkuConversionStatus.cs" />
-    <Compile Remove="Generated/Models/StorageTaskReportInstance.cs" />
-    <Compile Remove="Generated/Models/StoragePrivateLinkResourceData.cs" />
     <!-- Replace generated enum with backward-compatible readonly struct -->
+    <!-- Replace generated struct that conflicts with custom backward-compat version -->
+    <!-- Change internal string ResourceType to public Azure.Core.ResourceType for backward compat -->
+    <!-- Add setter to Rules property for backward compat -->
+    <!-- Replace Action property type from StorageAccountIPRuleAction/StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction for backward compat -->
+    <Compile Remove="Generated/Models/StorageAccountNetworkRuleAction.cs" />
     <Compile Remove="Generated/Models/StorageAccountProvisioningState.cs" />
     <Compile Remove="Generated/Models/StorageAccountProvisioningState.Serialization.cs" />
-    <!-- Replace generated struct that conflicts with custom backward-compat version -->
-    <Compile Remove="Generated/Models/StorageAccountNetworkRuleAction.cs" />
+    <Compile Remove="Generated/StoragePrivateEndpointConnectionData.cs" />
     <Compile Remove="Generated/Models/StorageAccountIPRuleAction.cs" />
     <Compile Remove="Generated/Models/StorageAccountVirtualNetworkRuleAction.cs" />
-    <!-- Change internal string ResourceType to public Azure.Core.ResourceType for backward compat -->
     <Compile Remove="Generated/Models/StorageAccountNameAvailabilityContent.cs" />
-    <!-- Add setter to Rules property for backward compat -->
-    <Compile Remove="Generated/StorageAccountManagementPolicyData.cs" />
-    <!-- Replace Action property type from StorageAccountIPRuleAction/StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction for backward compat -->
-    <Compile Remove="Generated/Models/StorageAccountIPRule.cs" />
-    <Compile Remove="Generated/Models/StorageAccountVirtualNetworkRule.cs" />
   </ItemGroup>
 </Project>
