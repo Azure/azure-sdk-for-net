@@ -3500,22 +3500,6 @@ namespace Azure.ResourceManager.Storage.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Resource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.Resource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.Resource>
-    {
-        public Resource() { }
-        public string Id { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.Storage.Models.Resource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Storage.Models.Resource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Storage.Models.Resource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.Resource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.Resource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Storage.Models.Resource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.Resource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode>
     {
@@ -3851,12 +3835,8 @@ namespace Azure.ResourceManager.Storage.Models
         public bool Equals(Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction left, Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction left, Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class StorageAccountIPv6Endpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>
@@ -4025,6 +4005,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>
     {
         public StorageAccountNameAvailabilityContent(string name) { }
+        public StorageAccountNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
         protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4065,7 +4046,6 @@ namespace Azure.ResourceManager.Storage.Models
         private readonly int _dummyPrimitive;
         public StorageAccountNetworkRuleAction(string value) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction Allow { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction ALLOW { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -4366,12 +4346,8 @@ namespace Azure.ResourceManager.Storage.Models
         public bool Equals(Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction left, Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction value) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction left, Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4672,75 +4648,6 @@ namespace Azure.ResourceManager.Storage.Models
         Azure.ResourceManager.Storage.Models.StorageEncryptionService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageEncryptionService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageEncryptionService>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageEncryptionService>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class StorageExtendedLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>
-    {
-        public StorageExtendedLocation() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes? Type { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Storage.Models.StorageExtendedLocation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageExtendedLocation (Azure.ResourceManager.Resources.Models.ExtendedLocation value) { throw null; }
-        protected virtual Azure.ResourceManager.Storage.Models.StorageExtendedLocation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Storage.Models.StorageExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Storage.Models.StorageExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageExtendedLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageExtendedLocationTypes : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageExtendedLocationTypes(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes EdgeZone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes left, Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes left, Azure.ResourceManager.Storage.Models.StorageExtendedLocationTypes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class StorageIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageIdentity>
-    {
-        public StorageIdentity(Azure.ResourceManager.Storage.Models.StorageIdentityType type) { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageIdentityType Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-        protected virtual Azure.ResourceManager.Storage.Models.StorageIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageIdentity (Azure.ResourceManager.Models.ManagedServiceIdentity value) { throw null; }
-        protected virtual Azure.ResourceManager.Storage.Models.StorageIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Storage.Models.StorageIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Storage.Models.StorageIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageIdentityType : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.StorageIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.StorageIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Storage.Models.StorageIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.StorageIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageIdentityType left, Azure.ResourceManager.Storage.Models.StorageIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.StorageIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageIdentityType left, Azure.ResourceManager.Storage.Models.StorageIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageKind : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageKind>
@@ -5494,21 +5401,6 @@ namespace Azure.ResourceManager.Storage.Models
         Percent = 3,
         CountsPerSecond = 4,
         BytesPerSecond = 5,
-    }
-    public partial class StorageUserAssignedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>
-    {
-        public StorageUserAssignedIdentity() { }
-        public string ClientId { get { throw null; } }
-        public string PrincipalId { get { throw null; } }
-        protected virtual Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageUserAssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TaskExecutionTriggerType : System.IEquatable<Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType>
