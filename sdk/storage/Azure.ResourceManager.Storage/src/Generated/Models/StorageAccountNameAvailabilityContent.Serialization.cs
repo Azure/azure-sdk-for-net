@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    DeserializeResourceType(prop, ref resourceType);
                     continue;
                 }
             }

@@ -3,16 +3,22 @@
 
 // Backward-compat: Adds public constructor matching prior GA shape (name only).
 // Provides fields/properties referenced by the generated partial and serialization.
+// DeserializationValueHook works around generator bug where @@alternateType to armResourceType
+// emits ResourceType.DeserializeResourceType which doesn't exist.
 
 #nullable disable
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters used to check the availability of the storage account name. </summary>
+    [CodeGenSerialization(nameof(ResourceType), DeserializationValueHook = nameof(DeserializeResourceType))]
     public partial class StorageAccountNameAvailabilityContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -34,5 +40,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
         [WirePath("type")]
         public ResourceType ResourceType { get; } = new ResourceType("Microsoft.Storage/storageAccounts");
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeResourceType(JsonProperty property, ref ResourceType resourceType)
+        {
+            resourceType = new ResourceType(property.Value.GetString());
+        }
     }
 }
