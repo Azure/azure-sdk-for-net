@@ -15,10 +15,6 @@
 <Project>
   <ItemGroup Condition="'$(SDKType)' == 'data' Or '$(SDKType)' == 'all'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.FrontDoor\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.Kusto\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.Search\**\*.csproj" />
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.ServiceBus\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.Sql\**\*.csproj" />
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Provisioning.WebPubSub\**\*.csproj" />
   </ItemGroup>

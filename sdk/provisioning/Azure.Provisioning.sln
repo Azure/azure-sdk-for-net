@@ -54,14 +54,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Operatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.OperationalInsights.Tests", "Azure.Provisioning.OperationalInsights\tests\Azure.Provisioning.OperationalInsights.Tests.csproj", "{FA5C780F-E297-45F1-9E16-B165AFFD8905}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Search", "Azure.Provisioning.Search\src\Azure.Provisioning.Search.csproj", "{D0FAC646-B56E-4E76-B2D8-F393A1D50167}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Search.Tests", "Azure.Provisioning.Search\tests\Azure.Provisioning.Search.Tests.csproj", "{3421072D-AEA8-47F2-BA00-E0EF2FFAE9FB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ServiceBus", "Azure.Provisioning.ServiceBus\src\Azure.Provisioning.ServiceBus.csproj", "{D6FEAF56-E155-4A4F-82AB-EDA88D7E21CD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ServiceBus.Tests", "Azure.Provisioning.ServiceBus\tests\Azure.Provisioning.ServiceBus.Tests.csproj", "{9F4A51AE-C465-4B22-A146-CEB6E0C43933}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Sql", "Azure.Provisioning.Sql\src\Azure.Provisioning.Sql.csproj", "{DF17367B-1669-453E-8B2E-D229CAA79DD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Sql.Tests", "Azure.Provisioning.Sql\tests\Azure.Provisioning.Sql.Tests.csproj", "{9B0675B4-2D36-403E-B73E-1144807585C0}"
@@ -74,17 +66,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment.Tests", "Azure.Provisioning.Deployment\tests\Azure.Provisioning.Deployment.Tests.csproj", "{0D2C464F-C246-4069-90B2-33D637BE18BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kusto", "Azure.Provisioning.Kusto\src\Azure.Provisioning.Kusto.csproj", "{2FC8B07C-A47F-21D5-CEC1-3B3F19A2DAA3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kusto.Tests", "Azure.Provisioning.Kusto\tests\Azure.Provisioning.Kusto.Tests.csproj", "{EE219177-1BE0-3E3D-D859-3E6965CD207F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Network", "Azure.Provisioning.Network\src\Azure.Provisioning.Network.csproj", "{08D90E81-F91A-22E8-4C08-A5F5D573DC6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Network.Tests", "Azure.Provisioning.Network\tests\Azure.Provisioning.Network.Tests.csproj", "{92B98FD7-F4FA-751C-2687-F410F4CF60B8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.FrontDoor", "Azure.Provisioning.FrontDoor\src\Azure.Provisioning.FrontDoor.csproj", "{8DDB13AA-8F5A-8A6C-8706-86324C8EFC1F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.FrontDoor.Tests", "Azure.Provisioning.FrontDoor\tests\Azure.Provisioning.FrontDoor.Tests.csproj", "{4D2F6171-7A1C-5333-C417-8F23BAFAEA5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Dns", "Azure.Provisioning.Dns\src\Azure.Provisioning.Dns.csproj", "{15C5A92A-614E-30D9-5D3A-AA857462E456}"
 EndProject

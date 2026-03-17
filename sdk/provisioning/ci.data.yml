@@ -11,10 +11,6 @@ trigger:
     - sdk/provisioning/ci.data.yml
     - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.FrontDoor
-    - sdk/provisioning/Azure.Provisioning.Kusto
-    - sdk/provisioning/Azure.Provisioning.Search
-    - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.Sql
     - sdk/provisioning/Azure.Provisioning.WebPubSub
     exclude:
@@ -23,22 +19,6 @@ trigger:
 parameters:
   - name: release_Azure_Provisioning
     displayName: 'Azure.Provisioning'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_FrontDoor
-    displayName: 'Azure.Provisioning.FrontDoor'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_Kusto
-    displayName: 'Azure.Provisioning.Kusto'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_Search
-    displayName: 'Azure.Provisioning.Search'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_ServiceBus
-    displayName: 'Azure.Provisioning.ServiceBus'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Sql
@@ -60,18 +40,6 @@ extends:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
       createReleaseStage: ${{ parameters.release_Azure_Provisioning }}
-    - name: Azure.Provisioning.FrontDoor
-      safeName: AzureProvisioningFrontDoor
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_FrontDoor }}
-    - name: Azure.Provisioning.Kusto
-      safeName: AzureProvisioningKusto
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Kusto }}
-    - name: Azure.Provisioning.Search
-      safeName: AzureProvisioningSearch
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Search }}
-    - name: Azure.Provisioning.ServiceBus
-      safeName: AzureProvisioningServiceBus
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_ServiceBus }}
     - name: Azure.Provisioning.Sql
       safeName: AzureProvisioningSql
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Sql }}
