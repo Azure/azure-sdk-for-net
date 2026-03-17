@@ -38,9 +38,32 @@ if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec") {
     }
 }
 
+if ($null -eq $filter -or $filter -eq "Mgmt-TypeSpec-MultiService") {
+    Write-Host "Generating MgmtTypeSpec-MultiService" -ForegroundColor Cyan
+    $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Local'
+
+    $mgmtMultiServiceTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec-MultiService"
+
+    Invoke (Get-Mgmt-TspCommand "$mgmtMultiServiceTestProject/client.tsp" $mgmtMultiServiceTestProject -debug:$Debug)
+
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+
+    Write-Host "Building MgmtTypeSpec-MultiService" -ForegroundColor Cyan
+    Invoke "dotnet build $mgmtPackageRoot/generator/TestProjects/Local/Mgmt-TypeSpec-MultiService/src/Azure.Generator.MgmtTypeSpec.MultiService.Tests.csproj"
+
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+}
+
 # only write new launch settings if no filter was passed in
 if ($null -eq $filter) {
     $mgmtSpec = "TestProjects/Local/Mgmt-TypeSpec"
+    $mgmtMultiServiceSpec = "TestProjects/Local/Mgmt-TypeSpec-MultiService"
 
     # Write the launch settings for Mgmt
     $mgmtLaunchSettings = @{}
@@ -49,6 +72,10 @@ if ($null -eq $filter) {
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$mgmtSpec -g MgmtClientGenerator")
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("commandName", "Executable")
     $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec"].Add("executablePath", "dotnet")
+    $mgmtLaunchSettings["profiles"].Add("Mgmt-TypeSpec-MultiService", @{})
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec-MultiService"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$mgmtMultiServiceSpec -g MgmtClientGenerator")
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec-MultiService"].Add("commandName", "Executable")
+    $mgmtLaunchSettings["profiles"]["Mgmt-TypeSpec-MultiService"].Add("executablePath", "dotnet")
 
     $mgmtSortedLaunchSettings = @{}
     $mgmtSortedLaunchSettings.Add("profiles", [ordered]@{})
