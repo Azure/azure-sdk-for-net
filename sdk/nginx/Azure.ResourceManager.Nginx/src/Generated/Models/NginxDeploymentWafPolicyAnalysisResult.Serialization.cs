@@ -15,58 +15,58 @@ using Azure.ResourceManager.Nginx;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Nginx Deployment Waf Policy Analysis Response. </summary>
-    public partial class NginxDeploymentWafPolicyAnalysisResponse : IJsonModel<NginxDeploymentWafPolicyAnalysisResponse>
+    public partial class NginxDeploymentWafPolicyAnalysisResult : IJsonModel<NginxDeploymentWafPolicyAnalysisResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxDeploymentWafPolicyAnalysisResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NginxDeploymentWafPolicyAnalysisResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNginxDeploymentWafPolicyAnalysisResponse(document.RootElement, options);
+                        return DeserializeNginxDeploymentWafPolicyAnalysisResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NginxDeploymentWafPolicyAnalysisResponse IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NginxDeploymentWafPolicyAnalysisResult IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentWafPolicyAnalysisResponse"/> from. </param>
-        internal static NginxDeploymentWafPolicyAnalysisResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxDeploymentWafPolicyAnalysisResult"/> from. </param>
+        internal static NginxDeploymentWafPolicyAnalysisResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNginxDeploymentWafPolicyAnalysisResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNginxDeploymentWafPolicyAnalysisResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NginxDeploymentWafPolicyAnalysisResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxDeploymentWafPolicyAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Status))
             {
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NginxDeploymentWafPolicyAnalysisResponse IJsonModel<NginxDeploymentWafPolicyAnalysisResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NginxDeploymentWafPolicyAnalysisResult IJsonModel<NginxDeploymentWafPolicyAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NginxDeploymentWafPolicyAnalysisResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NginxDeploymentWafPolicyAnalysisResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentWafPolicyAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentWafPolicyAnalysisResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNginxDeploymentWafPolicyAnalysisResponse(document.RootElement, options);
+            return DeserializeNginxDeploymentWafPolicyAnalysisResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NginxDeploymentWafPolicyAnalysisResponse DeserializeNginxDeploymentWafPolicyAnalysisResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static NginxDeploymentWafPolicyAnalysisResult DeserializeNginxDeploymentWafPolicyAnalysisResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NginxDeploymentWafPolicyAnalysisResponse(status, data, additionalBinaryDataProperties);
+            return new NginxDeploymentWafPolicyAnalysisResult(status, data, additionalBinaryDataProperties);
         }
     }
 }

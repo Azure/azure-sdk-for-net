@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Nginx Deployment Waf Policy Analysis Response. </summary>
-    public partial class NginxDeploymentWafPolicyAnalysisResponse
+    public partial class NginxDeploymentWafPolicyAnalysisResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisResponse"/>. </summary>
-        internal NginxDeploymentWafPolicyAnalysisResponse()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisResult"/>. </summary>
+        internal NginxDeploymentWafPolicyAnalysisResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyAnalysisResult"/>. </summary>
         /// <param name="status"> The status of the analysis. The possible values can be arbitrary. </param>
         /// <param name="data"> The analysis data containing errors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentWafPolicyAnalysisResponse(string status, NginxDeploymentWafPolicyAnalysisData data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NginxDeploymentWafPolicyAnalysisResult(string status, NginxDeploymentWafPolicyAnalysisData data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Data = data;

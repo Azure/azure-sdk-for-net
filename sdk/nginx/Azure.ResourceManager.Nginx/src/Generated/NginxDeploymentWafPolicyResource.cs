@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Nginx
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NginxDeploymentWafPolicyAnalysisResponse>> AnalysisAsync(NginxDeploymentWafPolicyAnalysisCreateRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NginxDeploymentWafPolicyAnalysisResult>> AnalysisAsync(NginxDeploymentWafPolicyAnalysisCreateContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyResource.Analysis");
             scope.Start();
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyAnalysisCreateRequest.ToRequestContent(content), context);
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyAnalysisCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NginxDeploymentWafPolicyAnalysisResponse> response = Response.FromValue(NginxDeploymentWafPolicyAnalysisResponse.FromResponse(result), result);
+                Response<NginxDeploymentWafPolicyAnalysisResult> response = Response.FromValue(NginxDeploymentWafPolicyAnalysisResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Nginx
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NginxDeploymentWafPolicyAnalysisResponse> Analysis(NginxDeploymentWafPolicyAnalysisCreateRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<NginxDeploymentWafPolicyAnalysisResult> Analysis(NginxDeploymentWafPolicyAnalysisCreateContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyResource.Analysis");
             scope.Start();
@@ -368,9 +368,9 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyAnalysisCreateRequest.ToRequestContent(content), context);
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentWafPolicyAnalysisCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NginxDeploymentWafPolicyAnalysisResponse> response = Response.FromValue(NginxDeploymentWafPolicyAnalysisResponse.FromResponse(result), result);
+                Response<NginxDeploymentWafPolicyAnalysisResult> response = Response.FromValue(NginxDeploymentWafPolicyAnalysisResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
