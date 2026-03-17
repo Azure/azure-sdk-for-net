@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppAttachPackageResource>> UpdateAsync(AppAttachPackagePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppAttachPackageResource>> UpdateAsync(AppAttachPackagePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appAttachPackageClientDiagnostics.CreateScope("AppAttachPackageResource.Update");
             scope.Start();
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppAttachPackageResource> Update(AppAttachPackagePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<AppAttachPackageResource> Update(AppAttachPackagePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appAttachPackageClientDiagnostics.CreateScope("AppAttachPackageResource.Update");
             scope.Start();

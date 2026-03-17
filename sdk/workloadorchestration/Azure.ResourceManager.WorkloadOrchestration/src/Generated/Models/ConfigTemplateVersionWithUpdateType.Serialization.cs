@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configTemplateVersionWithUpdateType, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(configTemplateVersionWithUpdateType, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

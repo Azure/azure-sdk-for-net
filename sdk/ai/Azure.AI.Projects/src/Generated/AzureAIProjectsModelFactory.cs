@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
-using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
@@ -1098,6 +1097,17 @@ namespace Azure.AI.Projects
         public static AgentClusterInsightResult AgentClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
+        }
+
+        /// <summary> Paged collection of Insight items. </summary>
+        /// <param name="value"> The Insight items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Core.PagedInsight"/> instance for mocking. </returns>
+        public static PagedInsight PagedInsight(IEnumerable<Insight> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<Insight>();
+
+            return new PagedInsight(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schedule model. </summary>

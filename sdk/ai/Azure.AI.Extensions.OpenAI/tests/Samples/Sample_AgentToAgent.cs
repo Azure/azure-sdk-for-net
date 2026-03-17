@@ -21,14 +21,14 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient_AgentToAgent
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var a2aConnectionName = System.Environment.GetEnvironmentVariable("A2A_CONNECTION_NAME");
         var a2aBaseUri = System.Environment.GetEnvironmentVariable("A2A_BASE_URI");
 
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var a2aConnectionName = TestEnvironment.A2A_CONNECTION_NAME;
         var a2aBaseUri = TestEnvironment.A2A_BASE_URI;
 #endif
@@ -87,14 +87,14 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var a2aConnectionName = System.Environment.GetEnvironmentVariable("A2A_CONNECTION_NAME");
         var a2aBaseUri = System.Environment.GetEnvironmentVariable("A2A_BASE_URI");
 
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var a2aConnectionName = TestEnvironment.A2A_CONNECTION_NAME;
         var a2aBaseUri = TestEnvironment.A2A_BASE_URI;
 #endif
