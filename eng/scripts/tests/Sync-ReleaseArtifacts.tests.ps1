@@ -228,8 +228,7 @@ Describe "Resolve-CsprojVersion" {
         $result | Should -Be "1.1.0"
     }
 
-    It "Normal GA release: release version is higher than main prerelease" {
-        # Main has 1.1.0-beta.1, releasing GA 1.1.0 bumps minor
+    It "Normal GA release: release version is higher than main" {
         $result = Resolve-CsprojVersion -MainVersion "1.0.0" -ReleaseVersion "1.1.0"
         $result | Should -Be "1.1.0"
     }
