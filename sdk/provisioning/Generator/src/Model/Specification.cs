@@ -31,7 +31,14 @@ public abstract partial class Specification : ModelBase
 
     internal bool IgnorePropertiesWithoutPath { get; }
 
-    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false)
+    /// <summary>
+    /// The service directory under sdk/ where the generated library is placed.
+    /// Defaults to "provisioning". Override to place the library alongside
+    /// a service's management SDK (e.g., "apimanagement", "datafactory").
+    /// </summary>
+    internal string ServiceDirectory { get; }
+
+    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false, string serviceDirectory = "provisioning")
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
@@ -41,6 +48,7 @@ public abstract partial class Specification : ModelBase
         DocComments = new XmlDocCommentReader(armEntryPoint.Assembly);
         TypeRegistry.Register(this);
         IgnorePropertiesWithoutPath = ignorePropertiesWithoutPath;
+        ServiceDirectory = serviceDirectory;
     }
 
     public override string ToString() => $"<Specification {Name}>";
