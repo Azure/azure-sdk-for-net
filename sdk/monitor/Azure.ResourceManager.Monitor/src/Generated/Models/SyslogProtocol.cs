@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Protocol to parse syslog messages. Default rfc3164. </summary>
+    /// <summary> The syslog protocol to parse messages. </summary>
     public readonly partial struct SyslogProtocol : IEquatable<SyslogProtocol>
     {
         private readonly string _value;
+        /// <summary> rfc3164 protocol. </summary>
+        private const string Rfc3164Value = "rfc3164";
+        /// <summary> rfc5424 protocol. </summary>
+        private const string Rfc5424Value = "rfc5424";
 
         /// <summary> Initializes a new instance of <see cref="SyslogProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyslogProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Rfc3164Value = "rfc3164";
-        private const string Rfc5424Value = "rfc5424";
+            _value = value;
+        }
 
         /// <summary> rfc3164 protocol. </summary>
         public static SyslogProtocol Rfc3164 { get; } = new SyslogProtocol(Rfc3164Value);
+
         /// <summary> rfc5424 protocol. </summary>
         public static SyslogProtocol Rfc5424 { get; } = new SyslogProtocol(Rfc5424Value);
+
         /// <summary> Determines if two <see cref="SyslogProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyslogProtocol left, SyslogProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyslogProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyslogProtocol left, SyslogProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyslogProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyslogProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyslogProtocol(string value) => new SyslogProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyslogProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyslogProtocol?(string value) => value == null ? null : new SyslogProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyslogProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyslogProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

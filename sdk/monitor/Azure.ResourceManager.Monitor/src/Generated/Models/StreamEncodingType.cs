@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The encoding of the stream being received. </summary>
+    /// <summary> Encoding types for streams. </summary>
     public readonly partial struct StreamEncodingType : IEquatable<StreamEncodingType>
     {
         private readonly string _value;
+        /// <summary> No encoding validation. Treats the file as a stream of raw bytes. </summary>
+        private const string NopValue = "nop";
+        /// <summary> UTF-8 encoding. </summary>
+        private const string Utf8Value = "utf-8";
+        /// <summary> UTF-16 encoding with little-endian byte order. </summary>
+        private const string Utf16leValue = "utf-16le";
+        /// <summary> UTF-16 encoding with little-endian byte order. </summary>
+        private const string Utf16beValue = "utf-16be";
+        /// <summary> ASCII encoding. </summary>
+        private const string AsciiValue = "ascii";
+        /// <summary> The Big5 Chinese character encoding. </summary>
+        private const string Big5Value = "big5";
 
         /// <summary> Initializes a new instance of <see cref="StreamEncodingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StreamEncodingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NopValue = "nop";
-        private const string Utf8Value = "utf-8";
-        private const string Utf16LeValue = "utf-16le";
-        private const string Utf16BeValue = "utf-16be";
-        private const string AsciiValue = "ascii";
-        private const string Big5Value = "big5";
+            _value = value;
+        }
 
         /// <summary> No encoding validation. Treats the file as a stream of raw bytes. </summary>
         public static StreamEncodingType Nop { get; } = new StreamEncodingType(NopValue);
+
         /// <summary> UTF-8 encoding. </summary>
         public static StreamEncodingType Utf8 { get; } = new StreamEncodingType(Utf8Value);
+
         /// <summary> UTF-16 encoding with little-endian byte order. </summary>
-        public static StreamEncodingType Utf16Le { get; } = new StreamEncodingType(Utf16LeValue);
+        public static StreamEncodingType Utf16le { get; } = new StreamEncodingType(Utf16leValue);
+
         /// <summary> UTF-16 encoding with little-endian byte order. </summary>
-        public static StreamEncodingType Utf16Be { get; } = new StreamEncodingType(Utf16BeValue);
+        public static StreamEncodingType Utf16be { get; } = new StreamEncodingType(Utf16beValue);
+
         /// <summary> ASCII encoding. </summary>
         public static StreamEncodingType Ascii { get; } = new StreamEncodingType(AsciiValue);
+
         /// <summary> The Big5 Chinese character encoding. </summary>
         public static StreamEncodingType Big5 { get; } = new StreamEncodingType(Big5Value);
+
         /// <summary> Determines if two <see cref="StreamEncodingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StreamEncodingType left, StreamEncodingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StreamEncodingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StreamEncodingType left, StreamEncodingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StreamEncodingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StreamEncodingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StreamEncodingType(string value) => new StreamEncodingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StreamEncodingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StreamEncodingType?(string value) => value == null ? null : new StreamEncodingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StreamEncodingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StreamEncodingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

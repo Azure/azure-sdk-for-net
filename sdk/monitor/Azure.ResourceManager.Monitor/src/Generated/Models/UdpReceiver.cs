@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Receiver using UDP as transport protocol. </summary>
     public partial class UdpReceiver
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UdpReceiver"/>. </summary>
         /// <param name="endpoint"> TCP endpoint definition. Example: 0.0.0.0:&lt;port&gt;. </param>
@@ -59,29 +31,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="endpoint"> TCP endpoint definition. Example: 0.0.0.0:&lt;port&gt;. </param>
         /// <param name="encoding"> The encoding of the stream being received. </param>
         /// <param name="readQueueLength"> Max read queue length. </param>
-        /// <param name="jsonArrayMapper"> Json array mapper - allows this udp receiver to parse a value from a given source field as a json array, match a key to each parsed value and output the key-value map to a given output field. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UdpReceiver(string endpoint, StreamEncodingType? encoding, int? readQueueLength, PipelineGroupJsonArrayMapper jsonArrayMapper, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UdpReceiver(string endpoint, StreamEncodingType? encoding, int? readQueueLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             Encoding = encoding;
             ReadQueueLength = readQueueLength;
-            JsonArrayMapper = jsonArrayMapper;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UdpReceiver"/> for deserialization. </summary>
-        internal UdpReceiver()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> TCP endpoint definition. Example: 0.0.0.0:&lt;port&gt;. </summary>
         public string Endpoint { get; set; }
+
         /// <summary> The encoding of the stream being received. </summary>
         public StreamEncodingType? Encoding { get; set; }
+
         /// <summary> Max read queue length. </summary>
         public int? ReadQueueLength { get; set; }
-        /// <summary> Json array mapper - allows this udp receiver to parse a value from a given source field as a json array, match a key to each parsed value and output the key-value map to a given output field. </summary>
-        public PipelineGroupJsonArrayMapper JsonArrayMapper { get; set; }
     }
 }

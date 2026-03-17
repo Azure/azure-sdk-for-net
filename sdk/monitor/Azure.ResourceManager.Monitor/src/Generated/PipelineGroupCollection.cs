@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class PipelineGroupCollection : ArmCollection, IEnumerable<PipelineGroupResource>, IAsyncEnumerable<PipelineGroupResource>
     {
-        private readonly ClientDiagnostics _pipelineGroupClientDiagnostics;
-        private readonly PipelineGroupsRestOperations _pipelineGroupRestClient;
+        private readonly ClientDiagnostics _pipelineGroupsClientDiagnostics;
+        private readonly PipelineGroups _pipelineGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PipelineGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PipelineGroupCollection for mocking. </summary>
         protected PipelineGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PipelineGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PipelineGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _pipelineGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", PipelineGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PipelineGroupResource.ResourceType, out string pipelineGroupApiVersion);
-            _pipelineGroupRestClient = new PipelineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, pipelineGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _pipelineGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", PipelineGroupResource.ResourceType.Namespace, Diagnostics);
+            _pipelineGroupsRestClient = new PipelineGroups(_pipelineGroupsClientDiagnostics, Pipeline, Endpoint, pipelineGroupApiVersion ?? "2023-10-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a pipeline group instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PipelineGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string pipelineGroupName, PipelineGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _pipelineGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<PipelineGroupResource>(new PipelineGroupOperationSource(Client), _pipelineGroupClientDiagnostics, Pipeline, _pipelineGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MonitorArmOperation<PipelineGroupResource> operation = new MonitorArmOperation<PipelineGroupResource>(
+                    new PipelineGroupOperationSource(Client),
+                    _pipelineGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Monitor
         /// Create or update a pipeline group instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PipelineGroupResource> CreateOrUpdate(WaitUntil waitUntil, string pipelineGroupName, PipelineGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _pipelineGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, data, cancellationToken);
-                var operation = new MonitorArmOperation<PipelineGroupResource>(new PipelineGroupOperationSource(Client), _pipelineGroupClientDiagnostics, Pipeline, _pipelineGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MonitorArmOperation<PipelineGroupResource> operation = new MonitorArmOperation<PipelineGroupResource>(
+                    new PipelineGroupOperationSource(Client),
+                    _pipelineGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns the specific pipeline group instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PipelineGroupResource>> GetAsync(string pipelineGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.Get");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _pipelineGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PipelineGroupData> response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PipelineGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Monitor
         /// Returns the specific pipeline group instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PipelineGroupResource> Get(string pipelineGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.Get");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _pipelineGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PipelineGroupData> response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PipelineGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Monitor
         /// Lists all workspaces in the specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PipelineGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PipelineGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PipelineGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _pipelineGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _pipelineGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PipelineGroupResource(Client, PipelineGroupData.DeserializePipelineGroupData(e)), _pipelineGroupClientDiagnostics, Pipeline, "PipelineGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupsGetByResourceGroupAsyncCollectionResultOfT(_pipelineGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>
         /// Lists all workspaces in the specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="PipelineGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PipelineGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _pipelineGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _pipelineGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PipelineGroupResource(Client, PipelineGroupData.DeserializePipelineGroupData(e)), _pipelineGroupClientDiagnostics, Pipeline, "PipelineGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PipelineGroupData, PipelineGroupResource>(new PipelineGroupsGetByResourceGroupCollectionResultOfT(_pipelineGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PipelineGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string pipelineGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.Exists");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _pipelineGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PipelineGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PipelineGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Monitor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string pipelineGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.Exists");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _pipelineGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PipelineGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PipelineGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PipelineGroupResource>> GetIfExistsAsync(string pipelineGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _pipelineGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PipelineGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PipelineGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PipelineGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PipelineGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/pipelineGroups/{pipelineGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PipelineGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineGroupName"> The name of pipeline group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PipelineGroupResource> GetIfExists(string pipelineGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(pipelineGroupName, nameof(pipelineGroupName));
 
-            using var scope = _pipelineGroupClientDiagnostics.CreateScope("PipelineGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _pipelineGroupsClientDiagnostics.CreateScope("PipelineGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _pipelineGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, pipelineGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PipelineGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PipelineGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PipelineGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PipelineGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Monitor
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PipelineGroupResource> IAsyncEnumerable<PipelineGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

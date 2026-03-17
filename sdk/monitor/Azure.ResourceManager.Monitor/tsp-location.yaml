@@ -1,0 +1,5 @@
+directory: specification/monitor/Microsoft.Monitor.Management
+commit: 00f1feade1e5f3aab30ca03b547f77a869f52bf2
+repo: Azure/azure-rest-api-specs
+cleanup: true
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
