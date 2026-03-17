@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Splits words into subwords and performs optional transformations on subword groups. This token filter is implemented using Apache Lucene. </summary>
-    public partial class WordDelimiterTokenFilter : TokenFilter, IJsonModel<WordDelimiterTokenFilter>
+    public partial class WordDelimiterTokenFilter : IUtf8JsonSerializable, IJsonModel<WordDelimiterTokenFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/> for deserialization. </summary>
-        internal WordDelimiterTokenFilter()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WordDelimiterTokenFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TokenFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWordDelimiterTokenFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WordDelimiterTokenFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WordDelimiterTokenFilter IPersistableModel<WordDelimiterTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (WordDelimiterTokenFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WordDelimiterTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WordDelimiterTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(GenerateWordParts))
             {
@@ -129,47 +84,34 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();
-                foreach (string item in ProtectedWords)
+                foreach (var item in ProtectedWords)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WordDelimiterTokenFilter IJsonModel<WordDelimiterTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WordDelimiterTokenFilter)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TokenFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WordDelimiterTokenFilter IJsonModel<WordDelimiterTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWordDelimiterTokenFilter(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WordDelimiterTokenFilter DeserializeWordDelimiterTokenFilter(JsonElement element, ModelReaderWriterOptions options)
+        internal static WordDelimiterTokenFilter DeserializeWordDelimiterTokenFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
-            string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? generateWordParts = default;
             bool? generateNumberParts = default;
             bool? catenateWords = default;
@@ -180,129 +122,127 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? splitOnNumerics = default;
             bool? stemEnglishPossessive = default;
             IList<string> protectedWords = default;
-            foreach (var prop in element.EnumerateObject())
+            string odataType = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("generateWordParts"u8))
                 {
-                    odataType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("generateWordParts"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    generateWordParts = prop.Value.GetBoolean();
+                    generateWordParts = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("generateNumberParts"u8))
+                if (property.NameEquals("generateNumberParts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    generateNumberParts = prop.Value.GetBoolean();
+                    generateNumberParts = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("catenateWords"u8))
+                if (property.NameEquals("catenateWords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    catenateWords = prop.Value.GetBoolean();
+                    catenateWords = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("catenateNumbers"u8))
+                if (property.NameEquals("catenateNumbers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    catenateNumbers = prop.Value.GetBoolean();
+                    catenateNumbers = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("catenateAll"u8))
+                if (property.NameEquals("catenateAll"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    catenateAll = prop.Value.GetBoolean();
+                    catenateAll = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("splitOnCaseChange"u8))
+                if (property.NameEquals("splitOnCaseChange"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    splitOnCaseChange = prop.Value.GetBoolean();
+                    splitOnCaseChange = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("preserveOriginal"u8))
+                if (property.NameEquals("preserveOriginal"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preserveOriginal = prop.Value.GetBoolean();
+                    preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("splitOnNumerics"u8))
+                if (property.NameEquals("splitOnNumerics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    splitOnNumerics = prop.Value.GetBoolean();
+                    splitOnNumerics = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("stemEnglishPossessive"u8))
+                if (property.NameEquals("stemEnglishPossessive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stemEnglishPossessive = prop.Value.GetBoolean();
+                    stemEnglishPossessive = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("protectedWords"u8))
+                if (property.NameEquals("protectedWords"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     protectedWords = array;
                     continue;
                 }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WordDelimiterTokenFilter(
                 odataType,
                 name,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 generateWordParts,
                 generateNumberParts,
                 catenateWords,
@@ -313,6 +253,53 @@ namespace Azure.Search.Documents.Indexes.Models
                 splitOnNumerics,
                 stemEnglishPossessive,
                 protectedWords ?? new ChangeTrackingList<string>());
+        }
+
+        BinaryData IPersistableModel<WordDelimiterTokenFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WordDelimiterTokenFilter IPersistableModel<WordDelimiterTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WordDelimiterTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWordDelimiterTokenFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WordDelimiterTokenFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WordDelimiterTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WordDelimiterTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeWordDelimiterTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

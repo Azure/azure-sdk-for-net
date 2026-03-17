@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct IndexerExecutionEnvironment : IEquatable<IndexerExecutionEnvironment>
     {
         private readonly string _value;
-        /// <summary> Indicates that the search service can determine where the indexer should execute. This is the default environment when nothing is specified and is the recommended value. </summary>
-        private const string StandardValue = "standard";
-        /// <summary> Indicates that the indexer should run with the environment provisioned specifically for the search service. This should only be specified as the execution environment if the indexer needs to access resources securely over shared private link resources. </summary>
-        private const string PrivateValue = "private";
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionEnvironment"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerExecutionEnvironment(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string StandardValue = "standard";
+        private const string PrivateValue = "private";
 
         /// <summary> Indicates that the search service can determine where the indexer should execute. This is the default environment when nothing is specified and is the recommended value. </summary>
         public static IndexerExecutionEnvironment Standard { get; } = new IndexerExecutionEnvironment(StandardValue);
-
         /// <summary> Indicates that the indexer should run with the environment provisioned specifically for the search service. This should only be specified as the execution environment if the indexer needs to access resources securely over shared private link resources. </summary>
         public static IndexerExecutionEnvironment Private { get; } = new IndexerExecutionEnvironment(PrivateValue);
-
         /// <summary> Determines if two <see cref="IndexerExecutionEnvironment"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerExecutionEnvironment left, IndexerExecutionEnvironment right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="IndexerExecutionEnvironment"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerExecutionEnvironment left, IndexerExecutionEnvironment right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="IndexerExecutionEnvironment"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexerExecutionEnvironment"/>. </summary>
         public static implicit operator IndexerExecutionEnvironment(string value) => new IndexerExecutionEnvironment(value);
 
-        /// <summary> Converts a string to a <see cref="IndexerExecutionEnvironment"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator IndexerExecutionEnvironment?(string value) => value == null ? null : new IndexerExecutionEnvironment(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IndexerExecutionEnvironment other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(IndexerExecutionEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

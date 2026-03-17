@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Divides text using language-specific rules and reduces words to their base forms. </summary>
-    public partial class MicrosoftLanguageStemmingTokenizer : LexicalTokenizer, IJsonModel<MicrosoftLanguageStemmingTokenizer>
+    public partial class MicrosoftLanguageStemmingTokenizer : IUtf8JsonSerializable, IJsonModel<MicrosoftLanguageStemmingTokenizer>
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftLanguageStemmingTokenizer"/> for deserialization. </summary>
-        internal MicrosoftLanguageStemmingTokenizer()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftLanguageStemmingTokenizer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMicrosoftLanguageStemmingTokenizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MicrosoftLanguageStemmingTokenizer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MicrosoftLanguageStemmingTokenizer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MicrosoftLanguageStemmingTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MicrosoftLanguageStemmingTokenizer IPersistableModel<MicrosoftLanguageStemmingTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (MicrosoftLanguageStemmingTokenizer)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MicrosoftLanguageStemmingTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MicrosoftLanguageStemmingTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MicrosoftLanguageStemmingTokenizer)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MaxTokenLength))
             {
@@ -97,88 +52,132 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MicrosoftLanguageStemmingTokenizer IJsonModel<MicrosoftLanguageStemmingTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MicrosoftLanguageStemmingTokenizer)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalTokenizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MicrosoftLanguageStemmingTokenizer IJsonModel<MicrosoftLanguageStemmingTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MicrosoftLanguageStemmingTokenizer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMicrosoftLanguageStemmingTokenizer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MicrosoftLanguageStemmingTokenizer DeserializeMicrosoftLanguageStemmingTokenizer(JsonElement element, ModelReaderWriterOptions options)
+        internal static MicrosoftLanguageStemmingTokenizer DeserializeMicrosoftLanguageStemmingTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer";
-            string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? maxTokenLength = default;
             bool? isSearchTokenizer = default;
             MicrosoftStemmingTokenizerLanguage? language = default;
-            foreach (var prop in element.EnumerateObject())
+            string odataType = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("maxTokenLength"u8))
                 {
-                    odataType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("maxTokenLength"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxTokenLength = prop.Value.GetInt32();
+                    maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("isSearchTokenizer"u8))
+                if (property.NameEquals("isSearchTokenizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSearchTokenizer = prop.Value.GetBoolean();
+                    isSearchTokenizer = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("language"u8))
+                if (property.NameEquals("language"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    language = prop.Value.GetString().ToMicrosoftStemmingTokenizerLanguage();
+                    language = property.Value.GetString().ToMicrosoftStemmingTokenizerLanguage();
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MicrosoftLanguageStemmingTokenizer(
                 odataType,
                 name,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 maxTokenLength,
                 isSearchTokenizer,
                 language);
+        }
+
+        BinaryData IPersistableModel<MicrosoftLanguageStemmingTokenizer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftLanguageStemmingTokenizer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MicrosoftLanguageStemmingTokenizer IPersistableModel<MicrosoftLanguageStemmingTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageStemmingTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMicrosoftLanguageStemmingTokenizer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftLanguageStemmingTokenizer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MicrosoftLanguageStemmingTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MicrosoftLanguageStemmingTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMicrosoftLanguageStemmingTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

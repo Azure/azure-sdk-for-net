@@ -12,34 +12,69 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used during query time.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOpenAIVectorizer"/>, <see cref="WebApiVectorizer"/>, <see cref="AIServicesVisionVectorizer"/>, and <see cref="AzureMachineLearningVectorizer"/>.
+    /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
     /// </summary>
     public abstract partial class VectorSearchVectorizer
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <param name="kind"> Type of VectorSearchVectorizer. </param>
-        private protected VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind)
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        protected VectorSearchVectorizer(string vectorizerName)
         {
+            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
+
             VectorizerName = vectorizerName;
-            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
-        /// <param name="kind"> Type of VectorSearchVectorizer. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorSearchVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VectorizerName = vectorizerName;
             Kind = kind;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of VectorSearchVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/> for deserialization. </summary>
+        internal VectorSearchVectorizer()
+        {
+        }
+        /// <summary> The name of the kind of vectorization method being configured for use with vector search. </summary>
         internal VectorSearchVectorizerKind Kind { get; set; }
     }
 }

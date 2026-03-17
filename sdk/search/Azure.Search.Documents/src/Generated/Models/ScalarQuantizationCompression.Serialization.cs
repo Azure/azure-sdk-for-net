@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Contains configuration options specific to the scalar quantization compression method used during indexing and querying. </summary>
-    public partial class ScalarQuantizationCompression : VectorSearchCompression, IJsonModel<ScalarQuantizationCompression>
+    public partial class ScalarQuantizationCompression : IUtf8JsonSerializable, IJsonModel<ScalarQuantizationCompression>
     {
-        /// <summary> Initializes a new instance of <see cref="ScalarQuantizationCompression"/> for deserialization. </summary>
-        internal ScalarQuantizationCompression()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalarQuantizationCompression>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VectorSearchCompression PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeScalarQuantizationCompression(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScalarQuantizationCompression)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScalarQuantizationCompression)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScalarQuantizationCompression>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ScalarQuantizationCompression IPersistableModel<ScalarQuantizationCompression>.Create(BinaryData data, ModelReaderWriterOptions options) => (ScalarQuantizationCompression)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScalarQuantizationCompression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScalarQuantizationCompression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScalarQuantizationCompression)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Parameters))
             {
@@ -87,90 +42,158 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ScalarQuantizationCompression IJsonModel<ScalarQuantizationCompression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ScalarQuantizationCompression)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VectorSearchCompression JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScalarQuantizationCompression IJsonModel<ScalarQuantizationCompression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScalarQuantizationCompression)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScalarQuantizationCompression(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScalarQuantizationCompression DeserializeScalarQuantizationCompression(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScalarQuantizationCompression DeserializeScalarQuantizationCompression(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string compressionName = default;
+            ScalarQuantizationParameters scalarQuantizationParameters = default;
+            string name = default;
+            VectorSearchCompressionKind kind = default;
             RescoringOptions rescoringOptions = default;
             int? truncationDimension = default;
-            VectorSearchCompressionKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ScalarQuantizationParameters parameters = default;
-            foreach (var prop in element.EnumerateObject())
+            bool? rerankWithOriginalVectors = default;
+            double? defaultOversampling = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("scalarQuantizationParameters"u8))
                 {
-                    compressionName = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scalarQuantizationParameters = ScalarQuantizationParameters.DeserializeScalarQuantizationParameters(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("rescoringOptions"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new VectorSearchCompressionKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rescoringOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         rescoringOptions = null;
                         continue;
                     }
-                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(prop.Value, options);
+                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("truncationDimension"u8))
+                if (property.NameEquals("truncationDimension"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         truncationDimension = null;
                         continue;
                     }
-                    truncationDimension = prop.Value.GetInt32();
+                    truncationDimension = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("kind"u8))
+                if (property.NameEquals("rerankWithOriginalVectors"u8))
                 {
-                    kind = new VectorSearchCompressionKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("scalarQuantizationParameters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rerankWithOriginalVectors = null;
                         continue;
                     }
-                    parameters = ScalarQuantizationParameters.DeserializeScalarQuantizationParameters(prop.Value, options);
+                    rerankWithOriginalVectors = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("defaultOversampling"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultOversampling = null;
+                        continue;
+                    }
+                    defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScalarQuantizationCompression(
-                compressionName,
+                name,
+                kind,
                 rescoringOptions,
                 truncationDimension,
-                kind,
-                additionalBinaryDataProperties,
-                parameters);
+                rerankWithOriginalVectors,
+                defaultOversampling,
+                serializedAdditionalRawData,
+                scalarQuantizationParameters);
+        }
+
+        BinaryData IPersistableModel<ScalarQuantizationCompression>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScalarQuantizationCompression)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScalarQuantizationCompression IPersistableModel<ScalarQuantizationCompression>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarQuantizationCompression>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeScalarQuantizationCompression(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalarQuantizationCompression)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalarQuantizationCompression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ScalarQuantizationCompression FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeScalarQuantizationCompression(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

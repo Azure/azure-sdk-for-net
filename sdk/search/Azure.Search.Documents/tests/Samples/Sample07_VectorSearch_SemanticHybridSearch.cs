@@ -3,18 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
+using System.Linq;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_11_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public partial class VectorSemanticHybridSearch : SearchTestBase
     {
         public VectorSemanticHybridSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -59,7 +57,6 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                              QueryCaption = new(QueryCaptionType.Extractive),
                              QueryAnswer = new(QueryAnswerType.Extractive)
                          },
-                         QueryLanguage = QueryLanguage.EnUs,
                          QueryType = SearchQueryType.Semantic,
                      });
 
@@ -98,7 +95,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 

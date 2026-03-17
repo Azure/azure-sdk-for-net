@@ -9,79 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents an indexer. </summary>
-    public partial class SearchIndexer : IJsonModel<SearchIndexer>
+    public partial class SearchIndexer : IUtf8JsonSerializable, IJsonModel<SearchIndexer>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexer"/> for deserialization. </summary>
-        internal SearchIndexer()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchIndexer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchIndexer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchIndexer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexer IPersistableModel<SearchIndexer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchIndexer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="searchIndexer"> The <see cref="SearchIndexer"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SearchIndexer searchIndexer)
-        {
-            if (searchIndexer == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(searchIndexer, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexer"/> from. </param>
-        public static explicit operator SearchIndexer(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexer(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -93,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexer)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -116,21 +52,35 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(TargetIndexName);
             if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule, options);
+                if (Schedule != null)
+                {
+                    writer.WritePropertyName("schedule"u8);
+                    writer.WriteObjectValue(Schedule, options);
+                }
+                else
+                {
+                    writer.WriteNull("schedule");
+                }
             }
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters, options);
+                if (Parameters != null)
+                {
+                    writer.WritePropertyName("parameters"u8);
+                    writer.WriteObjectValue(Parameters, options);
+                }
+                else
+                {
+                    writer.WriteNull("parameters");
+                }
             }
             if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
-                foreach (FieldMapping item in FieldMappings)
+                foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<FieldMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,41 +88,50 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("outputFieldMappings"u8);
                 writer.WriteStartArray();
-                foreach (FieldMapping item in OutputFieldMappings)
+                foreach (var item in OutputFieldMappings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<FieldMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("disabled"u8);
-                writer.WriteBooleanValue(IsDisabled.Value);
+                if (IsDisabled != null)
+                {
+                    writer.WritePropertyName("disabled"u8);
+                    writer.WriteBooleanValue(IsDisabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("disabled");
+                }
             }
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(_etag);
             }
             if (Optional.IsDefined(EncryptionKey))
             {
-                writer.WritePropertyName("encryptionKey"u8);
-                writer.WriteObjectValue(EncryptionKey, options);
+                if (EncryptionKey != null)
+                {
+                    writer.WritePropertyName("encryptionKey"u8);
+                    writer.WriteObjectValue(EncryptionKey, options);
+                }
+                else
+                {
+                    writer.WriteNull("encryptionKey");
+                }
             }
-            if (Optional.IsDefined(Cache))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("cache"u8);
-                writer.WriteObjectValue(Cache, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -181,27 +140,22 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexer IJsonModel<SearchIndexer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchIndexer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchIndexer IJsonModel<SearchIndexer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchIndexer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchIndexer DeserializeSearchIndexer(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchIndexer DeserializeSearchIndexer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -215,130 +169,117 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexingParameters parameters = default;
             IList<FieldMapping> fieldMappings = default;
             IList<FieldMapping> outputFieldMappings = default;
-            bool? isDisabled = default;
-            ETag? eTag = default;
+            bool? disabled = default;
+            string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            SearchIndexerCache cache = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    description = prop.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dataSourceName"u8))
+                if (property.NameEquals("dataSourceName"u8))
                 {
-                    dataSourceName = prop.Value.GetString();
+                    dataSourceName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("skillsetName"u8))
+                if (property.NameEquals("skillsetName"u8))
                 {
-                    skillsetName = prop.Value.GetString();
+                    skillsetName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetIndexName"u8))
+                if (property.NameEquals("targetIndexName"u8))
                 {
-                    targetIndexName = prop.Value.GetString();
+                    targetIndexName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("schedule"u8))
+                if (property.NameEquals("schedule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         schedule = null;
                         continue;
                     }
-                    schedule = IndexingSchedule.DeserializeIndexingSchedule(prop.Value, options);
+                    schedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("parameters"u8))
+                if (property.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         parameters = null;
                         continue;
                     }
-                    parameters = IndexingParameters.DeserializeIndexingParameters(prop.Value, options);
+                    parameters = IndexingParameters.DeserializeIndexingParameters(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("fieldMappings"u8))
+                if (property.NameEquals("fieldMappings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FieldMapping> array = new List<FieldMapping>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(FieldMapping.DeserializeFieldMapping(item, options));
                     }
                     fieldMappings = array;
                     continue;
                 }
-                if (prop.NameEquals("outputFieldMappings"u8))
+                if (property.NameEquals("outputFieldMappings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FieldMapping> array = new List<FieldMapping>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(FieldMapping.DeserializeFieldMapping(item, options));
                     }
                     outputFieldMappings = array;
                     continue;
                 }
-                if (prop.NameEquals("disabled"u8))
+                if (property.NameEquals("disabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        isDisabled = null;
+                        disabled = null;
                         continue;
                     }
-                    isDisabled = prop.Value.GetBoolean();
+                    disabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("@odata.etag"u8))
+                if (property.NameEquals("@odata.etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("encryptionKey"u8))
+                if (property.NameEquals("encryptionKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("cache"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        cache = null;
-                        continue;
-                    }
-                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(prop.Value, options);
+                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchIndexer(
                 name,
                 description,
@@ -349,11 +290,57 @@ namespace Azure.Search.Documents.Indexes.Models
                 parameters,
                 fieldMappings ?? new ChangeTrackingList<FieldMapping>(),
                 outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(),
-                isDisabled,
-                eTag,
+                disabled,
+                odataEtag,
                 encryptionKey,
-                cache,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchIndexer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchIndexer IPersistableModel<SearchIndexer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchIndexer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchIndexer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchIndexer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

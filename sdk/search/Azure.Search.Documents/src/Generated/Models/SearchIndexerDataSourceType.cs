@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,87 +14,53 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct SearchIndexerDataSourceType : IEquatable<SearchIndexerDataSourceType>
     {
         private readonly string _value;
-        /// <summary> Indicates an Azure SQL datasource. </summary>
-        private const string AzureSqlValue = "azuresql";
-        /// <summary> Indicates a CosmosDB datasource. </summary>
-        private const string CosmosDbValue = "cosmosdb";
-        /// <summary> Indicates an Azure Blob datasource. </summary>
-        private const string AzureBlobValue = "azureblob";
-        /// <summary> Indicates an Azure Table datasource. </summary>
-        private const string AzureTableValue = "azuretable";
-        /// <summary> Indicates a MySql datasource. </summary>
-        private const string MySqlValue = "mysql";
-        /// <summary> Indicates an ADLS Gen2 datasource. </summary>
-        private const string AdlsGen2Value = "adlsgen2";
-        /// <summary> Indicates a Microsoft Fabric OneLake datasource. </summary>
-        private const string OneLakeValue = "onelake";
-        /// <summary> Indicates a SharePoint datasource. </summary>
-        private const string SharePointValue = "sharepoint";
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchIndexerDataSourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Indicates an Azure SQL datasource. </summary>
+        private const string AzureSqlValue = "azuresql";
+        private const string CosmosDbValue = "cosmosdb";
+        private const string AzureBlobValue = "azureblob";
+        private const string AzureTableValue = "azuretable";
+        private const string MySqlValue = "mysql";
+        private const string AdlsGen2Value = "adlsgen2";
+        private const string OneLakeValue = "onelake";
+
+        /// <summary> Definition of an Azure SQL datasource whose credentials can either be a standard SQL connection string or the ResourceId of the SQL resource. The container property refers to the table or view to be indexed. Query parameter is not supported for this datasource. </summary>
         public static SearchIndexerDataSourceType AzureSql { get; } = new SearchIndexerDataSourceType(AzureSqlValue);
-
-        /// <summary> Indicates a CosmosDB datasource. </summary>
+        /// <summary> Definition of an CosmosDB datasource whose credentials can either be a formatted connection string containing details for AccountEndpoint, AccountKey, and Database for a key based connection or details for ResourceID and ApiKind for keyless connection. The container property refers to cosmosdb collection to be indexed and the optional query property refers to a SQL query on the collection. </summary>
         public static SearchIndexerDataSourceType CosmosDb { get; } = new SearchIndexerDataSourceType(CosmosDbValue);
-
-        /// <summary> Indicates an Azure Blob datasource. </summary>
+        /// <summary> Definition of an Azure Blob datasource whose credentials can either be a storage connection string or the ResourceId of the storage account. The container property refers to the blob container to be indexed and the optional query property refers to a specific sub-folder in the container. </summary>
         public static SearchIndexerDataSourceType AzureBlob { get; } = new SearchIndexerDataSourceType(AzureBlobValue);
-
-        /// <summary> Indicates an Azure Table datasource. </summary>
+        /// <summary> Definition of an Azure Table datasource whose credentials can either be a table connection string or the ResourceId of the storage account. The container property refers to the blob container to be indexed and the optional query property can be used to filter rows. </summary>
         public static SearchIndexerDataSourceType AzureTable { get; } = new SearchIndexerDataSourceType(AzureTableValue);
-
-        /// <summary> Indicates a MySql datasource. </summary>
+        /// <summary> Definition of an Azure SQL datasource whose credentials can either be a standard ADO.NET formatted SQL connection string or the ResourceId of the SQL resource. The container property refers to the table or view to be indexed. Query parameter is not supported for this datasource. </summary>
         public static SearchIndexerDataSourceType MySql { get; } = new SearchIndexerDataSourceType(MySqlValue);
-
-        /// <summary> Indicates an ADLS Gen2 datasource. </summary>
+        /// <summary> Definition of an Azure ADLS Gen 2 datasource whose credentials can either be a storage connection string or the ResourceId of the storage account. The container property refers to the blob container to be indexed and the optional query property refers to a specific sub-folder in the container. </summary>
         public static SearchIndexerDataSourceType AdlsGen2 { get; } = new SearchIndexerDataSourceType(AdlsGen2Value);
-
-        /// <summary> Indicates a Microsoft Fabric OneLake datasource. </summary>
+        /// <summary> Definition of an Microsoft Fabric Onelake datasource whose credentials can either be the Fabric workspace GUID or a workspace FQDN. The container property refers to the lakehouse GUID and the optional query property refers to folders or shortcuts in the lakehouse. </summary>
         public static SearchIndexerDataSourceType OneLake { get; } = new SearchIndexerDataSourceType(OneLakeValue);
-
-        /// <summary> Indicates a SharePoint datasource. </summary>
-        public static SearchIndexerDataSourceType SharePoint { get; } = new SearchIndexerDataSourceType(SharePointValue);
-
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SearchIndexerDataSourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchIndexerDataSourceType"/>. </summary>
         public static implicit operator SearchIndexerDataSourceType(string value) => new SearchIndexerDataSourceType(value);
 
-        /// <summary> Converts a string to a <see cref="SearchIndexerDataSourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SearchIndexerDataSourceType?(string value) => value == null ? null : new SearchIndexerDataSourceType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchIndexerDataSourceType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SearchIndexerDataSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

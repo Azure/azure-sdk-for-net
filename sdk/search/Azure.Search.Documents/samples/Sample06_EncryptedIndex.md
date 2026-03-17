@@ -1,10 +1,10 @@
 # Azure.Search.Documents Samples - Customer-managed Encryption Keys
 
-Azure AI Search automatically encrypts indexed content at rest with [service-managed keys](https://learn.microsoft.com/azure/security/fundamentals/encryption-atrest#azure-encryption-at-rest-components). If more protection is needed, you can supplement default encryption with an additional encryption layer using keys that you create and manage in Azure Key Vault. This sample shows you how to set up and use customer-managed keys to further encrypt your data source connections, skillsets, indexers, and indexes for additional security.
+Azure AI Search automatically encrypts indexed content at rest with [service-managed keys](https://docs.microsoft.com/azure/security/fundamentals/encryption-atrest#azure-encryption-at-rest-components). If more protection is needed, you can supplement default encryption with an additional encryption layer using keys that you create and manage in Azure Key Vault. This sample shows you how to set up and use customer-managed keys to further encrypt your data source connections, skillsets, indexers, and indexes for additional security.
 
 ## Getting started
 
-To begin using Customer-Managed Keys (CMK), follow steps 1 through 5 to [configure customer-managed keys for data encryption](https://learn.microsoft.com/azure/search/search-security-manage-encryption-keys). This will guide you how to configure your Key Vault, register a service principal if necessary, and grant appropriate access to a service principal for a Key Vault key. This can be a key you created previously, or you can create a key that can wrap and unwrap service keys, including AES and RSA keys like in the following example:
+To begin using Customer-Managed Keys (CMK), follow steps 1 through 5 to [configure customer-managed keys for data encryption](https://docs.microsoft.com/azure/search/search-security-manage-encryption-keys). This will guide you how to configure your Key Vault, register a service principal if necessary, and grant appropriate access to a service principal for a Key Vault key. This can be a key you created previously, or you can create a key that can wrap and unwrap service keys, including AES and RSA keys like in the following example:
 
 ```bash
 # Create a resource group for your Key Vault and Azure AI Search service.

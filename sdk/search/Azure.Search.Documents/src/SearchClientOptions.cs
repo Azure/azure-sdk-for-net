@@ -6,7 +6,6 @@ using System.Diagnostics;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Typespec = Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -16,8 +15,7 @@ namespace Azure.Search.Documents
     /// Provides the client configuration options for connecting to Azure
     /// Cognitive Search.
     /// </summary>
-    [Typespec.CodeGenType("DocumentsClientOptions")]
-    public partial class SearchClientOptions : ClientOptions
+    public class SearchClientOptions : ClientOptions
     {
         /// <summary>
         /// The versions of Azure Cognitive Search supported by this client
@@ -27,7 +25,7 @@ namespace Azure.Search.Documents
         /// </summary>
         public enum ServiceVersion
         {
-#pragma warning disable CA1707 // Identifiers should not contain underscores
+            #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
             /// The 2020-06-30 version of the Azure Cognitive Search service.
             /// </summary>
@@ -46,29 +44,21 @@ namespace Azure.Search.Documents
             /// <summary>
             /// The 2025-09-01 version of the Azure Cognitive Search service.
             /// </summary>
-            V2025_09_01 = 4,
-
-            /// <summary>
-            /// The 2025-11-01-preview version of the Azure Cognitive Search service.
-            /// </summary>
-            V2025_11_01_Preview = 5,
+            V2025_09_01 = 4
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_09_01;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
         /// can be passed between different client libraries.  Changing this
-        /// value requires updating <see cref="Documents.Models.SearchContinuationToken"/>.
+        /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
         /// </summary>
         internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2020_06_30;
-
-        [Typespec.CodeGenMember("Version")]
-        internal string RawVersion { get; }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
@@ -217,7 +207,6 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2023_11_01 => version,
                 SearchClientOptions.ServiceVersion.V2024_07_01 => version,
                 SearchClientOptions.ServiceVersion.V2025_09_01 => version,
-                SearchClientOptions.ServiceVersion.V2025_11_01_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -243,25 +232,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
                 SearchClientOptions.ServiceVersion.V2024_07_01 => "2024-07-01",
                 SearchClientOptions.ServiceVersion.V2025_09_01 => "2025-09-01",
-                SearchClientOptions.ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
                 _ => throw CreateInvalidVersionException(version)
-            };
-
-        /// <summary>
-        /// Convert a version string into a <see cref="SearchClientOptions.ServiceVersion"/>.
-        /// </summary>
-        public static SearchClientOptions.ServiceVersion ToServiceVersion(this string version) =>
-            version switch
-            {
-                "2020-06-30" => SearchClientOptions.ServiceVersion.V2020_06_30,
-                "2023-11-01" => SearchClientOptions.ServiceVersion.V2023_11_01,
-                "2024-07-01" => SearchClientOptions.ServiceVersion.V2024_07_01,
-                "2025-09-01" => SearchClientOptions.ServiceVersion.V2025_09_01,
-                "2025-11-01-preview" => SearchClientOptions.ServiceVersion.V2025_11_01_Preview,
-                _ => throw new ArgumentOutOfRangeException(
-                    nameof(version),
-                    version,
-                    $"The version string specified is not supported by this library.")
             };
 
         /// <summary>

@@ -8,64 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary>
-    /// Specifies the vectorization method to be used during query time.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOpenAIVectorizer"/>, <see cref="WebApiVectorizer"/>, <see cref="AIServicesVisionVectorizer"/>, and <see cref="AzureMachineLearningVectorizer"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorSearchVectorizer))]
-    public abstract partial class VectorSearchVectorizer : IJsonModel<VectorSearchVectorizer>
+    public partial class VectorSearchVectorizer : IUtf8JsonSerializable, IJsonModel<VectorSearchVectorizer>
     {
-        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/> for deserialization. </summary>
-        internal VectorSearchVectorizer()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorSearchVectorizer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VectorSearchVectorizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVectorSearchVectorizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VectorSearchVectorizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VectorSearchVectorizer IPersistableModel<VectorSearchVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VectorSearchVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VectorSearchVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,24 +29,25 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(VectorizerName);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,46 +56,82 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VectorSearchVectorizer IJsonModel<VectorSearchVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VectorSearchVectorizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VectorSearchVectorizer IJsonModel<VectorSearchVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVectorSearchVectorizer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VectorSearchVectorizer DeserializeVectorSearchVectorizer(JsonElement element, ModelReaderWriterOptions options)
+        internal static VectorSearchVectorizer DeserializeVectorSearchVectorizer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "azureOpenAI":
-                        return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element, options);
-                    case "customWebApi":
-                        return WebApiVectorizer.DeserializeWebApiVectorizer(element, options);
-                    case "aiServicesVision":
-                        return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element, options);
-                    case "aml":
-                        return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element, options);
+                    case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element, options);
+                    case "customWebApi": return WebApiVectorizer.DeserializeWebApiVectorizer(element, options);
                 }
             }
             return UnknownVectorSearchVectorizer.DeserializeUnknownVectorSearchVectorizer(element, options);
+        }
+
+        BinaryData IPersistableModel<VectorSearchVectorizer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VectorSearchVectorizer IPersistableModel<VectorSearchVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VectorSearchVectorizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVectorSearchVectorizer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VectorSearchVectorizer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VectorSearchVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVectorSearchVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

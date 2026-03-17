@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.8.0-beta.2</Version>
+    <Version>11.7.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>11.7.0</ApiCompatVersion>
+    <ApiCompatVersion>11.6.1</ApiCompatVersion>
     <Description>
       This is the Azure Cognitive Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your
@@ -18,7 +18,6 @@
      $(NoWarn);
      AZC0004;
     </NoWarn>
-    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
@@ -26,7 +25,6 @@
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
   </ItemGroup>
 

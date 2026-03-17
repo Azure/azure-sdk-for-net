@@ -14,9 +14,8 @@ namespace Azure.Search.Documents.Tests.Models
         [TestCase("\"0123abcd\"", "\"0123abcd\"")]
         public void ParsesETag(string value, string expected)
         {
-            SearchIndex sut = new SearchIndex("test");
-            // ETag is read-only from server responses, cannot be set directly in constructor
-            // Skip test as ETag is now only settable through deserialization
+            SearchIndex sut = new SearchIndex(null, null, new SearchField[0], null, null, null, null, null, null, null, null, null, null, null, null, null, value, serializedAdditionalRawData: null);
+            Assert.AreEqual(expected, sut.ETag?.ToString());
         }
 
         [Test]

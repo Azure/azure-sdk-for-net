@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code. </summary>
-    public partial class WebApiSkill : SearchIndexerSkill, IJsonModel<WebApiSkill>
+    public partial class WebApiSkill : IUtf8JsonSerializable, IJsonModel<WebApiSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="WebApiSkill"/> for deserialization. </summary>
-        internal WebApiSkill()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApiSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebApiSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebApiSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebApiSkill)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebApiSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApiSkill IPersistableModel<WebApiSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (WebApiSkill)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebApiSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApiSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,29 +28,32 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApiSkill)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
-                writer.WritePropertyName("httpHeaders"u8);
-                writer.WriteStartObject();
-                foreach (var item in HttpHeaders)
+                if (HttpHeaders != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("httpHeaders"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in HttpHeaders)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("httpHeaders");
+                }
             }
             if (Optional.IsDefined(HttpMethod))
             {
@@ -106,63 +62,86 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout"u8);
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout");
+                }
             }
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize"u8);
-                writer.WriteNumberValue(BatchSize.Value);
+                if (BatchSize != null)
+                {
+                    writer.WritePropertyName("batchSize"u8);
+                    writer.WriteNumberValue(BatchSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("batchSize");
+                }
             }
             if (Optional.IsDefined(DegreeOfParallelism))
             {
-                writer.WritePropertyName("degreeOfParallelism"u8);
-                writer.WriteNumberValue(DegreeOfParallelism.Value);
+                if (DegreeOfParallelism != null)
+                {
+                    writer.WritePropertyName("degreeOfParallelism"u8);
+                    writer.WriteNumberValue(DegreeOfParallelism.Value);
+                }
+                else
+                {
+                    writer.WriteNull("degreeOfParallelism");
+                }
             }
             if (Optional.IsDefined(AuthResourceId))
             {
-                writer.WritePropertyName("authResourceId"u8);
-                writer.WriteStringValue(AuthResourceId);
+                if (AuthResourceId != null)
+                {
+                    writer.WritePropertyName("authResourceId"u8);
+                    writer.WriteStringValue(AuthResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("authResourceId");
+                }
             }
             if (Optional.IsDefined(AuthIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity");
+                }
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApiSkill IJsonModel<WebApiSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WebApiSkill)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebApiSkill IJsonModel<WebApiSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApiSkill)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebApiSkill(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebApiSkill DeserializeWebApiSkill(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebApiSkill DeserializeWebApiSkill(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Skills.Custom.WebApiSkill";
-            string name = default;
-            string description = default;
-            string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string uri = default;
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
@@ -171,132 +150,137 @@ namespace Azure.Search.Documents.Indexes.Models
             int? degreeOfParallelism = default;
             ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
-            foreach (var prop in element.EnumerateObject())
+            string odataType = default;
+            string name = default;
+            string description = default;
+            string context = default;
+            IList<InputFieldMappingEntry> inputs = default;
+            IList<OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("uri"u8))
                 {
-                    odataType = prop.Value.GetString();
+                    uri = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("httpHeaders"u8))
                 {
-                    name = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        httpHeaders = null;
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    httpHeaders = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("httpMethod"u8))
                 {
-                    description = prop.Value.GetString();
+                    httpMethod = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("context"u8))
+                if (property.NameEquals("timeout"u8))
                 {
-                    context = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeout = null;
+                        continue;
+                    }
+                    timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("inputs"u8))
+                if (property.NameEquals("batchSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        batchSize = null;
+                        continue;
+                    }
+                    batchSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("degreeOfParallelism"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        degreeOfParallelism = null;
+                        continue;
+                    }
+                    degreeOfParallelism = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("authResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authResourceId = null;
+                        continue;
+                    }
+                    authResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("authIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authIdentity = null;
+                        continue;
+                    }
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("context"u8))
+                {
+                    context = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
-                if (prop.NameEquals("outputs"u8))
+                if (property.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
-                if (prop.NameEquals("uri"u8))
-                {
-                    uri = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("httpHeaders"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    httpHeaders = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("httpMethod"u8))
-                {
-                    httpMethod = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("timeout"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeout = prop.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (prop.NameEquals("batchSize"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        batchSize = null;
-                        continue;
-                    }
-                    batchSize = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("degreeOfParallelism"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        degreeOfParallelism = null;
-                        continue;
-                    }
-                    degreeOfParallelism = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("authResourceId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authResourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("authIdentity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        authIdentity = null;
-                        continue;
-                    }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebApiSkill(
                 odataType,
                 name,
@@ -304,7 +288,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
@@ -313,6 +297,53 @@ namespace Azure.Search.Documents.Indexes.Models
                 degreeOfParallelism,
                 authResourceId,
                 authIdentity);
+        }
+
+        BinaryData IPersistableModel<WebApiSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebApiSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebApiSkill IPersistableModel<WebApiSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWebApiSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApiSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApiSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WebApiSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeWebApiSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

@@ -3,17 +3,10 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Typespec = Microsoft.TypeSpec.Generator.Customizations;
-
-#pragma warning disable SA1402 // File may only contain a single type
-
-//TODO: Revisit serialization/deserialization here
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    [Typespec.CodeGenType("NGramTokenFilterV2")]
-    internal partial class NGramTokenFilterV2 { }
-
+    [CodeGenModel("NGramTokenFilterV2")]
     public partial class NGramTokenFilter : IUtf8JsonSerializable
     {
         /// <summary>
@@ -27,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            OdataType = "#Microsoft.Azure.Search.NGramTokenFilterV2";
+            ODataType = "#Microsoft.Azure.Search.NGramTokenFilterV2";
         }
 
         /// <summary>
@@ -48,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
 
             writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            writer.WriteStringValue(ODataType);
 
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
@@ -111,7 +104,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
             return new NGramTokenFilter(name)
             {
-                OdataType = odataType,
+                ODataType = odataType,
                 MinGram = minGram,
                 MaxGram = maxGram,
             };

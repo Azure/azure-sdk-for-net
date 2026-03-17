@@ -8,60 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for data change detection policies. </summary>
-    public partial class DataChangeDetectionPolicy : IJsonModel<DataChangeDetectionPolicy>
+    public partial class DataChangeDetectionPolicy : IUtf8JsonSerializable, IJsonModel<DataChangeDetectionPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/> for deserialization. </summary>
-        internal DataChangeDetectionPolicy()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataChangeDetectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataChangeDetectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataChangeDetectionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataChangeDetectionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataChangeDetectionPolicy IPersistableModel<DataChangeDetectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataChangeDetectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataChangeDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,22 +28,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteStringValue(ODataType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,42 +53,82 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataChangeDetectionPolicy IJsonModel<DataChangeDetectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataChangeDetectionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataChangeDetectionPolicy IJsonModel<DataChangeDetectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataChangeDetectionPolicy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataChangeDetectionPolicy DeserializeDataChangeDetectionPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataChangeDetectionPolicy DeserializeDataChangeDetectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("@odata.type"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy":
-                        return HighWaterMarkChangeDetectionPolicy.DeserializeHighWaterMarkChangeDetectionPolicy(element, options);
-                    case "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy":
-                        return SqlIntegratedChangeTrackingPolicy.DeserializeSqlIntegratedChangeTrackingPolicy(element, options);
+                    case "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy": return HighWaterMarkChangeDetectionPolicy.DeserializeHighWaterMarkChangeDetectionPolicy(element, options);
+                    case "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy": return SqlIntegratedChangeTrackingPolicy.DeserializeSqlIntegratedChangeTrackingPolicy(element, options);
                 }
             }
             return UnknownDataChangeDetectionPolicy.DeserializeUnknownDataChangeDetectionPolicy(element, options);
+        }
+
+        BinaryData IPersistableModel<DataChangeDetectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataChangeDetectionPolicy IPersistableModel<DataChangeDetectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataChangeDetectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataChangeDetectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataChangeDetectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataChangeDetectionPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataChangeDetectionPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

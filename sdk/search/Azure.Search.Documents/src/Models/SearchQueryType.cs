@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// Specifies the syntax of the search query.  The default is "simple".
     /// Use "full" if your query uses the Lucene query syntax.
-    /// Renames generated QueryType to SearchQueryType for backward compatibility.
     /// </summary>
-    [CodeGenType("QueryType")]
+    [CodeGenModel("QueryType")]
     public enum SearchQueryType
     {
         /// <summary>

@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -128,7 +127,6 @@ namespace Azure.Search.Documents.Tests
                         },
                         QueryType = SearchQueryType.Semantic,
                         Select = { "hotelId", "hotelName", "description", "category" },
-                        QueryLanguage = QueryLanguage.EnUs
                     });
 
             Assert.NotNull(response.SemanticSearch.Answers);

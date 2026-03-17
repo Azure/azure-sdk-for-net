@@ -11,7 +11,6 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal static partial class IndexerExecutionStatusExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexerExecutionStatus value) => value switch
         {
             IndexerExecutionStatus.TransientFailure => "transientFailure",
@@ -21,25 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerExecutionStatus value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static IndexerExecutionStatus ToIndexerExecutionStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "transientFailure"))
-            {
-                return IndexerExecutionStatus.TransientFailure;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success"))
-            {
-                return IndexerExecutionStatus.Success;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "inProgress"))
-            {
-                return IndexerExecutionStatus.InProgress;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "reset"))
-            {
-                return IndexerExecutionStatus.Reset;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "transientFailure")) return IndexerExecutionStatus.TransientFailure;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success")) return IndexerExecutionStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "inProgress")) return IndexerExecutionStatus.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "reset")) return IndexerExecutionStatus.Reset;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerExecutionStatus value.");
         }
     }

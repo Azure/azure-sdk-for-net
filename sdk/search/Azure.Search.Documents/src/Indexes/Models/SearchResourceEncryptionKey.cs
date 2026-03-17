@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenModel("EncryptionKey")]
     [CodeGenSuppress(nameof(SearchResourceEncryptionKey), typeof(string), typeof(string))]
     public partial class SearchResourceEncryptionKey
     {
@@ -21,22 +22,6 @@ namespace Azure.Search.Documents.Indexes.Models
             VaultUri = vaultUri ?? throw new ArgumentNullException(nameof(vaultUri));
             KeyName = keyName ?? throw new ArgumentNullException(nameof(keyName));
             KeyVersion = keyVersion ?? throw new ArgumentNullException(nameof(keyVersion));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
-        /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
-        /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
-        /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be `https://my-keyvault-name.vault.azure.net`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/>, <paramref name="keyVersion"/> or <paramref name="vaultUri"/> is null. </exception>
-        public SearchResourceEncryptionKey(string keyName, string keyVersion, string vaultUri)
-        {
-            Argument.AssertNotNull(keyName, nameof(keyName));
-            Argument.AssertNotNull(keyVersion, nameof(keyVersion));
-            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
-
-            KeyName = keyName;
-            KeyVersion = keyVersion;
-            _vaultUri = vaultUri;
         }
 
         [CodeGenMember("VaultUri")]
@@ -88,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (ApplicationId != null || ApplicationSecret != null)
                 {
-                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret, additionalBinaryDataProperties: null);
+                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret, serializedAdditionalRawData: null);
                 }
 
                 return null;

@@ -5,36 +5,38 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
+    /// <summary> A result containing a document found by a suggestion query, plus associated metadata. </summary>
     internal partial class SuggestResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
-        public SuggestResult()
+        /// <param name="text"> The text of the suggestion result. </param>
+        internal SuggestResult(string text)
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Text = text;
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
-        /// <param name="additionalProperties"></param>
-        internal SuggestResult(string text, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal SuggestResult(string text, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Text = text;
-            _additionalBinaryDataProperties = additionalProperties;
+            AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SuggestResult"/> for deserialization. </summary>
+        internal SuggestResult()
+        {
         }
 
         /// <summary> The text of the suggestion result. </summary>
         public string Text { get; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

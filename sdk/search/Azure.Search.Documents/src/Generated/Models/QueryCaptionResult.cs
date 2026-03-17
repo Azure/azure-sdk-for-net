@@ -6,41 +6,34 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type `semantic`. </summary>
     public partial class QueryCaptionResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
         internal QueryCaptionResult()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryCaptionResult"/>. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
-        /// <param name="additionalProperties"></param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
         internal QueryCaptionResult(string text, string highlights, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Text = text;
             Highlights = highlights;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>(additionalProperties);
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> A representative text passage extracted from the document most relevant to the search query. </summary>
         public string Text { get; }
-
         /// <summary> Same text passage as in the Text property with highlighted phrases most relevant to the query. </summary>
         public string Highlights { get; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, object> AdditionalProperties => new ReadOnlyDictionary<string, object>(_additionalBinaryDataProperties);
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

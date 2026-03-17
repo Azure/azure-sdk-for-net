@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -16,8 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesPathHierarchyTokenizerV2()
         {
             PathHierarchyTokenizer sut = new PathHierarchyTokenizer("test");
-            // ODataType is now internal, verify the tokenizer was created
-            Assert.AreEqual("test", sut.Name);
+            Assert.AreEqual(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2", sut.ODataType);
         }
 
         [Test]
@@ -34,10 +32,10 @@ namespace Azure.Search.Documents.Tests.Models
 }";
 
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
-            PathHierarchyTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement, ModelReaderWriterOptions.Json) as PathHierarchyTokenizer;
+            PathHierarchyTokenizer sut = LexicalTokenizer.DeserializeLexicalTokenizer(jsonDoc.RootElement) as PathHierarchyTokenizer;
 
             Assert.NotNull(sut);
-            // ODataType is now internal
+            Assert.AreEqual(@"#Microsoft.Azure.Search.PathHierarchyTokenizerV2", sut.ODataType);
             Assert.AreEqual("test", sut.Name);
             Assert.AreEqual('/', sut.Delimiter);
             Assert.AreEqual(300, sut.MaxTokenLength);
@@ -48,7 +46,7 @@ namespace Azure.Search.Documents.Tests.Models
             using MemoryStream stream = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
             {
-                ((IJsonModel<PathHierarchyTokenizer>)sut).Write(writer, ModelReaderWriterOptions.Json);
+                ((IUtf8JsonSerializable)sut).Write(writer);
             }
 
             stream.Position = 0;

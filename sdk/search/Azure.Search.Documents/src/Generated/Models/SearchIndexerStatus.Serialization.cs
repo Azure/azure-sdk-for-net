@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents the current status and execution history of an indexer. </summary>
-    public partial class SearchIndexerStatus : IJsonModel<SearchIndexerStatus>
+    public partial class SearchIndexerStatus : IUtf8JsonSerializable, IJsonModel<SearchIndexerStatus>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchIndexerStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchIndexerStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchIndexerStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchIndexerStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerStatus IPersistableModel<SearchIndexerStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchIndexerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerStatus"/> from. </param>
-        public static explicit operator SearchIndexerStatus(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSearchIndexerStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchIndexerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -92,21 +44,23 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(LastResult))
             {
-                writer.WritePropertyName("lastResult"u8);
-                writer.WriteObjectValue(LastResult, options);
+                if (LastResult != null)
+                {
+                    writer.WritePropertyName("lastResult"u8);
+                    writer.WriteObjectValue(LastResult, options);
+                }
+                else
+                {
+                    writer.WriteNull("lastResult");
+                }
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("executionHistory"u8);
                 writer.WriteStartArray();
-                foreach (IndexerExecutionResult item in ExecutionHistory)
+                foreach (var item in ExecutionHistory)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -117,20 +71,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentState))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -139,103 +88,130 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchIndexerStatus IJsonModel<SearchIndexerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchIndexerStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchIndexerStatus IJsonModel<SearchIndexerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchIndexerStatus(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchIndexerStatus DeserializeSearchIndexerStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             IndexerStatus status = default;
-            IndexerRuntime runtime = default;
             IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
-            IndexerState currentState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToIndexerStatus();
+                    status = property.Value.GetString().ToIndexerStatus();
                     continue;
                 }
-                if (prop.NameEquals("runtime"u8))
+                if (property.NameEquals("lastResult"u8))
                 {
-                    runtime = IndexerRuntime.DeserializeIndexerRuntime(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("lastResult"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        lastResult = null;
                         continue;
                     }
-                    lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(prop.Value, options);
+                    lastResult = IndexerExecutionResult.DeserializeIndexerExecutionResult(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("executionHistory"u8))
+                if (property.NameEquals("executionHistory"u8))
                 {
                     List<IndexerExecutionResult> array = new List<IndexerExecutionResult>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item, options));
                     }
                     executionHistory = array;
                     continue;
                 }
-                if (prop.NameEquals("limits"u8))
+                if (property.NameEquals("limits"u8))
                 {
-                    limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("currentState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    currentState = IndexerState.DeserializeIndexerState(prop.Value, options);
+                    limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchIndexerStatus(
                 name,
                 status,
-                runtime,
                 lastResult,
                 executionHistory,
                 limits,
-                currentState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchIndexerStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchIndexerStatus IPersistableModel<SearchIndexerStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchIndexerStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchIndexerStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchIndexerStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchIndexerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchIndexerStatus(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

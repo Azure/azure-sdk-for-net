@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
-    public partial class SearchField : IJsonModel<SearchField>
+    public partial class SearchField : IUtf8JsonSerializable, IJsonModel<SearchField>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchField"/> for deserialization. </summary>
-        internal SearchField()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchField>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchField PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchField(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchField)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchField)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchField>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchField IPersistableModel<SearchField>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchField)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -118,62 +73,96 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Optional.IsDefined(PermissionFilter))
-            {
-                writer.WritePropertyName("permissionFilter"u8);
-                writer.WriteStringValue(PermissionFilter.Value.ToString());
-            }
-            if (Optional.IsDefined(SensitivityLabel))
-            {
-                writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteBooleanValue(SensitivityLabel.Value);
-            }
             if (Optional.IsDefined(AnalyzerName))
             {
-                writer.WritePropertyName("analyzer"u8);
-                writer.WriteStringValue(AnalyzerName.Value.ToString());
+                if (AnalyzerName != null)
+                {
+                    writer.WritePropertyName("analyzer"u8);
+                    writer.WriteStringValue(AnalyzerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("analyzer");
+                }
             }
             if (Optional.IsDefined(SearchAnalyzerName))
             {
-                writer.WritePropertyName("searchAnalyzer"u8);
-                writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
+                if (SearchAnalyzerName != null)
+                {
+                    writer.WritePropertyName("searchAnalyzer"u8);
+                    writer.WriteStringValue(SearchAnalyzerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("searchAnalyzer");
+                }
             }
             if (Optional.IsDefined(IndexAnalyzerName))
             {
-                writer.WritePropertyName("indexAnalyzer"u8);
-                writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
+                if (IndexAnalyzerName != null)
+                {
+                    writer.WritePropertyName("indexAnalyzer"u8);
+                    writer.WriteStringValue(IndexAnalyzerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("indexAnalyzer");
+                }
             }
             if (Optional.IsDefined(NormalizerName))
             {
-                writer.WritePropertyName("normalizer"u8);
-                writer.WriteStringValue(NormalizerName.Value.ToString());
+                if (NormalizerName != null)
+                {
+                    writer.WritePropertyName("normalizer"u8);
+                    writer.WriteStringValue(NormalizerName.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("normalizer");
+                }
             }
             if (Optional.IsDefined(VectorSearchDimensions))
             {
-                writer.WritePropertyName("dimensions"u8);
-                writer.WriteNumberValue(VectorSearchDimensions.Value);
+                if (VectorSearchDimensions != null)
+                {
+                    writer.WritePropertyName("dimensions"u8);
+                    writer.WriteNumberValue(VectorSearchDimensions.Value);
+                }
+                else
+                {
+                    writer.WriteNull("dimensions");
+                }
             }
             if (Optional.IsDefined(VectorSearchProfileName))
             {
-                writer.WritePropertyName("vectorSearchProfile"u8);
-                writer.WriteStringValue(VectorSearchProfileName);
+                if (VectorSearchProfileName != null)
+                {
+                    writer.WritePropertyName("vectorSearchProfile"u8);
+                    writer.WriteStringValue(VectorSearchProfileName);
+                }
+                else
+                {
+                    writer.WriteNull("vectorSearchProfile");
+                }
             }
             if (Optional.IsDefined(VectorEncodingFormat))
             {
-                writer.WritePropertyName("vectorEncoding"u8);
-                writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                if (VectorEncodingFormat != null)
+                {
+                    writer.WritePropertyName("vectorEncoding"u8);
+                    writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("vectorEncoding");
+                }
             }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
                 writer.WriteStartArray();
-                foreach (string item in SynonymMapNames)
+                foreach (var item in SynonymMapNames)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -182,21 +171,21 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
-                foreach (SearchField item in Fields)
+                foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SearchField>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -205,245 +194,213 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchField IJsonModel<SearchField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchField JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchField IJsonModel<SearchField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchField)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchField(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchField DeserializeSearchField(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchField DeserializeSearchField(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            SearchFieldDataType @type = default;
-            bool? isKey = default;
-            bool? isRetrievable = default;
-            bool? isStored = default;
-            bool? isSearchable = default;
-            bool? isFilterable = default;
-            bool? isSortable = default;
-            bool? isFacetable = default;
-            PermissionFilter? permissionFilter = default;
-            bool? sensitivityLabel = default;
-            LexicalAnalyzerName? analyzerName = default;
-            LexicalAnalyzerName? searchAnalyzerName = default;
-            LexicalAnalyzerName? indexAnalyzerName = default;
-            LexicalNormalizerName? normalizerName = default;
-            int? vectorSearchDimensions = default;
-            string vectorSearchProfileName = default;
-            VectorEncodingFormat? vectorEncodingFormat = default;
-            IList<string> synonymMapNames = default;
+            SearchFieldDataType type = default;
+            bool? key = default;
+            bool? retrievable = default;
+            bool? stored = default;
+            bool? searchable = default;
+            bool? filterable = default;
+            bool? sortable = default;
+            bool? facetable = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
+            LexicalNormalizerName? normalizer = default;
+            int? dimensions = default;
+            string vectorSearchProfile = default;
+            VectorEncodingFormat? vectorEncoding = default;
+            IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    @type = new SearchFieldDataType(prop.Value.GetString());
+                    type = new SearchFieldDataType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("key"u8))
+                if (property.NameEquals("key"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isKey = prop.Value.GetBoolean();
+                    key = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("retrievable"u8))
+                if (property.NameEquals("retrievable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isRetrievable = prop.Value.GetBoolean();
+                    retrievable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("stored"u8))
+                if (property.NameEquals("stored"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isStored = prop.Value.GetBoolean();
+                    stored = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("searchable"u8))
+                if (property.NameEquals("searchable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSearchable = prop.Value.GetBoolean();
+                    searchable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("filterable"u8))
+                if (property.NameEquals("filterable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isFilterable = prop.Value.GetBoolean();
+                    filterable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("sortable"u8))
+                if (property.NameEquals("sortable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSortable = prop.Value.GetBoolean();
+                    sortable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("facetable"u8))
+                if (property.NameEquals("facetable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isFacetable = prop.Value.GetBoolean();
+                    facetable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("permissionFilter"u8))
+                if (property.NameEquals("analyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        permissionFilter = null;
+                        analyzer = null;
                         continue;
                     }
-                    permissionFilter = new PermissionFilter(prop.Value.GetString());
+                    analyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sensitivityLabel"u8))
+                if (property.NameEquals("searchAnalyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sensitivityLabel = null;
+                        searchAnalyzer = null;
                         continue;
                     }
-                    sensitivityLabel = prop.Value.GetBoolean();
+                    searchAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("analyzer"u8))
+                if (property.NameEquals("indexAnalyzer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        analyzerName = null;
+                        indexAnalyzer = null;
                         continue;
                     }
-                    analyzerName = new LexicalAnalyzerName(prop.Value.GetString());
+                    indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("searchAnalyzer"u8))
+                if (property.NameEquals("normalizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        searchAnalyzerName = null;
+                        normalizer = null;
                         continue;
                     }
-                    searchAnalyzerName = new LexicalAnalyzerName(prop.Value.GetString());
+                    normalizer = new LexicalNormalizerName(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("indexAnalyzer"u8))
+                if (property.NameEquals("dimensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        indexAnalyzerName = null;
+                        dimensions = null;
                         continue;
                     }
-                    indexAnalyzerName = new LexicalAnalyzerName(prop.Value.GetString());
+                    dimensions = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("normalizer"u8))
+                if (property.NameEquals("vectorSearchProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        normalizerName = null;
+                        vectorSearchProfile = null;
                         continue;
                     }
-                    normalizerName = new LexicalNormalizerName(prop.Value.GetString());
+                    vectorSearchProfile = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dimensions"u8))
+                if (property.NameEquals("vectorEncoding"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        vectorEncoding = null;
                         continue;
                     }
-                    vectorSearchDimensions = prop.Value.GetInt32();
+                    vectorEncoding = new VectorEncodingFormat(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("vectorSearchProfile"u8))
+                if (property.NameEquals("synonymMaps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vectorSearchProfileName = null;
-                        continue;
-                    }
-                    vectorSearchProfileName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("vectorEncoding"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        vectorEncodingFormat = null;
-                        continue;
-                    }
-                    vectorEncodingFormat = new VectorEncodingFormat(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("synonymMaps"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
-                    synonymMapNames = array;
+                    synonymMaps = array;
                     continue;
                 }
-                if (prop.NameEquals("fields"u8))
+                if (property.NameEquals("fields"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SearchField> array = new List<SearchField>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DeserializeSearchField(item, options));
                     }
@@ -452,31 +409,77 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchField(
                 name,
-                @type,
-                isKey,
-                isRetrievable,
-                isStored,
-                isSearchable,
-                isFilterable,
-                isSortable,
-                isFacetable,
-                permissionFilter,
-                sensitivityLabel,
-                analyzerName,
-                searchAnalyzerName,
-                indexAnalyzerName,
-                normalizerName,
-                vectorSearchDimensions,
-                vectorSearchProfileName,
-                vectorEncodingFormat,
-                synonymMapNames ?? new ChangeTrackingList<string>(),
+                type,
+                key,
+                retrievable,
+                stored,
+                searchable,
+                filterable,
+                sortable,
+                facetable,
+                analyzer,
+                searchAnalyzer,
+                indexAnalyzer,
+                normalizer,
+                dimensions,
+                vectorSearchProfile,
+                vectorEncoding,
+                synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchField>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchField)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchField IPersistableModel<SearchField>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchField>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchField(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchField)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchField>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchField(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

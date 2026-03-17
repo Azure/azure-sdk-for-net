@@ -9,59 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
+using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Indexes.Models
+namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownLexicalAnalyzer : LexicalAnalyzer, IJsonModel<LexicalAnalyzer>
+    internal partial class UnknownLexicalAnalyzer : IUtf8JsonSerializable, IJsonModel<LexicalAnalyzer>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownLexicalAnalyzer"/> for deserialization. </summary>
-        internal UnknownLexicalAnalyzer()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LexicalAnalyzer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalAnalyzer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLexicalAnalyzer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LexicalAnalyzer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LexicalAnalyzer IPersistableModel<LexicalAnalyzer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LexicalAnalyzer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LexicalAnalyzer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,60 +29,105 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LexicalAnalyzer IJsonModel<LexicalAnalyzer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalAnalyzer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LexicalAnalyzer IJsonModel<LexicalAnalyzer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLexicalAnalyzer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownLexicalAnalyzer DeserializeUnknownLexicalAnalyzer(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownLexicalAnalyzer DeserializeUnknownLexicalAnalyzer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "unknown";
+            string odataType = "Unknown";
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("@odata.type"u8))
                 {
-                    odataType = prop.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UnknownLexicalAnalyzer(odataType, name, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownLexicalAnalyzer(odataType, name, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<LexicalAnalyzer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LexicalAnalyzer IPersistableModel<LexicalAnalyzer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LexicalAnalyzer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLexicalAnalyzer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LexicalAnalyzer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LexicalAnalyzer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownLexicalAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeUnknownLexicalAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LexicalAnalyzer>(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

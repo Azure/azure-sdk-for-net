@@ -10,11 +10,40 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> A single vector field result. Both. </summary>
+    /// <summary> A single vector field result. Both @search.score and vector similarity values are returned. Vector similarity is related to @search.score by an equation. </summary>
     public partial class SingleVectorFieldResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SingleVectorFieldResult"/>. </summary>
         internal SingleVectorFieldResult()
@@ -22,19 +51,18 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SingleVectorFieldResult"/>. </summary>
-        /// <param name="searchScore"> The. </param>
+        /// <param name="searchScore"> The @search.score value that is calculated from the vector similarity score. This is the score that's visible in a pure single-field single-vector query. </param>
         /// <param name="vectorSimilarity"> The vector similarity score for this document. Note this is the canonical definition of similarity metric, not the 'distance' version. For example, cosine similarity instead of cosine distance. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SingleVectorFieldResult(double? searchScore, double? vectorSimilarity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SingleVectorFieldResult(double? searchScore, double? vectorSimilarity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchScore = searchScore;
             VectorSimilarity = vectorSimilarity;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The. </summary>
+        /// <summary> The @search.score value that is calculated from the vector similarity score. This is the score that's visible in a pure single-field single-vector query. </summary>
         public double? SearchScore { get; }
-
         /// <summary> The vector similarity score for this document. Note this is the canonical definition of similarity metric, not the 'distance' version. For example, cosine similarity instead of cosine distance. </summary>
         public double? VectorSimilarity { get; }
     }

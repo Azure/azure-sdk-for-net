@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Specifies the properties for connecting to a user-defined vectorizer. </summary>
-    public partial class WebApiVectorizerParameters : IJsonModel<WebApiVectorizerParameters>
+    public partial class WebApiVectorizerParameters : IUtf8JsonSerializable, IJsonModel<WebApiVectorizerParameters>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApiVectorizerParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebApiVectorizerParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApiVectorizerParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebApiVectorizerParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApiVectorizerParameters IPersistableModel<WebApiVectorizerParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebApiVectorizerParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApiVectorizerParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
@@ -87,11 +46,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 foreach (var item in HttpHeaders)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -108,23 +62,37 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(AuthResourceId))
             {
-                writer.WritePropertyName("authResourceId"u8);
-                writer.WriteStringValue(AuthResourceId);
+                if (AuthResourceId != null)
+                {
+                    writer.WritePropertyName("authResourceId"u8);
+                    writer.WriteStringValue(AuthResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("authResourceId");
+                }
             }
             if (Optional.IsDefined(AuthIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                if (AuthIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity");
+                }
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -133,27 +101,22 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApiVectorizerParameters IJsonModel<WebApiVectorizerParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApiVectorizerParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebApiVectorizerParameters IJsonModel<WebApiVectorizerParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebApiVectorizerParameters(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebApiVectorizerParameters DeserializeWebApiVectorizerParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebApiVectorizerParameters DeserializeWebApiVectorizerParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,77 +127,73 @@ namespace Azure.Search.Documents.Indexes.Models
             TimeSpan? timeout = default;
             ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("uri"u8))
+                if (property.NameEquals("uri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("httpHeaders"u8))
+                if (property.NameEquals("httpHeaders"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     httpHeaders = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("httpMethod"u8))
+                if (property.NameEquals("httpMethod"u8))
                 {
-                    httpMethod = prop.Value.GetString();
+                    httpMethod = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("timeout"u8))
+                if (property.NameEquals("timeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeout = prop.Value.GetTimeSpan("P");
+                    timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("authResourceId"u8))
+                if (property.NameEquals("authResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        authResourceId = null;
                         continue;
                     }
-                    authResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    authResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("authIdentity"u8))
+                if (property.NameEquals("authIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebApiVectorizerParameters(
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
@@ -242,7 +201,54 @@ namespace Azure.Search.Documents.Indexes.Models
                 timeout,
                 authResourceId,
                 authIdentity,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<WebApiVectorizerParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebApiVectorizerParameters IPersistableModel<WebApiVectorizerParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApiVectorizerParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWebApiVectorizerParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApiVectorizerParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApiVectorizerParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebApiVectorizerParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeWebApiVectorizerParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

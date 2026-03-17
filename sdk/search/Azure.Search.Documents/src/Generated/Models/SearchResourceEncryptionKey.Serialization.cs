@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A customer-managed encryption key in Azure Key Vault. Keys that you create and manage can be used to encrypt or decrypt data-at-rest, such as indexes and synonym maps. </summary>
-    public partial class SearchResourceEncryptionKey : IJsonModel<SearchResourceEncryptionKey>
+    public partial class SearchResourceEncryptionKey : IUtf8JsonSerializable, IJsonModel<SearchResourceEncryptionKey>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/> for deserialization. </summary>
-        internal SearchResourceEncryptionKey()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchResourceEncryptionKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchResourceEncryptionKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSearchResourceEncryptionKey(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchResourceEncryptionKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchResourceEncryptionKey IPersistableModel<SearchResourceEncryptionKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchResourceEncryptionKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchResourceEncryptionKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,39 +28,32 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("keyVaultKeyName"u8);
             writer.WriteStringValue(KeyName);
-            if (Optional.IsDefined(KeyVersion))
-            {
-                writer.WritePropertyName("keyVaultKeyVersion"u8);
-                writer.WriteStringValue(KeyVersion);
-            }
+            writer.WritePropertyName("keyVaultKeyVersion"u8);
+            writer.WriteStringValue(KeyVersion);
+            writer.WritePropertyName("keyVaultUri"u8);
+            writer.WriteStringValue(_vaultUri);
             if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials"u8);
-                writer.WriteObjectValue(AccessCredentialsInternal, options);
+                writer.WriteObjectValue<AzureActiveDirectoryApplicationCredentials>(AccessCredentialsInternal, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
-            writer.WritePropertyName("keyVaultUri"u8);
-            writer.WriteStringValue(_vaultUri);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -115,85 +62,112 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SearchResourceEncryptionKey IJsonModel<SearchResourceEncryptionKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchResourceEncryptionKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchResourceEncryptionKey IJsonModel<SearchResourceEncryptionKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchResourceEncryptionKey(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchResourceEncryptionKey DeserializeSearchResourceEncryptionKey(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchResourceEncryptionKey DeserializeSearchResourceEncryptionKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string keyName = default;
-            string keyVersion = default;
-            AzureActiveDirectoryApplicationCredentials accessCredentialsInternal = default;
-            SearchIndexerDataIdentity identity = default;
-            string vaultUri = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string keyVaultKeyName = default;
+            string keyVaultKeyVersion = default;
+            string keyVaultUri = default;
+            AzureActiveDirectoryApplicationCredentials accessCredentials = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyVaultKeyName"u8))
+                if (property.NameEquals("keyVaultKeyName"u8))
                 {
-                    keyName = prop.Value.GetString();
+                    keyVaultKeyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("keyVaultKeyVersion"u8))
+                if (property.NameEquals("keyVaultKeyVersion"u8))
                 {
-                    keyVersion = prop.Value.GetString();
+                    keyVaultKeyVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("accessCredentials"u8))
+                if (property.NameEquals("keyVaultUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    keyVaultUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accessCredentials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessCredentialsInternal = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("keyVaultUri"u8))
-                {
-                    vaultUri = prop.Value.GetString();
+                    accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SearchResourceEncryptionKey(
-                keyName,
-                keyVersion,
-                accessCredentialsInternal,
-                identity,
-                vaultUri,
-                additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SearchResourceEncryptionKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchResourceEncryptionKey IPersistableModel<SearchResourceEncryptionKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchResourceEncryptionKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSearchResourceEncryptionKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchResourceEncryptionKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchResourceEncryptionKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchResourceEncryptionKey FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchResourceEncryptionKey(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

@@ -5,37 +5,31 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-    public partial class SearchIndexerKnowledgeStoreParameters
+    internal partial class SearchIndexerKnowledgeStoreParameters
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
-        public SearchIndexerKnowledgeStoreParameters()
+        internal SearchIndexerKnowledgeStoreParameters()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerKnowledgeStoreParameters"/>. </summary>
         /// <param name="synthesizeGeneratedKeyName"> Whether or not projections should synthesize a generated key name if one isn't already present. </param>
-        /// <param name="additionalProperties"></param>
-        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal SearchIndexerKnowledgeStoreParameters(bool? synthesizeGeneratedKeyName, IReadOnlyDictionary<string, object> additionalProperties)
         {
             SynthesizeGeneratedKeyName = synthesizeGeneratedKeyName;
-            _additionalBinaryDataProperties = additionalProperties;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Whether or not projections should synthesize a generated key name if one isn't already present. </summary>
-        public bool? SynthesizeGeneratedKeyName { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public bool? SynthesizeGeneratedKeyName { get; }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }
