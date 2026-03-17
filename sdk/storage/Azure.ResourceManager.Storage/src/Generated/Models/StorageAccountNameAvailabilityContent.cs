@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters used to check the availability of the storage account name. </summary>
     public partial class StorageAccountNameAvailabilityContent
     {
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The storage account name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public StorageAccountNameAvailabilityContent(string name, ResourceType resourceType)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The storage account name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>

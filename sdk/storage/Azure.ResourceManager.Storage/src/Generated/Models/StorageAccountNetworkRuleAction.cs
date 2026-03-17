@@ -12,11 +12,6 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary></summary>
     public readonly partial struct StorageAccountNetworkRuleAction : IEquatable<StorageAccountNetworkRuleAction>
     {
-        private const string ALLOWValue = "Allow";
-
-        /// <summary> Gets the ALLOW. </summary>
-        public static StorageAccountNetworkRuleAction ALLOW { get; } = new StorageAccountNetworkRuleAction(ALLOWValue);
-
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
