@@ -93,26 +93,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComponentsByReleases))
-            {
-                writer.WritePropertyName("componentsByReleases"u8);
-                writer.WriteStartArray();
-                foreach (KubernetesVersionComponents item in ComponentsByReleases)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecentlyUsedVersions))
-            {
-                writer.WritePropertyName("recentlyUsedVersions"u8);
-                writer.WriteStartArray();
-                foreach (AgentPoolRecentlyUsedVersion item in RecentlyUsedVersions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(LatestNodeImageVersion))
             {
                 writer.WritePropertyName("latestNodeImageVersion"u8);
@@ -163,8 +143,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             string kubernetesVersion = default;
             ContainerServiceOSType osType = default;
             IList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades = default;
-            IList<KubernetesVersionComponents> componentsByReleases = default;
-            IReadOnlyList<AgentPoolRecentlyUsedVersion> recentlyUsedVersions = default;
             string latestNodeImageVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,34 +171,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     upgrades = array;
                     continue;
                 }
-                if (prop.NameEquals("componentsByReleases"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<KubernetesVersionComponents> array = new List<KubernetesVersionComponents>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(KubernetesVersionComponents.DeserializeKubernetesVersionComponents(item, options));
-                    }
-                    componentsByReleases = array;
-                    continue;
-                }
-                if (prop.NameEquals("recentlyUsedVersions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentPoolRecentlyUsedVersion> array = new List<AgentPoolRecentlyUsedVersion>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(AgentPoolRecentlyUsedVersion.DeserializeAgentPoolRecentlyUsedVersion(item, options));
-                    }
-                    recentlyUsedVersions = array;
-                    continue;
-                }
                 if (prop.NameEquals("latestNodeImageVersion"u8))
                 {
                     latestNodeImageVersion = prop.Value.GetString();
@@ -231,14 +181,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolUpgradeProfileProperties(
-                kubernetesVersion,
-                osType,
-                upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(),
-                componentsByReleases ?? new ChangeTrackingList<KubernetesVersionComponents>(),
-                recentlyUsedVersions ?? new ChangeTrackingList<AgentPoolRecentlyUsedVersion>(),
-                latestNodeImageVersion,
-                additionalBinaryDataProperties);
+            return new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(), latestNodeImageVersion, additionalBinaryDataProperties);
         }
     }
 }

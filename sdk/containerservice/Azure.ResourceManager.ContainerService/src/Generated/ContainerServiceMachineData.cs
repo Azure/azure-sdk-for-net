@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineData"/>. </summary>
-        public ContainerServiceMachineData()
+        internal ContainerServiceMachineData()
         {
             Zones = new ChangeTrackingList<string>();
         }
