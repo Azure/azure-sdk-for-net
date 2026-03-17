@@ -681,6 +681,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ProjectOpenAIClient : OpenAI.OpenAIClient
     {
         protected ProjectOpenAIClient() { }
+        public ProjectOpenAIClient(Azure.AI.Extensions.OpenAI.ProjectOpenAIClientSettings settings) { }
         public ProjectOpenAIClient(System.ClientModel.Primitives.AuthenticationPolicy authenticationPolicy, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options) { }
         protected internal ProjectOpenAIClient(System.ClientModel.Primitives.ClientPipeline pipeline, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options) { }
         public ProjectOpenAIClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { }
@@ -701,6 +702,13 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ProjectOpenAIClientOptions() { }
         public string ApiVersion { get { throw null; } set { } }
+    }
+    public partial class ProjectOpenAIClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ProjectOpenAIClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class ProjectResponsesClient : OpenAI.Responses.ResponsesClient
     {

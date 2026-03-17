@@ -313,17 +313,15 @@ namespace Azure.Generator.Management.Providers
                 methodName = isAsync ? $"{baseName}Async" : baseName;
             }
 
-            // Action operations should not resource-wrap paging results
-            var isResourceAction = resourceMethod.Kind == ResourceOperationKind.Action;
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource, isResourceAction);
+            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource);
         }
 
-        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null, bool isResourceAction = false)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, isResourceAction),
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient),
                 _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName, explicitResourceClient)
             };
         }

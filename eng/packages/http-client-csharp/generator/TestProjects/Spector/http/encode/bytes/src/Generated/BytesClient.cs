@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Encode.Bytes._Header;
 using Encode.Bytes._Property;
@@ -19,7 +20,12 @@ namespace Encode.Bytes
     {
         public BytesClient() : this(new Uri("http://localhost:3000"), new BytesClientOptions()) => throw null;
 
-        public BytesClient(Uri endpoint, BytesClientOptions options) => throw null;
+        internal BytesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BytesClientOptions options) => throw null;
+
+        public BytesClient(Uri endpoint, BytesClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public BytesClient(BytesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
