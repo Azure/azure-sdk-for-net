@@ -18,6 +18,23 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecMultiServiceTestsModelFactory
     {
+        /// <summary> The CheckAvailabilityRequest. </summary>
+        /// <param name="name"> The name to check availability for. </param>
+        /// <returns> A new <see cref="Models.CheckAvailabilityRequest"/> instance for mocking. </returns>
+        public static CheckAvailabilityRequest CheckAvailabilityRequest(string name = default)
+        {
+            return new CheckAvailabilityRequest(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CheckAvailabilityResponse. </summary>
+        /// <param name="isAvailable"> Whether the name is available. </param>
+        /// <param name="reason"> Reason the name is not available. </param>
+        /// <returns> A new <see cref="Models.CheckAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckAvailabilityResponse CheckAvailabilityResponse(bool isAvailable = default, string reason = default)
+        {
+            return new CheckAvailabilityResponse(isAvailable, reason, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

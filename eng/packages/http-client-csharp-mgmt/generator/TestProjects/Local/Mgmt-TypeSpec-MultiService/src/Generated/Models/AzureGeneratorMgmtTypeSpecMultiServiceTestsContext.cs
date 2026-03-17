@@ -20,6 +20,8 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
     [ModelReaderWriterBuildable(typeof(BarListResult))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarResource))]
+    [ModelReaderWriterBuildable(typeof(CheckAvailabilityRequest))]
+    [ModelReaderWriterBuildable(typeof(CheckAvailabilityResponse))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooProperties))]

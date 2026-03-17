@@ -40,3 +40,33 @@ interface Foos {
 }
 
 interface Operations extends Azure.ResourceManager.Operations {}
+
+/**
+ * A namespace-level operation (not inside an interface).
+ * Tests that the generator handles operations defined directly on the namespace.
+ */
+@autoRoute
+op checkAvailability is ArmProviderActionSync<
+  Request = CheckAvailabilityRequest,
+  Response = CheckAvailabilityResponse,
+  Scope = SubscriptionActionScope,
+  Parameters = {
+    @path
+    @segment("locations")
+    location: Azure.Core.azureLocation;
+  }
+>;
+
+model CheckAvailabilityRequest {
+  /** The name to check availability for. */
+  name: string;
+}
+
+model CheckAvailabilityResponse {
+  /** Whether the name is available. */
+  isAvailable: boolean;
+
+  /** Reason the name is not available. */
+  @visibility(Lifecycle.Read)
+  reason?: string;
+}
