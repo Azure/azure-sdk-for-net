@@ -24,8 +24,8 @@ BeforeAll {
     . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "logging.ps1")
     . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "ChangeLog-Operations.ps1")
 
-    # Load just the Merge-ChangeLogEntries function from the script under test.
-    # We dot-source a filtered version to avoid the main execution block and its
+    # Load just the testable functions from the script under test.
+    # We define them here to avoid the main execution block and its
     # dependencies (Get-PkgProperties, git, etc.).
     function Merge-ChangeLogEntries {
         param(
@@ -47,6 +47,25 @@ BeforeAll {
         }
 
         return $MainEntries
+    }
+
+    function Resolve-CsprojVersion {
+        param(
+            [Parameter(Mandatory = $true)] [string]$MainVersion,
+            [Parameter(Mandatory = $true)] [string]$ReleaseVersion
+        )
+
+        $mainSemVer = [AzureEngSemanticVersion]::new($MainVersion)
+        $releaseSemVer = [AzureEngSemanticVersion]::new($ReleaseVersion)
+
+        if ($releaseSemVer.CompareTo($mainSemVer) -gt 0) {
+            Write-Host "  Release version $ReleaseVersion > main version $MainVersion — using release"
+            return $ReleaseVersion
+        }
+        else {
+            Write-Host "  Main version $MainVersion >= release version $ReleaseVersion — keeping main"
+            return $MainVersion
+        }
     }
 
     function Build-Changelog {
@@ -199,5 +218,52 @@ Describe "Merge-ChangeLogEntries" {
         finally {
             Remove-Item $tempFile -Force -ErrorAction SilentlyContinue
         }
+    }
+}
+
+Describe "Resolve-CsprojVersion" {
+
+    It "Normal release: release version equals main version" {
+        $result = Resolve-CsprojVersion -MainVersion "1.1.0" -ReleaseVersion "1.1.0"
+        $result | Should -Be "1.1.0"
+    }
+
+    It "Normal GA release: release version is higher than main prerelease" {
+        # Main has 1.1.0-beta.1, releasing GA 1.1.0 bumps minor
+        $result = Resolve-CsprojVersion -MainVersion "1.0.0" -ReleaseVersion "1.1.0"
+        $result | Should -Be "1.1.0"
+    }
+
+    It "Normal beta release: release equals main" {
+        $result = Resolve-CsprojVersion -MainVersion "1.1.0-beta.2" -ReleaseVersion "1.1.0-beta.2"
+        $result | Should -Be "1.1.0-beta.2"
+    }
+
+    It "Hotfix: main has advanced past release — keeps main version" {
+        # Main is at 1.3.0-beta.1, hotfix ships 1.1.1
+        $result = Resolve-CsprojVersion -MainVersion "1.3.0-beta.1" -ReleaseVersion "1.1.1"
+        $result | Should -Be "1.3.0-beta.1"
+    }
+
+    It "Hotfix: main GA is higher than release — keeps main version" {
+        # Main already shipped 1.2.0, hotfix ships 1.1.1
+        $result = Resolve-CsprojVersion -MainVersion "1.2.0" -ReleaseVersion "1.1.1"
+        $result | Should -Be "1.2.0"
+    }
+
+    It "Release version higher than main prerelease" {
+        # Main has old beta, release ships newer GA
+        $result = Resolve-CsprojVersion -MainVersion "1.0.0-beta.3" -ReleaseVersion "1.0.0"
+        $result | Should -Be "1.0.0"
+    }
+
+    It "Prerelease on both — higher prerelease wins" {
+        $result = Resolve-CsprojVersion -MainVersion "1.2.0-beta.1" -ReleaseVersion "1.2.0-beta.3"
+        $result | Should -Be "1.2.0-beta.3"
+    }
+
+    It "Major version difference — higher wins" {
+        $result = Resolve-CsprojVersion -MainVersion "2.0.0-beta.1" -ReleaseVersion "1.5.0"
+        $result | Should -Be "2.0.0-beta.1"
     }
 }
