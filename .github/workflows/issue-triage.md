@@ -9,6 +9,7 @@ description: |
 on:
   issues:
     types: [opened]
+  roles: all
   reaction: eyes
 
 permissions: read-all
