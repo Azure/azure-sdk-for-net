@@ -14,8 +14,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class MgmtTypeSpecClient
     {
-        private readonly string _apiVersion;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>

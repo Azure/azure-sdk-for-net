@@ -23189,7 +23189,10 @@
         }
       ],
       "crossLanguageDefinitionId": "MgmtTypeSpecCombined",
-      "apiVersions": [],
+      "apiVersions": [
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "children": [
         {
           "$id": "1797",
