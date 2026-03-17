@@ -7,7 +7,69 @@ import {
   InputClient
 } from "@typespec/http-client-csharp";
 import { NoTarget } from "@typespec/compiler";
+import { UsageFlags } from "@azure-tools/typespec-client-generator-core";
 import { traverseClient } from "./sdk-client-utils.js";
+
+/**
+ * Deduplicates ApiVersionEnum enums in the code model to work around a base generator bug
+ * where multiple enums with the same namespace cause duplicate field names in ClientOptionsProvider,
+ * crashing in ClientProvider.BuildMethods().
+ *
+ * In multi-service scenarios (e.g., Compute has Compute, ComputeDisk, ComputeGallery, ComputeSku),
+ * each service produces its own Versions enum, all with the same namespace. The base generator
+ * creates one API version field per enum, using the namespace to derive the field name — so
+ * identical namespaces produce identical field names, causing a Dictionary duplicate key crash.
+ *
+ * This workaround merges all ApiVersionEnum enums that share the same namespace into a single
+ * enum with the union of all values. The mgmt generator does not use the base generator's
+ * ClientOptionsProvider API version mechanism, so this is safe.
+ *
+ * Tracked by: https://github.com/microsoft/typespec/issues/10055
+ */
+export function deduplicateApiVersionEnums(codeModel: CodeModel): void {
+  const apiVersionEnums = codeModel.enums.filter(
+    (e) => (e.usage & UsageFlags.ApiVersionEnum) !== 0
+  );
+
+  if (apiVersionEnums.length <= 1) {
+    return;
+  }
+
+  // Group ApiVersionEnum enums by namespace
+  const byNamespace = new Map<string, typeof apiVersionEnums>();
+  for (const e of apiVersionEnums) {
+    const group = byNamespace.get(e.namespace);
+    if (group) {
+      group.push(e);
+    } else {
+      byNamespace.set(e.namespace, [e]);
+    }
+  }
+
+  for (const [, group] of byNamespace) {
+    if (group.length <= 1) {
+      continue;
+    }
+
+    // Merge all values into the first enum, keeping unique values by value
+    const primary = group[0];
+    const seenValues = new Set(primary.values.map((v) => String(v.value)));
+    for (let i = 1; i < group.length; i++) {
+      for (const val of group[i].values) {
+        if (!seenValues.has(String(val.value))) {
+          seenValues.add(String(val.value));
+          // Re-parent the enum value to the primary enum
+          const mergedValue = { ...val, enumType: primary };
+          primary.values.push(mergedValue);
+        }
+      }
+    }
+
+    // Remove the duplicate enums from the code model
+    const duplicates = new Set(group.slice(1));
+    codeModel.enums = codeModel.enums.filter((e) => !duplicates.has(e));
+  }
+}
 
 /**
  * Walks the entire client tree in the code model and fixes clients with empty apiVersions.

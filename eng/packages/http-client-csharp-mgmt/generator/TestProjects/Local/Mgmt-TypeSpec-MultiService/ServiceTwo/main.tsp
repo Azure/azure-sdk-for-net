@@ -10,7 +10,7 @@ using TypeSpec.Versioning;
 using Azure.Core;
 using Azure.ResourceManager;
 
-@armProviderNamespace("ServiceOne.Management")
+@armProviderNamespace
 @service(#{
   title: "ServiceTwo",
 })

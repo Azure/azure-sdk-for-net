@@ -20,6 +20,10 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
     [ModelReaderWriterBuildable(typeof(BarListResult))]
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarResource))]
+    [ModelReaderWriterBuildable(typeof(FooData))]
+    [ModelReaderWriterBuildable(typeof(FooListResult))]
+    [ModelReaderWriterBuildable(typeof(FooProperties))]
+    [ModelReaderWriterBuildable(typeof(FooResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureGeneratorMgmtTypeSpecMultiServiceTestsContext : ModelReaderWriterContext

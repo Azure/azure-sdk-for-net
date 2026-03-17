@@ -1,12 +1,11 @@
 import "@azure-tools/typespec-client-generator-core";
-import "./serviceOne.tsp";
-import "./serviceTwo.tsp";
+import "./ServiceOne/main.tsp";
+import "./ServiceTwo/main.tsp";
 
 using Azure.ClientGenerator.Core;
 
-@@client(ServiceOne,
-  {
-    name: "MultiServiceClient",
-    service: [ServiceOne, ServiceTwo],
-  }
-);
+@client({
+  name: "MultiServiceClient",
+  service: [ServiceOne, ServiceTwo],
+})
+namespace MultiServiceCombine;

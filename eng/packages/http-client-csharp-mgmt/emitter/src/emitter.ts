@@ -14,7 +14,10 @@ import { updateClients } from "./resource-detection.js";
 import { DecoratorInfo } from "@azure-tools/typespec-client-generator-core";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { transformSubscriptionIdParameters } from "./subscription-id-transformer.js";
-import { fixClientApiVersions } from "./api-version-fixer.js";
+import {
+  deduplicateApiVersionEnums,
+  fixClientApiVersions
+} from "./api-version-fixer.js";
 
 export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
   context.options["generator-name"] ??= "ManagementClientGenerator";
@@ -31,6 +34,10 @@ export async function $onEmit(context: EmitContext<AzureMgmtEmitterOptions>) {
     // Transform subscriptionId parameters from client scope to method scope
     // This must happen before other transformations that may depend on method parameters
     transformSubscriptionIdParameters(codeModel);
+
+    // Deduplicate ApiVersionEnum enums to work around base generator crash
+    // when multiple services share the same namespace (microsoft/typespec#10055)
+    deduplicateApiVersionEnums(codeModel);
 
     // Fix clients with empty apiVersions by inferring from their methods.
     // This works around a TCGC bug where combined multi-service clients get empty apiVersions.
