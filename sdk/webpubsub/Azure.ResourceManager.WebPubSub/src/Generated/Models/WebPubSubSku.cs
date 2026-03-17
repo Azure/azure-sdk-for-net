@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubSku(string resourceType, BillingInfoSku sku, WebPubSubSkuCapacity capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubSku(ResourceType? resourceType, BillingInfoSku sku, WebPubSubSkuCapacity capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The resource type that this object applies to. </summary>
         [WirePath("resourceType")]
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> The billing information of the resource. </summary>
         [WirePath("sku")]

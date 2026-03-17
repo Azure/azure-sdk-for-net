@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
         /// <returns> A new <see cref="Models.WebPubSubSku"/> instance for mocking. </returns>
-        public static WebPubSubSku WebPubSubSku(string resourceType = default, BillingInfoSku sku = default, WebPubSubSkuCapacity capacity = default)
+        public static WebPubSubSku WebPubSubSku(ResourceType? resourceType = default, BillingInfoSku sku = default, WebPubSubSkuCapacity capacity = default)
         {
             return new WebPubSubSku(resourceType, sku, capacity, additionalBinaryDataProperties: null);
         }
