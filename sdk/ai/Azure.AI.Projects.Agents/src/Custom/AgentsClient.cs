@@ -51,6 +51,22 @@ public partial class AgentsClient
         _apiVersion = options.Version;
     }
 
+    /// <summary> Initializes a new instance of AgentsClient. </summary>
+    /// <param name="endpoint"> Service endpoint. </param>
+    /// <param name="options"> The options for configuring the client. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+    public AgentsClient(Uri endpoint, AgentsClientOptions options)
+    {
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+        options ??= new AgentsClientOptions();
+
+        _endpoint = endpoint;
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+        _apiVersion = options.Version;
+    }
+
+
     /// <summary> Retrieves the agent. </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
