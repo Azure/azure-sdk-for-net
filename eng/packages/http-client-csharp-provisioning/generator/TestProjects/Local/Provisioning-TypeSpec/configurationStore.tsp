@@ -47,7 +47,7 @@ model ConfigurationStoreProperties {
   publicNetworkAccess?: PublicNetworkAccess;
 
   /** The SKU tier of the configuration store. */
-  skuTier?: ConfigurationStoreSkuName;
+  skuTier?: ConfigurationStoreSkuTier;
 
   /** The create mode for the configuration store. */
   createMode?: ConfigurationStoreCreateMode;
@@ -90,11 +90,11 @@ union PublicNetworkAccess {
   Disabled: "Disabled",
 }
 
-/** The SKU name of the configuration store. */
+/** The SKU tier of the configuration store. */
 // Values use underscores (e.g., "Standard_S1") which differ from the PascalCase
 // C# enum member names (e.g., "StandardS1"), verifying that the generator
 // emits [DataMember(Name = "...")] attributes for correct serialization.
-union ConfigurationStoreSkuName {
+union ConfigurationStoreSkuTier {
   string,
 
   /** The free tier. */

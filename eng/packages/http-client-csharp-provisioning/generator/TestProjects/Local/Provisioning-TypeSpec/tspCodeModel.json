@@ -247,8 +247,8 @@
     {
       "$id": "20",
       "kind": "enum",
-      "name": "ConfigurationStoreSkuName",
-      "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreSkuName",
+      "name": "ConfigurationStoreSkuTier",
+      "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreSkuTier",
       "valueType": {
         "$id": "21",
         "kind": "string",
@@ -301,7 +301,7 @@
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
-      "doc": "The SKU name of the configuration store.",
+      "doc": "The SKU tier of the configuration store.",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",

@@ -9,8 +9,8 @@ using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> The SKU name of the configuration store. </summary>
-    public enum ConfigurationStoreSkuName
+    /// <summary> The SKU tier of the configuration store. </summary>
+    public enum ConfigurationStoreSkuTier
     {
         /// <summary> The free tier. </summary>
         Free,

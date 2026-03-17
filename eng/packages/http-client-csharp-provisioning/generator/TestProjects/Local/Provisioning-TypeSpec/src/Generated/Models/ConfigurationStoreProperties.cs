@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<bool> _disableLocalAuth;
         private BackupPolicy _backupPolicy;
         private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
-        private BicepValue<ConfigurationStoreSkuName> _skuTier;
+        private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the SkuTier. </summary>
-        public BicepValue<ConfigurationStoreSkuName> SkuTier
+        public BicepValue<ConfigurationStoreSkuTier> SkuTier
         {
             get
             {
@@ -194,7 +194,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
             _backupPolicy = DefineModelProperty<BackupPolicy>(nameof(BackupPolicy), new string[] { "backupPolicy" });
             _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _skuTier = DefineProperty<ConfigurationStoreSkuName>(nameof(SkuTier), new string[] { "skuTier" });
+            _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
         }
     }
