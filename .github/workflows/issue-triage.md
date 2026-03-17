@@ -159,7 +159,7 @@ Labels classification is distinguished by color. Actively inspect label colors w
 
 ### Excluded Category and Service Labels
 
-The following service labels require human judgment and are never assigned by automatic triage:
+The following labels require human judgment and are never assigned by automatic triage:
 - **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder. 
 - **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control. 
 
