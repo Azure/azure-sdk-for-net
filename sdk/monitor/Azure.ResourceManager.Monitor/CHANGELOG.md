@@ -1,14 +1,20 @@
 # Release History
 
-## 1.4.0-beta.5 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Migrated from Swagger/AutoRest to TypeSpec-based generation
+- Uses TypeSpec spec from `specification/monitor/Microsoft.Monitor.Management`
+
 ### Breaking Changes
 
-### Bugs Fixed
+- API surface is now scoped to Microsoft.Monitor resource provider (AzureMonitorWorkspace and PipelineGroup resources)
+- Previous Microsoft.Insights resources are no longer included in this package
 
 ### Other Changes
+
+- Updated code generation to use `@azure-typespec/http-client-csharp-mgmt` emitter
 
 ## 1.4.0-beta.4 (2025-11-18)
 
