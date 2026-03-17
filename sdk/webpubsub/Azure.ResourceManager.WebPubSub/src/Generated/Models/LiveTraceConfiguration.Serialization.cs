@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteStringValue(Enabled);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -131,14 +131,18 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            string enabled = default;
+            bool? isEnabled = default;
             IList<LiveTraceCategory> categories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("categories"u8))
@@ -160,7 +164,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LiveTraceConfiguration(enabled, categories ?? new ChangeTrackingList<LiveTraceCategory>(), additionalBinaryDataProperties);
+            return new LiveTraceConfiguration(isEnabled, categories ?? new ChangeTrackingList<LiveTraceCategory>(), additionalBinaryDataProperties);
         }
     }
 }

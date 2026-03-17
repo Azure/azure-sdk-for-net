@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -17,22 +18,43 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
+        public LiveTraceCategory()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </param>
-        /// <param name="enabled">
+        /// <param name="isEnabled">
         /// Indicates whether or the live trace category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveTraceCategory(string name, string enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveTraceCategory(string name, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// Gets or sets the live trace category's name.
+        /// Available values: ConnectivityLogs, MessagingLogs.
+        /// Case insensitive.
+        /// </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Indicates whether or the live trace category is enabled.
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </summary>
+        [WirePath("enabled")]
+        public bool? IsEnabled { get; set; }
     }
 }

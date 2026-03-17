@@ -141,6 +141,23 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     null));
         }
 
+        /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+        /// <param name="isEnabled">
+        /// Indicates whether or not enable live trace.
+        /// When it's set to true, live trace client can connect to the service.
+        /// Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you configure in "categories".
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </param>
+        /// <param name="categories"> Gets or sets the list of category configurations. </param>
+        /// <returns> A new <see cref="Models.LiveTraceConfiguration"/> instance for mocking. </returns>
+        public static LiveTraceConfiguration LiveTraceConfiguration(bool? isEnabled = default, IEnumerable<LiveTraceCategory> categories = default)
+        {
+            categories ??= new ChangeTrackingList<LiveTraceCategory>();
+
+            return new LiveTraceConfiguration(isEnabled, categories.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Network ACLs for the resource. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>

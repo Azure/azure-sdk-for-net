@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteStringValue(Enabled);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string name = default;
-            string enabled = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LiveTraceCategory(name, enabled, additionalBinaryDataProperties);
+            return new LiveTraceCategory(name, isEnabled, additionalBinaryDataProperties);
         }
     }
 }

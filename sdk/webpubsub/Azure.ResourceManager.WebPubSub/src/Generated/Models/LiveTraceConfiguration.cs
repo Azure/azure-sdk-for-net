@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -17,7 +18,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LiveTraceConfiguration"/>. </summary>
-        /// <param name="enabled">
+        public LiveTraceConfiguration()
+        {
+            Categories = new ChangeTrackingList<LiveTraceCategory>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LiveTraceConfiguration"/>. </summary>
+        /// <param name="isEnabled">
         /// Indicates whether or not enable live trace.
         /// When it's set to true, live trace client can connect to the service.
         /// Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you configure in "categories".
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="categories"> Gets or sets the list of category configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveTraceConfiguration(string enabled, IList<LiveTraceCategory> categories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveTraceConfiguration(bool? isEnabled, IList<LiveTraceCategory> categories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Categories = categories;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// Indicates whether or not enable live trace.
+        /// When it's set to true, live trace client can connect to the service.
+        /// Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you configure in "categories".
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </summary>
+        [WirePath("enabled")]
+        public bool? IsEnabled { get; set; }
+
+        /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("categories")]
+        public IList<LiveTraceCategory> Categories { get; }
     }
 }
