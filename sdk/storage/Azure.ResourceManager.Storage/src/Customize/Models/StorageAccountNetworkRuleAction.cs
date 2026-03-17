@@ -3,9 +3,8 @@
 
 #nullable disable
 
-// Backward-compat: Hand-authored extensible enum struct preserving the unified
-// StorageAccountNetworkRuleAction type from prior GA. Generator splits into
-// StorageAccountIPRuleAction and StorageAccountVirtualNetworkRuleAction.
+// Backward-compat: Provides constructor, field, static members, Equals/GetHashCode/ToString
+// for the unified StorageAccountNetworkRuleAction type. Generated partial provides operators.
 
 using System;
 using System.ComponentModel;
@@ -28,13 +27,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Allow. </summary>
         public static StorageAccountNetworkRuleAction Allow { get; } = new StorageAccountNetworkRuleAction(AllowValue);
-
-        /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are the same. </summary>
-        public static bool operator ==(StorageAccountNetworkRuleAction left, StorageAccountNetworkRuleAction right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are not the same. </summary>
-        public static bool operator !=(StorageAccountNetworkRuleAction left, StorageAccountNetworkRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountNetworkRuleAction"/>. </summary>
-        public static implicit operator StorageAccountNetworkRuleAction(string value) => new StorageAccountNetworkRuleAction(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

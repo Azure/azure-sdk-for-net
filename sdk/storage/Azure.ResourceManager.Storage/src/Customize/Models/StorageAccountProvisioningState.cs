@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward-compat (Compile Remove replacement): Hand-authored extensible struct replacing
-// generated enum to preserve older GA naming.
+// Backward-compat: Provides constructor, field, static members, Equals/GetHashCode/ToString
+// for the extensible struct. Generated partial provides operators (==, !=, implicit).
 
 #nullable disable
 
@@ -34,9 +34,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Succeeded. </summary>
         public static StorageAccountProvisioningState Succeeded { get; } = new StorageAccountProvisioningState(SucceededValue);
 
-        /// <summary> Converts a string to a <see cref="StorageAccountProvisioningState"/>. </summary>
-        public static implicit operator StorageAccountProvisioningState(string value) => new StorageAccountProvisioningState(value);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountProvisioningState other && Equals(other);
@@ -50,11 +47,5 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <inheritdoc />
         public override string ToString() => _value;
-
-        /// <summary> Determines if two <see cref="StorageAccountProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(StorageAccountProvisioningState left, StorageAccountProvisioningState right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="StorageAccountProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(StorageAccountProvisioningState left, StorageAccountProvisioningState right) => !left.Equals(right);
     }
 }

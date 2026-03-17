@@ -12,11 +12,6 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
     public readonly partial struct StorageAccountProvisioningState : IEquatable<StorageAccountProvisioningState>
     {
-        private const string ResolvingDNSValue = "ResolvingDNS";
-
-        /// <summary> Gets the ResolvingDNS. </summary>
-        public static StorageAccountProvisioningState ResolvingDNS { get; } = new StorageAccountProvisioningState(ResolvingDNSValue);
-
         /// <summary> Determines if two <see cref="StorageAccountProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

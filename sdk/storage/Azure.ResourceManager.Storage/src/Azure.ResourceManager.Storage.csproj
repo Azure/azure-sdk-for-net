@@ -17,12 +17,5 @@
     <!-- Change internal string ResourceType to public Azure.Core.ResourceType for backward compat -->
     <!-- Add setter to Rules property for backward compat -->
     <!-- Replace Action property type from StorageAccountIPRuleAction/StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction for backward compat -->
-    <Compile Remove="Generated/Models/StorageAccountNetworkRuleAction.cs" />
-    <Compile Remove="Generated/Models/StorageAccountProvisioningState.cs" />
-    <Compile Remove="Generated/Models/StorageAccountProvisioningState.Serialization.cs" />
-    <Compile Remove="Generated/StoragePrivateEndpointConnectionData.cs" />
-    <Compile Remove="Generated/Models/StorageAccountIPRuleAction.cs" />
-    <Compile Remove="Generated/Models/StorageAccountVirtualNetworkRuleAction.cs" />
-    <Compile Remove="Generated/Models/StorageAccountNameAvailabilityContent.cs" />
   </ItemGroup>
 </Project>
