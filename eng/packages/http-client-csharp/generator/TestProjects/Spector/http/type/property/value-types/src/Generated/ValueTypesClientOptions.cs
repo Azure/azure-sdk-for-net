@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace _Type.Property.ValueTypes
 {
     public partial class ValueTypesClientOptions : ClientOptions
     {
         public ValueTypesClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal ValueTypesClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

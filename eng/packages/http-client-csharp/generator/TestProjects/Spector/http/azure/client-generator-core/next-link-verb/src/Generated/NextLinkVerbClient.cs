@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
 using Azure.Core.Pipeline;
@@ -19,9 +17,6 @@ namespace Specs.Azure.ClientGenerator.Core.NextLinkVerb
         public NextLinkVerbClient() : this(new Uri("http://localhost:3000"), new NextLinkVerbClientOptions()) => throw null;
 
         public NextLinkVerbClient(Uri endpoint, NextLinkVerbClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public NextLinkVerbClient(NextLinkVerbClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

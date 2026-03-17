@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -25,9 +23,6 @@ namespace Authentication.OAuth2
         public OAuth2Client(TokenCredential credential, OAuth2ClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
 
         public OAuth2Client(Uri endpoint, TokenCredential credential, OAuth2ClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public OAuth2Client(OAuth2ClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Authentication.Union
 {
     public partial class UnionClientOptions : ClientOptions
     {
         public UnionClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal UnionClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

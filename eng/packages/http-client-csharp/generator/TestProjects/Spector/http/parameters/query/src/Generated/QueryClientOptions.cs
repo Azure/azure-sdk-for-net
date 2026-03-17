@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Parameters.Query
 {
     public partial class QueryClientOptions : ClientOptions
     {
         public QueryClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal QueryClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

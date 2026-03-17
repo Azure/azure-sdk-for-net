@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Payload.Xml
 {
     public partial class XmlClientOptions : ClientOptions
     {
         public XmlClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal XmlClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

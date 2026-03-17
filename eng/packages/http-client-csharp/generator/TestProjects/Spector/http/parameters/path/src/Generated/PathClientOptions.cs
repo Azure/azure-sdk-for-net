@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Parameters.Path
 {
     public partial class PathClientOptions : ClientOptions
     {
         public PathClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal PathClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

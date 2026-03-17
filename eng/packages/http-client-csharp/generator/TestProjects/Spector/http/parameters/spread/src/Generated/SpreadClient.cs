@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Parameters.Spread._Alias;
 using Parameters.Spread._Model;
@@ -19,9 +17,6 @@ namespace Parameters.Spread
         public SpreadClient() : this(new Uri("http://localhost:3000"), new SpreadClientOptions()) => throw null;
 
         public SpreadClient(Uri endpoint, SpreadClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public SpreadClient(SpreadClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

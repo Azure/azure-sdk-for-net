@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToRootClient
 {
     public partial class MoveToRootClientOptions : ClientOptions
     {
         public MoveToRootClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal MoveToRootClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Encode.Datetime
 {
     public partial class DatetimeClientOptions : ClientOptions
     {
         public DatetimeClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal DatetimeClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

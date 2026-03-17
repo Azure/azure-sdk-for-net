@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace _Type.Scalar
 {
     public partial class ScalarClientOptions : ClientOptions
     {
         public ScalarClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal ScalarClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

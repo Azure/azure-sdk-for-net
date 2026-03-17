@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.SpecialHeaders.XmsClientRequestId
 {
     public partial class XmsClientRequestIdClientOptions : ClientOptions
     {
         public XmsClientRequestIdClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal XmsClientRequestIdClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

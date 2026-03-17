@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.Core.Scalar
@@ -17,9 +15,6 @@ namespace Specs.Azure.Core.Scalar
         public ScalarClient() : this(new Uri("http://localhost:3000"), new ScalarClientOptions()) => throw null;
 
         public ScalarClient(Uri endpoint, ScalarClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public ScalarClient(ScalarClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

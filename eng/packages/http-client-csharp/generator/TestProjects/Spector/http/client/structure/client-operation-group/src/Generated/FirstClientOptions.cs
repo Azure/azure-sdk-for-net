@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Client.Structure.ClientOperationGroup
 {
     public partial class FirstClientOptions : ClientOptions
     {
         public FirstClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal FirstClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

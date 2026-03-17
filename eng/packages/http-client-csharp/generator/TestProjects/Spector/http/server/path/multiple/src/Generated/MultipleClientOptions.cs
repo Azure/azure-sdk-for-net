@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Server.Path.Multiple
 {
@@ -16,9 +14,6 @@ namespace Server.Path.Multiple
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
         public MultipleClientOptions(ServiceVersion version = LatestVersion) => throw null;
-
-        [Experimental("SCME0002")]
-        internal MultipleClientOptions(IConfigurationSection section) : base(section) => throw null;
 
         public enum ServiceVersion
         {

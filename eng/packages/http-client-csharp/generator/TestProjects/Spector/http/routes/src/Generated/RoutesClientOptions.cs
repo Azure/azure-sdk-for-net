@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Routes
 {
     public partial class RoutesClientOptions : ClientOptions
     {
         public RoutesClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal RoutesClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

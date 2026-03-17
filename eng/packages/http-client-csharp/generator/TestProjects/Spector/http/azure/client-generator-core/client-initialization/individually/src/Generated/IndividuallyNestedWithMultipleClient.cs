@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,9 +22,6 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
         public IndividuallyNestedWithMultipleClient(string name, string region, IndividuallyNestedWithMultipleClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
 
         public IndividuallyNestedWithMultipleClient(Uri endpoint, string name, string region, IndividuallyNestedWithMultipleClientOptions options) : this(null, endpoint, name, region, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public IndividuallyNestedWithMultipleClient(IndividuallyNestedWithMultipleClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

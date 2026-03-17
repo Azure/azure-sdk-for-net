@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Encode.Datetime._Header;
 using Encode.Datetime._Property;
@@ -21,9 +19,6 @@ namespace Encode.Datetime
         public DatetimeClient() : this(new Uri("http://localhost:3000"), new DatetimeClientOptions()) => throw null;
 
         public DatetimeClient(Uri endpoint, DatetimeClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public DatetimeClient(DatetimeClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

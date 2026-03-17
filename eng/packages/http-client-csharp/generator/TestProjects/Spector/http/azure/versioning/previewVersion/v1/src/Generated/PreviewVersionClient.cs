@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,9 +19,6 @@ namespace Specs.Azure.Versioning.PreviewVersion
         public PreviewVersionClient() : this(new Uri("http://localhost:3000"), new PreviewVersionClientOptions()) => throw null;
 
         public PreviewVersionClient(Uri endpoint, PreviewVersionClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public PreviewVersionClient(PreviewVersionClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -25,9 +23,6 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
         public MultipleParamsClient(string name, string region, MultipleParamsClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
 
         public MultipleParamsClient(Uri endpoint, string name, string region, MultipleParamsClientOptions options) : this(null, endpoint, name, region, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public MultipleParamsClient(MultipleParamsClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

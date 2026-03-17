@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Versioning.RenamedFrom
 {
@@ -16,9 +14,6 @@ namespace Versioning.RenamedFrom
         private const ServiceVersion LatestVersion = ServiceVersion.V2;
 
         public RenamedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
-
-        [Experimental("SCME0002")]
-        internal RenamedFromClientOptions(IConfigurationSection section) : base(section) => throw null;
 
         public enum ServiceVersion
         {

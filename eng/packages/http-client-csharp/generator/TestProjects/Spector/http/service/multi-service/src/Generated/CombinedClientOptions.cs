@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Service.MultiService.Combined
 {
@@ -17,9 +15,6 @@ namespace Service.MultiService.Combined
         private const ServiceBVersion LatestServiceBVersion = ServiceBVersion.Vbv2;
 
         public CombinedClientOptions(ServiceAVersion serviceAVersion = LatestServiceAVersion, ServiceBVersion serviceBVersion = LatestServiceBVersion) => throw null;
-
-        [Experimental("SCME0002")]
-        internal CombinedClientOptions(IConfigurationSection section) : base(section) => throw null;
 
         public enum ServiceAVersion
         {

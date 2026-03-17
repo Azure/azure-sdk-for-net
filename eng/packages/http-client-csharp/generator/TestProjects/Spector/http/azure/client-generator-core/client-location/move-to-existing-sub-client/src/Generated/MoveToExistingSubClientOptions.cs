@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClient
 {
     public partial class MoveToExistingSubClientOptions : ClientOptions
     {
         public MoveToExistingSubClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal MoveToExistingSubClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

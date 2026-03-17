@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Parameters.Spread
 {
     public partial class SpreadClientOptions : ClientOptions
     {
         public SpreadClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal SpreadClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

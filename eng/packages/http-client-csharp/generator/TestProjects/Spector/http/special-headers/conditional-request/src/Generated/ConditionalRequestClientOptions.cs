@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace SpecialHeaders.ConditionalRequest
 {
     public partial class ConditionalRequestClientOptions : ClientOptions
     {
         public ConditionalRequestClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal ConditionalRequestClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

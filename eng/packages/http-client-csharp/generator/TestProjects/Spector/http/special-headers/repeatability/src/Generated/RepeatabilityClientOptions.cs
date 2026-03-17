@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace SpecialHeaders.Repeatability
 {
     public partial class RepeatabilityClientOptions : ClientOptions
     {
         public RepeatabilityClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal RepeatabilityClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

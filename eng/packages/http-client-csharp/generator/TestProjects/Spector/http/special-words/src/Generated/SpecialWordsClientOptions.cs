@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace SpecialWords
 {
     public partial class SpecialWordsClientOptions : ClientOptions
     {
         public SpecialWordsClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal SpecialWordsClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -23,9 +21,6 @@ namespace Versioning.Removed
         public RemovedClient(Uri endpoint) : this(endpoint, new RemovedClientOptions()) => throw null;
 
         public RemovedClient(Uri endpoint, RemovedClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public RemovedClient(RemovedClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,9 +22,6 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
         public ParamAliasClient(string blobName, string blob, ParamAliasClientOptions options) : this(new Uri("http://localhost:3000"), blobName, blob, options) => throw null;
 
         public ParamAliasClient(Uri endpoint, string blobName, string blob, ParamAliasClientOptions options) : this(null, endpoint, blobName, blob, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public ParamAliasClient(ParamAliasClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

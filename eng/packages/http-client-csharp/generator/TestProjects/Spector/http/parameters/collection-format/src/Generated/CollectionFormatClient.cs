@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Parameters.CollectionFormat._Header;
 using Parameters.CollectionFormat._Query;
@@ -19,9 +17,6 @@ namespace Parameters.CollectionFormat
         public CollectionFormatClient() : this(new Uri("http://localhost:3000"), new CollectionFormatClientOptions()) => throw null;
 
         public CollectionFormatClient(Uri endpoint, CollectionFormatClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public CollectionFormatClient(CollectionFormatClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

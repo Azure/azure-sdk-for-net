@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Service.MultiService.ServiceA;
 using Service.MultiService.ServiceB;
@@ -19,9 +17,6 @@ namespace Service.MultiService.Combined
         public CombinedClient() : this(new Uri("http://localhost:3000"), new CombinedClientOptions()) => throw null;
 
         public CombinedClient(Uri endpoint, CombinedClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public CombinedClient(CombinedClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

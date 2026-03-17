@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Documentation
 {
     public partial class DocumentationClientOptions : ClientOptions
     {
         public DocumentationClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal DocumentationClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

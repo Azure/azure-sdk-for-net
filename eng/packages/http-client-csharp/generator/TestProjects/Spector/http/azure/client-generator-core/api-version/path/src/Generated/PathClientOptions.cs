@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Client.AlternateApiVersion.Service.Path
 {
@@ -16,9 +14,6 @@ namespace Client.AlternateApiVersion.Service.Path
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
 
         public PathClientOptions(ServiceVersion version = LatestVersion) => throw null;
-
-        [Experimental("SCME0002")]
-        internal PathClientOptions(IConfigurationSection section) : base(section) => throw null;
 
         public enum ServiceVersion
         {

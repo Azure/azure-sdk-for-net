@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Versioning.ReturnTypeChangedFrom
 {
@@ -16,9 +14,6 @@ namespace Versioning.ReturnTypeChangedFrom
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         public ReturnTypeChangedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
-
-        [Experimental("SCME0002")]
-        internal ReturnTypeChangedFromClientOptions(IConfigurationSection section) : base(section) => throw null;
 
         public enum ServiceVersion
         {

@@ -64,20 +64,20 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
 
             if (_hasKeyAuth)
             {
-                // key auth should have the following fields: AuthorizationHeader, _keyCredential
+                // key auth should have the AuthorizationHeader const field
+                // (credentials are now passed directly to the pipeline policy in the constructor initializer)
                 AssertHasFields(clientProvider, new List<ExpectedFieldProvider>
                 {
                     new(FieldModifiers.Private | FieldModifiers.Const, new CSharpType(typeof(string)), "AuthorizationHeader"),
-                    new(FieldModifiers.Private | FieldModifiers.ReadOnly, new CSharpType(typeof(AzureKeyCredential)), "_keyCredential")
                 });
             }
             if (_hasOAuth2)
             {
-                // oauth2 auth should have the following fields: AuthorizationScopes, _tokenCredential
+                // oauth2 auth should have the AuthorizationScopes field
+                // (credentials are now passed directly to the pipeline policy in the constructor initializer)
                 AssertHasFields(clientProvider, new List<ExpectedFieldProvider>
                 {
                     new(FieldModifiers.Private | FieldModifiers.Static | FieldModifiers.ReadOnly, new CSharpType(typeof(string[])), "AuthorizationScopes"),
-                    new(FieldModifiers.Private | FieldModifiers.ReadOnly, new CSharpType(typeof(TokenCredential)), "_tokenCredential"),
                 });
             }
         }

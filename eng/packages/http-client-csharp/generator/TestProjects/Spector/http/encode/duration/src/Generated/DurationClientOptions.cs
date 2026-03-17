@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Encode.Duration
 {
     public partial class DurationClientOptions : ClientOptions
     {
         public DurationClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal DurationClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }

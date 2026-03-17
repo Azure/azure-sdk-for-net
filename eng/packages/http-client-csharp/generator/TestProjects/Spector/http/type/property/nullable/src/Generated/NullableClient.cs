@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.Nullable
@@ -17,9 +15,6 @@ namespace _Type.Property.Nullable
         public NullableClient() : this(new Uri("http://localhost:3000"), new NullableClientOptions()) => throw null;
 
         public NullableClient(Uri endpoint, NullableClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public NullableClient(NullableClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

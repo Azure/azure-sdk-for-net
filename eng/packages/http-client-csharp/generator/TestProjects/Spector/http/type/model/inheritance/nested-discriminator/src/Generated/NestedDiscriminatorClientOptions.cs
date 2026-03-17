@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public partial class NestedDiscriminatorClientOptions : ClientOptions
     {
         public NestedDiscriminatorClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal NestedDiscriminatorClientOptions(IConfigurationSection section) : base(section) => throw null;
     }
 }
