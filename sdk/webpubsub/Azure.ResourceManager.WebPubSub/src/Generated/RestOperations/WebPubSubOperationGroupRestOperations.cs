@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckWebPubSubNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckWebPubSubNameAvailabilityRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.SignalRService/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             if (_apiVersion != null)
             {

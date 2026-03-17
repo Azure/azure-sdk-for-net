@@ -432,30 +432,20 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuList>> GetReplicaSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubAvailableSku> GetReplicaSkusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _replicasClientDiagnostics.CreateScope("WebPubSubReplicaResource.GetReplicaSkus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _replicasRestClient.CreateGetReplicaSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SkuList> response = Response.FromValue(SkuList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ReplicasGetReplicaSkusAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
         }
 
         /// <summary>
@@ -480,30 +470,20 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuList> GetReplicaSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubAvailableSku> GetReplicaSkus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _replicasClientDiagnostics.CreateScope("WebPubSubReplicaResource.GetReplicaSkus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _replicasRestClient.CreateGetReplicaSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SkuList> response = Response.FromValue(SkuList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ReplicasGetReplicaSkusCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
         }
 
         /// <summary>

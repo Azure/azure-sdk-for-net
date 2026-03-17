@@ -12,22 +12,22 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes an available sku.". </summary>
-    public partial class WebPubSubSku
+    public partial class WebPubSubAvailableSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSubSku"/>. </summary>
-        internal WebPubSubSku()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubAvailableSku"/>. </summary>
+        internal WebPubSubAvailableSku()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSubSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubAvailableSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubSku(string resourceType, BillingInfoSku sku, WebPubSubSkuCapacity capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubAvailableSku(string resourceType, BillingInfoSku sku, WebPubSubSkuCapacity capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Sku = sku;

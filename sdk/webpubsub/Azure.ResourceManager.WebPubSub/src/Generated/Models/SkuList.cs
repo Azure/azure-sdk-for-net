@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of <see cref="SkuList"/>. </summary>
         internal SkuList()
         {
-            Value = new ChangeTrackingList<WebPubSubSku>();
+            Value = new ChangeTrackingList<WebPubSubAvailableSku>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SkuList"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// It's null for now, added for future use.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuList(IReadOnlyList<WebPubSubSku> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuList(IReadOnlyList<WebPubSubAvailableSku> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The list of skus available for the resource. </summary>
         [WirePath("value")]
-        public IReadOnlyList<WebPubSubSku> Value { get; }
+        public IReadOnlyList<WebPubSubAvailableSku> Value { get; }
 
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).

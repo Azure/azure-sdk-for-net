@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.SignalRService/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/usages", false);
             if (_apiVersion != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub
     {
         private readonly UsagesOperationGroup _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of UsagesOperationGroupGetUsagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroup client, Guid subscriptionId, string location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroup client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

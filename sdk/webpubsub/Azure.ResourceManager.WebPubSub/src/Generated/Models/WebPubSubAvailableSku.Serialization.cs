@@ -14,51 +14,51 @@ using Azure.ResourceManager.WebPubSub;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes an available sku.". </summary>
-    public partial class WebPubSubSku : IJsonModel<WebPubSubSku>
+    public partial class WebPubSubAvailableSku : IJsonModel<WebPubSubAvailableSku>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebPubSubSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual WebPubSubAvailableSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubAvailableSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWebPubSubSku(document.RootElement, options);
+                        return DeserializeWebPubSubAvailableSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubAvailableSku)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubAvailableSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWebPubSubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubAvailableSku)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebPubSubSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WebPubSubAvailableSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WebPubSubSku IPersistableModel<WebPubSubSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WebPubSubAvailableSku IPersistableModel<WebPubSubAvailableSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebPubSubSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WebPubSubAvailableSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WebPubSubSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WebPubSubAvailableSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubAvailableSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubAvailableSku)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WebPubSubSku IJsonModel<WebPubSubSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WebPubSubAvailableSku IJsonModel<WebPubSubAvailableSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebPubSubSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual WebPubSubAvailableSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubAvailableSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubAvailableSku)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWebPubSubSku(document.RootElement, options);
+            return DeserializeWebPubSubAvailableSku(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebPubSubSku DeserializeWebPubSubSku(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebPubSubAvailableSku DeserializeWebPubSubAvailableSku(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebPubSubSku(resourceType, sku, capacity, additionalBinaryDataProperties);
+            return new WebPubSubAvailableSku(resourceType, sku, capacity, additionalBinaryDataProperties);
         }
     }
 }

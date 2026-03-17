@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Checks that the resource name is valid and is not already in use.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailabilityAsync(string, WebPubSubNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailabilityAsync(AzureLocation, WebPubSubNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Checks that the resource name is valid and is not already in use.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability(string, WebPubSubNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability(AzureLocation, WebPubSubNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, string location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// List resource usage quotas by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetUsagesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetUsagesAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// List resource usage quotas by location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetUsages(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetUsages(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

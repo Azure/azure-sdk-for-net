@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// It's null for now, added for future use.
         /// </param>
         /// <returns> A new <see cref="Models.SkuList"/> instance for mocking. </returns>
-        public static SkuList SkuList(IEnumerable<WebPubSubSku> value = default, string nextLink = default)
+        public static SkuList SkuList(IEnumerable<WebPubSubAvailableSku> value = default, string nextLink = default)
         {
-            value ??= new ChangeTrackingList<WebPubSubSku>();
+            value ??= new ChangeTrackingList<WebPubSubAvailableSku>();
 
             return new SkuList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
-        /// <returns> A new <see cref="Models.WebPubSubSku"/> instance for mocking. </returns>
-        public static WebPubSubSku WebPubSubSku(string resourceType = default, BillingInfoSku sku = default, WebPubSubSkuCapacity capacity = default)
+        /// <returns> A new <see cref="Models.WebPubSubAvailableSku"/> instance for mocking. </returns>
+        public static WebPubSubAvailableSku WebPubSubAvailableSku(string resourceType = default, BillingInfoSku sku = default, WebPubSubSkuCapacity capacity = default)
         {
-            return new WebPubSubSku(resourceType, sku, capacity, additionalBinaryDataProperties: null);
+            return new WebPubSubAvailableSku(resourceType, sku, capacity, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes scaling information of a sku. </summary>
@@ -529,6 +529,50 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static SignalRServiceUsageName SignalRServiceUsageName(string value = default, string localizedValue = default)
         {
             return new SignalRServiceUsageName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
+        /// <param name="hostName"> FQDN of the service instance. </param>
+        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
+        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
+        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
+        /// <param name="isClientCertEnabled"> TLS settings for the resource. </param>
+        /// <param name="hostNamePrefix"> Deprecated. </param>
+        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="networkAcls"> Network ACLs for the resource. </param>
+        /// <param name="publicNetworkAccess">
+        /// Enable or disable public network access. Default to "Enabled".
+        ///             When it's Enabled, network ACLs still apply.
+        ///             When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// </param>
+        /// <param name="isLocalAuthDisabled">
+        /// DisableLocalAuth
+        ///             Enable or disable local auth with AccessKey
+        ///             When set as true, connection with AccessKey=xxx won't work.
+        /// </param>
+        /// <param name="isAadAuthDisabled">
+        /// DisableLocalAuth
+        ///             Enable or disable aad auth
+        ///             When set as true, connection with AuthType=aad won't work.
+        /// </param>
+        /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WebPubSubData WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, bool? isClientCertEnabled, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, IEnumerable<ResourceLogCategory> resourceLogCategories, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled)
+        {
+            return WebPubSubData(id, name, resourceType, systemData, tags, location, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections, sharedPrivateLinkResources, hostNamePrefix, liveTraceConfiguration, networkAcls, applicationFirewall: default, publicNetworkAccess, isLocalAuthDisabled, isAadAuthDisabled, isRegionEndpointEnabled: default, resourceStopped: default, isClientCertEnabled, resourceLogCategories, socketIOServiceMode: default, sku, kind: default, identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/>. </summary>
