@@ -138,7 +138,7 @@ Note: Azure organization members are expected to have public membership per the 
 
 ## Step 3: Predict Labels
 
-All issues reaching this step are customer-reported
+All issues reaching this step are treated as customer-reported (`is_customer = true`) for label prediction
 
 Analyze the issue title and body to determine appropriate labels
 
