@@ -428,13 +428,13 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSubPrivateLink"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebPubSubPrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebPubSubPrivateLink> GetWebPubSubPrivateLinksAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetAllAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetWebPubSubPrivateLinksAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -460,13 +460,13 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebPubSubPrivateLink"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebPubSubPrivateLink> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<WebPubSubPrivateLink> GetWebPubSubPrivateLinks(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubResourcesGetAllCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetWebPubSubPrivateLinksCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>

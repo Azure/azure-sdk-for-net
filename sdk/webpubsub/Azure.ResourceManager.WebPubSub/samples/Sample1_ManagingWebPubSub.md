@@ -50,8 +50,10 @@ IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
 IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
 deny.Add(new WebPubSubRequestType("RESTAPI"));
 PublicNetworkAcls publicNetwork = new PublicNetworkAcls();
-foreach (var item in allow) publicNetwork.Allow.Add(item);
-foreach (var item in deny) publicNetwork.Deny.Add(item);
+foreach (var item in allow)
+    publicNetwork.Allow.Add(item);
+foreach (var item in deny)
+    publicNetwork.Deny.Add(item);
 IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
 List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -71,8 +73,10 @@ WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
     LiveTraceConfiguration = new LiveTraceConfiguration() { IsEnabled = true },
     NetworkAcls = networkAcls,
 };
-foreach (var cat in categories) data.LiveTraceConfiguration.Categories.Add(cat);
-foreach (var cat in resourceLogCategory) data.ResourceLogCategories.Add(cat);
+foreach (var cat in categories)
+    data.LiveTraceConfiguration.Categories.Add(cat);
+foreach (var cat in resourceLogCategory)
+    data.ResourceLogCategories.Add(cat);
 
 WebPubSubResource webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(WaitUntil.Started, webPubSubName, data)).WaitForCompletionAsync();
 ```

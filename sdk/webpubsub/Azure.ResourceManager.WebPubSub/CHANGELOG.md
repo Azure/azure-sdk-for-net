@@ -4,26 +4,13 @@
 
 ### Features Added
 
-- Upgraded API version to `2024-03-01`
-- Added support for `Replica` resources
-- Added support for `CustomCertificate` resources
-- Added support for `CustomDomain` resources
-- Added `ApplicationFirewallSettings`, `EventListener`, `EventNameFilter`, and traffic throttle models
+- Upgraded API version to `2025-08-01-preview`.
 
 ### Breaking Changes
-
-- Migrated from Swagger/AutoRest to TypeSpec-based generation
-- Some model types have been renamed or restructured as part of the TypeSpec migration
-- `ManagedServiceIdentity` on `WebPubSubData.Identity` is now `ManagedIdentity`
-- Some properties that were `ResourceIdentifier` are now `string`
-- `PrivateEndpointConnectionResource` and `PrivateEndpointConnectionCollection` no longer have `WebPubSub` prefix
-- `WebPubSubSharedPrivateLinkResourceCollection` replaces `WebPubSubSharedPrivateLinkCollection`
 
 ### Bugs Fixed
 
 ### Other Changes
-
-- API compatibility version temporarily removed during migration
 
 ## 1.2.0 (2025-06-13)
 

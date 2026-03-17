@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                SerializationIsEnabled(writer, options);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -138,11 +138,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isEnabled = prop.Value.GetBoolean();
+                    DeserializeIsEnabled(prop, ref isEnabled);
                     continue;
                 }
                 if (prop.NameEquals("categories"u8))

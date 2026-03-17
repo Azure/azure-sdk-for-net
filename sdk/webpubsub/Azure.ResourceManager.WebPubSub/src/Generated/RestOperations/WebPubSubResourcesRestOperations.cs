@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateGetWebPubSubPrivateLinksRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WebPubSub
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        internal HttpMessage CreateNextGetWebPubSubPrivateLinksRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

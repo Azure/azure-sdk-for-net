@@ -14,7 +14,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal partial class WebPubSubResourcesGetAllCollectionResultOfT : Pageable<WebPubSubPrivateLink>
+    internal partial class WebPubSubResourcesGetWebPubSubPrivateLinksCollectionResultOfT : Pageable<WebPubSubPrivateLink>
     {
         private readonly WebPubSubResources _client;
         private readonly Guid _subscriptionId;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.WebPubSub
         private readonly string _resourceName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of WebPubSubResourcesGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of WebPubSubResourcesGetWebPubSubPrivateLinksCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The WebPubSubResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public WebPubSubResourcesGetAllCollectionResultOfT(WebPubSubResources client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public WebPubSubResourcesGetWebPubSubPrivateLinksCollectionResultOfT(WebPubSubResources client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.WebPubSub
             _context = context;
         }
 
-        /// <summary> Gets the pages of WebPubSubResourcesGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WebPubSubResourcesGetWebPubSubPrivateLinksCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WebPubSubResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of WebPubSubResourcesGetWebPubSubPrivateLinksCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<WebPubSubPrivateLink>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WebPubSubResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWebPubSubPrivateLinksRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetWebPubSubPrivateLinksRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("WebPubSubResource.GetWebPubSubPrivateLinks");
             scope.Start();
             try
             {
