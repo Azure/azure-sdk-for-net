@@ -146,8 +146,6 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: null,
-                disableCacheReprocessingChangeDetection: null,
                 cancellationToken);
         }
 
@@ -178,8 +176,6 @@ namespace Azure.Search.Documents.Indexes
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: null,
-                disableCacheReprocessingChangeDetection: null,
                 cancellationToken).ConfigureAwait(false);
         }
 

@@ -246,13 +246,7 @@ namespace Azure.Search.Documents.Models
                         foreach (JsonElement facetValue in facetObject.Value.EnumerateArray())
                         {
                             Dictionary<string, object> facetValues = new Dictionary<string, object>();
-                            IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
                             long? facetCount = null;
-                            double? facetSum = null;
-                            double? facetAvg = null;
-                            double? facetMin = null;
-                            double? facetMax = null;
-                            long? facetCardinality = null;
                             foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
                                 if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
@@ -262,74 +256,13 @@ namespace Azure.Search.Documents.Models
                                         facetCount = facetProperty.Value.GetInt64();
                                     }
                                 }
-                                else if (facetProperty.NameEquals(Constants.SumKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetSum = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.AvgKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetAvg = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.MinKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetMin = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.MaxKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetMax = facetProperty.Value.GetDouble();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.CardinalityKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
-                                    {
-                                        facetCardinality = facetProperty.Value.GetInt64();
-                                    }
-                                }
-                                else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
-                                {
-                                    if (facetProperty.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
-                                    foreach (var property0 in facetProperty.Value.EnumerateObject())
-                                    {
-                                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                                        {
-                                            dictionary.Add(property0.Name, null);
-                                        }
-                                        else
-                                        {
-                                            List<FacetResult> array = new List<FacetResult>();
-                                            foreach (var item in property0.Value.EnumerateArray())
-                                            {
-                                                array.Add(FacetResult.DeserializeFacetResult(item, ModelReaderWriterOptions.Json));
-                                            }
-                                            dictionary.Add(property0.Name, array);
-                                        }
-                                    }
-                                    searchFacets = dictionary;
-                                    continue;
-                                }
                                 else
                                 {
                                     object value = facetProperty.Value.GetSearchObject();
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, facetAvg, facetMin, facetMax, facetSum, facetCardinality, searchFacets, facetValues.ToBinaryDataDictionary()));
+                            facets.Add(new FacetResult(facetCount, facetValues.ToBinaryDataDictionary()));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;
@@ -362,11 +295,6 @@ namespace Azure.Search.Documents.Models
                         answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue, ModelReaderWriterOptions.Json));
                     }
                     results.SemanticSearch.Answers = answerResults;
-                }
-                if (prop.NameEquals(Constants.SearchSemanticQueryRewritesResultTypeKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind != JsonValueKind.Null)
-                {
-                    results.SemanticSearch.SemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(prop.Value.GetString());
                 }
                 if (prop.NameEquals(Constants.SearchDebugKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
@@ -404,9 +332,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Type of partial response that was returned for a semantic search request. </summary>
         public SemanticSearchResultsType? ResultsType { get; internal set; }
-
-        /// <summary> Type of query rewrite that was used to retrieve documents. </summary>
-        public SemanticQueryRewritesResultType? SemanticQueryRewritesResultType { get; internal set; }
     }
 
     /// <summary>
@@ -665,25 +590,6 @@ namespace Azure.Search.Documents.Models
                 Answers = answers,
                 ErrorReason = errorReason,
                 ResultsType = resultsType
-            };
-
-        /// <summary> Initializes a new instance of <see cref="Models.SemanticSearchResults"/>. </summary>
-        /// <param name="answers"> The answers query results for the search operation. </param>
-        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
-        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
-        /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
-        /// <returns> A new <see cref="Models.SemanticSearchResults"/> instance for mocking. </returns>
-        public static SemanticSearchResults SemanticSearchResults(
-            IReadOnlyList<QueryAnswerResult> answers,
-            SemanticErrorReason? errorReason,
-            SemanticSearchResultsType? resultsType,
-            SemanticQueryRewritesResultType? semanticQueryRewritesResultType) =>
-            new SemanticSearchResults()
-            {
-                Answers = answers,
-                ErrorReason = errorReason,
-                ResultsType = resultsType,
-                SemanticQueryRewritesResultType = semanticQueryRewritesResultType
             };
 
         /// <summary> Initializes a new instance of SearchResultsPage. </summary>

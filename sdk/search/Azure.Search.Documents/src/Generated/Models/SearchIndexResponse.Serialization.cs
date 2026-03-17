@@ -196,16 +196,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("vectorSearch"u8);
                 writer.WriteObjectValue(VectorSearch, options);
             }
-            if (Optional.IsDefined(PermissionFilterOption))
-            {
-                writer.WritePropertyName("permissionFilterOption"u8);
-                writer.WriteStringValue(PermissionFilterOption.Value.ToString());
-            }
-            if (Optional.IsDefined(PurviewEnabled))
-            {
-                writer.WritePropertyName("purviewEnabled"u8);
-                writer.WriteBooleanValue(PurviewEnabled.Value);
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -269,8 +259,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SimilarityAlgorithm similarity = default;
             SemanticSearch semantic = default;
             VectorSearch vectorSearch = default;
-            SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool? purviewEnabled = default;
             string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -451,26 +439,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearch = VectorSearch.DeserializeVectorSearch(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("permissionFilterOption"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        permissionFilterOption = null;
-                        continue;
-                    }
-                    permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("purviewEnabled"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        purviewEnabled = null;
-                        continue;
-                    }
-                    purviewEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
                     eTag = prop.Value.GetString();
@@ -498,8 +466,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 similarity,
                 semantic,
                 vectorSearch,
-                permissionFilterOption,
-                purviewEnabled,
                 eTag,
                 additionalBinaryDataProperties);
         }

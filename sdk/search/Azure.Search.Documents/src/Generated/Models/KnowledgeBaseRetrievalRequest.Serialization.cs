@@ -110,25 +110,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("maxRuntimeInSeconds"u8);
                 writer.WriteNumberValue(MaxRuntimeInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxOutputSize))
+            if (Optional.IsDefined(MaxOutputSizeInTokens))
             {
-                writer.WritePropertyName("maxOutputSize"u8);
-                writer.WriteNumberValue(MaxOutputSize.Value);
-            }
-            if (Optional.IsDefined(RetrievalReasoningEffort))
-            {
-                writer.WritePropertyName("retrievalReasoningEffort"u8);
-                writer.WriteObjectValue(RetrievalReasoningEffort, options);
+                writer.WritePropertyName("maxOutputSizeInTokens"u8);
+                writer.WriteNumberValue(MaxOutputSizeInTokens.Value);
             }
             if (Optional.IsDefined(IncludeActivity))
             {
                 writer.WritePropertyName("includeActivity"u8);
                 writer.WriteBooleanValue(IncludeActivity.Value);
-            }
-            if (Optional.IsDefined(OutputMode))
-            {
-                writer.WritePropertyName("outputMode"u8);
-                writer.WriteStringValue(OutputMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(KnowledgeSourceParams))
             {
@@ -185,10 +175,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IList<KnowledgeBaseMessage> messages = default;
             IList<KnowledgeRetrievalIntent> intents = default;
             int? maxRuntimeInSeconds = default;
-            int? maxOutputSize = default;
-            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
+            int? maxOutputSizeInTokens = default;
             bool? includeActivity = default;
-            KnowledgeRetrievalOutputMode? outputMode = default;
             IList<KnowledgeSourceParams> knowledgeSourceParams = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -230,22 +218,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     maxRuntimeInSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxOutputSize"u8))
+                if (prop.NameEquals("maxOutputSizeInTokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxOutputSize = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("retrievalReasoningEffort"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
+                    maxOutputSizeInTokens = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("includeActivity"u8))
@@ -255,15 +234,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     includeActivity = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("outputMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    outputMode = new KnowledgeRetrievalOutputMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("knowledgeSourceParams"u8))
@@ -289,10 +259,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 messages ?? new ChangeTrackingList<KnowledgeBaseMessage>(),
                 intents ?? new ChangeTrackingList<KnowledgeRetrievalIntent>(),
                 maxRuntimeInSeconds,
-                maxOutputSize,
-                retrievalReasoningEffort,
+                maxOutputSizeInTokens,
                 includeActivity,
-                outputMode,
                 knowledgeSourceParams ?? new ChangeTrackingList<KnowledgeSourceParams>(),
                 additionalBinaryDataProperties);
         }

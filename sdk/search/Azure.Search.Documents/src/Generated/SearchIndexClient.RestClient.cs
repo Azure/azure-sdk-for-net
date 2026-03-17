@@ -43,7 +43,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -69,7 +72,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -92,7 +98,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -113,7 +122,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -130,7 +142,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -155,7 +170,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -181,7 +199,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -204,7 +225,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -221,7 +245,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -242,7 +269,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -259,7 +289,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -280,7 +313,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -299,7 +335,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -320,7 +359,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -346,7 +388,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -369,7 +414,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -386,7 +434,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -403,7 +454,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -424,7 +478,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -450,7 +507,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -473,7 +533,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -490,7 +553,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -507,7 +573,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -528,7 +597,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -554,7 +626,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -577,7 +652,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -594,7 +672,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -611,7 +692,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -632,7 +716,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -649,24 +736,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
-            return message;
-        }
-
-        internal HttpMessage CreateGetIndexStatsSummaryRequest(RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/indexstats", false);
-            if (_apiVersion != null)
+            if ("application/json;odata.metadata=minimal" != null)
             {
-                uri.AppendQuery("api-version", _apiVersion, true);
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
             return message;
         }
     }

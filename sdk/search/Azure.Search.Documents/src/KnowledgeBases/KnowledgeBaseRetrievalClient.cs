@@ -162,24 +162,22 @@ namespace Azure.Search.Documents.KnowledgeBases
         #region Service operations
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
-        /// <param name="xMsQuerySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
         {
-            return Retrieve(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken);
+            return Retrieve(KnowledgeBaseName, retrievalRequest, cancellationToken);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
-        /// <param name="xMsQuerySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, string xMsQuerySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken = default)
         {
-            return await RetrieveAsync(KnowledgeBaseName, retrievalRequest, xMsQuerySourceAuthorization, cancellationToken).ConfigureAwait(false);
+            return await RetrieveAsync(KnowledgeBaseName, retrievalRequest, cancellationToken).ConfigureAwait(false);
         }
         #endregion Service operations
     }

@@ -13,17 +13,35 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <para>Once an AML model is <see href="https://docs.microsoft.com/azure/machine-learning/concept-azure-machine-learning-architecture#workspace">trained and deployed</see>,
     /// an AML skill integrates it into AI enrichment.</para>
     /// </summary>
-    public partial class AzureMachineLearningSkill
+    public partial class AzureMachineLearningSkill : SearchIndexerSkill
     {
+        /// <summary> The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </summary>
+        public Uri ScoringUri { get; set; }
+
+        /// <summary> The key for the AML service. </summary>
+        public string AuthenticationKey { get; set; }
+
+        /// <summary> The Azure Resource Manager resource ID of the AML service. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
+
+        /// <summary> The region the AML service is deployed in. </summary>
+        public AzureLocation? Location { get; set; }
+
+        /// <summary> The degree of parallelism to use for the AML skill. </summary>
+        public int? DegreeOfParallelism { get; set; }
+
+        /// <summary> The timeout for the AML skill. </summary>
+        public TimeSpan? Timeout { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill.</param>
-        /// <param name="authenticationKey">The key for the AML service.</param>
         /// <param name="scoringUri">The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed.</param>
+        /// <param name="authenticationKey">The key for the AML service.</param>
         public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey = default) :
-            this(inputs, outputs)
+            base("#Microsoft.Skills.Custom.AmlSkill", inputs, outputs)
         {
             ScoringUri = scoringUri ?? throw new ArgumentNullException(nameof(scoringUri));
             AuthenticationKey = authenticationKey;
@@ -38,28 +56,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}.</param>
         /// <param name="location">The region the AML service is deployed in.</param>
         public AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, ResourceIdentifier resourceId, AzureLocation? location = default) :
-            this(inputs, outputs)
+            base("#Microsoft.Skills.Custom.AmlSkill", inputs, outputs)
         {
             ResourceId = resourceId ?? throw new ArgumentNullException(nameof(resourceId));
             Location = location;
-        }
-
-        /// <summary> Initializes a new instance of AmlSkill. </summary>
-        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
-        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        internal AzureMachineLearningSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
-        {
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (outputs == null)
-            {
-                throw new ArgumentNullException(nameof(outputs));
-            }
-
-            OdataType = "#Microsoft.Skills.Custom.AmlSkill";
         }
     }
 }

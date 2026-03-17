@@ -2405,53 +2405,5 @@ namespace Azure.Search.Documents.Indexes
             Response result = await GetServiceStatisticsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchServiceStatistics)result, result);
         }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves a summary of statistics for all indexes in the search service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexStatsSummary(RequestContext context)
-        {
-            return new SearchIndexClientGetIndexStatsSummaryCollectionResult(this, context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves a summary of statistics for all indexes in the search service.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexStatsSummaryAsync(RequestContext context)
-        {
-            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(this, context);
-        }
-
-        /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IndexStatisticsSummary> GetIndexStatsSummary(CancellationToken cancellationToken = default)
-        {
-            return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(this, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IndexStatisticsSummary> GetIndexStatsSummaryAsync(CancellationToken cancellationToken = default)
-        {
-            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
-        }
     }
 }
