@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             {
                 IngestionPolicy = new IngestionPolicyPropertiesFormat
                 {
-                    IngestionType = IngestionType.IPFIX,
+                    IngestionType = IngestionType.Ipfix,
                     IngestionSources = {new IngestionSourcesPropertiesFormat
 {
 SourceType = IngestionSourceType.Resource,
@@ -54,7 +54,7 @@ ResourceId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Networ
                 },
                 EmissionPolicies = {new EmissionPoliciesPropertiesFormat
 {
-EmissionType = EmissionType.IPFIX,
+EmissionType = EmissionType.Ipfix,
 EmissionDestinations = {new EmissionPolicyDestination
 {
 DestinationType = EmissionDestinationType.AzureMonitor,

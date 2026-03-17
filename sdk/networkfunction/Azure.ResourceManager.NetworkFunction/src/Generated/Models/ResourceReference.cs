@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of <see cref="ResourceReference"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceReference(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

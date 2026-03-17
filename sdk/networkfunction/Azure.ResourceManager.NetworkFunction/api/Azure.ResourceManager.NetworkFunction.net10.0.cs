@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.NetworkFunction
     {
         public AzureTrafficCollectorData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkFunction.Models.ResourceReference> CollectorPolicies { get { throw null; } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
-        public string VirtualHubId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkFunction
     {
         public CollectorPolicyData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> EmissionPolicies { get { throw null; } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 {
     public static partial class ArmNetworkFunctionModelFactory
     {
-        public static Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData AzureTrafficCollectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.ResourceReference> collectorPolicies = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?), string virtualHubId = null, string etag = null) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.CollectorPolicyData CollectorPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat ingestionPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> emissionPolicies = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?), string etag = null) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData AzureTrafficCollectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.ResourceReference> collectorPolicies = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?), Azure.Core.ResourceIdentifier virtualHubId = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.CollectorPolicyData CollectorPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat ingestionPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> emissionPolicies = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat EmissionPoliciesPropertiesFormat(Azure.ResourceManager.NetworkFunction.Models.EmissionType? emissionType = default(Azure.ResourceManager.NetworkFunction.Models.EmissionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.EmissionPolicyDestination> emissionDestinations = null) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicyPropertiesFormat(Azure.ResourceManager.NetworkFunction.Models.IngestionType? ingestionType = default(Azure.ResourceManager.NetworkFunction.Models.IngestionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.IngestionSourcesPropertiesFormat> ingestionSources = null) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.ResourceReference ResourceReference(string id = null) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.Models.ResourceReference ResourceReference(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.Models.TagsObject TagsObject(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EmissionType(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.EmissionType IPFIX { get { throw null; } }
+        public static Azure.ResourceManager.NetworkFunction.Models.EmissionType Ipfix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.EmissionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public IngestionType(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.IngestionType IPFIX { get { throw null; } }
+        public static Azure.ResourceManager.NetworkFunction.Models.IngestionType Ipfix { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkFunction.Models.IngestionType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     public partial class ResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkFunction.Models.ResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkFunction.Models.ResourceReference>
     {
         public ResourceReference() { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected virtual Azure.ResourceManager.NetworkFunction.Models.ResourceReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NetworkFunction.Models.ResourceReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="virtualHubId"> Resource ID. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.AzureTrafficCollectorData"/> instance for mocking. </returns>
-        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ResourceReference> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, string virtualHubId = default, string etag = default)
+        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ResourceReference> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, ResourceIdentifier virtualHubId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Resource reference properties. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
-        public static ResourceReference ResourceReference(string id = default)
+        public static ResourceReference ResourceReference(ResourceIdentifier id = default)
         {
             return new ResourceReference(id, additionalBinaryDataProperties: null);
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
-        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, string etag = default)
+        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

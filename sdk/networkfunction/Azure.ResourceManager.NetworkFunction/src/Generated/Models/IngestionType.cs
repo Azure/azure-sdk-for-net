@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         private readonly string _value;
         /// <summary> IPFIX. </summary>
-        private const string IPFIXValue = "IPFIX";
+        private const string IpfixValue = "IPFIX";
 
         /// <summary> Initializes a new instance of <see cref="IngestionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         }
 
         /// <summary> IPFIX. </summary>
-        public static IngestionType IPFIX { get; } = new IngestionType(IPFIXValue);
+        public static IngestionType Ipfix { get; } = new IngestionType(IpfixValue);
 
         /// <summary> Determines if two <see cref="IngestionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

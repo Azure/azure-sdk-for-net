@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         private readonly string _value;
         /// <summary> IPFIX. </summary>
-        private const string IPFIXValue = "IPFIX";
+        private const string IpfixValue = "IPFIX";
 
         /// <summary> Initializes a new instance of <see cref="EmissionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         }
 
         /// <summary> IPFIX. </summary>
-        public static EmissionType IPFIX { get; } = new EmissionType(IPFIXValue);
+        public static EmissionType Ipfix { get; } = new EmissionType(IpfixValue);
 
         /// <summary> Determines if two <see cref="EmissionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

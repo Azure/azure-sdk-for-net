@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public CollectorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID. </summary>
-        public string VirtualHubId
+        public ResourceIdentifier VirtualHubId
         {
             get
             {
