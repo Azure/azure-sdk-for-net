@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
     public class DeleteRecordingTests : CallAutomationTestBase
     {
-        private const string AmsDeleteUrl = "https://dummyurl.com/v1/objects/documentid";
+        private const string AmsDeleteUrl = "https://dummyurl.com.asm.skype.com/v1/objects/documentid";
 
         [Test]
         public void DeleteRecording_Returns200Ok()
