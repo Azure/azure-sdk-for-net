@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(azureTrafficCollectorData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(azureTrafficCollectorData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureTrafficCollectorData"/> from. </param>

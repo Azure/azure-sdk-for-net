@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(collectorPolicyData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(collectorPolicyData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CollectorPolicyData"/> from. </param>
