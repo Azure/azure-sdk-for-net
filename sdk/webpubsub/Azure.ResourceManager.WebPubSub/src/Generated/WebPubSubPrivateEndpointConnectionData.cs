@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
         [WirePath("properties.privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

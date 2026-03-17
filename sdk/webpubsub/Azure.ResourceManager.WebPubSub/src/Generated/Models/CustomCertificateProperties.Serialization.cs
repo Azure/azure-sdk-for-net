@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("keyVaultBaseUri"u8);
-            writer.WriteStringValue(KeyVaultBaseUri);
+            writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
             writer.WritePropertyName("keyVaultSecretName"u8);
             writer.WriteStringValue(KeyVaultSecretName);
             if (Optional.IsDefined(KeyVaultSecretVersion))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             WebPubSubProvisioningState? provisioningState = default;
-            string keyVaultBaseUri = default;
+            Uri keyVaultBaseUri = default;
             string keyVaultSecretName = default;
             string keyVaultSecretVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (prop.NameEquals("keyVaultBaseUri"u8))
                 {
-                    keyVaultBaseUri = prop.Value.GetString();
+                    keyVaultBaseUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("keyVaultSecretName"u8))

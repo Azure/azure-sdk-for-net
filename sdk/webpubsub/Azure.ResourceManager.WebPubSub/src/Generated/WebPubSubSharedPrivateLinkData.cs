@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
         [WirePath("properties.privateLinkResourceId")]
-        public string PrivateLinkResourceId
+        public ResourceIdentifier PrivateLinkResourceId
         {
             get
             {

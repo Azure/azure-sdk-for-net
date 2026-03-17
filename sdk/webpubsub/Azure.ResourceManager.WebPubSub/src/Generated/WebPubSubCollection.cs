@@ -26,10 +26,8 @@ namespace Azure.ResourceManager.WebPubSub
     /// </summary>
     public partial class WebPubSubCollection : ArmCollection, IEnumerable<WebPubSubResource>, IAsyncEnumerable<WebPubSubResource>
     {
-        private readonly ClientDiagnostics _webPubSubServiceClientDiagnostics;
-        private readonly WebPubSubService _webPubSubServiceRestClient;
-        private readonly ClientDiagnostics _webPubSubPrivateLinkResourcesClientDiagnostics;
-        private readonly WebPubSubPrivateLinkResources _webPubSubPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _webPubSubResourcesClientDiagnostics;
+        private readonly WebPubSubResources _webPubSubResourcesRestClient;
 
         /// <summary> Initializes a new instance of WebPubSubCollection for mocking. </summary>
         protected WebPubSubCollection()
@@ -42,10 +40,8 @@ namespace Azure.ResourceManager.WebPubSub
         internal WebPubSubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WebPubSubResource.ResourceType, out string webPubSubApiVersion);
-            _webPubSubServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubServiceRestClient = new WebPubSubService(_webPubSubServiceClientDiagnostics, Pipeline, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
-            _webPubSubPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResources(_webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
+            _webPubSubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
+            _webPubSubResourcesRestClient = new WebPubSubResources(_webPubSubResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +83,7 @@ namespace Azure.ResourceManager.WebPubSub
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,11 +91,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, WebPubSubData.ToRequestContent(data), context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, WebPubSubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubResource> operation = new WebPubSubArmOperation<WebPubSubResource>(
                     new WebPubSubOperationSource(Client),
-                    _webPubSubServiceClientDiagnostics,
+                    _webPubSubResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -145,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -153,11 +149,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, WebPubSubData.ToRequestContent(data), context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, WebPubSubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubResource> operation = new WebPubSubArmOperation<WebPubSubResource>(
                     new WebPubSubOperationSource(Client),
-                    _webPubSubServiceClientDiagnostics,
+                    _webPubSubResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -200,7 +196,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.Get");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
             try
             {
@@ -208,7 +204,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -249,7 +245,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.Get");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.Get");
             scope.Start();
             try
             {
@@ -257,7 +253,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +294,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubServiceGetByResourceGroupAsyncCollectionResultOfT(_webPubSubServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WebPubSubResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetByResourceGroupAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +322,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubServiceGetByResourceGroupCollectionResultOfT(_webPubSubServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WebPubSubResource(Client, data));
+            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetByResourceGroupCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -354,7 +350,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
@@ -362,7 +358,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubData> response = default;
@@ -411,7 +407,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.Exists");
             scope.Start();
             try
             {
@@ -419,7 +415,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubData> response = default;
@@ -468,7 +464,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -476,7 +472,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubData> response = default;
@@ -529,7 +525,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -537,7 +533,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubData> response = default;

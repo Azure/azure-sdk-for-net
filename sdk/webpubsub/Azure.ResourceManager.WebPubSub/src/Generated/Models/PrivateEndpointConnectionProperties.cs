@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
         [WirePath("privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

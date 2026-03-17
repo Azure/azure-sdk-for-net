@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CustomDomainData item in Value)
+            foreach (WebPubSubCustomDomainData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IList<CustomDomainData> value = default;
+            IList<WebPubSubCustomDomainData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CustomDomainData> array = new List<CustomDomainData>();
+                    List<WebPubSubCustomDomainData> array = new List<WebPubSubCustomDomainData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomDomainData.DeserializeCustomDomainData(item, options));
+                        array.Add(WebPubSubCustomDomainData.DeserializeWebPubSubCustomDomainData(item, options));
                     }
                     value = array;
                     continue;

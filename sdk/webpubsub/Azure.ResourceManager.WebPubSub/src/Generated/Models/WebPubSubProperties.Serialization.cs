@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(IsAadAuthDisabled.Value);
             }
-            if (Optional.IsDefined(RegionEndpointEnabled))
+            if (Optional.IsDefined(IsRegionEndpointEnabled))
             {
                 writer.WritePropertyName("regionEndpointEnabled"u8);
-                writer.WriteStringValue(RegionEndpointEnabled);
+                writer.WriteStringValue(IsRegionEndpointEnabled);
             }
             if (Optional.IsDefined(ResourceStopped))
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             string publicNetworkAccess = default;
             bool? isLocalAuthDisabled = default;
             bool? isAadAuthDisabled = default;
-            string regionEndpointEnabled = default;
+            string isRegionEndpointEnabled = default;
             string resourceStopped = default;
             WebPubSubSocketIOSettings socketIO = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (prop.NameEquals("regionEndpointEnabled"u8))
                 {
-                    regionEndpointEnabled = prop.Value.GetString();
+                    isRegionEndpointEnabled = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("resourceStopped"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 publicNetworkAccess,
                 isLocalAuthDisabled,
                 isAadAuthDisabled,
-                regionEndpointEnabled,
+                isRegionEndpointEnabled,
                 resourceStopped,
                 socketIO,
                 additionalBinaryDataProperties);

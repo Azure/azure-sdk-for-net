@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WebPubSubProperties properties, BillingInfoSku sku, ServiceKind? kind, ManagedIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WebPubSubProperties properties, BillingInfoSku sku, ServiceKind? kind, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> A class represent managed identities used for request and response. </summary>
         [WirePath("identity")]
-        public ManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
         /// </summary>
         [WirePath("properties.regionEndpointEnabled")]
-        public string RegionEndpointEnabled
+        public string IsRegionEndpointEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.RegionEndpointEnabled;
+                return Properties is null ? default : Properties.IsRegionEndpointEnabled;
             }
             set
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     Properties = new WebPubSubProperties();
                 }
-                Properties.RegionEndpointEnabled = value;
+                Properties.IsRegionEndpointEnabled = value;
             }
         }
 

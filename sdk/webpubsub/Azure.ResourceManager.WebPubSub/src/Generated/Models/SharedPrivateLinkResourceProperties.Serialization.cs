@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string groupId = default;
-            string privateLinkResourceId = default;
+            ResourceIdentifier privateLinkResourceId = default;
             WebPubSubProvisioningState? provisioningState = default;
             string requestMessage = default;
             IList<string> fqdns = default;
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (prop.NameEquals("privateLinkResourceId"u8))
                 {
-                    privateLinkResourceId = prop.Value.GetString();
+                    privateLinkResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

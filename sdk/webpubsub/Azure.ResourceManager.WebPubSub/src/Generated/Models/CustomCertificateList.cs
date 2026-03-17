@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomCertificateList"/>. </summary>
         /// <param name="value"> The CustomCertificate items on this page. </param>
-        internal CustomCertificateList(IEnumerable<CustomCertificateData> value)
+        internal CustomCertificateList(IEnumerable<WebPubSubCustomCertificateData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="value"> The CustomCertificate items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCertificateList(IList<CustomCertificateData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomCertificateList(IList<WebPubSubCustomCertificateData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The CustomCertificate items on this page. </summary>
         [WirePath("value")]
-        public IList<CustomCertificateData> Value { get; }
+        public IList<WebPubSubCustomCertificateData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

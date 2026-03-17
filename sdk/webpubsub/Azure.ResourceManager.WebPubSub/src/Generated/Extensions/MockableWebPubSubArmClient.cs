@@ -26,24 +26,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="WebPubSubHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSubHubResource"/> object. </returns>
-        public virtual WebPubSubHubResource GetWebPubSubHubResource(ResourceIdentifier id)
-        {
-            WebPubSubHubResource.ValidateResourceId(id);
-            return new WebPubSubHubResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WebPubSubSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource"/> object. </returns>
-        public virtual WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(ResourceIdentifier id)
-        {
-            WebPubSubSharedPrivateLinkResource.ValidateResourceId(id);
-            return new WebPubSubSharedPrivateLinkResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="WebPubSubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebPubSubResource"/> object. </returns>
@@ -53,49 +35,67 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             return new WebPubSubResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CustomCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebPubSubCustomCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomCertificateResource"/> object. </returns>
-        public virtual CustomCertificateResource GetCustomCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubCustomCertificateResource"/> object. </returns>
+        public virtual WebPubSubCustomCertificateResource GetWebPubSubCustomCertificateResource(ResourceIdentifier id)
         {
-            CustomCertificateResource.ValidateResourceId(id);
-            return new CustomCertificateResource(Client, id);
+            WebPubSubCustomCertificateResource.ValidateResourceId(id);
+            return new WebPubSubCustomCertificateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CustomDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebPubSubCustomDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomDomainResource"/> object. </returns>
-        public virtual CustomDomainResource GetCustomDomainResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubCustomDomainResource"/> object. </returns>
+        public virtual WebPubSubCustomDomainResource GetWebPubSubCustomDomainResource(ResourceIdentifier id)
         {
-            CustomDomainResource.ValidateResourceId(id);
-            return new CustomDomainResource(Client, id);
+            WebPubSubCustomDomainResource.ValidateResourceId(id);
+            return new WebPubSubCustomDomainResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebPubSubHubResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubHubResource"/> object. </returns>
+        public virtual WebPubSubHubResource GetWebPubSubHubResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            WebPubSubHubResource.ValidateResourceId(id);
+            return new WebPubSubHubResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebPubSubPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicaResource"/> object. </returns>
-        public virtual ReplicaResource GetReplicaResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual WebPubSubPrivateEndpointConnectionResource GetWebPubSubPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ReplicaResource.ValidateResourceId(id);
-            return new ReplicaResource(Client, id);
+            WebPubSubPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new WebPubSubPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebPubSubReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> object. </returns>
-        public virtual WebPubSubReplicaSharedPrivateLinkResource GetWebPubSubReplicaSharedPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubReplicaResource"/> object. </returns>
+        public virtual WebPubSubReplicaResource GetWebPubSubReplicaResource(ResourceIdentifier id)
         {
-            WebPubSubReplicaSharedPrivateLinkResource.ValidateResourceId(id);
-            return new WebPubSubReplicaSharedPrivateLinkResource(Client, id);
+            WebPubSubReplicaResource.ValidateResourceId(id);
+            return new WebPubSubReplicaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SharedPrivateLinkResource"/> object. </returns>
+        public virtual SharedPrivateLinkResource GetSharedPrivateLinkResource(ResourceIdentifier id)
+        {
+            SharedPrivateLinkResource.ValidateResourceId(id);
+            return new SharedPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WebPubSubSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource"/> object. </returns>
+        public virtual WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(ResourceIdentifier id)
+        {
+            WebPubSubSharedPrivateLinkResource.ValidateResourceId(id);
+            return new WebPubSubSharedPrivateLinkResource(Client, id);
         }
     }
 }

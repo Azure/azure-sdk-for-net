@@ -26,10 +26,8 @@ namespace Azure.ResourceManager.WebPubSub
     /// </summary>
     public partial class WebPubSubResource : ArmResource
     {
-        private readonly ClientDiagnostics _webPubSubServiceClientDiagnostics;
-        private readonly WebPubSubService _webPubSubServiceRestClient;
-        private readonly ClientDiagnostics _webPubSubPrivateLinkResourcesClientDiagnostics;
-        private readonly WebPubSubPrivateLinkResources _webPubSubPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _webPubSubResourcesClientDiagnostics;
+        private readonly WebPubSubResources _webPubSubResourcesRestClient;
         private readonly WebPubSubData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub";
@@ -54,10 +52,8 @@ namespace Azure.ResourceManager.WebPubSub
         internal WebPubSubResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string webPubSubApiVersion);
-            _webPubSubServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            _webPubSubServiceRestClient = new WebPubSubService(_webPubSubServiceClientDiagnostics, Pipeline, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
-            _webPubSubPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResources(_webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
+            _webPubSubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
+            _webPubSubResourcesRestClient = new WebPubSubResources(_webPubSubResourcesClientDiagnostics, Pipeline, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -121,7 +117,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebPubSubResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Get");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Get");
             scope.Start();
             try
             {
@@ -129,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +165,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSubResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Get");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Get");
             scope.Start();
             try
             {
@@ -177,7 +173,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +218,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Update");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Update");
             scope.Start();
             try
             {
@@ -230,11 +226,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubResource> operation = new WebPubSubArmOperation<WebPubSubResource>(
                     new WebPubSubOperationSource(Client),
-                    _webPubSubServiceClientDiagnostics,
+                    _webPubSubResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -281,7 +277,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Update");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Update");
             scope.Start();
             try
             {
@@ -289,11 +285,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubResource> operation = new WebPubSubArmOperation<WebPubSubResource>(
                     new WebPubSubOperationSource(Client),
-                    _webPubSubServiceClientDiagnostics,
+                    _webPubSubResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -336,7 +332,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Delete");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Delete");
             scope.Start();
             try
             {
@@ -344,9 +340,9 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -385,7 +381,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Delete");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Delete");
             scope.Start();
             try
             {
@@ -393,9 +389,9 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -438,7 +434,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubPrivateLinkResourcesGetAllAsyncCollectionResultOfT(_webPubSubPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetAllAsyncCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -470,7 +466,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new WebPubSubPrivateLinkResourcesGetAllCollectionResultOfT(_webPubSubPrivateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new WebPubSubResourcesGetAllCollectionResultOfT(_webPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -497,7 +493,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.GetKeys");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetKeys");
             scope.Start();
             try
             {
@@ -505,7 +501,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubKeys> response = Response.FromValue(WebPubSubKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -545,7 +541,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSubKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.GetKeys");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetKeys");
             scope.Start();
             try
             {
@@ -553,7 +549,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubKeys> response = Response.FromValue(WebPubSubKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -593,7 +589,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SkuList>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
             scope.Start();
             try
             {
@@ -601,7 +597,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SkuList> response = Response.FromValue(SkuList.FromResponse(result), result);
                 if (response.Value == null)
@@ -641,7 +637,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SkuList> GetSkus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.GetSkus");
             scope.Start();
             try
             {
@@ -649,7 +645,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SkuList> response = Response.FromValue(SkuList.FromResponse(result), result);
                 if (response.Value == null)
@@ -694,7 +690,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.RegenerateKey");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.RegenerateKey");
             scope.Start();
             try
             {
@@ -702,11 +698,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubKeys> operation = new WebPubSubArmOperation<WebPubSubKeys>(
                     new WebPubSubKeysOperationSource(),
-                    _webPubSubServiceClientDiagnostics,
+                    _webPubSubResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -753,7 +749,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.RegenerateKey");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.RegenerateKey");
             scope.Start();
             try
             {
@@ -761,11 +757,11 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubKeys> operation = new WebPubSubArmOperation<WebPubSubKeys>(
                     new WebPubSubKeysOperationSource(),
-                    _webPubSubServiceClientDiagnostics,
+                    _webPubSubResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -808,7 +804,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Restart");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Restart");
             scope.Start();
             try
             {
@@ -816,9 +812,9 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -857,7 +853,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.Restart");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.Restart");
             scope.Start();
             try
             {
@@ -865,9 +861,9 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubServiceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webPubSubResourcesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -891,7 +887,7 @@ namespace Azure.ResourceManager.WebPubSub
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.AddTag");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.AddTag");
             scope.Start();
             try
             {
@@ -904,7 +900,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -939,7 +935,7 @@ namespace Azure.ResourceManager.WebPubSub
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.AddTag");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.AddTag");
             scope.Start();
             try
             {
@@ -952,7 +948,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -985,7 +981,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.SetTags");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.SetTags");
             scope.Start();
             try
             {
@@ -999,7 +995,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1028,7 +1024,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.SetTags");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.SetTags");
             scope.Start();
             try
             {
@@ -1042,7 +1038,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1071,7 +1067,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.RemoveTag");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1084,7 +1080,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1117,7 +1113,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _webPubSubServiceClientDiagnostics.CreateScope("WebPubSubResource.RemoveTag");
+            using DiagnosticScope scope = _webPubSubResourcesClientDiagnostics.CreateScope("WebPubSubResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1130,7 +1126,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1153,6 +1149,72 @@ namespace Azure.ResourceManager.WebPubSub
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of WebPubSubCustomCertificates in the <see cref="WebPubSubResource"/>. </summary>
+        /// <returns> An object representing collection of WebPubSubCustomCertificates and their operations over a WebPubSubCustomCertificateResource. </returns>
+        public virtual WebPubSubCustomCertificateCollection GetWebPubSubCustomCertificates()
+        {
+            return GetCachedClient(client => new WebPubSubCustomCertificateCollection(client, Id));
+        }
+
+        /// <summary> Get a custom certificate. </summary>
+        /// <param name="certificateName"> Custom certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WebPubSubCustomCertificateResource>> GetWebPubSubCustomCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetWebPubSubCustomCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a custom certificate. </summary>
+        /// <param name="certificateName"> Custom certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebPubSubCustomCertificateResource> GetWebPubSubCustomCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetWebPubSubCustomCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WebPubSubCustomDomains in the <see cref="WebPubSubResource"/>. </summary>
+        /// <returns> An object representing collection of WebPubSubCustomDomains and their operations over a WebPubSubCustomDomainResource. </returns>
+        public virtual WebPubSubCustomDomainCollection GetWebPubSubCustomDomains()
+        {
+            return GetCachedClient(client => new WebPubSubCustomDomainCollection(client, Id));
+        }
+
+        /// <summary> Get a custom domain. </summary>
+        /// <param name="name"> Custom domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WebPubSubCustomDomainResource>> GetWebPubSubCustomDomainAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetWebPubSubCustomDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a custom domain. </summary>
+        /// <param name="name"> Custom domain name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebPubSubCustomDomainResource> GetWebPubSubCustomDomain(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetWebPubSubCustomDomains().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebPubSubHubs in the <see cref="WebPubSubResource"/>. </summary>
@@ -1188,6 +1250,72 @@ namespace Azure.ResourceManager.WebPubSub
             return GetWebPubSubHubs().Get(hubName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of WebPubSubPrivateEndpointConnections in the <see cref="WebPubSubResource"/>. </summary>
+        /// <returns> An object representing collection of WebPubSubPrivateEndpointConnections and their operations over a WebPubSubPrivateEndpointConnectionResource. </returns>
+        public virtual WebPubSubPrivateEndpointConnectionCollection GetWebPubSubPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new WebPubSubPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get the specified private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WebPubSubPrivateEndpointConnectionResource>> GetWebPubSubPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetWebPubSubPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebPubSubPrivateEndpointConnectionResource> GetWebPubSubPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetWebPubSubPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WebPubSubReplicas in the <see cref="WebPubSubResource"/>. </summary>
+        /// <returns> An object representing collection of WebPubSubReplicas and their operations over a WebPubSubReplicaResource. </returns>
+        public virtual WebPubSubReplicaCollection GetWebPubSubReplicas()
+        {
+            return GetCachedClient(client => new WebPubSubReplicaCollection(client, Id));
+        }
+
+        /// <summary> Get the replica and its properties. </summary>
+        /// <param name="replicaName"> The name of the replica. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WebPubSubReplicaResource>> GetWebPubSubReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
+
+            return await GetWebPubSubReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the replica and its properties. </summary>
+        /// <param name="replicaName"> The name of the replica. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebPubSubReplicaResource> GetWebPubSubReplica(string replicaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
+
+            return GetWebPubSubReplicas().Get(replicaName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of WebPubSubSharedPrivateLinkResources in the <see cref="WebPubSubResource"/>. </summary>
         /// <returns> An object representing collection of WebPubSubSharedPrivateLinkResources and their operations over a WebPubSubSharedPrivateLinkResource. </returns>
         public virtual WebPubSubSharedPrivateLinkResourceCollection GetWebPubSubSharedPrivateLinkResources()
@@ -1219,138 +1347,6 @@ namespace Azure.ResourceManager.WebPubSub
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             return GetWebPubSubSharedPrivateLinkResources().Get(sharedPrivateLinkResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CustomCertificates in the <see cref="WebPubSubResource"/>. </summary>
-        /// <returns> An object representing collection of CustomCertificates and their operations over a CustomCertificateResource. </returns>
-        public virtual CustomCertificateCollection GetCustomCertificates()
-        {
-            return GetCachedClient(client => new CustomCertificateCollection(client, Id));
-        }
-
-        /// <summary> Get a custom certificate. </summary>
-        /// <param name="certificateName"> Custom certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CustomCertificateResource>> GetCustomCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            return await GetCustomCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a custom certificate. </summary>
-        /// <param name="certificateName"> Custom certificate name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CustomCertificateResource> GetCustomCertificate(string certificateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-
-            return GetCustomCertificates().Get(certificateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CustomDomains in the <see cref="WebPubSubResource"/>. </summary>
-        /// <returns> An object representing collection of CustomDomains and their operations over a CustomDomainResource. </returns>
-        public virtual CustomDomainCollection GetCustomDomains()
-        {
-            return GetCachedClient(client => new CustomDomainCollection(client, Id));
-        }
-
-        /// <summary> Get a custom domain. </summary>
-        /// <param name="name"> Custom domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CustomDomainResource>> GetCustomDomainAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetCustomDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a custom domain. </summary>
-        /// <param name="name"> Custom domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CustomDomainResource> GetCustomDomain(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetCustomDomains().Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="WebPubSubResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Get the specified private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the specified private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of Replicas in the <see cref="WebPubSubResource"/>. </summary>
-        /// <returns> An object representing collection of Replicas and their operations over a ReplicaResource. </returns>
-        public virtual ReplicaCollection GetReplicas()
-        {
-            return GetCachedClient(client => new ReplicaCollection(client, Id));
-        }
-
-        /// <summary> Get the replica and its properties. </summary>
-        /// <param name="replicaName"> The name of the replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicaResource>> GetReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
-
-            return await GetReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the replica and its properties. </summary>
-        /// <param name="replicaName"> The name of the replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ReplicaResource> GetReplica(string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
-
-            return GetReplicas().Get(replicaName, cancellationToken);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </param>
-        /// <param name="regionEndpointEnabled">
+        /// <param name="isRegionEndpointEnabled">
         /// Enable or disable the regional endpoint. Default to "Enabled".
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="socketIO"> SocketIO settings for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubProperties(WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string regionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubProperties(WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string isRegionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             PublicNetworkAccess = publicNetworkAccess;
             IsLocalAuthDisabled = isLocalAuthDisabled;
             IsAadAuthDisabled = isAadAuthDisabled;
-            RegionEndpointEnabled = regionEndpointEnabled;
+            IsRegionEndpointEnabled = isRegionEndpointEnabled;
             ResourceStopped = resourceStopped;
             SocketIO = socketIO;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
         /// </summary>
         [WirePath("regionEndpointEnabled")]
-        public string RegionEndpointEnabled { get; set; }
+        public string IsRegionEndpointEnabled { get; set; }
 
         /// <summary>
         /// Stop or start the resource.  Default to "False".

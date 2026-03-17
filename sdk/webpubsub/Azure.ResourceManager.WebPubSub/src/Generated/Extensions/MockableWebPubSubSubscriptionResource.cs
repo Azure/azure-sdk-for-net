@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableWebPubSubSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _webPubSubServiceClientDiagnostics;
-        private WebPubSubService _webPubSubServiceRestClient;
-        private ClientDiagnostics _usagesClientDiagnostics;
-        private Usages _usagesRestClient;
+        private ClientDiagnostics _webPubSubResourcesClientDiagnostics;
+        private WebPubSubResources _webPubSubResourcesRestClient;
+        private ClientDiagnostics _webPubSubOperationGroupClientDiagnostics;
+        private WebPubSubOperationGroup _webPubSubOperationGroupRestClient;
+        private ClientDiagnostics _usagesOperationGroupClientDiagnostics;
+        private UsagesOperationGroup _usagesOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockableWebPubSubSubscriptionResource for mocking. </summary>
         protected MockableWebPubSubSubscriptionResource()
@@ -38,13 +40,17 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
         }
 
-        private ClientDiagnostics WebPubSubServiceClientDiagnostics => _webPubSubServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics WebPubSubResourcesClientDiagnostics => _webPubSubResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebPubSubService WebPubSubServiceRestClient => _webPubSubServiceRestClient ??= new WebPubSubService(WebPubSubServiceClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics WebPubSubOperationGroupClientDiagnostics => _webPubSubOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private WebPubSubOperationGroup WebPubSubOperationGroupRestClient => _webPubSubOperationGroupRestClient ??= new WebPubSubOperationGroup(WebPubSubOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+
+        private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
@@ -71,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubServiceGetBySubscriptionAsyncCollectionResultOfT(WebPubSubServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WebPubSubResource(Client, data));
+            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionAsyncCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubServiceGetBySubscriptionCollectionResultOfT(WebPubSubServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WebPubSubResource(Client, data));
+            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
@@ -124,12 +130,12 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WebPubSubNameAvailability>> CheckNameAvailabilityAsync(string location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(string location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = WebPubSubServiceClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = WebPubSubOperationGroupClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
             scope.Start();
             try
             {
@@ -137,7 +143,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebPubSubServiceRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubNameAvailability> response = Response.FromValue(WebPubSubNameAvailability.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,12 +181,12 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WebPubSubNameAvailability> CheckNameAvailability(string location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(string location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = WebPubSubServiceClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = WebPubSubOperationGroupClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
             scope.Start();
             try
             {
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebPubSubServiceRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubNameAvailability> response = Response.FromValue(WebPubSubNameAvailability.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +232,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SignalRServiceUsage> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -234,7 +240,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetAllAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -259,7 +265,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SignalRServiceUsage> GetAll(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<SignalRServiceUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -267,7 +273,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetAllCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesOperationGroupGetUsagesCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
     }
 }

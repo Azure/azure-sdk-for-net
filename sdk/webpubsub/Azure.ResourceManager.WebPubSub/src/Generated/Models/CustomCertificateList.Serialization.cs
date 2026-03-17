@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CustomCertificateData item in Value)
+            foreach (WebPubSubCustomCertificateData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IList<CustomCertificateData> value = default;
+            IList<WebPubSubCustomCertificateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CustomCertificateData> array = new List<CustomCertificateData>();
+                    List<WebPubSubCustomCertificateData> array = new List<WebPubSubCustomCertificateData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomCertificateData.DeserializeCustomCertificateData(item, options));
+                        array.Add(WebPubSubCustomCertificateData.DeserializeWebPubSubCustomCertificateData(item, options));
                     }
                     value = array;
                     continue;

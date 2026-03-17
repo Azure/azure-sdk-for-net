@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("customCertificate.id")]
-        public string CustomCertificateId
+        public ResourceIdentifier CustomCertificateId
         {
             get
             {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of <see cref="ReplicaProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="regionEndpointEnabled">
+        /// <param name="isRegionEndpointEnabled">
         /// Enable or disable the regional endpoint. Default to "Enabled".
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// When it's false, the data plane of the resource is started.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaProperties(WebPubSubProvisioningState? provisioningState, string regionEndpointEnabled, string resourceStopped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReplicaProperties(WebPubSubProvisioningState? provisioningState, string isRegionEndpointEnabled, string resourceStopped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            RegionEndpointEnabled = regionEndpointEnabled;
+            IsRegionEndpointEnabled = isRegionEndpointEnabled;
             ResourceStopped = resourceStopped;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
         /// </summary>
         [WirePath("regionEndpointEnabled")]
-        public string RegionEndpointEnabled { get; set; }
+        public string IsRegionEndpointEnabled { get; set; }
 
         /// <summary>
         /// Stop or start the resource.  Default to "false".

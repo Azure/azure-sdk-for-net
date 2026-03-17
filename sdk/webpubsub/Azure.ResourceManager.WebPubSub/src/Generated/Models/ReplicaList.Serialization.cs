@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ReplicaData item in Value)
+            foreach (WebPubSubReplicaData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IList<ReplicaData> value = default;
+            IList<WebPubSubReplicaData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ReplicaData> array = new List<ReplicaData>();
+                    List<WebPubSubReplicaData> array = new List<WebPubSubReplicaData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaData.DeserializeReplicaData(item, options));
+                        array.Add(WebPubSubReplicaData.DeserializeWebPubSubReplicaData(item, options));
                     }
                     value = array;
                     continue;

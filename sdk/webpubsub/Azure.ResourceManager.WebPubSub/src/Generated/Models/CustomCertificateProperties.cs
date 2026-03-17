@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
-        public CustomCertificateProperties(string keyVaultBaseUri, string keyVaultSecretName)
+        public CustomCertificateProperties(Uri keyVaultBaseUri, string keyVaultSecretName)
         {
             Argument.AssertNotNull(keyVaultBaseUri, nameof(keyVaultBaseUri));
             Argument.AssertNotNull(keyVaultSecretName, nameof(keyVaultSecretName));
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCertificateProperties(WebPubSubProvisioningState? provisioningState, string keyVaultBaseUri, string keyVaultSecretName, string keyVaultSecretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomCertificateProperties(WebPubSubProvisioningState? provisioningState, Uri keyVaultBaseUri, string keyVaultSecretName, string keyVaultSecretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             KeyVaultBaseUri = keyVaultBaseUri;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Base uri of the KeyVault that stores certificate. </summary>
         [WirePath("keyVaultBaseUri")]
-        public string KeyVaultBaseUri { get; set; }
+        public Uri KeyVaultBaseUri { get; set; }
 
         /// <summary> Certificate secret name. </summary>
         [WirePath("keyVaultSecretName")]

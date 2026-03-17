@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="privateLinkResourceId"/> is null. </exception>
-        public SharedPrivateLinkResourceProperties(string groupId, string privateLinkResourceId)
+        public SharedPrivateLinkResourceProperties(string groupId, ResourceIdentifier privateLinkResourceId)
         {
             Argument.AssertNotNull(groupId, nameof(groupId));
             Argument.AssertNotNull(privateLinkResourceId, nameof(privateLinkResourceId));
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="fqdns"> A list of FQDNs for third party private link service. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedPrivateLinkResourceProperties(string groupId, string privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, IList<string> fqdns, WebPubSubSharedPrivateLinkStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedPrivateLinkResourceProperties(string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, IList<string> fqdns, WebPubSubSharedPrivateLinkStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
         [WirePath("privateLinkResourceId")]
-        public string PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("provisioningState")]

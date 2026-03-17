@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(RegionEndpointEnabled))
+            if (Optional.IsDefined(IsRegionEndpointEnabled))
             {
                 writer.WritePropertyName("regionEndpointEnabled"u8);
-                writer.WriteStringValue(RegionEndpointEnabled);
+                writer.WriteStringValue(IsRegionEndpointEnabled);
             }
             if (Optional.IsDefined(ResourceStopped))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             WebPubSubProvisioningState? provisioningState = default;
-            string regionEndpointEnabled = default;
+            string isRegionEndpointEnabled = default;
             string resourceStopped = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (prop.NameEquals("regionEndpointEnabled"u8))
                 {
-                    regionEndpointEnabled = prop.Value.GetString();
+                    isRegionEndpointEnabled = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("resourceStopped"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReplicaProperties(provisioningState, regionEndpointEnabled, resourceStopped, additionalBinaryDataProperties);
+            return new ReplicaProperties(provisioningState, isRegionEndpointEnabled, resourceStopped, additionalBinaryDataProperties);
         }
     }
 }

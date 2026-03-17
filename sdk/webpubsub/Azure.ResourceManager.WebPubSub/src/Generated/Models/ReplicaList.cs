@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of <see cref="ReplicaList"/>. </summary>
         /// <param name="value"> The Replica items on this page. </param>
-        internal ReplicaList(IEnumerable<ReplicaData> value)
+        internal ReplicaList(IEnumerable<WebPubSubReplicaData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="value"> The Replica items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaList(IList<ReplicaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReplicaList(IList<WebPubSubReplicaData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The Replica items on this page. </summary>
         [WirePath("value")]
-        public IList<ReplicaData> Value { get; }
+        public IList<WebPubSubReplicaData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]
