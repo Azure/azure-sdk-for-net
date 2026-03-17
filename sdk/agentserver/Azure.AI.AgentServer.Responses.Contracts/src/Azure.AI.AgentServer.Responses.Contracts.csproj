@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RequiredTargetFrameworks>net9.0;$(LtsTargetFramework);</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
+    <Nullable>enable</Nullable>
+    <Version>1.0.0-beta.1</Version>
+    <Description>TypeSpec-generated model contracts for the Azure AI Agent Server Responses SDK.</Description>
+    <PackageTags>Azure.AI.AgentServer.Responses.Contracts</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);OPENAI001;CS1591;AZC0011;AZC0012;AZC0014;AZC0030;AZC0031;AZC0033;AZC0034;AZC0150;SA1633;SA1507;SA1649;SA1402;IDT002;</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenAI" />
+    <PackageReference Include="System.ClientModel" />
+  </ItemGroup>
+
+  <!-- Exclude TypeSpec compilation output (used only for copy to Generated/) -->
+  <ItemGroup>
+    <Compile Remove="TypeSpec/tsp-output/**" />
+    <None Remove="TypeSpec/tsp-output/**" />
+  </ItemGroup>
+
+  <!-- Re-include hand-written custom partials (Optional, CodeGenStubs, etc.) -->
+  <ItemGroup>
+    <Compile Include="TypeSpec/tsp-output/src/Custom/*.cs" />
+  </ItemGroup>
+
+</Project>

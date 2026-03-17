@@ -1,0 +1,16 @@
+emit:
+  - "@typespec/http-client-csharp"
+  - "@typespec/openapi3"
+options:
+  "@typespec/http-client-csharp":
+    emitter-output-dir: "{output-dir}"
+    package-name: Azure.AI.AgentServer.Responses
+    api-version: "virtual-public-preview"
+    unreferenced-types-handling: keepAll
+  "@typespec/openapi3":
+    emitter-output-dir: "{output-dir}"
+imports:
+  - "@azure-tools/typespec-azure-core"
+  - "@azure-tools/typespec-azure-core/experimental"
+  - "@azure-tools/typespec-client-generator-core"
+  - "@azure-tools/openai-typespec/views/client-emitters/models/responses"

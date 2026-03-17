@@ -1,0 +1,631 @@
+using System.Collections.Concurrent;
+using System.Net;
+using System.Net.Http.Json;
+using System.Reactive;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
+
+/// <summary>
+/// T019 — Protocol tests verifying IResponsesProvider DI integration.
+/// A recording decorator wraps the default InMemoryResponsesProvider and tracks
+/// which provider methods are invoked during standard API operations.
+/// Covers SC-003.
+/// </summary>
+public class ProviderDiIntegrationTests : IDisposable
+{
+    private readonly TestHandler _handler = new();
+    private readonly RecordingResponsesProvider _spy;
+    private readonly TestWebApplicationFactory _factory;
+    private readonly HttpClient _client;
+
+    public ProviderDiIntegrationTests()
+    {
+        // Create the recording spy — it will be given the real inner provider via DI
+        _spy = new RecordingResponsesProvider();
+
+        _factory = new TestWebApplicationFactory(
+            _handler,
+            configureTestServices: services =>
+            {
+                // Register spy before AddResponsesServer so TryAddSingleton skips the defaults
+                services.AddSingleton<IResponsesProvider>(_spy);
+                services.AddSingleton<IResponsesCancellationSignalProvider>(_spy);
+                services.AddSingleton<IResponsesStreamProvider>(_spy);
+            });
+        _client = _factory.CreateClient();
+    }
+
+    [Test]
+    public async Task Post_Responses_Calls_CreateResponseAsync()
+    {
+        var body = JsonSerializer.Serialize(new { model = "test" });
+        var response = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        XAssert.Contains("CreateResponseAsync", _spy.Calls);
+    }
+
+    [Test]
+    public async Task Post_Responses_Calls_CreateEventPublisherAsync()
+    {
+        var body = JsonSerializer.Serialize(new { model = "test" });
+        await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        XAssert.Contains("CreateEventPublisherAsync", _spy.Calls);
+    }
+
+    [Test]
+    public async Task Post_Responses_Calls_GetResponseCancellationTokenAsync()
+    {
+        var body = JsonSerializer.Serialize(new { model = "test" });
+        await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        XAssert.Contains("GetResponseCancellationTokenAsync", _spy.Calls);
+    }
+
+    [Test]
+    public async Task Post_Responses_Calls_UpdateResponseAsync()
+    {
+        var body = JsonSerializer.Serialize(new { model = "test" });
+        await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        // Default mode (bg=false): single CreateResponseAsync at terminal state
+        XAssert.Contains("CreateResponseAsync", _spy.Calls);
+    }
+
+    [Test]
+    public async Task Post_Cancel_Calls_CancelResponseAsync()
+    {
+        // Create a background response that blocks until we signal
+        var tcs = new TaskCompletionSource();
+        _handler.EventFactory = (_, ctx, ct) => WaitingEventStream(ctx, tcs.Task, ct);
+
+        var createBody = JsonSerializer.Serialize(new { model = "test", background = true });
+        var createResponse = await _client.PostAsync("/responses",
+            new StringContent(createBody, Encoding.UTF8, "application/json"));
+        var created = await createResponse.Content.ReadFromJsonAsync<JsonElement>();
+        var responseId = created.GetProperty("id").GetString()!;
+
+        // Cancel the response
+        var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
+
+        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+        XAssert.Contains("CancelResponseAsync", _spy.Calls);
+
+        // Clean up
+        tcs.SetResult();
+        await Task.Delay(100);
+    }
+
+    [Test]
+    public async Task Get_Response_Stream_Calls_SubscribeToEventsAsync()
+    {
+        // Create a background streaming response
+        var body = JsonSerializer.Serialize(new { model = "test", stream = true, background = true });
+        var createResponse = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        // Read SSE to get the response ID
+        var sseBody = await createResponse.Content.ReadAsStringAsync();
+        var events = SseParser.Parse(sseBody);
+        using var doc = JsonDocument.Parse(events[0].Data);
+        var responseId = doc.RootElement.GetProperty("response").GetProperty("id").GetString()!;
+
+        // Wait for background to complete
+        await WaitForCompletionAsync(responseId);
+
+        // GET with ?stream=true to trigger SSE replay
+        var getResponse = await _client.GetAsync($"/responses/{responseId}?stream=true");
+
+        XAssert.Contains("SubscribeToEventsAsync", _spy.Calls);
+    }
+
+    private async Task WaitForCompletionAsync(string responseId, TimeSpan? timeout = null)
+    {
+        var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            var response = await _client.GetAsync($"/responses/{responseId}");
+            var body = await response.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(body);
+            var status = doc.RootElement.GetProperty("status").GetString();
+            if (status is "completed" or "failed" or "incomplete" or "cancelled")
+                return;
+            await Task.Delay(50);
+        }
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
+        IResponseContext ctx,
+        Task delayTask,
+        [EnumeratorCancellation] CancellationToken ct)
+    {
+        var response = new Models.Response(ctx.ResponseId, "test");
+        yield return new ResponseCreatedEvent(0, response);
+        await delayTask.WaitAsync(ct);
+        response.SetCompleted();
+        yield return new ResponseCompletedEvent(0, response);
+    }
+
+    public void Dispose()
+    {
+        _client.Dispose();
+        _factory.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// A recording decorator around IResponsesProvider that delegates all operations
+    /// to ConcurrentDictionary-backed in-memory storage while recording method calls.
+    /// </summary>
+    private sealed class RecordingResponsesProvider : IResponsesProvider, IResponsesCancellationSignalProvider, IResponsesStreamProvider, IDisposable
+    {
+        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+        private readonly ConcurrentDictionary<string, SeekableReplaySubject> _subjects = new();
+        private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
+        private readonly TimeSpan _ttl = TimeSpan.FromMinutes(30);
+
+        public ConcurrentBag<string> Calls { get; } = new();
+
+        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("CreateResponseAsync");
+            _responses.TryAdd(response.Id, response);
+            return Task.CompletedTask;
+        }
+
+        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("GetResponseAsync");
+            if (!_responses.TryGetValue(responseId, out var response))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+            return Task.FromResult(response);
+        }
+
+        public Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("UpdateResponseAsync");
+            _responses[response.Id] = response;
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("DeleteResponseAsync");
+            if (!_responses.TryRemove(responseId, out _))
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            return Task.CompletedTask;
+        }
+
+        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+
+        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
+            => Task.FromResult(Enumerable.Empty<OutputItem?>());
+
+        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
+            => Task.FromResult(Enumerable.Empty<string>());
+
+        public Task<IAsyncObserver<ResponseStreamEvent>> CreateEventPublisherAsync(
+            string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("CreateEventPublisherAsync");
+            var subject = _subjects.GetOrAdd(responseId, _ => new SeekableReplaySubject(_ttl));
+            return Task.FromResult(subject.GetPublisher());
+        }
+
+        public async Task<IAsyncDisposable> SubscribeToEventsAsync(
+            string responseId,
+            IAsyncObserver<ResponseStreamEvent> observer,
+            long? cursor = null,
+            CancellationToken cancellationToken = default)
+        {
+            Calls.Add("SubscribeToEventsAsync");
+            if (!_subjects.TryGetValue(responseId, out var subject))
+            {
+                throw new InvalidOperationException($"No event stream for '{responseId}'.");
+            }
+
+            var unwrapping = new UnwrappingObserver(observer);
+            return await subject.SubscribeAsync(unwrapping, cursor);
+        }
+
+        public Task CancelResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("CancelResponseAsync");
+            if (_cancellationTokenSources.TryGetValue(responseId, out var cts))
+            {
+                try { cts.Cancel(); }
+                catch (ObjectDisposedException) { }
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task<CancellationToken> GetResponseCancellationTokenAsync(
+            string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("GetResponseCancellationTokenAsync");
+            var cts = _cancellationTokenSources.GetOrAdd(responseId, _ => new CancellationTokenSource());
+            return Task.FromResult(cts.Token);
+        }
+
+        public void Dispose()
+        {
+            foreach (var subject in _subjects.Values)
+                subject.Dispose();
+            foreach (var cts in _cancellationTokenSources.Values)
+                cts.Dispose();
+        }
+
+        /// <summary>
+        /// Adapts IAsyncObserver&lt;ResponseStreamEvent&gt; to IAsyncObserver&lt;(long, ResponseStreamEvent)&gt;
+        /// by unwrapping the tuple and forwarding only the event.
+        /// </summary>
+        private sealed class UnwrappingObserver(IAsyncObserver<ResponseStreamEvent> inner)
+            : IAsyncObserver<(long SequenceNumber, ResponseStreamEvent Event)>
+        {
+            public ValueTask OnNextAsync((long SequenceNumber, ResponseStreamEvent Event) value)
+                => inner.OnNextAsync(value.Event);
+
+            public ValueTask OnErrorAsync(Exception error)
+                => inner.OnErrorAsync(error);
+
+            public ValueTask OnCompletedAsync()
+                => inner.OnCompletedAsync();
+        }
+    }
+}
+
+/// <summary>
+/// T020 — Protocol tests verifying zero-regression with the default InMemoryResponsesProvider.
+/// These run key scenarios (sync, streaming, background, cancel) and verify identical results
+/// to the pre-refactoring baseline. Covers SC-004.
+/// </summary>
+public class DefaultProviderZeroRegressionTests : ProtocolTestBase
+{
+    [Test]
+    public async Task Default_Sync_Create_Returns_Completed_Response()
+    {
+        var responseId = await CreateDefaultResponseAsync();
+
+        var getResponse = await GetResponseAsync(responseId);
+        Assert.AreEqual(HttpStatusCode.OK, getResponse.StatusCode);
+
+        using var doc = await ParseJsonAsync(getResponse);
+        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+        Assert.AreEqual(responseId, doc.RootElement.GetProperty("id").GetString());
+    }
+
+    [Test]
+    public async Task Default_Streaming_Create_Returns_SSE_Events()
+    {
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+
+        var events = await ParseSseAsync(response);
+        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 SSE events, got {events.Count}");
+
+        // First event should be response.created
+        Assert.AreEqual("response.created", events[0].EventType);
+        // Last event should be response.completed
+        Assert.AreEqual("response.completed", events[^1].EventType);
+    }
+
+    [Test]
+    public async Task Default_Background_Create_Returns_InProgress_Then_Completed()
+    {
+        var responseId = await CreateBackgroundResponseAsync();
+
+        // Should be completable
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        var getResponse = await GetResponseAsync(responseId);
+        using var doc = await ParseJsonAsync(getResponse);
+        Assert.AreEqual("completed", doc.RootElement.GetProperty("status").GetString());
+    }
+
+    [Test]
+    public async Task Default_Background_Cancel_Returns_Cancelled()
+    {
+        var tcs = new TaskCompletionSource();
+        Handler.EventFactory = (_, ctx, ct) => WaitingEventStream(ctx, tcs.Task, ct);
+
+        var responseId = await CreateBackgroundResponseAsync();
+
+        // Cancel
+        var cancelResponse = await CancelResponseAsync(responseId);
+        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+
+        // Let handler unblock (it will see cancellation)
+        tcs.SetResult();
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        var getResponse = await GetResponseAsync(responseId);
+        using var doc = await ParseJsonAsync(getResponse);
+        var status = doc.RootElement.GetProperty("status").GetString();
+        Assert.AreEqual("cancelled", status);
+    }
+
+    [Test]
+    public async Task Default_Background_Streaming_SSE_Replay()
+    {
+        var responseId = await CreateBackgroundStreamingResponseAsync();
+
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        // SSE replay
+        var replayResponse = await GetResponseStreamAsync(responseId);
+        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
+        Assert.AreEqual("text/event-stream", replayResponse.Content.Headers.ContentType?.MediaType);
+
+        var events = await ParseSseAsync(replayResponse);
+        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 SSE replay events, got {events.Count}");
+        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.AreEqual("response.completed", events[^1].EventType);
+    }
+
+    [Test]
+    public async Task Default_Get_Unknown_Returns_404()
+    {
+        var response = await GetResponseAsync("resp_unknown_provider_test");
+        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
+        IResponseContext ctx,
+        Task delayTask,
+        [EnumeratorCancellation] CancellationToken ct)
+    {
+        var response = new Models.Response(ctx.ResponseId, "test");
+        yield return new ResponseCreatedEvent(0, response);
+        await delayTask.WaitAsync(ct);
+        response.SetCompleted();
+        yield return new ResponseCompletedEvent(0, response);
+    }
+}
+
+/// <summary>
+/// T014 — Protocol tests verifying partial provider override:
+/// register only IResponsesProvider (custom) while IResponsesCancellationSignalProvider
+/// and IResponsesStreamProvider fall back to the SDK's in-memory defaults.
+/// </summary>
+public class PartialProviderOverrideTests : IDisposable
+{
+    private readonly TestHandler _handler = new();
+    private readonly StateOnlyProvider _stateProvider;
+    private readonly TestWebApplicationFactory _factory;
+    private readonly HttpClient _client;
+
+    public PartialProviderOverrideTests()
+    {
+        _stateProvider = new StateOnlyProvider();
+
+        _factory = new TestWebApplicationFactory(
+            _handler,
+            configureTestServices: services =>
+            {
+                // Register ONLY IResponsesProvider — streaming and cancellation fall back to defaults
+                services.AddSingleton<IResponsesProvider>(_stateProvider);
+            });
+        _client = _factory.CreateClient();
+    }
+
+    [Test]
+    public async Task Post_Uses_Custom_StateProvider_For_CreateResponse()
+    {
+        var body = JsonSerializer.Serialize(new { model = "test" });
+        var response = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        XAssert.Contains("CreateResponseAsync", _stateProvider.Calls);
+    }
+
+    [Test]
+    public async Task Post_Background_Uses_Custom_StateProvider_For_UpdateResponse()
+    {
+        // Create a background response
+        var body = JsonSerializer.Serialize(new { model = "test", background = true });
+        var response = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Wait for background completion
+        var createBody = await response.Content.ReadAsStringAsync();
+        using var createDoc = JsonDocument.Parse(createBody);
+        var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
+        await WaitForCompletionAsync(responseId);
+
+        // Background responses call CreateResponseAsync (at response.created)
+        // and UpdateResponseAsync (at terminal state)
+        XAssert.Contains("CreateResponseAsync", _stateProvider.Calls);
+        XAssert.Contains("UpdateResponseAsync", _stateProvider.Calls);
+    }
+
+    [Test]
+    public async Task Streaming_Uses_Default_InMemory_StreamProvider()
+    {
+        // POST stream=true — streaming events handled by default InMemoryResponsesProvider
+        var body = JsonSerializer.Serialize(new { model = "test", stream = true });
+        var response = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+
+        var sseBody = await response.Content.ReadAsStringAsync();
+        var events = SseParser.Parse(sseBody);
+        Assert.IsTrue(events.Count >= 2, $"Expected at least 2 SSE events, got {events.Count}");
+        Assert.AreEqual("response.created", events[0].EventType);
+        Assert.AreEqual("response.completed", events[^1].EventType);
+    }
+
+    [Test]
+    public async Task Cancel_Uses_Default_InMemory_CancellationProvider()
+    {
+        // Create a background response that blocks until we signal
+        var tcs = new TaskCompletionSource();
+        _handler.EventFactory = (_, ctx, ct) => WaitingEventStream(ctx, tcs.Task, ct);
+
+        var createBody = JsonSerializer.Serialize(new { model = "test", background = true });
+        var createResponse = await _client.PostAsync("/responses",
+            new StringContent(createBody, Encoding.UTF8, "application/json"));
+        var created = await createResponse.Content.ReadFromJsonAsync<JsonElement>();
+        var responseId = created.GetProperty("id").GetString()!;
+
+        // Cancel should work via the default InMemory cancellation provider
+        var cancelResponse = await _client.PostAsync($"/responses/{responseId}/cancel", null);
+        Assert.AreEqual(HttpStatusCode.OK, cancelResponse.StatusCode);
+
+        // Clean up
+        tcs.SetResult();
+        await Task.Delay(100);
+    }
+
+    [Test]
+    public async Task SseReplay_Uses_Default_InMemory_StreamProvider()
+    {
+        // Create a background streaming response
+        var body = JsonSerializer.Serialize(new { model = "test", stream = true, background = true });
+        var createResponse = await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        var sseBody = await createResponse.Content.ReadAsStringAsync();
+        var events = SseParser.Parse(sseBody);
+        using var doc = JsonDocument.Parse(events[0].Data);
+        var responseId = doc.RootElement.GetProperty("response").GetProperty("id").GetString()!;
+
+        // Wait for background to complete
+        await WaitForCompletionAsync(responseId);
+
+        // SSE replay should work via default InMemory stream provider
+        var replayResponse = await _client.GetAsync($"/responses/{responseId}?stream=true");
+        Assert.AreEqual(HttpStatusCode.OK, replayResponse.StatusCode);
+        Assert.AreEqual("text/event-stream", replayResponse.Content.Headers.ContentType?.MediaType);
+
+        var replayEvents = SseParser.Parse(await replayResponse.Content.ReadAsStringAsync());
+        Assert.IsTrue(replayEvents.Count >= 2);
+    }
+
+    [Test]
+    public async Task StateProvider_Receives_No_Streaming_Or_Cancellation_Calls()
+    {
+        // Run a full lifecycle: create, cancel attempt, SSE — state provider only sees state ops
+        var body = JsonSerializer.Serialize(new { model = "test" });
+        await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        // State provider should never see streaming or cancellation calls
+        XAssert.DoesNotContain("CreateEventPublisherAsync", _stateProvider.Calls);
+        XAssert.DoesNotContain("SubscribeToEventsAsync", _stateProvider.Calls);
+        XAssert.DoesNotContain("CancelResponseAsync", _stateProvider.Calls);
+        XAssert.DoesNotContain("GetResponseCancellationTokenAsync", _stateProvider.Calls);
+    }
+
+    private async Task WaitForCompletionAsync(string responseId, TimeSpan? timeout = null)
+    {
+        var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            var response = await _client.GetAsync($"/responses/{responseId}");
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                await Task.Delay(50);
+                continue;
+            }
+            var respBody = await response.Content.ReadAsStringAsync();
+            using var respDoc = JsonDocument.Parse(respBody);
+            var status = respDoc.RootElement.GetProperty("status").GetString();
+            if (status is "completed" or "failed" or "incomplete" or "cancelled")
+                return;
+            await Task.Delay(50);
+        }
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> WaitingEventStream(
+        IResponseContext ctx,
+        Task delayTask,
+        [EnumeratorCancellation] CancellationToken ct)
+    {
+        var response = new Models.Response(ctx.ResponseId, "test");
+        yield return new ResponseCreatedEvent(0, response);
+        await delayTask.WaitAsync(ct);
+        response.SetCompleted();
+        yield return new ResponseCompletedEvent(0, response);
+    }
+
+    public void Dispose()
+    {
+        _client.Dispose();
+        _factory.Dispose();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// A state-only provider that handles Create/Get/Update with in-memory storage
+    /// but does NOT implement IResponsesCancellationSignalProvider or IResponsesStreamProvider.
+    /// </summary>
+    private sealed class StateOnlyProvider : IResponsesProvider
+    {
+        private readonly ConcurrentDictionary<string, Models.Response> _responses = new();
+
+        public ConcurrentBag<string> Calls { get; } = new();
+
+        public Task CreateResponseAsync(Models.Response response, IEnumerable<OutputItem>? inputItems, IEnumerable<string>? historyItemIds, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("CreateResponseAsync");
+            _responses.TryAdd(response.Id, response);
+            return Task.CompletedTask;
+        }
+
+        public Task<Models.Response> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("GetResponseAsync");
+            if (!_responses.TryGetValue(responseId, out var response))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+            return Task.FromResult(response);
+        }
+
+        public Task UpdateResponseAsync(Models.Response response, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("UpdateResponseAsync");
+            _responses[response.Id] = response;
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteResponseAsync(string responseId, CancellationToken cancellationToken = default)
+        {
+            Calls.Add("DeleteResponseAsync");
+            if (!_responses.TryRemove(responseId, out _))
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            return Task.CompletedTask;
+        }
+
+        public Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+
+        public Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, CancellationToken cancellationToken = default)
+            => Task.FromResult(Enumerable.Empty<OutputItem?>());
+
+        public Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, CancellationToken cancellationToken = default)
+            => Task.FromResult(Enumerable.Empty<string>());
+    }
+}

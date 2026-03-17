@@ -1,0 +1,1260 @@
+# Handler Implementation Guide
+
+> Developer guidance for implementing `IResponseHandler` — the single integration point for building Azure AI Responses API servers with this SDK.
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting Started](#getting-started)
+- [Core Concepts](#core-concepts)
+  - [IResponseHandler](#iresponsehandler)
+  - [ResponseEventStream](#responseeventstream)
+  - [IResponseContext](#iresponsecontext)
+  - [Sequence Numbers](#sequence-numbers)
+  - [Snapshot Semantics](#snapshot-semantics)
+  - [Builder Pattern](#builder-pattern)
+- [Emitting Output](#emitting-output)
+  - [Text Messages](#text-messages)
+  - [Function Calls (Tool Use)](#function-calls-tool-use)
+  - [Reasoning Items](#reasoning-items)
+  - [Multiple Output Items](#multiple-output-items)
+  - [Other Tool Call Types](#other-tool-call-types)
+- [Handling Input](#handling-input)
+- [Cancellation](#cancellation)
+- [Error Handling](#error-handling)
+  - [Validation Pipeline](#validation-pipeline)
+- [Signalling Incomplete](#signalling-incomplete)
+- [Terminal Event Requirement](#terminal-event-requirement)
+- [Token Usage Reporting](#token-usage-reporting)
+- [Server Registration](#server-registration)
+- [RawBody Access](#rawbody-access)
+- [Configuration](#configuration)
+  - [Distributed Tracing](#distributed-tracing)
+  - [TTL Eviction](#ttl-eviction)
+  - [SSE Keep-Alive](#sse-keep-alive)
+- [Best Practices](#best-practices)
+- [Common Mistakes](#common-mistakes)
+
+---
+
+## Overview
+
+The SDK handles all protocol concerns — routing, serialization, SSE framing, `stream`/`background` mode negotiation, status lifecycle, and error shapes. You implement **one interface**: `IResponseHandler`. Your handler receives a `CreateResponse` request and yields SSE events via `IAsyncEnumerable<ResponseStreamEvent>`. The SDK wraps these events into the correct HTTP response format based on the client's requested mode.
+
+You do **not** need to think about:
+- Whether the client requested JSON or SSE streaming
+- Whether the response is running in the foreground or background
+- HTTP status codes, content types, or error envelopes
+- Sequence numbers or response IDs
+
+The SDK manages all of this. Your handler just yields events.
+
+---
+
+## Getting Started
+
+### Minimal Handler
+
+```csharp
+using Azure.AI.AgentServer.Responses;
+
+public class EchoHandler : IResponseHandler
+{
+    public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        IResponseContext context,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
+
+        var stream = new ResponseEventStream(context, request);
+
+        // 1. Signal response creation
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+
+        // 2. Build and emit output
+        var message = stream.AddOutputItemMessage();
+        yield return message.EmitAdded();
+
+        var text = message.AddTextContent();
+        yield return text.EmitAdded();
+        yield return text.EmitDelta("Hello, world!");
+        yield return text.EmitDone("Hello, world!");
+
+        yield return message.EmitContentDone(text);
+        yield return message.EmitDone();
+
+        // 3. Signal completion
+        yield return stream.EmitCompleted();
+    }
+}
+```
+
+### Minimal Program.cs
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddResponsesServer();
+builder.Services.AddSingleton<IResponseHandler, EchoHandler>();
+
+var app = builder.Build();
+app.MapResponsesServer();
+app.Run();
+```
+
+That's it. The SDK registers all middleware, routes (`POST /responses`, `GET /responses/{id}`, `POST /responses/{id}/cancel`), and protocol plumbing.
+
+---
+
+## Core Concepts
+
+### IResponseHandler
+
+```csharp
+public interface IResponseHandler
+{
+    IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        IResponseContext context,
+        CancellationToken cancellationToken);
+}
+```
+
+| Parameter | Purpose |
+|---|---|
+| `request` | The deserialized `CreateResponse` body from the client (model, input, tools, instructions, etc.) |
+| `context` | Provides the response ID and ID generation helpers |
+| `cancellationToken` | Triggered on cancellation (explicit `/cancel` call or client disconnection for non-background) |
+
+Your handler is an `IAsyncEnumerable` — you `yield return` events one at a time. The SDK consumes them, assigns sequence numbers, manages the response lifecycle, and delivers them to the client.
+
+### ResponseEventStream
+
+The main helper for producing correctly-structured events. Create one at the start of your handler:
+
+```csharp
+var stream = new ResponseEventStream(context, request);
+```
+
+It provides:
+
+| Category | Methods / Properties |
+|---|---|
+| **Response** | `Response` — the underlying `Response` object. Set custom `Metadata` or `Instructions` before `EmitCreated()` |
+| **Lifecycle** | `EmitCreated()`, `EmitInProgress()`, `EmitQueued()`, `EmitCompleted()`, `EmitFailed()`, `EmitIncomplete()` |
+| **Output factories** | `AddOutputItemMessage()`, `AddOutputItemFunctionCall()`, `AddOutputItemReasoningItem()`, `AddOutputItemCodeInterpreterCall()`, `AddOutputItemFileSearchCall()`, `AddOutputItemWebSearchCall()`, `AddOutputItemImageGenCall()`, `AddOutputItemMcpCall()`, `AddOutputItemCustomToolCall()`, and more |
+
+#### Setting Custom Metadata
+
+Use the `Response` property to set custom metadata or instructions before emitting the created event:
+
+```csharp
+var stream = new ResponseEventStream(context, request);
+
+// Set custom metadata (preserved in all response.* events)
+stream.Response.Metadata = new Metadata
+{
+    ["handler_version"] = "2.0",
+    ["region"] = "us-west-2",
+};
+
+// Set custom instructions (preserved in final response)
+stream.Response.Instructions = BinaryData.FromObjectAsJson("You are a helpful assistant.");
+
+yield return stream.EmitCreated();
+```
+
+If the handler does not set `Metadata` or `Instructions`, the SDK automatically copies them from the original `CreateResponse` request.
+
+The SDK also auto-populates `Conversation` and `PreviousResponseId` on the `Response` from the original request:
+
+- **`Conversation`** — set to a `ConversationReference` with the request's `conversation_id` (if present), enabling conversation chain tracking.
+- **`PreviousResponseId`** — set to the request's `previous_response_id` (if present), linking responses in a chain.
+
+Handlers do not need to set these — they are populated automatically in the `ResponseEventStream` constructor.
+
+**Important**: Do not add output items directly to `stream.Response.Output`. Use the output builder factories instead — the SDK tracks output items through `output_item.added` events and will detect direct manipulation as a handler error.
+
+**Every handler must**:
+1. Call `stream.EmitCreated()` first — this creates the `response.created` SSE event. **This is mandatory and must be the first event yielded.** No response is persisted before this event.
+2. Call `stream.EmitInProgress()` — this creates the `response.in_progress` SSE event.
+3. Emit output items using the builder factories.
+4. End with exactly one terminal event: `stream.EmitCompleted()`, `stream.EmitFailed()`, or `stream.EmitIncomplete()`.
+
+**Bad handler consequences** — if the handler violates this contract:
+
+| Violation | SDK Behaviour |
+|-----------|--------------|
+| First event is not `response.created` | HTTP 500 error, handler CT cancelled, no persistence |
+| `Response.Id` doesn't match `IResponseContext.ResponseId` | HTTP 500 error, handler CT cancelled, no persistence (FR-006) |
+| `Response.Status` is terminal on `response.created` | HTTP 500 error, handler CT cancelled, no persistence (FR-007) |
+| Direct `Response.Output` manipulation detected | Post-created: `response.failed`; pre-created: HTTP 500 (FR-008a) |
+| Empty enumerable (no events) | HTTP 500 error, handler CT cancelled, no persistence |
+| Throws before `response.created` | HTTP 500 error, no persistence |
+| Ends without terminal event or error | SDK emits `response.failed` automatically (FR-009) |
+| Throws after `response.created` | SDK emits `response.failed`, persists failed state |
+
+All violations are logged with handler type name and request ID for diagnostics.
+
+### IResponseContext
+
+```csharp
+public interface IResponseContext
+{
+    string ResponseId { get; }
+    bool IsShutdownRequested { get; set; }
+    JsonElement RawBody { get; }
+    Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default);
+}
+```
+
+Provides the SDK-generated response ID, shutdown signalling, and access to resolved input and history items.
+
+#### Input Items — `GetInputItemsAsync()`
+
+Returns the caller's input items fully resolved and converted to `OutputItem` types:
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context, CancellationToken ct)
+{
+    var inputItems = await context.GetInputItemsAsync(ct);
+    // inputItems contains OutputItemMessage instances with generated IDs
+    // Inline items are converted; item references are resolved via the provider
+}
+```
+
+- **Inline items** are converted to their corresponding `OutputItem` subtypes with a generated type-specific ID and `status: completed`. For example, a `{"type":"message","role":"user","content":"Hi"}` becomes an `OutputItemMessage` with a `msg_` prefixed ID, a function call output becomes `OutputItemFunctionCallOutput` with an `fco_` prefixed ID, and so on for all 24+ supported item types.
+- **Item references** (e.g., `{"type":"item_reference","id":"msg_123"}`) are batch-resolved via `IResponsesProvider.GetItemsAsync`.
+- **Input order is preserved** — items are returned in the same order as in the request.
+- **Lazy singleton** — the result is computed once on first call and cached. Subsequent calls return the same instance. Thread-safe.
+
+#### Conversation History — `GetHistoryAsync()`
+
+Returns resolved output items from previous responses in the conversation chain:
+
+```csharp
+var history = await context.GetHistoryAsync(ct);
+// history contains OutputItem instances from previous responses
+// Empty if no previous_response_id or conversation context
+```
+
+- **Two-step resolution**: First resolves history item IDs via `IResponsesProvider.GetHistoryItemIdsAsync`, then fetches actual items via `GetItemsAsync`.
+- **Ascending order** — items are returned oldest-first (ascending by position).
+- **Configurable limit** — controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **Lazy singleton** — computed once and cached, like `GetInputItemsAsync`.
+
+#### ID Generation Extensions
+
+Extension methods on `IResponseContext` generate correctly-prefixed IDs for child items:
+
+| Method | Prefix | Use For |
+|---|---|---|
+| `context.NewMessageItemId()` | `msg_` | Message output items |
+| `context.NewFunctionCallItemId()` | `fc_` | Function call output items |
+| `context.NewReasoningItemId()` | `rs_` | Reasoning items |
+| `context.NewFileSearchCallItemId()` | `fs_` | File search tool calls |
+| `context.NewWebSearchCallItemId()` | `ws_` | Web search tool calls |
+| `context.NewCodeInterpreterCallItemId()` | `ci_` | Code interpreter calls |
+| `context.NewImageGenCallItemId()` | `ig_` | Image generation calls |
+| `context.NewMcpCallItemId()` | `mcp_` | MCP tool calls |
+| `context.NewMcpListToolsItemId()` | `mcpl_` | MCP list tools items |
+| `context.NewCustomToolCallItemId()` | `ctc_` | Custom tool calls |
+
+You typically don't need to call these directly — the builders handle ID generation internally. They're available if you need IDs before creating a builder.
+
+### Sequence Numbers
+
+The server auto-assigns 0-based sequence numbers to every SSE event. Never set them manually — they are injected automatically by the SDK during event serialization.
+
+Clients use sequence numbers for stream resumption via the `starting_after` query parameter on SSE replay. See [Sequence Numbers (B9)](api-behaviour-contract.md#behavioural-rules-index) for the wire format.
+
+### Snapshot Semantics
+
+Each SSE event captures a point-in-time snapshot of the `Response`. It is safe to mutate response state between yields — each event reflects the state at emission time, not the current state.
+
+See [Snapshot Semantics (B23)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour and [Response Replacement Semantics (B37)](api-behaviour-contract.md#response-replacement-semantics-rule-b37) for how response state is tracked.
+
+### Builder Pattern
+
+Output is constructed through a **builder hierarchy** that enforces correct event ordering:
+
+```
+ResponseEventStream
+  └── OutputItemBuilder (message, function call, reasoning, etc.)
+        └── Content builders (text, refusal, summary, etc.)
+```
+
+Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) and will throw if you emit events out of order. This prevents protocol violations at development time rather than runtime.
+
+**Key rule**: Every builder that you start (`EmitAdded`) must be finished (`EmitDone`). Unfinished builders result in malformed responses.
+
+---
+
+## Emitting Output
+
+### Text Messages
+
+The most common output — a message with text content:
+
+```csharp
+var stream = new ResponseEventStream(context, request);
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+var text = message.AddTextContent();
+yield return text.EmitAdded();
+
+// Stream text incrementally (deltas are sent to the client in real-time)
+yield return text.EmitDelta("First chunk of text. ");
+yield return text.EmitDelta("Second chunk. ");
+
+// Finalise the text content (final text = full accumulated text)
+yield return text.EmitDone("First chunk of text. Second chunk. ");
+
+yield return message.EmitContentDone(text);
+yield return message.EmitDone();
+
+yield return stream.EmitCompleted();
+```
+
+**Tip**: For streaming, emit small deltas frequently for a responsive feel. For non-streaming mode, the SDK accumulates everything and delivers the final JSON — so delta granularity doesn't affect the JSON response, only SSE streaming UX.
+
+### Function Calls (Tool Use)
+
+When your handler needs the client to execute a function (tool) and return the result:
+
+```csharp
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+
+var funcCall = stream.AddOutputItemFunctionCall("get_weather", "call_weather_1");
+yield return funcCall.EmitAdded();
+
+var arguments = JsonSerializer.Serialize(new { location = "Seattle", unit = "fahrenheit" });
+yield return funcCall.EmitArgumentsDelta(arguments);
+yield return funcCall.EmitArgumentsDone(arguments);
+yield return funcCall.EmitDone();
+
+yield return stream.EmitCompleted();
+```
+
+The client receives the function call, executes it locally, and sends a new request with the function output as input. Your handler then processes the result on the next turn.
+
+#### Multi-Turn Function Calling
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+{
+    await Task.CompletedTask;
+    var stream = new ResponseEventStream(context, request);
+    var inputItems = request.GetInputExpanded();
+
+    // Check if this is a follow-up with function output
+    var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
+
+    if (toolOutput is not null)
+    {
+        // Turn 2+: Process the function result and respond
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+        var message = stream.AddOutputItemMessage();
+        yield return message.EmitAdded();
+        var text = message.AddTextContent();
+        yield return text.EmitAdded();
+        var reply = $"The result is: {toolOutput.Output}";
+        yield return text.EmitDelta(reply);
+        yield return text.EmitDone(reply);
+        yield return message.EmitContentDone(text);
+        yield return message.EmitDone();
+        yield return stream.EmitCompleted();
+    }
+    else
+    {
+        // Turn 1: Request a function call
+        yield return stream.EmitCreated();
+        yield return stream.EmitInProgress();
+        var funcCall = stream.AddOutputItemFunctionCall("get_weather", "call_weather_1");
+        yield return funcCall.EmitAdded();
+        var args = JsonSerializer.Serialize(new { location = "Seattle" });
+        yield return funcCall.EmitArgumentsDelta(args);
+        yield return funcCall.EmitArgumentsDone(args);
+        yield return funcCall.EmitDone();
+        yield return stream.EmitCompleted();
+    }
+}
+```
+
+### Reasoning Items
+
+Emit reasoning (chain-of-thought) before the main response:
+
+```csharp
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+
+// Output 0: Reasoning
+var reasoning = stream.AddOutputItemReasoningItem();
+yield return reasoning.EmitAdded();
+
+var summary = reasoning.AddSummaryPart();
+yield return summary.EmitAdded();
+yield return summary.EmitTextDelta("Let me think about this...");
+yield return summary.EmitTextDone("Let me think about this...");
+yield return summary.EmitDone();
+reasoning.EmitSummaryPartDone(summary);
+yield return reasoning.EmitDone();
+
+// Output 1: Message with the answer
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+// ... text content ...
+yield return message.EmitDone();
+
+yield return stream.EmitCompleted();
+```
+
+### Multiple Output Items
+
+A single response can contain multiple output items. Each gets an auto-incrementing output index:
+
+```csharp
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+
+// Output 0
+var msg1 = stream.AddOutputItemMessage();
+yield return msg1.EmitAdded();
+// ... content ...
+yield return msg1.EmitDone();
+
+// Output 1
+var msg2 = stream.AddOutputItemMessage();
+yield return msg2.EmitAdded();
+// ... content ...
+yield return msg2.EmitDone();
+
+yield return stream.EmitCompleted();
+```
+
+### Other Tool Call Types
+
+The SDK provides specialised builders for each tool call type:
+
+| Builder | Factory Method | Key Methods |
+|---|---|---|
+| `OutputItemCodeInterpreterCallBuilder` | `AddOutputItemCodeInterpreterCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitInterpreting()` → `EmitCodeDelta()` → `EmitCodeDone()` → `EmitCompleted()` → `EmitDone()` |
+| `OutputItemFileSearchCallBuilder` | `AddOutputItemFileSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` |
+| `OutputItemWebSearchCallBuilder` | `AddOutputItemWebSearchCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitSearching()` → `EmitCompleted()` → `EmitDone()` |
+| `OutputItemImageGenCallBuilder` | `AddOutputItemImageGenCall()` | `EmitAdded()` → `EmitInProgress()` → `EmitGenerating()` → `EmitPartialImage()` → `EmitCompleted()` → `EmitDone()` |
+| `OutputItemMcpCallBuilder` | `AddOutputItemMcpCall(serverLabel, name)` | `EmitAdded()` → `EmitInProgress()` → `EmitArgumentsDelta()` → `EmitArgumentsDone()` → `EmitCompleted()` / `EmitFailed()` → `EmitDone()` |
+| `OutputItemCustomToolCallBuilder` | `AddOutputItemCustomToolCall(callId, name)` | `EmitAdded()` → `EmitInputDelta()` → `EmitInputDone()` → `EmitDone()` |
+
+Each builder enforces its own lifecycle ordering — follow the method progression from left to right.
+
+---
+
+## Handling Input
+
+Access the client's input via `request.GetInputExpanded()`:
+
+```csharp
+var inputItems = request.GetInputExpanded();
+
+// Check for specific input types
+var textInputs = inputItems.OfType<EasyInputMessageItemParam>();
+var functionOutputs = inputItems.OfType<FunctionCallOutputItemParam>();
+```
+
+The `CreateResponse` object also provides:
+- `request.Model` — the requested model name
+- `request.Instructions` — system instructions
+- `request.Tools` — registered tool definitions
+- `request.Metadata` — key-value metadata pairs
+- `request.Store` — whether to persist the response
+- `request.Stream` — whether SSE streaming was requested
+- `request.Background` — whether background mode was requested
+
+### Expanding Message Content
+
+To access typed content parts from an `ItemMessage` (e.g., in resolved input items or history), use `GetContentExpanded()`:
+
+```csharp
+var inputItems = await context.GetInputItemsAsync(cancellationToken);
+foreach (var item in inputItems.OfType<ItemMessage>())
+{
+    var contentParts = item.GetContentExpanded();
+    foreach (var part in contentParts)
+    {
+        if (part is MessageContentInputTextContent textContent)
+        {
+            Console.WriteLine(textContent.Text);
+        }
+    }
+}
+```
+
+This complements the request-level helpers (`GetInputExpanded`, `GetInputText`, `GetToolChoiceExpanded`) — they operate on the `CreateResponse` request, while `GetContentExpanded` operates on individual `ItemMessage` instances.
+
+---
+
+## RawBody Access
+
+The `IResponseContext` exposes the full raw JSON request body via `context.RawBody`:
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+{
+    // Access the raw JSON request body
+    JsonElement rawBody = context.RawBody;
+
+    // Read custom extension fields not in the typed model
+    if (rawBody.TryGetProperty("x-custom-field", out var customField))
+    {
+        var customValue = customField.GetString();
+        // Use custom value in handler logic
+    }
+
+    // ... emit events ...
+}
+```
+
+| Property | Type | Description |
+|---|---|---|
+| `context.RawBody` | `JsonElement` | The full raw JSON request body, including any custom extension fields not present in the typed `CreateResponse` model |
+
+**Notes**:
+- Returns `default(JsonElement)` in test contexts where no HTTP request is available (e.g., unit tests using `TestResponseContext`).
+- Useful for forward-compatible extension fields, vendor-specific annotations, or custom metadata that the typed model does not capture.
+- The `JsonElement` is read-only — modifications do not affect the request.
+
+---
+
+## Cancellation
+
+The `CancellationToken` is triggered when:
+- A client calls `POST /responses/{id}/cancel` (background mode only)
+- A client disconnects the HTTP connection (non-background mode)
+
+**Use `[EnumeratorCancellation]` on the cancellation token parameter** — this is required for `IAsyncEnumerable` to propagate cancellation correctly.
+
+### Checking Cancellation
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+{
+    var stream = new ResponseEventStream(context, request);
+    yield return stream.EmitCreated();
+    yield return stream.EmitInProgress();
+
+    var message = stream.AddOutputItemMessage();
+    yield return message.EmitAdded();
+    var text = message.AddTextContent();
+    yield return text.EmitAdded();
+
+    // Long-running work — check cancellation between chunks
+    foreach (var chunk in GetChunks())
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        yield return text.EmitDelta(chunk);
+    }
+
+    yield return text.EmitDone(fullText);
+    yield return message.EmitContentDone(text);
+    yield return message.EmitDone();
+    yield return stream.EmitCompleted();
+}
+```
+
+### What the SDK Does on Cancellation
+
+Let `OperationCanceledException` propagate — the server handles the winddown automatically. The 10-second grace period, output clearing, and terminal event emission are all automatic. You don't need to emit any terminal event on cancellation.
+
+See [Cancel Winddown (B11)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+
+### Graceful Shutdown
+
+When the host shuts down (e.g., `SIGTERM`, `IHost.StopAsync()`), `context.IsShutdownRequested` is set to `true` and the handler's `CancellationToken` is cancelled.
+
+Use `context.IsShutdownRequested` to distinguish shutdown from explicit cancel or client disconnect and choose the appropriate terminal state for your scenario. See [Shutdown Signal (B24)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+
+**Option A — Emit `response.incomplete`** (clients can resume with `previous_response_id`):
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+{
+    var stream = new ResponseEventStream(context, request);
+    yield return stream.EmitCreated();
+    yield return stream.EmitInProgress();
+
+    try
+    {
+        await DoLongRunningWorkAsync(cancellationToken);
+    }
+    catch (OperationCanceledException)
+    {
+        if (context.IsShutdownRequested)
+        {
+            // Server is shutting down — emit incomplete so clients can resume
+            yield return stream.EmitIncomplete();
+            yield break;
+        }
+        throw; // Let SDK handle cancel/disconnect
+    }
+
+    yield return stream.EmitCompleted();
+}
+```
+
+**Option B — Emit `response.failed` with a retry indicator** (clients receive an explicit error instructing them to retry):
+
+```csharp
+catch (OperationCanceledException) when (context.IsShutdownRequested)
+{
+    yield return stream.EmitFailed("server_shutting_down", "Server is restarting. Please retry.");
+    yield break;
+}
+```
+
+Configure the shutdown timeout via `HostOptions`:
+
+```csharp
+builder.Services.Configure<HostOptions>(options =>
+{
+    options.ShutdownTimeout = TimeSpan.FromSeconds(10);
+});
+```
+
+Internally, the SDK uses `ResponseExecutionTracker` (registered as an `IHostedService`) to coordinate shutdown. When the host stops, the tracker cancels all in-flight response executions and waits for them to complete within the shutdown timeout. This propagation chain is automatic — `context.IsShutdownRequested` and the handler's `CancellationToken` are both triggered by the tracker.
+
+**Client-side reconnection**: When a client receives `response.incomplete` (e.g., because the handler chose Option A above), it can resume by creating a new request with `previous_response_id` set to the incomplete response's ID. The new request continues from where the previous one stopped. This works only when `store=true` — ephemeral (`store=false`) responses cannot be resumed because they are not persisted.
+
+---
+
+## Error Handling
+
+### Handler Exceptions
+
+Throwing an exception is a valid way to terminate your handler — you don't need to emit a terminal event first. The SDK catches the exception, maps it to the appropriate HTTP error response, and emits `response.failed` on your behalf.
+
+**What clients see when your handler throws**:
+
+| Exception Type | HTTP Status | Response Status | `error.code` | `error.message` |
+|---------------|-------------|-----------------|-------------|----------------|
+| `BadRequestException` | 400 | `failed` | from exception (e.g., `"invalid_value"`) | from exception |
+| `ResourceNotFoundException` | 404 | `failed` | `null` | from exception |
+| `ResponsesApiException` | from exception | `failed` | from exception | from exception |
+| Any other exception | 500 | `failed` | `"server_error"` | `"An internal error occurred."` |
+| `OperationCanceledException` | *(special)* | `cancelled` | *(see [Cancellation](#cancellation))* | *(see [Cancellation](#cancellation))* |
+
+The SDK recognises specific exception types and maps them to structured error responses. For unknown exceptions, clients see a generic 500 with `"server_error"` — the actual exception details are logged server-side but never exposed to callers.
+
+**The `ResponseError` on the response object** (visible via `GET /responses/{id}` when `store=true`) contains only `code` and `message` — no `type` or `param`. This is a different (smaller) shape than the HTTP error envelope.
+
+> For the complete error-to-status mapping, see [SDK Behavioural Specification — Error Handling Pipeline](sdk-behaviour-spec.md#error-handling-pipeline) (S-027–S-030). For .NET exception class details, see [.NET Design — Error Handling](design/error-handling.md).
+
+### Explicit Failure
+
+To signal a specific failure with a custom error code and message:
+
+```csharp
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+// ... some work ...
+
+// Something went wrong — signal failure explicitly
+yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Custom error message");
+// Do NOT yield any more events after a terminal event
+```
+
+### Input Validation in the Handler
+
+For request-level validation (e.g., unsupported model, missing required tool), throw `BadRequestException`:
+
+```csharp
+if (request.Model != "my-model")
+{
+    throw new BadRequestException("Model not supported", "model");
+}
+```
+
+The SDK converts this to an HTTP 400 response with the standard error envelope shape.
+
+### Validation Pipeline
+
+Bad client input returns HTTP 400 before your handler runs. Bad handler output returns HTTP 500 or triggers `response.failed`. Don't catch either exception type — `PayloadValidationException` runs before your handler, and `ResponseValidationException` indicates a bug in your handler code that should be fixed, not caught.
+
+**Debugging**: If you see unexpected 500 errors during development, check your application logs for validation errors. The logged details include the JSON path and expected type, pointing you to the builder call that produced invalid output.
+
+See [Validation (B29, B30)](api-behaviour-contract.md#validation) for the protocol-level behaviour.
+
+---
+
+## Signalling Incomplete
+
+If your handler cannot fully complete the request (e.g., output was truncated), signal incomplete:
+
+```csharp
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+
+var message = stream.AddOutputItemMessage();
+// ... partial output ...
+yield return message.EmitDone();
+
+yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens);
+```
+
+The `incomplete` status is **handler-driven** — the SDK does not automatically detect truncation. Your handler decides when to signal it.
+
+---
+
+## Terminal Event Requirement
+
+Your handler **must** do one of two things before the `IAsyncEnumerable` completes:
+
+1. **Emit a terminal event** — `EmitCompleted()`, `EmitFailed()`, or `EmitIncomplete()`
+2. **Throw an exception** — the SDK maps it to `response.failed` (see [Handler Exceptions](#handler-exceptions))
+
+Both are valid ways to end a response. What is **not** valid is silently completing the stream without either — that is a programming error and the SDK treats it as one.
+
+```csharp
+// ✅ Emit a terminal event
+yield return stream.EmitCompleted();
+
+// ✅ Also good: emit with usage data
+yield return stream.EmitCompleted(usage);
+
+// ✅ Also valid: throw an exception — SDK handles the error response
+throw new BadRequestException("Unsupported model", "model");
+
+// ❌ Bad handler: stopping without a terminal event or exception
+//    → SDK emits response.failed with a diagnostic log (B32)
+```
+
+**Why the SDK doesn't auto-complete**:
+- A silent completion could mask bugs — the handler may have forgotten to emit output
+- The SDK fails loudly so programming errors surface during development
+- Allows passing `ResponseUsage` data (see [Token Usage Reporting](#token-usage-reporting) below)
+- Lets you choose the right terminal status (`completed`, `failed`, or `incomplete`)
+- Makes handler intent unambiguous to readers of your code
+
+See [Terminal Event Guarantee (B32)](api-behaviour-contract.md#behavioural-rules-index) for the API-level guarantee.
+
+---
+
+## Token Usage Reporting
+
+All three terminal methods accept an optional `ResponseUsage?` parameter for reporting token consumption. If no usage is provided, the `usage` field is omitted from the response.
+
+```csharp
+// Completed with usage
+yield return stream.EmitCompleted(usage);
+
+// Failed with usage
+yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Error message", usage);
+
+// Incomplete with usage
+yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens, usage);
+```
+
+Create `ResponseUsage` using the model factory:
+
+```csharp
+var usage = AzureAIResponsesServerSdkModelFactory.ResponseUsage(
+    inputTokens: 150,
+    outputTokens: 42,
+    totalTokens: 192);
+yield return stream.EmitCompleted(usage);
+```
+
+Handlers that proxy to an LLM and receive token counts should pass them through. Handlers that do not interact with an LLM typically omit usage.
+
+See [Token Usage (B33)](api-behaviour-contract.md#token-usage-reporting-rule-b33) for the protocol-level behaviour.
+
+---
+
+## Server Registration
+
+### Basic Setup
+
+```csharp
+builder.Services.AddResponsesServer();
+builder.Services.AddSingleton<IResponseHandler, MyHandler>();
+```
+
+### With Options
+
+```csharp
+builder.Services.AddResponsesServer(options =>
+{
+    options.SseKeepAliveInterval = TimeSpan.FromSeconds(15); // SSE keep-alive (default: disabled)
+});
+
+// Configure in-memory provider TTLs separately
+builder.Services.Configure<InMemoryProviderOptions>(opts =>
+{
+    opts.EventStreamTtl = TimeSpan.FromMinutes(5);   // How long SSE replay is available (default: 10 min)
+});
+```
+
+### Route Mapping
+
+```csharp
+app.MapResponsesServer();              // Routes at /responses
+app.MapResponsesServer("/v1");         // Routes at /v1/responses
+```
+
+This maps five endpoints:
+- `POST {prefix}/responses` — Create a response
+- `GET {prefix}/responses/{responseId}` — Retrieve a response (JSON or SSE replay)
+- `POST {prefix}/responses/{responseId}/cancel` — Cancel a response
+- `DELETE {prefix}/responses/{responseId}` — Delete a response
+- `GET {prefix}/responses/{responseId}/input_items` — List input items (paginated)
+
+**Startup validation**: `MapResponsesServer()` throws `InvalidOperationException` if no `IResponseHandler` is registered. This fail-fast behaviour ensures misconfigured servers are caught at startup, not at the first request.
+
+### Custom Response Provider
+
+The server delegates state persistence, event streaming, and cancellation to three pluggable provider interfaces. The default in-memory implementation works for single-instance deployments.
+
+#### Provider Interface Split
+
+The provider contract is split into **three focused interfaces**, each with a single responsibility:
+
+| Interface | Responsibility | Methods |
+|---|---|---|
+| `IResponsesProvider` | State persistence (CRUD for responses, input items, history) | `CreateResponseAsync`, `GetResponseAsync`, `UpdateResponseAsync`, `DeleteResponseAsync`, `GetInputItemsAsync`, `GetItemsAsync`, `GetHistoryItemIdsAsync` |
+| `IResponsesCancellationSignalProvider` | Cancellation signal coordination | `CancelResponseAsync`, `GetResponseCancellationTokenAsync` |
+| `IResponsesStreamProvider` | SSE event streaming (publish/subscribe) | `CreateEventPublisherAsync`, `SubscribeToEventsAsync` |
+
+The default in-memory provider implements all three interfaces. You can override **any subset** — the SDK falls back to the in-memory implementation for unregistered interfaces.
+
+```csharp
+// Override only state persistence (e.g., use a database)
+services.AddSingleton<IResponsesProvider, MyDatabaseProvider>();
+
+// Override only cancellation (e.g., use Redis pub/sub)
+services.AddSingleton<IResponsesCancellationSignalProvider, MyRedisSignalProvider>();
+
+// Override all three
+services.AddSingleton<IResponsesProvider, MyProvider>();
+services.AddSingleton<IResponsesCancellationSignalProvider, MyProvider>();
+services.AddSingleton<IResponsesStreamProvider, MyProvider>();
+```
+
+For multi-instance or durable scenarios, see [SDK Behavioural Specification — Persistence Contract](sdk-behaviour-spec.md#persistence-contract) for the abstract provider contract, and [.NET Design — Provider Contract](design/provider-contract.md) for implementation details.
+
+---
+
+## Configuration
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `SseKeepAliveInterval` | `TimeSpan` | Disabled (`Timeout.InfiniteTimeSpan`) | Interval between SSE keep-alive comments. Opt-in via code or `AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL` env var (seconds). See [SSE Keep-Alive](#sse-keep-alive) |
+| `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
+| `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `IResponsesProvider.GetHistoryItemIdsAsync` |
+
+**In-memory provider options** (`InMemoryProviderOptions` — separate from `ResponsesServerOptions`):
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `EventStreamTtl` | `TimeSpan` | 10 minutes | Per-event SSE replay buffer retention. Each event is available for replay for this duration from when it was emitted. See [TTL Eviction](#ttl-eviction) |
+
+### Model Resolution
+
+The `model` field is optional on `CreateResponse`. When omitted, the SDK resolves it in priority order:
+
+1. **Request-level**: `request.Model` (from the JSON payload)
+2. **Server default**: `ResponsesServerOptions.DefaultModel`
+3. **Fallback**: empty string (`""`)
+
+```csharp
+services.AddResponsesServer(options =>
+{
+    options.DefaultModel = "gpt-4o";  // Used when request omits model
+});
+```
+
+### Auto-Stamping
+
+The SDK automatically stamps output items with contextual metadata:
+
+- **`ResponseId`**: Every `OutputItem` gets its `ResponseId` set to the current response ID. If you set it explicitly in your handler, your value takes precedence.
+- **`AgentReference`**: When `CreateResponse.AgentReference` is set, it is propagated to every `OutputItem.AgentReference`. If you set it explicitly in your handler, your value takes precedence.
+
+This happens transparently — no handler code is needed.
+
+### SDK Identity Header
+
+The server automatically adds an `x-platform-server` identity header to all responses. To append custom identity information, use the server options:
+
+```csharp
+builder.Services.AddResponsesServer(options =>
+{
+    options.AdditionalServerIdentity = "my-app/1.0";
+});
+```
+
+See [Server Identity Header (B19)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+
+### Distributed Tracing
+
+The server emits OpenTelemetry-compatible spans for `POST /responses` requests. To capture them:
+
+```csharp
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddSource("Azure.AI.AgentServer.Responses")  // SDK spans
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter());
+```
+
+Handler authors can create child activities using their own `ActivitySource` — they are automatically parented under the SDK's span via `Activity.Current` propagation.
+
+#### Baggage Items
+
+The SDK sets baggage items on the activity for `POST /responses` requests. Handlers can read these from `Activity.Current`:
+
+```csharp
+using System.Diagnostics;
+
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+{
+    var activity = Activity.Current;
+    if (activity is not null)
+    {
+        var responseId = activity.GetBaggageItem("response.id");
+        var conversationId = activity.GetBaggageItem("conversation.id");
+        var streaming = activity.GetBaggageItem("streaming");
+        var agentName = activity.GetBaggageItem("agent.name");
+        var agentId = activity.GetBaggageItem("agent.id");
+        var providerName = activity.GetBaggageItem("provider.name");
+        var requestId = activity.GetBaggageItem("request.id");
+    }
+
+    // ... emit events ...
+}
+```
+
+| Baggage Key | Description |
+|---|---|
+| `response.id` | The SDK-generated response identifier |
+| `conversation.id` | Conversation ID from the request (if present) |
+| `streaming` | `"true"` or `"false"` — whether SSE streaming was requested |
+| `agent.name` | Agent name from `agent_reference` (if provided) |
+| `agent.id` | Composite `{name}:{version}` from `agent_reference` (if provided) |
+| `provider.name` | Fixed: `"azure.ai.responses"` |
+| `request.id` | From the `X-Request-Id` HTTP header (if present) |
+
+Baggage items are propagated to child activities and downstream telemetry processors automatically.
+
+#### Customizing Tracing with `ResponsesActivitySource`
+
+All distributed tracing behaviour — tags, baggage, activity name — is encapsulated in the virtual method `ResponsesActivitySource.StartCreateResponseActivity`. The SDK registers a default instance via `TryAddSingleton`, so you can replace it entirely by registering your own subclass **before** calling `AddResponsesServer()`.
+
+##### Composition pattern (recommended)
+
+Because `Activity.SetTag` **replaces** existing values for the same key, and `Activity.AddBaggage` prepends (so `GetBaggageItem` returns the most recently added value), you can call `base` first and then selectively override — no need to duplicate the entire method:
+
+```csharp
+class MyActivitySource : ResponsesActivitySource
+{
+    public override Activity? StartCreateResponseActivity(
+        CreateResponse request, string responseId, IHeaderDictionary headers)
+    {
+        // Get all defaults (GenAI tags, baggage, X-Request-Id, etc.)
+        var activity = base.StartCreateResponseActivity(request, responseId, headers);
+        if (activity is null) return null;
+
+        // Override service identity
+        activity.SetTag("gen_ai.provider.name", "my-service");
+        activity.SetTag("service.name", "my-service");
+        activity.SetTag("gen_ai.system", "my-service");
+        activity.AddBaggage("provider.name", "my-service");
+
+        // Add extra tags
+        activity.SetTag("service.namespace", "my.company.agents");
+
+        // Read any header you need
+        if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
+            activity.SetTag("tenant.id", tenantId.ToString());
+
+        return activity;
+    }
+}
+
+// Register before AddResponsesServer so TryAddSingleton skips the default:
+builder.Services.AddSingleton<ResponsesActivitySource, MyActivitySource>();
+builder.Services.AddResponsesServer();
+```
+
+##### Full override
+
+To completely replace the tracing behaviour, override without calling `base`:
+
+```csharp
+class MinimalActivitySource : ResponsesActivitySource
+{
+    public override Activity? StartCreateResponseActivity(
+        CreateResponse request, string responseId, IHeaderDictionary headers)
+    {
+        var activity = Source.StartActivity($"my-op {request.Model}");
+        activity?.SetTag("custom.response.id", responseId);
+        return activity;
+    }
+}
+```
+
+##### OpenTelemetry integration
+
+The default `ActivitySource` name is `ResponsesActivitySource.DefaultName` (`"Azure.AI.AgentServer.Responses"`). Configure your tracing pipeline to listen for it:
+
+```csharp
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddSource(ResponsesActivitySource.DefaultName)
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter());
+```
+
+If your subclass uses a different source name (via the `protected` constructor), listen for that name instead.
+
+See [SDK Behavioural Specification — Observability Requirements](sdk-behaviour-spec.md#observability-requirements) (S-043–S-045) for the full tracing contract.
+
+See [API Behaviour Contract — Distributed Tracing](api-behaviour-contract.md#distributed-tracing) for the full list of activity tags and baggage items.
+
+### TTL Eviction
+
+The default in-memory response store retains response data indefinitely. Only event stream replay buffers are automatically evicted — each SSE event is retained for a configurable TTL from the time it was emitted (default: 10 minutes).
+
+```csharp
+builder.Services.Configure<InMemoryProviderOptions>(opts =>
+{
+    opts.EventStreamTtl = TimeSpan.FromMinutes(30);  // SSE replay available for 30 min
+});
+```
+
+If you register a custom `IResponsesProvider`, you manage your own retention strategy. `InMemoryProviderOptions` only affects the built-in in-memory provider.
+
+See [Event Stream Replay Availability (B35)](api-behaviour-contract.md#event-stream-replay-availability-rule-b35) for the protocol-level behaviour. See [.NET Design — Provider Contract](design/provider-contract.md) for implementation details.
+
+### SSE Keep-Alive
+
+The server can send periodic keep-alive comments during SSE streaming to prevent reverse proxies from closing idle connections. Disabled by default.
+
+**Enable via code**:
+
+```csharp
+builder.Services.AddResponsesServer(options =>
+{
+    options.SseKeepAliveInterval = TimeSpan.FromSeconds(15);
+});
+```
+
+**Enable via environment variable**:
+
+```bash
+export AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL=15
+```
+
+The `X-Accel-Buffering: no` response header is automatically set on SSE streams to disable nginx buffering.
+
+See [SSE Keep-Alive (B28)](api-behaviour-contract.md#behavioural-rules-index) for the protocol-level behaviour.
+
+---
+
+## Best Practices
+
+### 1. Always Emit Created First, Terminal Last
+
+Every handler must yield `stream.EmitCreated()` followed by `stream.EmitInProgress()` as its first two events, and exactly one terminal event (`EmitCompleted`, `EmitFailed`, or `EmitIncomplete`) as its last. The SDK validates this ordering.
+
+### 2. Use Small, Frequent Deltas
+
+For streaming mode, smaller deltas create a more responsive UX. Don't buffer the entire response — stream it as it's generated:
+
+```csharp
+// Good: Stream word-by-word
+foreach (var word in words)
+{
+    yield return text.EmitDelta(word + " ");
+    await Task.Delay(50, cancellationToken); // Simulate generation
+}
+```
+
+### 3. Check Cancellation in Loops
+
+Any long-running loop should check `cancellationToken`:
+
+```csharp
+foreach (var item in largeCollection)
+{
+    cancellationToken.ThrowIfCancellationRequested();
+    // ... process item ...
+}
+```
+
+### 4. Pass CancellationToken to Async Calls
+
+```csharp
+var result = await httpClient.GetAsync(url, cancellationToken);
+var data = await database.QueryAsync(query, cancellationToken);
+```
+
+### 5. Close Every Builder You Open
+
+Every builder follows `EmitAdded()` → work → `EmitDone()`. If you forget `EmitDone()`, the response will have incomplete output items.
+
+### 6. Use `await Task.CompletedTask` for Sync Handlers
+
+If your handler does no async work, the compiler requires at least one `await`. Use `await Task.CompletedTask` at the top:
+
+```csharp
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(...)
+{
+    await Task.CompletedTask;
+    // ... synchronous work with yield return ...
+}
+```
+
+### 7. Register as Singleton for Stateless, Scoped for Stateful
+
+```csharp
+// Stateless handler — one instance for the lifetime of the app
+builder.Services.AddSingleton<IResponseHandler, MyHandler>();
+
+// Stateful handler — new instance per request
+builder.Services.AddScoped<IResponseHandler, MyStatefulHandler>();
+```
+
+### 8. Let the SDK Handle Mode Negotiation
+
+Never branch on `request.Stream` or `request.Background` in your handler. The SDK handles these concerns — your handler always produces the same event sequence regardless of mode.
+
+---
+
+## Common Mistakes
+
+### Forgetting `[EnumeratorCancellation]`
+
+```csharp
+// ❌ Cancellation won't propagate correctly
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    CancellationToken cancellationToken)
+
+// ✅ Correct
+public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+    CreateResponse request, IResponseContext context,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+```
+
+### Emitting Events After a Terminal Event
+
+```csharp
+// ❌ Don't yield after EmitCompleted
+yield return stream.EmitCompleted();
+yield return message.EmitDone(); // This will be ignored or cause errors
+
+// ✅ Finish all output items before the terminal event
+yield return message.EmitDone();
+yield return stream.EmitCompleted();
+```
+
+### Not Closing Content Builders
+
+```csharp
+// ❌ Missing EmitContentDone
+var text = message.AddTextContent();
+yield return text.EmitAdded();
+yield return text.EmitDone("text");
+yield return message.EmitDone(); // Content wasn't properly closed
+
+// ✅ Always call EmitContentDone before closing the message
+var text = message.AddTextContent();
+yield return text.EmitAdded();
+yield return text.EmitDone("text");
+yield return message.EmitContentDone(text); // Close the content part
+yield return message.EmitDone();
+```
+
+### Swallowing OperationCanceledException
+
+```csharp
+// ❌ Don't catch and convert to failure
+try { /* work */ }
+catch (OperationCanceledException)
+{
+    yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Cancelled");
+}
+
+// ✅ Let it propagate — the SDK handles it correctly
+// (just don't catch OperationCanceledException)
+```
+
+### Branching on Stream/Background Flags
+
+```csharp
+// ❌ Don't do this — the SDK handles mode negotiation
+if (request.Stream == true)
+{
+    // streaming path
+}
+else
+{
+    // non-streaming path
+}
+
+// ✅ Same event sequence regardless of mode
+yield return stream.EmitCreated();
+yield return stream.EmitInProgress();
+// ... same output for all modes ...
+yield return stream.EmitCompleted();
+```
+
+### Omitting Output Items from Terminal Response (Raw Events)
+
+When emitting raw events (without `ResponseEventStream` builders), each `response.*` event **fully replaces** the SDK's tracked `Response` with the event's embedded `Response` ([Rule B37](api-behaviour-contract.md#behavioural-rules-index)). If the terminal `response.completed` has empty output, accumulated `output_item.added/done` items are lost. Additionally, the handler **must** set the correct `Status` on the `Response` before yielding a terminal event — the SDK validates but never auto-sets terminal status.
+
+```csharp
+// ❌ Terminal response has empty output — items accumulated via output_item.added are lost
+var response = new Response(ctx.ResponseId, "test-model");
+yield return new ResponseCreatedEvent(0, response);
+yield return new ResponseOutputItemAddedEvent(0, 0, msg);
+yield return new ResponseCompletedEvent(0, response); // response.Output is still empty!
+
+// ❌ Status not set — SDK validates and emits response.failed
+var response = new Response(ctx.ResponseId, "test-model");
+yield return new ResponseCreatedEvent(0, response);
+yield return new ResponseCompletedEvent(0, response); // Status is still null!
+
+// ✅ Include output items and set Status in the terminal response
+var response = new Response(ctx.ResponseId, "test-model");
+yield return new ResponseCreatedEvent(0, response);
+yield return new ResponseOutputItemAddedEvent(0, 0, msg);
+
+var completedResponse = new Response(ctx.ResponseId, "test-model");
+completedResponse.Output.Add(msg); // Handler is source of truth
+completedResponse.SetCompleted();  // Sets Status, CompletedAt, OutputText
+yield return new ResponseCompletedEvent(0, completedResponse);
+```
+
+**Note**: This only applies to raw event construction. When using `ResponseEventStream` builders (e.g., `stream.EmitCompleted()`), the SDK automatically includes all accumulated output items in the terminal response — no additional work is needed.

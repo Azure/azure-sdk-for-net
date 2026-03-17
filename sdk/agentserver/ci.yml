@@ -23,3 +23,7 @@ extends:
         safeName: AzureAIAgentServerContracts
       - name: Azure.AI.AgentServer.AgentFramework
         safeName: AzureAIAgentServerAgentFramework
+      - name: Azure.AI.AgentServer.Responses.Contracts
+        safeName: AzureAIAgentServerResponsesContracts
+      - name: Azure.AI.AgentServer.Responses
+        safeName: AzureAIAgentServerResponses

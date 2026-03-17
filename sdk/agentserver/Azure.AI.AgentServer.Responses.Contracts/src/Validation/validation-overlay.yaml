@@ -1,0 +1,25 @@
+# Validation Overlay
+# -----------------
+# Constraints the TypeSpec OpenAPI emitter misses (or underspecifies).
+# Applied by generate-validators.py before codegen.
+#
+# To add a new override:
+#   1. Add a key under `schemas:` matching the schema name (or "CreateResponse" for the inline request body)
+#   2. Set `required:` to add required fields
+#   3. Set `properties.<field>.minimum/maximum` for range fixes
+#
+# Example:
+#   schemas:
+#     MySchema:
+#       required: ["field_a"]
+#       properties:
+#         field_b:
+#           minimum: 0
+#           maximum: 100
+
+schemas:
+  # The TypeSpec emitter produces required: [] for the CreateResponse request body.
+  # Model was previously required here, but is now optional (PW-006).
+  # When omitted, the SDK resolves it via ResponsesServerOptions.DefaultModel or empty string.
+  CreateResponse:
+    required: []

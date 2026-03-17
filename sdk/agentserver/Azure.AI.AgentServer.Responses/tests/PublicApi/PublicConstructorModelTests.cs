@@ -1,0 +1,210 @@
+using System.Reflection;
+using Azure.AI.AgentServer.Responses.Models;
+
+namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
+
+/// <summary>
+/// T009: Reflection tests asserting key OutputItem subtypes, OutputContent subtypes,
+/// Models.Response, and Models.ResponseError have public constructors. Abstract bases and Unknown
+/// variants must NOT have public constructors.
+/// </summary>
+public class PublicConstructorModelTests
+{
+    /// <summary>
+    /// Concrete OutputItem subtypes from OpenAI namespace.
+    /// </summary>
+    public static IEnumerable<object[]> OpenAIOutputItemTypes => new[]
+    {
+        new object[] { typeof(OutputItemApplyPatchToolCall) },
+        new object[] { typeof(OutputItemApplyPatchToolCallOutput) },
+        new object[] { typeof(OutputItemCodeInterpreterToolCall) },
+        new object[] { typeof(OutputItemCompactionBody) },
+        new object[] { typeof(OutputItemComputerToolCall) },
+        new object[] { typeof(OutputItemComputerToolCallOutputResource) },
+        new object[] { typeof(OutputItemCustomToolCall) },
+        new object[] { typeof(OutputItemCustomToolCallOutput) },
+        new object[] { typeof(OutputItemFileSearchToolCall) },
+        new object[] { typeof(OutputItemFunctionShellCall) },
+        new object[] { typeof(OutputItemFunctionShellCallOutput) },
+        new object[] { typeof(OutputItemFunctionToolCall) },
+        new object[] { typeof(OutputItemImageGenToolCall) },
+        new object[] { typeof(OutputItemLocalShellToolCall) },
+        new object[] { typeof(OutputItemLocalShellToolCallOutput) },
+        new object[] { typeof(OutputItemMcpApprovalRequest) },
+        new object[] { typeof(OutputItemMcpApprovalResponseResource) },
+        new object[] { typeof(OutputItemMcpListTools) },
+        new object[] { typeof(OutputItemMcpToolCall) },
+        new object[] { typeof(OutputItemMessage) },
+        new object[] { typeof(OutputItemOutputMessage) },
+        new object[] { typeof(OutputItemReasoningItem) },
+        new object[] { typeof(OutputItemWebSearchToolCall) },
+        new object[] { typeof(FunctionToolCallOutputResource) },
+    };
+
+    /// <summary>
+    /// Concrete OutputItem subtypes from Azure.AI.Projects namespace.
+    /// </summary>
+    public static IEnumerable<object[]> AzureOutputItemTypes => new[]
+    {
+        new object[] { typeof(A2AToolCall) },
+        new object[] { typeof(A2AToolCallOutput) },
+        new object[] { typeof(AzureAISearchToolCall) },
+        new object[] { typeof(AzureAISearchToolCallOutput) },
+        new object[] { typeof(AzureFunctionToolCall) },
+        new object[] { typeof(AzureFunctionToolCallOutput) },
+        new object[] { typeof(BingCustomSearchToolCall) },
+        new object[] { typeof(BingCustomSearchToolCallOutput) },
+        new object[] { typeof(BingGroundingToolCall) },
+        new object[] { typeof(BingGroundingToolCallOutput) },
+        new object[] { typeof(BrowserAutomationToolCall) },
+        new object[] { typeof(BrowserAutomationToolCallOutput) },
+        new object[] { typeof(FabricDataAgentToolCall) },
+        new object[] { typeof(FabricDataAgentToolCallOutput) },
+        new object[] { typeof(MemorySearchToolCallItemResource) },
+        new object[] { typeof(OAuthConsentRequestOutputItem) },
+        new object[] { typeof(OpenApiToolCall) },
+        new object[] { typeof(OpenApiToolCallOutput) },
+        new object[] { typeof(SharepointGroundingToolCall) },
+        new object[] { typeof(SharepointGroundingToolCallOutput) },
+        new object[] { typeof(StructuredOutputsOutputItem) },
+        new object[] { typeof(WorkflowActionOutputItem) },
+    };
+
+    /// <summary>
+    /// All concrete OutputItem subtypes (both namespaces).
+    /// </summary>
+    public static IEnumerable<object[]> AllOutputItemTypes =>
+        OpenAIOutputItemTypes.Concat(AzureOutputItemTypes);
+
+    /// <summary>
+    /// Concrete OutputContent subtypes.
+    /// </summary>
+    public static IEnumerable<object[]> OutputContentTypes => new[]
+    {
+        new object[] { typeof(OutputContentOutputTextContent) },
+        new object[] { typeof(OutputContentReasoningTextContent) },
+        new object[] { typeof(OutputContentRefusalContent) },
+    };
+
+    /// <summary>
+    /// Concrete OutputMessageContent subtypes.
+    /// </summary>
+    public static IEnumerable<object[]> OutputMessageContentTypes => new[]
+    {
+        new object[] { typeof(OutputMessageContentOutputTextContent) },
+        new object[] { typeof(OutputMessageContentRefusalContent) },
+    };
+
+    // ========================================
+    // OutputItem subtypes
+    // ========================================
+
+    [TestCaseSource(nameof(AllOutputItemTypes))]
+    public void OutputItemSubtype_HasAtLeastOnePublicConstructor(Type type)
+    {
+        var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsTrue(
+            publicCtors.Length > 0,
+            $"{type.Name} should have at least one public constructor but has none.");
+    }
+
+    // ========================================
+    // OutputContent subtypes
+    // ========================================
+
+    [TestCaseSource(nameof(OutputContentTypes))]
+    public void OutputContentSubtype_HasAtLeastOnePublicConstructor(Type type)
+    {
+        var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsTrue(
+            publicCtors.Length > 0,
+            $"{type.Name} should have at least one public constructor but has none.");
+    }
+
+    [TestCaseSource(nameof(OutputMessageContentTypes))]
+    public void OutputMessageContentSubtype_HasAtLeastOnePublicConstructor(Type type)
+    {
+        var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsTrue(
+            publicCtors.Length > 0,
+            $"{type.Name} should have at least one public constructor but has none.");
+    }
+
+    // ========================================
+    // Models.Response and Models.ResponseError
+    // ========================================
+
+    [Test]
+    public void Response_HasAtLeastOnePublicConstructor()
+    {
+        var publicCtors = typeof(Models.Response).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsTrue(publicCtors.Length > 0, "Response should have at least one public constructor.");
+    }
+
+    [Test]
+    public void ResponseError_HasAtLeastOnePublicConstructor()
+    {
+        var publicCtors = typeof(Models.ResponseError).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsTrue(publicCtors.Length > 0, "ResponseError should have at least one public constructor.");
+    }
+
+    [Test]
+    public void CreateResponse_HasAtLeastOnePublicConstructor()
+    {
+        var publicCtors = typeof(CreateResponse).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsTrue(publicCtors.Length > 0, "CreateResponse should have at least one public constructor.");
+    }
+
+    // ========================================
+    // Abstract base types must NOT be constructable
+    // ========================================
+
+    [Test]
+    public void OutputItem_HasNoPublicConstructors()
+    {
+        var publicCtors = typeof(OutputItem).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsEmpty(publicCtors);
+    }
+
+    [Test]
+    public void OutputItem_IsAbstract()
+    {
+        Assert.IsTrue(typeof(OutputItem).IsAbstract);
+    }
+
+    [Test]
+    public void OutputContent_HasNoPublicConstructors()
+    {
+        var publicCtors = typeof(OutputContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsEmpty(publicCtors);
+    }
+
+    [Test]
+    public void OutputContent_IsAbstract()
+    {
+        Assert.IsTrue(typeof(OutputContent).IsAbstract);
+    }
+
+    [Test]
+    public void OutputMessageContent_HasNoPublicConstructors()
+    {
+        var publicCtors = typeof(OutputMessageContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        Assert.IsEmpty(publicCtors);
+    }
+
+    [Test]
+    public void OutputMessageContent_IsAbstract()
+    {
+        Assert.IsTrue(typeof(OutputMessageContent).IsAbstract);
+    }
+
+    // ========================================
+    // Counts
+    // ========================================
+
+    [Test]
+    public void AllOutputItemTypes_Count_Is46()
+    {
+        Assert.AreEqual(46, AllOutputItemTypes.Count());
+    }
+}

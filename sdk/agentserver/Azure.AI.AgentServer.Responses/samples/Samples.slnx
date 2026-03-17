@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="../../Azure.AI.AgentServer.Responses.Contracts/src/Azure.AI.AgentServer.Responses.Contracts.csproj" />
+  <Project Path="../src/Azure.AI.AgentServer.Responses.csproj" />
+  <Project Path="ConversationHistory/ConversationHistory.csproj" />
+  <Project Path="FunctionCalling/FunctionCalling.csproj" />
+  <Project Path="GettingStarted/GettingStarted.csproj" />
+  <Project Path="MultiOutput/MultiOutput.csproj" />
+</Solution>

@@ -1,0 +1,219 @@
+using System.Net;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
+
+namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
+
+/// <summary>
+/// Protocol conformance tests for streaming mode (stream=true, background=false).
+/// Validates SSE wire format, event ordering, and sequence numbers.
+/// All assertions use HttpClient + JsonDocument + SseParser only.
+/// </summary>
+public class StreamingModeProtocolTests : ProtocolTestBase
+{
+    [Test]
+    public async Task POST_Responses_Stream_Returns200_WithSseContentType()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual("text/event-stream", response.Content.Headers.ContentType?.MediaType);
+    }
+
+    [Test]
+    // Validates: B27 — SSE wire format (event: + data: structure)
+    public async Task POST_Responses_Stream_SseFormat_HasCorrectStructure()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var rawBody = await response.Content.ReadAsStringAsync();
+
+        // Each SSE block must follow the pattern: "event: {type}\ndata: {json}\n\n"
+        var blocks = rawBody.Split("\n\n", StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var block in blocks)
+        {
+            if (block.TrimStart().StartsWith(":"))
+                continue; // skip keep-alive comments
+
+            var lines = block.Split('\n');
+            Assert.IsTrue(lines.Length >= 2, $"SSE block must have at least 2 lines: {block}");
+            XAssert.StartsWith("event: ", lines[0]);
+            XAssert.StartsWith("data: ", lines[1]);
+
+            // Data must be valid single-line JSON
+            var jsonStr = lines[1]["data: ".Length..];
+            XAssert.DoesNotContain("\n", jsonStr);
+            using var doc = JsonDocument.Parse(jsonStr);
+            Assert.IsNotNull(doc);
+        }
+    }
+
+    [Test]
+    public async Task POST_Responses_Stream_FirstEvent_IsResponseCreated()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var events = await ParseSseAsync(response);
+
+        Assert.IsTrue(events.Count >= 2, "Expected at least 2 SSE events");
+        Assert.AreEqual("response.created", events[0].EventType);
+    }
+
+    [Test]
+    public async Task POST_Responses_Stream_LastEvent_IsResponseCompleted()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var events = await ParseSseAsync(response);
+
+        Assert.IsTrue(events.Count >= 2, "Expected at least 2 SSE events");
+        Assert.AreEqual("response.completed", events[^1].EventType);
+    }
+
+    [Test]
+    public async Task POST_Responses_Stream_SequenceNumbers_AreMonotonicallyIncreasing()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var events = await ParseSseAsync(response);
+
+        var seqNums = new List<long>();
+        foreach (var evt in events)
+        {
+            using var doc = JsonDocument.Parse(evt.Data);
+            Assert.IsTrue(doc.RootElement.TryGetProperty("sequence_number", out var seqProp),
+                $"Event {evt.EventType} missing sequence_number");
+            seqNums.Add(seqProp.GetInt64());
+        }
+
+        // Verify monotonically increasing (each number > previous)
+        for (int i = 1; i < seqNums.Count; i++)
+        {
+            Assert.IsTrue(seqNums[i] > seqNums[i - 1],
+                $"Sequence numbers not monotonically increasing: {seqNums[i - 1]} → {seqNums[i]} at index {i}");
+        }
+
+        // First sequence number should be 0
+        Assert.AreEqual(0, seqNums[0]);
+    }
+
+    [Test]
+    // Validates: B27 — SSE wire format (event type in data matches event: line)
+    public async Task POST_Responses_Stream_EventDataType_MatchesEventLine()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var events = await ParseSseAsync(response);
+
+        foreach (var evt in events)
+        {
+            using var doc = JsonDocument.Parse(evt.Data);
+            var dataType = doc.RootElement.GetProperty("type").GetString();
+            Assert.AreEqual(evt.EventType, dataType);
+        }
+    }
+
+    [Test]
+    public async Task POST_Responses_Stream_TextOutput_EventOrdering()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+        var events = await ParseSseAsync(response);
+
+        var eventTypes = events.Select(e => e.EventType).ToList();
+
+        // Verify the expected ordering for a simple text response
+        var expectedOrder = new[]
+        {
+            "response.created",
+            "response.output_item.added",
+            "response.content_part.added",
+            "response.output_text.delta",
+            "response.output_text.done",
+            "response.content_part.done",
+            "response.output_item.done",
+            "response.completed"
+        };
+
+        Assert.AreEqual(expectedOrder.Length, eventTypes.Count);
+        for (int i = 0; i < expectedOrder.Length; i++)
+        {
+            Assert.AreEqual(expectedOrder[i], eventTypes[i]);
+        }
+    }
+
+    [Test]
+    // Validates: B28 — SSE keep-alive comments during pauses
+    public async Task POST_Responses_Stream_KeepAlive_SentDuringPause()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SlowStream(ctx, ct);
+
+        // Configure a very short keep-alive interval for testing
+        using var factory = new TestWebApplicationFactory(Handler, options =>
+        {
+            options.SseKeepAliveInterval = TimeSpan.FromMilliseconds(50);
+        });
+        using var client = factory.CreateClient();
+
+        var response = await client.PostAsync("/responses",
+            new System.Net.Http.StringContent(
+                System.Text.Json.JsonSerializer.Serialize(new { model = "test", stream = true }),
+                System.Text.Encoding.UTF8, "application/json"));
+
+        var rawBody = await response.Content.ReadAsStringAsync();
+
+        // Should contain at least one keep-alive comment
+        XAssert.Contains(": keep-alive", rawBody);
+    }
+
+    // ── Helper event factories ─────────────────────────────────
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> SimpleTextStream(
+        IResponseContext ctx,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        await Task.CompletedTask;
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+
+        yield return stream.EmitCreated();
+
+        var message = stream.AddOutputItemMessage();
+        yield return message.EmitAdded();
+
+        var text = message.AddTextContent();
+        yield return text.EmitAdded();
+
+        yield return text.EmitDelta("Hello");
+        yield return text.EmitDone("Hello");
+
+        yield return message.EmitContentDone(text);
+        yield return message.EmitDone();
+
+        yield return stream.EmitCompleted();
+    }
+
+    private static async IAsyncEnumerable<ResponseStreamEvent> SlowStream(
+        IResponseContext ctx,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+
+        yield return stream.EmitCreated();
+
+        // Delay long enough for keep-alive to fire
+        await Task.Delay(200, ct);
+
+        yield return stream.EmitCompleted();
+    }
+}

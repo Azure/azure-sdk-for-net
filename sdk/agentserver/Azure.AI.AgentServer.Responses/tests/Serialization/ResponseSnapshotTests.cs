@@ -1,0 +1,221 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses.Models;
+
+namespace Azure.AI.AgentServer.Responses.Tests.Serialization;
+
+/// <summary>
+/// T003: Tests for Models.Response.Snapshot() deep copy via ModelReaderWriter round-trip.
+/// Verifies snapshot independence, round-trip fidelity, and polymorphic subtype support.
+/// </summary>
+public class ResponseSnapshotTests
+{
+    [Test]
+    public void Snapshot_ReturnsIndependentCopy_StatusMutationDoesNotAffectSnapshot()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap1", "gpt-4o")
+        {
+            Status = ResponseStatus.InProgress,
+        };
+
+        // Act
+        var snapshot = original.Snapshot();
+        original.Status = ResponseStatus.Completed;
+
+        // Assert
+        Assert.AreEqual(ResponseStatus.InProgress, snapshot.Status);
+        Assert.AreEqual(ResponseStatus.Completed, original.Status);
+    }
+
+    [Test]
+    public void Snapshot_ReturnsIndependentCopy_AddingOutputDoesNotAffectSnapshot()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap2", "gpt-4o")
+        {
+            Status = ResponseStatus.InProgress,
+        };
+        var message = new OutputItemMessage(
+            "msg_1",
+            MessageStatus.Completed,
+            MessageRole.Assistant,
+            Array.Empty<MessageContent>());
+        original.Output.Add(message);
+
+        // Act
+        var snapshot = original.Snapshot();
+        var message2 = new OutputItemMessage(
+            "msg_2",
+            MessageStatus.Completed,
+            MessageRole.Assistant,
+            Array.Empty<MessageContent>());
+        original.Output.Add(message2);
+
+        // Assert
+        XAssert.Single(snapshot.Output);
+        Assert.AreEqual(2, original.Output.Count);
+    }
+
+    [Test]
+    public void Snapshot_PreservesAllCoreProperties()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap3", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            CompletedAt = new DateTimeOffset(2026, 3, 8, 12, 0, 0, TimeSpan.Zero),
+        };
+
+        // Act
+        var snapshot = original.Snapshot();
+
+        // Assert
+        Assert.AreEqual(original.Id, snapshot.Id);
+        Assert.AreEqual(original.Model, snapshot.Model);
+        Assert.AreEqual(original.Status, snapshot.Status);
+        // CreatedAt is auto-set by the constructor; JSON round-trip truncates to seconds
+        Assert.AreEqual(
+            original.CreatedAt.ToUnixTimeSeconds(),
+            snapshot.CreatedAt.ToUnixTimeSeconds());
+        Assert.AreEqual(original.CompletedAt, snapshot.CompletedAt);
+    }
+
+    [Test]
+    public void Snapshot_PreservesPolymorphicOutputItems()
+    {
+        // Arrange
+        var message = new OutputItemMessage(
+            "msg_poly",
+            MessageStatus.Completed,
+            MessageRole.Assistant,
+            Array.Empty<MessageContent>());
+
+        var functionCall = new OutputItemFunctionToolCall(
+            "call_fn1",
+            "get_weather",
+            """{"location":"Seattle"}""");
+
+        var original = new Models.Response("resp_snap4", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+        };
+        original.Output.Add(message);
+        original.Output.Add(functionCall);
+
+        // Act
+        var snapshot = original.Snapshot();
+
+        // Assert — polymorphic types preserved
+        Assert.AreEqual(2, snapshot.Output.Count);
+
+        var snappedMessage = XAssert.IsType<OutputItemMessage>(snapshot.Output[0]);
+        Assert.AreEqual("msg_poly", snappedMessage.Id);
+        Assert.AreEqual(MessageRole.Assistant, snappedMessage.Role);
+
+        var snappedFunction = XAssert.IsType<OutputItemFunctionToolCall>(snapshot.Output[1]);
+        Assert.AreEqual("call_fn1", snappedFunction.CallId);
+        Assert.AreEqual("get_weather", snappedFunction.Name);
+        Assert.AreEqual("""{"location":"Seattle"}""", snappedFunction.Arguments);
+    }
+
+    [Test]
+    public void Snapshot_PreservesMetadata()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap5", "gpt-4o")
+        {
+            Status = ResponseStatus.InProgress,
+            Metadata = new Metadata
+            {
+                AdditionalProperties = { ["user_id"] = "u_123", ["session"] = "s_456" },
+            },
+        };
+
+        // Act
+        var snapshot = original.Snapshot();
+
+        // Assert
+        Assert.IsNotNull(snapshot.Metadata);
+        Assert.AreEqual("u_123", snapshot.Metadata.AdditionalProperties["user_id"]);
+        Assert.AreEqual("s_456", snapshot.Metadata.AdditionalProperties["session"]);
+    }
+
+    [Test]
+    public void Snapshot_MetadataMutationDoesNotAffectSnapshot()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap6", "gpt-4o")
+        {
+            Status = ResponseStatus.InProgress,
+            Metadata = new Metadata
+            {
+                AdditionalProperties = { ["key1"] = "value1" },
+            },
+        };
+
+        // Act
+        var snapshot = original.Snapshot();
+        original.Metadata.AdditionalProperties["key2"] = "value2";
+
+        // Assert — snapshot unaffected by mutation of original's metadata
+        Assert.IsFalse(snapshot.Metadata.AdditionalProperties.ContainsKey("key2"));
+        XAssert.Single(snapshot.Metadata.AdditionalProperties);
+    }
+
+    [Test]
+    public void Snapshot_PreservesErrorField()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap7", "gpt-4o")
+        {
+            Status = ResponseStatus.Failed,
+            Error = ResponsesModelFactory.ResponseError(
+                code: ResponseErrorCode.ServerError,
+                message: "Something went wrong"),
+        };
+
+        // Act
+        var snapshot = original.Snapshot();
+
+        // Assert
+        Assert.IsNotNull(snapshot.Error);
+        Assert.AreEqual(ResponseErrorCode.ServerError, snapshot.Error.Code);
+        Assert.AreEqual("Something went wrong", snapshot.Error.Message);
+    }
+
+    [Test]
+    public void Snapshot_ReturnsNewInstance_NotSameReference()
+    {
+        // Arrange
+        var original = new Models.Response("resp_snap8", "gpt-4o");
+
+        // Act
+        var snapshot = original.Snapshot();
+
+        // Assert
+        Assert.AreNotSame(original, snapshot);
+    }
+
+    [Test]
+    public void Snapshot_EmptyResponse_RoundTripsSuccessfully()
+    {
+        // Arrange — minimal response with no output, no error, no metadata
+        var original = new Models.Response("resp_snap9", "gpt-4o")
+        {
+            Status = ResponseStatus.InProgress,
+        };
+
+        // Act
+        var snapshot = original.Snapshot();
+
+        // Assert
+        Assert.AreEqual("resp_snap9", snapshot.Id);
+        Assert.AreEqual("gpt-4o", snapshot.Model);
+        Assert.AreEqual(ResponseStatus.InProgress, snapshot.Status);
+        Assert.IsEmpty(snapshot.Output);
+    }
+}

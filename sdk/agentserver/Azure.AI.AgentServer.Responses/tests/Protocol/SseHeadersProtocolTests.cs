@@ -1,0 +1,78 @@
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
+
+namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
+
+/// <summary>
+/// E2E protocol tests for SSE wire-format headers (US1 / FR-001..003).
+/// Verifies Content-Type includes charset and Connection: keep-alive is set.
+/// </summary>
+public sealed class SseHeadersProtocolTests : ProtocolTestBase
+{
+    [Test]
+    public async Task StreamingPost_HasCorrectContentType()
+    {
+        // FR-001: Content-Type: text/event-stream; charset=utf-8
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+
+        Assert.AreEqual("text/event-stream; charset=utf-8",
+            response.Content.Headers.ContentType?.ToString());
+    }
+
+    [Test]
+    public async Task StreamingPost_HasConnectionKeepAlive()
+    {
+        // FR-002: Connection: keep-alive
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+
+        Assert.IsTrue(
+            response.Headers.Contains("Connection"),
+            "Response should include Connection header");
+        XAssert.Contains("keep-alive",
+            response.Headers.GetValues("Connection"));
+    }
+
+    [Test]
+    public async Task StreamingPost_HasCacheControlNoCache()
+    {
+        // Existing behaviour preserved: Cache-Control: no-cache
+        var response = await PostResponsesAsync(new { model = "test", stream = true });
+
+        Assert.IsTrue(
+            response.Headers.CacheControl?.NoCache == true
+            || (response.Headers.Contains("Cache-Control")
+                && response.Headers.GetValues("Cache-Control").Any(v => v.Contains("no-cache"))),
+            "Response should include Cache-Control: no-cache");
+    }
+
+    [Test]
+    public async Task SseReplay_HasCorrectContentType()
+    {
+        // FR-003: Replay GET also has correct Content-Type
+        // SSE replay requires background+streaming
+        var responseId = await CreateBackgroundStreamingResponseAsync();
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        // Now request the SSE replay
+        var replayResponse = await GetResponseStreamAsync(responseId);
+
+        Assert.AreEqual("text/event-stream; charset=utf-8",
+            replayResponse.Content.Headers.ContentType?.ToString());
+    }
+
+    [Test]
+    public async Task SseReplay_HasConnectionKeepAlive()
+    {
+        // FR-003: Replay GET also has Connection: keep-alive
+        // SSE replay requires background+streaming
+        var responseId = await CreateBackgroundStreamingResponseAsync();
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        var replayResponse = await GetResponseStreamAsync(responseId);
+
+        Assert.IsTrue(
+            replayResponse.Headers.Contains("Connection"),
+            "Replay response should include Connection header");
+        XAssert.Contains("keep-alive",
+            replayResponse.Headers.GetValues("Connection"));
+    }
+}
