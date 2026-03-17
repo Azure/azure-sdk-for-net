@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.RedHatOpenShift
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProvisioningState? provisioningState = default;
-            ClusterProfile clusterProfile = default;
-            ConsoleProfile consoleProfile = default;
-            ServicePrincipalProfile servicePrincipalProfile = default;
-            PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = default;
-            NetworkProfile networkProfile = default;
-            MasterProfile masterProfile = default;
-            IList<WorkerProfile> workerProfiles = default;
-            IReadOnlyList<WorkerProfile> workerProfilesStatus = default;
-            APIServerProfile apiserverProfile = default;
-            IList<IngressProfile> ingressProfiles = default;
+            OpenShiftClusterProvisioningState? provisioningState = default;
+            OpenShiftClusterProfile clusterProfile = default;
+            OpenShiftConsoleProfile consoleProfile = default;
+            OpenShiftServicePrincipalProfile servicePrincipalProfile = default;
+            OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = default;
+            OpenShiftNetworkProfile networkProfile = default;
+            OpenShiftMasterProfile masterProfile = default;
+            IList<OpenShiftWorkerProfile> workerProfiles = default;
+            IReadOnlyList<OpenShiftWorkerProfile> workerProfilesStatus = default;
+            OpenShiftApiServerProfile apiserverProfile = default;
+            IList<OpenShiftIngressProfile> ingressProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new OpenShiftClusterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clusterProfile"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            clusterProfile = ClusterProfile.DeserializeClusterProfile(property0.Value, options);
+                            clusterProfile = OpenShiftClusterProfile.DeserializeOpenShiftClusterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("consoleProfile"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            consoleProfile = ConsoleProfile.DeserializeConsoleProfile(property0.Value, options);
+                            consoleProfile = OpenShiftConsoleProfile.DeserializeOpenShiftConsoleProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalProfile"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            servicePrincipalProfile = ServicePrincipalProfile.DeserializeServicePrincipalProfile(property0.Value, options);
+                            servicePrincipalProfile = OpenShiftServicePrincipalProfile.DeserializeOpenShiftServicePrincipalProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("platformWorkloadIdentityProfile"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            platformWorkloadIdentityProfile = PlatformWorkloadIdentityProfile.DeserializePlatformWorkloadIdentityProfile(property0.Value, options);
+                            platformWorkloadIdentityProfile = OpenShiftPlatformWorkloadIdentityProfile.DeserializeOpenShiftPlatformWorkloadIdentityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
+                            networkProfile = OpenShiftNetworkProfile.DeserializeOpenShiftNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("masterProfile"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            masterProfile = MasterProfile.DeserializeMasterProfile(property0.Value, options);
+                            masterProfile = OpenShiftMasterProfile.DeserializeOpenShiftMasterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workerProfiles"u8))
@@ -290,10 +290,10 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            List<WorkerProfile> array = new List<WorkerProfile>();
+                            List<OpenShiftWorkerProfile> array = new List<OpenShiftWorkerProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkerProfile.DeserializeWorkerProfile(item, options));
+                                array.Add(OpenShiftWorkerProfile.DeserializeOpenShiftWorkerProfile(item, options));
                             }
                             workerProfiles = array;
                             continue;
@@ -304,10 +304,10 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            List<WorkerProfile> array = new List<WorkerProfile>();
+                            List<OpenShiftWorkerProfile> array = new List<OpenShiftWorkerProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkerProfile.DeserializeWorkerProfile(item, options));
+                                array.Add(OpenShiftWorkerProfile.DeserializeOpenShiftWorkerProfile(item, options));
                             }
                             workerProfilesStatus = array;
                             continue;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            apiserverProfile = APIServerProfile.DeserializeAPIServerProfile(property0.Value, options);
+                            apiserverProfile = OpenShiftApiServerProfile.DeserializeOpenShiftApiServerProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingressProfiles"u8))
@@ -327,10 +327,10 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            List<IngressProfile> array = new List<IngressProfile>();
+                            List<OpenShiftIngressProfile> array = new List<OpenShiftIngressProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IngressProfile.DeserializeIngressProfile(item, options));
+                                array.Add(OpenShiftIngressProfile.DeserializeOpenShiftIngressProfile(item, options));
                             }
                             ingressProfiles = array;
                             continue;
@@ -359,10 +359,10 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 platformWorkloadIdentityProfile,
                 networkProfile,
                 masterProfile,
-                workerProfiles ?? new ChangeTrackingList<WorkerProfile>(),
-                workerProfilesStatus ?? new ChangeTrackingList<WorkerProfile>(),
+                workerProfiles ?? new ChangeTrackingList<OpenShiftWorkerProfile>(),
+                workerProfilesStatus ?? new ChangeTrackingList<OpenShiftWorkerProfile>(),
                 apiserverProfile,
-                ingressProfiles ?? new ChangeTrackingList<IngressProfile>(),
+                ingressProfiles ?? new ChangeTrackingList<OpenShiftIngressProfile>(),
                 serializedAdditionalRawData);
         }
 

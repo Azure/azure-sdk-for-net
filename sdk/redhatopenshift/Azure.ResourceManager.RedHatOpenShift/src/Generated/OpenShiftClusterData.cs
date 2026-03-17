@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="location"> The location. </param>
         public OpenShiftClusterData(AzureLocation location) : base(location)
         {
-            WorkerProfiles = new ChangeTrackingList<WorkerProfile>();
-            WorkerProfilesStatus = new ChangeTrackingList<WorkerProfile>();
-            IngressProfiles = new ChangeTrackingList<IngressProfile>();
+            WorkerProfiles = new ChangeTrackingList<OpenShiftWorkerProfile>();
+            WorkerProfilesStatus = new ChangeTrackingList<OpenShiftWorkerProfile>();
+            IngressProfiles = new ChangeTrackingList<OpenShiftIngressProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterData"/>. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="apiserverProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, ClusterProfile clusterProfile, ConsoleProfile consoleProfile, ServicePrincipalProfile servicePrincipalProfile, PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, NetworkProfile networkProfile, MasterProfile masterProfile, IList<WorkerProfile> workerProfiles, IReadOnlyList<WorkerProfile> workerProfilesStatus, APIServerProfile apiserverProfile, IList<IngressProfile> ingressProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal OpenShiftClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OpenShiftClusterProvisioningState? provisioningState, OpenShiftClusterProfile clusterProfile, OpenShiftConsoleProfile consoleProfile, OpenShiftServicePrincipalProfile servicePrincipalProfile, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile, OpenShiftNetworkProfile networkProfile, OpenShiftMasterProfile masterProfile, IList<OpenShiftWorkerProfile> workerProfiles, IReadOnlyList<OpenShiftWorkerProfile> workerProfilesStatus, OpenShiftApiServerProfile apiserverProfile, IList<OpenShiftIngressProfile> ingressProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <summary> Identity stores information about the cluster MSI(s) in a workload identity cluster. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The cluster provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public OpenShiftClusterProvisioningState? ProvisioningState { get; set; }
         /// <summary> The cluster profile. </summary>
-        public ClusterProfile ClusterProfile { get; set; }
+        public OpenShiftClusterProfile ClusterProfile { get; set; }
         /// <summary> The console profile. </summary>
-        internal ConsoleProfile ConsoleProfile { get; set; }
+        internal OpenShiftConsoleProfile ConsoleProfile { get; set; }
         /// <summary> The URL to access the cluster console. </summary>
         public string ConsoleUrl
         {
@@ -117,20 +117,20 @@ namespace Azure.ResourceManager.RedHatOpenShift
         }
 
         /// <summary> The cluster service principal profile. </summary>
-        public ServicePrincipalProfile ServicePrincipalProfile { get; set; }
+        public OpenShiftServicePrincipalProfile ServicePrincipalProfile { get; set; }
         /// <summary> The workload identity profile. </summary>
-        public PlatformWorkloadIdentityProfile PlatformWorkloadIdentityProfile { get; set; }
+        public OpenShiftPlatformWorkloadIdentityProfile PlatformWorkloadIdentityProfile { get; set; }
         /// <summary> The cluster network profile. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public OpenShiftNetworkProfile NetworkProfile { get; set; }
         /// <summary> The cluster master profile. </summary>
-        public MasterProfile MasterProfile { get; set; }
+        public OpenShiftMasterProfile MasterProfile { get; set; }
         /// <summary> The cluster worker profiles. </summary>
-        public IList<WorkerProfile> WorkerProfiles { get; }
+        public IList<OpenShiftWorkerProfile> WorkerProfiles { get; }
         /// <summary> The cluster worker profiles status. </summary>
-        public IReadOnlyList<WorkerProfile> WorkerProfilesStatus { get; }
+        public IReadOnlyList<OpenShiftWorkerProfile> WorkerProfilesStatus { get; }
         /// <summary> The cluster API server profile. </summary>
-        public APIServerProfile ApiserverProfile { get; set; }
+        public OpenShiftApiServerProfile ApiserverProfile { get; set; }
         /// <summary> The cluster ingress profiles. </summary>
-        public IList<IngressProfile> IngressProfiles { get; }
+        public IList<OpenShiftIngressProfile> IngressProfiles { get; }
     }
 }

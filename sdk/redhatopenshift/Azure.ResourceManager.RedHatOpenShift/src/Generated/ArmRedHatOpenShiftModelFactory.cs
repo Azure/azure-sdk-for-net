@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="openShiftVersion"> OpenShiftVersion represents the version associated with this set of roles. </param>
         /// <param name="platformWorkloadIdentityRoles"> PlatformWorkloadIdentityRoles represents the set of roles associated with this version. </param>
         /// <returns> A new <see cref="RedHatOpenShift.PlatformWorkloadIdentityRoleSetData"/> instance for mocking. </returns>
-        public static PlatformWorkloadIdentityRoleSetData PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string openShiftVersion = null, IEnumerable<PlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = null)
+        public static PlatformWorkloadIdentityRoleSetData PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string openShiftVersion = null, IEnumerable<OpenShiftPlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = null)
         {
-            platformWorkloadIdentityRoles ??= new List<PlatformWorkloadIdentityRole>();
+            platformWorkloadIdentityRoles ??= new List<OpenShiftPlatformWorkloadIdentityRole>();
 
             return new PlatformWorkloadIdentityRoleSetData(
                 id,
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="apiserverProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
         /// <returns> A new <see cref="RedHatOpenShift.OpenShiftClusterData"/> instance for mocking. </returns>
-        public static OpenShiftClusterData OpenShiftClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, ClusterProfile clusterProfile = null, string consoleUrl = null, ServicePrincipalProfile servicePrincipalProfile = null, PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, NetworkProfile networkProfile = null, MasterProfile masterProfile = null, IEnumerable<WorkerProfile> workerProfiles = null, IEnumerable<WorkerProfile> workerProfilesStatus = null, APIServerProfile apiserverProfile = null, IEnumerable<IngressProfile> ingressProfiles = null)
+        public static OpenShiftClusterData OpenShiftClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, OpenShiftClusterProvisioningState? provisioningState = null, OpenShiftClusterProfile clusterProfile = null, string consoleUrl = null, OpenShiftServicePrincipalProfile servicePrincipalProfile = null, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, OpenShiftNetworkProfile networkProfile = null, OpenShiftMasterProfile masterProfile = null, IEnumerable<OpenShiftWorkerProfile> workerProfiles = null, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = null, OpenShiftApiServerProfile apiserverProfile = null, IEnumerable<OpenShiftIngressProfile> ingressProfiles = null)
         {
             tags ??= new Dictionary<string, string>();
-            workerProfiles ??= new List<WorkerProfile>();
-            workerProfilesStatus ??= new List<WorkerProfile>();
-            ingressProfiles ??= new List<IngressProfile>();
+            workerProfiles ??= new List<OpenShiftWorkerProfile>();
+            workerProfilesStatus ??= new List<OpenShiftWorkerProfile>();
+            ingressProfiles ??= new List<OpenShiftIngressProfile>();
 
             return new OpenShiftClusterData(
                 id,
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 identity,
                 provisioningState,
                 clusterProfile,
-                consoleUrl != null ? new ConsoleProfile(consoleUrl, serializedAdditionalRawData: null) : null,
+                consoleUrl != null ? new OpenShiftConsoleProfile(consoleUrl, serializedAdditionalRawData: null) : null,
                 servicePrincipalProfile,
                 platformWorkloadIdentityProfile,
                 networkProfile,
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OpenShiftClusterProfile"/>. </summary>
         /// <param name="pullSecret"> The pull secret for the cluster. </param>
         /// <param name="domain"> The domain for the cluster. </param>
         /// <param name="version"> The version of the cluster. </param>
         /// <param name="resourceGroupId"> The ID of the cluster resource group. </param>
         /// <param name="fipsValidatedModules"> If FIPS validated crypto modules are used. </param>
         /// <param name="oidcIssuer"> The URL of the managed OIDC issuer in a workload identity cluster. </param>
-        /// <returns> A new <see cref="Models.ClusterProfile"/> instance for mocking. </returns>
-        public static ClusterProfile ClusterProfile(string pullSecret = null, string domain = null, string version = null, string resourceGroupId = null, FipsValidatedModule? fipsValidatedModules = null, string oidcIssuer = null)
+        /// <returns> A new <see cref="Models.OpenShiftClusterProfile"/> instance for mocking. </returns>
+        public static OpenShiftClusterProfile OpenShiftClusterProfile(string pullSecret = null, string domain = null, string version = null, ResourceIdentifier resourceGroupId = null, OpenShiftFipsValidatedModule? fipsValidatedModules = null, string oidcIssuer = null)
         {
-            return new ClusterProfile(
+            return new OpenShiftClusterProfile(
                 pullSecret,
                 domain,
                 version,
@@ -126,45 +126,45 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PlatformWorkloadIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OpenShiftPlatformWorkloadIdentity"/>. </summary>
         /// <param name="resourceId"> The resource ID of the PlatformWorkloadIdentity resource. </param>
         /// <param name="clientId"> The ClientID of the PlatformWorkloadIdentity resource. </param>
         /// <param name="objectId"> The ObjectID of the PlatformWorkloadIdentity resource. </param>
-        /// <returns> A new <see cref="Models.PlatformWorkloadIdentity"/> instance for mocking. </returns>
-        public static PlatformWorkloadIdentity PlatformWorkloadIdentity(string resourceId = null, string clientId = null, string objectId = null)
+        /// <returns> A new <see cref="Models.OpenShiftPlatformWorkloadIdentity"/> instance for mocking. </returns>
+        public static OpenShiftPlatformWorkloadIdentity OpenShiftPlatformWorkloadIdentity(ResourceIdentifier resourceId = null, string clientId = null, string objectId = null)
         {
-            return new PlatformWorkloadIdentity(resourceId, clientId, objectId, serializedAdditionalRawData: null);
+            return new OpenShiftPlatformWorkloadIdentity(resourceId, clientId, objectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LoadBalancerProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OpenShiftLoadBalancerProfile"/>. </summary>
         /// <param name="managedOutboundIPsCount"> The desired managed outbound IPs for the cluster public load balancer. </param>
         /// <param name="effectiveOutboundIPs"> The list of effective outbound IP addresses of the public load balancer. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerProfile"/> instance for mocking. </returns>
-        public static LoadBalancerProfile LoadBalancerProfile(int? managedOutboundIPsCount = null, IEnumerable<SubResource> effectiveOutboundIPs = null)
+        /// <returns> A new <see cref="Models.OpenShiftLoadBalancerProfile"/> instance for mocking. </returns>
+        public static OpenShiftLoadBalancerProfile OpenShiftLoadBalancerProfile(int? managedOutboundIPsCount = null, IEnumerable<SubResource> effectiveOutboundIPs = null)
         {
             effectiveOutboundIPs ??= new List<SubResource>();
 
-            return new LoadBalancerProfile(managedOutboundIPsCount != null ? new ManagedOutboundIPs(managedOutboundIPsCount, serializedAdditionalRawData: null) : null, effectiveOutboundIPs?.ToList(), serializedAdditionalRawData: null);
+            return new OpenShiftLoadBalancerProfile(managedOutboundIPsCount != null ? new OpenShiftManagedOutboundIPs(managedOutboundIPsCount, serializedAdditionalRawData: null) : null, effectiveOutboundIPs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.APIServerProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OpenShiftApiServerProfile"/>. </summary>
         /// <param name="visibility"> API server visibility. </param>
         /// <param name="url"> The URL to access the cluster API server. </param>
         /// <param name="ip"> The IP of the cluster API server. </param>
-        /// <returns> A new <see cref="Models.APIServerProfile"/> instance for mocking. </returns>
-        public static APIServerProfile APIServerProfile(Visibility? visibility = null, string url = null, string ip = null)
+        /// <returns> A new <see cref="Models.OpenShiftApiServerProfile"/> instance for mocking. </returns>
+        public static OpenShiftApiServerProfile OpenShiftApiServerProfile(OpenShiftVisibility? visibility = null, string url = null, string ip = null)
         {
-            return new APIServerProfile(visibility, url, ip, serializedAdditionalRawData: null);
+            return new OpenShiftApiServerProfile(visibility, url, ip, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IngressProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OpenShiftIngressProfile"/>. </summary>
         /// <param name="name"> The ingress profile name. </param>
         /// <param name="visibility"> Ingress visibility. </param>
         /// <param name="ip"> The IP of the ingress. </param>
-        /// <returns> A new <see cref="Models.IngressProfile"/> instance for mocking. </returns>
-        public static IngressProfile IngressProfile(string name = null, Visibility? visibility = null, string ip = null)
+        /// <returns> A new <see cref="Models.OpenShiftIngressProfile"/> instance for mocking. </returns>
+        public static OpenShiftIngressProfile OpenShiftIngressProfile(string name = null, OpenShiftVisibility? visibility = null, string ip = null)
         {
-            return new IngressProfile(name, visibility, ip, serializedAdditionalRawData: null);
+            return new OpenShiftIngressProfile(name, visibility, ip, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OpenShiftClusterPatch"/>. </summary>
@@ -182,19 +182,19 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="apiserverProfile"> The cluster API server profile. </param>
         /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
         /// <returns> A new <see cref="Models.OpenShiftClusterPatch"/> instance for mocking. </returns>
-        public static OpenShiftClusterPatch OpenShiftClusterPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, ClusterProfile clusterProfile = null, string consoleUrl = null, ServicePrincipalProfile servicePrincipalProfile = null, PlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, NetworkProfile networkProfile = null, MasterProfile masterProfile = null, IEnumerable<WorkerProfile> workerProfiles = null, IEnumerable<WorkerProfile> workerProfilesStatus = null, APIServerProfile apiserverProfile = null, IEnumerable<IngressProfile> ingressProfiles = null)
+        public static OpenShiftClusterPatch OpenShiftClusterPatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, OpenShiftClusterProvisioningState? provisioningState = null, OpenShiftClusterProfile clusterProfile = null, string consoleUrl = null, OpenShiftServicePrincipalProfile servicePrincipalProfile = null, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = null, OpenShiftNetworkProfile networkProfile = null, OpenShiftMasterProfile masterProfile = null, IEnumerable<OpenShiftWorkerProfile> workerProfiles = null, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = null, OpenShiftApiServerProfile apiserverProfile = null, IEnumerable<OpenShiftIngressProfile> ingressProfiles = null)
         {
             tags ??= new Dictionary<string, string>();
-            workerProfiles ??= new List<WorkerProfile>();
-            workerProfilesStatus ??= new List<WorkerProfile>();
-            ingressProfiles ??= new List<IngressProfile>();
+            workerProfiles ??= new List<OpenShiftWorkerProfile>();
+            workerProfilesStatus ??= new List<OpenShiftWorkerProfile>();
+            ingressProfiles ??= new List<OpenShiftIngressProfile>();
 
             return new OpenShiftClusterPatch(
                 tags,
                 identity,
                 provisioningState,
                 clusterProfile,
-                consoleUrl != null ? new ConsoleProfile(consoleUrl, serializedAdditionalRawData: null) : null,
+                consoleUrl != null ? new OpenShiftConsoleProfile(consoleUrl, serializedAdditionalRawData: null) : null,
                 servicePrincipalProfile,
                 platformWorkloadIdentityProfile,
                 networkProfile,

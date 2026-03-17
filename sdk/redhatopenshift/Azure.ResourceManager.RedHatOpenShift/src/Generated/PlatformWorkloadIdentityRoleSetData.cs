@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetData"/>. </summary>
         public PlatformWorkloadIdentityRoleSetData()
         {
-            PlatformWorkloadIdentityRoles = new ChangeTrackingList<PlatformWorkloadIdentityRole>();
+            PlatformWorkloadIdentityRoles = new ChangeTrackingList<OpenShiftPlatformWorkloadIdentityRole>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PlatformWorkloadIdentityRoleSetData"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="openShiftVersion"> OpenShiftVersion represents the version associated with this set of roles. </param>
         /// <param name="platformWorkloadIdentityRoles"> PlatformWorkloadIdentityRoles represents the set of roles associated with this version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string openShiftVersion, IList<PlatformWorkloadIdentityRole> platformWorkloadIdentityRoles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlatformWorkloadIdentityRoleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string openShiftVersion, IList<OpenShiftPlatformWorkloadIdentityRole> platformWorkloadIdentityRoles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OpenShiftVersion = openShiftVersion;
             PlatformWorkloadIdentityRoles = platformWorkloadIdentityRoles;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <summary> OpenShiftVersion represents the version associated with this set of roles. </summary>
         public string OpenShiftVersion { get; set; }
         /// <summary> PlatformWorkloadIdentityRoles represents the set of roles associated with this version. </summary>
-        public IList<PlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles { get; }
+        public IList<OpenShiftPlatformWorkloadIdentityRole> PlatformWorkloadIdentityRoles { get; }
     }
 }

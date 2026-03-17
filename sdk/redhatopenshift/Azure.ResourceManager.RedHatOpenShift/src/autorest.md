@@ -22,6 +22,33 @@ use-model-reader-writer: true
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RedHatOpenShift/openShiftClusters/{resourceName}: OpenShiftCluster
 override-client-name: RedHatOpenShiftManagementClient
+rename-mapping:
+  APIServerProfile: OpenShiftApiServerProfile
+  ProvisioningState: OpenShiftClusterProvisioningState
+  Visibility: OpenShiftVisibility
+  NetworkProfile: OpenShiftNetworkProfile
+  ClusterProfile: OpenShiftClusterProfile
+  MasterProfile: OpenShiftMasterProfile
+  WorkerProfile: OpenShiftWorkerProfile
+  IngressProfile: OpenShiftIngressProfile
+  LoadBalancerProfile: OpenShiftLoadBalancerProfile
+  ServicePrincipalProfile: OpenShiftServicePrincipalProfile
+  OutboundType: OpenShiftOutboundType
+  EncryptionAtHost: OpenShiftEncryptionAtHost
+  FipsValidatedModules: OpenShiftFipsValidatedModules
+  PreconfiguredNSG: OpenShiftPreconfiguredNsg
+  PlatformWorkloadIdentity: OpenShiftPlatformWorkloadIdentity
+  PlatformWorkloadIdentityProfile: OpenShiftPlatformWorkloadIdentityProfile
+  PlatformWorkloadIdentityRole: OpenShiftPlatformWorkloadIdentityRole
+  PlatformWorkloadIdentityRoleSetList: OpenShiftPlatformWorkloadIdentityRoleSetList
+  ConsoleProfile: OpenShiftConsoleProfile
+  ManagedOutboundIPs: OpenShiftManagedOutboundIPs
+format-by-name-rules:
+  'subnetId': 'arm-id'
+  'diskEncryptionSetId': 'arm-id'
+  'resourceGroupId': 'arm-id'
+  'resourceId': 'arm-id'
+  'roleDefinitionId': 'arm-id'
 
 directive:
   - from: swagger-document

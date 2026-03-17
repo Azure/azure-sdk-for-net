@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PlatformWorkloadIdentityRoleSetList>> ListAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetList>> ListAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 case 200:
                     {
-                        PlatformWorkloadIdentityRoleSetList value = default;
+                        OpenShiftPlatformWorkloadIdentityRoleSetList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PlatformWorkloadIdentityRoleSetList.DeserializePlatformWorkloadIdentityRoleSetList(document.RootElement);
+                        value = OpenShiftPlatformWorkloadIdentityRoleSetList.DeserializeOpenShiftPlatformWorkloadIdentityRoleSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PlatformWorkloadIdentityRoleSetList> List(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public Response<OpenShiftPlatformWorkloadIdentityRoleSetList> List(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 case 200:
                     {
-                        PlatformWorkloadIdentityRoleSetList value = default;
+                        OpenShiftPlatformWorkloadIdentityRoleSetList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PlatformWorkloadIdentityRoleSetList.DeserializePlatformWorkloadIdentityRoleSetList(document.RootElement);
+                        value = OpenShiftPlatformWorkloadIdentityRoleSetList.DeserializeOpenShiftPlatformWorkloadIdentityRoleSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PlatformWorkloadIdentityRoleSetList>> ListNextPageAsync(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<OpenShiftPlatformWorkloadIdentityRoleSetList>> ListNextPageAsync(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 case 200:
                     {
-                        PlatformWorkloadIdentityRoleSetList value = default;
+                        OpenShiftPlatformWorkloadIdentityRoleSetList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PlatformWorkloadIdentityRoleSetList.DeserializePlatformWorkloadIdentityRoleSetList(document.RootElement);
+                        value = OpenShiftPlatformWorkloadIdentityRoleSetList.DeserializeOpenShiftPlatformWorkloadIdentityRoleSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PlatformWorkloadIdentityRoleSetList> ListNextPage(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public Response<OpenShiftPlatformWorkloadIdentityRoleSetList> ListNextPage(string nextLink, string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.RedHatOpenShift
             {
                 case 200:
                     {
-                        PlatformWorkloadIdentityRoleSetList value = default;
+                        OpenShiftPlatformWorkloadIdentityRoleSetList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PlatformWorkloadIdentityRoleSetList.DeserializePlatformWorkloadIdentityRoleSetList(document.RootElement);
+                        value = OpenShiftPlatformWorkloadIdentityRoleSetList.DeserializeOpenShiftPlatformWorkloadIdentityRoleSetList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
             ResourceType type = default;
             SystemData systemData = default;
             string openShiftVersion = default;
-            IList<PlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = default;
+            IList<OpenShiftPlatformWorkloadIdentityRole> platformWorkloadIdentityRoles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.RedHatOpenShift
                             {
                                 continue;
                             }
-                            List<PlatformWorkloadIdentityRole> array = new List<PlatformWorkloadIdentityRole>();
+                            List<OpenShiftPlatformWorkloadIdentityRole> array = new List<OpenShiftPlatformWorkloadIdentityRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlatformWorkloadIdentityRole.DeserializePlatformWorkloadIdentityRole(item, options));
+                                array.Add(OpenShiftPlatformWorkloadIdentityRole.DeserializeOpenShiftPlatformWorkloadIdentityRole(item, options));
                             }
                             platformWorkloadIdentityRoles = array;
                             continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 type,
                 systemData,
                 openShiftVersion,
-                platformWorkloadIdentityRoles ?? new ChangeTrackingList<PlatformWorkloadIdentityRole>(),
+                platformWorkloadIdentityRoles ?? new ChangeTrackingList<OpenShiftPlatformWorkloadIdentityRole>(),
                 serializedAdditionalRawData);
         }
 
