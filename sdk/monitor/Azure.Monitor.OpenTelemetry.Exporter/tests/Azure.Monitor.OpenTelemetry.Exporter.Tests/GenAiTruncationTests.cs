@@ -17,13 +17,16 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class GenAiTruncationExemptionTests
+    public class GenAiTruncationTests
     {
-        private const int LargePayloadLength = 64_000;
+        /// <summary>
+        /// A payload larger than the 256 KB GenAI truncation limit to verify truncation occurs.
+        /// </summary>
+        private const int LargePayloadLength = 300_000;
 
         private static readonly string s_largePayload = new string('x', LargePayloadLength);
 
-        static GenAiTruncationExemptionTests()
+        static GenAiTruncationTests()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
@@ -45,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("gen_ai.tool.call.arguments")]
         [InlineData("gen_ai.tool.call.result")]
         [InlineData("gen_ai.evaluation.explanation")]
-        public void GenAiProperties_AreNotTruncated_InAddPropertiesToTelemetry(string propertyKey)
+        public void GenAiProperties_AreTruncatedTo256KB_InAddPropertiesToTelemetry(string propertyKey)
         {
             // Arrange
             IDictionary<string, string> destination = new Dictionary<string, string>();
@@ -57,8 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.True(destination.TryGetValue(propertyKey, out var value));
-            Assert.Equal(LargePayloadLength, value!.Length);
-            Assert.Equal(s_largePayload, value);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value!.Length);
         }
 
         [Theory]
@@ -69,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("gen_ai.tool.call.arguments")]
         [InlineData("gen_ai.tool.call.result")]
         [InlineData("gen_ai.evaluation.explanation")]
-        public void GenAiProperties_AreNotTruncated_InAddKvpToDictionary_WithStringOverload(string propertyKey)
+        public void GenAiProperties_AreTruncatedTo256KB_InAddKvpToDictionary_WithStringOverload(string propertyKey)
         {
             // Arrange
             IDictionary<string, string> destination = new Dictionary<string, string>();
@@ -79,8 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.True(destination.TryGetValue(propertyKey, out var value));
-            Assert.Equal(LargePayloadLength, value!.Length);
-            Assert.Equal(s_largePayload, value);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value!.Length);
         }
 
         [Fact]
@@ -121,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("gen_ai.tool.call.arguments")]
         [InlineData("gen_ai.tool.call.result")]
         [InlineData("gen_ai.evaluation.explanation")]
-        public void GenAiProperties_AreNotTruncated_InLogRecordAttributes(string propertyKey)
+        public void GenAiProperties_AreTruncatedTo256KB_InLogRecordAttributes(string propertyKey)
         {
             // Arrange
             var logRecords = new List<LogRecord>();
@@ -132,10 +133,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     options.IncludeFormattedMessage = true;
                     options.AddInMemoryExporter(logRecords);
                 });
-                builder.AddFilter(typeof(GenAiTruncationExemptionTests).FullName, LogLevel.Trace);
+                builder.AddFilter(typeof(GenAiTruncationTests).FullName, LogLevel.Trace);
             });
 
-            var logger = loggerFactory.CreateLogger<GenAiTruncationExemptionTests>();
+            var logger = loggerFactory.CreateLogger<GenAiTruncationTests>();
 
             // Use LoggerMessage.Define pattern to add structured attributes
             var state = new List<KeyValuePair<string, object?>>
@@ -151,8 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.True(properties.TryGetValue(propertyKey, out var value), $"Property '{propertyKey}' should exist in the properties dictionary.");
-            Assert.Equal(LargePayloadLength, value!.Length);
-            Assert.Equal(s_largePayload, value);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value!.Length);
         }
 
         [Fact]
@@ -167,10 +167,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     options.IncludeFormattedMessage = true;
                     options.AddInMemoryExporter(logRecords);
                 });
-                builder.AddFilter(typeof(GenAiTruncationExemptionTests).FullName, LogLevel.Trace);
+                builder.AddFilter(typeof(GenAiTruncationTests).FullName, LogLevel.Trace);
             });
 
-            var logger = loggerFactory.CreateLogger<GenAiTruncationExemptionTests>();
+            var logger = loggerFactory.CreateLogger<GenAiTruncationTests>();
 
             var state = new List<KeyValuePair<string, object?>>
             {
@@ -196,10 +196,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("gen_ai.tool.call.arguments")]
         [InlineData("gen_ai.tool.call.result")]
         [InlineData("gen_ai.evaluation.explanation")]
-        public void GenAiProperties_AreNotTruncated_InActivityCustomDimensions(string propertyKey)
+        public void GenAiProperties_AreTruncatedTo256KB_InActivityCustomDimensions(string propertyKey)
         {
             // Arrange
-            using var activitySource = new ActivitySource(nameof(GenAiTruncationExemptionTests));
+            using var activitySource = new ActivitySource(nameof(GenAiTruncationTests));
             using var activity = activitySource.StartActivity(
                 "TestActivity",
                 ActivityKind.Client,
@@ -214,8 +214,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.True(remoteDependencyData.Properties.TryGetValue(propertyKey, out var value), $"Property '{propertyKey}' should exist in dependency custom dimensions.");
-            Assert.Equal(LargePayloadLength, value!.Length);
-            Assert.Equal(s_largePayload, value);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value!.Length);
         }
 
         [Theory]
@@ -226,10 +225,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("gen_ai.tool.call.arguments")]
         [InlineData("gen_ai.tool.call.result")]
         [InlineData("gen_ai.evaluation.explanation")]
-        public void GenAiProperties_AreNotTruncated_InRequestDataCustomDimensions(string propertyKey)
+        public void GenAiProperties_AreTruncatedTo256KB_InRequestDataCustomDimensions(string propertyKey)
         {
             // Arrange
-            using var activitySource = new ActivitySource(nameof(GenAiTruncationExemptionTests));
+            using var activitySource = new ActivitySource(nameof(GenAiTruncationTests));
             using var activity = activitySource.StartActivity(
                 "TestActivity",
                 ActivityKind.Server,
@@ -244,8 +243,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Assert
             Assert.True(requestData.Properties.TryGetValue(propertyKey, out var value), $"Property '{propertyKey}' should exist in request custom dimensions.");
-            Assert.Equal(LargePayloadLength, value!.Length);
-            Assert.Equal(s_largePayload, value);
+            Assert.Equal(SchemaConstants.GenAi_Properties_MaxValueLength, value!.Length);
         }
     }
 }
