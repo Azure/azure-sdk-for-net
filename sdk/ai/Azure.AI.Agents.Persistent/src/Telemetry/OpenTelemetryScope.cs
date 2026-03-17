@@ -1179,6 +1179,19 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                             );
                             break;
 
+                        case RunStepOpenAPIToolCall openAPIToolCall:
+                            toolCallObj = ToJsonElement(
+                                JsonSerializer.Serialize(
+                                    new GenericToolCallEvent(
+                                        id: toolCall.Id,
+                                        type: toolCall.Type,
+                                        details: openAPIToolCall.OpenAPI
+                                    ),
+                                    EventsContext.Default.GenericToolCallEvent
+                                )
+                            );
+                            break;
+
                         default:
                             IReadOnlyDictionary<string, string> toolCallAttributeDetails = GetToolCallAttributes(toolCall);
                             toolCallObj = ToJsonElement(
@@ -1271,14 +1284,23 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
             // We cannot get the properties of an object, because Dynamic types are not AOT compatible.
             // Convert the call to JSON and get properties from it.
+            Dictionary<string, string> toolDetails = [];
             using var memStream = new MemoryStream();
-            toolCall.ToRequestContent().WriteTo(memStream, default);
+            try
+            {
+                toolCall.ToRequestContent().WriteTo(memStream, default);
+            }
+            catch (NullReferenceException)
+            {
+                // Some tool call types may have null properties when partially deserialized
+                // during streaming. Return empty details rather than crashing telemetry.
+                return toolDetails;
+            }
             // Reset stream position to the beginning.
             memStream.Position = 0;
             using var tempDoc = JsonDocument.Parse(memStream);
             // Try to find a property with the parsed name
             var toolCallKind = tempDoc.RootElement.ValueKind;
-            Dictionary<string, string> toolDetails = [];
             foreach (JsonProperty elem in tempDoc.RootElement.EnumerateObject())
             {
                 if (string.Equals(toCamelCase(elem.Name), attributeName) && elem.Value.ValueKind == JsonValueKind.Object)
