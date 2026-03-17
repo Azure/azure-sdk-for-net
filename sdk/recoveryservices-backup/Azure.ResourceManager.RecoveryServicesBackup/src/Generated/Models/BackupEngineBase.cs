@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// The base backup engine class. All workload specific backup engines derive from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
     public abstract partial class BackupEngineBase
     {

@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schedulePolicy"> Backup schedule of backup policy. </param>
         /// <param name="retentionPolicy"> Retention policy details. </param>
-        internal MabProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal MabProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
         }
 
         /// <summary> Backup schedule of backup policy. </summary>
-        public SchedulePolicy SchedulePolicy { get; set; }
+        public BackupSchedulePolicy SchedulePolicy { get; set; }
 
         /// <summary> Retention policy details. </summary>
-        public RetentionPolicy RetentionPolicy { get; set; }
+        public BackupRetentionPolicy RetentionPolicy { get; set; }
     }
 }

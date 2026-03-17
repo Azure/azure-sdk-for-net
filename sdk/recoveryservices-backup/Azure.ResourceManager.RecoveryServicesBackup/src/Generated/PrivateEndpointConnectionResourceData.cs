@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal PrivateEndpointConnectionResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryServicesBackupPrivateEndpointConnection properties, IDictionary<string, string> tags, string location, string eTag) : base(string.IsNullOrEmpty(id) ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal PrivateEndpointConnectionResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupPrivateEndpointConnectionProperties properties, IDictionary<string, string> tags, string location, string eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> PrivateEndpointConnectionResource properties. </summary>
-        public RecoveryServicesBackupPrivateEndpointConnection Properties { get; set; }
+        public BackupPrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

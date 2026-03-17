@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/>, and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/>, and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
     /// </summary>
     public abstract partial class WorkloadItem
     {

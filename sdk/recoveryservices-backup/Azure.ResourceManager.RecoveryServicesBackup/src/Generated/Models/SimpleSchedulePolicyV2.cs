@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The V2 policy schedule for IaaS that supports hourly backups. </summary>
-    public partial class SimpleSchedulePolicyV2 : SchedulePolicy
+    public partial class SimpleSchedulePolicyV2 : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicyV2"/>. </summary>
         public SimpleSchedulePolicyV2() : base("SimpleSchedulePolicyV2")
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="hourlySchedule"> hourly schedule of this policy. </param>
         /// <param name="dailySchedule"> Daily schedule of this policy. </param>
         /// <param name="weeklySchedule"> Weekly schedule of this policy. </param>
-        internal SimpleSchedulePolicyV2(string schedulePolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleRunType? scheduleRunFrequency, HourlySchedule hourlySchedule, DailySchedule dailySchedule, WeeklySchedule weeklySchedule) : base(schedulePolicyType, additionalBinaryDataProperties)
+        internal SimpleSchedulePolicyV2(string schedulePolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleRunType? scheduleRunFrequency, BackupHourlySchedule hourlySchedule, DailySchedule dailySchedule, BackupWeeklySchedule weeklySchedule) : base(schedulePolicyType, additionalBinaryDataProperties)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             HourlySchedule = hourlySchedule;
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public ScheduleRunType? ScheduleRunFrequency { get; set; }
 
         /// <summary> hourly schedule of this policy. </summary>
-        public HourlySchedule HourlySchedule { get; set; }
+        public BackupHourlySchedule HourlySchedule { get; set; }
 
         /// <summary> Daily schedule of this policy. </summary>
         internal DailySchedule DailySchedule { get; set; }
 
         /// <summary> Weekly schedule of this policy. </summary>
-        public WeeklySchedule WeeklySchedule { get; set; }
+        public BackupWeeklySchedule WeeklySchedule { get; set; }
 
         /// <summary> List of times of day this schedule has to be run. </summary>
         public IList<DateTimeOffset> ScheduleRunTimes

@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     return new NoValueResponse<ExportJobsOperationResultResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExportJobsOperationResultResource(Client, Id), response.GetRawResponse());
+                return Response.FromValue(new ExportJobsOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     return new NoValueResponse<ExportJobsOperationResultResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExportJobsOperationResultResource(Client, Id), response.GetRawResponse());
+                return Response.FromValue(new ExportJobsOperationResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

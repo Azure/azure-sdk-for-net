@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFileShareRecoveryPoint"/>, <see cref="AzureWorkloadPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaRecoveryPoint"/>, <see cref="AzureWorkloadSAPAsePointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPAseRecoveryPoint"/>, <see cref="AzureWorkloadSQLPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSQLRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVMRecoveryPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRecoveryPoint))]
     public abstract partial class RecoveryPoint : IJsonModel<RecoveryPoint>
@@ -146,27 +146,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureFileShareRecoveryPoint":
-                        return AzureFileShareRecoveryPoint.DeserializeAzureFileShareRecoveryPoint(element, options);
+                        return FileShareRecoveryPoint.DeserializeFileShareRecoveryPoint(element, options);
                     case "AzureWorkloadPointInTimeRecoveryPoint":
-                        return AzureWorkloadPointInTimeRecoveryPoint.DeserializeAzureWorkloadPointInTimeRecoveryPoint(element, options);
+                        return WorkloadPointInTimeRecoveryPoint.DeserializeWorkloadPointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadRecoveryPoint":
-                        return AzureWorkloadRecoveryPoint.DeserializeAzureWorkloadRecoveryPoint(element, options);
+                        return WorkloadRecoveryPoint.DeserializeWorkloadRecoveryPoint(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
-                        return AzureWorkloadSAPHanaPointInTimeRecoveryPoint.DeserializeAzureWorkloadSAPHanaPointInTimeRecoveryPoint(element, options);
+                        return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSAPHanaRecoveryPoint":
-                        return AzureWorkloadSAPHanaRecoveryPoint.DeserializeAzureWorkloadSAPHanaRecoveryPoint(element, options);
+                        return WorkloadSapHanaRecoveryPoint.DeserializeWorkloadSapHanaRecoveryPoint(element, options);
                     case "AzureWorkloadSAPAsePointInTimeRecoveryPoint":
-                        return AzureWorkloadSAPAsePointInTimeRecoveryPoint.DeserializeAzureWorkloadSAPAsePointInTimeRecoveryPoint(element, options);
+                        return WorkloadSapAsePointInTimeRecoveryPoint.DeserializeWorkloadSapAsePointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSAPAseRecoveryPoint":
-                        return AzureWorkloadSAPAseRecoveryPoint.DeserializeAzureWorkloadSAPAseRecoveryPoint(element, options);
+                        return WorkloadSapAseRecoveryPoint.DeserializeWorkloadSapAseRecoveryPoint(element, options);
                     case "AzureWorkloadSQLPointInTimeRecoveryPoint":
-                        return AzureWorkloadSQLPointInTimeRecoveryPoint.DeserializeAzureWorkloadSQLPointInTimeRecoveryPoint(element, options);
+                        return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSQLRecoveryPoint":
-                        return AzureWorkloadSQLRecoveryPoint.DeserializeAzureWorkloadSQLRecoveryPoint(element, options);
+                        return WorkloadSqlRecoveryPoint.DeserializeWorkloadSqlRecoveryPoint(element, options);
                     case "GenericRecoveryPoint":
                         return GenericRecoveryPoint.DeserializeGenericRecoveryPoint(element, options);
                     case "IaasVMRecoveryPoint":
-                        return IaasVMRecoveryPoint.DeserializeIaasVMRecoveryPoint(element, options);
+                        return IaasVmRecoveryPoint.DeserializeIaasVmRecoveryPoint(element, options);
                 }
             }
             return UnknownRecoveryPoint.DeserializeUnknownRecoveryPoint(element, options);

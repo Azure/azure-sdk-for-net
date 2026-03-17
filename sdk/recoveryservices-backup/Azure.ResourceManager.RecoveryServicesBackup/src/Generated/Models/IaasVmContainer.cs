@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload-specific container. </summary>
-    public partial class IaaSVMContainer : ProtectionContainer
+    public partial class IaasVmContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of <see cref="IaaSVMContainer"/>. </summary>
-        public IaaSVMContainer() : base(ProtectableContainerType.IaasVMContainer)
+        /// <summary> Initializes a new instance of <see cref="IaasVmContainer"/>. </summary>
+        public IaasVmContainer() : base("IaasVMContainer")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaaSVMContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
@@ -34,21 +34,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaaSVMContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
+        internal IaasVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
         {
             VirtualMachineId = virtualMachineId;
             VirtualMachineVersion = virtualMachineVersion;
             ResourceGroup = resourceGroup;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaaSVMContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmContainer"/>. </summary>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
         /// </param>
-        private protected IaaSVMContainer(ProtectableContainerType containerType) : base(containerType)
+        private protected IaasVmContainer(ProtectableContainerType containerType) : base(containerType)
         {
         }
 

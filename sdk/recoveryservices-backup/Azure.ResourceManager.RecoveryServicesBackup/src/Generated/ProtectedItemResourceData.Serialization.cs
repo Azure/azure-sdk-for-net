@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(protectedItemResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(protectedItemResourceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProtectedItemResourceData"/> from. </param>

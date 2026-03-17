@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             PolicyType? policyType = default;
-            SchedulePolicy schedulePolicy = default;
-            RetentionPolicy retentionPolicy = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
             SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = SchedulePolicy.DeserializeSchedulePolicy(prop.Value, options);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("retentionPolicy"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(prop.Value, options);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tieringPolicy"u8))

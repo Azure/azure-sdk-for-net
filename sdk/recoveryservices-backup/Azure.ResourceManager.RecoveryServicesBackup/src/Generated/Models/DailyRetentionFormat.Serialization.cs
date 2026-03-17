@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("daysOfTheMonth"u8);
                 writer.WriteStartArray();
-                foreach (Day item in DaysOfTheMonth)
+                foreach (BackupDay item in DaysOfTheMonth)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            IList<Day> daysOfTheMonth = default;
+            IList<BackupDay> daysOfTheMonth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Day> array = new List<Day>();
+                    List<BackupDay> array = new List<BackupDay>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Day.DeserializeDay(item, options));
+                        array.Add(BackupDay.DeserializeBackupDay(item, options));
                     }
                     daysOfTheMonth = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DailyRetentionFormat(daysOfTheMonth ?? new ChangeTrackingList<Day>(), additionalBinaryDataProperties);
+            return new DailyRetentionFormat(daysOfTheMonth ?? new ChangeTrackingList<BackupDay>(), additionalBinaryDataProperties);
         }
     }
 }

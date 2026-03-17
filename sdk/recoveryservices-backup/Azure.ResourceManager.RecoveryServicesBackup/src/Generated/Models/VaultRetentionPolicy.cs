@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="vaultRetention"> Base class for retention policy. </param>
         /// <param name="snapshotRetentionInDays"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultRetention"/> is null. </exception>
-        public VaultRetentionPolicy(RetentionPolicy vaultRetention, int snapshotRetentionInDays)
+        public VaultRetentionPolicy(BackupRetentionPolicy vaultRetention, int snapshotRetentionInDays)
         {
             Argument.AssertNotNull(vaultRetention, nameof(vaultRetention));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="vaultRetention"> Base class for retention policy. </param>
         /// <param name="snapshotRetentionInDays"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VaultRetentionPolicy(RetentionPolicy vaultRetention, int snapshotRetentionInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VaultRetentionPolicy(BackupRetentionPolicy vaultRetention, int snapshotRetentionInDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultRetention = vaultRetention;
             SnapshotRetentionInDays = snapshotRetentionInDays;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Base class for retention policy. </summary>
-        public RetentionPolicy VaultRetention { get; set; }
+        public BackupRetentionPolicy VaultRetention { get; set; }
 
         /// <summary> Gets or sets the SnapshotRetentionInDays. </summary>
         public int SnapshotRetentionInDays { get; set; }

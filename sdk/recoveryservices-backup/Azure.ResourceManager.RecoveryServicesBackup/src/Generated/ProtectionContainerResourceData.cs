@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal ProtectionContainerResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProtectionContainer properties, IDictionary<string, string> tags, string location, string eTag) : base(string.IsNullOrEmpty(id) ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal ProtectionContainerResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupGenericProtectionContainer properties, IDictionary<string, string> tags, string location, string eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> ProtectionContainerResource properties. </summary>
-        public ProtectionContainer Properties { get; set; }
+        public BackupGenericProtectionContainer Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

@@ -14,11 +14,11 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Simple policy retention. </summary>
-    public partial class SimpleRetentionPolicy : RetentionPolicy, IJsonModel<SimpleRetentionPolicy>
+    public partial class SimpleRetentionPolicy : BackupRetentionPolicy, IJsonModel<SimpleRetentionPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RetentionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupRetentionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RetentionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupRetentionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

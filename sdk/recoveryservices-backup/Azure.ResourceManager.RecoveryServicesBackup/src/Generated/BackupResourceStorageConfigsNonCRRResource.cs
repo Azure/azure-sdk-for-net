@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Prepare data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OkResponse>> BMSPrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OkResponse>> BMSPrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveRequest.ToRequestContent(content), context);
+                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
                     new OkResponseOperationSource(),
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Prepare data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OkResponse> BMSPrepareDataMove(WaitUntil waitUntil, PrepareDataMoveRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OkResponse> BMSPrepareDataMove(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveRequest.ToRequestContent(content), context);
+                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
                     new OkResponseOperationSource(),
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Trigger data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OkResponse>> BMSTriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OkResponse>> BMSTriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveRequest.ToRequestContent(content), context);
+                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
                     new OkResponseOperationSource(),
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Trigger data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OkResponse> BMSTriggerDataMove(WaitUntil waitUntil, TriggerDataMoveRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OkResponse> BMSTriggerDataMove(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveRequest.ToRequestContent(content), context);
+                HttpMessage message = _recoveryServicesClientRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<OkResponse> operation = new RecoveryServicesBackupArmOperation<OkResponse>(
                     new OkResponseOperationSource(),

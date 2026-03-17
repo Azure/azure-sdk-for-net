@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// The base backup engine class. All workload specific backup engines derive from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBackupEngineBase))]
     public abstract partial class BackupEngineBase : IJsonModel<BackupEngineBase>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureBackupServerEngine":
-                        return AzureBackupServerEngine.DeserializeAzureBackupServerEngine(element, options);
+                        return BackupServerEngine.DeserializeBackupServerEngine(element, options);
                     case "DpmBackupEngine":
                         return DpmBackupEngine.DeserializeDpmBackupEngine(element, options);
                 }

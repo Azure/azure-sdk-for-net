@@ -14,51 +14,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload specific backup copy. </summary>
-    public partial class IaasVMRecoveryPoint : RecoveryPoint, IJsonModel<IaasVMRecoveryPoint>
+    public partial class IaasVmRecoveryPoint : RecoveryPoint, IJsonModel<IaasVmRecoveryPoint>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RecoveryPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIaasVMRecoveryPoint(document.RootElement, options);
+                        return DeserializeIaasVmRecoveryPoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVMRecoveryPoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVMRecoveryPoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IaasVMRecoveryPoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IaasVmRecoveryPoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVMRecoveryPoint IPersistableModel<IaasVMRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVMRecoveryPoint)PersistableModelCreateCore(data, options);
+        IaasVmRecoveryPoint IPersistableModel<IaasVmRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVmRecoveryPoint)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IaasVMRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IaasVmRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IaasVMRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IaasVmRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVMRecoveryPoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RecoveryPointType))
@@ -195,24 +195,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVMRecoveryPoint IJsonModel<IaasVMRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVMRecoveryPoint)JsonModelCreateCore(ref reader, options);
+        IaasVmRecoveryPoint IJsonModel<IaasVmRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVmRecoveryPoint)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RecoveryPoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVMRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVMRecoveryPoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIaasVMRecoveryPoint(document.RootElement, options);
+            return DeserializeIaasVmRecoveryPoint(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IaasVMRecoveryPoint DeserializeIaasVMRecoveryPoint(JsonElement element, ModelReaderWriterOptions options)
+        internal static IaasVmRecoveryPoint DeserializeIaasVmRecoveryPoint(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IaasVMRecoveryPoint(
+            return new IaasVmRecoveryPoint(
                 objectType,
                 threatStatus,
                 threatInfo ?? new ChangeTrackingList<ThreatInfo>(),

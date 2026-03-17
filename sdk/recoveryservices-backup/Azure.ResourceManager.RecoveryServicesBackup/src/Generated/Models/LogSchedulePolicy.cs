@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Log policy schedule. </summary>
-    public partial class LogSchedulePolicy : SchedulePolicy
+    public partial class LogSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of <see cref="LogSchedulePolicy"/>. </summary>
         public LogSchedulePolicy() : base("LogSchedulePolicy")

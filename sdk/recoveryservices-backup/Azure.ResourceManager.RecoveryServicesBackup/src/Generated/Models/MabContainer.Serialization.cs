@@ -14,11 +14,11 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Container with items backed up using MAB backup engine. </summary>
-    public partial class MabContainer : ProtectionContainer, IJsonModel<MabContainer>
+    public partial class MabContainer : BackupGenericProtectionContainer, IJsonModel<MabContainer>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("mabContainerHealthDetails"u8);
                 writer.WriteStartArray();
-                foreach (Models.MabContainerHealthDetails item in MabContainerHealthDetails)
+                foreach (MabContainerHealthDetails item in MabContainerHealthDetails)
                 {
-                    writer.WriteObjectValue<Models.MabContainerHealthDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             long? protectedItemCount = default;
             string agentVersion = default;
             MabContainerExtendedInfo extendedInfo = default;
-            IList<Models.MabContainerHealthDetails> mabContainerHealthDetails = default;
+            IList<MabContainerHealthDetails> mabContainerHealthDetails = default;
             string containerHealthState = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.MabContainerHealthDetails> array = new List<Models.MabContainerHealthDetails>();
+                    List<MabContainerHealthDetails> array = new List<MabContainerHealthDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item, options));
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 protectedItemCount,
                 agentVersion,
                 extendedInfo,
-                mabContainerHealthDetails ?? new ChangeTrackingList<Models.MabContainerHealthDetails>(),
+                mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(),
                 containerHealthState);
         }
     }

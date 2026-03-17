@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureVmWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPAseSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaDatabaseWorkloadItem"/>, <see cref="AzureVmWorkloadSAPHanaSystemWorkloadItem"/>, <see cref="AzureVmWorkloadSQLDatabaseWorkloadItem"/>, and <see cref="AzureVmWorkloadSQLInstanceWorkloadItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadItem"/>, <see cref="VmWorkloadSapAseDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapAseSystemWorkloadItem"/>, <see cref="VmWorkloadSapHanaDatabaseWorkloadItem"/>, <see cref="VmWorkloadSapHanaSystemWorkloadItem"/>, <see cref="VmWorkloadSqlDatabaseWorkloadItem"/>, and <see cref="VmWorkloadSqlInstanceWorkloadItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownWorkloadItem))]
     public abstract partial class WorkloadItem : IJsonModel<WorkloadItem>
@@ -151,19 +151,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureVmWorkloadItem":
-                        return AzureVmWorkloadItem.DeserializeAzureVmWorkloadItem(element, options);
+                        return VmWorkloadItem.DeserializeVmWorkloadItem(element, options);
                     case "SAPAseDatabase":
-                        return AzureVmWorkloadSAPAseDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPAseDatabaseWorkloadItem(element, options);
+                        return VmWorkloadSapAseDatabaseWorkloadItem.DeserializeVmWorkloadSapAseDatabaseWorkloadItem(element, options);
                     case "SAPAseSystem":
-                        return AzureVmWorkloadSAPAseSystemWorkloadItem.DeserializeAzureVmWorkloadSAPAseSystemWorkloadItem(element, options);
+                        return VmWorkloadSapAseSystemWorkloadItem.DeserializeVmWorkloadSapAseSystemWorkloadItem(element, options);
                     case "SAPHanaDatabase":
-                        return AzureVmWorkloadSAPHanaDatabaseWorkloadItem.DeserializeAzureVmWorkloadSAPHanaDatabaseWorkloadItem(element, options);
+                        return VmWorkloadSapHanaDatabaseWorkloadItem.DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(element, options);
                     case "SAPHanaSystem":
-                        return AzureVmWorkloadSAPHanaSystemWorkloadItem.DeserializeAzureVmWorkloadSAPHanaSystemWorkloadItem(element, options);
+                        return VmWorkloadSapHanaSystemWorkloadItem.DeserializeVmWorkloadSapHanaSystemWorkloadItem(element, options);
                     case "SQLDataBase":
-                        return AzureVmWorkloadSQLDatabaseWorkloadItem.DeserializeAzureVmWorkloadSQLDatabaseWorkloadItem(element, options);
+                        return VmWorkloadSqlDatabaseWorkloadItem.DeserializeVmWorkloadSqlDatabaseWorkloadItem(element, options);
                     case "SQLInstance":
-                        return AzureVmWorkloadSQLInstanceWorkloadItem.DeserializeAzureVmWorkloadSQLInstanceWorkloadItem(element, options);
+                        return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element, options);
                 }
             }
             return UnknownWorkloadItem.DeserializeUnknownWorkloadItem(element, options);

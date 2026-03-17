@@ -12,10 +12,10 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> DPM workload-specific protection container. </summary>
-    public partial class DpmContainer : ProtectionContainer
+    public partial class DpmContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="DpmContainer"/>. </summary>
-        public DpmContainer() : base(ProtectableContainerType.DPMContainer)
+        public DpmContainer() : base("DPMContainer")
         {
             DpmServers = new ChangeTrackingList<string>();
         }

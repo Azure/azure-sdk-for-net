@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for restore request. Workload-specific restore requests are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFileShareRestoreRequest"/>, <see cref="AzureWorkloadPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaRestoreRequest"/>, <see cref="AzureWorkloadSAPAsePointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSAPAseRestoreRequest"/>, <see cref="AzureWorkloadSQLPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSQLRestoreRequest"/>, <see cref="IaasVMRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSAPHanaRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSQLRestoreWithRehydrateRequest"/>, and <see cref="IaasVMRestoreWithRehydrationRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareRestoreContent"/>, <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="WorkloadRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapAsePointInTimeRestoreContent"/>, <see cref="WorkloadSapAseRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlRestoreContent"/>, <see cref="IaasVmRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreWithRehydrateContent"/>, and <see cref="IaasVmRestoreWithRehydrationContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRestoreContent))]
     public abstract partial class RestoreContent : IJsonModel<RestoreContent>
@@ -146,35 +146,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureFileShareRestoreRequest":
-                        return AzureFileShareRestoreRequest.DeserializeAzureFileShareRestoreRequest(element, options);
+                        return FileShareRestoreContent.DeserializeFileShareRestoreContent(element, options);
                     case "AzureWorkloadPointInTimeRestoreRequest":
-                        return AzureWorkloadPointInTimeRestoreRequest.DeserializeAzureWorkloadPointInTimeRestoreRequest(element, options);
+                        return WorkloadPointInTimeRestoreContent.DeserializeWorkloadPointInTimeRestoreContent(element, options);
                     case "AzureWorkloadRestoreRequest":
-                        return AzureWorkloadRestoreRequest.DeserializeAzureWorkloadRestoreRequest(element, options);
+                        return WorkloadRestoreContent.DeserializeWorkloadRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
-                        return AzureWorkloadSAPHanaPointInTimeRestoreRequest.DeserializeAzureWorkloadSAPHanaPointInTimeRestoreRequest(element, options);
+                        return WorkloadSapHanaPointInTimeRestoreContent.DeserializeWorkloadSapHanaPointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaRestoreRequest":
-                        return AzureWorkloadSAPHanaRestoreRequest.DeserializeAzureWorkloadSAPHanaRestoreRequest(element, options);
+                        return WorkloadSapHanaRestoreContent.DeserializeWorkloadSapHanaRestoreContent(element, options);
                     case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
-                        return AzureWorkloadSAPAsePointInTimeRestoreRequest.DeserializeAzureWorkloadSAPAsePointInTimeRestoreRequest(element, options);
+                        return WorkloadSapAsePointInTimeRestoreContent.DeserializeWorkloadSapAsePointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSAPAseRestoreRequest":
-                        return AzureWorkloadSAPAseRestoreRequest.DeserializeAzureWorkloadSAPAseRestoreRequest(element, options);
+                        return WorkloadSapAseRestoreContent.DeserializeWorkloadSapAseRestoreContent(element, options);
                     case "AzureWorkloadSQLPointInTimeRestoreRequest":
-                        return AzureWorkloadSQLPointInTimeRestoreRequest.DeserializeAzureWorkloadSQLPointInTimeRestoreRequest(element, options);
+                        return WorkloadSqlPointInTimeRestoreContent.DeserializeWorkloadSqlPointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSQLRestoreRequest":
-                        return AzureWorkloadSQLRestoreRequest.DeserializeAzureWorkloadSQLRestoreRequest(element, options);
+                        return WorkloadSqlRestoreContent.DeserializeWorkloadSqlRestoreContent(element, options);
                     case "IaasVMRestoreRequest":
-                        return IaasVMRestoreRequest.DeserializeIaasVMRestoreRequest(element, options);
+                        return IaasVmRestoreContent.DeserializeIaasVmRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
-                        return AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest.DeserializeAzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest(element, options);
+                        return WorkloadSapHanaPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSapHanaPointInTimeRestoreWithRehydrateContent(element, options);
                     case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
-                        return AzureWorkloadSAPHanaRestoreWithRehydrateRequest.DeserializeAzureWorkloadSAPHanaRestoreWithRehydrateRequest(element, options);
+                        return WorkloadSapHanaRestoreWithRehydrateContent.DeserializeWorkloadSapHanaRestoreWithRehydrateContent(element, options);
                     case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
-                        return AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest.DeserializeAzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest(element, options);
+                        return WorkloadSqlPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(element, options);
                     case "AzureWorkloadSQLRestoreWithRehydrateRequest":
-                        return AzureWorkloadSQLRestoreWithRehydrateRequest.DeserializeAzureWorkloadSQLRestoreWithRehydrateRequest(element, options);
+                        return WorkloadSqlRestoreWithRehydrateContent.DeserializeWorkloadSqlRestoreWithRehydrateContent(element, options);
                     case "IaasVMRestoreWithRehydrationRequest":
-                        return IaasVMRestoreWithRehydrationRequest.DeserializeIaasVMRestoreWithRehydrationRequest(element, options);
+                        return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element, options);
                 }
             }
             return UnknownRestoreContent.DeserializeUnknownRestoreContent(element, options);

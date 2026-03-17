@@ -334,12 +334,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ilrRequestResource"> resource ILR request. </param>
+        /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ilrRequestResource"/> is null. </exception>
-        public virtual async Task<Response> ProvisionAsync(ILRRequestResource ilrRequestResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> ProvisionAsync(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ilrRequestResource, nameof(ilrRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("RecoveryPointResource.Provision");
             scope.Start();
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ILRRequestResource.ToRequestContent(ilrRequestResource), context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProvisionIlrConnectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ilrRequestResource"> resource ILR request. </param>
+        /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ilrRequestResource"/> is null. </exception>
-        public virtual Response Provision(ILRRequestResource ilrRequestResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Provision(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ilrRequestResource, nameof(ilrRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("RecoveryPointResource.Provision");
             scope.Start();
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ILRRequestResource.ToRequestContent(ilrRequestResource), context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateProvisionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProvisionIlrConnectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Move Resource Across Tiers Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> MoveRecoveryPointAsync(WaitUntil waitUntil, MoveRPAcrossTiersRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MoveRecoveryPointAsync(WaitUntil waitUntil, MoveRPAcrossTiersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryServicesClientRestClient.CreateMoveRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MoveRPAcrossTiersRequest.ToRequestContent(content), context);
+                HttpMessage message = _recoveryServicesClientRestClient.CreateMoveRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MoveRPAcrossTiersContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_recoveryServicesClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Move Resource Across Tiers Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation MoveRecoveryPoint(WaitUntil waitUntil, MoveRPAcrossTiersRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation MoveRecoveryPoint(WaitUntil waitUntil, MoveRPAcrossTiersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryServicesClientRestClient.CreateMoveRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MoveRPAcrossTiersRequest.ToRequestContent(content), context);
+                HttpMessage message = _recoveryServicesClientRestClient.CreateMoveRecoveryPointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MoveRPAcrossTiersContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_recoveryServicesClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -713,5 +713,278 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<RecoveryPointResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("RecoveryPointResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RecoveryPointResourceData> response = Response.FromValue(RecoveryPointResourceData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    RecoveryPointResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RecoveryPointResourcePatch patch = new RecoveryPointResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<RecoveryPointResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<RecoveryPointResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("RecoveryPointResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RecoveryPointResourceData> response = Response.FromValue(RecoveryPointResourceData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    RecoveryPointResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RecoveryPointResourcePatch patch = new RecoveryPointResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<RecoveryPointResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<RecoveryPointResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("RecoveryPointResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RecoveryPointResourceData> response = Response.FromValue(RecoveryPointResourceData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    RecoveryPointResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RecoveryPointResourcePatch patch = new RecoveryPointResourcePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<RecoveryPointResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<RecoveryPointResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("RecoveryPointResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RecoveryPointResourceData> response = Response.FromValue(RecoveryPointResourceData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    RecoveryPointResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RecoveryPointResourcePatch patch = new RecoveryPointResourcePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<RecoveryPointResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<RecoveryPointResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("RecoveryPointResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<RecoveryPointResourceData> response = Response.FromValue(RecoveryPointResourceData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    RecoveryPointResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    RecoveryPointResourcePatch patch = new RecoveryPointResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<RecoveryPointResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<RecoveryPointResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("RecoveryPointResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _recoveryPointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<RecoveryPointResourceData> response = Response.FromValue(RecoveryPointResourceData.FromResponse(result), result);
+                    return Response.FromValue(new RecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    RecoveryPointResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    RecoveryPointResourcePatch patch = new RecoveryPointResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<RecoveryPointResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

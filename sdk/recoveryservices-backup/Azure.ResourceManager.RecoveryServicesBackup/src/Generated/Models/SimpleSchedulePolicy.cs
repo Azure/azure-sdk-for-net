@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Simple policy schedule. </summary>
-    public partial class SimpleSchedulePolicy : SchedulePolicy
+    public partial class SimpleSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicy"/>. </summary>
         public SimpleSchedulePolicy() : base("SimpleSchedulePolicy")
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
         /// <param name="hourlySchedule"> Hourly Schedule of this Policy. </param>
         /// <param name="scheduleWeeklyFrequency"> At every number weeks this schedule has to be run. </param>
-        internal SimpleSchedulePolicy(string schedulePolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, HourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType, additionalBinaryDataProperties)
+        internal SimpleSchedulePolicy(string schedulePolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, BackupHourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType, additionalBinaryDataProperties)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             ScheduleRunDays = scheduleRunDays;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<DateTimeOffset> ScheduleRunTimes { get; }
 
         /// <summary> Hourly Schedule of this Policy. </summary>
-        public HourlySchedule HourlySchedule { get; set; }
+        public BackupHourlySchedule HourlySchedule { get; set; }
 
         /// <summary> At every number weeks this schedule has to be run. </summary>
         public int? ScheduleWeeklyFrequency { get; set; }

@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(protectionContainerResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(protectionContainerResourceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProtectionContainerResourceData"/> from. </param>
@@ -161,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ProtectionContainer properties = default;
+            BackupGenericProtectionContainer properties = default;
             IDictionary<string, string> tags = default;
             string location = default;
             string eTag = default;
@@ -201,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = ProtectionContainer.DeserializeProtectionContainer(prop.Value, options);
+                    properties = BackupGenericProtectionContainer.DeserializeBackupGenericProtectionContainer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

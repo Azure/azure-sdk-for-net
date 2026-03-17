@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="DailyRetentionFormat"/>. </summary>
         public DailyRetentionFormat()
         {
-            DaysOfTheMonth = new ChangeTrackingList<Day>();
+            DaysOfTheMonth = new ChangeTrackingList<BackupDay>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DailyRetentionFormat"/>. </summary>
         /// <param name="daysOfTheMonth"> List of days of the month. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DailyRetentionFormat(IList<Day> daysOfTheMonth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DailyRetentionFormat(IList<BackupDay> daysOfTheMonth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DaysOfTheMonth = daysOfTheMonth;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of days of the month. </summary>
-        public IList<Day> DaysOfTheMonth { get; }
+        public IList<BackupDay> DaysOfTheMonth { get; }
     }
 }

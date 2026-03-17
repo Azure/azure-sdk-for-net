@@ -151,25 +151,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "SAPAseDatabase":
-                        return AzureVmWorkloadSAPAseDatabaseProtectableItem.DeserializeAzureVmWorkloadSAPAseDatabaseProtectableItem(element, options);
+                        return VmWorkloadSapAseDatabaseProtectableItem.DeserializeVmWorkloadSapAseDatabaseProtectableItem(element, options);
                     case "SAPAseSystem":
-                        return AzureVmWorkloadSAPAseSystemProtectableItem.DeserializeAzureVmWorkloadSAPAseSystemProtectableItem(element, options);
+                        return VmWorkloadSapAseSystemProtectableItem.DeserializeVmWorkloadSapAseSystemProtectableItem(element, options);
                     case "SAPHanaDatabase":
-                        return AzureVmWorkloadSAPHanaDatabaseProtectableItem.DeserializeAzureVmWorkloadSAPHanaDatabaseProtectableItem(element, options);
+                        return VmWorkloadSapHanaDatabaseProtectableItem.DeserializeVmWorkloadSapHanaDatabaseProtectableItem(element, options);
                     case "SAPHanaSystem":
-                        return AzureVmWorkloadSAPHanaSystemProtectableItem.DeserializeAzureVmWorkloadSAPHanaSystemProtectableItem(element, options);
+                        return VmWorkloadSapHanaSystemProtectableItem.DeserializeVmWorkloadSapHanaSystemProtectableItem(element, options);
                     case "SAPHanaDBInstance":
-                        return AzureVmWorkloadSAPHanaDBInstance.DeserializeAzureVmWorkloadSAPHanaDBInstance(element, options);
+                        return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
                     case "HanaHSRContainer":
-                        return AzureVmWorkloadSAPHanaHSRProtectableItem.DeserializeAzureVmWorkloadSAPHanaHSRProtectableItem(element, options);
+                        return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
                     case "HanaScaleoutContainer":
                         return AzureVmWorkloadSAPHanaScaleoutProtectableItem.DeserializeAzureVmWorkloadSAPHanaScaleoutProtectableItem(element, options);
                     case "SQLAvailabilityGroupContainer":
-                        return AzureVmWorkloadSQLAvailabilityGroupProtectableItem.DeserializeAzureVmWorkloadSQLAvailabilityGroupProtectableItem(element, options);
+                        return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
                     case "SQLDataBase":
-                        return AzureVmWorkloadSQLDatabaseProtectableItem.DeserializeAzureVmWorkloadSQLDatabaseProtectableItem(element, options);
+                        return VmWorkloadSqlDatabaseProtectableItem.DeserializeVmWorkloadSqlDatabaseProtectableItem(element, options);
                     case "SQLInstance":
-                        return AzureVmWorkloadSQLInstanceProtectableItem.DeserializeAzureVmWorkloadSQLInstanceProtectableItem(element, options);
+                        return VmWorkloadSqlInstanceProtectableItem.DeserializeVmWorkloadSqlInstanceProtectableItem(element, options);
                 }
             }
             return UnknownVmWorkloadProtectableItem.DeserializeUnknownVmWorkloadProtectableItem(element, options);

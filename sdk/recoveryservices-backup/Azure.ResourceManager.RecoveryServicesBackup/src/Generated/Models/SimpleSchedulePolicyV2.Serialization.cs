@@ -14,11 +14,11 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The V2 policy schedule for IaaS that supports hourly backups. </summary>
-    public partial class SimpleSchedulePolicyV2 : SchedulePolicy, IJsonModel<SimpleSchedulePolicyV2>
+    public partial class SimpleSchedulePolicyV2 : BackupSchedulePolicy, IJsonModel<SimpleSchedulePolicyV2>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupSchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicyV2>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SchedulePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupSchedulePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicyV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string schedulePolicyType = "SimpleSchedulePolicyV2";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ScheduleRunType? scheduleRunFrequency = default;
-            HourlySchedule hourlySchedule = default;
+            BackupHourlySchedule hourlySchedule = default;
             DailySchedule dailySchedule = default;
-            WeeklySchedule weeklySchedule = default;
+            BackupWeeklySchedule weeklySchedule = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("schedulePolicyType"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = HourlySchedule.DeserializeHourlySchedule(prop.Value, options);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dailySchedule"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = WeeklySchedule.DeserializeWeeklySchedule(prop.Value, options);
+                    weeklySchedule = BackupWeeklySchedule.DeserializeBackupWeeklySchedule(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

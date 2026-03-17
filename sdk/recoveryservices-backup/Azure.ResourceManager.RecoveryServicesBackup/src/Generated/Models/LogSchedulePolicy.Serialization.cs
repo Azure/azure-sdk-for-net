@@ -14,11 +14,11 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Log policy schedule. </summary>
-    public partial class LogSchedulePolicy : SchedulePolicy, IJsonModel<LogSchedulePolicy>
+    public partial class LogSchedulePolicy : BackupSchedulePolicy, IJsonModel<LogSchedulePolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupSchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LogSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SchedulePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupSchedulePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LogSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

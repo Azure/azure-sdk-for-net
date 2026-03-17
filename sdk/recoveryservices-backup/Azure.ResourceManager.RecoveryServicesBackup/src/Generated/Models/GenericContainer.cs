@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for generic container of backup items. </summary>
-    public partial class GenericContainer : ProtectionContainer
+    public partial class GenericContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="GenericContainer"/>. </summary>
         public GenericContainer() : base(ProtectableContainerType.GenericContainer)

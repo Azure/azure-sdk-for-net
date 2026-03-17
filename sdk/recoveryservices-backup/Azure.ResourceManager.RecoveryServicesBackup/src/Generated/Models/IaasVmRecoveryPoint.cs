@@ -12,17 +12,17 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload specific backup copy. </summary>
-    public partial class IaasVMRecoveryPoint : RecoveryPoint
+    public partial class IaasVmRecoveryPoint : RecoveryPoint
     {
-        /// <summary> Initializes a new instance of <see cref="IaasVMRecoveryPoint"/>. </summary>
-        internal IaasVMRecoveryPoint() : base("IaasVMRecoveryPoint")
+        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
+        internal IaasVmRecoveryPoint() : base("IaasVMRecoveryPoint")
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
             Zones = new ChangeTrackingList<string>();
             RecoveryPointMoveReadinessInfo = new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaasVMRecoveryPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Extended location of the VM recovery point,
         /// should be null if VM is in public cloud
         /// </param>
-        internal IaasVMRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVMStorageType, bool? isSourceVMEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
+        internal IaasVmRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVMStorageType, bool? isSourceVMEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;

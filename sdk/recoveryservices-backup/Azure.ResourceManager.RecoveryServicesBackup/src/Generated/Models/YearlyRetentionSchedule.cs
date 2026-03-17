@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public RetentionDuration RetentionDuration { get; set; }
 
         /// <summary> List of days of the month. </summary>
-        public IList<Day> RetentionScheduleDailyDaysOfTheMonth
+        public IList<BackupDay> RetentionScheduleDailyDaysOfTheMonth
         {
             get
             {

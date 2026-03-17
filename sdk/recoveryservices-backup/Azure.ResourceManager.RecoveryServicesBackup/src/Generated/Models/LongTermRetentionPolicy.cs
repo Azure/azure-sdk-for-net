@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Long term retention policy. </summary>
-    public partial class LongTermRetentionPolicy : RetentionPolicy
+    public partial class LongTermRetentionPolicy : BackupRetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
         public LongTermRetentionPolicy() : base("LongTermRetentionPolicy")

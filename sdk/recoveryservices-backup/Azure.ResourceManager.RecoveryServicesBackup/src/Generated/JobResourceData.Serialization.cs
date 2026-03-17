@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Job properties = default;
+            BackupGenericJob properties = default;
             IDictionary<string, string> tags = default;
             string location = default;
             string eTag = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = Job.DeserializeJob(prop.Value, options);
+                    properties = BackupGenericJob.DeserializeBackupGenericJob(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

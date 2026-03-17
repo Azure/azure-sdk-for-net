@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     return new NoValueResponse<ProtectedItemOperationStatusResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectedItemOperationStatusResource(Client, Id), response.GetRawResponse());
+                return Response.FromValue(new ProtectedItemOperationStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     return new NoValueResponse<ProtectedItemOperationStatusResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProtectedItemOperationStatusResource(Client, Id), response.GetRawResponse());
+                return Response.FromValue(new ProtectedItemOperationStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

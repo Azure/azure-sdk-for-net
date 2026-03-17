@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DpmContainer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DpmContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

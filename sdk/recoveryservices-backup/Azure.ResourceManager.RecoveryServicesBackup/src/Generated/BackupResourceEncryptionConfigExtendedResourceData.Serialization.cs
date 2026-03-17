@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BackupResourceEncryptionConfigExtended properties = default;
+            BackupResourceEncryptionConfigExtendedProperties properties = default;
             IDictionary<string, string> tags = default;
             string location = default;
             string eTag = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         continue;
                     }
-                    properties = BackupResourceEncryptionConfigExtended.DeserializeBackupResourceEncryptionConfigExtended(prop.Value, options);
+                    properties = BackupResourceEncryptionConfigExtendedProperties.DeserializeBackupResourceEncryptionConfigExtendedProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

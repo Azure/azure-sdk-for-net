@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BackupStatusResult>> GetAsync(string azureRegion, BackupStatusRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupStatusResult>> GetAsync(string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupStatusRestClient.CreateGetRequest(azureRegion, Id.SubscriptionId, BackupStatusRequest.ToRequestContent(content), context);
+                HttpMessage message = BackupStatusRestClient.CreateGetRequest(azureRegion, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupStatusResult> response = Response.FromValue(BackupStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BackupStatusResult> Get(string azureRegion, BackupStatusRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<BackupStatusResult> Get(string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupStatusRestClient.CreateGetRequest(azureRegion, Id.SubscriptionId, BackupStatusRequest.ToRequestContent(content), context);
+                HttpMessage message = BackupStatusRestClient.CreateGetRequest(azureRegion, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupStatusResult> response = Response.FromValue(BackupStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AzureVMResourceFeatureSupportResponse>> ValidateAsync(string azureRegion, FeatureSupportRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmResourceFeatureSupportResult>> ValidateAsync(string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -189,9 +189,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeatureSupportRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, FeatureSupportRequest.ToRequestContent(content), context);
+                HttpMessage message = FeatureSupportRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureVMResourceFeatureSupportResponse> response = Response.FromValue(AzureVMResourceFeatureSupportResponse.FromResponse(result), result);
+                Response<VmResourceFeatureSupportResult> response = Response.FromValue(VmResourceFeatureSupportResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AzureVMResourceFeatureSupportResponse> Validate(string azureRegion, FeatureSupportRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<VmResourceFeatureSupportResult> Validate(string azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeatureSupportRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, FeatureSupportRequest.ToRequestContent(content), context);
+                HttpMessage message = FeatureSupportRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureVMResourceFeatureSupportResponse> response = Response.FromValue(AzureVMResourceFeatureSupportResponse.FromResponse(result), result);
+                Response<VmResourceFeatureSupportResult> response = Response.FromValue(VmResourceFeatureSupportResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PreValidateEnableBackupResponse>> ValidateAsync(string azureRegion, PreValidateEnableBackupRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreValidateEnableBackupResult>> ValidateAsync(string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionIntentRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, PreValidateEnableBackupRequest.ToRequestContent(content), context);
+                HttpMessage message = ProtectionIntentRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PreValidateEnableBackupResponse> response = Response.FromValue(PreValidateEnableBackupResponse.FromResponse(result), result);
+                Response<PreValidateEnableBackupResult> response = Response.FromValue(PreValidateEnableBackupResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PreValidateEnableBackupResponse> Validate(string azureRegion, PreValidateEnableBackupRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<PreValidateEnableBackupResult> Validate(string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -344,9 +344,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionIntentRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, PreValidateEnableBackupRequest.ToRequestContent(content), context);
+                HttpMessage message = ProtectionIntentRestClient.CreateValidateRequest(azureRegion, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PreValidateEnableBackupResponse> response = Response.FromValue(PreValidateEnableBackupResponse.FromResponse(result), result);
+                Response<PreValidateEnableBackupResult> response = Response.FromValue(PreValidateEnableBackupResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

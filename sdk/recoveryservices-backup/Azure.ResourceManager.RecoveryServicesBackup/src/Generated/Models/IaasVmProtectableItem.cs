@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload-specific backup item. </summary>
-    public partial class IaaSVMProtectableItem : WorkloadProtectableItem
+    public partial class IaasVmProtectableItem : WorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of <see cref="IaaSVMProtectableItem"/>. </summary>
-        internal IaaSVMProtectableItem() : base("IaaSVMProtectableItem")
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectableItem"/>. </summary>
+        internal IaasVmProtectableItem() : base("IaaSVMProtectableItem")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaaSVMProtectableItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaaSVMProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties)
+        internal IaasVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties)
         {
             VirtualMachineId = virtualMachineId;
             VirtualMachineVersion = virtualMachineVersion;
             ResourceGroup = resourceGroup;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaaSVMProtectableItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmProtectableItem"/>. </summary>
         /// <param name="protectableItemType"> Type of the backup item. </param>
-        private protected IaaSVMProtectableItem(string protectableItemType) : base(protectableItemType)
+        private protected IaasVmProtectableItem(string protectableItemType) : base(protectableItemType)
         {
         }
 

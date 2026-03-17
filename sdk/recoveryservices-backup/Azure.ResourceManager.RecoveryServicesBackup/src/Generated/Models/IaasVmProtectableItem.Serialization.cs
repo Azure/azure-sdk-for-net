@@ -13,51 +13,51 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload-specific backup item. </summary>
-    public partial class IaaSVMProtectableItem : WorkloadProtectableItem, IJsonModel<IaaSVMProtectableItem>
+    public partial class IaasVmProtectableItem : WorkloadProtectableItem, IJsonModel<IaasVmProtectableItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkloadProtectableItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaaSVMProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIaaSVMProtectableItem(document.RootElement, options);
+                        return DeserializeIaasVmProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaaSVMProtectableItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaaSVMProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IaaSVMProtectableItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IaaSVMProtectableItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IaasVmProtectableItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaaSVMProtectableItem IPersistableModel<IaaSVMProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaaSVMProtectableItem)PersistableModelCreateCore(data, options);
+        IaasVmProtectableItem IPersistableModel<IaasVmProtectableItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVmProtectableItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IaaSVMProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IaasVmProtectableItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IaaSVMProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IaasVmProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaaSVMProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaaSVMProtectableItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmProtectableItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(VirtualMachineId))
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaaSVMProtectableItem IJsonModel<IaaSVMProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaaSVMProtectableItem)JsonModelCreateCore(ref reader, options);
+        IaasVmProtectableItem IJsonModel<IaasVmProtectableItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVmProtectableItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override WorkloadProtectableItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaaSVMProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaaSVMProtectableItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmProtectableItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIaaSVMProtectableItem(document.RootElement, options);
+            return DeserializeIaasVmProtectableItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IaaSVMProtectableItem DeserializeIaaSVMProtectableItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static IaasVmProtectableItem DeserializeIaasVmProtectableItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "Microsoft.ClassicCompute/virtualMachines":
-                        return AzureIaaSClassicComputeVMProtectableItem.DeserializeAzureIaaSClassicComputeVMProtectableItem(element, options);
+                        return IaasClassicComputeVmProtectableItem.DeserializeIaasClassicComputeVmProtectableItem(element, options);
                     case "Microsoft.Compute/virtualMachines":
-                        return AzureIaaSComputeVMProtectableItem.DeserializeAzureIaaSComputeVMProtectableItem(element, options);
+                        return IaasComputeVmProtectableItem.DeserializeIaasComputeVmProtectableItem(element, options);
                 }
             }
-            return UnknownIaaSVMProtectableItem.DeserializeUnknownIaaSVMProtectableItem(element, options);
+            return UnknownIaasVmProtectableItem.DeserializeUnknownIaasVmProtectableItem(element, options);
         }
     }
 }

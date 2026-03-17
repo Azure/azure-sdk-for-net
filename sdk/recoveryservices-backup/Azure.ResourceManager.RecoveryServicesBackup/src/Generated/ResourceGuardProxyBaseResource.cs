@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<UnlockDeleteResponse>> UnlockDeleteAsync(UnlockDeleteRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UnlockDeleteResult>> UnlockDeleteAsync(UnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateUnlockDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnlockDeleteRequest.ToRequestContent(content), context);
+                HttpMessage message = _resourceGuardProxyRestClient.CreateUnlockDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnlockDeleteContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UnlockDeleteResponse> response = Response.FromValue(UnlockDeleteResponse.FromResponse(result), result);
+                Response<UnlockDeleteResult> response = Response.FromValue(UnlockDeleteResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<UnlockDeleteResponse> UnlockDelete(UnlockDeleteRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<UnlockDeleteResult> UnlockDelete(UnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateUnlockDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnlockDeleteRequest.ToRequestContent(content), context);
+                HttpMessage message = _resourceGuardProxyRestClient.CreateUnlockDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, UnlockDeleteContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<UnlockDeleteResponse> response = Response.FromValue(UnlockDeleteResponse.FromResponse(result), result);
+                Response<UnlockDeleteResult> response = Response.FromValue(UnlockDeleteResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -330,12 +330,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupRequestResource"> resource backup request. </param>
+        /// <param name="content"> resource backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupRequestResource"/> is null. </exception>
-        public virtual async Task<Response> TriggerAsync(BackupRequestResource backupRequestResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> TriggerAsync(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupRequestResource, nameof(backupRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("ProtectedItemResource.Trigger");
             scope.Start();
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupRequestResource.ToRequestContent(backupRequestResource), context);
+                HttpMessage message = _backupsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -378,12 +378,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupRequestResource"> resource backup request. </param>
+        /// <param name="content"> resource backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupRequestResource"/> is null. </exception>
-        public virtual Response Trigger(BackupRequestResource backupRequestResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Trigger(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupRequestResource, nameof(backupRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("ProtectedItemResource.Trigger");
             scope.Start();
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupRequestResource.ToRequestContent(backupRequestResource), context);
+                HttpMessage message = _backupsRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -428,8 +428,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecoveryPointResource> GetAllAsync(ListRecoveryPointsRecommendedForMoveRequest content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecoveryPointResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecoveryPointResourceData> GetAllAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryPointResourceData, RecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
+            return new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -445,8 +445,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                ListRecoveryPointsRecommendedForMoveRequest.ToRequestContent(content),
-                context), data => new RecoveryPointResource(Client, data));
+                RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
+                context);
         }
 
         /// <summary>
@@ -473,8 +473,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecoveryPointResource> GetAll(ListRecoveryPointsRecommendedForMoveRequest content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecoveryPointResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecoveryPointResourceData> GetAll(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryPointResourceData, RecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
+            return new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -490,8 +490,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                ListRecoveryPointsRecommendedForMoveRequest.ToRequestContent(content),
-                context), data => new RecoveryPointResource(Client, data));
+                RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
+                context);
         }
 
         /// <summary>

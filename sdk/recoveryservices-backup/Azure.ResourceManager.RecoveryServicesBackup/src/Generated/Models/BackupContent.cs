@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup request. Workload-specific backup requests are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFileShareBackupRequest"/>, <see cref="AzureWorkloadBackupRequest"/>, and <see cref="IaasVMBackupRequest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/>, and <see cref="IaasVmBackupContent"/>.
     /// </summary>
     public abstract partial class BackupContent
     {

@@ -14,11 +14,11 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Simple policy schedule. </summary>
-    public partial class SimpleSchedulePolicy : SchedulePolicy, IJsonModel<SimpleSchedulePolicy>
+    public partial class SimpleSchedulePolicy : BackupSchedulePolicy, IJsonModel<SimpleSchedulePolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupSchedulePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SchedulePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupSchedulePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SimpleSchedulePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ScheduleRunType? scheduleRunFrequency = default;
             IList<BackupDayOfWeek> scheduleRunDays = default;
             IList<DateTimeOffset> scheduleRunTimes = default;
-            HourlySchedule hourlySchedule = default;
+            BackupHourlySchedule hourlySchedule = default;
             int? scheduleWeeklyFrequency = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    hourlySchedule = HourlySchedule.DeserializeHourlySchedule(prop.Value, options);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduleWeeklyFrequency"u8))

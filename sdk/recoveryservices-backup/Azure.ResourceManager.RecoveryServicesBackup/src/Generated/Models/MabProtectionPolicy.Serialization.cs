@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string backupManagementType = "MAB";
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SchedulePolicy schedulePolicy = default;
-            RetentionPolicy retentionPolicy = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protectedItemsCount"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = SchedulePolicy.DeserializeSchedulePolicy(prop.Value, options);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("retentionPolicy"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(prop.Value, options);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

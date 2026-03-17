@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownIaaSVMContainer : IaaSVMContainer
+    internal partial class UnknownIaasVmContainer : IaasVmContainer
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownIaaSVMContainer"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownIaasVmContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal UnknownIaaSVMContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties, virtualMachineId, virtualMachineVersion, resourceGroup)
+        internal UnknownIaasVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
         }
     }

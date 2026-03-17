@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFileShareRecoveryPoint"/>, <see cref="AzureWorkloadPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPHanaRecoveryPoint"/>, <see cref="AzureWorkloadSAPAsePointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSAPAseRecoveryPoint"/>, <see cref="AzureWorkloadSQLPointInTimeRecoveryPoint"/>, <see cref="AzureWorkloadSQLRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVMRecoveryPoint"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
     public abstract partial class RecoveryPoint
     {

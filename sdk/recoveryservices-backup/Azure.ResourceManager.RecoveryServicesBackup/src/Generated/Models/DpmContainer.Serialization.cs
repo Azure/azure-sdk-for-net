@@ -13,11 +13,11 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> DPM workload-specific protection container. </summary>
-    public partial class DpmContainer : ProtectionContainer, IJsonModel<DpmContainer>
+    public partial class DpmContainer : BackupGenericProtectionContainer, IJsonModel<DpmContainer>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DpmContainer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DpmContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureBackupServerContainer":
-                        return AzureBackupServerContainer.DeserializeAzureBackupServerContainer(element, options);
+                        return BackupServerContainer.DeserializeBackupServerContainer(element, options);
                 }
             }
             return UnknownDpmContainer.DeserializeUnknownDpmContainer(element, options);

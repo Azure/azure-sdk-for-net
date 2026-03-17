@@ -898,90 +898,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         }
 
         /// <summary>
-        /// Provides a pageable list of all intents that are present within a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupProtectionIntent_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionIntentResource> GetAllAsync(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ProtectionIntentResourceData, ProtectionIntentResource>(new BackupProtectionIntentGetAllAsyncCollectionResultOfT(
-                BackupProtectionIntentRestClient,
-                vaultName,
-                Id.ResourceGroupName,
-                Id.SubscriptionId,
-                filter,
-                skipToken,
-                context), data => new ProtectionIntentResource(Client, data));
-        }
-
-        /// <summary>
-        /// Provides a pageable list of all intents that are present within a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionIntents. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupProtectionIntent_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="skipToken"> skipToken Filter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionIntentResource> GetAll(string vaultName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ProtectionIntentResourceData, ProtectionIntentResource>(new BackupProtectionIntentGetAllCollectionResultOfT(
-                BackupProtectionIntentRestClient,
-                vaultName,
-                Id.ResourceGroupName,
-                Id.SubscriptionId,
-                filter,
-                skipToken,
-                context), data => new ProtectionIntentResource(Client, data));
-        }
-
-        /// <summary>
         /// Triggers export of jobs specified by filters and returns an OperationID to track.
         /// <list type="bullet">
         /// <item>
@@ -1176,108 +1092,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         }
 
         /// <summary>
-        /// Fetches the result of a triggered validate operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperationResults/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ValidateOperationResults_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ValidateOperationsResponse>> GetAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ValidateOperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ValidateOperationResultsRestClient.CreateGetRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ValidateOperationsResponse> response = Response.FromValue(ValidateOperationsResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the result of a triggered validate operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperationResults/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ValidateOperationResults_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ValidateOperationsResponse> Get(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using DiagnosticScope scope = ValidateOperationResultsClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ValidateOperationResultsRestClient.CreateGetRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ValidateOperationsResponse> response = Response.FromValue(ValidateOperationsResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Provides the result of the refresh operation triggered by the BeginRefresh operation.
         /// <list type="bullet">
         /// <item>
@@ -1371,86 +1185,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists the containers registered to Recovery Services Vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupProtectionContainers_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionContainerResource> GetAllAsync(string vaultName, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ProtectionContainerResourceData, ProtectionContainerResource>(new BackupProtectionContainersGetAllAsyncCollectionResultOfT(
-                BackupProtectionContainersRestClient,
-                vaultName,
-                Id.ResourceGroupName,
-                Id.SubscriptionId,
-                filter,
-                context), data => new ProtectionContainerResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists the containers registered to Recovery Services Vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupProtectionContainers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupProtectionContainers_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionContainerResource> GetAll(string vaultName, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ProtectionContainerResourceData, ProtectionContainerResource>(new BackupProtectionContainersGetAllCollectionResultOfT(
-                BackupProtectionContainersRestClient,
-                vaultName,
-                Id.ResourceGroupName,
-                Id.SubscriptionId,
-                filter,
-                context), data => new ProtectionContainerResource(Client, data));
         }
 
         /// <summary>
@@ -1579,7 +1313,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TieringCostInfo>> PostAsync(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TieringCostInfo>> PostAsync(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1592,7 +1326,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoRequest.ToRequestContent(content), context);
+                HttpMessage message = FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
                     new TieringCostInfoOperationSource(),
@@ -1638,7 +1372,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TieringCostInfo> Post(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TieringCostInfo> Post(WaitUntil waitUntil, string vaultName, FetchTieringCostInfoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1651,7 +1385,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoRequest.ToRequestContent(content), context);
+                HttpMessage message = FetchTieringCostRestClient.CreatePostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
                     new TieringCostInfoOperationSource(),
