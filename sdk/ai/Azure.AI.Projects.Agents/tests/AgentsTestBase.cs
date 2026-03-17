@@ -109,7 +109,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         AgentsClientOptions options = new()
         {
-            Endpoint = new(TestEnvironment.PROJECT_ENDPOINT)
+            Endpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT)
         };
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
         options.AddPolicy(
@@ -193,7 +193,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             return;
         AgentsClientOptions options = new()
         {
-            Endpoint = new(TestEnvironment.PROJECT_ENDPOINT)
+            Endpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT)
         };
         AgentsClient agentsClient = new(TestEnvironment.Credential, options);
 

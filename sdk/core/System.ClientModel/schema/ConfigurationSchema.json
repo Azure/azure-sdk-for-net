@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "scmCredential": {
+    "credential": {
       "type": "object",
       "description": "Credential configuration for System.ClientModel clients.",
       "properties": {
@@ -102,7 +102,7 @@
         "type": "object",
         "properties": {
           "Credential": {
-            "$ref": "#/definitions/scmCredential"
+            "$ref": "#/definitions/credential"
           },
           "Options": {
             "$ref": "#/definitions/options"
