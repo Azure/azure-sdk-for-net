@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             LiveTraceConfiguration liveTraceConfiguration = default;
             ResourceLogConfiguration resourceLogConfiguration = default;
             WebPubSubNetworkAcls networkAcls = default;
-            ApplicationFirewallSettings applicationFirewall = default;
+            WebPubSubApplicationFirewallSettings applicationFirewall = default;
             string publicNetworkAccess = default;
             bool? isLocalAuthDisabled = default;
             bool? isAadAuthDisabled = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    applicationFirewall = ApplicationFirewallSettings.DeserializeApplicationFirewallSettings(prop.Value, options);
+                    applicationFirewall = WebPubSubApplicationFirewallSettings.DeserializeWebPubSubApplicationFirewallSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))

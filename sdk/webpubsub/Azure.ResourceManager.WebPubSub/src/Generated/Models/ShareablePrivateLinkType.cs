@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkType"/>. </summary>
-        internal ShareablePrivateLinkType()
+        public ShareablePrivateLinkType()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The name of the resource type that has been onboarded to private link service. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
         [WirePath("properties")]
-        public ShareablePrivateLinkProperties Properties { get; }
+        public ShareablePrivateLinkProperties Properties { get; set; }
     }
 }

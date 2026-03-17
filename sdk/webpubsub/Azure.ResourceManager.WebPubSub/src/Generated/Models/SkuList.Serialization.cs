@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (WebPubSubAvailableSku item in Value)
+                foreach (WebPubSubSku item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IReadOnlyList<WebPubSubAvailableSku> value = default;
+            IReadOnlyList<WebPubSubSku> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<WebPubSubAvailableSku> array = new List<WebPubSubAvailableSku>();
+                    List<WebPubSubSku> array = new List<WebPubSubSku>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubAvailableSku.DeserializeWebPubSubAvailableSku(item, options));
+                        array.Add(WebPubSubSku.DeserializeWebPubSubSku(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SkuList(value ?? new ChangeTrackingList<WebPubSubAvailableSku>(), nextLink, additionalBinaryDataProperties);
+            return new SkuList(value ?? new ChangeTrackingList<WebPubSubSku>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

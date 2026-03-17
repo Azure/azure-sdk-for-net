@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="name"> Localizable String object containing the name and a localized value. </param>
         /// <param name="unit"> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRServiceUsage(string id, long? currentValue, long? limit, SignalRServiceUsageName name, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalRServiceUsage(ResourceIdentifier id, long? currentValue, long? limit, SignalRServiceUsageName name, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             CurrentValue = currentValue;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Fully qualified ARM resource id. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Current value for the usage quota. </summary>
         [WirePath("currentValue")]

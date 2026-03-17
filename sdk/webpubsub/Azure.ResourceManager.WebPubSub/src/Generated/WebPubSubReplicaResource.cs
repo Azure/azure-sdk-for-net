@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSubAvailableSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebPubSubAvailableSku> GetReplicaSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubSku> GetReplicaSkusAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -470,8 +470,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSubAvailableSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebPubSubAvailableSku> GetReplicaSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubSku> GetReplicaSkus(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

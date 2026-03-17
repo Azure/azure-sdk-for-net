@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (IPRule item in IpRules)
+                foreach (WebPubSubIPRule item in IpRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             AclAction? defaultAction = default;
             PublicNetworkAcls publicNetwork = default;
             IList<PrivateEndpointAcl> privateEndpoints = default;
-            IList<IPRule> ipRules = default;
+            IList<WebPubSubIPRule> ipRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<IPRule> array = new List<IPRule>();
+                    List<WebPubSubIPRule> array = new List<WebPubSubIPRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IPRule.DeserializeIPRule(item, options));
+                        array.Add(WebPubSubIPRule.DeserializeWebPubSubIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), ipRules ?? new ChangeTrackingList<IPRule>(), additionalBinaryDataProperties);
+            return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), ipRules ?? new ChangeTrackingList<WebPubSubIPRule>(), additionalBinaryDataProperties);
         }
     }
 }

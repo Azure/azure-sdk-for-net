@@ -11,7 +11,6 @@ using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Private link resource properties. </summary>
     internal partial class WebPubSubPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,27 +21,23 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
-            ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
+            ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> Group Id of the private link resource. </param>
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
-        /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service. </param>
+        /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubPrivateLinkResourceProperties(string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkResourceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubPrivateLinkResourceProperties(string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IList<ShareablePrivateLinkType> shareablePrivateLinkTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
-            ShareablePrivateLinkResourceTypes = shareablePrivateLinkResourceTypes;
+            ShareablePrivateLinkTypes = shareablePrivateLinkTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Group Id of the private link resource. </summary>
-        [WirePath("groupId")]
-        public string GroupId { get; }
 
         /// <summary> Required members of the private link resource. </summary>
         [WirePath("requiredMembers")]
@@ -54,6 +49,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The list of resources that are onboarded to private link service. </summary>
         [WirePath("shareablePrivateLinkResourceTypes")]
-        public IList<ShareablePrivateLinkType> ShareablePrivateLinkResourceTypes { get; } = new ChangeTrackingList<ShareablePrivateLinkType>();
+        public IList<ShareablePrivateLinkType> ShareablePrivateLinkTypes { get; } = new ChangeTrackingList<ShareablePrivateLinkType>();
     }
 }

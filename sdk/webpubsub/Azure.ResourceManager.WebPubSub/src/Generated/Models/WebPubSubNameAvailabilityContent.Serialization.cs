@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 throw new FormatException($"The model {nameof(WebPubSubNameAvailabilityContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            string @type = default;
+            string resourceType = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebPubSubNameAvailabilityContent(@type, name, additionalBinaryDataProperties);
+            return new WebPubSubNameAvailabilityContent(resourceType, name, additionalBinaryDataProperties);
         }
     }
 }

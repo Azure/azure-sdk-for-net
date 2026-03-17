@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
         /// <param name="groupPresenceEvents"> The group presence events that this event handler is concerned with. Group presence events are triggered when connections join or leave groups in the hub. If the value is null, no presence events will be sent to this event handler. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth, GroupPresenceEventFilters groupPresenceEvents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth, WebPubSubGroupPresenceEventFilters groupPresenceEvents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UrlTemplate = urlTemplate;
             UserEventPattern = userEventPattern;
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> The group presence events that this event handler is concerned with. Group presence events are triggered when connections join or leave groups in the hub. If the value is null, no presence events will be sent to this event handler. </summary>
         [WirePath("groupPresenceEvents")]
-        public GroupPresenceEventFilters GroupPresenceEvents { get; set; }
+        public WebPubSubGroupPresenceEventFilters GroupPresenceEvents { get; set; }
     }
 }

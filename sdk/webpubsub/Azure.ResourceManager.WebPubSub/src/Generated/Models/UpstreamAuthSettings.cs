@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpstreamAuthSettings"/>. </summary>
-        /// <param name="type"> Upstream auth type enum. </param>
+        /// <param name="authType"> Upstream auth type enum. </param>
         /// <param name="managedIdentity"> Managed identity settings for upstream. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpstreamAuthSettings(UpstreamAuthType? @type, ManagedIdentitySettings managedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpstreamAuthSettings(UpstreamAuthType? authType, ManagedIdentitySettings managedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            AuthType = authType;
             ManagedIdentity = managedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Upstream auth type enum. </summary>
         [WirePath("type")]
-        public UpstreamAuthType? Type { get; set; }
+        public UpstreamAuthType? AuthType { get; set; }
 
         /// <summary> Managed identity settings for upstream. </summary>
         [WirePath("managedIdentity")]

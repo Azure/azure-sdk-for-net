@@ -13,7 +13,6 @@ using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Private link resource properties. </summary>
     internal partial class WebPubSubPrivateLinkResourceProperties : IJsonModel<WebPubSubPrivateLinkResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -109,11 +108,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
+            if (Optional.IsCollectionDefined(ShareablePrivateLinkTypes))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (ShareablePrivateLinkType item in ShareablePrivateLinkResourceTypes)
+                foreach (ShareablePrivateLinkType item in ShareablePrivateLinkTypes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             string groupId = default;
             IList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
-            IList<ShareablePrivateLinkType> shareablePrivateLinkResourceTypes = default;
+            IList<ShareablePrivateLinkType> shareablePrivateLinkTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item, options));
                     }
-                    shareablePrivateLinkResourceTypes = array;
+                    shareablePrivateLinkTypes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebPubSubPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>(), additionalBinaryDataProperties);
+            return new WebPubSubPrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 throw new FormatException($"The model {nameof(UpstreamAuthSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(AuthType.Value.ToString());
             }
             if (Optional.IsDefined(ManagedIdentity))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            UpstreamAuthType? @type = default;
+            UpstreamAuthType? authType = default;
             ManagedIdentitySettings managedIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    @type = new UpstreamAuthType(prop.Value.GetString());
+                    authType = new UpstreamAuthType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedIdentity"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpstreamAuthSettings(@type, managedIdentity, additionalBinaryDataProperties);
+            return new UpstreamAuthSettings(authType, managedIdentity, additionalBinaryDataProperties);
         }
     }
 }

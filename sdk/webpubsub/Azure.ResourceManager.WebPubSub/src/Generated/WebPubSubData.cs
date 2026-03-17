@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WebPubSubProperties properties, BillingInfoSku sku, ServiceKind? kind, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, WebPubSubProperties properties, BillingInfoSku sku, WebPubSubServiceKind? kind, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> The kind of the service. </summary>
         [WirePath("kind")]
-        public ServiceKind? Kind { get; set; }
+        public WebPubSubServiceKind? Kind { get; set; }
 
         /// <summary> A class represent managed identities used for request and response. </summary>
         [WirePath("identity")]
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Application firewall settings for the resource. </summary>
         [WirePath("properties.applicationFirewall")]
-        public ApplicationFirewallSettings ApplicationFirewall
+        public WebPubSubApplicationFirewallSettings ApplicationFirewall
         {
             get
             {

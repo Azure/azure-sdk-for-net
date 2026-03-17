@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 writer.WritePropertyName("eventListeners"u8);
                 writer.WriteStartArray();
-                foreach (EventListener item in EventListeners)
+                foreach (WebPubSubEventListener item in EventListeners)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IList<WebPubSubEventHandler> eventHandlers = default;
-            IList<EventListener> eventListeners = default;
+            IList<WebPubSubEventListener> eventListeners = default;
             string anonymousConnectPolicy = default;
             int? webSocketKeepAliveIntervalInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<EventListener> array = new List<EventListener>();
+                    List<WebPubSubEventListener> array = new List<WebPubSubEventListener>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EventListener.DeserializeEventListener(item, options));
+                        array.Add(WebPubSubEventListener.DeserializeWebPubSubEventListener(item, options));
                     }
                     eventListeners = array;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), eventListeners ?? new ChangeTrackingList<EventListener>(), anonymousConnectPolicy, webSocketKeepAliveIntervalInSeconds, additionalBinaryDataProperties);
+            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), eventListeners ?? new ChangeTrackingList<WebPubSubEventListener>(), anonymousConnectPolicy, webSocketKeepAliveIntervalInSeconds, additionalBinaryDataProperties);
         }
     }
 }

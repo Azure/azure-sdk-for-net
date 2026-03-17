@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             string userEventPattern = default;
             IList<string> systemEvents = default;
             UpstreamAuthSettings auth = default;
-            GroupPresenceEventFilters groupPresenceEvents = default;
+            WebPubSubGroupPresenceEventFilters groupPresenceEvents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    groupPresenceEvents = GroupPresenceEventFilters.DeserializeGroupPresenceEventFilters(prop.Value, options);
+                    groupPresenceEvents = WebPubSubGroupPresenceEventFilters.DeserializeWebPubSubGroupPresenceEventFilters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

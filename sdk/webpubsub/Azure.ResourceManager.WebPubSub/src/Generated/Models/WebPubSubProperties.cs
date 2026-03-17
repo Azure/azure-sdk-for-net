@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="socketIO"> SocketIO settings for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubProperties(WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string isRegionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubProperties(WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, WebPubSubApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string isRegionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Application firewall settings for the resource. </summary>
         [WirePath("applicationFirewall")]
-        public ApplicationFirewallSettings ApplicationFirewall { get; set; }
+        public WebPubSubApplicationFirewallSettings ApplicationFirewall { get; set; }
 
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.WebPubSub
             AzureLocation location = default;
             WebPubSubProperties properties = default;
             BillingInfoSku sku = default;
-            ServiceKind? kind = default;
+            WebPubSubServiceKind? kind = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         continue;
                     }
-                    kind = new ServiceKind(prop.Value.GetString());
+                    kind = new WebPubSubServiceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

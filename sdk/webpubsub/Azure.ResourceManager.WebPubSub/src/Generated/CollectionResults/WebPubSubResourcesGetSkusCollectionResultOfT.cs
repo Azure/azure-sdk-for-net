@@ -14,7 +14,7 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal partial class WebPubSubResourcesGetSkusCollectionResultOfT : Pageable<WebPubSubAvailableSku>
+    internal partial class WebPubSubResourcesGetSkusCollectionResultOfT : Pageable<WebPubSubSku>
     {
         private readonly WebPubSubResources _client;
         private readonly Guid _subscriptionId;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebPubSubResourcesGetSkusCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<WebPubSubAvailableSku>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<WebPubSubSku>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             SkuList result = SkuList.FromResponse(response);
-            yield return Page<WebPubSubAvailableSku>.FromValues(result.Value, null, response);
+            yield return Page<WebPubSubSku>.FromValues(result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
