@@ -6,10 +6,6 @@
 
 - Migrated from AutoRest/Swagger to TypeSpec-based generation.
 
-### Breaking Changes
-
-- `ArmNetworkFunctionModelFactory.AzureTrafficCollectorData()` and `CollectorPolicyData()` factory method parameter order updated.
-
 ### Bugs Fixed
 
 ### Other Changes
