@@ -6,6 +6,6 @@
        via $(AzureCoreSharedSources). The test project doesn't inherit from the SDK tree,
        so we include it directly. -->
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>
