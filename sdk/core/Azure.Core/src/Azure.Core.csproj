@@ -12,8 +12,18 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <NoWarn>$(NoWarn);CA1416;AZC0011;AZC0034</NoWarn>
     <AotAnalyzersOptOut>true</AotAnalyzersOptOut>
   </PropertyGroup>
+
+  <!--Conditionally define the PREVIEW_FEATURE_FLAG constant if the version is pre-release-->
+  <Choose>
+    <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(Version)', '-beta'))">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);PREVIEW_FEATURE_FLAG</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -28,6 +38,11 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Microsoft.Identity.Client" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
@@ -37,11 +52,13 @@
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
+    <Compile Include="Shared\ArrayBufferWriter.cs" />
     <Compile Include="Shared\AsyncLockWithValue.cs" />
     <Compile Include="Shared\Argument.cs" />
     <Compile Include="Shared\AuthorizationChallengeParser.cs" />
     <Compile Include="Shared\AzureEventSource.cs" />
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
+    <Compile Include="Shared\AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
     <Compile Include="Shared\CallerShouldAuditAttribute.cs" />
@@ -57,10 +74,12 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\IOperationSource.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
+    <Compile Include="Shared\LightweightPkcs8Decoder.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\NextLinkOperationImplementation.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
+    <Compile Include="Shared\PemReader.cs" />
     <Compile Include="Shared\TrimmingAttribute.cs" />
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationFinalStateVia.cs" />
