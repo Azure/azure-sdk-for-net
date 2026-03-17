@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             string actionType = default;
             string correlationId = default;
-            string endTime = default;
+            DateTimeOffset? endOn = default;
             string message = default;
-            string startTime = default;
+            DateTimeOffset? startOn = default;
             NetworkCloudActionStateStatus? status = default;
             IReadOnlyList<NetworkCloudStepState> stepStates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -178,7 +178,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -188,7 +192,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -222,9 +230,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkCloudActionState(
                 actionType,
                 correlationId,
-                endTime,
+                endOn,
                 message,
-                startTime,
+                startOn,
                 status,
                 stepStates ?? new ChangeTrackingList<NetworkCloudStepState>(),
                 additionalBinaryDataProperties);

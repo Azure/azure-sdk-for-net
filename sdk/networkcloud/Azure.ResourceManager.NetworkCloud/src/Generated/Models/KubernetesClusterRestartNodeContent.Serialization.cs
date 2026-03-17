@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(kubernetesClusterRestartNodeContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(kubernetesClusterRestartNodeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

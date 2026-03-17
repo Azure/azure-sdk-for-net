@@ -1,0 +1,20 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.NetworkCloud.Models;
+
+namespace Azure.ResourceManager.NetworkCloud
+{
+    public partial class NetworkCloudClusterMetricsConfigurationData
+    {
+        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval)
+            : this(location, collectionInterval, extendedLocation) { }
+    }
+}

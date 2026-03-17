@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
             AdministratorCredentials = administratorCredentials;
-            CaCertificate = caCertificate;
+            CACertificate = caCertificate;
             Capacity = capacity;
             CapacityUsed = capacityUsed;
             ClusterId = clusterId;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public AdministrativeCredentials AdministratorCredentials { get; set; }
 
         /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </summary>
-        public NetworkCloudCertificateInfo CaCertificate { get; }
+        public NetworkCloudCertificateInfo CACertificate { get; }
 
         /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
         public long? Capacity { get; }

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkCloudClusterManagerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(networkCloudClusterManagerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudClusterManagerData"/> from. </param>
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -155,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ClusterManagerProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             ManagedServiceIdentity identity = default;
             DeploymentType? kind = default;
             foreach (var prop in element.EnumerateObject())
@@ -225,7 +223,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AssociatedResourceIds = associatedResourceIds;
             BmcIpv4Address = bmcIpv4Address;
             BmcIpv6Address = bmcIpv6Address;
-            CaCertificate = caCertificate;
+            CACertificate = caCertificate;
             ClusterId = clusterId;
             CordonStatus = cordonStatus;
             DetailedStatus = detailedStatus;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string BmcIpv6Address { get; }
 
         /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </summary>
-        public NetworkCloudCertificateInfo CaCertificate { get; }
+        public NetworkCloudCertificateInfo CACertificate { get; }
 
         /// <summary> The resource ID of the cluster this bare metal machine is associated with. </summary>
         public ResourceIdentifier ClusterId { get; }

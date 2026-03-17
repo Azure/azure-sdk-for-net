@@ -8,11 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -193,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ClusterExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(ClusterExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterManagerConnectionStatus))
             {
@@ -218,7 +216,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)HybridAksExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(HybridAksExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
@@ -516,7 +514,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    clusterExtendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    clusterExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("clusterManagerConnectionStatus"u8))
@@ -557,7 +555,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    hybridAksExtendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    hybridAksExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("manualActionCount"u8))

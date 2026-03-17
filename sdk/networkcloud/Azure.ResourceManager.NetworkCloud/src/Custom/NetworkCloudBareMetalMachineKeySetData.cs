@@ -3,7 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
+using Azure.Core;
+using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -16,5 +21,11 @@ namespace Azure.ResourceManager.NetworkCloud
             get => OsGroupName;
             set => OsGroupName = value;
         }
+
+        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudBareMetalMachineKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
+            : this(location, azureGroupId, expireOn, jumpHostsAllowed, privilegeLevel, userList, extendedLocation) { }
     }
 }

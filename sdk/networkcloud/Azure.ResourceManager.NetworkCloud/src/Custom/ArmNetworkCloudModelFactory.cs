@@ -205,5 +205,375 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 status,
                 additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudAgentPoolData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudAgentPoolData NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IEnumerable<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IEnumerable<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
+            => NetworkCloudAgentPoolData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                administratorConfiguration: administratorConfiguration,
+                agentOptions: agentOptions,
+                attachedNetworkConfiguration: attachedNetworkConfiguration,
+                availabilityZones: availabilityZones,
+                count: count,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                kubernetesVersion: kubernetesVersion,
+                labels: labels,
+                mode: mode,
+                provisioningState: provisioningState,
+                taints: taints,
+                upgradeSettings: upgradeSettings,
+                vmSkuName: vmSkuName);
+
+        // ---- Backward-compatible overloads without ETag parameter (old API surface) ----
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineKeySetData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, DateTimeOffset? lastValidatedOn, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, BareMetalMachineKeySetProvisioningState? provisioningState, IEnumerable<KeySetUser> userList, IEnumerable<KeySetUserStatus> userListStatus)
+            => NetworkCloudBareMetalMachineKeySetData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                azureGroupId: azureGroupId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                expireOn: expireOn,
+                jumpHostsAllowed: jumpHostsAllowed,
+                lastValidatedOn: lastValidatedOn,
+                osGroupName: osGroupName,
+                privilegeLevel: privilegeLevel,
+                provisioningState: provisioningState,
+                userList: userList,
+                userListStatus: userListStatus);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBareMetalMachineKeySetData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, string azureGroupId, BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, DateTimeOffset? lastValidatedOn, string osGroupName, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, BareMetalMachineKeySetProvisioningState? provisioningState, IEnumerable<KeySetUser> userList, IEnumerable<KeySetUserStatus> userListStatus)
+            => NetworkCloudBareMetalMachineKeySetData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: etag,
+                extendedLocation: extendedLocation,
+                azureGroupId: azureGroupId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                expireOn: expireOn,
+                jumpHostsAllowed: jumpHostsAllowed,
+                lastValidatedOn: lastValidatedOn,
+                osGroupName: osGroupName,
+                privilegeLevel: privilegeLevel,
+                provisioningState: provisioningState,
+                userList: userList,
+                userListStatus: userListStatus);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudBmcKeySetData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudBmcKeySetData NetworkCloudBmcKeySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, BmcKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, DateTimeOffset expireOn, DateTimeOffset? lastValidatedOn, BmcKeySetPrivilegeLevel privilegeLevel, BmcKeySetProvisioningState? provisioningState, IEnumerable<KeySetUser> userList, IEnumerable<KeySetUserStatus> userListStatus)
+            => NetworkCloudBmcKeySetData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                azureGroupId: azureGroupId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                expireOn: expireOn,
+                lastValidatedOn: lastValidatedOn,
+                privilegeLevel: privilegeLevel,
+                provisioningState: provisioningState,
+                userList: userList,
+                userListStatus: userListStatus);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudCloudServicesNetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<EgressEndpoint> additionalEgressEndpoints, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IEnumerable<EgressEndpoint> enabledEgressEndpoints, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds)
+            => NetworkCloudCloudServicesNetworkData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                additionalEgressEndpoints: additionalEgressEndpoints,
+                associatedResourceIds: associatedResourceIds,
+                clusterId: clusterId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                enableDefaultEgressEndpoints: enableDefaultEgressEndpoints,
+                enabledEgressEndpoints: enabledEgressEndpoints,
+                hybridAksClustersAssociatedIds: hybridAksClustersAssociatedIds,
+                interfaceName: interfaceName,
+                provisioningState: provisioningState,
+                virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudCloudServicesNetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<EgressEndpoint> additionalEgressEndpoints, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IEnumerable<EgressEndpoint> enabledEgressEndpoints, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds)
+            => NetworkCloudCloudServicesNetworkData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: etag,
+                extendedLocation: extendedLocation,
+                additionalEgressEndpoints: additionalEgressEndpoints,
+                associatedResourceIds: associatedResourceIds,
+                clusterId: clusterId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                enableDefaultEgressEndpoints: enableDefaultEgressEndpoints,
+                enabledEgressEndpoints: enabledEgressEndpoints,
+                hybridAksClustersAssociatedIds: hybridAksClustersAssociatedIds,
+                interfaceName: interfaceName,
+                provisioningState: provisioningState,
+                virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudClusterMetricsConfigurationData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterMetricsConfigurationData NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<string> disabledMetrics, IEnumerable<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState)
+            => NetworkCloudClusterMetricsConfigurationData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                collectionInterval: collectionInterval,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                disabledMetrics: disabledMetrics,
+                enabledMetrics: enabledMetrics,
+                provisioningState: provisioningState);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudKubernetesClusterData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudKubernetesClusterData NetworkCloudKubernetesClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<string> aadAdminGroupObjectIds, AdministratorConfiguration administratorConfiguration, IEnumerable<ResourceIdentifier> attachedNetworkIds, IEnumerable<AvailableUpgrade> availableUpgrades, ResourceIdentifier clusterId, ResourceIdentifier connectedClusterId, string controlPlaneKubernetesVersion, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, KubernetesClusterDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<FeatureStatus> featureStatuses, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, KubernetesClusterNetworkConfiguration networkConfiguration, IEnumerable<KubernetesClusterNode> nodes, KubernetesClusterProvisioningState? provisioningState)
+            => NetworkCloudKubernetesClusterData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                aadAdminGroupObjectIds: aadAdminGroupObjectIds,
+                administratorConfiguration: administratorConfiguration,
+                attachedNetworkIds: attachedNetworkIds,
+                availableUpgrades: availableUpgrades,
+                clusterId: clusterId,
+                connectedClusterId: connectedClusterId,
+                controlPlaneKubernetesVersion: controlPlaneKubernetesVersion,
+                controlPlaneNodeConfiguration: controlPlaneNodeConfiguration,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                featureStatuses: featureStatuses,
+                initialAgentPoolConfigurations: initialAgentPoolConfigurations,
+                kubernetesVersion: kubernetesVersion,
+                managedResourceGroupConfiguration: managedResourceGroupConfiguration,
+                networkConfiguration: networkConfiguration,
+                nodes: nodes,
+                provisioningState: provisioningState);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudKubernetesClusterFeatureData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? @required, string version)
+            => NetworkCloudKubernetesClusterFeatureData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                availabilityLifecycle: availabilityLifecycle,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                options: options,
+                provisioningState: provisioningState,
+                @required: @required,
+                version: version);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudL2NetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudL2NetworkData NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds)
+            => NetworkCloudL2NetworkData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                associatedResourceIds: associatedResourceIds,
+                clusterId: clusterId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                hybridAksClustersAssociatedIds: hybridAksClustersAssociatedIds,
+                hybridAksPluginType: hybridAksPluginType,
+                interfaceName: interfaceName,
+                l2IsolationDomainId: l2IsolationDomainId,
+                provisioningState: provisioningState,
+                virtualMachinesAssociatedIds: virtualMachinesAssociatedIds);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudL3NetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudL3NetworkData NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan)
+            => NetworkCloudL3NetworkData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                associatedResourceIds: associatedResourceIds,
+                clusterId: clusterId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                hybridAksClustersAssociatedIds: hybridAksClustersAssociatedIds,
+                hybridAksIpamEnabled: hybridAksIpamEnabled,
+                hybridAksPluginType: hybridAksPluginType,
+                interfaceName: interfaceName,
+                ipAllocationType: ipAllocationType,
+                ipv4ConnectedPrefix: ipv4ConnectedPrefix,
+                ipv6ConnectedPrefix: ipv6ConnectedPrefix,
+                l3IsolationDomainId: l3IsolationDomainId,
+                provisioningState: provisioningState,
+                virtualMachinesAssociatedIds: virtualMachinesAssociatedIds,
+                vlan: vlan);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudRackData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudRackData NetworkCloudRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string availabilityZone, ResourceIdentifier clusterId, RackDetailedStatus? detailedStatus, string detailedStatusMessage, RackProvisioningState? provisioningState, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId)
+            => NetworkCloudRackData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                availabilityZone: availabilityZone,
+                clusterId: clusterId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                provisioningState: provisioningState,
+                rackLocation: rackLocation,
+                rackSerialNumber: rackSerialNumber,
+                rackSkuId: rackSkuId);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudTrunkedNetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudTrunkedNetworkData NetworkCloudTrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<string> associatedResourceIds, ResourceIdentifier clusterId, TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, IEnumerable<ResourceIdentifier> isolationDomainIds, TrunkedNetworkProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds, IEnumerable<long> vlans)
+            => NetworkCloudTrunkedNetworkData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                associatedResourceIds: associatedResourceIds,
+                clusterId: clusterId,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                hybridAksClustersAssociatedIds: hybridAksClustersAssociatedIds,
+                hybridAksPluginType: hybridAksPluginType,
+                interfaceName: interfaceName,
+                isolationDomainIds: isolationDomainIds,
+                provisioningState: provisioningState,
+                virtualMachinesAssociatedIds: virtualMachinesAssociatedIds,
+                vlans: vlans);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVirtualMachineConsoleData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudVirtualMachineConsoleData NetworkCloudVirtualMachineConsoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ConsoleDetailedStatus? detailedStatus, string detailedStatusMessage, ConsoleEnabled enabled, DateTimeOffset? expireOn, ResourceIdentifier privateLinkServiceId, ConsoleProvisioningState? provisioningState, string keyData, Guid? virtualMachineAccessId)
+            => NetworkCloudVirtualMachineConsoleData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                enabled: enabled,
+                expireOn: expireOn,
+                privateLinkServiceId: privateLinkServiceId,
+                provisioningState: provisioningState,
+                keyData: keyData,
+                virtualMachineAccessId: virtualMachineAccessId);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVolumeData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudVolumeData NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB)
+            => NetworkCloudVolumeData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: default,
+                extendedLocation: extendedLocation,
+                attachedTo: attachedTo,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                provisioningState: provisioningState,
+                serialNumber: serialNumber,
+                sizeInMiB: sizeInMiB);
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudVolumeData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudVolumeData NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IEnumerable<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB)
+            => NetworkCloudVolumeData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                etag: etag,
+                extendedLocation: extendedLocation,
+                attachedTo: attachedTo,
+                detailedStatus: detailedStatus,
+                detailedStatusMessage: detailedStatusMessage,
+                provisioningState: provisioningState,
+                serialNumber: serialNumber,
+                sizeInMiB: sizeInMiB);
     }
 }

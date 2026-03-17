@@ -4,18 +4,15 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class NetworkCloudStepState
     {
-        /// <summary> The timestamp when the step started. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? StartOn => DateTimeOffset.TryParse(StartTime, out var result) ? result : (DateTimeOffset?)null;
+        /// <summary> The timestamp for when processing of the step reached its terminal state, in ISO 8601 format. </summary>
+        public DateTimeOffset? EndOn { get; }
 
-        /// <summary> The timestamp when the step ended. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? EndOn => DateTimeOffset.TryParse(EndTime, out var result) ? result : (DateTimeOffset?)null;
+        /// <summary> The timestamp for when processing of the step began, in ISO 8601 format. </summary>
+        public DateTimeOffset? StartOn { get; }
     }
 }

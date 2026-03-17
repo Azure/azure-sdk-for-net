@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudActionState"/>. </summary>
         /// <param name="actionType"> The representation of the action for which this is a status. Matches ARM resource action format when the action is an ARM-based action. </param>
         /// <param name="correlationId"> The correlation ID for the original action request. Omitted if there is no related correlation ID. </param>
-        /// <param name="endTime"> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </param>
+        /// <param name="endOn"> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </param>
         /// <param name="message"> The description providing additional context for the status value. May be empty or contain guidance in the case of a failure. </param>
-        /// <param name="startTime"> The timestamp of when the action began, in ISO 8601 format. </param>
+        /// <param name="startOn"> The timestamp of when the action began, in ISO 8601 format. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="stepStates"> The ordered list of the individual steps which make up the action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudActionState(string actionType, string correlationId, string endTime, string message, string startTime, NetworkCloudActionStateStatus? status, IReadOnlyList<NetworkCloudStepState> stepStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudActionState(string actionType, string correlationId, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, NetworkCloudActionStateStatus? status, IReadOnlyList<NetworkCloudStepState> stepStates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionType = actionType;
             CorrelationId = correlationId;
-            EndTime = endTime;
+            EndOn = endOn;
             Message = message;
-            StartTime = startTime;
+            StartOn = startOn;
             Status = status;
             StepStates = stepStates;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string CorrelationId { get; }
 
         /// <summary> The timestamp of when the action reached its final, terminal state. Uses ISO 8601 format. </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> The description providing additional context for the status value. May be empty or contain guidance in the case of a failure. </summary>
         public string Message { get; }
 
         /// <summary> The timestamp of when the action began, in ISO 8601 format. </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The status of the action. </summary>
         public NetworkCloudActionStateStatus? Status { get; }

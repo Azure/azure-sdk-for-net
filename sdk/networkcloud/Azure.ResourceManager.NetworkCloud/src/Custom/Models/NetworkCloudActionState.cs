@@ -10,8 +10,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class NetworkCloudActionState
     {
-        /// <summary> The timestamp when the action ended. </summary>
+        /// <summary> The start time of the action. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? EndOn => DateTimeOffset.TryParse(EndTime, out var result) ? result : (DateTimeOffset?)null;
+        public string StartTime => StartOn?.ToString("O");
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(string adminUsername, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IList<NetworkAttachment> networkAttachments, string networkData, string networkDataContent, IList<VirtualMachinePlacementHint> placementHints, IList<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, string userDataContent, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, string availabilityZone, ResourceIdentifier bareMetalMachineId, ResourceIdentifier clusterId, ExtendedLocation consoleExtendedLocation, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachinePowerState? powerState, IReadOnlyList<ResourceIdentifier> volumes, VirtualMachineProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineProperties(string adminUsername, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IList<NetworkAttachment> networkAttachments, string networkData, string networkDataContent, IList<VirtualMachinePlacementHint> placementHints, IList<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, string userDataContent, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, string availabilityZone, ResourceIdentifier bareMetalMachineId, ResourceIdentifier clusterId, Resources.Models.ExtendedLocation consoleExtendedLocation, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachinePowerState? powerState, IReadOnlyList<ResourceIdentifier> volumes, VirtualMachineProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminUsername = adminUsername;
             BootMethod = bootMethod;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ResourceIdentifier ClusterId { get; }
 
         /// <summary> The extended location to use for creation of a VM console resource. </summary>
-        public ExtendedLocation ConsoleExtendedLocation { get; set; }
+        public Resources.Models.ExtendedLocation ConsoleExtendedLocation { get; set; }
 
         /// <summary> The more detailed status of the virtual machine. </summary>
         public VirtualMachineDetailedStatus? DetailedStatus { get; }

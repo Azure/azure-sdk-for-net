@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBmcKeySetPatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBmcKeySetPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetResource.Update");
             scope.Start();
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudBmcKeySetResource> Update(WaitUntil waitUntil, NetworkCloudBmcKeySetPatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudBmcKeySetResource> Update(WaitUntil waitUntil, NetworkCloudBmcKeySetPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetResource.Update");
             scope.Start();

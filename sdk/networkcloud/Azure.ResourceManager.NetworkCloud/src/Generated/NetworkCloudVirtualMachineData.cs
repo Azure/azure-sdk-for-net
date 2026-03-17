@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, string eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
         internal VirtualMachineProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
@@ -399,23 +399,6 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 return Properties is null ? default : Properties.ClusterId;
-            }
-        }
-
-        /// <summary> The extended location to use for creation of a VM console resource. </summary>
-        public ExtendedLocation ConsoleExtendedLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConsoleExtendedLocation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineProperties();
-                }
-                Properties.ConsoleExtendedLocation = value;
             }
         }
 

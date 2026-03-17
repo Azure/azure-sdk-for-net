@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("storageApplianceId"u8);
                 writer.WriteStringValue(StorageApplianceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AllocatedSizeMiB))
+            if (options.Format != "W" && Optional.IsDefined(AllocatedInSizeMiB))
             {
                 writer.WritePropertyName("allocatedSizeMiB"u8);
-                writer.WriteNumberValue(AllocatedSizeMiB.Value);
+                writer.WriteNumberValue(AllocatedInSizeMiB.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedTo))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             long sizeInMiB = default;
             ResourceIdentifier storageApplianceId = default;
-            long? allocatedSizeMiB = default;
+            long? allocatedInSizeMiB = default;
             IReadOnlyList<string> attachedTo = default;
             VolumeDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    allocatedSizeMiB = prop.Value.GetInt64();
+                    allocatedInSizeMiB = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("attachedTo"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new VolumeProperties(
                 sizeInMiB,
                 storageApplianceId,
-                allocatedSizeMiB,
+                allocatedInSizeMiB,
                 attachedTo ?? new ChangeTrackingList<string>(),
                 detailedStatus,
                 detailedStatusMessage,

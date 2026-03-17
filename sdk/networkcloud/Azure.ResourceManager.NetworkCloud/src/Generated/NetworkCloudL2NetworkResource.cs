@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkCloudL2NetworkResource>> UpdateAsync(NetworkCloudL2NetworkPatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudL2NetworkResource>> UpdateAsync(NetworkCloudL2NetworkPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _l2NetworksClientDiagnostics.CreateScope("NetworkCloudL2NetworkResource.Update");
             scope.Start();
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkCloudL2NetworkResource> Update(NetworkCloudL2NetworkPatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudL2NetworkResource> Update(NetworkCloudL2NetworkPatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _l2NetworksClientDiagnostics.CreateScope("NetworkCloudL2NetworkResource.Update");
             scope.Start();

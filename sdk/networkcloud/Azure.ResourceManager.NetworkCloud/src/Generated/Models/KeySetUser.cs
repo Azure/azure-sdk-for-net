@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -16,19 +15,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="KeySetUser"/>. </summary>
-        /// <param name="azureUserName"> The user name that will be used for access. </param>
-        /// <param name="keyData"> The SSH public key data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureUserName"/> or <paramref name="keyData"/> is null. </exception>
-        public KeySetUser(string azureUserName, string keyData)
-        {
-            Argument.AssertNotNull(azureUserName, nameof(azureUserName));
-            Argument.AssertNotNull(keyData, nameof(keyData));
-
-            AzureUserName = azureUserName;
-            SshPublicKey = new NetworkCloudSshPublicKey(keyData);
-        }
 
         /// <summary> Initializes a new instance of <see cref="KeySetUser"/>. </summary>
         /// <param name="azureUserName"> The user name that will be used for access. </param>

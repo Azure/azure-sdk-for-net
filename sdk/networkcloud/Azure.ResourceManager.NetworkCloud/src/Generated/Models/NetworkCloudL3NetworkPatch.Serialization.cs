@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkCloudL3NetworkPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(networkCloudL3NetworkPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

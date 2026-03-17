@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ManagerExtendedLocation).Write(writer, options);
+                ((IJsonModel<Resources.Models.ExtendedLocation>)ManagerExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
             ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            ExtendedLocation managerExtendedLocation = default;
+            Resources.Models.ExtendedLocation managerExtendedLocation = default;
             ClusterManagerProvisioningState? provisioningState = default;
             ClusterManagerRelayConfiguration relayConfiguration = default;
             string vmSize = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    managerExtendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    managerExtendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

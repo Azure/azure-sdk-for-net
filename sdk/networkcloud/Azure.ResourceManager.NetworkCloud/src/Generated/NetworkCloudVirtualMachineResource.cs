@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudVirtualMachinePatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudVirtualMachinePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineResource.Update");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudVirtualMachineResource> Update(WaitUntil waitUntil, NetworkCloudVirtualMachinePatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudVirtualMachineResource> Update(WaitUntil waitUntil, NetworkCloudVirtualMachinePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineResource.Update");
             scope.Start();

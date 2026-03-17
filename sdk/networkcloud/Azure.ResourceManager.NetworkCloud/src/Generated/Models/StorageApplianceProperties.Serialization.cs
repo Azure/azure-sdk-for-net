@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(SerialNumber);
             writer.WritePropertyName("administratorCredentials"u8);
             writer.WriteObjectValue(AdministratorCredentials, options);
-            if (options.Format != "W" && Optional.IsDefined(CaCertificate))
+            if (options.Format != "W" && Optional.IsDefined(CACertificate))
             {
                 writer.WritePropertyName("caCertificate"u8);
-                writer.WriteObjectValue(CaCertificate, options);
+                writer.WriteObjectValue(CACertificate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<SecretRotationStatus> array = new List<SecretRotationStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
+                        array.Add(NetworkCloud.Models.SecretRotationStatus.DeserializeSecretRotationStatus(item, options));
                     }
                     secretRotationStatus = array;
                     continue;

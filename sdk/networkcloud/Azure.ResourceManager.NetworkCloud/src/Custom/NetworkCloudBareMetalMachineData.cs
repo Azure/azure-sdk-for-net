@@ -5,12 +5,20 @@
 
 using System.ComponentModel;
 using System.Net;
+using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudBareMetalMachineData
     {
+        // Backward compat: CACertificate was flattened in old autorest code but not in new generator.
+        // Expose it through internal Properties to maintain API surface.
+
+        /// <summary> The information of the certificate authority for the bare metal machine. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudCertificateInfo CACertificate => Properties?.CACertificate;
+
         /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IPAddress OamIPv4Address => OamIpv4Address;
@@ -23,8 +31,10 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string OSImage => OsImage;
 
-        /// <summary> The information of the certificate authority for the bare metal machine. </summary>
+        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetworkCloudCertificateInfo CACertificate => CaCertificate;
+        public NetworkCloudBareMetalMachineData(AzureLocation location, ExtendedLocation extendedLocation, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber)
+            : this(location, bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails, machineName, machineSkuId, rackId, rackSlot, serialNumber, extendedLocation) { }
     }
 }

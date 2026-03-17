@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<AccessBridgeResource>> UpdateAsync(WaitUntil waitUntil, AccessBridgePatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AccessBridgeResource>> UpdateAsync(WaitUntil waitUntil, AccessBridgePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeResource.Update");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="patch"> The request body. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<AccessBridgeResource> Update(WaitUntil waitUntil, AccessBridgePatch patch = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AccessBridgeResource> Update(WaitUntil waitUntil, AccessBridgePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _accessBridgesClientDiagnostics.CreateScope("AccessBridgeResource.Update");
             scope.Start();

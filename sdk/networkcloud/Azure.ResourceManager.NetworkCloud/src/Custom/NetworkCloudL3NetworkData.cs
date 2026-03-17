@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -33,5 +34,11 @@ namespace Azure.ResourceManager.NetworkCloud
             get => Ipv6ConnectedPrefix;
             set => Ipv6ConnectedPrefix = value;
         }
+
+        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudL3NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l3IsolationDomainId, long vlan)
+            : this(location, l3IsolationDomainId, vlan, extendedLocation) { }
     }
 }

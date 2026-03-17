@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -22,5 +23,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 RuntimeProtectionConfiguration.EnforcementLevel = value;
             }
         }
+
+        // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId)
+            : this(location, aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId, extendedLocation) { }
     }
 }

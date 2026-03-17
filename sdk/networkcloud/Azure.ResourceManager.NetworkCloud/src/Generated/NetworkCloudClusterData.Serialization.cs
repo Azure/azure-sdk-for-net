@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -73,9 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkCloudClusterData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(networkCloudClusterData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudClusterData"/> from. </param>
@@ -109,10 +106,10 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -158,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ClusterProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             ExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             DeploymentType? kind = default;
@@ -229,12 +226,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
