@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicPlanData"/>. </summary>
-        public NewRelicPlanData()
+        internal NewRelicPlanData()
         {
         }
 
@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.PlanData;
             }
-            set { }
         }
 
         /// <summary> Source of org creation. </summary>
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrgCreationSource;
             }
-            set { }
         }
 
         /// <summary> Source of account creation. </summary>
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.AccountCreationSource;
             }
-            set { }
         }
     }
 }

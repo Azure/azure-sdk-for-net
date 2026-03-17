@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary></summary>
-    public partial class NewRelicMonitorResource : IJsonModel<NewRelicMonitorResourceData>
+    public partial class NewRelicMonitorResource : ArmResource, IJsonModel<NewRelicMonitorResourceData>
     {
         private static IJsonModel<NewRelicMonitorResourceData> s_dataDeserializationInstance;
 

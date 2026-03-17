@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     public partial class NewRelicObservabilityTagRuleData : ResourceData, IJsonModel<NewRelicObservabilityTagRuleData>
     {
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleData"/> for deserialization. </summary>
-        public NewRelicObservabilityTagRuleData()
+        internal NewRelicObservabilityTagRuleData()
         {
         }
 

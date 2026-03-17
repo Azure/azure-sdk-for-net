@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
-        public NewRelicAccountResourceData()
+        internal NewRelicAccountResourceData()
         {
         }
 
@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrganizationId;
             }
-            set { }
         }
 
         /// <summary> account id. </summary>
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.AccountId;
             }
-            set { }
         }
 
         /// <summary> account name. </summary>
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.AccountName;
             }
-            set { }
         }
 
         /// <summary> Region where New Relic account is present. </summary>
@@ -82,7 +79,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.Region;
             }
-            set { }
         }
     }
 }

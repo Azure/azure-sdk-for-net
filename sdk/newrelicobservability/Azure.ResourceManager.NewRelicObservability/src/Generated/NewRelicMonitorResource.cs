@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
-                body != null ? RequestContent.Create(BinaryData.FromString("\"" + body + "\"")) : null,
+                body != null ? RequestContent.Create(body) : null,
                 context);
         }
 
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
-                body != null ? RequestContent.Create(BinaryData.FromString("\"" + body + "\"")) : null,
+                body != null ? RequestContent.Create(body) : null,
                 context);
         }
 

@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusResult"/>. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMetricsStatusResult(IList<string> azureResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NewRelicMetricsStatusResult(IReadOnlyList<string> azureResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AzureResourceIds = (IReadOnlyList<string>)azureResourceIds;
+            AzureResourceIds = azureResourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

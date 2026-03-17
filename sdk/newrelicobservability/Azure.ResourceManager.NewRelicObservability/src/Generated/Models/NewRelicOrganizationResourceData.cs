@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationResourceData"/>. </summary>
-        public NewRelicOrganizationResourceData()
+        internal NewRelicOrganizationResourceData()
         {
         }
 
@@ -49,7 +49,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrganizationId;
             }
-            set { }
         }
 
         /// <summary> organization name. </summary>
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.OrganizationName;
             }
-            set { }
         }
 
         /// <summary> Billing source. </summary>
@@ -71,7 +69,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return Properties.BillingSource;
             }
-            set { }
         }
     }
 }
