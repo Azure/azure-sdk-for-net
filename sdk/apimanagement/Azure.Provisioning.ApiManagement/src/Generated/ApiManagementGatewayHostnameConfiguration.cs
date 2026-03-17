@@ -58,36 +58,6 @@ public partial class ApiManagementGatewayHostnameConfiguration : ProvisionableRe
     private BicepValue<bool>? _isClientCertificateRequired;
 
     /// <summary>
-    /// Specifies if HTTP/2.0 is supported.
-    /// </summary>
-    public BicepValue<bool> IsHttp2_0Enabled 
-    {
-        get { Initialize(); return _isHttp2_0Enabled!; }
-        set { Initialize(); _isHttp2_0Enabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isHttp2_0Enabled;
-
-    /// <summary>
-    /// Specifies if TLS 1.0 is supported.
-    /// </summary>
-    public BicepValue<bool> IsTls1_0Enabled 
-    {
-        get { Initialize(); return _isTls1_0Enabled!; }
-        set { Initialize(); _isTls1_0Enabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isTls1_0Enabled;
-
-    /// <summary>
-    /// Specifies if TLS 1.1 is supported.
-    /// </summary>
-    public BicepValue<bool> IsTls1_1Enabled 
-    {
-        get { Initialize(); return _isTls1_1Enabled!; }
-        set { Initialize(); _isTls1_1Enabled!.Assign(value); }
-    }
-    private BicepValue<bool>? _isTls1_1Enabled;
-
-    /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id 
@@ -142,9 +112,6 @@ public partial class ApiManagementGatewayHostnameConfiguration : ProvisionableRe
         _certificateId = DefineProperty<string>("CertificateId", ["properties", "certificateId"]);
         _hostname = DefineProperty<string>("Hostname", ["properties", "hostname"]);
         _isClientCertificateRequired = DefineProperty<bool>("IsClientCertificateRequired", ["properties", "negotiateClientCertificate"]);
-        _isHttp2_0Enabled = DefineProperty<bool>("IsHttp2_0Enabled", ["IsHttp2_0Enabled"]);
-        _isTls1_0Enabled = DefineProperty<bool>("IsTls1_0Enabled", ["IsTls1_0Enabled"]);
-        _isTls1_1Enabled = DefineProperty<bool>("IsTls1_1Enabled", ["IsTls1_1Enabled"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ApiManagementGateway>("Parent", ["parent"], isRequired: true);

@@ -7,7 +7,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class ApiManagementSpecification() :
-    Specification("ApiManagement", typeof(ApiManagementExtensions), serviceDirectory: "apimanagement")
+    Specification("ApiManagement", typeof(ApiManagementExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "apimanagement")
 {
     protected override void Customize()
     {

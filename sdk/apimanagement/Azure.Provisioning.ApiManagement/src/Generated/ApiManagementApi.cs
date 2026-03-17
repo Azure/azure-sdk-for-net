@@ -215,17 +215,6 @@ public partial class ApiManagementApi : ProvisionableResource
     private BicepValue<string>? _serviceLink;
 
     /// <summary>
-    /// Absolute URL of the backend service implementing this API. Cannot be
-    /// more than 2000 characters long.
-    /// </summary>
-    public BicepValue<Uri> ServiceUri 
-    {
-        get { Initialize(); return _serviceUri!; }
-        set { Initialize(); _serviceUri!.Assign(value); }
-    }
-    private BicepValue<Uri>? _serviceUri;
-
-    /// <summary>
     /// Type of API to create.              * `http` creates a REST API
     /// * `soap` creates a SOAP pass-through API              *
     /// `websocket` creates websocket API              * `graphql` creates
@@ -268,17 +257,6 @@ public partial class ApiManagementApi : ProvisionableResource
         set { Initialize(); _termsOfServiceLink!.Assign(value); }
     }
     private BicepValue<string>? _termsOfServiceLink;
-
-    /// <summary>
-    /// A URL to the Terms of Service for the API. MUST be in the format of a
-    /// URL.
-    /// </summary>
-    public BicepValue<Uri> TermsOfServiceUri 
-    {
-        get { Initialize(); return _termsOfServiceUri!; }
-        set { Initialize(); _termsOfServiceUri!.Assign(value); }
-    }
-    private BicepValue<Uri>? _termsOfServiceUri;
 
     /// <summary>
     /// Strategy of translating required query parameters to template ones. By
@@ -398,12 +376,10 @@ public partial class ApiManagementApi : ProvisionableResource
         _path = DefineProperty<string>("Path", ["properties", "path"]);
         _protocols = DefineListProperty<ApiOperationInvokableProtocol>("Protocols", ["properties", "protocols"]);
         _serviceLink = DefineProperty<string>("ServiceLink", ["properties", "serviceUrl"]);
-        _serviceUri = DefineProperty<Uri>("ServiceUri", ["ServiceUri"]);
         _soapApiType = DefineProperty<SoapApiType>("SoapApiType", ["properties", "apiType"]);
         _sourceApiId = DefineProperty<ResourceIdentifier>("SourceApiId", ["properties", "sourceApiId"]);
         _subscriptionKeyParameterNames = DefineModelProperty<SubscriptionKeyParameterNamesContract>("SubscriptionKeyParameterNames", ["properties", "subscriptionKeyParameterNames"]);
         _termsOfServiceLink = DefineProperty<string>("TermsOfServiceLink", ["properties", "termsOfServiceUrl"]);
-        _termsOfServiceUri = DefineProperty<Uri>("TermsOfServiceUri", ["TermsOfServiceUri"]);
         _translateRequiredQueryParametersConduct = DefineProperty<TranslateRequiredQueryParametersConduct>("TranslateRequiredQueryParametersConduct", ["properties", "translateRequiredQueryParameters"]);
         _value = DefineProperty<string>("Value", ["properties", "value"]);
         _wsdlSelector = DefineModelProperty<ApiCreateOrUpdatePropertiesWsdlSelector>("WsdlSelector", ["properties", "wsdlSelector"]);
