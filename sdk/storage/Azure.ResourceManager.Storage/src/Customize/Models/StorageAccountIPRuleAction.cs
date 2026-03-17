@@ -3,8 +3,9 @@
 
 #nullable disable
 
-// Backward-compat: Provides the legacy action type and conversions to/from
-// StorageAccountNetworkRuleAction to support the unified action type from prior GA.
+// Backward-compat: Provides constructor, field, static members, Equals/GetHashCode/ToString
+// and implicit conversions to/from StorageAccountNetworkRuleAction.
+// Generated partial provides ==, !=, and implicit string operators.
 
 using System;
 using System.ComponentModel;
@@ -23,10 +24,6 @@ namespace Azure.ResourceManager.Storage.Models
         private const string AllowValue = "Allow";
 
         public static StorageAccountIPRuleAction Allow { get; } = new StorageAccountIPRuleAction(AllowValue);
-
-        public static bool operator ==(StorageAccountIPRuleAction left, StorageAccountIPRuleAction right) => left.Equals(right);
-        public static bool operator !=(StorageAccountIPRuleAction left, StorageAccountIPRuleAction right) => !left.Equals(right);
-        public static implicit operator StorageAccountIPRuleAction(string value) => new StorageAccountIPRuleAction(value);
 
         /// <summary> Implicit conversion to backward-compatible <see cref="StorageAccountNetworkRuleAction"/>. </summary>
         public static implicit operator StorageAccountNetworkRuleAction(StorageAccountIPRuleAction value) => new StorageAccountNetworkRuleAction(value.ToString());
