@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementIpv4Address))
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
-                writer.WriteStringValue(ManagementIpv4Address.ToString());
+                writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Manufacturer))
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StorageApplianceDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves = default;
-            IPAddress managementIpv4Address = default;
+            IPAddress managementIPv4Address = default;
             string manufacturer = default;
             string model = default;
             RemoteVendorManagementFeature? remoteVendorManagementFeature = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    managementIpv4Address = IPAddress.Parse(prop.Value.GetString());
+                    managementIPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("manufacturer"u8))
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 detailedStatus,
                 detailedStatusMessage,
                 expansionShelves ?? new ChangeTrackingList<StorageApplianceExpansionShelf>(),
-                managementIpv4Address,
+                managementIPv4Address,
                 manufacturer,
                 model,
                 remoteVendorManagementFeature,

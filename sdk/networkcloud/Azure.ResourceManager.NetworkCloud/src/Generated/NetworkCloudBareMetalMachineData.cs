@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudBareMetalMachineData(AzureLocation location, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudBareMetalMachineData(AzureLocation location, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, Resources.Models.ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(bmcConnectionString, nameof(bmcConnectionString));
             Argument.AssertNotNull(bmcCredentials, nameof(bmcCredentials));
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 rackId,
                 rackSlot,
                 serialNumber);
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BareMetalMachineProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BareMetalMachineProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> The list of the resource properties. </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
 
         /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> The connection string for the baseboard management controller including IP address and protocol. </summary>
         public string BmcConnectionString
@@ -416,33 +416,6 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new BareMetalMachineProperties();
                 }
                 return Properties.MachineRoles;
-            }
-        }
-
-        /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        public IPAddress OamIpv4Address
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OamIpv4Address;
-            }
-        }
-
-        /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        public string OamIpv6Address
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OamIpv6Address;
-            }
-        }
-
-        /// <summary> The image that is currently provisioned to the OS disk. </summary>
-        public string OsImage
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OsImage;
             }
         }
 

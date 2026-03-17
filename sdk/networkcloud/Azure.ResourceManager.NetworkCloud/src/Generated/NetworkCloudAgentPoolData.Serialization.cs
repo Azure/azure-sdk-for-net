@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -108,10 +109,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocationInternal))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocationInternal).Write(writer, options);
             }
         }
 
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             AgentPoolProperties properties = default;
             ETag? eTag = default;
-            ExtendedLocation extendedLocation = default;
+            Resources.Models.ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

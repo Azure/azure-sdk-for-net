@@ -49,6 +49,18 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         private ClientDiagnostics _volumesClientDiagnostics;
         private Volumes _volumesRestClient;
 
+        /// <summary> Initializes a new instance of MockableNetworkCloudSubscriptionResource for mocking. </summary>
+        protected MockableNetworkCloudSubscriptionResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MockableNetworkCloudSubscriptionResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal MockableNetworkCloudSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+        }
+
         private ClientDiagnostics AccessBridgesClientDiagnostics => _accessBridgesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(AccessBridgesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AzureGroupId = azureGroupId;
             ExpireOn = expireOn;
             JumpHostsAllowed = jumpHostsAllowed;
-            OsGroupName = osGroupName;
+            OSGroupName = osGroupName;
             PrivilegeLevel = privilegeLevel;
             PrivilegeLevelName = privilegeLevelName;
             UserList = userList;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IList<IPAddress> JumpHostsAllowed { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> The name of the group that users will be assigned to on the operating system of the machines. </summary>
-        public string OsGroupName { get; set; }
+        public string OSGroupName { get; set; }
 
         /// <summary> The access level allowed for the users in this key set. </summary>
         public BareMetalMachineKeySetPrivilegeLevel PrivilegeLevel { get; set; }

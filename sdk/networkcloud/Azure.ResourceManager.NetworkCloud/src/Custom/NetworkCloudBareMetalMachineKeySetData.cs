@@ -18,8 +18,13 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string OSGroupName
         {
-            get => OsGroupName;
-            set => OsGroupName = value;
+            get => Properties?.OSGroupName;
+            set
+            {
+                if (Properties is null)
+                    Properties = new Models.BareMetalMachineKeySetProperties();
+                Properties.OSGroupName = value;
+            }
         }
 
         // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
@@ -27,5 +32,13 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudBareMetalMachineKeySetData(AzureLocation location, ExtendedLocation extendedLocation, string azureGroupId, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList)
             : this(location, azureGroupId, expireOn, jumpHostsAllowed, privilegeLevel, userList, extendedLocation) { }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
+        {
+            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            set => ExtendedLocationInternal = value;
+        }
     }
 }

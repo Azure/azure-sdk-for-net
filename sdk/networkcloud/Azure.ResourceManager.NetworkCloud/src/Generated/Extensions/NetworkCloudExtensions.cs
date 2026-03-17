@@ -32,6 +32,12 @@ namespace Azure.ResourceManager.NetworkCloud
             return resourceGroupResource.GetCachedClient(client => new MockableNetworkCloudResourceGroupResource(client, resourceGroupResource.Id));
         }
 
+        /// <param name="subscriptionResource"></param>
+        private static MockableNetworkCloudSubscriptionResource GetMockableNetworkCloudSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableNetworkCloudSubscriptionResource(client, subscriptionResource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="AccessBridgeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>

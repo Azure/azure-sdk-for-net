@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("fabricPeeringEnabled"u8);
                 writer.WriteStringValue(FabricPeeringEnabled.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpAddressPools))
+            if (Optional.IsCollectionDefined(IPAddressPools))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (IPAddressPool item in IpAddressPools)
+                foreach (IPAddressPool item in IPAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }

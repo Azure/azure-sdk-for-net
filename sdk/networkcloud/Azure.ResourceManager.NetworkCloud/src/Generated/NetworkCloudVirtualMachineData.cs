@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/>, <paramref name="vmImage"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudVirtualMachineData(AzureLocation location, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudVirtualMachineData(AzureLocation location, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage, Resources.Models.ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(adminUsername, nameof(adminUsername));
             Argument.AssertNotNull(cloudServicesNetworkAttachment, nameof(cloudServicesNetworkAttachment));
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 memorySizeInGB,
                 storageProfile,
                 vmImage);
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineData"/>. </summary>
@@ -60,12 +61,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
             Identity = identity;
         }
 
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
 
         /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }

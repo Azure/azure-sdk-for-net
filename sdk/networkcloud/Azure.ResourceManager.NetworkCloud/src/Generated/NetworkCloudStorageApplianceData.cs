@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/>, <paramref name="administratorCredentials"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, Resources.Models.ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(rackId, nameof(rackId));
             Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageApplianceProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageApplianceProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> The list of the resource properties. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
 
         /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> The resource ID of the rack where this storage appliance resides. </summary>
         public ResourceIdentifier RackId
@@ -210,15 +210,6 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new StorageApplianceProperties();
                 }
                 return Properties.ExpansionShelves;
-            }
-        }
-
-        /// <summary> The endpoint for the management interface of the storage appliance. </summary>
-        public IPAddress ManagementIpv4Address
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagementIpv4Address;
             }
         }
 

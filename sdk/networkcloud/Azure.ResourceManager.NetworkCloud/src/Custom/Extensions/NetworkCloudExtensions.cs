@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -14,11 +14,6 @@ namespace Azure.ResourceManager.NetworkCloud
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkCloud. </summary>
     public static partial class NetworkCloudExtensions
     {
-        private static MockableNetworkCloudSubscriptionResource GetMockableNetworkCloudSubscriptionResource(SubscriptionResource subscriptionResource)
-        {
-            return subscriptionResource.GetCachedClient(client => new MockableNetworkCloudSubscriptionResource(client, subscriptionResource.Id));
-        }
-
         /// <summary>
         /// Get a list of bare metal machines in the provided subscription.
         /// <list type="bullet">
@@ -41,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -78,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudBareMetalMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -115,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -152,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudCloudServicesNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -189,7 +184,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -226,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusterManagers(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -263,7 +258,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudClusters(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -300,7 +295,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudClusters(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -337,7 +332,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -374,7 +369,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudKubernetesClusters(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -411,7 +406,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -448,7 +443,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL2Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -485,7 +480,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -522,7 +517,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudL3Networks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -559,7 +554,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudRacks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -596,7 +591,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudRacks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudRacks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -633,7 +628,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -670,7 +665,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudStorageAppliances(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -707,7 +702,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -744,7 +739,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudTrunkedNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -781,7 +776,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -818,7 +813,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVirtualMachines(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -855,7 +850,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -892,7 +887,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMicrosoftNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkCloudSubscriptionResource.GetNetworkCloudVolumes(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>

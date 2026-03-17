@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             Argument.AssertNotNull(osDisk, nameof(osDisk));
 
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             VolumeAttachments = new ChangeTrackingList<ResourceIdentifier>();
         }
 
@@ -35,13 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkCloudStorageProfile(NetworkCloudOSDisk osDisk, IList<ResourceIdentifier> volumeAttachments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             VolumeAttachments = volumeAttachments;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The disk to use with this virtual machine. </summary>
-        public NetworkCloudOSDisk OsDisk { get; set; }
 
         /// <summary> The resource IDs of volumes that are requested to be attached to the virtual machine. </summary>
         public IList<ResourceIdentifier> VolumeAttachments { get; }

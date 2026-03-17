@@ -21,20 +21,28 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IPAddress OamIPv4Address => OamIpv4Address;
+        public IPAddress OamIPv4Address => Properties?.OamIPv4Address;
 
         /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string OamIPv6Address => OamIpv6Address;
+        public string OamIPv6Address => Properties?.OamIPv6Address;
 
         /// <summary> The OS image currently in the machine. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string OSImage => OsImage;
+        public string OSImage => Properties?.OSImage;
 
         // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudBareMetalMachineData(AzureLocation location, ExtendedLocation extendedLocation, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber)
             : this(location, bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails, machineName, machineSkuId, rackId, rackSlot, serialNumber, extendedLocation) { }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
+        {
+            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            set => ExtendedLocationInternal = value;
+        }
     }
 }

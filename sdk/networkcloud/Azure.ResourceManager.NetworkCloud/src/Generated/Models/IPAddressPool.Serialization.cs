@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(OnlyUseHostIps))
+            if (Optional.IsDefined(OnlyUseHostIPs))
             {
                 writer.WritePropertyName("onlyUseHostIps"u8);
-                writer.WriteStringValue(OnlyUseHostIps.Value.ToString());
+                writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IList<string> addresses = default;
             BfdEnabled? autoAssign = default;
             string name = default;
-            BfdEnabled? onlyUseHostIps = default;
+            BfdEnabled? onlyUseHostIPs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    onlyUseHostIps = new BfdEnabled(prop.Value.GetString());
+                    onlyUseHostIPs = new BfdEnabled(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IPAddressPool(addresses, autoAssign, name, onlyUseHostIps, additionalBinaryDataProperties);
+            return new IPAddressPool(addresses, autoAssign, name, onlyUseHostIPs, additionalBinaryDataProperties);
         }
     }
 }

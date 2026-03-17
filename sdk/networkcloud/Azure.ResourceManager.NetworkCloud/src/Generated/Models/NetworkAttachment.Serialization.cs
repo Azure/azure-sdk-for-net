@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(DefaultGateway.Value.ToString());
             }
             writer.WritePropertyName("ipAllocationMethod"u8);
-            writer.WriteStringValue(IpAllocationMethod.ToString());
-            if (Optional.IsDefined(Ipv4Address))
+            writer.WriteStringValue(IPAllocationMethod.ToString());
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address);
             }
-            if (Optional.IsDefined(Ipv6Address))
+            if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(Ipv6Address);
+                writer.WriteStringValue(IPv6Address);
             }
             if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ResourceIdentifier attachedNetworkArmId = default;
             DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            string ipv4Address = default;
-            string ipv6Address = default;
+            string iPv4Address = default;
+            string iPv6Address = default;
             string macAddress = default;
             string networkAttachmentName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -182,12 +182,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    ipv4Address = prop.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6Address"u8))
                 {
-                    ipv6Address = prop.Value.GetString();
+                    iPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("macAddress"u8))
@@ -209,8 +209,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 attachedNetworkArmId,
                 defaultGateway,
                 ipAllocationMethod,
-                ipv4Address,
-                ipv6Address,
+                iPv4Address,
+                iPv6Address,
                 macAddress,
                 networkAttachmentName,
                 additionalBinaryDataProperties);

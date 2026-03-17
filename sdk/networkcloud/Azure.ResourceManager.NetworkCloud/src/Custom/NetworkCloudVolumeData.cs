@@ -22,5 +22,13 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudVolumeData(AzureLocation location, ExtendedLocation extendedLocation, long sizeInMiB)
             : this(location, sizeInMiB, extendedLocation) { }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
+        {
+            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            set => ExtendedLocationInternal = value;
+        }
     }
 }

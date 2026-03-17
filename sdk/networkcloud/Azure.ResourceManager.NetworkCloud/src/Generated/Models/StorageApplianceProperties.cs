@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="expansionShelves"> The list of expansion shelves connected to the storage appliance. </param>
-        /// <param name="managementIpv4Address"> The endpoint for the management interface of the storage appliance. </param>
+        /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
         /// <param name="manufacturer"> The manufacturer of the storage appliance. </param>
         /// <param name="model"> The model of the storage appliance. </param>
         /// <param name="remoteVendorManagementFeature"> The indicator of whether the storage appliance supports remote vendor management. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="version"> The version of the storage appliance. </param>
         /// <param name="provisioningState"> The provisioning state of the storage appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageApplianceProperties(ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves, IPAddress managementIpv4Address, string manufacturer, string model, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string version, StorageApplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageApplianceProperties(ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves, IPAddress managementIPv4Address, string manufacturer, string model, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string version, StorageApplianceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RackId = rackId;
             StorageApplianceSkuId = storageApplianceSkuId;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
             ExpansionShelves = expansionShelves;
-            ManagementIpv4Address = managementIpv4Address;
+            ManagementIPv4Address = managementIPv4Address;
             Manufacturer = manufacturer;
             Model = model;
             RemoteVendorManagementFeature = remoteVendorManagementFeature;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IReadOnlyList<StorageApplianceExpansionShelf> ExpansionShelves { get; } = new ChangeTrackingList<StorageApplianceExpansionShelf>();
 
         /// <summary> The endpoint for the management interface of the storage appliance. </summary>
-        public IPAddress ManagementIpv4Address { get; }
+        public IPAddress ManagementIPv4Address { get; }
 
         /// <summary> The manufacturer of the storage appliance. </summary>
         public string Manufacturer { get; }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             BgpAdvertisements = new ChangeTrackingList<BgpAdvertisement>();
             BgpPeers = new ChangeTrackingList<ServiceLoadBalancerBgpPeer>();
-            IpAddressPools = new ChangeTrackingList<IPAddressPool>();
+            IPAddressPools = new ChangeTrackingList<IPAddressPool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BgpServiceLoadBalancerConfiguration"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             BgpAdvertisements = bgpAdvertisements;
             BgpPeers = bgpPeers;
             FabricPeeringEnabled = fabricPeeringEnabled;
-            IpAddressPools = ipAddressPools;
+            IPAddressPools = ipAddressPools;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,8 +48,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The indicator to specify if the load balancer peers with the network fabric. </summary>
         public FabricPeeringEnabled? FabricPeeringEnabled { get; set; }
-
-        /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
-        public IList<IPAddressPool> IpAddressPools { get; }
     }
 }

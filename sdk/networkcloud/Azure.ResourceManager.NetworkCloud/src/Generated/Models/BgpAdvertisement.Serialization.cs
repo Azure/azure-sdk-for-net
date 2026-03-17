@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("ipAddressPools"u8);
             writer.WriteStartArray();
-            foreach (string item in IpAddressPools)
+            foreach (string item in IPAddressPools)
             {
                 if (item == null)
                 {

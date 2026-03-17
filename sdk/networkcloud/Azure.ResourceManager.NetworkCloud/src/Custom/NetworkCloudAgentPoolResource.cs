@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudAgentPoolResource> Update(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
 
         /// <summary>
         /// Patch the properties of the provided Kubernetes cluster agent pool, or update the tags associated with the Kubernetes cluster agent pool. Properties and tag updates can be done independently.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Delete the provided Kubernetes cluster agent pool.
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Delete the provided Kubernetes cluster agent pool.
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> DeleteWithResponse(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, matchConditions: default, cancellationToken: cancellationToken);
+            => Delete(waitUntil, null, cancellationToken);
 
         /// <summary>
         /// Delete the provided Kubernetes cluster agent pool.
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            var operation = await DeleteAsync(waitUntil, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            var operation = await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
             return new CustomNetworkCloudArmOperationWrapper<NetworkCloudOperationStatusResult>(operation);
         }
 
@@ -158,24 +158,27 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            var operation = Delete(waitUntil, matchConditions: default, cancellationToken: cancellationToken);
+            var operation = Delete(waitUntil, null, cancellationToken);
             return new CustomNetworkCloudArmOperationWrapper<NetworkCloudOperationStatusResult>(operation);
         }
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => Delete(waitUntil, matchConditions: default, cancellationToken: cancellationToken);
+        public virtual ArmOperation<NetworkCloudAgentPoolResource> Update(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => Update(waitUntil, patch, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await DeleteAsync(waitUntil, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => Delete(waitUntil, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudAgentPoolResource> Update(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudAgentPoolPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await DeleteAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -4,14 +4,12 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class BgpServiceLoadBalancerConfiguration
     {
-        /// <summary> The association of IP address pools to the communities and peers, allowing for announcement of IPs. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<IPAddressPool> IPAddressPools => IpAddressPools;
+        /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
+        public IList<IPAddressPool> IPAddressPools { get; }
     }
 }

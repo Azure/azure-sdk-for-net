@@ -5,22 +5,12 @@
 
 using System.ComponentModel;
 using System.Threading;
-using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class MockableNetworkCloudSubscriptionResource
+    public partial class MockableNetworkCloudSubscriptionResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableNetworkCloudSubscriptionResource for mocking. </summary>
-        protected MockableNetworkCloudSubscriptionResource()
-        {
-        }
-
-        internal MockableNetworkCloudSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-        }
         /// <summary>
         /// Get the list of bare metal machine for the subscription
         /// <list type="bullet">

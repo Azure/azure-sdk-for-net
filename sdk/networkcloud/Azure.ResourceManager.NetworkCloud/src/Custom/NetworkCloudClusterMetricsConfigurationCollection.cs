@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create new or update the existing metrics configuration of the provided cluster.
@@ -70,17 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => CreateOrUpdate(waitUntil, metricsConfigurationName, data, null, cancellationToken);
 
         /// <summary>
         /// Get a list of metrics configurations for the provided cluster.
@@ -135,5 +125,15 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudClusterMetricsConfigurationResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, metricsConfigurationName, data, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

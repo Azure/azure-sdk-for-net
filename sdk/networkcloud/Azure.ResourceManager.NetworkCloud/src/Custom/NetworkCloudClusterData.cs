@@ -29,5 +29,29 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId)
             : this(location, aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId, extendedLocation) { }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
+        {
+            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            set => ExtendedLocationInternal = value;
+        }
+
+        /// <summary> The extended location (custom location) that represents the cluster's control plane location. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ClusterExtendedLocation
+        {
+            get => ClusterExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (ClusterExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ClusterExtendedLocationInternal.Name, ClusterExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+        }
+
+        /// <summary> Field Deprecated. The extended location (custom location) that represents the Hybrid AKS control plane location. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation HybridAksExtendedLocation
+        {
+            get => HybridAksExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (HybridAksExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(HybridAksExtendedLocationInternal.Name, HybridAksExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+        }
     }
 }

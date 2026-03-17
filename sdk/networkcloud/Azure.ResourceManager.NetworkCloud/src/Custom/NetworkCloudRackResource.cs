@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudRackResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudRackPatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Patch properties of the provided rack, or update the tags associated with the rack. Properties and tag updates can be done independently.
@@ -69,14 +69,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudRackResource> Update(WaitUntil waitUntil, NetworkCloudRackPatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudRackResource> Update(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
+        public virtual ArmOperation<NetworkCloudRackResource> Update(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => Update(waitUntil, patch, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudRackResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation<NetworkCloudRackResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudRackPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
     }
 }

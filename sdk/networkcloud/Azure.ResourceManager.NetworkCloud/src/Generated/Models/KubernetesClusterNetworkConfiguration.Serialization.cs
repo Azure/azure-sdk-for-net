@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(CloudServicesNetworkId);
             writer.WritePropertyName("cniNetworkId"u8);
             writer.WriteStringValue(CniNetworkId);
-            if (Optional.IsDefined(DnsServiceIp))
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
-                writer.WriteStringValue(DnsServiceIp.ToString());
+                writer.WriteStringValue(DnsServiceIP.ToString());
             }
             if (Optional.IsDefined(L2ServiceLoadBalancerConfiguration))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = default;
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
-            IPAddress dnsServiceIp = default;
+            IPAddress dnsServiceIP = default;
             L2ServiceLoadBalancerConfiguration l2ServiceLoadBalancerConfiguration = default;
             IList<string> podCidrs = default;
             IList<string> serviceCidrs = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    dnsServiceIp = IPAddress.Parse(prop.Value.GetString());
+                    dnsServiceIP = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("l2ServiceLoadBalancerConfiguration"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 bgpServiceLoadBalancerConfiguration,
                 cloudServicesNetworkId,
                 cniNetworkId,
-                dnsServiceIp,
+                dnsServiceIP,
                 l2ServiceLoadBalancerConfiguration,
                 podCidrs ?? new ChangeTrackingList<string>(),
                 serviceCidrs ?? new ChangeTrackingList<string>(),

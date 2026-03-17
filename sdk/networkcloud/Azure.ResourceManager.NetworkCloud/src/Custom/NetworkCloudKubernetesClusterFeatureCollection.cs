@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, featureName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, featureName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new Kubernetes cluster feature or update properties of the Kubernetes cluster feature if it exists.
@@ -70,17 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, featureName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, featureName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, featureName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => CreateOrUpdate(waitUntil, featureName, data, null, cancellationToken);
 
         /// <summary>
         /// Get a list of features for the provided Kubernetes cluster.
@@ -135,5 +125,15 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudKubernetesClusterFeatureResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, featureName, data, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string featureName, NetworkCloudKubernetesClusterFeatureData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, featureName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

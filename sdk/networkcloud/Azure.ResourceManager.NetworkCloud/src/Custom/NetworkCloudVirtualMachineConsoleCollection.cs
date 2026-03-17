@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, consoleName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, consoleName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new virtual machine console or update the properties of the existing virtual machine console.
@@ -70,17 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, consoleName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, consoleName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, consoleName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => CreateOrUpdate(waitUntil, consoleName, data, null, cancellationToken);
 
         /// <summary>
         /// Get a list of consoles for the provided virtual machine.
@@ -135,5 +125,15 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudVirtualMachineConsoleResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, consoleName, data, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, consoleName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

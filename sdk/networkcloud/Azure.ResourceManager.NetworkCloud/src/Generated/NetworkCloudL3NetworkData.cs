@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -26,13 +27,13 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainId"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudL3NetworkData(AzureLocation location, ResourceIdentifier l3IsolationDomainId, long vlan, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudL3NetworkData(AzureLocation location, ResourceIdentifier l3IsolationDomainId, long vlan, Resources.Models.ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             Properties = new L3NetworkProperties(l3IsolationDomainId, vlan);
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
@@ -46,12 +47,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, L3NetworkProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, L3NetworkProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocation = extendedLocation;
+            ExtendedLocationInternal = extendedLocation;
         }
 
         /// <summary> The list of the resource properties. </summary>
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
 
         /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The indicator of whether or not to disable IPAM allocation on the network attachment definition injected into the Hybrid AKS Cluster. </summary>
         public HybridAksIpamEnabled? HybridAksIpamEnabled
@@ -111,57 +112,6 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new L3NetworkProperties();
                 }
                 Properties.InterfaceName = value;
-            }
-        }
-
-        /// <summary> The type of the IP address allocation, defaulted to "DualStack". </summary>
-        public IPAllocationType? IpAllocationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IpAllocationType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3NetworkProperties();
-                }
-                Properties.IpAllocationType = value.Value;
-            }
-        }
-
-        /// <summary> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </summary>
-        public string Ipv4ConnectedPrefix
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Ipv4ConnectedPrefix;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3NetworkProperties();
-                }
-                Properties.Ipv4ConnectedPrefix = value;
-            }
-        }
-
-        /// <summary> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </summary>
-        public string Ipv6ConnectedPrefix
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Ipv6ConnectedPrefix;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3NetworkProperties();
-                }
-                Properties.Ipv6ConnectedPrefix = value;
             }
         }
 

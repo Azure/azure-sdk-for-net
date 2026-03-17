@@ -15,24 +15,39 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IPAllocationType? IPAllocationType
         {
-            get => IpAllocationType;
-            set => IpAllocationType = value;
+            get => Properties is null ? default : Properties.IPAllocationType;
+            set
+            {
+                if (Properties is null)
+                    Properties = new Models.L3NetworkProperties();
+                Properties.IPAllocationType = value;
+            }
         }
 
         /// <summary> The IPV4 prefix (CIDR) assigned to this L3 network. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string IPv4ConnectedPrefix
         {
-            get => Ipv4ConnectedPrefix;
-            set => Ipv4ConnectedPrefix = value;
+            get => Properties?.IPv4ConnectedPrefix;
+            set
+            {
+                if (Properties is null)
+                    Properties = new Models.L3NetworkProperties();
+                Properties.IPv4ConnectedPrefix = value;
+            }
         }
 
         /// <summary> The IPV6 prefix (CIDR) assigned to this L3 network. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string IPv6ConnectedPrefix
         {
-            get => Ipv6ConnectedPrefix;
-            set => Ipv6ConnectedPrefix = value;
+            get => Properties?.IPv6ConnectedPrefix;
+            set
+            {
+                if (Properties is null)
+                    Properties = new Models.L3NetworkProperties();
+                Properties.IPv6ConnectedPrefix = value;
+            }
         }
 
         // Backward compat: old API had ExtendedLocation as 2nd parameter; new API has it last.
@@ -40,5 +55,13 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudL3NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l3IsolationDomainId, long vlan)
             : this(location, l3IsolationDomainId, vlan, extendedLocation) { }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
+        {
+            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
+                ? custom
+                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            set => ExtendedLocationInternal = value;
+        }
     }
 }

@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(OsGroupName))
+            if (Optional.IsDefined(OSGroupName))
             {
                 writer.WritePropertyName("osGroupName"u8);
-                writer.WriteStringValue(OsGroupName);
+                writer.WriteStringValue(OSGroupName);
             }
             writer.WritePropertyName("privilegeLevel"u8);
             writer.WriteStringValue(PrivilegeLevel.ToString());

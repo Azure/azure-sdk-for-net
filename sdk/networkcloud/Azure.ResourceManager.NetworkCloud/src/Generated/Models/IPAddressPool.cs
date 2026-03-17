@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. For a BGP service load balancer configuration, only CIDR format is supported and excludes /32 (IPv4) and /128 (IPv6) prefixes. </param>
         /// <param name="autoAssign"> The indicator to determine if automatic allocation from the pool should occur. </param>
         /// <param name="name"> The name used to identify this IP address pool for association with a BGP advertisement. </param>
-        /// <param name="onlyUseHostIps"> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </param>
+        /// <param name="onlyUseHostIPs"> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPAddressPool(IList<string> addresses, BfdEnabled? autoAssign, string name, BfdEnabled? onlyUseHostIps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAddressPool(IList<string> addresses, BfdEnabled? autoAssign, string name, BfdEnabled? onlyUseHostIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Addresses = addresses;
             AutoAssign = autoAssign;
             Name = name;
-            OnlyUseHostIps = onlyUseHostIps;
+            OnlyUseHostIPs = onlyUseHostIPs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,8 +54,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The name used to identify this IP address pool for association with a BGP advertisement. </summary>
         public string Name { get; set; }
-
-        /// <summary> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </summary>
-        public BfdEnabled? OnlyUseHostIps { get; set; }
     }
 }

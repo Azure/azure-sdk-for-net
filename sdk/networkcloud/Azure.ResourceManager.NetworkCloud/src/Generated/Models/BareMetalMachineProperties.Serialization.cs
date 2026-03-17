@@ -216,20 +216,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(OamIpv4Address))
+            if (options.Format != "W" && Optional.IsDefined(OamIPv4Address))
             {
                 writer.WritePropertyName("oamIpv4Address"u8);
-                writer.WriteStringValue(OamIpv4Address.ToString());
+                writer.WriteStringValue(OamIPv4Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OamIpv6Address))
+            if (options.Format != "W" && Optional.IsDefined(OamIPv6Address))
             {
                 writer.WritePropertyName("oamIpv6Address"u8);
-                writer.WriteStringValue(OamIpv6Address);
+                writer.WriteStringValue(OamIPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsImage))
+            if (options.Format != "W" && Optional.IsDefined(OSImage))
             {
                 writer.WritePropertyName("osImage"u8);
-                writer.WriteStringValue(OsImage);
+                writer.WriteStringValue(OSImage);
             }
             if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string kubernetesVersion = default;
             string machineClusterVersion = default;
             IReadOnlyList<string> machineRoles = default;
-            IPAddress oamIpv4Address = default;
-            string oamIpv6Address = default;
+            IPAddress oamIPv4Address = default;
+            string oamIPv6Address = default;
             string osImage = default;
             BareMetalMachinePowerState? powerState = default;
             BareMetalMachineReadyState? readyState = default;
@@ -579,12 +579,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    oamIpv4Address = IPAddress.Parse(prop.Value.GetString());
+                    oamIPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("oamIpv6Address"u8))
                 {
-                    oamIpv6Address = prop.Value.GetString();
+                    oamIPv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("osImage"u8))
@@ -700,8 +700,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 kubernetesVersion,
                 machineClusterVersion,
                 machineRoles ?? new ChangeTrackingList<string>(),
-                oamIpv4Address,
-                oamIpv6Address,
+                oamIPv4Address,
+                oamIPv6Address,
                 osImage,
                 powerState,
                 readyState,

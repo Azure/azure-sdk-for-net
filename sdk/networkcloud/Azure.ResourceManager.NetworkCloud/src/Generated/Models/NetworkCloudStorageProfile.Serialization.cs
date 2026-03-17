@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("osDisk"u8);
-            writer.WriteObjectValue(OsDisk, options);
+            writer.WriteObjectValue(OSDisk, options);
             if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);

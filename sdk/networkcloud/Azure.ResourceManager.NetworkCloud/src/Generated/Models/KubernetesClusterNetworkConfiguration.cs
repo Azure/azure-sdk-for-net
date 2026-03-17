@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="bgpServiceLoadBalancerConfiguration"> The configuration of the BGP service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </param>
         /// <param name="cloudServicesNetworkId"> The resource ID of the associated Cloud Services network. </param>
         /// <param name="cniNetworkId"> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </param>
-        /// <param name="dnsServiceIp"> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </param>
+        /// <param name="dnsServiceIP"> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </param>
         /// <param name="l2ServiceLoadBalancerConfiguration"> The configuration of the Layer 2 service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </param>
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration, ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId, IPAddress dnsServiceIp, L2ServiceLoadBalancerConfiguration l2ServiceLoadBalancerConfiguration, IList<string> podCidrs, IList<string> serviceCidrs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesClusterNetworkConfiguration(AttachedNetworkConfiguration attachedNetworkConfiguration, BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration, ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId, IPAddress dnsServiceIP, L2ServiceLoadBalancerConfiguration l2ServiceLoadBalancerConfiguration, IList<string> podCidrs, IList<string> serviceCidrs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AttachedNetworkConfiguration = attachedNetworkConfiguration;
             BgpServiceLoadBalancerConfiguration = bgpServiceLoadBalancerConfiguration;
             CloudServicesNetworkId = cloudServicesNetworkId;
             CniNetworkId = cniNetworkId;
-            DnsServiceIp = dnsServiceIp;
+            DnsServiceIP = dnsServiceIP;
             L2ServiceLoadBalancerConfiguration = l2ServiceLoadBalancerConfiguration;
             PodCidrs = podCidrs;
             ServiceCidrs = serviceCidrs;
@@ -68,9 +68,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The resource ID of the Layer 3 network that is used for creation of the Container Networking Interface network. </summary>
         public ResourceIdentifier CniNetworkId { get; set; }
-
-        /// <summary> The IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in service CIDR. </summary>
-        public IPAddress DnsServiceIp { get; set; }
 
         /// <summary> The configuration of the Layer 2 service load balancer for this Kubernetes cluster. A maximum of one service load balancer may be specified, either Layer 2 or BGP. </summary>
         internal L2ServiceLoadBalancerConfiguration L2ServiceLoadBalancerConfiguration { get; set; }

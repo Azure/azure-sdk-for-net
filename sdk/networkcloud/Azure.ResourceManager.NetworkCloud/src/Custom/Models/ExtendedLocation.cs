@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     [CodeGenSuppress("ExtendedLocation", typeof(string), typeof(ExtendedLocationType))]
     [CodeGenSuppress("ExtendedLocation", typeof(string), typeof(ExtendedLocationType), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    public partial class ExtendedLocation : Azure.ResourceManager.Resources.Models.ExtendedLocation
+    public partial class ExtendedLocation : Azure.ResourceManager.Resources.Models.ExtendedLocation, IJsonModel<ExtendedLocation>, IPersistableModel<ExtendedLocation>
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         public ExtendedLocation()
@@ -50,6 +50,37 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get => base.ExtendedLocationType?.ToString();
             set => base.ExtendedLocationType = value == null ? null : new Resources.Models.ExtendedLocationType(value);
+        }
+
+        // IJsonModel<ExtendedLocation> implementation - delegates to base class
+        ExtendedLocation IJsonModel<ExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var baseResult = ((IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Create(ref reader, options);
+            if (baseResult is ExtendedLocation custom) return custom;
+            return new ExtendedLocation(baseResult.Name, baseResult.ExtendedLocationType?.ToString());
+        }
+
+        void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            ((IJsonModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Write(writer, options);
+        }
+
+        // IPersistableModel<ExtendedLocation> implementation - delegates to base class
+        ExtendedLocation IPersistableModel<ExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var baseResult = ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Create(data, options);
+            if (baseResult is ExtendedLocation custom) return custom;
+            return new ExtendedLocation(baseResult.Name, baseResult.ExtendedLocationType?.ToString());
+        }
+
+        string IPersistableModel<ExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            return ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).GetFormatFromOptions(options);
+        }
+
+        BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
+        {
+            return ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Write(options);
         }
     }
 }

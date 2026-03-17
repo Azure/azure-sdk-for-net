@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, kubernetesClusterName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, kubernetesClusterName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new Kubernetes cluster or update the properties of the existing one.
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudKubernetesClusterResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, kubernetesClusterName, data, matchConditions: default, cancellationToken: cancellationToken);
+            => CreateOrUpdate(waitUntil, kubernetesClusterName, data, null, cancellationToken);
 
         /// <summary>
         /// Get a list of Kubernetes clusters in the provided resource group.
@@ -127,12 +127,14 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Pageable<NetworkCloudKubernetesClusterResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudKubernetesClusterResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, kubernetesClusterName, data, matchConditions: default, cancellationToken: cancellationToken);
+        public virtual ArmOperation<NetworkCloudKubernetesClusterResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, kubernetesClusterName, data, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, kubernetesClusterName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, kubernetesClusterName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
@@ -37,14 +37,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => Update(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken);
+        public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => Update(waitUntil, patch, null, cancellationToken);
 
+        /// <summary> Backward compatible overload for API compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, patch, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation, options);
+            ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocationInternal).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             VirtualMachineProperties properties = default;
             ETag? eTag = default;
-            ExtendedLocation extendedLocation = default;
+            Resources.Models.ExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

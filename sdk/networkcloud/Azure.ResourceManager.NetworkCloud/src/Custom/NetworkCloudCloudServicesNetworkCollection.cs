@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, cloudServicesNetworkName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, cloudServicesNetworkName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new cloud services network or update the properties of the existing cloud services network.
@@ -71,17 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, cloudServicesNetworkName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, cloudServicesNetworkName, data, matchConditions: default, cancellationToken: cancellationToken);
-
-        /// <summary> Compat overload for old ifMatch/ifNoneMatch string parameters. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, cloudServicesNetworkName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => CreateOrUpdate(waitUntil, cloudServicesNetworkName, data, null, cancellationToken);
 
         /// <summary>
         /// Get a list of cloud services networks in the provided resource group.
@@ -136,5 +126,15 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => CreateOrUpdate(waitUntil, cloudServicesNetworkName, data, null, cancellationToken);
+
+        /// <summary> Backward compatible overload for API compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken)
+            => await CreateOrUpdateAsync(waitUntil, cloudServicesNetworkName, data, null, cancellationToken).ConfigureAwait(false);
     }
 }

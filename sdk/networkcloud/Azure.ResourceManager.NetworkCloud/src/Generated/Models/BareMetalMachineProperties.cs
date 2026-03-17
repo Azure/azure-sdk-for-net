@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="kubernetesVersion"> The version of Kubernetes running on this machine. </param>
         /// <param name="machineClusterVersion"> The cluster version that has been applied to this machine during deployment or a version update. </param>
         /// <param name="machineRoles"> The list of roles that are assigned to the cluster node running on this machine. </param>
-        /// <param name="oamIpv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
-        /// <param name="oamIpv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
+        /// <param name="oamIPv4Address"> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </param>
+        /// <param name="oamIPv6Address"> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </param>
         /// <param name="osImage"> The image that is currently provisioned to the OS disk. </param>
         /// <param name="powerState"> The power state derived from the baseboard management controller. </param>
         /// <param name="readyState"> The indicator of whether the bare metal machine is ready to receive workloads. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         /// <param name="provisioningState"> The provisioning state of the bare metal machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineProperties(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcIpv4Address, string bmcIpv6Address, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, IReadOnlyList<string> machineRoles, IPAddress oamIpv4Address, string oamIpv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, BareMetalMachineProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BareMetalMachineProperties(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcIpv4Address, string bmcIpv6Address, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, IReadOnlyList<string> machineRoles, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, BareMetalMachineProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BmcConnectionString = bmcConnectionString;
             BmcCredentials = bmcCredentials;
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             KubernetesVersion = kubernetesVersion;
             MachineClusterVersion = machineClusterVersion;
             MachineRoles = machineRoles;
-            OamIpv4Address = oamIpv4Address;
-            OamIpv6Address = oamIpv6Address;
-            OsImage = osImage;
+            OamIPv4Address = oamIPv4Address;
+            OamIPv6Address = oamIPv6Address;
+            OSImage = osImage;
             PowerState = powerState;
             ReadyState = readyState;
             RuntimeProtectionStatus = runtimeProtectionStatus;
@@ -219,13 +219,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IReadOnlyList<string> MachineRoles { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        public IPAddress OamIpv4Address { get; }
+        public IPAddress OamIPv4Address { get; }
 
         /// <summary> The IPv6 address that is assigned to the bare metal machine during the cluster deployment. </summary>
-        public string OamIpv6Address { get; }
+        public string OamIPv6Address { get; }
 
         /// <summary> The image that is currently provisioned to the OS disk. </summary>
-        public string OsImage { get; }
+        public string OSImage { get; }
 
         /// <summary> The power state derived from the baseboard management controller. </summary>
         public BareMetalMachinePowerState? PowerState { get; }

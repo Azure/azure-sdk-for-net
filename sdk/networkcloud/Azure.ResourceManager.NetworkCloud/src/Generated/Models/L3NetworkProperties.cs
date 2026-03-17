@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="hybridAksPluginType"> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </param>
         /// <param name="interfaceName"> The default interface name for this L3 network in the virtual machine. This name can be overridden by the name supplied in the network attachment configuration of that virtual machine. </param>
         /// <param name="ipAllocationType"> The type of the IP address allocation, defaulted to "DualStack". </param>
-        /// <param name="ipv4ConnectedPrefix"> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </param>
-        /// <param name="ipv6ConnectedPrefix"> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </param>
+        /// <param name="iPv4ConnectedPrefix"> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </param>
+        /// <param name="iPv6ConnectedPrefix"> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </param>
         /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </param>
         /// <param name="provisioningState"> The provisioning state of the L3 network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal L3NetworkProperties(HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, long vlan, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, L3NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal L3NetworkProperties(HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string iPv4ConnectedPrefix, string iPv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, long vlan, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, L3NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HybridAksIpamEnabled = hybridAksIpamEnabled;
             HybridAksPluginType = hybridAksPluginType;
             InterfaceName = interfaceName;
-            IpAllocationType = ipAllocationType;
-            Ipv4ConnectedPrefix = ipv4ConnectedPrefix;
-            Ipv6ConnectedPrefix = ipv6ConnectedPrefix;
+            IPAllocationType = ipAllocationType;
+            IPv4ConnectedPrefix = iPv4ConnectedPrefix;
+            IPv6ConnectedPrefix = iPv6ConnectedPrefix;
             L3IsolationDomainId = l3IsolationDomainId;
             Vlan = vlan;
             AssociatedResourceIds = associatedResourceIds;
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string InterfaceName { get; set; }
 
         /// <summary> The type of the IP address allocation, defaulted to "DualStack". </summary>
-        public IPAllocationType? IpAllocationType { get; set; }
+        public IPAllocationType? IPAllocationType { get; set; }
 
         /// <summary> The IPV4 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV4 or DualStack. </summary>
-        public string Ipv4ConnectedPrefix { get; set; }
+        public string IPv4ConnectedPrefix { get; set; }
 
         /// <summary> The IPV6 prefix (CIDR) assigned to this L3 network. Required when the IP allocation type is IPV6 or DualStack. </summary>
-        public string Ipv6ConnectedPrefix { get; set; }
+        public string IPv6ConnectedPrefix { get; set; }
 
         /// <summary> The resource ID of the Network Fabric l3IsolationDomain. </summary>
         public ResourceIdentifier L3IsolationDomainId { get; set; }

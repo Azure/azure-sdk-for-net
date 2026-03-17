@@ -30,31 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(attachedNetworkId, nameof(attachedNetworkId));
 
             AttachedNetworkId = attachedNetworkId;
-            IpAllocationMethod = ipAllocationMethod;
-        }
-
-        /// <summary> The IP allocation mechanism for the virtual machine. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public VirtualMachineIPAllocationMethod IPAllocationMethod
-        {
-            get => IpAllocationMethod;
-            set => IpAllocationMethod = value;
-        }
-
-        /// <summary> The IPv4 address of the virtual machine. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string IPv4Address
-        {
-            get => Ipv4Address;
-            set => Ipv4Address = value;
-        }
-
-        /// <summary> The IPv6 address of the virtual machine. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string IPv6Address
-        {
-            get => Ipv6Address;
-            set => Ipv6Address = value;
+            IPAllocationMethod = ipAllocationMethod;
         }
 
         /// <summary>
