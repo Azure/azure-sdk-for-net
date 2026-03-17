@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NginxDeploymentWafPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentWafPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NginxDeploymentWafPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentWafPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Payload.Xml
@@ -34,5 +35,9 @@ namespace Payload.Xml
         public static ModelWithDictionary ModelWithDictionary(IDictionary<string, string> metadata = default) => throw null;
 
         public static ModelWithEncodedNames ModelWithEncodedNames(SimpleModel modelData = default, IEnumerable<string> colors = default) => throw null;
+
+        public static ModelWithEnum ModelWithEnum(Status status = default) => throw null;
+
+        public static ModelWithDatetime ModelWithDatetime(DateTimeOffset rfc3339 = default, DateTimeOffset rfc7231 = default) => throw null;
     }
 }

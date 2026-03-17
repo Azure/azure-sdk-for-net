@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(largeStorageInstancePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(largeStorageInstancePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

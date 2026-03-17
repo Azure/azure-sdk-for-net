@@ -6,8 +6,8 @@ using the `AIProjectClient`.
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` for creating and running evaluations.
 
 ```C# Snippet:Sample_CreateClients_EvaluationsAgent
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 ```
@@ -43,7 +43,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_EvaluationsAgent_Sync
 ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
 ResponseResult response = responseClient.CreateResponse([request]);
 Console.WriteLine(response.GetOutputText());
 ```
@@ -51,7 +51,7 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_EvaluationsAgent_Async
 ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
 ResponseResult response = await responseClient.CreateResponseAsync([request]);
 Console.WriteLine(response.GetOutputText());
 ```

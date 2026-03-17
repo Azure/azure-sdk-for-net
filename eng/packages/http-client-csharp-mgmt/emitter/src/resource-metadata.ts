@@ -4,8 +4,7 @@
 import {
   isVariableSegment,
   findLongestPrefixMatch,
-  getResourceTypeSegment,
-  getLastPathSegment
+  countProviderSegments
 } from "./utils.js";
 
 const ResourceGroupScopePrefix =
@@ -45,6 +44,18 @@ export enum ResourceScope {
   Extension = "Extension"
 }
 
+/**
+ * Constraints on the resource name from TypeSpec @pattern, @minLength, @maxLength decorators.
+ */
+export interface NameConstraints {
+  /** The regex pattern constraint for the resource name, from @pattern decorator */
+  pattern?: string;
+  /** The minimum length constraint for the resource name, from @minLength decorator */
+  minLength?: number;
+  /** The maximum length constraint for the resource name, from @maxLength decorator */
+  maxLength?: number;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern: string;
   resourceType: string;
@@ -54,6 +65,10 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** The name constraints for the resource, from TypeSpec decorators */
+  nameConstraints: NameConstraints;
+  /** The API versions that this resource is available in */
+  apiVersions: string[];
 }
 
 export function convertResourceMetadataToArguments(
@@ -122,6 +137,27 @@ export enum ResourceOperationKind {
   Read = "Read",
   List = "List",
   Update = "Update"
+}
+
+/**
+ * Resolves the API versions for a resource from its methods.
+ * Uses the Create method's versions if available, otherwise falls back to the Read method's versions.
+ * @param methods - The resource's methods
+ * @param methodApiVersionsMap - A map from methodId to its API versions
+ * @returns The API versions for the resource
+ */
+export function resolveResourceApiVersions(
+  methods: ResourceMethod[],
+  methodApiVersionsMap: Map<string, string[]>
+): string[] {
+  const createMethod = methods.find(
+    (m) => m.kind === ResourceOperationKind.Create
+  );
+  const readMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
+  const primaryMethod = createMethod ?? readMethod;
+  return primaryMethod
+    ? methodApiVersionsMap.get(primaryMethod.methodId) ?? []
+    : [];
 }
 
 /**
@@ -215,7 +251,9 @@ export function convertArmProviderSchemaToArguments(
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
-      resourceName: r.metadata.resourceName
+      resourceName: r.metadata.resourceName,
+      nameConstraints: r.metadata.nameConstraints,
+      apiVersions: r.metadata.apiVersions
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
@@ -452,10 +490,12 @@ export function postProcessArmResources(
  * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
- * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
- *    segment is compared against each resource's type segment (second-to-last segment of the
- *    resource ID pattern). This handles "missing operations" from resolveArmResources that
- *    lack resourceModelId but share a type segment with a known resource.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using calculateResourceTypeFromPath (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -501,22 +541,28 @@ export function assignNonResourceMethodsToResources(
         methodsToRemove.add(method.methodId);
       }
     } else {
-      // Both prefix and model ID matching failed — try matching by type segment.
+      // Both prefix and model ID matching failed — try matching by resource type.
       // Extension resource list paths may have fewer parent segments than the resource
-      // ID pattern (e.g., {providerName}/{resourceType}/{resourceName} vs
-      // {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}),
-      // causing a structural length mismatch that prefix matching cannot resolve.
-      // As a final fallback, compare the operation path's last segment against the
-      // resource's type segment (second-to-last segment of the resource ID pattern).
-      const lastSegment = getLastPathSegment(method.operationPath);
-      if (lastSegment) {
+      // ID pattern, causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the resource type (extracted via calculateResourceTypeFromPath,
+      // which includes the provider namespace) against each resource's metadata.resourceType.
+      // The provider hierarchy depth must also match to prevent cross-scope false matches
+      // (e.g., RG-scoped list matching a VM-scoped extension resource).
+      if (method.operationPath.includes("/providers/")) {
+        const operationType = calculateResourceTypeFromPath(
+          method.operationPath
+        );
+        const operationProviderDepth = countProviderSegments(
+          method.operationPath
+        );
         const match = resources.find((r) => {
-          const typeSegment = getResourceTypeSegment(
-            r.metadata.resourceIdPattern
-          );
-          return (
-            typeSegment?.toLowerCase() === lastSegment.toLowerCase()
-          );
+          if (
+            countProviderSegments(r.metadata.resourceIdPattern) !==
+            operationProviderDepth
+          ) {
+            return false;
+          }
+          return r.metadata.resourceType === operationType;
         });
         if (match) {
           match.metadata.methods.push({

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiKeyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NginxDeploymentApiKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiKeyName, NginxDeploymentApiKeyCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentApiKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiKeyName, NginxDeploymentApiKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiKeyName, nameof(apiKeyName));
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKeyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiKeyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NginxDeploymentApiKeyResource> CreateOrUpdate(WaitUntil waitUntil, string apiKeyName, NginxDeploymentApiKeyCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentApiKeyResource> CreateOrUpdate(WaitUntil waitUntil, string apiKeyName, NginxDeploymentApiKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiKeyName, nameof(apiKeyName));
 

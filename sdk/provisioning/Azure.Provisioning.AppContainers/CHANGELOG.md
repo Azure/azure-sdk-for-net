@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2026-03-13)
+
+### Other Changes
+
+- Refreshed provisioning library with latest resource model updates.
 
 ## 1.2.0-beta.1 (2026-02-05)
 

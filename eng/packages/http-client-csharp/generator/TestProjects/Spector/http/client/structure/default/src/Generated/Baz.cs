@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using Azure.Core.Pipeline;
+using Client.Structure.Service;
 
 namespace Client.Structure.Service._Baz
 {
     public partial class Baz
     {
         protected Baz() => throw null;
+
+        internal Baz(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, ClientType client) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

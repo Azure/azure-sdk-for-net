@@ -14,20 +14,19 @@ namespace Azure.Identity
 
         public DefaultAzureCredentialImdsRetryPolicy(RetryOptions retryOptions, DelayStrategy delayStrategy = null) : base(retryOptions.MaxRetries,
                     delayStrategy ?? new ImdsRetryDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay))
-        { }
+        {
+        }
 
         protected override bool ShouldRetry(HttpMessage message, Exception exception)
         {
             message.ResponseClassifier = classifier;
-            // For IMDS requests, do not retry until we have observed the first response cycle
-            return !ImdsManagedIdentityProbeSource.IsProbRequest(message) ? base.ShouldRetry(message, exception) : false;
+            return ImdsManagedIdentityProbeSource.IsProbRequest(message) ? false : base.ShouldRetry(message, exception);
         }
 
         protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
         {
             message.ResponseClassifier = classifier;
-            // For IMDS requests, do not retry until we have observed the first response cycle
-            return !ImdsManagedIdentityProbeSource.IsProbRequest(message) ? base.ShouldRetryAsync(message, exception) : default;
+            return ImdsManagedIdentityProbeSource.IsProbRequest(message) ? default : base.ShouldRetryAsync(message, exception);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

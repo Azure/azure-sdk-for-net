@@ -35,6 +35,7 @@ internal static class Program
             new AppServiceSpecification(),
             new AppConfigurationSpecification(),
             new ApplicationInsightsSpecification(),
+            new CdnSpecification(),
             new CommunicationSpecification(),
             new CognitiveServicesSpecification(),
             new ContainerRegistrySpecification(),

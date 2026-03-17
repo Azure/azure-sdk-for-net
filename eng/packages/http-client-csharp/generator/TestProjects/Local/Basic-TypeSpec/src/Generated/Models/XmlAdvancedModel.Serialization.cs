@@ -384,9 +384,9 @@ namespace BasicTypeSpec
             string originalName = default;
             string xmlIdentifier = default;
             string content = default;
-            IList<string> unwrappedStrings = default;
-            IList<int> unwrappedCounts = default;
-            IList<XmlItem> unwrappedItems = default;
+            IList<string> unwrappedStrings = new List<string>();
+            IList<int> unwrappedCounts = new List<int>();
+            IList<XmlItem> unwrappedItems = new List<XmlItem>();
             IList<string> wrappedColors = default;
             IList<XmlItem> items = default;
             XmlNestedModel nestedModel = default;
@@ -405,7 +405,7 @@ namespace BasicTypeSpec
             IList<string> fooItems = default;
             XmlNestedModel anotherModel = default;
             IList<XmlModelWithNamespace> modelsWithNamespaces = default;
-            IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default;
+            IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces = new List<XmlModelWithNamespace>();
             IList<IList<XmlItem>> listOfListFoo = default;
             IDictionary<string, XmlItem> dictionaryFoo = default;
             IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default;
@@ -492,28 +492,16 @@ namespace BasicTypeSpec
                 }
                 if (localName == "unwrappedStrings")
                 {
-                    if (unwrappedStrings == null)
-                    {
-                        unwrappedStrings = new List<string>();
-                    }
                     unwrappedStrings.Add((string)child);
                     continue;
                 }
                 if (localName == "unwrappedCounts")
                 {
-                    if (unwrappedCounts == null)
-                    {
-                        unwrappedCounts = new List<int>();
-                    }
                     unwrappedCounts.Add((int)child);
                     continue;
                 }
                 if (localName == "unwrappedItems")
                 {
-                    if (unwrappedItems == null)
-                    {
-                        unwrappedItems = new List<XmlItem>();
-                    }
                     unwrappedItems.Add(XmlItem.DeserializeXmlItem(child, options));
                     continue;
                 }
@@ -634,10 +622,6 @@ namespace BasicTypeSpec
                 }
                 if (localName == "unwrappedModelsWithNamespaces")
                 {
-                    if (unwrappedModelsWithNamespaces == null)
-                    {
-                        unwrappedModelsWithNamespaces = new List<XmlModelWithNamespace>();
-                    }
                     unwrappedModelsWithNamespaces.Add(XmlModelWithNamespace.DeserializeXmlModelWithNamespace(child, options));
                     continue;
                 }

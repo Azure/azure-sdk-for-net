@@ -7,64 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The response from the List Machines operation. </summary>
+    /// <summary> The response of a Machine list operation. </summary>
     internal partial class MachineListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
-        internal MachineListResult()
+        /// <param name="value"> The Machine items on this page. </param>
+        internal MachineListResult(IEnumerable<ContainerServiceMachineData> value)
         {
-            Value = new ChangeTrackingList<ContainerServiceMachineData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
-        /// <param name="nextLink"> The URL to get the next set of machine results. </param>
-        /// <param name="value"> The list of Machines in cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineListResult(Uri nextLink, IReadOnlyList<ContainerServiceMachineData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The Machine items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineListResult(IList<ContainerServiceMachineData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The URL to get the next set of machine results. </summary>
+        /// <summary> The Machine items on this page. </summary>
+        [WirePath("value")]
+        public IList<ContainerServiceMachineData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
-        /// <summary> The list of Machines in cluster. </summary>
-        public IReadOnlyList<ContainerServiceMachineData> Value { get; }
     }
 }

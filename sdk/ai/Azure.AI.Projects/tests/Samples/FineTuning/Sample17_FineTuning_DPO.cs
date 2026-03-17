@@ -7,7 +7,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
@@ -28,8 +28,8 @@ public partial class Sample17_FineTuning_DPO : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -92,8 +92,8 @@ public partial class Sample17_FineTuning_DPO : SamplesBase
         string trainingFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_training_set.jsonl");
         string validationFilePath = Path.Combine(FineTuningHelpers.GetSamplesDataDirectory(), "dpo_validation_set.jsonl");
 #endif
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
         ProjectOpenAIClient oaiClient = projectClient.OpenAI;
         OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
