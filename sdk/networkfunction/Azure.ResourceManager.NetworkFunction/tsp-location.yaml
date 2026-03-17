@@ -1,4 +1,4 @@
 directory: specification/networkfunction/resource-manager/Microsoft.NetworkFunction/TrafficCollector
 commit: edfa5be98909bc3bd834237a421e6017acdb9534
-repo: live1206/azure-rest-api-specs
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
