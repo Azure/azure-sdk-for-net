@@ -148,9 +148,9 @@ public class Sample_EvaluatorsCatalog : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluatorsCatalog
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         #endregion
@@ -224,9 +224,9 @@ public class Sample_EvaluatorsCatalog : SamplesBase
     public void EvaluatorsCatalogExampleSync()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         #region Snippet:Sample_CreatePromptEvaluator_EvaluatorsCatalog_Sync

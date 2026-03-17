@@ -36,7 +36,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentCRUD()
     {
         AgentsClient agentsClient = GetTestClient();
-        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try

@@ -124,6 +124,7 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentsClient
     {
         protected AgentsClient() { }
+        public AgentsClient(Azure.AI.Projects.Agents.AgentsClientSettings settings) { }
         public AgentsClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.Agents.AgentsClientOptions options) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult CreateAgent(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
@@ -167,6 +168,13 @@ namespace Azure.AI.Projects.Agents
     {
         public AgentsClientOptions() { }
         public string ApiVersion { get { throw null; } set { } }
+    }
+    public partial class AgentsClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public AgentsClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Projects.Agents.AgentsClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public abstract partial class AgentTool : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentTool>
     {
