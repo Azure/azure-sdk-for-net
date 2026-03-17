@@ -19,7 +19,7 @@
       AZC0034: Typename is already used in another library.
       AZC0035: Missing model factory method
 
-      Tracked by # 51311
+      Tracked by #51311
   -->
   <PropertyGroup>
     <NoWarn>
