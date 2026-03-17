@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                ((IJsonModel<ResourceManager.Models.ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                writer.WriteObjectValue(EntraIdConfig, options);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -99,6 +104,11 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("multiAdStatus"u8);
                 writer.WriteStringValue(MultiAdStatus.Value.ToString());
             }
+            if (Optional.IsDefined(LdapConfiguration))
+            {
+                writer.WritePropertyName("ldapConfiguration"u8);
+                writer.WriteObjectValue(LdapConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -123,19 +133,21 @@ namespace Azure.ResourceManager.NetApp
                 return null;
             }
             ETag? etag = default;
-            ManagedServiceIdentity identity = default;
+            ResourceManager.Models.ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             string provisioningState = default;
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
+            EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
             string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
+            LdapConfiguration ldapConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +167,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetAppContext.Default);
+                    identity = ModelReaderWriter.Read<ResourceManager.Models.ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -198,7 +210,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -227,6 +239,15 @@ namespace Azure.ResourceManager.NetApp
                                 array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                             }
                             activeDirectories = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("entraIdConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -267,6 +288,15 @@ namespace Azure.ResourceManager.NetApp
                             multiAdStatus = new MultiAdStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("ldapConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ldapConfiguration = LdapConfiguration.DeserializeLdapConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -287,10 +317,12 @@ namespace Azure.ResourceManager.NetApp
                 identity,
                 provisioningState,
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                entraIdConfig,
                 encryption,
                 disableShowmount,
                 nfsV4IdDomain,
                 multiAdStatus,
+                ldapConfiguration,
                 serializedAdditionalRawData);
         }
 

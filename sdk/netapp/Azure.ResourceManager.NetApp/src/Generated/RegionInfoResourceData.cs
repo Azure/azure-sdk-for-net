@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegionInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegionStorageToNetworkProximity? storageToNetworkProximity, IList<AvailabilityZoneMapping> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RegionInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, RegionStorageToNetworkProximity? storageToNetworkProximity, IList<AvailabilityZoneMapping> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageToNetworkProximity = storageToNetworkProximity;
             AvailabilityZoneMappings = availabilityZoneMappings;
