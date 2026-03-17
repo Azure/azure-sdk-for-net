@@ -66,28 +66,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.siteUrl")]
         public DataFactoryElement<string> SiteUri { get; set; }
         /// <summary> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tenantId")]
         public DataFactoryElement<string> TenantId { get; set; }
         /// <summary> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalCredentialType")]
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalEmbeddedCert")]
         public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
         /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalEmbeddedCertPassword")]
         public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

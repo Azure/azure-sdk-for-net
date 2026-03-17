@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the connection. </summary>
-        [WirePath("connectionName")]
         public string ConnectionName { get; set; }
         /// <summary> Type of connection via linked service or dataset. </summary>
-        [WirePath("type")]
         public MapperConnectionType? ConnectionType { get; set; }
     }
 }

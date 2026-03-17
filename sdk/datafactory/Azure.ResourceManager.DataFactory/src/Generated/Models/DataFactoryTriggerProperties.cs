@@ -42,10 +42,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Trigger type. </summary>
         internal string TriggerType { get; set; }
         /// <summary> Trigger description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </summary>
-        [WirePath("runtimeState")]
         public DataFactoryTriggerRuntimeState? RuntimeState { get; }
         /// <summary>
         /// List of tags that can be used for describing the trigger.
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("annotations")]
         public IList<BinaryData> Annotations { get; }
         /// <summary>
         /// Additional Properties
@@ -109,7 +106,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

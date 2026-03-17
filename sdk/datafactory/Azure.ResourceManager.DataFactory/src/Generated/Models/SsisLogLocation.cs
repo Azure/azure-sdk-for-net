@@ -79,16 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The SSIS package execution log path. Type: string (or Expression with resultType string). </summary>
-        [WirePath("logPath")]
         public DataFactoryElement<string> LogPath { get; set; }
         /// <summary> The type of SSIS log location. </summary>
-        [WirePath("type")]
         public SsisLogLocationType LocationType { get; set; }
         /// <summary> The package execution log access credential. </summary>
-        [WirePath("typeProperties.accessCredential")]
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        [WirePath("typeProperties.logRefreshInterval")]
         public DataFactoryElement<string> LogRefreshInterval { get; set; }
     }
 }

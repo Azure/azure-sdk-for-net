@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the query in Power Query mashup document. </summary>
-        [WirePath("queryName")]
         public string QueryName { get; set; }
         /// <summary> List of sinks mapped to Power Query mashup query. </summary>
-        [WirePath("dataflowSinks")]
         public IList<PowerQuerySink> DataflowSinks { get; }
     }
 }

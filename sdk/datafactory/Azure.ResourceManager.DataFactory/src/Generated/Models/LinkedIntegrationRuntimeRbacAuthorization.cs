@@ -43,10 +43,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource identifier of the integration runtime to be shared. </summary>
-        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

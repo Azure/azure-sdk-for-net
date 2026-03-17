@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A query to retrieve data from source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
     }
 }

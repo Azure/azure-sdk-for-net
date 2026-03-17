@@ -47,16 +47,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of linked service. </summary>
         internal string LinkedServiceType { get; set; }
         /// <summary> Version of the linked service. </summary>
-        [WirePath("version")]
         public string LinkedServiceVersion { get; set; }
         /// <summary> The integration runtime reference. </summary>
-        [WirePath("connectVia")]
         public IntegrationRuntimeReference ConnectVia { get; set; }
         /// <summary> Linked service description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Parameters for linked service. </summary>
-        [WirePath("parameters")]
         public IDictionary<string, EntityParameterSpecification> Parameters { get; }
         /// <summary>
         /// List of tags that can be used for describing the linked service.
@@ -88,7 +84,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("annotations")]
         public IList<BinaryData> Annotations { get; }
         /// <summary>
         /// Additional Properties
@@ -120,7 +115,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

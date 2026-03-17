@@ -67,25 +67,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.accountName")]
         public DataFactoryElement<string> AccountName { get; set; }
         /// <summary> The Azure Batch account access key. </summary>
-        [WirePath("typeProperties.accessKey")]
         public DataFactorySecret AccessKey { get; set; }
         /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.batchUri")]
         public DataFactoryElement<string> BatchUri { get; set; }
         /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.poolName")]
         public DataFactoryElement<string> PoolName { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
-        [WirePath("typeProperties.linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

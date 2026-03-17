@@ -76,13 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Pipeline reference type. </summary>
-        [WirePath("type")]
         public DataFactoryPipelineReferenceType ReferenceType { get; set; }
         /// <summary> Reference pipeline name. </summary>
-        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
         /// <summary> Reference name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
     }
 }

@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
-        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
     }
 }

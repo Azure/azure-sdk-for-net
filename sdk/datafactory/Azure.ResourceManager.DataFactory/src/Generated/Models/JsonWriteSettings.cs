@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive. </summary>
-        [WirePath("filePattern")]
         public DataFactoryElement<string> FilePattern { get; set; }
     }
 }

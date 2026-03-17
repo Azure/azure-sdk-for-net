@@ -54,19 +54,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.authenticationType")]
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> User name for Windows authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for Windows authentication. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
     }
 }

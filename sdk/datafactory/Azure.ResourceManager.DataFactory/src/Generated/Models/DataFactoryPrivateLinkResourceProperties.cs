@@ -66,13 +66,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GroupId of a private link resource. </summary>
-        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> RequiredMembers of a private link resource. </summary>
-        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> RequiredZoneNames of a private link resource. </summary>
-        [WirePath("requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

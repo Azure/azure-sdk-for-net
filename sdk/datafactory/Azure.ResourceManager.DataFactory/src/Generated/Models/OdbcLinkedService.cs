@@ -56,22 +56,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </summary>
-        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.authenticationType")]
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The access credential portion of the connection string specified in driver-specific property-value format. </summary>
-        [WirePath("typeProperties.credential")]
         public DataFactorySecret Credential { get; set; }
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for Basic authentication. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

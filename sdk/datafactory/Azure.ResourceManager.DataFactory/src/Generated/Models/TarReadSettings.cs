@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("preserveCompressionFileNameAsFolder")]
         public DataFactoryElement<bool> PreserveCompressionFileNameAsFolder { get; set; }
     }
 }

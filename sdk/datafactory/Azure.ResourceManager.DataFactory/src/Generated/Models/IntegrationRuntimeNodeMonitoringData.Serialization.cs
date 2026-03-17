@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -204,149 +203,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeName))
-                {
-                    builder.Append("  nodeName: ");
-                    if (NodeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NodeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NodeName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableMemoryInMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  availableMemoryInMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AvailableMemoryInMB))
-                {
-                    builder.Append("  availableMemoryInMB: ");
-                    builder.AppendLine($"{AvailableMemoryInMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUtilization), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cpuUtilization: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CpuUtilization))
-                {
-                    builder.Append("  cpuUtilization: ");
-                    builder.AppendLine($"{CpuUtilization.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConcurrentJobsLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  concurrentJobsLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConcurrentJobsLimit))
-                {
-                    builder.Append("  concurrentJobsLimit: ");
-                    builder.AppendLine($"{ConcurrentJobsLimit.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConcurrentJobsRunning), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  concurrentJobsRunning: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConcurrentJobsRunning))
-                {
-                    builder.Append("  concurrentJobsRunning: ");
-                    builder.AppendLine($"{ConcurrentJobsRunning.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentJobs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxConcurrentJobs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxConcurrentJobs))
-                {
-                    builder.Append("  maxConcurrentJobs: ");
-                    builder.AppendLine($"{MaxConcurrentJobs.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SentBytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sentBytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SentBytes))
-                {
-                    builder.Append("  sentBytes: ");
-                    builder.AppendLine($"'{SentBytes.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReceivedBytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  receivedBytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReceivedBytes))
-                {
-                    builder.Append("  receivedBytes: ");
-                    builder.AppendLine($"'{ReceivedBytes.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<IntegrationRuntimeNodeMonitoringData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
@@ -355,8 +211,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support writing '{options.Format}' format.");
             }

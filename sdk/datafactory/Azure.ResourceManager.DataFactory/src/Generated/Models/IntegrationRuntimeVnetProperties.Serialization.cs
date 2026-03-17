@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -146,110 +144,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeVnetProperties(vnetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), subnetId, additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vNetId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VnetId))
-                {
-                    builder.Append("  vNetId: ");
-                    builder.AppendLine($"'{VnetId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subnet), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnet: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Subnet))
-                {
-                    builder.Append("  subnet: ");
-                    if (Subnet.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Subnet}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Subnet}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publicIPs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PublicIPs))
-                {
-                    if (PublicIPs.Any())
-                    {
-                        builder.Append("  publicIPs: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PublicIPs)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnetId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubnetId))
-                {
-                    builder.Append("  subnetId: ");
-                    builder.AppendLine($"'{SubnetId.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<IntegrationRuntimeVnetProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeVnetProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -258,8 +152,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support writing '{options.Format}' format.");
             }

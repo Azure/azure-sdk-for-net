@@ -58,40 +58,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Teradata ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only applied for version 1.0. </summary>
-        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> AuthenticationType to be used for connection. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public TeradataAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
-        [WirePath("typeProperties.sslMode")]
         public DataFactoryElement<string> SslMode { get; set; }
         /// <summary> The port numbers when connecting to server through non HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only used for V2. Only applied for version 2.0. </summary>
-        [WirePath("typeProperties.portNumber")]
         public DataFactoryElement<int> PortNumber { get; set; }
         /// <summary> The port numbers when connecting to server through HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </summary>
-        [WirePath("typeProperties.httpsPortNumber")]
         public DataFactoryElement<int> HttpsPortNumber { get; set; }
         /// <summary> Specifies whether to encrypt all communication with the Teradata database. Allowed values are 0 or 1. This setting will be ignored for HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </summary>
-        [WirePath("typeProperties.useDataEncryption")]
         public DataFactoryElement<int> UseDataEncryption { get; set; }
         /// <summary> The character set to use for the connection. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
-        [WirePath("typeProperties.characterSet")]
         public DataFactoryElement<string> CharacterSet { get; set; }
         /// <summary> The maximum size of the response buffer for SQL requests, in bytes. Type: integer. Only applied for version 2.0. </summary>
-        [WirePath("typeProperties.maxRespSize")]
         public DataFactoryElement<int> MaxRespSize { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

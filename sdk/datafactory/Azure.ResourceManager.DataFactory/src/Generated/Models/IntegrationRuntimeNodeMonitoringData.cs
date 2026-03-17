@@ -43,28 +43,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the integration runtime node. </summary>
-        [WirePath("nodeName")]
         public string NodeName { get; }
         /// <summary> Available memory (MB) on the integration runtime node. </summary>
-        [WirePath("availableMemoryInMB")]
         public int? AvailableMemoryInMB { get; }
         /// <summary> CPU percentage on the integration runtime node. </summary>
-        [WirePath("cpuUtilization")]
         public int? CpuUtilization { get; }
         /// <summary> Maximum concurrent jobs on the integration runtime node. </summary>
-        [WirePath("concurrentJobsLimit")]
         public int? ConcurrentJobsLimit { get; }
         /// <summary> The number of jobs currently running on the integration runtime node. </summary>
-        [WirePath("concurrentJobsRunning")]
         public int? ConcurrentJobsRunning { get; }
         /// <summary> The maximum concurrent jobs in this integration runtime. </summary>
-        [WirePath("maxConcurrentJobs")]
         public int? MaxConcurrentJobs { get; }
         /// <summary> Sent bytes on the integration runtime node. </summary>
-        [WirePath("sentBytes")]
         public float? SentBytes { get; }
         /// <summary> Received bytes on the integration runtime node. </summary>
-        [WirePath("receivedBytes")]
         public float? ReceivedBytes { get; }
         /// <summary>
         /// Additional Properties
@@ -96,7 +88,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

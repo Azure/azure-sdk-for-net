@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the relativeUrl of http server. Type: string (or Expression with resultType string). </summary>
-        [WirePath("relativeUrl")]
         public DataFactoryElement<string> RelativeUri { get; set; }
     }
 }

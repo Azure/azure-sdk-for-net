@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of custom property. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Value of custom property. </summary>
-        [WirePath("value")]
         public string Value { get; set; }
     }
 }

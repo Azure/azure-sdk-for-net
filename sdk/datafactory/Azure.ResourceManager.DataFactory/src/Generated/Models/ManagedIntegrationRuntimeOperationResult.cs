@@ -40,22 +40,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The operation type. Could be start or stop. </summary>
-        [WirePath("type")]
         public string ManagedIntegrationRuntimeOperationResultType { get; }
         /// <summary> The start time of the operation. </summary>
-        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The operation result. </summary>
-        [WirePath("result")]
         public string Result { get; }
         /// <summary> The error code. </summary>
-        [WirePath("errorCode")]
         public string ErrorCode { get; }
         /// <summary> Managed integration runtime error parameters. </summary>
-        [WirePath("parameters")]
         public IReadOnlyList<string> Parameters { get; }
         /// <summary> The activity id for the operation request. </summary>
-        [WirePath("activityId")]
         public string ActivityId { get; }
         /// <summary>
         /// Additional Properties
@@ -87,7 +81,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

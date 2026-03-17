@@ -41,13 +41,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A name of a pre-created csv mapping that was defined on the target Kusto table. Type: string. </summary>
-        [WirePath("ingestionMappingName")]
         public DataFactoryElement<string> IngestionMappingName { get; set; }
         /// <summary> An explicit column mapping description provided in a json format. Type: string. </summary>
-        [WirePath("ingestionMappingAsJson")]
         public DataFactoryElement<string> IngestionMappingAsJson { get; set; }
         /// <summary> If set to true, any aggregation will be skipped. Default is false. Type: boolean. </summary>
-        [WirePath("flushImmediately")]
         public DataFactoryElement<bool> FlushImmediately { get; set; }
     }
 }

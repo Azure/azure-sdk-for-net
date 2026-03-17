@@ -88,67 +88,46 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The base URL of the REST service. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.enableServerCertificateValidation")]
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
         /// <summary> Type of authentication used to connect to the REST service. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public RestServiceAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used in Basic authentication type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password used in Basic authentication type. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
-        [WirePath("typeProperties.authHeaders")]
         public DataFactoryElement<BinaryData> AuthHeaders { get; set; }
         /// <summary> The application's client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The application's key used in AadServicePrincipal authentication type. </summary>
-        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.azureCloudType")]
         public DataFactoryElement<string> AzureCloudType { get; set; }
         /// <summary> The resource you are requesting authorization to use. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.aadResourceId")]
         public DataFactoryElement<string> AadResourceId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
         /// <summary> The client ID associated with your application. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret associated with your application. </summary>
-        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tokenEndpoint")]
         public DataFactoryElement<string> TokenEndpoint { get; set; }
         /// <summary> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.resource")]
         public DataFactoryElement<string> Resource { get; set; }
         /// <summary> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.scope")]
         public DataFactoryElement<string> Scope { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalCredentialType")]
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalEmbeddedCert")]
         public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
         /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalEmbeddedCertPassword")]
         public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
     }
 }

@@ -57,20 +57,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Path to the folder in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.folderPath")]
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> The name of the file in the Azure Data Lake Store. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.fileName")]
         public DataFactoryElement<string> FileName { get; set; }
         /// <summary>
         /// The format of the Data Lake Store.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
-        [WirePath("typeProperties.format")]
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the item(s) in the Azure Data Lake Store. </summary>
-        [WirePath("typeProperties.compression")]
         public DatasetCompression Compression { get; set; }
     }
 }

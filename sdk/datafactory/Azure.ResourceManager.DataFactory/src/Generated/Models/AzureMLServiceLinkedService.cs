@@ -66,28 +66,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.subscriptionId")]
         public DataFactoryElement<string> SubscriptionId { get; set; }
         /// <summary> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.resourceGroupName")]
         public DataFactoryElement<string> ResourceGroupName { get; set; }
         /// <summary> Azure ML Service workspace name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.mlWorkspaceName")]
         public DataFactoryElement<string> MLWorkspaceName { get; set; }
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.authentication")]
         public DataFactoryElement<string> Authentication { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. </summary>
-        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

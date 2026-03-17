@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -117,74 +116,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DelimitedTextReadSettings(type, additionalProperties, skipLineCount, compressionProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipLineCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  skipLineCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SkipLineCount))
-                {
-                    builder.Append("  skipLineCount: ");
-                    builder.AppendLine($"'{SkipLineCount.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompressionProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  compressionProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CompressionProperties))
-                {
-                    builder.Append("  compressionProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CompressionProperties, options, 2, false, "  compressionProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FormatReadSettingsType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FormatReadSettingsType))
-                {
-                    builder.Append("  type: ");
-                    if (FormatReadSettingsType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FormatReadSettingsType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FormatReadSettingsType}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DelimitedTextReadSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextReadSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -193,8 +124,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DelimitedTextReadSettings)} does not support writing '{options.Format}' format.");
             }

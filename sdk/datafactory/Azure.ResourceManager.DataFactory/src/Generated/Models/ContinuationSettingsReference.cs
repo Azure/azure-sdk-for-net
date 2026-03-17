@@ -65,13 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Continuation TTL in minutes. </summary>
-        [WirePath("continuationTtlInMinutes")]
         public DataFactoryElement<int> ContinuationTtlInMinutes { get; set; }
         /// <summary> Idle condition. </summary>
-        [WirePath("idleCondition")]
         public DataFactoryElement<string> IdleCondition { get; set; }
         /// <summary> Customized checkpoint key. </summary>
-        [WirePath("customizedCheckpointKey")]
         public DataFactoryElement<string> CustomizedCheckpointKey { get; set; }
     }
 }

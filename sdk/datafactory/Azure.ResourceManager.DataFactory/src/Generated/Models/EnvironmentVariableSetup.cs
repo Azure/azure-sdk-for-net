@@ -45,10 +45,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the environment variable. </summary>
-        [WirePath("typeProperties.variableName")]
         public string VariableName { get; set; }
         /// <summary> The value of the environment variable. </summary>
-        [WirePath("typeProperties.variableValue")]
         public string VariableValue { get; set; }
     }
 }

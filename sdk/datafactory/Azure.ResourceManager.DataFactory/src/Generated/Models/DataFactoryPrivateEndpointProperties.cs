@@ -41,22 +41,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The managed private endpoint connection state. </summary>
-        [WirePath("connectionState")]
         public ConnectionStateProperties ConnectionState { get; set; }
         /// <summary> Fully qualified domain names. </summary>
-        [WirePath("fqdns")]
         public IList<string> Fqdns { get; }
         /// <summary> The groupId to which the managed private endpoint is created. </summary>
-        [WirePath("groupId")]
         public string GroupId { get; set; }
         /// <summary> Denotes whether the managed private endpoint is reserved. </summary>
-        [WirePath("isReserved")]
         public bool? IsReserved { get; }
         /// <summary> The ARM resource ID of the resource to which the managed private endpoint is created. </summary>
-        [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
         /// <summary> The managed private endpoint provisioning state. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
         /// <summary>
         /// Additional Properties
@@ -88,7 +82,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

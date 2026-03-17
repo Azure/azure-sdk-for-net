@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The status of the operation. </summary>
-        [WirePath("status")]
         public string Status { get; }
         /// <summary> The operation name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary> The operation properties. </summary>
-        [WirePath("properties")]
         public string Properties { get; }
         /// <summary> The operation error message. </summary>
-        [WirePath("error")]
         public string Error { get; }
     }
 }

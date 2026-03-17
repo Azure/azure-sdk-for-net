@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
-        [WirePath("logLevel")]
         public DataFactoryElement<string> LogLevel { get; set; }
         /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("enableReliableLogging")]
         public DataFactoryElement<bool> EnableReliableLogging { get; set; }
     }
 }

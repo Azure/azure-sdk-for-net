@@ -48,10 +48,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Data flow reference type. </summary>
-        [WirePath("type")]
         public DataFlowReferenceType ReferenceType { get; set; }
         /// <summary> Reference data flow name. </summary>
-        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
         /// <summary>
         /// Reference data flow parameters from dataset.
@@ -83,7 +81,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("datasetParameters")]
         public BinaryData DatasetParameters { get; set; }
         /// <summary>
         /// Data flow parameters
@@ -115,7 +112,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary>
         /// Additional Properties
@@ -147,7 +143,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

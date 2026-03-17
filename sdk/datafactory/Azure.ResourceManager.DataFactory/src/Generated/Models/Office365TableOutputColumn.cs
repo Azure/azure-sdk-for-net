@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the table column. Type: string. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
     }
 }

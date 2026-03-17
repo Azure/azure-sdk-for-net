@@ -39,22 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The frequency. </summary>
-        [WirePath("frequency")]
         public DataFactoryRecurrenceFrequency? Frequency { get; set; }
         /// <summary> The interval. </summary>
-        [WirePath("interval")]
         public int? Interval { get; set; }
         /// <summary> The start time. </summary>
-        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end time. </summary>
-        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The time zone. </summary>
-        [WirePath("timeZone")]
         public string TimeZone { get; set; }
         /// <summary> The recurrence schedule. </summary>
-        [WirePath("schedule")]
         public DataFactoryRecurrenceSchedule Schedule { get; set; }
         /// <summary>
         /// Additional Properties
@@ -86,7 +80,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

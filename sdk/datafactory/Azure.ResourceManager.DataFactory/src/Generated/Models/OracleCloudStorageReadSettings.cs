@@ -51,34 +51,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("recursive")]
         public DataFactoryElement<bool> Recursive { get; set; }
         /// <summary> Oracle Cloud Storage wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
-        [WirePath("wildcardFolderPath")]
         public DataFactoryElement<string> WildcardFolderPath { get; set; }
         /// <summary> Oracle Cloud Storage wildcardFileName. Type: string (or Expression with resultType string). </summary>
-        [WirePath("wildcardFileName")]
         public DataFactoryElement<string> WildcardFileName { get; set; }
         /// <summary> The prefix filter for the Oracle Cloud Storage object name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("prefix")]
         public DataFactoryElement<string> Prefix { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
-        [WirePath("fileListPath")]
         public DataFactoryElement<string> FileListPath { get; set; }
         /// <summary> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("enablePartitionDiscovery")]
         public DataFactoryElement<bool> EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
-        [WirePath("partitionRootPath")]
         public DataFactoryElement<string> PartitionRootPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("deleteFilesAfterCompletion")]
         public DataFactoryElement<bool> DeleteFilesAfterCompletion { get; set; }
         /// <summary> The start of file's modified datetime. Type: string (or Expression with resultType string). </summary>
-        [WirePath("modifiedDatetimeStart")]
         public DataFactoryElement<string> ModifiedDatetimeStart { get; set; }
         /// <summary> The end of file's modified datetime. Type: string (or Expression with resultType string). </summary>
-        [WirePath("modifiedDatetimeEnd")]
         public DataFactoryElement<string> ModifiedDatetimeEnd { get; set; }
     }
 }

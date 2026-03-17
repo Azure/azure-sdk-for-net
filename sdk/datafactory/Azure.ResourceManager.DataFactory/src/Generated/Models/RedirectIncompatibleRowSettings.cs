@@ -42,10 +42,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </summary>
-        [WirePath("linkedServiceName")]
         public DataFactoryElement<string> LinkedServiceName { get; set; }
         /// <summary> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </summary>
-        [WirePath("path")]
         public DataFactoryElement<string> Path { get; set; }
         /// <summary>
         /// Additional Properties
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

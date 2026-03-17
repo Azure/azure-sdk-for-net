@@ -82,10 +82,8 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Properties of the global parameter. </summary>
-        [WirePath("properties")]
         public IDictionary<string, DataFactoryGlobalParameterProperties> Properties { get; }
         /// <summary> Etag identifies change in the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

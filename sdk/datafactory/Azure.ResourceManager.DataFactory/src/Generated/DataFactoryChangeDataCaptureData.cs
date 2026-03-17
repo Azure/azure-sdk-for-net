@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The folder that this CDC is in. If not specified, CDC will appear at the root level. </summary>
         internal ChangeDataCaptureFolder Folder { get; set; }
         /// <summary> The name of the folder that this CDC is in. </summary>
-        [WirePath("properties.folder.name")]
         public string FolderName
         {
             get => Folder is null ? default : Folder.Name;
@@ -85,25 +84,18 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> The description of the change data capture. </summary>
-        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> List of sources connections that can be used as sources in the CDC. </summary>
-        [WirePath("properties.sourceConnectionsInfo")]
         public IList<MapperSourceConnectionsInfo> SourceConnectionsInfo { get; }
         /// <summary> List of target connections that can be used as sources in the CDC. </summary>
-        [WirePath("properties.targetConnectionsInfo")]
         public IList<MapperTargetConnectionsInfo> TargetConnectionsInfo { get; }
         /// <summary> CDC policy. </summary>
-        [WirePath("properties.policy")]
         public MapperPolicy Policy { get; set; }
         /// <summary> A boolean to determine if the vnet configuration needs to be overwritten. </summary>
-        [WirePath("properties.allowVNetOverride")]
         public bool? AllowVnetOverride { get; set; }
         /// <summary> Status of the CDC as to if it is running or stopped. </summary>
-        [WirePath("properties.status")]
         public string Status { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary>
         /// Additional Properties
@@ -135,7 +127,6 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

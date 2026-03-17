@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Pipeline reference. </summary>
-        [WirePath("pipelineReference")]
         public DataFactoryPipelineReference PipelineReference { get; set; }
         /// <summary>
         /// Pipeline parameters.
@@ -95,7 +94,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

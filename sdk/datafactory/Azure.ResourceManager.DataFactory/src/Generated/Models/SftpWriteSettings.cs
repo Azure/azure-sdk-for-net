@@ -37,10 +37,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the timeout for writing each chunk to SFTP server. Default value: 01:00:00 (one hour). Type: string (or Expression with resultType string). </summary>
-        [WirePath("operationTimeout")]
         public DataFactoryElement<string> OperationTimeout { get; set; }
         /// <summary> Upload to temporary file(s) and rename. Disable this option if your SFTP server doesn't support rename operation. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("useTempFileRename")]
         public DataFactoryElement<bool> UseTempFileRename { get; set; }
     }
 }

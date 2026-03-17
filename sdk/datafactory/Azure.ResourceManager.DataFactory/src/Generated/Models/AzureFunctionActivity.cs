@@ -60,10 +60,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Rest API method for target endpoint. </summary>
-        [WirePath("typeProperties.method")]
         public AzureFunctionActivityMethod Method { get; set; }
         /// <summary> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.functionName")]
         public DataFactoryElement<string> FunctionName { get; set; }
         /// <summary>
         /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string).
@@ -95,10 +93,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.headers")]
         public IDictionary<string, BinaryData> RequestHeaders { get; }
         /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.body")]
         public DataFactoryElement<string> Body { get; set; }
     }
 }

@@ -79,16 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GitHub access code. </summary>
-        [WirePath("gitHubAccessCode")]
         public string GitHubAccessCode { get; }
         /// <summary> GitHub application client ID. </summary>
-        [WirePath("gitHubClientId")]
         public string GitHubClientId { get; set; }
         /// <summary> GitHub bring your own app client secret information. </summary>
-        [WirePath("gitHubClientSecret")]
         public FactoryGitHubClientSecret GitHubClientSecret { get; set; }
         /// <summary> GitHub access token base URL. </summary>
-        [WirePath("gitHubAccessTokenBaseUrl")]
         public Uri GitHubAccessTokenBaseUri { get; }
     }
 }

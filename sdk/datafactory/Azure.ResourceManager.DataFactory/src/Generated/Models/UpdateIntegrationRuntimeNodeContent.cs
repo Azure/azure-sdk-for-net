@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </summary>
-        [WirePath("concurrentJobsLimit")]
         public int? ConcurrentJobsLimit { get; set; }
     }
 }

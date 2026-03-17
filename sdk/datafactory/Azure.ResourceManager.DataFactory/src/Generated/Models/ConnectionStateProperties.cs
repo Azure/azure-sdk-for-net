@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The actions required on the managed private endpoint. </summary>
-        [WirePath("actionsRequired")]
         public string ActionsRequired { get; }
         /// <summary> The managed private endpoint description. </summary>
-        [WirePath("description")]
         public string Description { get; }
         /// <summary> The approval status. </summary>
-        [WirePath("status")]
         public string Status { get; }
     }
 }

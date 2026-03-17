@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("preserveZipFileNameAsFolder")]
         public DataFactoryElement<bool> PreserveZipFileNameAsFolder { get; set; }
     }
 }

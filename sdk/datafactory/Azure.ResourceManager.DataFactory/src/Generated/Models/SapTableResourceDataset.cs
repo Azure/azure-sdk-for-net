@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the SAP Table. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
     }
 }

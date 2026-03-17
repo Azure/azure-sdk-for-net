@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </summary>
-        [WirePath("url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Type of authentication used to connect to the web table source. </summary>
         internal WebAuthenticationType AuthenticationType { get; set; }

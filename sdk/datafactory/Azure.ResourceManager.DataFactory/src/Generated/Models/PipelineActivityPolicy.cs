@@ -38,19 +38,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        [WirePath("timeout")]
         public DataFactoryElement<string> Timeout { get; set; }
         /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        [WirePath("retry")]
         public DataFactoryElement<int> Retry { get; set; }
         /// <summary> Interval between each retry attempt (in seconds). The default is 30 sec. </summary>
-        [WirePath("retryIntervalInSeconds")]
         public int? RetryIntervalInSeconds { get; set; }
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
-        [WirePath("secureInput")]
         public bool? IsSecureInputEnabled { get; set; }
         /// <summary> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </summary>
-        [WirePath("secureOutput")]
         public bool? IsSecureOutputEnabled { get; set; }
         /// <summary>
         /// Additional Properties
@@ -82,7 +77,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

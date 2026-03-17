@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name of the MongoDB database. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.collectionName")]
         public DataFactoryElement<string> CollectionName { get; set; }
     }
 }

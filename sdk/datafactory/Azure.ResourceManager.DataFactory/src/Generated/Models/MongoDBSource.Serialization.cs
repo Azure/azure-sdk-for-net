@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -172,134 +171,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Query), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  query: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Query))
-                {
-                    builder.Append("  query: ");
-                    builder.AppendLine($"'{Query.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalColumns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  additionalColumns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdditionalColumns))
-                {
-                    builder.Append("  additionalColumns: ");
-                    builder.AppendLine($"'{AdditionalColumns.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CopySourceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CopySourceType))
-                {
-                    builder.Append("  type: ");
-                    if (CopySourceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CopySourceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CopySourceType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceRetryCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceRetryCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceRetryCount))
-                {
-                    builder.Append("  sourceRetryCount: ");
-                    builder.AppendLine($"'{SourceRetryCount.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceRetryWait), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceRetryWait: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceRetryWait))
-                {
-                    builder.Append("  sourceRetryWait: ");
-                    builder.AppendLine($"'{SourceRetryWait.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentConnections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxConcurrentConnections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxConcurrentConnections))
-                {
-                    builder.Append("  maxConcurrentConnections: ");
-                    builder.AppendLine($"'{MaxConcurrentConnections.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableMetricsCollection), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  disableMetricsCollection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisableMetricsCollection))
-                {
-                    builder.Append("  disableMetricsCollection: ");
-                    builder.AppendLine($"'{DisableMetricsCollection.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<MongoDBSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -308,8 +179,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBSource)} does not support writing '{options.Format}' format.");
             }

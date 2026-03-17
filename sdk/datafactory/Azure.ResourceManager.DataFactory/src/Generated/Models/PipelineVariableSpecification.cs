@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Variable type. </summary>
-        [WirePath("type")]
         public PipelineVariableType VariableType { get; set; }
         /// <summary>
         /// Default value of variable.
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("defaultValue")]
         public BinaryData DefaultValue { get; set; }
     }
 }

@@ -53,31 +53,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        [WirePath("preCopyScript")]
         public DataFactoryElement<string> PreCopyScript { get; set; }
         /// <summary> Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("allowPolyBase")]
         public DataFactoryElement<bool> AllowPolyBase { get; set; }
         /// <summary> Specifies PolyBase-related settings when allowPolyBase is true. </summary>
-        [WirePath("polyBaseSettings")]
         public PolybaseSettings PolyBaseSettings { get; set; }
         /// <summary> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("allowCopyCommand")]
         public DataFactoryElement<bool> AllowCopyCommand { get; set; }
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
-        [WirePath("copyCommandSettings")]
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
-        [WirePath("tableOption")]
         public DataFactoryElement<string> TableOption { get; set; }
         /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("sqlWriterUseTableLock")]
         public DataFactoryElement<bool> SqlWriterUseTableLock { get; set; }
         /// <summary> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </summary>
-        [WirePath("writeBehavior")]
         public DataFactoryElement<string> WriteBehavior { get; set; }
         /// <summary> SQL DW upsert settings. </summary>
-        [WirePath("upsertSettings")]
         public SqlDWUpsertSettings UpsertSettings { get; set; }
     }
 }

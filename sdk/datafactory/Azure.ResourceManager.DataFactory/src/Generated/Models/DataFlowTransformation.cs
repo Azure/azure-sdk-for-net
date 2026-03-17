@@ -79,19 +79,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Transformation name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Transformation description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Dataset reference. </summary>
-        [WirePath("dataset")]
         public DatasetReference Dataset { get; set; }
         /// <summary> Linked service reference. </summary>
-        [WirePath("linkedService")]
         public DataFactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary> Flowlet Reference. </summary>
-        [WirePath("flowlet")]
         public DataFlowReference Flowlet { get; set; }
     }
 }

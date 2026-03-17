@@ -76,10 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> User property name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> User property value. Type: string (or Expression with resultType string). </summary>
-        [WirePath("value")]
         public DataFactoryElement<string> Value { get; set; }
     }
 }

@@ -41,15 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A query to execute before starting the copy. Type: string (or Expression with resultType string). </summary>
-        [WirePath("preCopyScript")]
         public DataFactoryElement<string> PreCopyScript { get; set; }
         /// <summary> The write behavior for the operation. Default is Bulk Insert. </summary>
-        [WirePath("writeMethod")]
         public AzurePostgreSqlWriteMethodEnum? WriteMethod { get; set; }
         /// <summary> Azure Database for PostgreSQL upsert option settings. </summary>
         internal AzurePostgreSqlSinkUpsertSettings UpsertSettings { get; set; }
         /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
-        [WirePath("upsertSettings.keys")]
         public DataFactoryElement<IList<string>> UpsertKeys
         {
             get => UpsertSettings is null ? default : UpsertSettings.Keys;

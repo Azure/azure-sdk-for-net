@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> A query to execute before starting the copy. Type: string (or Expression with resultType string). </summary>
-        [WirePath("preCopyScript")]
         public DataFactoryElement<string> PreCopyScript { get; set; }
     }
 }

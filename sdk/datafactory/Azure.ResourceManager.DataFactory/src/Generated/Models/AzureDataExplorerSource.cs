@@ -51,7 +51,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </summary>
-        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary>
         /// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
@@ -83,10 +82,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("noTruncation")]
         public BinaryData NoTruncation { get; set; }
         /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).. </summary>
-        [WirePath("queryTimeout")]
         public DataFactoryElement<string> QueryTimeout { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
@@ -118,7 +115,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
     }
 }

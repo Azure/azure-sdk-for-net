@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the authentication key to regenerate. </summary>
-        [WirePath("keyName")]
         public IntegrationRuntimeAuthKeyName? KeyName { get; set; }
     }
 }

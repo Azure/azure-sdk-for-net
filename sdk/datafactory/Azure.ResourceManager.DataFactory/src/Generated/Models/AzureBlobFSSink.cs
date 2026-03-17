@@ -40,10 +40,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </summary>
-        [WirePath("copyBehavior")]
         public DataFactoryElement<string> CopyBehavior { get; set; }
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        [WirePath("metadata")]
         public IList<DataFactoryMetadataItemInfo> Metadata { get; }
     }
 }

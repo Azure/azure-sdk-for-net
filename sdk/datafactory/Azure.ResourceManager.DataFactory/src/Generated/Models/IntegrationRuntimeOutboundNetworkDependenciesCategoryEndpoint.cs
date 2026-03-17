@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The category of outbound network dependency. </summary>
-        [WirePath("category")]
         public string Category { get; }
         /// <summary> The endpoints for outbound network dependency. </summary>
-        [WirePath("endpoints")]
         public IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> Endpoints { get; }
     }
 }

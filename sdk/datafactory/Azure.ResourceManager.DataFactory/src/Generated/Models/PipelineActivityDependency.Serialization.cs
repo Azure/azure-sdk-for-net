@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -106,67 +104,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineActivityDependency(activity, dependencyConditions, additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Activity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  activity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Activity))
-                {
-                    builder.Append("  activity: ");
-                    if (Activity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Activity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Activity}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DependencyConditions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dependencyConditions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DependencyConditions))
-                {
-                    if (DependencyConditions.Any())
-                    {
-                        builder.Append("  dependencyConditions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DependencyConditions)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<PipelineActivityDependency>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityDependency>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,8 +112,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PipelineActivityDependency)} does not support writing '{options.Format}' format.");
             }

@@ -71,22 +71,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the target column. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </summary>
-        [WirePath("type")]
         public MappingType? MappingType { get; set; }
         /// <summary> Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping. </summary>
-        [WirePath("functionName")]
         public string FunctionName { get; set; }
         /// <summary> Expression used for 'Aggregate' and 'Derived' type mapping. </summary>
-        [WirePath("expression")]
         public string Expression { get; set; }
         /// <summary> Reference of the source column used in the mapping. It is used for 'Direct' mapping type only. </summary>
-        [WirePath("attributeReference")]
         public MapperAttributeReference AttributeReference { get; set; }
         /// <summary> List of references for source columns. It is used for 'Derived' and 'Aggregate' type mappings only. </summary>
-        [WirePath("attributeReferences")]
         public IList<MapperAttributeReference> AttributeReferences { get; }
     }
 }

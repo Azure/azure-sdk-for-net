@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of this referenced entity. </summary>
-        [WirePath("type")]
         public IntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get; set; }
         /// <summary> The name of this referenced entity. </summary>
-        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
     }
 }

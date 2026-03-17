@@ -72,10 +72,8 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Core resource properties. </summary>
-        [WirePath("properties")]
         public DataFactoryPrivateEndpointConnectionProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

@@ -54,13 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.openHubDestinationName")]
         public DataFactoryElement<string> OpenHubDestinationName { get; set; }
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.excludeLastRequest")]
         public DataFactoryElement<bool> ExcludeLastRequest { get; set; }
         /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
-        [WirePath("typeProperties.baseRequestId")]
         public DataFactoryElement<int> BaseRequestId { get; set; }
     }
 }

@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("fileMissing")]
         public DataFactoryElement<bool> FileMissing { get; set; }
         /// <summary> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("dataInconsistency")]
         public DataFactoryElement<bool> DataInconsistency { get; set; }
     }
 }

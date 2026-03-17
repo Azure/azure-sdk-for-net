@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
     }
 }

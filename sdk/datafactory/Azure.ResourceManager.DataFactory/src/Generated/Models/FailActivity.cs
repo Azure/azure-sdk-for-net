@@ -54,10 +54,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.message")]
         public DataFactoryElement<string> Message { get; set; }
         /// <summary> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.errorCode")]
         public DataFactoryElement<string> ErrorCode { get; set; }
     }
 }

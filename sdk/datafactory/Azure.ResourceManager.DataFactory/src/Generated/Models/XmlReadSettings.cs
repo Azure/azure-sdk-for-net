@@ -47,19 +47,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </summary>
-        [WirePath("compressionProperties")]
         public CompressionReadSettings CompressionProperties { get; set; }
         /// <summary> Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string). </summary>
-        [WirePath("validationMode")]
         public DataFactoryElement<string> ValidationMode { get; set; }
         /// <summary> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("detectDataType")]
         public DataFactoryElement<bool> DetectDataType { get; set; }
         /// <summary> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("namespaces")]
         public DataFactoryElement<bool> Namespaces { get; set; }
         /// <summary> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object). </summary>
-        [WirePath("namespacePrefixes")]
         public DataFactoryElement<IDictionary<string, string>> NamespacePrefixes { get; set; }
     }
 }

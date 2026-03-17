@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -171,105 +169,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  computeType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ComputeType))
-                {
-                    builder.Append("  computeType: ");
-                    builder.AppendLine($"'{ComputeType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CoreCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  coreCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CoreCount))
-                {
-                    builder.Append("  coreCount: ");
-                    builder.AppendLine($"{CoreCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToLiveInMinutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timeToLive: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TimeToLiveInMinutes))
-                {
-                    builder.Append("  timeToLive: ");
-                    builder.AppendLine($"{TimeToLiveInMinutes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldCleanupAfterTtl), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cleanup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ShouldCleanupAfterTtl))
-                {
-                    builder.Append("  cleanup: ");
-                    var boolValue = ShouldCleanupAfterTtl.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CustomProperties))
-                {
-                    if (CustomProperties.Any())
-                    {
-                        builder.Append("  customProperties: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CustomProperties)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  customProperties: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<IntegrationRuntimeDataFlowProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -278,8 +177,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support writing '{options.Format}' format.");
             }

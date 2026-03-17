@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -100,39 +99,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPipelinePolicy(elapsedTimeMetric, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ElapsedTimeMetricDuration", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  elapsedTimeMetric: ");
-                builder.AppendLine("{");
-                builder.Append("    duration: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ElapsedTimeMetric))
-                {
-                    builder.Append("  elapsedTimeMetric: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ElapsedTimeMetric, options, 2, false, "  elapsedTimeMetric: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DataFactoryPipelinePolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelinePolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,8 +107,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryPipelinePolicy)} does not support writing '{options.Format}' format.");
             }

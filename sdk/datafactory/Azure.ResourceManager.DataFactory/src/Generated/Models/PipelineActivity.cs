@@ -57,24 +57,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Activity name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Type of activity. </summary>
         internal string ActivityType { get; set; }
         /// <summary> Activity description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Activity state. This is an optional property and if not provided, the state will be Active by default. </summary>
-        [WirePath("state")]
         public PipelineActivityState? State { get; set; }
         /// <summary> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </summary>
-        [WirePath("onInactiveMarkAs")]
         public ActivityOnInactiveMarkAs? OnInactiveMarkAs { get; set; }
         /// <summary> Activity depends on condition. </summary>
-        [WirePath("dependsOn")]
         public IList<PipelineActivityDependency> DependsOn { get; }
         /// <summary> Activity user properties. </summary>
-        [WirePath("userProperties")]
         public IList<PipelineActivityUserProperty> UserProperties { get; }
         /// <summary>
         /// Additional Properties
@@ -106,7 +100,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

@@ -134,61 +134,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </summary>
-        [WirePath("typeProperties.clusterSize")]
         public DataFactoryElement<int> ClusterSize { get; set; }
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.timeToLive")]
         public DataFactoryElement<string> TimeToLiveExpression { get; set; }
         /// <summary> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.version")]
         public DataFactoryElement<string> Version { get; set; }
         /// <summary> Azure Storage linked service to be used by the on-demand cluster for storing and processing data. </summary>
-        [WirePath("typeProperties.linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.hostSubscriptionId")]
         public DataFactoryElement<string> HostSubscriptionId { get; set; }
         /// <summary> The service principal id for the hostSubscriptionId. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key for the service principal id. </summary>
-        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clusterResourceGroup")]
         public DataFactoryElement<string> ClusterResourceGroup { get; set; }
         /// <summary> HDInsight On-demand cluster resource group authentication type. </summary>
-        [WirePath("typeProperties.clusterResourceGroupAuthType")]
         public HDInsightOnDemandClusterResourceGroupAuthenticationType? ClusterResourceGroupAuthType { get; set; }
         /// <summary> The prefix of cluster name, postfix will be distinct with timestamp. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clusterNamePrefix")]
         public DataFactoryElement<string> ClusterNamePrefix { get; set; }
         /// <summary> The username to access the cluster. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clusterUserName")]
         public DataFactoryElement<string> ClusterUserName { get; set; }
         /// <summary> The password to access the cluster. </summary>
-        [WirePath("typeProperties.clusterPassword")]
         public DataFactorySecret ClusterPassword { get; set; }
         /// <summary> The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clusterSshUserName")]
         public DataFactoryElement<string> ClusterSshUserName { get; set; }
         /// <summary> The password to SSH remotely connect cluster’s node (for Linux). </summary>
-        [WirePath("typeProperties.clusterSshPassword")]
         public DataFactorySecret ClusterSshPassword { get; set; }
         /// <summary> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </summary>
-        [WirePath("typeProperties.additionalLinkedServiceNames")]
         public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; }
         /// <summary> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </summary>
-        [WirePath("typeProperties.hcatalogLinkedServiceName")]
         public DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary> The cluster type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clusterType")]
         public DataFactoryElement<string> ClusterType { get; set; }
         /// <summary> The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.sparkVersion")]
         public DataFactoryElement<string> SparkVersion { get; set; }
         /// <summary>
         /// Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created.
@@ -220,7 +201,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.coreConfiguration")]
         public BinaryData CoreConfiguration { get; set; }
         /// <summary>
         /// Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster.
@@ -252,7 +232,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.hBaseConfiguration")]
         public BinaryData HBaseConfiguration { get; set; }
         /// <summary>
         /// Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster.
@@ -284,7 +263,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.hdfsConfiguration")]
         public BinaryData HdfsConfiguration { get; set; }
         /// <summary>
         /// Specifies the hive configuration parameters (hive-site.xml) for the HDInsight cluster.
@@ -316,7 +294,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.hiveConfiguration")]
         public BinaryData HiveConfiguration { get; set; }
         /// <summary>
         /// Specifies the MapReduce configuration parameters (mapred-site.xml) for the HDInsight cluster.
@@ -348,7 +325,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.mapReduceConfiguration")]
         public BinaryData MapReduceConfiguration { get; set; }
         /// <summary>
         /// Specifies the Oozie configuration parameters (oozie-site.xml) for the HDInsight cluster.
@@ -380,7 +356,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.oozieConfiguration")]
         public BinaryData OozieConfiguration { get; set; }
         /// <summary>
         /// Specifies the Storm configuration parameters (storm-site.xml) for the HDInsight cluster.
@@ -412,7 +387,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.stormConfiguration")]
         public BinaryData StormConfiguration { get; set; }
         /// <summary>
         /// Specifies the Yarn configuration parameters (yarn-site.xml) for the HDInsight cluster.
@@ -444,10 +418,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.yarnConfiguration")]
         public BinaryData YarnConfiguration { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary>
         /// Specifies the size of the head node for the HDInsight cluster.
@@ -479,7 +451,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.headNodeSize")]
         public BinaryData HeadNodeSize { get; set; }
         /// <summary>
         /// Specifies the size of the data node for the HDInsight cluster.
@@ -511,7 +482,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.dataNodeSize")]
         public BinaryData DataNodeSize { get; set; }
         /// <summary>
         /// Specifies the size of the Zoo Keeper node for the HDInsight cluster.
@@ -543,19 +513,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.zookeeperNodeSize")]
         public BinaryData ZookeeperNodeSize { get; set; }
         /// <summary> Custom script actions to run on HDI ondemand cluster once it's up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
-        [WirePath("typeProperties.scriptActions")]
         public IList<DataFactoryScriptAction> ScriptActions { get; }
         /// <summary> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.virtualNetworkId")]
         public DataFactoryElement<string> VirtualNetworkId { get; set; }
         /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.subnetName")]
         public DataFactoryElement<string> SubnetName { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

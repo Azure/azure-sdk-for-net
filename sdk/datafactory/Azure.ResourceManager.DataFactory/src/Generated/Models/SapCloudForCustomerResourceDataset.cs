@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.path")]
         public DataFactoryElement<string> Path { get; set; }
     }
 }

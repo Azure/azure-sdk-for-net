@@ -75,13 +75,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("enableCopyActivityLog")]
         public DataFactoryElement<bool> EnableCopyActivityLog { get; set; }
         /// <summary> Specifies settings for copy activity log. </summary>
-        [WirePath("copyActivityLogSettings")]
         public CopyActivityLogSettings CopyActivityLogSettings { get; set; }
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        [WirePath("logLocationSettings")]
         public LogLocationSettings LogLocationSettings { get; set; }
     }
 }

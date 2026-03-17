@@ -53,13 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The user token for the Quickbase source. </summary>
-        [WirePath("typeProperties.userToken")]
         public DataFactorySecret UserToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

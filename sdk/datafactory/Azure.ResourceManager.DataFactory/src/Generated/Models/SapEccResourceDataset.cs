@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.path")]
         public DataFactoryElement<string> Path { get; set; }
     }
 }

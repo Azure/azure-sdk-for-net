@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -161,98 +160,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timeout), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timeout: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timeout))
-                {
-                    builder.Append("  timeout: ");
-                    builder.AppendLine($"'{Timeout.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Retry), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  retry: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Retry))
-                {
-                    builder.Append("  retry: ");
-                    builder.AppendLine($"'{Retry.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryIntervalInSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  retryIntervalInSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RetryIntervalInSeconds))
-                {
-                    builder.Append("  retryIntervalInSeconds: ");
-                    builder.AppendLine($"{RetryIntervalInSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSecureInputEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secureInput: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSecureInputEnabled))
-                {
-                    builder.Append("  secureInput: ");
-                    var boolValue = IsSecureInputEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSecureOutputEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secureOutput: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSecureOutputEnabled))
-                {
-                    builder.Append("  secureOutput: ");
-                    var boolValue = IsSecureOutputEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -261,8 +168,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PipelineActivityPolicy)} does not support writing '{options.Format}' format.");
             }

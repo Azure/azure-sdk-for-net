@@ -57,19 +57,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        [WirePath("typeProperties.scriptBlockExecutionTimeout")]
         public DataFactoryElement<string> ScriptBlockExecutionTimeout { get; set; }
         /// <summary> Array of script blocks. Type: array. </summary>
-        [WirePath("typeProperties.scripts")]
         public IList<ScriptActivityScriptBlock> Scripts { get; }
         /// <summary> Log settings of script activity. </summary>
-        [WirePath("typeProperties.logSettings")]
         public ScriptActivityTypeLogSettings LogSettings { get; set; }
         /// <summary> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.returnMultistatementResult")]
         public DataFactoryElement<bool> ReturnMultistatementResult { get; set; }
         /// <summary> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.treatDecimalAsString")]
         public DataFactoryElement<bool> TreatDecimalAsString { get; set; }
     }
 }

@@ -54,13 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Pipeline for which runs are created when all upstream pipelines complete successfully. </summary>
-        [WirePath("pipeline")]
         public TriggerPipelineReference Pipeline { get; set; }
         /// <summary> Upstream Pipelines. </summary>
-        [WirePath("typeProperties.dependsOn")]
         public IList<DataFactoryPipelineReference> DependsOn { get; }
         /// <summary> Run Dimension property that needs to be emitted by upstream pipelines. </summary>
-        [WirePath("typeProperties.runDimension")]
         public string RunDimension { get; set; }
     }
 }

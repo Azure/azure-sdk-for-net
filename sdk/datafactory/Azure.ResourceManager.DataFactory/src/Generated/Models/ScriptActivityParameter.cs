@@ -69,19 +69,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the parameter. Type: string (or Expression with resultType string). </summary>
-        [WirePath("name")]
         public DataFactoryElement<string> Name { get; set; }
         /// <summary> The type of the parameter. </summary>
-        [WirePath("type")]
         public ScriptActivityParameterType? ParameterType { get; set; }
         /// <summary> The value of the parameter. Type: string (or Expression with resultType string). </summary>
-        [WirePath("value")]
         public DataFactoryElement<string> Value { get; set; }
         /// <summary> The direction of the parameter. </summary>
-        [WirePath("direction")]
         public ScriptActivityParameterDirection? Direction { get; set; }
         /// <summary> The size of the output direction parameter. </summary>
-        [WirePath("size")]
         public int? Size { get; set; }
     }
 }

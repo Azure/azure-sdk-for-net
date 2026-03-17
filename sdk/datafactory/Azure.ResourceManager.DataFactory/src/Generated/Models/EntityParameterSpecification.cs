@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Parameter type. </summary>
-        [WirePath("type")]
         public EntityParameterType ParameterType { get; set; }
         /// <summary>
         /// Default value of parameter.
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("defaultValue")]
         public BinaryData DefaultValue { get; set; }
     }
 }

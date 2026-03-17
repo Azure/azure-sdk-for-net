@@ -65,10 +65,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Linked service references. </summary>
-        [WirePath("linkedServices")]
         public IList<DataFactoryLinkedServiceReference> LinkedServices { get; }
         /// <summary> Dataset references. </summary>
-        [WirePath("datasets")]
         public IList<DatasetReference> Datasets { get; }
     }
 }

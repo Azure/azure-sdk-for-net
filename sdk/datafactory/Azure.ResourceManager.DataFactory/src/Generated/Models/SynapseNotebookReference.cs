@@ -75,10 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Synapse notebook reference type. </summary>
-        [WirePath("type")]
         public NotebookReferenceType NotebookReferenceType { get; set; }
         /// <summary> Reference notebook name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("referenceName")]
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

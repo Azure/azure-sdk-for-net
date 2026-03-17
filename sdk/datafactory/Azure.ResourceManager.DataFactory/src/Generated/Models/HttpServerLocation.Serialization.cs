@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -122,89 +121,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new HttpServerLocation(type, folderPath, fileName, additionalProperties, relativeUrl);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelativeUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  relativeUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RelativeUri))
-                {
-                    builder.Append("  relativeUrl: ");
-                    builder.AppendLine($"'{RelativeUri.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatasetLocationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatasetLocationType))
-                {
-                    builder.Append("  type: ");
-                    if (DatasetLocationType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatasetLocationType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatasetLocationType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FolderPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  folderPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FolderPath))
-                {
-                    builder.Append("  folderPath: ");
-                    builder.AppendLine($"'{FolderPath.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fileName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FileName))
-                {
-                    builder.Append("  fileName: ");
-                    builder.AppendLine($"'{FileName.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<HttpServerLocation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
@@ -213,8 +129,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HttpServerLocation)} does not support writing '{options.Format}' format.");
             }

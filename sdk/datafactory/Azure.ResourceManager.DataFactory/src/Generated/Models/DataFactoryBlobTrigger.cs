@@ -54,13 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The path of the container/folder that will trigger the pipeline. </summary>
-        [WirePath("typeProperties.folderPath")]
         public string FolderPath { get; set; }
         /// <summary> The max number of parallel files to handle when it is triggered. </summary>
-        [WirePath("typeProperties.maxConcurrency")]
         public int MaxConcurrency { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
-        [WirePath("typeProperties.linkedService")]
         public DataFactoryLinkedServiceReference LinkedService { get; set; }
     }
 }

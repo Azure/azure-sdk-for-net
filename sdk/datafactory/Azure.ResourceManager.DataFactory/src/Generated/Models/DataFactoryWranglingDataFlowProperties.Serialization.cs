@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -186,185 +184,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 documentLocale);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataFlowType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataFlowType))
-                {
-                    builder.Append("  type: ");
-                    if (DataFlowType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DataFlowType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DataFlowType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Annotations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  annotations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Annotations))
-                {
-                    if (Annotations.Any())
-                    {
-                        builder.Append("  annotations: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Annotations)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FolderName", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  folder: ");
-                builder.AppendLine("{");
-                builder.Append("    name: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Folder))
-                {
-                    builder.Append("  folder: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Folder, options, 2, false, "  folder: ");
-                }
-            }
-
-            builder.Append("  typeProperties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Sources))
-                {
-                    if (Sources.Any())
-                    {
-                        builder.Append("    sources: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Sources)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sources: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Script), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    script: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Script))
-                {
-                    builder.Append("    script: ");
-                    if (Script.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Script}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Script}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DocumentLocale), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    documentLocale: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DocumentLocale))
-                {
-                    builder.Append("    documentLocale: ");
-                    if (DocumentLocale.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DocumentLocale}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DocumentLocale}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DataFactoryWranglingDataFlowProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryWranglingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -373,8 +192,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryWranglingDataFlowProperties)} does not support writing '{options.Format}' format.");
             }

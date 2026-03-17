@@ -66,13 +66,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
-        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        [WirePath("properties.publicNetworkAccess")]
         public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

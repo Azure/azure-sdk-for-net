@@ -44,25 +44,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        [WirePath("sessionId")]
         public Guid? SessionId { get; set; }
         /// <summary> Data flow instance. </summary>
-        [WirePath("dataFlow")]
         public DataFactoryDataFlowDebugInfo DataFlow { get; set; }
         /// <summary> List of Data flows. </summary>
-        [WirePath("dataFlows")]
         public IList<DataFactoryDataFlowDebugInfo> DataFlows { get; }
         /// <summary> List of datasets. </summary>
-        [WirePath("datasets")]
         public IList<DataFactoryDatasetDebugInfo> Datasets { get; }
         /// <summary> List of linked services. </summary>
-        [WirePath("linkedServices")]
         public IList<DataFactoryLinkedServiceDebugInfo> LinkedServices { get; }
         /// <summary> Staging info for debug session. </summary>
-        [WirePath("staging")]
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> Data flow debug settings. </summary>
-        [WirePath("debugSettings")]
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
         /// <summary>
         /// Additional Properties
@@ -94,7 +87,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

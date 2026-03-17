@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The allowed idle time for interactive authoring. </summary>
-        [WirePath("autoTerminationMinutes")]
         public int? AutoTerminationMinutes { get; set; }
     }
 }

@@ -63,28 +63,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.mlEndpoint")]
         public DataFactoryElement<string> MLEndpoint { get; set; }
         /// <summary> The API key for accessing the Azure ML model endpoint. </summary>
-        [WirePath("typeProperties.apiKey")]
         public DataFactorySecret ApiKey { get; set; }
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.updateResourceEndpoint")]
         public DataFactoryElement<string> UpdateResourceEndpoint { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </summary>
-        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.authentication")]
         public DataFactoryElement<string> Authentication { get; set; }
     }
 }

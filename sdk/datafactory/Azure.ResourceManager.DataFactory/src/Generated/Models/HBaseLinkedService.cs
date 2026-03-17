@@ -68,37 +68,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </summary>
-        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the HBase instance uses to listen for client connections. The default value is 9090. </summary>
-        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> The partial URL corresponding to the HBase server. (i.e. /gateway/sandbox/hbase/version). </summary>
-        [WirePath("typeProperties.httpPath")]
         public DataFactoryElement<string> HttpPath { get; set; }
         /// <summary> The authentication mechanism to use to connect to the HBase server. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public HBaseAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the HBase instance. </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password corresponding to the user name. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
-        [WirePath("typeProperties.enableSsl")]
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        [WirePath("typeProperties.trustedCertPath")]
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
-        [WirePath("typeProperties.allowHostNameCNMismatch")]
         public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
-        [WirePath("typeProperties.allowSelfSignedServerCert")]
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

@@ -83,34 +83,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.connectionProperties")]
         public BinaryData ConnectionProperties { get; set; }
         /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>
-        [WirePath("typeProperties.endpoint")]
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>
-        [WirePath("typeProperties.companyId")]
         public DataFactoryElement<string> CompanyId { get; set; }
         /// <summary> The consumer key for OAuth 2.0 authentication. </summary>
-        [WirePath("typeProperties.consumerKey")]
         public DataFactoryElement<string> ConsumerKey { get; set; }
         /// <summary> The consumer secret for OAuth 2.0 authentication. </summary>
-        [WirePath("typeProperties.consumerSecret")]
         public DataFactorySecret ConsumerSecret { get; set; }
         /// <summary> The access token for OAuth 2.0 authentication. </summary>
-        [WirePath("typeProperties.accessToken")]
         public DataFactorySecret AccessToken { get; set; }
         /// <summary> The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0. </summary>
-        [WirePath("typeProperties.accessTokenSecret")]
         public DataFactorySecret AccessTokenSecret { get; set; }
         /// <summary> The refresh token for OAuth 2.0 authentication. </summary>
-        [WirePath("typeProperties.refreshToken")]
         public DataFactorySecret RefreshToken { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Only used for version 1.0. </summary>
-        [WirePath("typeProperties.useEncryptedEndpoints")]
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

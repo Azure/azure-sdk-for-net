@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Schema linked service reference. </summary>
-        [WirePath("schemaLinkedService")]
         public DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

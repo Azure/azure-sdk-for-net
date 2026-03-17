@@ -79,13 +79,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
-        [WirePath("operand")]
         public RunQueryFilterOperand Operand { get; }
         /// <summary> Operator to be used for filter. </summary>
-        [WirePath("operator")]
         public RunQueryFilterOperator Operator { get; }
         /// <summary> List of filter values. </summary>
-        [WirePath("values")]
         public IList<string> Values { get; }
     }
 }

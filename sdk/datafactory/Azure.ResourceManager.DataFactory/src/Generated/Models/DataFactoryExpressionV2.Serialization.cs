@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -179,102 +177,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryExpressionV2(type, value, operators ?? new ChangeTrackingList<DataFactoryElement<string>>(), operands ?? new ChangeTrackingList<DataFactoryExpressionV2>(), serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(V2Type), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(V2Type))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{V2Type.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(V2Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(V2Value))
-                {
-                    builder.Append("  value: ");
-                    builder.AppendLine($"'{V2Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operators), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operators: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Operators))
-                {
-                    if (Operators.Any())
-                    {
-                        builder.Append("  operators: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Operators)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operands), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operands: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Operands))
-                {
-                    if (Operands.Any())
-                    {
-                        builder.Append("  operands: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Operands)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  operands: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DataFactoryExpressionV2>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryExpressionV2>)this).GetFormatFromOptions(options) : options.Format;
@@ -283,8 +185,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryExpressionV2)} does not support writing '{options.Format}' format.");
             }

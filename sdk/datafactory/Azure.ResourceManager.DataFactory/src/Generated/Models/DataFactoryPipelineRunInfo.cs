@@ -55,43 +55,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Identifier of a run. </summary>
-        [WirePath("runId")]
         public Guid? RunId { get; }
         /// <summary> Identifier that correlates all the recovery runs of a pipeline run. </summary>
-        [WirePath("runGroupId")]
         public string RunGroupId { get; }
         /// <summary> Indicates if the recovered pipeline run is the latest in its group. </summary>
-        [WirePath("isLatest")]
         public bool? IsLatest { get; }
         /// <summary> The pipeline name. </summary>
-        [WirePath("pipelineName")]
         public string PipelineName { get; }
         /// <summary> The full or partial list of parameter name, value pair used in the pipeline run. </summary>
-        [WirePath("parameters")]
         public IReadOnlyDictionary<string, string> Parameters { get; }
         /// <summary> Run dimensions emitted by Pipeline run. </summary>
-        [WirePath("runDimensions")]
         public IReadOnlyDictionary<string, string> RunDimensions { get; }
         /// <summary> Entity that started the pipeline run. </summary>
-        [WirePath("invokedBy")]
         public DataFactoryPipelineRunEntityInfo InvokedBy { get; }
         /// <summary> The last updated timestamp for the pipeline run event in ISO8601 format. </summary>
-        [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The start time of a pipeline run in ISO8601 format. </summary>
-        [WirePath("runStart")]
         public DateTimeOffset? RunStartOn { get; }
         /// <summary> The end time of a pipeline run in ISO8601 format. </summary>
-        [WirePath("runEnd")]
         public DateTimeOffset? RunEndOn { get; }
         /// <summary> The duration of a pipeline run. </summary>
-        [WirePath("durationInMs")]
         public int? DurationInMs { get; }
         /// <summary> The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled. </summary>
-        [WirePath("status")]
         public string Status { get; }
         /// <summary> The message from a pipeline run. </summary>
-        [WirePath("message")]
         public string Message { get; }
         /// <summary>
         /// Additional Properties
@@ -123,7 +110,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

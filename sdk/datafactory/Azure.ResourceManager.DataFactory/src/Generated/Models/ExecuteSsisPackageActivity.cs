@@ -81,40 +81,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SSIS package location. </summary>
-        [WirePath("typeProperties.packageLocation")]
         public SsisPackageLocation PackageLocation { get; set; }
         /// <summary> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.runtime")]
         public DataFactoryElement<string> Runtime { get; set; }
         /// <summary> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.loggingLevel")]
         public DataFactoryElement<string> LoggingLevel { get; set; }
         /// <summary> The environment path to execute the SSIS package. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.environmentPath")]
         public DataFactoryElement<string> EnvironmentPath { get; set; }
         /// <summary> The package execution credential. </summary>
-        [WirePath("typeProperties.executionCredential")]
         public SsisExecutionCredential ExecutionCredential { get; set; }
         /// <summary> The integration runtime reference. </summary>
-        [WirePath("typeProperties.connectVia")]
         public IntegrationRuntimeReference ConnectVia { get; set; }
         /// <summary> The project level parameters to execute the SSIS package. </summary>
-        [WirePath("typeProperties.projectParameters")]
         public IDictionary<string, SsisExecutionParameter> ProjectParameters { get; }
         /// <summary> The package level parameters to execute the SSIS package. </summary>
-        [WirePath("typeProperties.packageParameters")]
         public IDictionary<string, SsisExecutionParameter> PackageParameters { get; }
         /// <summary> The project level connection managers to execute the SSIS package. </summary>
-        [WirePath("typeProperties.projectConnectionManagers")]
         public IDictionary<string, IDictionary<string, SsisExecutionParameter>> ProjectConnectionManagers { get; }
         /// <summary> The package level connection managers to execute the SSIS package. </summary>
-        [WirePath("typeProperties.packageConnectionManagers")]
         public IDictionary<string, IDictionary<string, SsisExecutionParameter>> PackageConnectionManagers { get; }
         /// <summary> The property overrides to execute the SSIS package. </summary>
-        [WirePath("typeProperties.propertyOverrides")]
         public IDictionary<string, SsisPropertyOverride> PropertyOverrides { get; }
         /// <summary> SSIS package execution log location. </summary>
-        [WirePath("typeProperties.logLocation")]
         public SsisLogLocation LogLocation { get; set; }
     }
 }

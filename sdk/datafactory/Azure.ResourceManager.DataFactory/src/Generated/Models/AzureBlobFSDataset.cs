@@ -57,20 +57,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.folderPath")]
         public DataFactoryElement<string> FolderPath { get; set; }
         /// <summary> The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.fileName")]
         public DataFactoryElement<string> FileName { get; set; }
         /// <summary>
         /// The format of the Azure Data Lake Storage Gen2 storage.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
-        [WirePath("typeProperties.format")]
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the blob storage. </summary>
-        [WirePath("typeProperties.compression")]
         public DatasetCompression Compression { get; set; }
     }
 }

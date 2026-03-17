@@ -42,10 +42,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Timespan applied to the start time of a tumbling window when evaluating dependency. </summary>
-        [WirePath("offset")]
         public string Offset { get; set; }
         /// <summary> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </summary>
-        [WirePath("size")]
         public string Size { get; set; }
     }
 }

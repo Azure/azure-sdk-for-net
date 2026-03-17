@@ -56,22 +56,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> AuthenticationType to be used for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.authenticationType")]
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> The port for the connection. Type: integer (or Expression with resultType integer). </summary>
-        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

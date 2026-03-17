@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
-        [WirePath("computeType")]
         public string ComputeType { get; set; }
         /// <summary> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </summary>
-        [WirePath("coreCount")]
         public int? CoreCount { get; set; }
         /// <summary> Time to live setting of the cluster in minutes. </summary>
-        [WirePath("timeToLive")]
         public int? TimeToLiveInMinutes { get; set; }
         /// <summary> Set to use integration runtime setting for data flow debug session. </summary>
-        [WirePath("integrationRuntime")]
         public DataFactoryIntegrationRuntimeDebugInfo IntegrationRuntime { get; set; }
     }
 }

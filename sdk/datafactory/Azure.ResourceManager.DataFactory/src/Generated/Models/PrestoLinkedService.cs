@@ -79,49 +79,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </summary>
-        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The version of the Presto server. (i.e. 0.148-t) Only used for Version 1.0. </summary>
-        [WirePath("typeProperties.serverVersion")]
         public DataFactoryElement<string> ServerVersion { get; set; }
         /// <summary> The catalog context for all request against the server. </summary>
-        [WirePath("typeProperties.catalog")]
         public DataFactoryElement<string> Catalog { get; set; }
         /// <summary> The TCP port that the Presto server uses to listen for client connections. The default value is 8080 when disable SSL, default value is 443 when enable SSL. </summary>
-        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> The authentication mechanism used to connect to the Presto server. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public PrestoAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to connect to the Presto server. </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password corresponding to the user name. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </summary>
-        [WirePath("typeProperties.enableSsl")]
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.enableServerCertificateValidation")]
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Only used for Version 1.0. </summary>
-        [WirePath("typeProperties.trustedCertPath")]
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Only used for Version 1.0. </summary>
-        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. Only used for Version 1.0. </summary>
-        [WirePath("typeProperties.allowHostNameCNMismatch")]
         public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. Only used for Version 1.0. </summary>
-        [WirePath("typeProperties.allowSelfSignedServerCert")]
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </summary>
-        [WirePath("typeProperties.timeZoneID")]
         public DataFactoryElement<string> TimeZoneId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

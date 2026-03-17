@@ -64,12 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The state of a private link connection. </summary>
-        [WirePath("privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The resource of private endpoint. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;

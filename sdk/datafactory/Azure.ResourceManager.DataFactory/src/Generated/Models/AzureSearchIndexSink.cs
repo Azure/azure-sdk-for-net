@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the write behavior when upserting documents into Azure Search Index. </summary>
-        [WirePath("writeBehavior")]
         public AzureSearchIndexWriteBehaviorType? WriteBehavior { get; set; }
     }
 }

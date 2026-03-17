@@ -40,10 +40,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset storage format. </summary>
         internal string DatasetStorageFormatType { get; set; }
         /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
-        [WirePath("serializer")]
         public DataFactoryElement<string> Serializer { get; set; }
         /// <summary> Deserializer. Type: string (or Expression with resultType string). </summary>
-        [WirePath("deserializer")]
         public DataFactoryElement<string> Deserializer { get; set; }
         /// <summary>
         /// Additional Properties
@@ -75,7 +73,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

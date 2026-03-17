@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        [WirePath("typeProperties.storageLinkedServices")]
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>
         /// User specified arguments to HDInsightActivity.
@@ -122,22 +121,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.arguments")]
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
-        [WirePath("typeProperties.getDebugInfo")]
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> Mapper executable name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.mapper")]
         public DataFactoryElement<string> Mapper { get; set; }
         /// <summary> Reducer executable name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.reducer")]
         public DataFactoryElement<string> Reducer { get; set; }
         /// <summary> Input blob path. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.input")]
         public DataFactoryElement<string> Input { get; set; }
         /// <summary> Output blob path. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.output")]
         public DataFactoryElement<string> Output { get; set; }
         /// <summary>
         /// Paths to streaming job files. Can be directories.
@@ -169,13 +162,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.filePaths")]
         public IList<BinaryData> FilePaths { get; }
         /// <summary> Linked service reference where the files are located. </summary>
-        [WirePath("typeProperties.fileLinkedService")]
         public DataFactoryLinkedServiceReference FileLinkedService { get; set; }
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.combiner")]
         public DataFactoryElement<string> Combiner { get; set; }
         /// <summary>
         /// Command line environment values.
@@ -207,7 +197,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.commandEnvironment")]
         public IList<BinaryData> CommandEnvironment { get; }
         /// <summary>
         /// Allows user to specify defines for streaming job request.
@@ -239,7 +228,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.defines")]
         public IDictionary<string, BinaryData> Defines { get; }
     }
 }

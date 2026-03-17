@@ -49,10 +49,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Salesforce V2 object API name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.objectApiName")]
         public DataFactoryElement<string> ObjectApiName { get; set; }
         /// <summary> The Salesforce V2 report Id. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.reportId")]
         public DataFactoryElement<string> ReportId { get; set; }
     }
 }

@@ -68,10 +68,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Core resource properties. </summary>
-        [WirePath("properties")]
         public DataFactoryPrivateLinkResourceProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

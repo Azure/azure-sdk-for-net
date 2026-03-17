@@ -74,16 +74,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Sql always encrypted AKV authentication type. Type: string. </summary>
-        [WirePath("alwaysEncryptedAkvAuthType")]
         public SqlAlwaysEncryptedAkvAuthType AlwaysEncryptedAkvAuthType { get; set; }
         /// <summary> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate against Azure Key Vault. </summary>
-        [WirePath("servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

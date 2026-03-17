@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Source setting for data flow debug. </summary>
-        [WirePath("sourceSettings")]
         public IList<DataFlowSourceSetting> SourceSettings { get; }
         /// <summary>
         /// Data flow parameters.
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary>
         /// Parameters for dataset.
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("datasetParameters")]
         public BinaryData DatasetParameters { get; set; }
     }
 }

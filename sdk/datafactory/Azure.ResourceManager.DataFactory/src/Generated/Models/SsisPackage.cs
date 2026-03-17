@@ -40,16 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Folder id which contains package. </summary>
-        [WirePath("folderId")]
         public long? FolderId { get; }
         /// <summary> Project version which contains package. </summary>
-        [WirePath("projectVersion")]
         public long? ProjectVersion { get; }
         /// <summary> Project id which contains package. </summary>
-        [WirePath("projectId")]
         public long? ProjectId { get; }
         /// <summary> Parameters in package. </summary>
-        [WirePath("parameters")]
         public IReadOnlyList<SsisParameterInfo> Parameters { get; }
     }
 }

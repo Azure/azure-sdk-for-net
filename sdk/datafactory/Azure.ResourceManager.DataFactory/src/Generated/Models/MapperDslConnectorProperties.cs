@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the property. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Value of the property.
@@ -94,7 +93,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("value")]
         public BinaryData Value { get; set; }
     }
 }

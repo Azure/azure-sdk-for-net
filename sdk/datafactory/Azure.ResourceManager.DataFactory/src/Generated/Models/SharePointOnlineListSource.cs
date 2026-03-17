@@ -37,10 +37,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The OData query to filter the data in SharePoint Online list. For example, "$top=1". Type: string (or Expression with resultType string). </summary>
-        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> The wait time to get a response from SharePoint Online. Default value is 5 minutes (00:05:00). Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        [WirePath("httpRequestTimeout")]
         public DataFactoryElement<string> HttpRequestTimeout { get; set; }
     }
 }

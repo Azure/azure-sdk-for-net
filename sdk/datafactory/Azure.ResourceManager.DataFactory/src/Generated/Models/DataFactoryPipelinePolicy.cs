@@ -91,7 +91,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("elapsedTimeMetric.duration")]
         public BinaryData ElapsedTimeMetricDuration
         {
             get => ElapsedTimeMetric is null ? default : ElapsedTimeMetric.Duration;

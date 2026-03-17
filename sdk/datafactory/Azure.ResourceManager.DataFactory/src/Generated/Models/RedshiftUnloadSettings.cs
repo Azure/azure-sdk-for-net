@@ -76,10 +76,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </summary>
-        [WirePath("s3LinkedServiceName")]
         public DataFactoryLinkedServiceReference S3LinkedServiceName { get; set; }
         /// <summary> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("bucketName")]
         public DataFactoryElement<string> BucketName { get; set; }
     }
 }

@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
     }
 }

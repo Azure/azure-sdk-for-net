@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.pythonFile")]
         public DataFactoryElement<string> PythonFile { get; set; }
         /// <summary>
         /// Command line parameters that will be passed to the Python file.
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.parameters")]
         public IList<BinaryData> Parameters { get; }
         /// <summary>
         /// A list of libraries to be installed on the cluster that will execute the job.
@@ -121,7 +119,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.libraries")]
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

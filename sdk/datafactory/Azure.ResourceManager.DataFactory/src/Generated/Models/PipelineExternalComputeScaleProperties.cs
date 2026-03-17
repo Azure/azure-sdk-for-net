@@ -33,13 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </summary>
-        [WirePath("timeToLive")]
         public int? TimeToLive { get; set; }
         /// <summary> Number of the pipeline nodes, which should be greater than 0 and less than 11. </summary>
-        [WirePath("numberOfPipelineNodes")]
         public int? NumberOfPipelineNodes { get; set; }
         /// <summary> Number of the the external nodes, which should be greater than 0 and less than 11. </summary>
-        [WirePath("numberOfExternalNodes")]
         public int? NumberOfExternalNodes { get; set; }
         /// <summary>
         /// Additional Properties
@@ -71,7 +68,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

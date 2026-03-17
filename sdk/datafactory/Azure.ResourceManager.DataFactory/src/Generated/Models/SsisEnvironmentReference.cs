@@ -66,16 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Environment reference id. </summary>
-        [WirePath("id")]
         public long? Id { get; }
         /// <summary> Environment folder name. </summary>
-        [WirePath("environmentFolderName")]
         public string EnvironmentFolderName { get; }
         /// <summary> Environment name. </summary>
-        [WirePath("environmentName")]
         public string EnvironmentName { get; }
         /// <summary> Reference type. </summary>
-        [WirePath("referenceType")]
         public string ReferenceType { get; }
     }
 }

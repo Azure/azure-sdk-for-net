@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -160,144 +159,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceToken))
-                {
-                    builder.Append("  serviceToken: ");
-                    if (ServiceToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityCertThumbprint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identityCertThumbprint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IdentityCertThumbprint))
-                {
-                    builder.Append("  identityCertThumbprint: ");
-                    if (IdentityCertThumbprint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IdentityCertThumbprint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IdentityCertThumbprint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostServiceUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostServiceUri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostServiceUri))
-                {
-                    builder.Append("  hostServiceUri: ");
-                    builder.AppendLine($"'{HostServiceUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  version: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Version))
-                {
-                    builder.Append("  version: ");
-                    if (Version.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Version}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Version}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publicKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicKey))
-                {
-                    builder.Append("  publicKey: ");
-                    if (PublicKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PublicKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PublicKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsIdentityCertExprired), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isIdentityCertExprired: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsIdentityCertExprired))
-                {
-                    builder.Append("  isIdentityCertExprired: ");
-                    var boolValue = IsIdentityCertExprired.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<IntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -306,8 +167,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support writing '{options.Format}' format.");
             }

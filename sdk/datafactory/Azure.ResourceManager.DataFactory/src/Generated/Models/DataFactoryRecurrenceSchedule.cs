@@ -42,19 +42,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The minutes. </summary>
-        [WirePath("minutes")]
         public IList<int> Minutes { get; }
         /// <summary> The hours. </summary>
-        [WirePath("hours")]
         public IList<int> Hours { get; }
         /// <summary> The days of the week. </summary>
-        [WirePath("weekDays")]
         public IList<DataFactoryDayOfWeek> WeekDays { get; }
         /// <summary> The month days. </summary>
-        [WirePath("monthDays")]
         public IList<int> MonthDays { get; }
         /// <summary> The monthly occurrences. </summary>
-        [WirePath("monthlyOccurrences")]
         public IList<DataFactoryRecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
         /// <summary>
         /// Additional Properties
@@ -86,7 +81,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

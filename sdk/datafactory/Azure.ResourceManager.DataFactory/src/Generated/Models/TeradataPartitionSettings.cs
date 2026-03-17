@@ -65,13 +65,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string). </summary>
-        [WirePath("partitionColumnName")]
         public DataFactoryElement<string> PartitionColumnName { get; set; }
         /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        [WirePath("partitionUpperBound")]
         public DataFactoryElement<string> PartitionUpperBound { get; set; }
         /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
-        [WirePath("partitionLowerBound")]
         public DataFactoryElement<string> PartitionLowerBound { get; set; }
     }
 }

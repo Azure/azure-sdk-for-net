@@ -79,19 +79,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
-        [WirePath("continuationToken")]
         public string ContinuationToken { get; set; }
         /// <summary> The time at or after which the run event was updated in 'ISO 8601' format. </summary>
-        [WirePath("lastUpdatedAfter")]
         public DateTimeOffset LastUpdatedAfter { get; }
         /// <summary> The time at or before which the run event was updated in 'ISO 8601' format. </summary>
-        [WirePath("lastUpdatedBefore")]
         public DateTimeOffset LastUpdatedBefore { get; }
         /// <summary> List of filters. </summary>
-        [WirePath("filters")]
         public IList<RunQueryFilter> Filters { get; }
         /// <summary> List of OrderBy option. </summary>
-        [WirePath("orderBy")]
         public IList<RunQueryOrderBy> OrderBy { get; }
     }
 }

@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> FetchXML is a proprietary query language that is used in Microsoft Common Data Service for Apps (online &amp; on-premises). Type: string (or Expression with resultType string). </summary>
-        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary>
         /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
@@ -69,7 +68,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("additionalColumns")]
         public BinaryData AdditionalColumns { get; set; }
     }
 }

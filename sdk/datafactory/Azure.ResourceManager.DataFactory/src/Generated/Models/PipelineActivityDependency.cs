@@ -45,10 +45,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Activity name. </summary>
-        [WirePath("activity")]
         public string Activity { get; set; }
         /// <summary> Match-Condition for the dependency. </summary>
-        [WirePath("dependencyConditions")]
         public IList<DependencyCondition> DependencyConditions { get; }
         /// <summary>
         /// Additional Properties
@@ -80,7 +78,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

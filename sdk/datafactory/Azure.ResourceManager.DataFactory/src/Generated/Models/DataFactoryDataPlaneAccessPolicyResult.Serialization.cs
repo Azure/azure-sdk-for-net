@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -126,74 +125,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataPlaneAccessPolicyResult(policy, accessToken, dataPlaneUrl, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Policy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  policy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Policy))
-                {
-                    builder.Append("  policy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Policy, options, 2, false, "  policy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  accessToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AccessToken))
-                {
-                    builder.Append("  accessToken: ");
-                    if (AccessToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AccessToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AccessToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataPlaneUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dataPlaneUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataPlaneUri))
-                {
-                    builder.Append("  dataPlaneUrl: ");
-                    builder.AppendLine($"'{DataPlaneUri.AbsoluteUri}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -202,8 +133,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support writing '{options.Format}' format.");
             }

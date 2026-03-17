@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties")]
         public BinaryData TypeProperties { get; set; }
     }
 }

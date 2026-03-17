@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -198,149 +197,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestMethod), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestMethod: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestMethod))
-                {
-                    builder.Append("  requestMethod: ");
-                    builder.AppendLine($"'{RequestMethod.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBody), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestBody: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestBody))
-                {
-                    builder.Append("  requestBody: ");
-                    builder.AppendLine($"'{RequestBody.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalHeaders), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  additionalHeaders: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdditionalHeaders))
-                {
-                    builder.Append("  additionalHeaders: ");
-                    builder.AppendLine($"'{AdditionalHeaders.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTimeout), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestTimeout: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestTimeout))
-                {
-                    builder.Append("  requestTimeout: ");
-                    builder.AppendLine($"'{RequestTimeout.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalColumns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  additionalColumns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AdditionalColumns))
-                {
-                    builder.Append("  additionalColumns: ");
-                    builder.AppendLine($"'{AdditionalColumns.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StoreReadSettingsType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StoreReadSettingsType))
-                {
-                    builder.Append("  type: ");
-                    if (StoreReadSettingsType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StoreReadSettingsType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StoreReadSettingsType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxConcurrentConnections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxConcurrentConnections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxConcurrentConnections))
-                {
-                    builder.Append("  maxConcurrentConnections: ");
-                    builder.AppendLine($"'{MaxConcurrentConnections.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableMetricsCollection), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  disableMetricsCollection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisableMetricsCollection))
-                {
-                    builder.Append("  disableMetricsCollection: ");
-                    builder.AppendLine($"'{DisableMetricsCollection.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<HttpReadSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HttpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -349,8 +205,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HttpReadSettings)} does not support writing '{options.Format}' format.");
             }

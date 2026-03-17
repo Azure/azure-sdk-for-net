@@ -49,10 +49,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password for Basic authentication. </summary>
-        [WirePath("password")]
         public DataFactorySecret Password { get; set; }
     }
 }

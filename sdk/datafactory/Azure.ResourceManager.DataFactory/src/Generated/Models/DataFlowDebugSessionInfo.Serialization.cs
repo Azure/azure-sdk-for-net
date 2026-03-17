@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -212,182 +211,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataFlowName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dataFlowName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DataFlowName))
-                {
-                    builder.Append("  dataFlowName: ");
-                    if (DataFlowName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DataFlowName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DataFlowName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  computeType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ComputeType))
-                {
-                    builder.Append("  computeType: ");
-                    if (ComputeType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ComputeType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ComputeType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CoreCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  coreCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CoreCount))
-                {
-                    builder.Append("  coreCount: ");
-                    builder.AppendLine($"{CoreCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nodeCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeCount))
-                {
-                    builder.Append("  nodeCount: ");
-                    builder.AppendLine($"{NodeCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntegrationRuntimeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  integrationRuntimeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IntegrationRuntimeName))
-                {
-                    builder.Append("  integrationRuntimeName: ");
-                    if (IntegrationRuntimeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IntegrationRuntimeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IntegrationRuntimeName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sessionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SessionId))
-                {
-                    builder.Append("  sessionId: ");
-                    builder.AppendLine($"'{SessionId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("  startTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeToLiveInMinutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timeToLiveInMinutes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TimeToLiveInMinutes))
-                {
-                    builder.Append("  timeToLiveInMinutes: ");
-                    builder.AppendLine($"{TimeToLiveInMinutes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastActivityOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastActivityTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastActivityOn))
-                {
-                    builder.Append("  lastActivityTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastActivityOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DataFlowDebugSessionInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugSessionInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -396,8 +219,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataFlowDebugSessionInfo)} does not support writing '{options.Format}' format.");
             }

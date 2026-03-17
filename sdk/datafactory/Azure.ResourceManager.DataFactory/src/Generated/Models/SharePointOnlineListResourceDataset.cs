@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the SharePoint Online list. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.listName")]
         public DataFactoryElement<string> ListName { get; set; }
     }
 }

@@ -68,55 +68,38 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
-        [WirePath("typeProperties.createTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The task queue id of the integration runtime. </summary>
-        [WirePath("typeProperties.taskQueueId")]
         public Guid? TaskQueueId { get; }
         /// <summary> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </summary>
-        [WirePath("typeProperties.internalChannelEncryption")]
         public IntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get; }
         /// <summary> Version of the integration runtime. </summary>
-        [WirePath("typeProperties.version")]
         public string Version { get; }
         /// <summary> The list of nodes for this integration runtime. </summary>
-        [WirePath("typeProperties.nodes")]
         public IReadOnlyList<SelfHostedIntegrationRuntimeNode> Nodes { get; }
         /// <summary> The date at which the integration runtime will be scheduled to update, in ISO8601 format. </summary>
-        [WirePath("typeProperties.scheduledUpdateDate")]
         public DateTimeOffset? ScheduledUpdateOn { get; }
         /// <summary> The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours. </summary>
-        [WirePath("typeProperties.updateDelayOffset")]
         public TimeSpan? UpdateDelayOffset { get; }
         /// <summary> The local time zone offset in hours. </summary>
-        [WirePath("typeProperties.localTimeZoneOffset")]
         public TimeSpan? LocalTimeZoneOffset { get; }
         /// <summary> Object with additional information about integration runtime capabilities. </summary>
-        [WirePath("typeProperties.capabilities")]
         public IReadOnlyDictionary<string, string> Capabilities { get; }
         /// <summary> The URLs for the services used in integration runtime backend service. </summary>
-        [WirePath("typeProperties.serviceUrls")]
         public IReadOnlyList<string> ServiceUriStringList { get; }
         /// <summary> Whether Self-hosted integration runtime auto update has been turned on. </summary>
-        [WirePath("typeProperties.autoUpdate")]
         public IntegrationRuntimeAutoUpdateState? AutoUpdate { get; }
         /// <summary> Status of the integration runtime version. </summary>
-        [WirePath("typeProperties.versionStatus")]
         public string VersionStatus { get; }
         /// <summary> The list of linked integration runtimes that are created to share with this integration runtime. </summary>
-        [WirePath("typeProperties.links")]
         public IReadOnlyList<LinkedIntegrationRuntime> Links { get; }
         /// <summary> The version that the integration runtime is going to update to. </summary>
-        [WirePath("typeProperties.pushedVersion")]
         public string PushedVersion { get; }
         /// <summary> The latest version on download center. </summary>
-        [WirePath("typeProperties.latestVersion")]
         public string LatestVersion { get; }
         /// <summary> The estimated time when the self-hosted integration runtime will be updated. </summary>
-        [WirePath("typeProperties.autoUpdateETA")]
         public DateTimeOffset? AutoUpdateEta { get; }
         /// <summary> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </summary>
-        [WirePath("typeProperties.selfContainedInteractiveAuthoringEnabled")]
         public bool? IsSelfContainedInteractiveAuthoringEnabled { get; }
     }
 }

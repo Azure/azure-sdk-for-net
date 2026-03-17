@@ -61,25 +61,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> Schema { get; set; }
         /// <summary> AuthenticationType to be used for connection. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public SybaseAuthenticationType? AuthenticationType { get; set; }
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

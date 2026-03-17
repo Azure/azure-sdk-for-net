@@ -74,10 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Trigger reference type. </summary>
-        [WirePath("type")]
         public DataFactoryTriggerReferenceType ReferenceType { get; set; }
         /// <summary> Reference trigger name. </summary>
-        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
     }
 }

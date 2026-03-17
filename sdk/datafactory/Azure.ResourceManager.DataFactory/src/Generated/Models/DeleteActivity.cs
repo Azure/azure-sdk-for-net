@@ -65,26 +65,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.recursive")]
         public DataFactoryElement<bool> Recursive { get; set; }
         /// <summary> The max concurrent connections to connect data source at the same time. </summary>
-        [WirePath("typeProperties.maxConcurrentConnections")]
         public int? MaxConcurrentConnections { get; set; }
         /// <summary> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.enableLogging")]
         public DataFactoryElement<bool> EnableLogging { get; set; }
         /// <summary> Log storage settings customer need to provide when enableLogging is true. </summary>
-        [WirePath("typeProperties.logStorageSettings")]
         public LogStorageSettings LogStorageSettings { get; set; }
         /// <summary> Delete activity dataset reference. </summary>
-        [WirePath("typeProperties.dataset")]
         public DatasetReference Dataset { get; set; }
         /// <summary>
         /// Delete activity store settings.
         /// Please note <see cref="StoreReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleReadSettings"/>, <see cref="AmazonS3ReadSettings"/>, <see cref="AzureBlobFSReadSettings"/>, <see cref="AzureBlobStorageReadSettings"/>, <see cref="AzureDataLakeStoreReadSettings"/>, <see cref="AzureFileStorageReadSettings"/>, <see cref="FileServerReadSettings"/>, <see cref="FtpReadSettings"/>, <see cref="GoogleCloudStorageReadSettings"/>, <see cref="HdfsReadSettings"/>, <see cref="HttpReadSettings"/>, <see cref="LakeHouseReadSettings"/>, <see cref="OracleCloudStorageReadSettings"/> and <see cref="SftpReadSettings"/>.
         /// </summary>
-        [WirePath("typeProperties.storeSettings")]
         public StoreReadSettings StoreSettings { get; set; }
     }
 }

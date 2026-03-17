@@ -58,22 +58,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The authentication type to use. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public ZendeskAuthenticationType AuthenticationType { get; set; }
         /// <summary> The url to connect Zendesk source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The username of the Zendesk source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of the Zendesk source. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The api token for the Zendesk source. </summary>
-        [WirePath("typeProperties.apiToken")]
         public DataFactorySecret ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

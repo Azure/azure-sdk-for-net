@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource name. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
     }
 }

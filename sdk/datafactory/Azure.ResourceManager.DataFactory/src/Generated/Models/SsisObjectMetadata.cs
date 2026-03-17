@@ -72,13 +72,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of metadata. </summary>
         internal SsisObjectMetadataType MetadataType { get; set; }
         /// <summary> Metadata id. </summary>
-        [WirePath("id")]
         public long? Id { get; }
         /// <summary> Metadata name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary> Metadata description. </summary>
-        [WirePath("description")]
         public string Description { get; }
     }
 }

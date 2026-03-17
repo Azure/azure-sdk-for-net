@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -165,115 +164,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetEntityName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  targetEntityName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TargetEntityName))
-                {
-                    builder.Append("  targetEntityName: ");
-                    if (TargetEntityName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TargetEntityName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TargetEntityName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceEntityName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceEntityName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceEntityName))
-                {
-                    builder.Append("  sourceEntityName: ");
-                    if (SourceEntityName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SourceEntityName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SourceEntityName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceConnectionReference), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceConnectionReference: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceConnectionReference))
-                {
-                    builder.Append("  sourceConnectionReference: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SourceConnectionReference, options, 2, false, "  sourceConnectionReference: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AttributeMappings", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  attributeMappingInfo: ");
-                builder.AppendLine("{");
-                builder.Append("    attributeMappings: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(AttributeMappingInfo))
-                {
-                    builder.Append("  attributeMappingInfo: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AttributeMappingInfo, options, 2, false, "  attributeMappingInfo: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceDenormalizeInfo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceDenormalizeInfo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceDenormalizeInfo))
-                {
-                    builder.Append("  sourceDenormalizeInfo: ");
-                    builder.AppendLine($"'{SourceDenormalizeInfo.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<DataMapperMapping>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -282,8 +172,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataMapperMapping)} does not support writing '{options.Format}' format.");
             }

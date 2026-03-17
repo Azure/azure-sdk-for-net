@@ -39,10 +39,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Expression to filter data from source. </summary>
-        [WirePath("expression")]
         public DataFactoryExpressionV2 Expression { get; set; }
         /// <summary> Page size of the result. Type: integer (or Expression with resultType integer). </summary>
-        [WirePath("pageSize")]
         public DataFactoryElement<int> PageSize { get; set; }
     }
 }

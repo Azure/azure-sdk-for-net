@@ -51,10 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
     }
 }

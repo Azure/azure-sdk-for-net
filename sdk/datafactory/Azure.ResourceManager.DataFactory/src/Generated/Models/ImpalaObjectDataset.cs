@@ -80,13 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.tableName")]
         public BinaryData TableName { get; set; }
         /// <summary> The table name of the Impala. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
         /// <summary> The schema name of the Impala. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
     }
 }

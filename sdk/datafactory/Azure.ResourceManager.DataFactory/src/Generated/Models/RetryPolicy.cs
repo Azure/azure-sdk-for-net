@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        [WirePath("count")]
         public DataFactoryElement<int> Count { get; set; }
         /// <summary> Interval between retries in seconds. Default is 30. </summary>
-        [WirePath("intervalInSeconds")]
         public int? IntervalInSeconds { get; set; }
     }
 }

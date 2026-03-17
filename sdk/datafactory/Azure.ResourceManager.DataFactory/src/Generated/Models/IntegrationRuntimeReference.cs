@@ -77,10 +77,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Type of integration runtime. </summary>
-        [WirePath("type")]
         public IntegrationRuntimeReferenceType ReferenceType { get; set; }
         /// <summary> Reference integration runtime name. </summary>
-        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
         /// <summary>
         /// Arguments for integration runtime.
@@ -112,7 +110,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("parameters")]
         public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

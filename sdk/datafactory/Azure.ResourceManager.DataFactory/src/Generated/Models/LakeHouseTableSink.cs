@@ -41,10 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of table action for Lakehouse Table sink. Possible values include: "None", "Append", "Overwrite". </summary>
-        [WirePath("tableActionOption")]
         public DataFactoryElement<string> TableActionOption { get; set; }
         /// <summary> Create partitions in folder structure based on one or multiple columns. Each distinct column value (pair) will be a new partition. Possible values include: "None", "PartitionByKey". </summary>
-        [WirePath("partitionOption")]
         public DataFactoryElement<string> PartitionOption { get; set; }
         /// <summary>
         /// Specify the partition column names from sink columns. Type: array of objects (or Expression with resultType array of objects).
@@ -76,7 +74,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("partitionNameList")]
         public BinaryData PartitionNameList { get; set; }
     }
 }

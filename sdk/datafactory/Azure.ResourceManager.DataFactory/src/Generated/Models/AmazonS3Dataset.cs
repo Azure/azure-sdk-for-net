@@ -68,32 +68,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.bucketName")]
         public DataFactoryElement<string> BucketName { get; set; }
         /// <summary> The key of the Amazon S3 object. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.key")]
         public DataFactoryElement<string> Key { get; set; }
         /// <summary> The prefix filter for the S3 object name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.prefix")]
         public DataFactoryElement<string> Prefix { get; set; }
         /// <summary> The version for the S3 object. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.version")]
         public DataFactoryElement<string> Version { get; set; }
         /// <summary> The start of S3 object's modified datetime. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.modifiedDatetimeStart")]
         public DataFactoryElement<string> ModifiedDatetimeStart { get; set; }
         /// <summary> The end of S3 object's modified datetime. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.modifiedDatetimeEnd")]
         public DataFactoryElement<string> ModifiedDatetimeEnd { get; set; }
         /// <summary>
         /// The format of files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DatasetAvroFormat"/>, <see cref="DatasetJsonFormat"/>, <see cref="DatasetOrcFormat"/>, <see cref="DatasetParquetFormat"/> and <see cref="DatasetTextFormat"/>.
         /// </summary>
-        [WirePath("typeProperties.format")]
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the Amazon S3 object. </summary>
-        [WirePath("typeProperties.compression")]
         public DatasetCompression Compression { get; set; }
     }
 }

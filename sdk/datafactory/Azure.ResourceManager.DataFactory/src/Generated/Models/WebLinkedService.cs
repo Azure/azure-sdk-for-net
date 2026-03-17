@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
         /// </summary>
-        [WirePath("typeProperties")]
         public WebLinkedServiceTypeProperties TypeProperties { get; set; }
     }
 }

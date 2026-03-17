@@ -39,10 +39,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Database query. Type: string (or Expression with resultType string). </summary>
-        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> The read behavior for the operation. Default is Query. Allowed values: Query/QueryAll. Type: string (or Expression with resultType string). </summary>
-        [WirePath("readBehavior")]
         public DataFactoryElement<string> ReadBehavior { get; set; }
     }
 }

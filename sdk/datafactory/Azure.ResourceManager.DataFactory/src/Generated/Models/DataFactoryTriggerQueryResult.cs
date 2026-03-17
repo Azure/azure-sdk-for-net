@@ -73,10 +73,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of triggers. </summary>
-        [WirePath("value")]
         public IReadOnlyList<DataFactoryTriggerData> Value { get; }
         /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
-        [WirePath("continuationToken")]
         public string ContinuationToken { get; }
     }
 }

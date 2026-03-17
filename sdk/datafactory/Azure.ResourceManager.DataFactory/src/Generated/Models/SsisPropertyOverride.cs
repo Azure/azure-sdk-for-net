@@ -73,10 +73,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SSIS package property override value. Type: string (or Expression with resultType string). </summary>
-        [WirePath("value")]
         public DataFactoryElement<string> Value { get; set; }
         /// <summary> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </summary>
-        [WirePath("isSensitive")]
         public bool? IsSensitive { get; set; }
     }
 }

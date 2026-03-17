@@ -51,13 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The PostgreSQL table name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
         /// <summary> The PostgreSQL schema name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
     }
 }

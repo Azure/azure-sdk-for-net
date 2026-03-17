@@ -47,10 +47,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="StoreWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="LakeHouseWriteSettings"/> and <see cref="SftpWriteSettings"/>.
         /// </summary>
-        [WirePath("storeSettings")]
         public StoreWriteSettings StoreSettings { get; set; }
         /// <summary> DelimitedText format settings. </summary>
-        [WirePath("formatSettings")]
         public DelimitedTextWriteSettings FormatSettings { get; set; }
     }
 }

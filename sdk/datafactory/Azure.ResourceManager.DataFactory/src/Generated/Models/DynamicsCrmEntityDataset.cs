@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.entityName")]
         public DataFactoryElement<string> EntityName { get; set; }
     }
 }

@@ -84,55 +84,38 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </summary>
-        [WirePath("typeProperties.accountIdentifier")]
         public DataFactoryElement<string> AccountIdentifier { get; set; }
         /// <summary> The name of the Snowflake user. </summary>
-        [WirePath("typeProperties.user")]
         public DataFactoryElement<string> User { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The name of the Snowflake database. </summary>
-        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The name of the Snowflake warehouse. </summary>
-        [WirePath("typeProperties.warehouse")]
         public DataFactoryElement<string> Warehouse { get; set; }
         /// <summary> The type used for authentication. Type: string. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public SnowflakeAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
-        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </summary>
-        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
-        [WirePath("typeProperties.tenantId")]
         public DataFactoryElement<string> TenantId { get; set; }
         /// <summary> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
-        [WirePath("typeProperties.scope")]
         public DataFactoryElement<string> Scope { get; set; }
         /// <summary> The Azure key vault secret reference of privateKey for KeyPair auth. </summary>
-        [WirePath("typeProperties.privateKey")]
         public DataFactorySecret PrivateKey { get; set; }
         /// <summary> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </summary>
-        [WirePath("typeProperties.privateKeyPassphrase")]
         public DataFactorySecret PrivateKeyPassphrase { get; set; }
         /// <summary> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.role")]
         public DataFactoryElement<string> Role { get; set; }
         /// <summary> The host name of the Snowflake account. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> Schema name for connection. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> Schema { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </summary>
-        [WirePath("typeProperties.useUtcTimestamps")]
         public DataFactoryElement<bool> UseUtcTimestamps { get; set; }
     }
 }

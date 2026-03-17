@@ -45,22 +45,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The groups containing all the users. Type: array of strings (or Expression with resultType array of strings). </summary>
-        [WirePath("allowedGroups")]
         public DataFactoryElement<IList<string>> AllowedGroups { get; set; }
         /// <summary> The user scope uri. Type: string (or Expression with resultType string). </summary>
-        [WirePath("userScopeFilterUri")]
         public DataFactoryElement<string> UserScopeFilterUri { get; set; }
         /// <summary> The Column to apply the &lt;paramref name="StartTime"/&gt; and &lt;paramref name="EndTime"/&gt;. Type: string (or Expression with resultType string). </summary>
-        [WirePath("dateFilterColumn")]
         public DataFactoryElement<string> DateFilterColumn { get; set; }
         /// <summary> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
-        [WirePath("startTime")]
         public DataFactoryElement<string> StartOn { get; set; }
         /// <summary> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
-        [WirePath("endTime")]
         public DataFactoryElement<string> EndOn { get; set; }
         /// <summary> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). itemType: OutputColumn. Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </summary>
-        [WirePath("outputColumns")]
         public DataFactoryElement<IList<Office365TableOutputColumn>> OutputColumns { get; set; }
     }
 }

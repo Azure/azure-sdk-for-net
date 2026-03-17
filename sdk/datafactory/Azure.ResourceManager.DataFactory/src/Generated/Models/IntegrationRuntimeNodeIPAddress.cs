@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The IP address of self-hosted integration runtime node. </summary>
-        [WirePath("ipAddress")]
         public IPAddress IPAddress { get; }
     }
 }

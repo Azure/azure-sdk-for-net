@@ -49,31 +49,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("recursive")]
         public DataFactoryElement<bool> Recursive { get; set; }
         /// <summary> Ftp wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
-        [WirePath("wildcardFolderPath")]
         public DataFactoryElement<string> WildcardFolderPath { get; set; }
         /// <summary> Ftp wildcardFileName. Type: string (or Expression with resultType string). </summary>
-        [WirePath("wildcardFileName")]
         public DataFactoryElement<string> WildcardFileName { get; set; }
         /// <summary> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("enablePartitionDiscovery")]
         public DataFactoryElement<bool> EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
-        [WirePath("partitionRootPath")]
         public DataFactoryElement<string> PartitionRootPath { get; set; }
         /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("deleteFilesAfterCompletion")]
         public DataFactoryElement<bool> DeleteFilesAfterCompletion { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
-        [WirePath("fileListPath")]
         public DataFactoryElement<string> FileListPath { get; set; }
         /// <summary> Specify whether to use binary transfer mode for FTP stores. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("useBinaryTransfer")]
         public DataFactoryElement<bool> UseBinaryTransfer { get; set; }
         /// <summary> If true, disable parallel reading within each file. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("disableChunking")]
         public DataFactoryElement<bool> DisableChunking { get; set; }
     }
 }

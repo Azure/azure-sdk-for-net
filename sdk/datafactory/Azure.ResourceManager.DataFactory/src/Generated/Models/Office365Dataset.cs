@@ -52,10 +52,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.predicate")]
         public DataFactoryElement<string> Predicate { get; set; }
     }
 }

@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of data flow. </summary>
         internal string DataFlowType { get; set; }
         /// <summary> The description of the data flow. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
         /// <summary>
         /// List of tags that can be used for describing the data flow.
@@ -105,12 +104,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("annotations")]
         public IList<BinaryData> Annotations { get; }
         /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
         internal DataFlowFolder Folder { get; set; }
         /// <summary> The name of the folder that this data flow is in. </summary>
-        [WirePath("folder.name")]
         public string FolderName
         {
             get => Folder is null ? default : Folder.Name;

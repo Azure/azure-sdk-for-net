@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> source script. </summary>
-        [WirePath("script")]
         public string Script { get; set; }
     }
 }

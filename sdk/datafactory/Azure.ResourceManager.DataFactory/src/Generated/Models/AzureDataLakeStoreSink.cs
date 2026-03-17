@@ -39,10 +39,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </summary>
-        [WirePath("copyBehavior")]
         public DataFactoryElement<string> CopyBehavior { get; set; }
         /// <summary> Single File Parallel. </summary>
-        [WirePath("enableAdlsSingleFileParallel")]
         public DataFactoryElement<bool> EnableAdlsSingleFileParallel { get; set; }
     }
 }

@@ -71,16 +71,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Synapse notebook reference. </summary>
-        [WirePath("typeProperties.notebook")]
         public SynapseNotebookReference Notebook { get; set; }
         /// <summary> The name of the big data pool which will be used to execute the notebook. </summary>
-        [WirePath("typeProperties.sparkPool")]
         public BigDataPoolParametrizationReference SparkPool { get; set; }
         /// <summary> Notebook parameters. </summary>
-        [WirePath("typeProperties.parameters")]
         public IDictionary<string, NotebookParameter> Parameters { get; }
         /// <summary> Number of core and memory to be used for executors allocated in the specified Spark pool for the session, which will be used for overriding 'executorCores' and 'executorMemory' of the notebook you provide. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.executorSize")]
         public DataFactoryElement<string> ExecutorSize { get; set; }
         /// <summary>
         /// Spark configuration properties, which will override the 'conf' of the notebook you provide.
@@ -112,19 +108,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.conf")]
         public BinaryData Conf { get; set; }
         /// <summary> Number of core and memory to be used for driver allocated in the specified Spark pool for the session, which will be used for overriding 'driverCores' and 'driverMemory' of the notebook you provide. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.driverSize")]
         public DataFactoryElement<string> DriverSize { get; set; }
         /// <summary> Number of executors to launch for this session, which will override the 'numExecutors' of the notebook you provide. Type: integer (or Expression with resultType integer). </summary>
-        [WirePath("typeProperties.numExecutors")]
         public DataFactoryElement<int> NumExecutors { get; set; }
         /// <summary> The type of the spark config. </summary>
-        [WirePath("typeProperties.configurationType")]
         public DataFactorySparkConfigurationType? ConfigurationType { get; set; }
         /// <summary> The spark configuration of the spark job. </summary>
-        [WirePath("typeProperties.targetSparkConfiguration")]
         public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
         /// <summary>
         /// Spark configuration property.
@@ -156,7 +147,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.sparkConfig")]
         public IDictionary<string, BinaryData> SparkConfig { get; }
     }
 }

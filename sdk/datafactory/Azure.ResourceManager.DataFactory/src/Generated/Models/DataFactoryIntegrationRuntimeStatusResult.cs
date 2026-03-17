@@ -80,14 +80,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The integration runtime name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary>
         /// Integration runtime properties.
         /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
         /// </summary>
-        [WirePath("properties")]
         public IntegrationRuntimeStatus Properties { get; }
     }
 }

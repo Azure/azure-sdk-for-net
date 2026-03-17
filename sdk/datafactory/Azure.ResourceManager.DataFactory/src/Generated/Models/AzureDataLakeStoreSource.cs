@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("recursive")]
         public DataFactoryElement<bool> Recursive { get; set; }
     }
 }

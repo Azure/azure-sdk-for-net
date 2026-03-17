@@ -69,37 +69,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of Microsoft Fabric Warehouse artifact. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.artifactId")]
         public DataFactoryElement<string> ArtifactId { get; set; }
         /// <summary> The endpoint of Microsoft Fabric Warehouse server. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.endpoint")]
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.workspaceId")]
         public DataFactoryElement<string> WorkspaceId { get; set; }
         /// <summary> The authentication type to use. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public WarehouseAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The ID of the application used to authenticate against Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalId")]
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The Key of the application used to authenticate against Microsoft Fabric Warehouse. </summary>
-        [WirePath("typeProperties.servicePrincipalKey")]
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.tenant")]
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.servicePrincipalCredentialType")]
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
         /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
-        [WirePath("typeProperties.servicePrincipalCredential")]
         public DataFactorySecret ServicePrincipalCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("typeProperties.credential")]
         public DataFactoryCredentialReference Credential { get; set; }
     }
 }

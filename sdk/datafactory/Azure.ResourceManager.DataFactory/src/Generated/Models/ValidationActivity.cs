@@ -57,19 +57,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specifies the timeout for the activity to run. If there is no value specified, it takes the value of TimeSpan.FromDays(7) which is 1 week as default. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
-        [WirePath("typeProperties.timeout")]
         public DataFactoryElement<string> Timeout { get; set; }
         /// <summary> A delay in seconds between validation attempts. If no value is specified, 10 seconds will be used as the default. Type: integer (or Expression with resultType integer). </summary>
-        [WirePath("typeProperties.sleep")]
         public DataFactoryElement<int> Sleep { get; set; }
         /// <summary> Can be used if dataset points to a file. The file must be greater than or equal in size to the value specified. Type: integer (or Expression with resultType integer). </summary>
-        [WirePath("typeProperties.minimumSize")]
         public DataFactoryElement<int> MinimumSize { get; set; }
         /// <summary> Can be used if dataset points to a folder. If set to true, the folder must have at least one file. If set to false, the folder must be empty. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.childItems")]
         public DataFactoryElement<bool> ChildItems { get; set; }
         /// <summary> Validation activity dataset reference. </summary>
-        [WirePath("typeProperties.dataset")]
         public DatasetReference Dataset { get; set; }
     }
 }

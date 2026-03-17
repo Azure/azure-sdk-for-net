@@ -41,10 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </summary>
-        [WirePath("typeProperties.linkedInfo")]
         public LinkedIntegrationRuntimeType LinkedInfo { get; set; }
         /// <summary> An alternative option to ensure interactive authoring function when your self-hosted integration runtime is unable to establish a connection with Azure Relay. </summary>
-        [WirePath("typeProperties.selfContainedInteractiveAuthoringEnabled")]
         public bool? IsSelfContainedInteractiveAuthoringEnabled { get; set; }
     }
 }

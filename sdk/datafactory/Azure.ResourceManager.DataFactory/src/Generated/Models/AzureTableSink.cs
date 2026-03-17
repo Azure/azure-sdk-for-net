@@ -43,16 +43,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Azure Table default partition key value. Type: string (or Expression with resultType string). </summary>
-        [WirePath("azureTableDefaultPartitionKeyValue")]
         public DataFactoryElement<string> AzureTableDefaultPartitionKeyValue { get; set; }
         /// <summary> Azure Table partition key name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("azureTablePartitionKeyName")]
         public DataFactoryElement<string> AzureTablePartitionKeyName { get; set; }
         /// <summary> Azure Table row key name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("azureTableRowKeyName")]
         public DataFactoryElement<string> AzureTableRowKeyName { get; set; }
         /// <summary> Azure Table insert type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("azureTableInsertType")]
         public DataFactoryElement<string> AzureTableInsertType { get; set; }
     }
 }

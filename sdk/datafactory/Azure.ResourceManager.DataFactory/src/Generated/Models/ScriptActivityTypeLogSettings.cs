@@ -69,10 +69,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The destination of logs. Type: string. </summary>
-        [WirePath("logDestination")]
         public ScriptActivityLogDestination LogDestination { get; set; }
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        [WirePath("logLocationSettings")]
         public LogLocationSettings LogLocationSettings { get; set; }
     }
 }

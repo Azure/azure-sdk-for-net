@@ -62,22 +62,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.systemNumber")]
         public DataFactoryElement<string> SystemNumber { get; set; }
         /// <summary> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> Username to access the SAP BW server. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to access the SAP BW server. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

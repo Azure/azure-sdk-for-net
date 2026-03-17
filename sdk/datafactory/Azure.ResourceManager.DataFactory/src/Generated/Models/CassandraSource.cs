@@ -39,10 +39,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Database query. Should be a SQL-92 query expression or Cassandra Query Language (CQL) command. Type: string (or Expression with resultType string). </summary>
-        [WirePath("query")]
         public DataFactoryElement<string> Query { get; set; }
         /// <summary> The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is 'ONE'. It is case-insensitive. </summary>
-        [WirePath("consistencyLevel")]
         public CassandraSourceReadConsistencyLevel? ConsistencyLevel { get; set; }
     }
 }

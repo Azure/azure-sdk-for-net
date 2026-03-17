@@ -72,43 +72,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The IP address or host name of the Impala server. (i.e. 192.168.222.160). </summary>
-        [WirePath("typeProperties.host")]
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Impala server uses to listen for client connections. The default value is 21050. </summary>
-        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> The authentication type to use. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public ImpalaAuthenticationType AuthenticationType { get; set; }
         /// <summary> The user name used to access the Impala server. The default value is anonymous when using SASLUsername. </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password corresponding to the user name when using UsernameAndPassword. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </summary>
-        [WirePath("typeProperties.thriftTransportProtocol")]
         public ImpalaThriftTransportProtocol? ThriftTransportProtocol { get; set; }
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
-        [WirePath("typeProperties.enableSsl")]
         public DataFactoryElement<bool> EnableSsl { get; set; }
         /// <summary> Specify whether to enable server SSL certificate validation when you connect.Always use System Trust Store (for V2 only). The default value is true. </summary>
-        [WirePath("typeProperties.enableServerCertificateValidation")]
         public DataFactoryElement<bool> EnableServerCertificateValidation { get; set; }
         /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
-        [WirePath("typeProperties.trustedCertPath")]
         public DataFactoryElement<string> TrustedCertPath { get; set; }
         /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
-        [WirePath("typeProperties.useSystemTrustStore")]
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
         /// <summary> Specifies whether to require a CA-issued SSL certificate name to match the host name of the server when connecting over SSL. The default value is false. </summary>
-        [WirePath("typeProperties.allowHostNameCNMismatch")]
         public DataFactoryElement<bool> AllowHostNameCNMismatch { get; set; }
         /// <summary> Specifies whether to allow self-signed certificates from the server. The default value is false. </summary>
-        [WirePath("typeProperties.allowSelfSignedServerCert")]
         public DataFactoryElement<bool> AllowSelfSignedServerCert { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

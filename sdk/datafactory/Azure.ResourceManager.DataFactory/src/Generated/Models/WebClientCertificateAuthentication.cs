@@ -49,10 +49,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Base64-encoded contents of a PFX file. </summary>
-        [WirePath("pfx")]
         public DataFactorySecret Pfx { get; set; }
         /// <summary> Password for the PFX file. </summary>
-        [WirePath("password")]
         public DataFactorySecret Password { get; set; }
     }
 }

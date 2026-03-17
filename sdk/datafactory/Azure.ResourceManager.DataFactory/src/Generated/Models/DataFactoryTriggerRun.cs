@@ -51,31 +51,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Trigger run id. </summary>
-        [WirePath("triggerRunId")]
         public string TriggerRunId { get; }
         /// <summary> Trigger name. </summary>
-        [WirePath("triggerName")]
         public string TriggerName { get; }
         /// <summary> Trigger type. </summary>
-        [WirePath("triggerType")]
         public string TriggerType { get; }
         /// <summary> Trigger run start time. </summary>
-        [WirePath("triggerRunTimestamp")]
         public DateTimeOffset? TriggerRunTimestamp { get; }
         /// <summary> Trigger run status. </summary>
-        [WirePath("status")]
         public DataFactoryTriggerRunStatus? Status { get; }
         /// <summary> Trigger error message. </summary>
-        [WirePath("message")]
         public string Message { get; }
         /// <summary> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </summary>
-        [WirePath("properties")]
         public IReadOnlyDictionary<string, string> Properties { get; }
         /// <summary> List of pipeline name and run Id triggered by the trigger run. </summary>
-        [WirePath("triggeredPipelines")]
         public IReadOnlyDictionary<string, string> TriggeredPipelines { get; }
         /// <summary> Run dimension for which trigger was fired. </summary>
-        [WirePath("runDimension")]
         public IReadOnlyDictionary<string, string> RunDimension { get; }
         /// <summary>
         /// Status of the upstream pipelines.
@@ -107,7 +98,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("dependencyStatus")]
         public IReadOnlyDictionary<string, BinaryData> DependencyStatus { get; }
         /// <summary>
         /// Additional Properties
@@ -139,7 +129,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

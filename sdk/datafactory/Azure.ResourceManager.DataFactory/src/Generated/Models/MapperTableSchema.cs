@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the column. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Data type of the column. </summary>
-        [WirePath("dataType")]
         public string DataType { get; set; }
     }
 }

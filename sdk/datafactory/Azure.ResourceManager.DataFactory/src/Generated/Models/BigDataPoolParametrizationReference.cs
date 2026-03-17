@@ -75,10 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Big data pool reference type. </summary>
-        [WirePath("type")]
         public BigDataPoolReferenceType ReferenceType { get; set; }
         /// <summary> Reference big data pool name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("referenceName")]
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

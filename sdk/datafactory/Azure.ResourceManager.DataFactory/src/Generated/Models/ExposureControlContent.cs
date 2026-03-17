@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The feature name. </summary>
-        [WirePath("featureName")]
         public string FeatureName { get; set; }
         /// <summary> The feature type. </summary>
-        [WirePath("featureType")]
         public string FeatureType { get; set; }
     }
 }

@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the container of azure blob. Type: string (or Expression with resultType string). </summary>
-        [WirePath("container")]
         public DataFactoryElement<string> Container { get; set; }
     }
 }

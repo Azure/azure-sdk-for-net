@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </summary>
-        [WirePath("fileSystem")]
         public DataFactoryElement<string> FileSystem { get; set; }
     }
 }

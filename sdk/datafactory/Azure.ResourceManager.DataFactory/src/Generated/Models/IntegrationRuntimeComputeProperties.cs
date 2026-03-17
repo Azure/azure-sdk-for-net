@@ -44,28 +44,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </summary>
-        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The node size requirement to managed integration runtime. </summary>
-        [WirePath("nodeSize")]
         public string NodeSize { get; set; }
         /// <summary> The required number of nodes for managed integration runtime. </summary>
-        [WirePath("numberOfNodes")]
         public int? NumberOfNodes { get; set; }
         /// <summary> Maximum parallel executions count per node for managed integration runtime. </summary>
-        [WirePath("maxParallelExecutionsPerNode")]
         public int? MaxParallelExecutionsPerNode { get; set; }
         /// <summary> Data flow properties for managed integration runtime. </summary>
-        [WirePath("dataFlowProperties")]
         public IntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
         /// <summary> VNet properties for managed integration runtime. </summary>
-        [WirePath("vNetProperties")]
         public IntegrationRuntimeVnetProperties VnetProperties { get; set; }
         /// <summary> CopyComputeScale properties for managed integration runtime. </summary>
-        [WirePath("copyComputeScaleProperties")]
         public CopyComputeScaleProperties CopyComputeScaleProperties { get; set; }
         /// <summary> PipelineExternalComputeScale properties for managed integration runtime. </summary>
-        [WirePath("pipelineExternalComputeScaleProperties")]
         public PipelineExternalComputeScaleProperties PipelineExternalComputeScaleProperties { get; set; }
         /// <summary>
         /// Additional Properties
@@ -97,7 +89,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

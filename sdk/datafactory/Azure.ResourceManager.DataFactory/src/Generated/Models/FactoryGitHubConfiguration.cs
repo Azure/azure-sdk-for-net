@@ -55,13 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </summary>
-        [WirePath("hostName")]
         public string HostName { get; set; }
         /// <summary> GitHub bring your own app client id. </summary>
-        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> GitHub bring your own app client secret information. </summary>
-        [WirePath("clientSecret")]
         public FactoryGitHubClientSecret ClientSecret { get; set; }
     }
 }

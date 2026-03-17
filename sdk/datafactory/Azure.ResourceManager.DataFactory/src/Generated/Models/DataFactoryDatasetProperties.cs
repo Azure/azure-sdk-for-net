@@ -62,19 +62,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of dataset. </summary>
         internal string DatasetType { get; set; }
         /// <summary> Dataset description. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </summary>
-        [WirePath("structure")]
         public DataFactoryElement<IList<DatasetDataElement>> Structure { get; set; }
         /// <summary> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </summary>
-        [WirePath("schema")]
         public DataFactoryElement<IList<DatasetSchemaDataElement>> Schema { get; set; }
         /// <summary> Linked service reference. </summary>
-        [WirePath("linkedServiceName")]
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> Parameters for dataset. </summary>
-        [WirePath("parameters")]
         public IDictionary<string, EntityParameterSpecification> Parameters { get; }
         /// <summary>
         /// List of tags that can be used for describing the Dataset.
@@ -106,12 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("annotations")]
         public IList<BinaryData> Annotations { get; }
         /// <summary> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </summary>
         internal DatasetFolder Folder { get; set; }
         /// <summary> The name of the folder that this Dataset is in. </summary>
-        [WirePath("folder.name")]
         public string FolderName
         {
             get => Folder is null ? default : Folder.Name;
@@ -153,7 +146,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

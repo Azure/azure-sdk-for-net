@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The domain name of endpoint. </summary>
-        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> The details of endpoint. </summary>
-        [WirePath("endpointDetails")]
         public IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> EndpointDetails { get; }
     }
 }

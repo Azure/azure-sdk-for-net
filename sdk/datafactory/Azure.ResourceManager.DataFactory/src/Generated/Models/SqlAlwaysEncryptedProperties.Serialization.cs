@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -139,78 +138,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, servicePrincipalKey, credential, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysEncryptedAkvAuthType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  alwaysEncryptedAkvAuthType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  alwaysEncryptedAkvAuthType: ");
-                builder.AppendLine($"'{AlwaysEncryptedAkvAuthType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  servicePrincipalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServicePrincipalId))
-                {
-                    builder.Append("  servicePrincipalId: ");
-                    builder.AppendLine($"'{ServicePrincipalId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  servicePrincipalKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServicePrincipalKey))
-                {
-                    builder.Append("  servicePrincipalKey: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipalKey, options, 2, false, "  servicePrincipalKey: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Credential), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  credential: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Credential))
-                {
-                    builder.Append("  credential: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Credential, options, 2, false, "  credential: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<SqlAlwaysEncryptedProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlAlwaysEncryptedProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -219,8 +146,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support writing '{options.Format}' format.");
             }

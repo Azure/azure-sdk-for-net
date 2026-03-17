@@ -82,40 +82,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Parameter id. </summary>
-        [WirePath("id")]
         public long? Id { get; }
         /// <summary> Parameter name. </summary>
-        [WirePath("name")]
         public string Name { get; }
         /// <summary> Parameter description. </summary>
-        [WirePath("description")]
         public string Description { get; }
         /// <summary> Parameter type. </summary>
-        [WirePath("dataType")]
         public string DataType { get; }
         /// <summary> Whether parameter is required. </summary>
-        [WirePath("required")]
         public bool? IsRequired { get; }
         /// <summary> Whether parameter is sensitive. </summary>
-        [WirePath("sensitive")]
         public bool? IsSensitive { get; }
         /// <summary> Design default value of parameter. </summary>
-        [WirePath("designDefaultValue")]
         public string DesignDefaultValue { get; }
         /// <summary> Default value of parameter. </summary>
-        [WirePath("defaultValue")]
         public string DefaultValue { get; }
         /// <summary> Default sensitive value of parameter. </summary>
-        [WirePath("sensitiveDefaultValue")]
         public string SensitiveDefaultValue { get; }
         /// <summary> Parameter value type. </summary>
-        [WirePath("valueType")]
         public string ValueType { get; }
         /// <summary> Parameter value set. </summary>
-        [WirePath("valueSet")]
         public bool? HasValueSet { get; }
         /// <summary> Parameter reference variable. </summary>
-        [WirePath("variable")]
         public string Variable { get; }
     }
 }

@@ -96,64 +96,44 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Server name for connection. Type: string. </summary>
-        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The port for the connection. Type: integer. </summary>
-        [WirePath("typeProperties.port")]
         public DataFactoryElement<int> Port { get; set; }
         /// <summary> Username for authentication. Type: string. </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Database name for connection. Type: string. </summary>
-        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The authentication type to use. Type: string. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public DataFactoryElement<string> AuthenticationType { get; set; }
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </summary>
-        [WirePath("typeProperties.sslMode")]
         public DataFactoryElement<int> SslMode { get; set; }
         /// <summary> Sets the schema search path. Type: string. </summary>
-        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> Schema { get; set; }
         /// <summary> Whether connection pooling should be used. Type: boolean. </summary>
-        [WirePath("typeProperties.pooling")]
         public DataFactoryElement<bool> Pooling { get; set; }
         /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. </summary>
-        [WirePath("typeProperties.connectionTimeout")]
         public DataFactoryElement<int> ConnectionTimeout { get; set; }
         /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. </summary>
-        [WirePath("typeProperties.commandTimeout")]
         public DataFactoryElement<int> CommandTimeout { get; set; }
         /// <summary> Whether to trust the server certificate without validating it. Type: boolean. </summary>
-        [WirePath("typeProperties.trustServerCertificate")]
         public DataFactoryElement<bool> TrustServerCertificate { get; set; }
         /// <summary> Location of a client certificate to be sent to the server. Type: string. </summary>
-        [WirePath("typeProperties.sslCertificate")]
         public DataFactoryElement<string> SslCertificate { get; set; }
         /// <summary> Location of a client key for a client certificate to be sent to the server. Type: string. </summary>
-        [WirePath("typeProperties.sslKey")]
         public DataFactoryElement<string> SslKey { get; set; }
         /// <summary> Password for a key for a client certificate. Type: string. </summary>
-        [WirePath("typeProperties.sslPassword")]
         public DataFactoryElement<string> SslPassword { get; set; }
         /// <summary> Determines the size of the internal buffer uses when reading. Increasing may improve performance if transferring large values from the database. Type: integer. </summary>
-        [WirePath("typeProperties.readBufferSize")]
         public DataFactoryElement<int> ReadBufferSize { get; set; }
         /// <summary> When enabled, parameter values are logged when commands are executed. Type: boolean. </summary>
-        [WirePath("typeProperties.logParameters")]
         public DataFactoryElement<bool> LogParameters { get; set; }
         /// <summary> Gets or sets the session timezone. Type: string. </summary>
-        [WirePath("typeProperties.timezone")]
         public DataFactoryElement<string> Timezone { get; set; }
         /// <summary> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </summary>
-        [WirePath("typeProperties.encoding")]
         public DataFactoryElement<string> Encoding { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. Type: string. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactoryKeyVaultSecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

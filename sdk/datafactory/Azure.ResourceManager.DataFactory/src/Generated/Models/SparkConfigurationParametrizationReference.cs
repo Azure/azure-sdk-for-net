@@ -75,10 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Spark configuration reference type. </summary>
-        [WirePath("type")]
         public SparkConfigurationReferenceType ReferenceType { get; set; }
         /// <summary> Reference spark configuration name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("referenceName")]
         public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SSIS package execution parameter value. Type: string (or Expression with resultType string). </summary>
-        [WirePath("value")]
         public DataFactoryElement<string> Value { get; set; }
     }
 }

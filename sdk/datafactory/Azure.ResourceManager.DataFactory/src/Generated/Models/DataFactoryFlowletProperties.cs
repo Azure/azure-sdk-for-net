@@ -45,19 +45,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of sources in Flowlet. </summary>
-        [WirePath("typeProperties.sources")]
         public IList<DataFlowSource> Sources { get; }
         /// <summary> List of sinks in Flowlet. </summary>
-        [WirePath("typeProperties.sinks")]
         public IList<DataFlowSink> Sinks { get; }
         /// <summary> List of transformations in Flowlet. </summary>
-        [WirePath("typeProperties.transformations")]
         public IList<DataFlowTransformation> Transformations { get; }
         /// <summary> Flowlet script. </summary>
-        [WirePath("typeProperties.script")]
         public string Script { get; set; }
         /// <summary> Flowlet script lines. </summary>
-        [WirePath("typeProperties.scriptLines")]
         public IList<string> ScriptLines { get; }
     }
 }

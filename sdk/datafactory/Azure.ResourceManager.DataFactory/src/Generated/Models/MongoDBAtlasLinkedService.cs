@@ -53,13 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.database")]
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The driver version that you want to choose. Allowed value are v1 and v2. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.driverVersion")]
         public DataFactoryElement<string> DriverVersion { get; set; }
     }
 }

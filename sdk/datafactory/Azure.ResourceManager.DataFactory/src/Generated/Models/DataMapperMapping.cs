@@ -68,18 +68,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the target table. </summary>
-        [WirePath("targetEntityName")]
         public string TargetEntityName { get; set; }
         /// <summary> Name of the source table. </summary>
-        [WirePath("sourceEntityName")]
         public string SourceEntityName { get; set; }
         /// <summary> The connection reference for the source connection. </summary>
-        [WirePath("sourceConnectionReference")]
         public MapperConnectionReference SourceConnectionReference { get; set; }
         /// <summary> This holds the user provided attribute mapping information. </summary>
         internal MapperAttributeMappings AttributeMappingInfo { get; set; }
         /// <summary> List of attribute mappings. </summary>
-        [WirePath("attributeMappingInfo.attributeMappings")]
         public IList<MapperAttributeMapping> AttributeMappings
         {
             get
@@ -120,7 +116,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("sourceDenormalizeInfo")]
         public BinaryData SourceDenormalizeInfo { get; set; }
     }
 }

@@ -82,10 +82,8 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Managed Virtual Network properties. </summary>
-        [WirePath("properties")]
         public DataFactoryManagedVirtualNetworkProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

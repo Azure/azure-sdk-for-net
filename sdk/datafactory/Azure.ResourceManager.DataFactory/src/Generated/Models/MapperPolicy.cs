@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Mode of running the CDC: batch vs continuous. </summary>
-        [WirePath("mode")]
         public string Mode { get; set; }
         /// <summary> Defines the frequency and interval for running the CDC for batch mode. </summary>
-        [WirePath("recurrence")]
         public MapperPolicyRecurrence Recurrence { get; set; }
     }
 }

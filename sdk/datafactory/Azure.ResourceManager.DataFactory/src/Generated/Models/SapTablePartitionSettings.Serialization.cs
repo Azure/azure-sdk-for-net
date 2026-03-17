@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -146,81 +145,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SapTablePartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, maxPartitionsNumber, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionColumnName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  partitionColumnName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartitionColumnName))
-                {
-                    builder.Append("  partitionColumnName: ");
-                    builder.AppendLine($"'{PartitionColumnName.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionUpperBound), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  partitionUpperBound: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartitionUpperBound))
-                {
-                    builder.Append("  partitionUpperBound: ");
-                    builder.AppendLine($"'{PartitionUpperBound.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartitionLowerBound), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  partitionLowerBound: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartitionLowerBound))
-                {
-                    builder.Append("  partitionLowerBound: ");
-                    builder.AppendLine($"'{PartitionLowerBound.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPartitionsNumber), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxPartitionsNumber: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxPartitionsNumber))
-                {
-                    builder.Append("  maxPartitionsNumber: ");
-                    builder.AppendLine($"'{MaxPartitionsNumber.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<SapTablePartitionSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -229,8 +153,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support writing '{options.Format}' format.");
             }

@@ -68,55 +68,38 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </summary>
-        [WirePath("typeProperties.connectionString")]
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The location of AmazonRdsForOracle database you want to connect to, the supported forms include connector descriptor, Easy Connect (Plus) Naming and Oracle Net Services Name (Only self-hosted IR). Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> Authentication type for connecting to the AmazonRdsForOracle database. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public AmazonRdsForOracleAuthenticationType? AuthenticationType { get; set; }
         /// <summary> The AmazonRdsForOracle database username. Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.username")]
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> Specifies the encryption client behavior. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.encryptionClient")]
         public DataFactoryElement<string> EncryptionClient { get; set; }
         /// <summary> Specifies the encryption algorithms that client can use. Supported values are AES128, AES192, AES256, 3DES112, 3DES168, default value is (AES256). Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.encryptionTypesClient")]
         public DataFactoryElement<string> EncryptionTypesClient { get; set; }
         /// <summary> Specifies the desired data integrity behavior when this client connects to a server. Supported values are accepted, rejected, requested or required, default value is required. Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.cryptoChecksumClient")]
         public DataFactoryElement<string> CryptoChecksumClient { get; set; }
         /// <summary> Specifies the crypto-checksum algorithms that client can use. Supported values are SHA1, SHA256, SHA384, SHA512, default value is (SHA512). Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.cryptoChecksumTypesClient")]
         public DataFactoryElement<string> CryptoChecksumTypesClient { get; set; }
         /// <summary> Specifies the amount that the source initially fetches for LOB columns, default value is 0. Type: integer. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.initialLobFetchSize")]
         public DataFactoryElement<int> InitialLobFetchSize { get; set; }
         /// <summary> Specifies the number of bytes that the driver allocates to fetch the data in one database round-trip, default value is 10485760. Type: integer. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.fetchSize")]
         public DataFactoryElement<int> FetchSize { get; set; }
         /// <summary> Specifies the number of cursors or statements to be cached for each database connection, default value is 0. Type: integer. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.statementCacheSize")]
         public DataFactoryElement<int> StatementCacheSize { get; set; }
         /// <summary> Specifies a command that is issued immediately after connecting to the database to manage session settings. Type: string. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.initializationString")]
         public DataFactoryElement<string> InitializationString { get; set; }
         /// <summary> Specifies whether to use bulk copy or batch insert when loading data into the database, default value is true. Type: boolean. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.enableBulkLoad")]
         public DataFactoryElement<bool> EnableBulkLoad { get; set; }
         /// <summary> Specifies whether to use the Version 1.0 data type mappings. Do not set this to true unless you want to keep backward compatibility with Version 1.0's data type mappings, default value is false. Type: boolean. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.supportV1DataTypes")]
         public DataFactoryElement<bool> SupportV1DataTypes { get; set; }
         /// <summary> Specifies whether the driver returns column value with the TIMESTAMP WITH TIME ZONE data type as DateTime or string. This setting is ignored if supportV1DataTypes is not true, default value is true. Type: boolean. Only used for Version 2.0. </summary>
-        [WirePath("typeProperties.fetchTswtzAsTimestamp")]
         public DataFactoryElement<bool> FetchTswtzAsTimestamp { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

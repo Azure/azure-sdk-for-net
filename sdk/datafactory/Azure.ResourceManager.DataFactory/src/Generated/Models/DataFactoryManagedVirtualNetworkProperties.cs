@@ -31,10 +31,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Managed Virtual Network ID. </summary>
-        [WirePath("vNetId")]
         public Guid? VnetId { get; }
         /// <summary> Managed Virtual Network alias. </summary>
-        [WirePath("alias")]
         public string Alias { get; }
         /// <summary>
         /// Additional Properties
@@ -66,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

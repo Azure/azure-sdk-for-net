@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Notebook parameter value. Type: string (or Expression with resultType string). </summary>
-        [WirePath("value")]
         public DataFactoryElement<string> Value { get; set; }
         /// <summary> Notebook parameter type. </summary>
-        [WirePath("type")]
         public NotebookParameterType? ParameterType { get; set; }
     }
 }

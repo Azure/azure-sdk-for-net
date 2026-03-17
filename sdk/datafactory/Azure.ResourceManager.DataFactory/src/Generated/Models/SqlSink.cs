@@ -53,13 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL writer stored procedure name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("sqlWriterStoredProcedureName")]
         public DataFactoryElement<string> SqlWriterStoredProcedureName { get; set; }
         /// <summary> SQL writer table type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("sqlWriterTableType")]
         public DataFactoryElement<string> SqlWriterTableType { get; set; }
         /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
-        [WirePath("preCopyScript")]
         public DataFactoryElement<string> PreCopyScript { get; set; }
         /// <summary>
         /// SQL stored procedure parameters.
@@ -91,22 +88,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("storedProcedureParameters")]
         public BinaryData StoredProcedureParameters { get; set; }
         /// <summary> The stored procedure parameter name of the table type. Type: string (or Expression with resultType string). </summary>
-        [WirePath("storedProcedureTableTypeParameterName")]
         public DataFactoryElement<string> StoredProcedureTableTypeParameterName { get; set; }
         /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
-        [WirePath("tableOption")]
         public DataFactoryElement<string> TableOption { get; set; }
         /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("sqlWriterUseTableLock")]
         public DataFactoryElement<bool> SqlWriterUseTableLock { get; set; }
         /// <summary> Write behavior when copying data into sql. Type: string (or Expression with resultType string). </summary>
-        [WirePath("writeBehavior")]
         public DataFactoryElement<string> WriteBehavior { get; set; }
         /// <summary> SQL upsert settings. </summary>
-        [WirePath("upsertSettings")]
         public SqlUpsertSettings UpsertSettings { get; set; }
     }
 }

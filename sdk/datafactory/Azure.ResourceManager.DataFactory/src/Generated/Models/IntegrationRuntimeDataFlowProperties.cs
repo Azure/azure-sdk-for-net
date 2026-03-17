@@ -38,19 +38,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Compute type of the cluster which will execute data flow job. </summary>
-        [WirePath("computeType")]
         public DataFlowComputeType? ComputeType { get; set; }
         /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </summary>
-        [WirePath("coreCount")]
         public int? CoreCount { get; set; }
         /// <summary> Time to live (in minutes) setting of the cluster which will execute data flow job. </summary>
-        [WirePath("timeToLive")]
         public int? TimeToLiveInMinutes { get; set; }
         /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
-        [WirePath("cleanup")]
         public bool? ShouldCleanupAfterTtl { get; set; }
         /// <summary> Custom properties are used to tune the data flow runtime performance. </summary>
-        [WirePath("customProperties")]
         public IList<IntegrationRuntimeDataFlowCustomItem> CustomProperties { get; }
         /// <summary>
         /// Additional Properties
@@ -82,7 +77,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

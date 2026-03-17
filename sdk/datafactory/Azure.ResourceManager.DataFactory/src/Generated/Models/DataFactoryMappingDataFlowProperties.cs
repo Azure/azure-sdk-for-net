@@ -45,19 +45,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> List of sources in data flow. </summary>
-        [WirePath("typeProperties.sources")]
         public IList<DataFlowSource> Sources { get; }
         /// <summary> List of sinks in data flow. </summary>
-        [WirePath("typeProperties.sinks")]
         public IList<DataFlowSink> Sinks { get; }
         /// <summary> List of transformations in data flow. </summary>
-        [WirePath("typeProperties.transformations")]
         public IList<DataFlowTransformation> Transformations { get; }
         /// <summary> DataFlow script. </summary>
-        [WirePath("typeProperties.script")]
         public string Script { get; set; }
         /// <summary> Data flow script lines. </summary>
-        [WirePath("typeProperties.scriptLines")]
         public IList<string> ScriptLines { get; }
     }
 }

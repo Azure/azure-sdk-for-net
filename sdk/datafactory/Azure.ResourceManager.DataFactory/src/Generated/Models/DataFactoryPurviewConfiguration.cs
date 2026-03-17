@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Purview resource id. </summary>
-        [WirePath("purviewResourceId")]
         public ResourceIdentifier PurviewResourceId { get; set; }
     }
 }

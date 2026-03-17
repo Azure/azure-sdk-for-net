@@ -67,31 +67,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Data flow reference. </summary>
-        [WirePath("typeProperties.dataFlow")]
         public DataFlowReference DataFlow { get; set; }
         /// <summary> Staging info for execute data flow activity. </summary>
-        [WirePath("typeProperties.staging")]
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> The integration runtime reference. </summary>
-        [WirePath("typeProperties.integrationRuntime")]
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
         /// <summary> Continuation settings for execute data flow activity. </summary>
-        [WirePath("typeProperties.continuationSettings")]
         public ContinuationSettingsReference ContinuationSettings { get; set; }
         /// <summary> Compute properties for data flow activity. </summary>
-        [WirePath("typeProperties.compute")]
         public ExecuteDataFlowActivityComputeType Compute { get; set; }
         /// <summary> Trace level setting used for data flow monitoring output. Supported values are: 'coarse', 'fine', and 'none'. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.traceLevel")]
         public DataFactoryElement<string> TraceLevel { get; set; }
         /// <summary> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.continueOnError")]
         public DataFactoryElement<bool> ContinueOnError { get; set; }
         /// <summary> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.runConcurrently")]
         public DataFactoryElement<bool> RunConcurrently { get; set; }
         /// <summary> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </summary>
-        [WirePath("typeProperties.sourceStagingConcurrency")]
         public DataFactoryElement<int> SourceStagingConcurrency { get; set; }
     }
 }

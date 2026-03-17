@@ -46,13 +46,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Blob writer overwrite files. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("blobWriterOverwriteFiles")]
         public DataFactoryElement<bool> BlobWriterOverwriteFiles { get; set; }
         /// <summary> Blob writer date time format. Type: string (or Expression with resultType string). </summary>
-        [WirePath("blobWriterDateTimeFormat")]
         public DataFactoryElement<string> BlobWriterDateTimeFormat { get; set; }
         /// <summary> Blob writer add header. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("blobWriterAddHeader")]
         public DataFactoryElement<bool> BlobWriterAddHeader { get; set; }
         /// <summary>
         /// The type of copy behavior for copy sink.
@@ -84,10 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("copyBehavior")]
         public BinaryData CopyBehavior { get; set; }
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        [WirePath("metadata")]
         public IList<DataFactoryMetadataItemInfo> Metadata { get; }
     }
 }

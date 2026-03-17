@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -206,154 +205,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 interactiveQuery);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedVirtualNetwork), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  managedVirtualNetwork: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ManagedVirtualNetwork))
-                {
-                    builder.Append("  managedVirtualNetwork: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ManagedVirtualNetwork, options, 2, false, "  managedVirtualNetwork: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntegrationRuntimeType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{IntegrationRuntimeType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            builder.Append("  typeProperties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    computeProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ComputeProperties))
-                {
-                    builder.Append("    computeProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ComputeProperties, options, 4, false, "    computeProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SsisProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ssisProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SsisProperties))
-                {
-                    builder.Append("    ssisProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SsisProperties, options, 4, false, "    ssisProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CustomerVirtualNetworkSubnetId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customerVirtualNetwork: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      customerVirtualNetwork: {");
-                builder.Append("        subnetId: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomerVirtualNetwork))
-                {
-                    builder.Append("    customerVirtualNetwork: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomerVirtualNetwork, options, 4, false, "    customerVirtualNetwork: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InteractiveQuery), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    interactiveQuery: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InteractiveQuery))
-                {
-                    builder.Append("    interactiveQuery: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, InteractiveQuery, options, 4, false, "    interactiveQuery: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<ManagedIntegrationRuntime>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
@@ -362,8 +213,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support writing '{options.Format}' format.");
             }

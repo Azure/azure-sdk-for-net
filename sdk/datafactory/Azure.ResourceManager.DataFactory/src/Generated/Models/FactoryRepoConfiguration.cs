@@ -97,22 +97,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of repo configuration. </summary>
         internal string FactoryRepoConfigurationType { get; set; }
         /// <summary> Account name. </summary>
-        [WirePath("accountName")]
         public string AccountName { get; set; }
         /// <summary> Repository name. </summary>
-        [WirePath("repositoryName")]
         public string RepositoryName { get; set; }
         /// <summary> Collaboration branch. </summary>
-        [WirePath("collaborationBranch")]
         public string CollaborationBranch { get; set; }
         /// <summary> Root folder. </summary>
-        [WirePath("rootFolder")]
         public string RootFolder { get; set; }
         /// <summary> Last commit id. </summary>
-        [WirePath("lastCommitId")]
         public string LastCommitId { get; set; }
         /// <summary> Disable manual publish operation in ADF studio to favor automated publish. </summary>
-        [WirePath("disablePublish")]
         public bool? DisablePublish { get; set; }
     }
 }

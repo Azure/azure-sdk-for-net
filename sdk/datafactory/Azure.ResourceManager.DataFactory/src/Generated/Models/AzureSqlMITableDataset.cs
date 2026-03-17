@@ -51,13 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        [WirePath("typeProperties.tableName")]
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.schema")]
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the Azure SQL Managed Instance dataset. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.table")]
         public DataFactoryElement<string> Table { get; set; }
     }
 }

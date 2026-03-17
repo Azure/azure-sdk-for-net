@@ -52,16 +52,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Activity policy. </summary>
-        [WirePath("policy")]
         public SecureInputOutputPolicy Policy { get; set; }
         /// <summary> Name of the variable whose value needs to be set. </summary>
-        [WirePath("typeProperties.variableName")]
         public string VariableName { get; set; }
         /// <summary> Value to be set. Could be a static value or Expression. </summary>
-        [WirePath("typeProperties.value")]
         public DataFactoryElement<BinaryData> Value { get; set; }
         /// <summary> If set to true, it sets the pipeline run return value. </summary>
-        [WirePath("typeProperties.setSystemVariable")]
         public bool? SetSystemVariable { get; set; }
     }
 }

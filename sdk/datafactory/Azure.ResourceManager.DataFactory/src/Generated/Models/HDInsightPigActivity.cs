@@ -60,19 +60,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Storage linked service references. </summary>
-        [WirePath("typeProperties.storageLinkedServices")]
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
-        [WirePath("typeProperties.arguments")]
         public DataFactoryElement<IList<string>> Arguments { get; set; }
         /// <summary> Debug info option. </summary>
-        [WirePath("typeProperties.getDebugInfo")]
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.scriptPath")]
         public DataFactoryElement<string> ScriptPath { get; set; }
         /// <summary> Script linked service reference. </summary>
-        [WirePath("typeProperties.scriptLinkedService")]
         public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
         /// <summary>
         /// Allows user to specify defines for Pig job request.
@@ -104,7 +99,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.defines")]
         public IDictionary<string, BinaryData> Defines { get; }
     }
 }

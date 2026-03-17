@@ -42,21 +42,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Integration runtime state, only valid for managed dedicated integration runtime. </summary>
-        [WirePath("state")]
         public IntegrationRuntimeState? State { get; }
         /// <summary> Managed Virtual Network reference. </summary>
-        [WirePath("managedVirtualNetwork")]
         public ManagedVirtualNetworkReference ManagedVirtualNetwork { get; set; }
         /// <summary> The compute resource for managed integration runtime. </summary>
-        [WirePath("typeProperties.computeProperties")]
         public IntegrationRuntimeComputeProperties ComputeProperties { get; set; }
         /// <summary> SSIS properties for managed integration runtime. </summary>
-        [WirePath("typeProperties.ssisProperties")]
         public IntegrationRuntimeSsisProperties SsisProperties { get; set; }
         /// <summary> The name of virtual network to which Azure-SSIS integration runtime will join. </summary>
         internal IntegrationRuntimeCustomerVirtualNetwork CustomerVirtualNetwork { get; set; }
         /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>
-        [WirePath("typeProperties.customerVirtualNetwork.subnetId")]
         public ResourceIdentifier CustomerVirtualNetworkSubnetId
         {
             get => CustomerVirtualNetwork is null ? default : CustomerVirtualNetwork.SubnetId;
@@ -69,7 +64,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Interactive authoring capability reference. </summary>
-        [WirePath("typeProperties.interactiveQuery")]
         public InteractiveQueryProperties InteractiveQuery { get; set; }
     }
 }

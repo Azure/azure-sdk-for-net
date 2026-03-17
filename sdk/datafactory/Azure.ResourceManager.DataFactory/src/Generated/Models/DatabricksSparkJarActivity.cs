@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.mainClassName")]
         public DataFactoryElement<string> MainClassName { get; set; }
         /// <summary>
         /// Parameters that will be passed to the main method.
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.parameters")]
         public IList<BinaryData> Parameters { get; }
         /// <summary>
         /// A list of libraries to be installed on the cluster that will execute the job.
@@ -121,7 +119,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("typeProperties.libraries")]
         public IList<IDictionary<string, BinaryData>> Libraries { get; }
     }
 }

@@ -58,22 +58,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The authentication type to use. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public TeamDeskAuthenticationType AuthenticationType { get; set; }
         /// <summary> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.url")]
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The username of the TeamDesk source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of the TeamDesk source. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The api token for the TeamDesk source. </summary>
-        [WirePath("typeProperties.apiToken")]
         public DataFactorySecret ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

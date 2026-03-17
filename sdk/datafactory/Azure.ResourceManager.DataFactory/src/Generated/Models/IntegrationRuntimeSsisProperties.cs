@@ -49,32 +49,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Catalog information for managed dedicated integration runtime. </summary>
-        [WirePath("catalogInfo")]
         public IntegrationRuntimeSsisCatalogInfo CatalogInfo { get; set; }
         /// <summary> License type for bringing your own license scenario. </summary>
-        [WirePath("licenseType")]
         public IntegrationRuntimeLicenseType? LicenseType { get; set; }
         /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-        [WirePath("customSetupScriptProperties")]
         public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
         /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
-        [WirePath("dataProxyProperties")]
         public IntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }
         /// <summary> The edition for the SSIS Integration Runtime. </summary>
-        [WirePath("edition")]
         public IntegrationRuntimeEdition? Edition { get; set; }
         /// <summary>
         /// Custom setup without script properties for a SSIS integration runtime.
         /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
         /// </summary>
-        [WirePath("expressCustomSetupProperties")]
         public IList<CustomSetupBase> ExpressCustomSetupProperties { get; }
         /// <summary> Package stores for the SSIS Integration Runtime. </summary>
-        [WirePath("packageStores")]
         public IList<DataFactoryPackageStore> PackageStores { get; }
         /// <summary> The credential reference containing authentication information. </summary>
-        [WirePath("credential")]
         public DataFactoryCredentialReference Credential { get; set; }
         /// <summary>
         /// Additional Properties
@@ -106,7 +98,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

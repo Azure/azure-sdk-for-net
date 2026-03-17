@@ -43,10 +43,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The extraction mode. Allowed value include: Full, Delta and Recovery. The default value is Full. Type: string (or Expression with resultType string). </summary>
-        [WirePath("extractionMode")]
         public DataFactoryElement<string> ExtractionMode { get; set; }
         /// <summary> The subscriber process to manage the delta process. Type: string (or Expression with resultType string). </summary>
-        [WirePath("subscriberProcess")]
         public DataFactoryElement<string> SubscriberProcess { get; set; }
         /// <summary>
         /// Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects).
@@ -78,7 +76,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("selection")]
         public BinaryData Selection { get; set; }
         /// <summary>
         /// Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects).
@@ -110,7 +107,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("projection")]
         public BinaryData Projection { get; set; }
     }
 }

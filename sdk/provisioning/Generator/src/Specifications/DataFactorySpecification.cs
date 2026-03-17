@@ -10,6 +10,12 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
+// NOTE: To correctly regenerate Azure.Provisioning.DataFactory, the mgmt library
+// (Azure.ResourceManager.DataFactory) must first be regenerated with
+// `enable-bicep-serialization: true` in its autorest.md to produce WirePath
+// attributes. Then switch the PackageReference below to a ProjectReference
+// pointing to the local mgmt project before running this generator.
+// After generation, restore the PackageReference and revert the mgmt changes.
 public class DataFactorySpecification() :
     Specification("DataFactory", typeof(DataFactoryExtensions), ignorePropertiesWithoutPath: true)
 {

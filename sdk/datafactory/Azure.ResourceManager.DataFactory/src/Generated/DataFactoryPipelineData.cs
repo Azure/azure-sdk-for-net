@@ -66,23 +66,18 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> The description of the pipeline. </summary>
-        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// List of activities in pipeline.
         /// Please note <see cref="PipelineActivity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DatabricksJobActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetDatasetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="DataFactoryScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SynapseSparkJobDefinitionActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="SynapseNotebookActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </summary>
-        [WirePath("properties.activities")]
         public IList<PipelineActivity> Activities { get; }
         /// <summary> List of parameters for pipeline. </summary>
-        [WirePath("properties.parameters")]
         public IDictionary<string, EntityParameterSpecification> Parameters { get; }
         /// <summary> List of variables for pipeline. </summary>
-        [WirePath("properties.variables")]
         public IDictionary<string, PipelineVariableSpecification> Variables { get; }
         /// <summary> The max number of concurrent runs for the pipeline. </summary>
-        [WirePath("properties.concurrency")]
         public int? Concurrency { get; set; }
         /// <summary>
         /// List of tags that can be used for describing the Pipeline.
@@ -114,7 +109,6 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("properties.annotations")]
         public IList<BinaryData> Annotations { get; }
         /// <summary>
         /// Dimensions emitted by Pipeline.
@@ -146,12 +140,10 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("properties.runDimensions")]
         public IDictionary<string, BinaryData> RunDimensions { get; }
         /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
         internal PipelineFolder Folder { get; set; }
         /// <summary> The name of the folder that this Pipeline is in. </summary>
-        [WirePath("properties.folder.name")]
         public string FolderName
         {
             get => Folder is null ? default : Folder.Name;
@@ -195,7 +187,6 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("properties.policy.elapsedTimeMetric.duration")]
         public BinaryData ElapsedTimeMetricDuration
         {
             get => Policy is null ? default : Policy.ElapsedTimeMetricDuration;
@@ -208,7 +199,6 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Etag identifies change in the resource. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary>
         /// Additional Properties
@@ -240,7 +230,6 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

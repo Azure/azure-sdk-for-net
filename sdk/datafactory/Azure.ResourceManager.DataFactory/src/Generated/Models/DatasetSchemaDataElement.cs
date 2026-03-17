@@ -32,10 +32,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
-        [WirePath("name")]
         public DataFactoryElement<string> SchemaColumnName { get; set; }
         /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
-        [WirePath("type")]
         public DataFactoryElement<string> SchemaColumnType { get; set; }
         /// <summary>
         /// Additional Properties
@@ -67,7 +65,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

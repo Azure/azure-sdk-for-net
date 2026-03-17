@@ -56,13 +56,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The username of the Appfigures source. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of the AppFigures source. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The client key for the AppFigures source. </summary>
-        [WirePath("typeProperties.clientKey")]
         public DataFactorySecret ClientKey { get; set; }
     }
 }

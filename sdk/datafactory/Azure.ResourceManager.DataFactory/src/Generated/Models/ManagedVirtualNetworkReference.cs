@@ -74,10 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Managed Virtual Network reference type. </summary>
-        [WirePath("type")]
         public ManagedVirtualNetworkReferenceType ReferenceType { get; set; }
         /// <summary> Reference ManagedVirtualNetwork name. </summary>
-        [WirePath("referenceName")]
         public string ReferenceName { get; set; }
     }
 }

@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The ID of data flow debug session. </summary>
-        [WirePath("sessionId")]
         public Guid? SessionId { get; set; }
     }
 }

@@ -70,58 +70,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.server")]
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.systemNumber")]
         public DataFactoryElement<string> SystemNumber { get; set; }
         /// <summary> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.language")]
         public DataFactoryElement<string> Language { get; set; }
         /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.systemId")]
         public DataFactoryElement<string> SystemId { get; set; }
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.userName")]
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to access the SAP server where the table is located. </summary>
-        [WirePath("typeProperties.password")]
         public DataFactorySecret Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.messageServer")]
         public DataFactoryElement<string> MessageServer { get; set; }
         /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.messageServerService")]
         public DataFactoryElement<string> MessageServerService { get; set; }
         /// <summary> SNC activation flag (Boolean) to access the SAP server where the table is located. Type: boolean (or Expression with resultType boolean). </summary>
-        [WirePath("typeProperties.sncMode")]
         public DataFactoryElement<bool> SncFlag { get; set; }
         /// <summary> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.sncMyName")]
         public DataFactoryElement<string> SncMyName { get; set; }
         /// <summary> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.sncPartnerName")]
         public DataFactoryElement<string> SncPartnerName { get; set; }
         /// <summary> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.sncLibraryPath")]
         public DataFactoryElement<string> SncLibraryPath { get; set; }
         /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.sncQop")]
         public DataFactoryElement<string> SncQop { get; set; }
         /// <summary> SNC X509 certificate file path. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.x509CertificatePath")]
         public DataFactoryElement<string> X509CertificatePath { get; set; }
         /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.logonGroup")]
         public DataFactoryElement<string> LogonGroup { get; set; }
         /// <summary> The subscriber name. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.subscriberName")]
         public DataFactoryElement<string> SubscriberName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

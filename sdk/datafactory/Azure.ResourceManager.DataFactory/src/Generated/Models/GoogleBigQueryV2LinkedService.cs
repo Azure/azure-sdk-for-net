@@ -60,25 +60,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The default BigQuery project id to query against. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.projectId")]
         public DataFactoryElement<string> ProjectId { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. </summary>
-        [WirePath("typeProperties.authenticationType")]
         public GoogleBigQueryV2AuthenticationType AuthenticationType { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.clientId")]
         public DataFactoryElement<string> ClientId { get; set; }
         /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
-        [WirePath("typeProperties.clientSecret")]
         public DataFactorySecret ClientSecret { get; set; }
         /// <summary> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </summary>
-        [WirePath("typeProperties.refreshToken")]
         public DataFactorySecret RefreshToken { get; set; }
         /// <summary> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </summary>
-        [WirePath("typeProperties.keyFileContent")]
         public DataFactorySecret KeyFileContent { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        [WirePath("typeProperties.encryptedCredential")]
         public string EncryptedCredential { get; set; }
     }
 }

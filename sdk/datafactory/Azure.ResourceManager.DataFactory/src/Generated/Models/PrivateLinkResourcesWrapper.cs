@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Gets the value. </summary>
-        [WirePath("value")]
         public IReadOnlyList<DataFactoryPrivateLinkResource> Value { get; }
     }
 }

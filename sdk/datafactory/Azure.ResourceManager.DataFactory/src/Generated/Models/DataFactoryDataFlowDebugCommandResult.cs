@@ -62,10 +62,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The run status of data preview, statistics or expression preview. </summary>
-        [WirePath("status")]
         public string Status { get; }
         /// <summary> The result data of data preview, statistics or expression preview. </summary>
-        [WirePath("data")]
         public string Data { get; }
     }
 }

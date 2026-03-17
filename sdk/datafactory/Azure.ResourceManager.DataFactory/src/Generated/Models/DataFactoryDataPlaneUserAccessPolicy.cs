@@ -68,19 +68,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The string with permissions for Data Plane access. Currently only 'r' is supported which grants read only access. </summary>
-        [WirePath("permissions")]
         public string Permissions { get; set; }
         /// <summary> The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource. </summary>
-        [WirePath("accessResourcePath")]
         public string AccessResourcePath { get; set; }
         /// <summary> The name of the profile. Currently only the default is supported. The default value is DefaultProfile. </summary>
-        [WirePath("profileName")]
         public string ProfileName { get; set; }
         /// <summary> Start time for the token. If not specified the current time will be used. </summary>
-        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours. </summary>
-        [WirePath("expireTime")]
         public DateTimeOffset? ExpireOn { get; set; }
     }
 }
