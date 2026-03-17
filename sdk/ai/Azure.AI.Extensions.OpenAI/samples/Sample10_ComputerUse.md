@@ -4,7 +4,7 @@ To enable your Agent to Computer Use tool, you need to use `ComputerTool` while 
 1. First, we need to create clients and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ComputerUse
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();

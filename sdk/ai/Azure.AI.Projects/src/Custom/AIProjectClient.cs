@@ -21,6 +21,8 @@ namespace Azure.AI.Projects
     {
         private const int _defaultMaxCacheSize = 100;
         private readonly ClientConnectionCacheManager _cacheManager;
+        /// <summary> A credential provider used to authenticate to the service. </summary>
+        private readonly AuthenticationTokenProvider _tokenProvider;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
         private ProjectOpenAIClient _cachedOpenAIClient;
         private AgentsClient _cachedAgentsClient;
@@ -30,6 +32,29 @@ namespace Azure.AI.Projects
         protected AIProjectClient()
             : base(maxCacheSize: _defaultMaxCacheSize)
         {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient from a <see cref="AIProjectClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for AIProjectClient. </param>
+        [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options)
+            : base(maxCacheSize: _defaultMaxCacheSize)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>

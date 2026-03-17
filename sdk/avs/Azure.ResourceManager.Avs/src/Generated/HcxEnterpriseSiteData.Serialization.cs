@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hcxEnterpriseSiteData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(hcxEnterpriseSiteData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HcxEnterpriseSiteData"/> from. </param>

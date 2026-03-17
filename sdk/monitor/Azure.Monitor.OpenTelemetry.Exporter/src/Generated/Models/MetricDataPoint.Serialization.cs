@@ -5,16 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MetricDataPoint : IUtf8JsonSerializable
+    internal partial class MetricDataPoint : IJsonModel<MetricDataPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/> for deserialization. </summary>
+        internal MetricDataPoint()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricDataPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricDataPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricDataPoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricDataPoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MetricDataPoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricDataPoint IPersistableModel<MetricDataPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MetricDataPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<MetricDataPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricDataPoint)} does not support writing '{format}' format.");
+            }
             if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("ns"u8);
@@ -31,61 +94,152 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteNumberValue(Value);
             if (Optional.IsDefined(Count))
             {
-                if (Count != null)
-                {
-                    writer.WritePropertyName("count"u8);
-                    writer.WriteNumberValue(Count.Value);
-                }
-                else
-                {
-                    writer.WriteNull("count");
-                }
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(Min))
             {
-                if (Min != null)
-                {
-                    writer.WritePropertyName("min"u8);
-                    writer.WriteNumberValue(Min.Value);
-                }
-                else
-                {
-                    writer.WriteNull("min");
-                }
+                writer.WritePropertyName("min"u8);
+                writer.WriteNumberValue(Min.Value);
             }
             if (Optional.IsDefined(Max))
             {
-                if (Max != null)
-                {
-                    writer.WritePropertyName("max"u8);
-                    writer.WriteNumberValue(Max.Value);
-                }
-                else
-                {
-                    writer.WriteNull("max");
-                }
+                writer.WritePropertyName("max"u8);
+                writer.WriteNumberValue(Max.Value);
             }
             if (Optional.IsDefined(StdDev))
             {
-                if (StdDev != null)
+                writer.WritePropertyName("stdDev"u8);
+                writer.WriteNumberValue(StdDev.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    writer.WritePropertyName("stdDev"u8);
-                    writer.WriteNumberValue(StdDev.Value);
-                }
-                else
-                {
-                    writer.WriteNull("stdDev");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricDataPoint IJsonModel<MetricDataPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricDataPoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricDataPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricDataPoint)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricDataPoint(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MetricDataPoint DeserializeMetricDataPoint(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string @namespace = default;
+            string name = default;
+            DataPointType? dataPointType = default;
+            double value = default;
+            int? count = default;
+            double? min = default;
+            double? max = default;
+            double? stdDev = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("ns"u8))
+                {
+                    @namespace = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataPointType = new DataPointType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    value = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    count = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("min"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    min = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("max"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    max = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("stdDev"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stdDev = prop.Value.GetDouble();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new MetricDataPoint(
+                @namespace,
+                name,
+                dataPointType,
+                value,
+                count,
+                min,
+                max,
+                stdDev,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -113,7 +113,7 @@ namespace Azure.Generator.Management.Providers
                     ResourceHelpers.GetRestClientPropertyName(restClientProvider.Name),
                     new ExpressionPropertyBody(
                         restClientField.Assign(
-                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion)),
+                            New.Instance(restClientProvider.Type, clientDiagnosticsProperty, thisResource.Pipeline(), thisResource.Endpoint(), Literal(inputClient.CurrentApiVersion)),
                             nullCoalesce: true)),
                     enclosingType);
 
@@ -313,15 +313,17 @@ namespace Azure.Generator.Management.Providers
                 methodName = isAsync ? $"{baseName}Async" : baseName;
             }
 
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource);
+            // Action operations should not resource-wrap paging results
+            var isResourceAction = resourceMethod.Kind == ResourceOperationKind.Action;
+            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource, isResourceAction);
         }
 
-        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null, bool isResourceAction = false)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient),
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient, isResourceAction),
                 _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName, explicitResourceClient)
             };
         }

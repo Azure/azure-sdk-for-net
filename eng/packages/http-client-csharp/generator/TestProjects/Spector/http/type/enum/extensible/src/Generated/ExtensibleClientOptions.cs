@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type._Enum.Extensible
 {
     public partial class ExtensibleClientOptions : ClientOptions
     {
+        public ExtensibleClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal ExtensibleClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

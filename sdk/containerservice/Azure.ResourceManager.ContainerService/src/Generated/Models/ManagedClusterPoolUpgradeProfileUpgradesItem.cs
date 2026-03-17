@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
+    /// <summary> Available upgrades for an AgentPool. </summary>
     public partial class ManagedClusterPoolUpgradeProfileUpgradesItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         internal ManagedClusterPoolUpgradeProfileUpgradesItem()
@@ -53,19 +25,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="isOutOfSupport"> Whether the Kubernetes version is out of support. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview, bool? isOutOfSupport, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IsOutOfSupport = isOutOfSupport;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>
         [WirePath("kubernetesVersion")]
         public string KubernetesVersion { get; }
+
         /// <summary> Whether the Kubernetes version is currently in preview. </summary>
         [WirePath("isPreview")]
         public bool? IsPreview { get; }
+
+        /// <summary> Whether the Kubernetes version is out of support. </summary>
+        [WirePath("isOutOfSupport")]
+        public bool? IsOutOfSupport { get; }
     }
 }

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(scheduledActionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(scheduledActionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ScheduledActionData"/> from. </param>

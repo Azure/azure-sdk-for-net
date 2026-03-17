@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pineconeVectorDBOrganizationPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(pineconeVectorDBOrganizationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

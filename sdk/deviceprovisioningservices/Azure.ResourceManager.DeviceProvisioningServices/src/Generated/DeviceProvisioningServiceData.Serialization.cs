@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceProvisioningServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(deviceProvisioningServiceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceProvisioningServiceData"/> from. </param>

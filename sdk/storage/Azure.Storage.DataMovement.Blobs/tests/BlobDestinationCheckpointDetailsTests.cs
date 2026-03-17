@@ -349,5 +349,45 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(original.PreserveTags, deserialized.PreserveTags);
             Assert.AreEqual(original.Tags, deserialized.Tags);
         }
+
+        [Test]
+        public void Deserialize_InvalidOffset_NearEndOfStream_Throws()
+        {
+            // Create a valid checkpoint, then corrupt the offset to point
+            // near the end of the stream with a length that overflows past it.
+            BlobDestinationCheckpointDetails data = CreateSetSampleValues();
+            using MemoryStream dataStream = new();
+            data.Serialize(dataStream);
+
+            int streamLength = (int)dataStream.Length;
+            // Position after version (4 bytes) + isBlobTypeSet (1 byte) + blobType (1 byte) = 6
+            // Then isContentTypeSet (1 byte) at position 6, contentTypeOffset (4 bytes) at position 7
+            dataStream.Position = sizeof(int) + sizeof(byte) + sizeof(byte);
+            using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
+            writer.Write(true);              // isContentTypeSet = true
+            writer.Write(streamLength - 1);  // offset near end of stream
+            writer.Write(10);                // length that overflows past stream end
+
+            dataStream.Position = 0;
+            Assert.Throws<InvalidDataException>(() => BlobDestinationCheckpointDetails.Deserialize(dataStream));
+        }
+
+        [Test]
+        public void Deserialize_OffsetLengthExceedsStream_Throws()
+        {
+            BlobDestinationCheckpointDetails data = CreateSetSampleValues();
+            using MemoryStream dataStream = new();
+            data.Serialize(dataStream);
+
+            // Corrupt: set offset + length beyond stream length
+            dataStream.Position = sizeof(int) + sizeof(byte) + sizeof(byte);
+            using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
+            writer.Write(true);  // isContentTypeSet = true
+            writer.Write(1000);  // offset beyond stream
+            writer.Write(100);   // length
+
+            dataStream.Position = 0;
+            Assert.Throws<InvalidDataException>(() => BlobDestinationCheckpointDetails.Deserialize(dataStream));
+        }
     }
 }
