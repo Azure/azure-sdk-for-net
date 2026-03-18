@@ -1,8 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (Unreleased)
 
 ### Features Added
+
+- Upgraded API version to `2026-02-01`.
 
 ### Breaking Changes
 
@@ -111,6 +113,7 @@ This release is the first stable release of the Key Vault Management client libr
 ### Breaking Changes
 
 Polishing since last public beta release:
+
 - Prepended `KeyVault` / `ManagedHsm` prefix to all single / simple model names.
 - Renamed all `Vault` prefix models to `KeyVault` prefix.
 - Corrected the format of all `Guid` type properties / parameters.
@@ -125,13 +128,13 @@ Polishing since last public beta release:
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 - Correct inherits
-  - Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
-  - Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
-  - Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
-  - Type `KeyVaultResourceData` was removed.
-  - Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
-  - Type `ManagedHsmTrackedResourceData` was removed.
-  - Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+    - Base type of `KeyVaultPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+    - Base type of `ManagedHsmData` changed to `Azure.ResourceManager.Models.ResourceData`.
+    - Base type of `ManagedHsmPrivateEndpointConnectionData` changed to `Azure.ResourceManager.Models.ResourceData`.
+    - Type `KeyVaultResourceData` was removed.
+    - Base type of `ManagedHsmPrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
+    - Type `ManagedHsmTrackedResourceData` was removed.
+    - Base type of `PrivateLinkResourceData` changed to `Azure.ResourceManager.Models.ResourceData`.
 
 ### Other Changes
 
