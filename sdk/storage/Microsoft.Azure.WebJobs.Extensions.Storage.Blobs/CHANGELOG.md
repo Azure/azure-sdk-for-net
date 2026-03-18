@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.8 (2025-03-16)
+## 5.3.8 (2026-03-18)
 
 ### Bugs Fixed
 - Fixed a bug where polling for new blobs could permanently miss blobs that were created or modified while a multi-request blob listing scan was in progress (#51030).
