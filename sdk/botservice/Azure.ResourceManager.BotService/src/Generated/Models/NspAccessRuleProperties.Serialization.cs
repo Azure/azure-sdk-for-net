@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (NspAccessRulePropertiesSubscriptionsItem item in Subscriptions)
+                foreach (BotServiceNspAccessRuleSubscription item in Subscriptions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             NspAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
-            IList<NspAccessRulePropertiesSubscriptionsItem> subscriptions = default;
+            IList<BotServiceNspAccessRuleSubscription> subscriptions = default;
             IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IReadOnlyList<string> fullyQualifiedDomainNames = default;
             IReadOnlyList<string> emailAddresses = default;
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    List<NspAccessRulePropertiesSubscriptionsItem> array = new List<NspAccessRulePropertiesSubscriptionsItem>();
+                    List<BotServiceNspAccessRuleSubscription> array = new List<BotServiceNspAccessRuleSubscription>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NspAccessRulePropertiesSubscriptionsItem.DeserializeNspAccessRulePropertiesSubscriptionsItem(item, options));
+                        array.Add(BotServiceNspAccessRuleSubscription.DeserializeBotServiceNspAccessRuleSubscription(item, options));
                     }
                     subscriptions = array;
                     continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new NspAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<NspAccessRulePropertiesSubscriptionsItem>(),
+                subscriptions ?? new ChangeTrackingList<BotServiceNspAccessRuleSubscription>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),

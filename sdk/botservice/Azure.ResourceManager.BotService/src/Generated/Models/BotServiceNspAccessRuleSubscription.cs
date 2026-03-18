@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Subscription for inbound rule. </summary>
-    public partial class NspAccessRulePropertiesSubscriptionsItem
+    public partial class BotServiceNspAccessRuleSubscription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRulePropertiesSubscriptionsItem"/>. </summary>
-        internal NspAccessRulePropertiesSubscriptionsItem()
+        /// <summary> Initializes a new instance of <see cref="BotServiceNspAccessRuleSubscription"/>. </summary>
+        internal BotServiceNspAccessRuleSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRulePropertiesSubscriptionsItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceNspAccessRuleSubscription"/>. </summary>
         /// <param name="id"> Fully qualified identifier of subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRulePropertiesSubscriptionsItem(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BotServiceNspAccessRuleSubscription(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

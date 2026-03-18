@@ -14,51 +14,51 @@ using Azure.ResourceManager.BotService;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Information about profile. </summary>
-    public partial class Profile : IJsonModel<Profile>
+    public partial class BotServiceNetworkSecurityPerimeterProfile : IJsonModel<BotServiceNetworkSecurityPerimeterProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Profile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BotServiceNetworkSecurityPerimeterProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Profile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProfile(document.RootElement, options);
+                        return DeserializeBotServiceNetworkSecurityPerimeterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Profile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceNetworkSecurityPerimeterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Profile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Profile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceNetworkSecurityPerimeterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Profile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Profile IPersistableModel<Profile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BotServiceNetworkSecurityPerimeterProfile IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Profile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Profile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BotServiceNetworkSecurityPerimeterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Profile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Profile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceNetworkSecurityPerimeterProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -133,24 +133,24 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Profile IJsonModel<Profile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BotServiceNetworkSecurityPerimeterProfile IJsonModel<BotServiceNetworkSecurityPerimeterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Profile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BotServiceNetworkSecurityPerimeterProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Profile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceNetworkSecurityPerimeterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Profile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceNetworkSecurityPerimeterProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProfile(document.RootElement, options);
+            return DeserializeBotServiceNetworkSecurityPerimeterProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Profile DeserializeProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static BotServiceNetworkSecurityPerimeterProfile DeserializeBotServiceNetworkSecurityPerimeterProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.BotService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Profile(
+            return new BotServiceNetworkSecurityPerimeterProfile(
                 name,
                 accessRulesVersion,
                 accessRules ?? new ChangeTrackingList<NspAccessRule>(),

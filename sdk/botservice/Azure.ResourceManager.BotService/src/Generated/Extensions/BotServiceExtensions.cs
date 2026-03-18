@@ -332,44 +332,6 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Get the operation result for a long running operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<OperationResultsDescription>> GetAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableBotServiceSubscriptionResource(subscriptionResource).GetAsync(waitUntil, operationResultId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.Get(WaitUntil, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<OperationResultsDescription> Get(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableBotServiceSubscriptionResource(subscriptionResource).Get(waitUntil, operationResultId, cancellationToken);
-        }
-
-        /// <summary>
         /// Check whether a bot name is available.
         /// <item>
         /// <term> Mocking. </term>

@@ -13,52 +13,52 @@ using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> Subscription for inbound rule. </summary>
-    public partial class NspAccessRulePropertiesSubscriptionsItem : IJsonModel<NspAccessRulePropertiesSubscriptionsItem>
+    /// <summary> Information about resource association. </summary>
+    public partial class BotServiceResourceAssociation : IJsonModel<BotServiceResourceAssociation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspAccessRulePropertiesSubscriptionsItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BotServiceResourceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNspAccessRulePropertiesSubscriptionsItem(document.RootElement, options);
+                        return DeserializeBotServiceResourceAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRulePropertiesSubscriptionsItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceResourceAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRulePropertiesSubscriptionsItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceResourceAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BotServiceResourceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspAccessRulePropertiesSubscriptionsItem IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BotServiceResourceAssociation IPersistableModel<BotServiceResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BotServiceResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NspAccessRulePropertiesSubscriptionsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BotServiceResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,20 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRulePropertiesSubscriptionsItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceResourceAssociation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(AccessMode))
+            {
+                writer.WritePropertyName("accessMode"u8);
+                writer.WriteStringValue(AccessMode.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,36 +103,46 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NspAccessRulePropertiesSubscriptionsItem IJsonModel<NspAccessRulePropertiesSubscriptionsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BotServiceResourceAssociation IJsonModel<BotServiceResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NspAccessRulePropertiesSubscriptionsItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BotServiceResourceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NspAccessRulePropertiesSubscriptionsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRulePropertiesSubscriptionsItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceResourceAssociation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspAccessRulePropertiesSubscriptionsItem(document.RootElement, options);
+            return DeserializeBotServiceResourceAssociation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NspAccessRulePropertiesSubscriptionsItem DeserializeNspAccessRulePropertiesSubscriptionsItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static BotServiceResourceAssociation DeserializeBotServiceResourceAssociation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
+            string name = default;
+            BotServiceAccessMode? accessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = prop.Value.GetString();
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("accessMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessMode = new BotServiceAccessMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +150,7 @@ namespace Azure.ResourceManager.BotService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NspAccessRulePropertiesSubscriptionsItem(id, additionalBinaryDataProperties);
+            return new BotServiceResourceAssociation(name, accessMode, additionalBinaryDataProperties);
         }
     }
 }

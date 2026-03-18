@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BotServiceProvisioningState? provisioningState = default;
             IList<ProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
-            ResourceAssociation resourceAssociation = default;
-            Profile profile = default;
+            BotServiceResourceAssociation resourceAssociation = default;
+            BotServiceNetworkSecurityPerimeterProfile profile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new BotServiceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningIssues"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(prop.Value, options);
+                    resourceAssociation = BotServiceResourceAssociation.DeserializeBotServiceResourceAssociation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("profile"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    profile = Profile.DeserializeProfile(prop.Value, options);
+                    profile = BotServiceNetworkSecurityPerimeterProfile.DeserializeBotServiceNetworkSecurityPerimeterProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

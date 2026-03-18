@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about profile. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(ProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, ResourceAssociation resourceAssociation = default, Profile profile = default)
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(BotServiceProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, BotServiceResourceAssociation resourceAssociation = default, BotServiceNetworkSecurityPerimeterProfile profile = default)
         {
             provisioningIssues ??= new ChangeTrackingList<ProvisioningIssue>();
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="suggestedResourceIds"> ARM IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the same profile to remediate the issue. </param>
         /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<NspAccessRule> suggestedAccessRules = default)
+        public static ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = default, BotServiceSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<NspAccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
             suggestedAccessRules ??= new ChangeTrackingList<NspAccessRule>();
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <returns> A new <see cref="Models.NspAccessRuleProperties"/> instance for mocking. </returns>
-        public static NspAccessRuleProperties NspAccessRuleProperties(NspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<NspAccessRulePropertiesSubscriptionsItem> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        public static NspAccessRuleProperties NspAccessRuleProperties(NspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<BotServiceNspAccessRuleSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<NspAccessRulePropertiesSubscriptionsItem>();
+            subscriptions ??= new ChangeTrackingList<BotServiceNspAccessRuleSubscription>();
             networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
             emailAddresses ??= new ChangeTrackingList<string>();
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <summary> Subscription for inbound rule. </summary>
         /// <param name="id"> Fully qualified identifier of subscription. </param>
-        /// <returns> A new <see cref="Models.NspAccessRulePropertiesSubscriptionsItem"/> instance for mocking. </returns>
-        public static NspAccessRulePropertiesSubscriptionsItem NspAccessRulePropertiesSubscriptionsItem(string id = default)
+        /// <returns> A new <see cref="Models.BotServiceNspAccessRuleSubscription"/> instance for mocking. </returns>
+        public static BotServiceNspAccessRuleSubscription BotServiceNspAccessRuleSubscription(string id = default)
         {
-            return new NspAccessRulePropertiesSubscriptionsItem(id, additionalBinaryDataProperties: null);
+            return new BotServiceNspAccessRuleSubscription(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Information about Network Security Perimeter. </summary>
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
-        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
-        public static ResourceAssociation ResourceAssociation(string name = default, AccessMode? accessMode = default)
+        /// <returns> A new <see cref="Models.BotServiceResourceAssociation"/> instance for mocking. </returns>
+        public static BotServiceResourceAssociation BotServiceResourceAssociation(string name = default, BotServiceAccessMode? accessMode = default)
         {
-            return new ResourceAssociation(name, accessMode, additionalBinaryDataProperties: null);
+            return new BotServiceResourceAssociation(name, accessMode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Information about profile. </summary>
@@ -246,13 +246,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories. </param>
-        /// <returns> A new <see cref="Models.Profile"/> instance for mocking. </returns>
-        public static Profile Profile(string name = default, long? accessRulesVersion = default, IEnumerable<NspAccessRule> accessRules = default, long? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        /// <returns> A new <see cref="Models.BotServiceNetworkSecurityPerimeterProfile"/> instance for mocking. </returns>
+        public static BotServiceNetworkSecurityPerimeterProfile BotServiceNetworkSecurityPerimeterProfile(string name = default, long? accessRulesVersion = default, IEnumerable<NspAccessRule> accessRules = default, long? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
         {
             accessRules ??= new ChangeTrackingList<NspAccessRule>();
             enabledLogCategories ??= new ChangeTrackingList<string>();
 
-            return new Profile(
+            return new BotServiceNetworkSecurityPerimeterProfile(
                 name,
                 accessRulesVersion,
                 accessRules.ToList(),
@@ -1015,17 +1015,6 @@ namespace Azure.ResourceManager.BotService.Models
                 validateAuthority,
                 botOpenIdMetadata,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The properties indicating the operation result of an operation on a service. </summary>
-        /// <param name="id"> The ID of the operation returned. </param>
-        /// <param name="name"> The name of the operation result. </param>
-        /// <param name="status"> The status of the operation being performed. </param>
-        /// <param name="startOn"> The time that the operation was started. </param>
-        /// <returns> A new <see cref="Models.OperationResultsDescription"/> instance for mocking. </returns>
-        public static OperationResultsDescription OperationResultsDescription(string id = default, string name = default, OperationResultStatus? status = default, DateTimeOffset? startOn = default)
-        {
-            return new OperationResultsDescription(id, name, status, startOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="BotService.BotData"/>. </summary>

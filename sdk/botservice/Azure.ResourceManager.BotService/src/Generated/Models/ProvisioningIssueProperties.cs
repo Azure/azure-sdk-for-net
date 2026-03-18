@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="suggestedResourceIds"> ARM IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the same profile to remediate the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(string issueType, Severity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IList<NspAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProvisioningIssueProperties(string issueType, BotServiceSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IList<NspAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BotService.Models
         public string IssueType { get; }
 
         /// <summary> Provisioning state of Network Security Perimeter configuration propagation. </summary>
-        public Severity? Severity { get; }
+        public BotServiceSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
         public string Description { get; }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(ProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, Profile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterConfigurationProperties(BotServiceProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, BotServiceResourceAssociation resourceAssociation, BotServiceNetworkSecurityPerimeterProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BotService.Models
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BotServiceProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of Provisioning Issues if any. </summary>
         public IList<ProvisioningIssue> ProvisioningIssues { get; }
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.BotService.Models
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Information about resource association. </summary>
-        public ResourceAssociation ResourceAssociation { get; }
+        public BotServiceResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Information about profile. </summary>
-        public Profile Profile { get; }
+        public BotServiceNetworkSecurityPerimeterProfile Profile { get; }
     }
 }

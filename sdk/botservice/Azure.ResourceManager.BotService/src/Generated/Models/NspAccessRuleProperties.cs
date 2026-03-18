@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.BotService.Models
         internal NspAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<NspAccessRulePropertiesSubscriptionsItem>();
+            Subscriptions = new ChangeTrackingList<BotServiceNspAccessRuleSubscription>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<NspAccessRulePropertiesSubscriptionsItem> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IReadOnlyList<string> emailAddresses, IReadOnlyList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<BotServiceNspAccessRuleSubscription> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IReadOnlyList<string> emailAddresses, IReadOnlyList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BotService.Models
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
-        public IList<NspAccessRulePropertiesSubscriptionsItem> Subscriptions { get; }
+        public IList<BotServiceNspAccessRuleSubscription> Subscriptions { get; }
 
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
         public IReadOnlyList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }

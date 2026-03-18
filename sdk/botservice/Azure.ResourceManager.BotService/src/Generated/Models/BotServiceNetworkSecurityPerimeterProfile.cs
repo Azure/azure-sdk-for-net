@@ -12,26 +12,26 @@ using Azure.ResourceManager.BotService;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Information about profile. </summary>
-    public partial class Profile
+    public partial class BotServiceNetworkSecurityPerimeterProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Profile"/>. </summary>
-        internal Profile()
+        /// <summary> Initializes a new instance of <see cref="BotServiceNetworkSecurityPerimeterProfile"/>. </summary>
+        internal BotServiceNetworkSecurityPerimeterProfile()
         {
             AccessRules = new ChangeTrackingList<NspAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Profile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceNetworkSecurityPerimeterProfile"/>. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Profile(string name, long? accessRulesVersion, IList<NspAccessRule> accessRules, long? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BotServiceNetworkSecurityPerimeterProfile(string name, long? accessRulesVersion, IList<NspAccessRule> accessRules, long? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
