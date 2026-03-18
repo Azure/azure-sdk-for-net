@@ -8,9 +8,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
+    // Override the generated RequiredMembers and RequiredZoneNames properties to return IReadOnlyList<string>
+    // instead of IList<string> for backward compatibility with the old AutoRest-generated SDK (version 1.2.x).
     public partial class EventHubsPrivateLinkResourceData
     {
         /// <summary> The private link resource required member names. </summary>
+        [CodeGenMember("RequiredMembers")]
         [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers
         {
@@ -18,6 +21,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
+        [CodeGenMember("RequiredZoneNames")]
         [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames
         {
