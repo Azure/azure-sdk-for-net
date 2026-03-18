@@ -70,7 +70,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        internal virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
@@ -106,7 +106,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
         /// <remarks> Use this API to submit a single translation request to the Document Translation Service. </remarks>
-        internal virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, bool? translateTextWithinImage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
