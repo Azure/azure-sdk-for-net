@@ -209,7 +209,7 @@ After generation, additionally:
 
 1. Check `src/Generated/` for output files — verify file contents changed, not just file names.
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
-3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped.
+3. Verify no compile errors: `dotnet build`. Then run `dotnet pack --no-restore` to check for ApiCompat errors (`CannotRemoveAttribute`, `MembersMustExist`, `TypesMustExist`) — these indicate **breaking changes** that must be investigated and fixed through spec-side fixes or custom code shims, **never** by creating `ApiCompatBaseline.txt` or disabling ApiCompat in the `.csproj`. See the ApiCompat Error → Fix Table in error-reference.md.
 4. Run existing tests if available: `dotnet test`.
 5.**Export the API surface** after all errors are fixed:
    ```powershell
@@ -374,6 +374,7 @@ These patterns are specific to data-plane migrations. Apply them during the shar
 | AZC0030 (forbidden suffix) | Naming analyzer rejects name | `@@clientName` to old name |
 | AZC0032 (forbidden 'Data' suffix) | Doesn't inherit `ResourceData` | `@@clientName` to old name |
 | ApiCompat MembersMustExist | Changed return type / missing member | `[CodeGenSuppress]` + custom shim (never use ApiCompatBaseline.txt) |
+| ApiCompat CannotRemoveAttribute (WirePathAttribute) | Old SDK had `WirePathAttribute` but new generation doesn't | See `mitigate-breaking-changes` skill |
 | ApiCompat TypesMustExist | Missing type | `@@clientName` to restore old name |
 
 ### MPG Fix Decision Tree [MPG only]
@@ -644,10 +645,11 @@ Report: error messages, generated code snippet, repro steps. Do NOT manually fix
 1. **Never edit files under `Generated/`** — they are overwritten by codegen.
 2. **Never hand-edit `metadata.json`** — it is auto-generated.
 3. **Never use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
-4. **Never add entries to `ApiCompatBaseline.txt`** without explicit user approval.
-5. **Never bump the major version** of an Azure SDK package.
-6. **Preserve git history** — prefer renames over delete+create.
-7. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:
+4. **Never create or add entries to `ApiCompatBaseline.txt`** — this file must never be used to bypass breaking changes. Always mitigate ApiCompat errors through spec-side fixes (`@@clientName`) or SDK custom code shims (see error-reference.md). If you encounter ApiCompat errors, follow the ApiCompat Error → Fix Table — do NOT suppress them via baseline files.
+5. **Never disable ApiCompat or package validation in `.csproj`** — do NOT set `<EnablePackageValidation>false</EnablePackageValidation>`, `<RunApiCompat>false</RunApiCompat>`, or any other property that disables API compatibility checks. These checks exist to catch breaking changes and must always remain enabled. Fix the underlying breaking changes instead.
+6. **Never bump the major version** of an Azure SDK package.
+7. **Preserve git history** — prefer renames over delete+create.
+8. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:
    - **TypeSpec decorators** (`@@clientName`, `@@alternateType`, `@@access`) in `client.tsp`
    - **Custom partial classes** with `[CodeGenSuppress]` in `src/Custom/` to suppress the broken member and provide a corrected replacement
    - **Generator bug fix** if no decorator or customization can resolve it
@@ -672,8 +674,7 @@ These actions **require explicit user approval** (use `ask_user`):
 1. **Modifying spec `.tsp` files beyond `client.tsp`** — e.g., changing `main.tsp`, model definitions, or operation signatures. These affect all languages, not just C#.
 2. **Generator code changes** that affect other SDKs — run `Generate.ps1` to verify scope first.
 3. **Removing public API surface** with no backward-compat option (true breaking change).
-4. **Adding `ApiCompatBaseline.txt` entries** — this should almost never be done.
-5. **Deleting existing custom code files** — may lose manually-written logic.
+4. **Deleting existing custom code files** — may lose manually-written logic.
 
 ### Escalation Criteria
 

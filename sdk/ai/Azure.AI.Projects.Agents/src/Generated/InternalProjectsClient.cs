@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new InternalProjectsClientOptions())
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentsClientOptions())
         {
         }
 
@@ -42,11 +42,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, InternalProjectsClientOptions options)
+        internal InternalProjectsClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            options ??= new InternalProjectsClientOptions();
+            options ??= new AgentsClientOptions();
 
             _endpoint = endpoint;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, InternalProjectsClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
+        public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentsClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
         {
         }
 

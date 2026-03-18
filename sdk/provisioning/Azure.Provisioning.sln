@@ -26,17 +26,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppService.Tests", "Azure.Provisioning.AppService\tests\Azure.Provisioning.AppService.Tests.csproj", "{76098A77-CF29-421E-AC8A-BF94239B56C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerRegistry", "Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj", "{351AD973-DA8A-4CEA-94D9-49D10B0497AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerRegistry.Tests", "Azure.Provisioning.ContainerRegistry\tests\Azure.Provisioning.ContainerRegistry.Tests.csproj", "{66D2E68D-8B1A-44BB-87BB-B90AA0E36B74}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerService", "Azure.Provisioning.ContainerService\src\Azure.Provisioning.ContainerService.csproj", "{432AB987-6CFA-4590-9C23-36765E47B836}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerService.Tests", "Azure.Provisioning.ContainerService\tests\Azure.Provisioning.ContainerService.Tests.csproj", "{182DB588-C4D2-439F-AAD1-BDFB26AB59CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventGrid", "Azure.Provisioning.EventGrid\src\Azure.Provisioning.EventGrid.csproj", "{2A49BD8F-E064-4D18-9B0D-6C2DEAD74A09}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventGrid.Tests", "Azure.Provisioning.EventGrid\tests\Azure.Provisioning.EventGrid.Tests.csproj", "{8E4491BA-B8B9-4C43-AB7C-3EF8E2D4097E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernetes", "Azure.Provisioning.Kubernetes\src\Azure.Provisioning.Kubernetes.csproj", "{ED3BF558-C208-4245-A310-1C95936C2030}"
 EndProject
@@ -46,10 +38,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KubernetesConfiguration.Tests", "Azure.Provisioning.KubernetesConfiguration\tests\Azure.Provisioning.KubernetesConfiguration.Tests.csproj", "{B1D58035-8189-44D9-A16A-EA339D692686}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.OperationalInsights", "Azure.Provisioning.OperationalInsights\src\Azure.Provisioning.OperationalInsights.csproj", "{CCDA1C51-45A2-4EB4-8767-75DCDBE62D09}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.OperationalInsights.Tests", "Azure.Provisioning.OperationalInsights\tests\Azure.Provisioning.OperationalInsights.Tests.csproj", "{FA5C780F-E297-45F1-9E16-B165AFFD8905}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment", "Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj", "{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment.Tests", "Azure.Provisioning.Deployment\tests\Azure.Provisioning.Deployment.Tests.csproj", "{0D2C464F-C246-4069-90B2-33D637BE18BF}"
@@ -57,10 +45,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Network", "Azure.Provisioning.Network\src\Azure.Provisioning.Network.csproj", "{08D90E81-F91A-22E8-4C08-A5F5D573DC6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Network.Tests", "Azure.Provisioning.Network\tests\Azure.Provisioning.Network.Tests.csproj", "{92B98FD7-F4FA-751C-2687-F410F4CF60B8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Dns", "Azure.Provisioning.Dns\src\Azure.Provisioning.Dns.csproj", "{15C5A92A-614E-30D9-5D3A-AA857462E456}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Dns.Tests", "Azure.Provisioning.Dns\tests\Azure.Provisioning.Dns.Tests.csproj", "{78621E7D-65DF-8346-3ED9-8F0CB9531744}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.PrivateDns", "Azure.Provisioning.PrivateDns\src\Azure.Provisioning.PrivateDns.csproj", "{29703EE4-89CC-BB2F-29AA-5F092C1799EE}"
 EndProject

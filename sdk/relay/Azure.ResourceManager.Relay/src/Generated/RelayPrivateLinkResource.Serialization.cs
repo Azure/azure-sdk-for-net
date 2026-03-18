@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relay
 {
+    /// <summary></summary>
     public partial class RelayPrivateLinkResource : IJsonModel<RelayPrivateLinkResourceData>
     {
-        private static RelayPrivateLinkResourceData s_dataDeserializationInstance;
-        private static RelayPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RelayPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RelayPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RelayPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RelayPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayPrivateLinkResourceData>)Data).Write(writer, options);
 
-        RelayPrivateLinkResourceData IJsonModel<RelayPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelayPrivateLinkResourceData IJsonModel<RelayPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RelayPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayPrivateLinkResourceData>(Data, options, AzureResourceManagerRelayContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RelayPrivateLinkResourceData IPersistableModel<RelayPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayPrivateLinkResourceData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RelayPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

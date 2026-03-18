@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Communication.Models
     public readonly partial struct CommunicationPublicNetworkAccess : IEquatable<CommunicationPublicNetworkAccess>
     {
         private readonly string _value;
+        /// <summary> Allows public network access to the resource. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disallows public network access to the resource. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="CommunicationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunicationPublicNetworkAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
+            _value = value;
+        }
 
         /// <summary> Allows public network access to the resource. </summary>
         public static CommunicationPublicNetworkAccess Enabled { get; } = new CommunicationPublicNetworkAccess(EnabledValue);
+
         /// <summary> Disallows public network access to the resource. </summary>
         public static CommunicationPublicNetworkAccess Disabled { get; } = new CommunicationPublicNetworkAccess(DisabledValue);
+
         /// <summary> The network security perimeter configuration rules allow or disallow public network access to the resource. Requires an associated network security perimeter. </summary>
         public static CommunicationPublicNetworkAccess SecuredByPerimeter { get; } = new CommunicationPublicNetworkAccess(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="CommunicationPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunicationPublicNetworkAccess left, CommunicationPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommunicationPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunicationPublicNetworkAccess left, CommunicationPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommunicationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommunicationPublicNetworkAccess(string value) => new CommunicationPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommunicationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommunicationPublicNetworkAccess?(string value) => value == null ? null : new CommunicationPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommunicationPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommunicationPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
