@@ -434,26 +434,46 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal bool IsResourceModelType(CSharpType type) => TryGetResourceClientProvider(type, out _);
+        internal bool IsResourceModelType(CSharpType type) => GetResourceDataTypes().ContainsKey(type);
 
-        private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
-        internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
+        private IReadOnlyDictionary<CSharpType, List<ResourceClientProvider>>? _resourceDataTypes;
+        private IReadOnlyDictionary<CSharpType, List<ResourceClientProvider>> GetResourceDataTypes()
         {
             if (_resourceDataTypes == null)
             {
-                // Build dictionary, handling cases where multiple resources share the same data type
-                var dict = new Dictionary<CSharpType, ResourceClientProvider>();
+                var dict = new Dictionary<CSharpType, List<ResourceClientProvider>>();
                 foreach (var provider in ResourceProviders)
                 {
-                    // If the key already exists (multiple resources sharing same model), keep the first one
-                    if (!dict.ContainsKey(provider.ResourceData.Type))
+                    if (!dict.TryGetValue(provider.ResourceData.Type, out var list))
                     {
-                        dict[provider.ResourceData.Type] = provider;
+                        list = new List<ResourceClientProvider>();
+                        dict[provider.ResourceData.Type] = list;
                     }
+                    list.Add(provider);
                 }
                 _resourceDataTypes = dict;
             }
-            return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
+            return _resourceDataTypes;
+        }
+
+        internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
+        {
+            resourceClientProvider = null;
+            if (!GetResourceDataTypes().TryGetValue(resourceDataType, out var providers))
+            {
+                return false;
+            }
+
+            // Only wrap when the data type is exclusively used by one resource.
+            // When multiple resources share the same data type, wrapping would pick an arbitrary resource,
+            // so we skip wrapping and return the raw data type instead.
+            if (providers.Count != 1)
+            {
+                return false;
+            }
+
+            resourceClientProvider = providers[0];
+            return true;
         }
 
         private record ResourcesAndNonResourceMethodsInScope(

@@ -1,0 +1,6 @@
+{
+  "main": "dist/src/index.js",
+  "dependencies": {
+    "@azure-typespec/http-client-csharp-provisioning": "1.0.0-alpha.20260316.3"
+  }
+}

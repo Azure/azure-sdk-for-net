@@ -40,12 +40,7 @@ public class Sample_Agents_Tracing : SamplesBase
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
         #endregion
-
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -82,11 +77,7 @@ public class Sample_Agents_Tracing : SamplesBase
 
         using (tracerProvider)
         {
-            AgentsClientOptions options = new()
-            {
-                Endpoint = new Uri(projectEndpoint)
-            };
-            AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+            AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
             PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
             {
@@ -115,11 +106,7 @@ public class Sample_Agents_Tracing : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
         AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
@@ -159,11 +146,7 @@ public class Sample_Agents_Tracing : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var connectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         Console.WriteLine("Assign the retrieved string to the required environment variable.");
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", connectionString);

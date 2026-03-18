@@ -124,9 +124,9 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentsClient
     {
         protected AgentsClient() { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-        public AgentsClient(Azure.AI.Projects.Agents.AgentsClientSettings settings) { }
-        public AgentsClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.Agents.AgentsClientOptions options) { }
+        public AgentsClient(System.Uri endpoint) { }
+        public AgentsClient(System.Uri endpoint, Azure.AI.Projects.Agents.AgentsClientOptions options) { }
+        public AgentsClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.Agents.AgentsClientOptions options = null) { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult CreateAgent(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAgentAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
@@ -165,10 +165,13 @@ namespace Azure.AI.Projects.Agents
         public virtual System.ClientModel.ClientResult UpdateAgentFromManifest(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> UpdateAgentFromManifestAsync(string agentName, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
     }
-    public partial class AgentsClientOptions : OpenAI.OpenAIClientOptions
+    public partial class AgentsClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
-        public AgentsClientOptions() { }
-        public string ApiVersion { get { throw null; } set { } }
+        public AgentsClientOptions(Azure.AI.Projects.Agents.AgentsClientOptions.ServiceVersion version = Azure.AI.Projects.Agents.AgentsClientOptions.ServiceVersion.V1) { }
+        public enum ServiceVersion
+        {
+            V1 = 1,
+        }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public partial class AgentsClientSettings : System.ClientModel.Primitives.ClientSettings
@@ -538,12 +541,12 @@ namespace Azure.AI.Projects.Agents
     }
     public static partial class ClientConnectionProviderExtensions
     {
-        public static Azure.AI.Projects.Agents.AgentsClient GetProjectAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, Azure.AI.Projects.Agents.AgentsClientOptions options = null) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentsClient GetProjectAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, System.Uri endpoint = null, Azure.AI.Projects.Agents.AgentsClientOptions options = null) { throw null; }
         public sealed partial class <G>$EE9D7A1C67932FB454531401B8375DE4
         {
             internal <G>$EE9D7A1C67932FB454531401B8375DE4() { }
             [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$781747A4149937EE6CD40CB5B8268DAD")]
-            public Azure.AI.Projects.Agents.AgentsClient GetProjectAgentsClient(Azure.AI.Projects.Agents.AgentsClientOptions options = null) { throw null; }
+            public Azure.AI.Projects.Agents.AgentsClient GetProjectAgentsClient(System.Uri endpoint = null, Azure.AI.Projects.Agents.AgentsClientOptions options = null) { throw null; }
             public static partial class <M>$781747A4149937EE6CD40CB5B8268DAD
             {
                 public static void <Extension>$(System.ClientModel.Primitives.ClientConnectionProvider connectionProvider) { }

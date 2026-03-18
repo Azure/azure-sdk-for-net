@@ -12,7 +12,7 @@ using Azure.AI.Projects;
 namespace Azure.Core
 {
     /// <summary> Paged collection of Insight items. </summary>
-    public partial class PagedInsight : IJsonModel<PagedInsight>
+    internal partial class PagedInsight : IJsonModel<PagedInsight>
     {
         /// <summary> Initializes a new instance of <see cref="PagedInsight"/> for deserialization. </summary>
         internal PagedInsight()
