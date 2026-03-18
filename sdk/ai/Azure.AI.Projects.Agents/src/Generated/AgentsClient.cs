@@ -29,6 +29,13 @@ namespace Azure.AI.Projects.Agents
             _apiVersion = apiVersion;
         }
 
+        /// <summary> Initializes a new instance of AgentsClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AgentsClient(Uri endpoint) : this(endpoint, new AgentsClientOptions())
+        {
+        }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
     }

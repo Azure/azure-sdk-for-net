@@ -116,5 +116,35 @@ namespace Azure.ResourceManager.Nginx
             request.Method = RequestMethod.Delete;
             return message;
         }
+
+        internal HttpMessage CreateAnalysisRequest(Guid subscriptionId, string resourceGroupName, string deploymentName, string wafPolicyName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/wafPolicies/", false);
+            uri.AppendPath(wafPolicyName, true);
+            uri.AppendPath("/analyzeWafPolicy", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if ("application/json" != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
     }
 }

@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 namespace Azure.Core
 {
     /// <summary> Paged collection of Insight items. </summary>
-    public partial class PagedInsight
+    internal partial class PagedInsight
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

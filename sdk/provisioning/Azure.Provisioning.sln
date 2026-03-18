@@ -26,10 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppService.Tests", "Azure.Provisioning.AppService\tests\Azure.Provisioning.AppService.Tests.csproj", "{76098A77-CF29-421E-AC8A-BF94239B56C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Communication", "Azure.Provisioning.Communication\src\Azure.Provisioning.Communication.csproj", "{09FE6279-9FA8-419B-AD1F-DD2C3862FC5D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Communication.Tests", "Azure.Provisioning.Communication\tests\Azure.Provisioning.Communication.Tests.csproj", "{AACFC256-69EB-4ACD-A19D-026C82AA2DD2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerRegistry", "Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj", "{351AD973-DA8A-4CEA-94D9-49D10B0497AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerRegistry.Tests", "Azure.Provisioning.ContainerRegistry\tests\Azure.Provisioning.ContainerRegistry.Tests.csproj", "{66D2E68D-8B1A-44BB-87BB-B90AA0E36B74}"
@@ -54,14 +50,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Operatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.OperationalInsights.Tests", "Azure.Provisioning.OperationalInsights\tests\Azure.Provisioning.OperationalInsights.Tests.csproj", "{FA5C780F-E297-45F1-9E16-B165AFFD8905}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Sql", "Azure.Provisioning.Sql\src\Azure.Provisioning.Sql.csproj", "{DF17367B-1669-453E-8B2E-D229CAA79DD8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Sql.Tests", "Azure.Provisioning.Sql\tests\Azure.Provisioning.Sql.Tests.csproj", "{9B0675B4-2D36-403E-B73E-1144807585C0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.WebPubSub", "Azure.Provisioning.WebPubSub\src\Azure.Provisioning.WebPubSub.csproj", "{70EB42A0-15A8-48AD-B96D-894EF6DEBBFB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.WebPubSub.Tests", "Azure.Provisioning.WebPubSub\tests\Azure.Provisioning.WebPubSub.Tests.csproj", "{015670AB-881C-464F-8545-E686C9A92C4F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment", "Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj", "{0BC64290-A91B-4EF2-BAF2-01AE91F81AED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment.Tests", "Azure.Provisioning.Deployment\tests\Azure.Provisioning.Deployment.Tests.csproj", "{0D2C464F-C246-4069-90B2-33D637BE18BF}"
@@ -77,16 +65,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.PrivateDns", "Azure.Provisioning.PrivateDns\src\Azure.Provisioning.PrivateDns.csproj", "{29703EE4-89CC-BB2F-29AA-5F092C1799EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.PrivateDns.Tests", "Azure.Provisioning.PrivateDns\tests\Azure.Provisioning.PrivateDns.Tests.csproj", "{0F591945-027C-7A4C-D18A-E242126C427A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.Provisioning.Cdn", "Azure.Provisioning.Cdn", "{A2CDAB89-62BB-7741-B15C-A78F1F6DD80B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2B34438D-BC3D-7B26-D888-2657D4FE1539}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Cdn", "Azure.Provisioning.Cdn\src\Azure.Provisioning.Cdn.csproj", "{ECA8183F-BC78-42C5-8F33-3D83CF1E1215}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{835AD449-053F-6A9B-E308-BCE341B4624A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Cdn.Tests", "Azure.Provisioning.Cdn\tests\Azure.Provisioning.Cdn.Tests.csproj", "{74253C77-3012-4AE3-87C4-6BDB44108BDA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.Provisioning", "Azure.Provisioning", "{D3302C68-7D7C-1D32-995C-9D0001028868}"
 EndProject
@@ -111,10 +89,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2B34438D-BC3D-7B26-D888-2657D4FE1539} = {A2CDAB89-62BB-7741-B15C-A78F1F6DD80B}
-		{ECA8183F-BC78-42C5-8F33-3D83CF1E1215} = {2B34438D-BC3D-7B26-D888-2657D4FE1539}
-		{835AD449-053F-6A9B-E308-BCE341B4624A} = {A2CDAB89-62BB-7741-B15C-A78F1F6DD80B}
-		{74253C77-3012-4AE3-87C4-6BDB44108BDA} = {835AD449-053F-6A9B-E308-BCE341B4624A}
 		{4DFF187B-0348-2B67-D624-2F11DF431ECF} = {D3302C68-7D7C-1D32-995C-9D0001028868}
 		{811A56CF-D821-1F0B-5AD5-25C76177592A} = {568825D7-221D-741A-47F0-9892B36E5296}
 	EndGlobalSection

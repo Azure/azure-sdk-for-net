@@ -16,6 +16,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -105,7 +106,9 @@ namespace Azure.Generator.Provisioning.Providers
         {
             _inputModel = inputModel;
             _resourceMetadata = metadata;
-            _defaultApiVersion = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
+            _defaultApiVersion = metadata.ApiVersions.Count > 0
+                ? metadata.ApiVersions.Last()
+                : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
         }
@@ -232,14 +235,17 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             // Base resource: base(bicepIdentifier, "ResourceType", resourceVersion ?? "defaultVersion")
+            var resourceVersionArg = _defaultApiVersion != null
+                ? (ValueExpression)new BinaryOperatorExpression("??",
+                    resourceVersionParam,
+                    Literal(_defaultApiVersion))
+                : resourceVersionParam;
             var baseInitializer = new ConstructorInitializer(
                 true,
                 [
                     bicepIdentifierParam,
                     Literal(_resourceMetadata!.ResourceType),
-                    new BinaryOperatorExpression("??",
-                        resourceVersionParam,
-                        Literal(_defaultApiVersion!))
+                    resourceVersionArg
                 ]);
 
             var baseSig = new ConstructorSignature(
@@ -285,12 +291,12 @@ namespace Azure.Generator.Provisioning.Providers
             if (_inputModel.DiscriminatorValue != null)
                 return [];
 
-            var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
-            if (apiVersions.Count == 0)
+            var apiVersions = _resourceMetadata?.ApiVersions;
+            if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
             // ResourceVersions nested class
-            return [new ResourceVersionsProvider(this, _defaultApiVersion!)];
+            return [new ResourceVersionsProvider(this, apiVersions)];
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
@@ -701,12 +707,12 @@ namespace Azure.Generator.Provisioning.Providers
         private class ResourceVersionsProvider : TypeProvider
         {
             private readonly ProvisioningResourceProvider _parent;
-            private readonly string _defaultApiVersion;
+            private readonly IReadOnlyList<string> _apiVersions;
 
-            public ResourceVersionsProvider(ProvisioningResourceProvider parent, string defaultApiVersion)
+            public ResourceVersionsProvider(ProvisioningResourceProvider parent, IReadOnlyList<string> apiVersions)
             {
                 _parent = parent;
-                _defaultApiVersion = defaultApiVersion;
+                _apiVersions = apiVersions;
             }
 
             protected override string BuildName() => "ResourceVersions";
@@ -722,19 +728,26 @@ namespace Azure.Generator.Provisioning.Providers
 
             protected override FieldProvider[] BuildFields()
             {
-                var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
                 var fields = new List<FieldProvider>();
 
-                foreach (var version in apiVersions.Reverse())
+                foreach (var version in _apiVersions.Reverse())
                 {
-                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_');
+                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
+
+                    // Preview API versions are marked with [Experimental] to signal they may change or be removed.
+                    var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+                    var attributes = isPreview
+                        ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
+                        : Array.Empty<AttributeStatement>();
+
                     fields.Add(new FieldProvider(
                         FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly,
                         typeof(string),
                         fieldName,
                         this,
                         description: $"API version \"{version}\".",
-                        initializationValue: Literal(version)));
+                        initializationValue: Literal(version),
+                        attributes: attributes));
                 }
 
                 return [.. fields];

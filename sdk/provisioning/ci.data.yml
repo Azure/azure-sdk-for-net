@@ -11,22 +11,12 @@ trigger:
     - sdk/provisioning/ci.data.yml
     - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.Sql
-    - sdk/provisioning/Azure.Provisioning.WebPubSub
     exclude:
     - sdk/provisioning/Generator/
 
 parameters:
   - name: release_Azure_Provisioning
     displayName: 'Azure.Provisioning'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_Sql
-    displayName: 'Azure.Provisioning.Sql'
-    type: boolean
-    default: false
-  - name: release_Azure_Provisioning_WebPubSub
-    displayName: 'Azure.Provisioning.WebPubSub'
     type: boolean
     default: false
 
@@ -40,9 +30,3 @@ extends:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
       createReleaseStage: ${{ parameters.release_Azure_Provisioning }}
-    - name: Azure.Provisioning.Sql
-      safeName: AzureProvisioningSql
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_Sql }}
-    - name: Azure.Provisioning.WebPubSub
-      safeName: AzureProvisioningWebPubSub
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_WebPubSub }}

@@ -24,11 +24,7 @@ public class Sample_agents_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
@@ -77,11 +73,7 @@ public class Sample_agents_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -129,12 +121,8 @@ public class Sample_agents_CRUD : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         #region Snippet:Sample_Agents_API_version
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint),
-            ApiVersion = "2025-11-15-preview"
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClientOptions options = new(version: AgentsClientOptions.ServiceVersion.V1);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #endregion
     }
 
@@ -149,11 +137,7 @@ public class Sample_agents_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentsClientOptions options = new()
-        {
-            Endpoint = new Uri(projectEndpoint)
-        };
-        AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_Agent_ErrorHandling
         try
         {
