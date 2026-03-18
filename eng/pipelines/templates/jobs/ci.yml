@@ -149,8 +149,10 @@ jobs:
             if (-not $targetBranch) {
               $targetBranch = "main"
             }
-            Write-Host "Fetching origin/$targetBranch for diff comparison"
+            Write-Host "Fetching origin/$targetBranch at depth=1"
             git fetch --depth=1 origin "${targetBranch}:refs/remotes/origin/${targetBranch}"
+            Write-Host "Deepening by 1 commit to resolve merge base for three-dot diff"
+            git fetch --deepen=1 origin
           displayName: Fetch target branch for diff comparison
 
         - task: UsePythonVersion@0
