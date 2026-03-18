@@ -18,11 +18,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ApiManagementPortalRevision : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -140,7 +141,7 @@ public partial class ApiManagementPortalRevision : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _isCurrent = DefineProperty<bool>("IsCurrent", ["properties", "isCurrent"]);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdDateTime"], isOutput: true);

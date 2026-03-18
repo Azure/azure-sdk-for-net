@@ -18,11 +18,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ServiceTagOperationLink : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -85,7 +86,7 @@ public partial class ServiceTagOperationLink : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _operationId = DefineProperty<string>("OperationId", ["properties", "operationId"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

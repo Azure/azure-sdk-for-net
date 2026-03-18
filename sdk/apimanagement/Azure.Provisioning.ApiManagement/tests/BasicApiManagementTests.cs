@@ -192,6 +192,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleApi 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
+              name: take('exampleapi${uniqueString(resourceGroup().id)}', 24)
               properties: {
                 description: 'Description for example API'
                 displayName: 'Example API Name'
@@ -204,6 +205,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleProduct 'Microsoft.ApiManagement/service/products@2024-05-01' = {
+              name: take('exampleproduct${uniqueString(resourceGroup().id)}', 24)
               properties: {
                 description: 'Description for example product'
                 displayName: 'Example Product Name'

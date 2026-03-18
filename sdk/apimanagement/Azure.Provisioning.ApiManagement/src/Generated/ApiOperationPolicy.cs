@@ -18,11 +18,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ApiOperationPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -95,7 +96,7 @@ public partial class ApiOperationPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _format = DefineProperty<PolicyContentFormat>("Format", ["properties", "format"]);
         _value = DefineProperty<string>("Value", ["properties", "value"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

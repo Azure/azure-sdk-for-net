@@ -18,11 +18,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ResolverContract : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -105,7 +106,7 @@ public partial class ResolverContract : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
         _path = DefineProperty<string>("Path", ["properties", "path"]);

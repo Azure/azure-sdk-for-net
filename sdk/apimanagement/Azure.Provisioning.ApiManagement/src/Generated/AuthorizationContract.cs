@@ -19,11 +19,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class AuthorizationContract : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -126,7 +127,7 @@ public partial class AuthorizationContract : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _authorizationType = DefineProperty<ApiManagementAuthorizationType>("AuthorizationType", ["properties", "authorizationType"]);
         _error = DefineModelProperty<ApiManagementAuthorizationError>("Error", ["properties", "error"]);
         _oAuth2GrantType = DefineProperty<OAuth2GrantType>("OAuth2GrantType", ["properties", "oauth2grantType"]);

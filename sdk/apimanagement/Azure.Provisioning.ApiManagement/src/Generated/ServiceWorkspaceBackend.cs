@@ -19,11 +19,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ServiceWorkspaceBackend : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -197,7 +198,7 @@ public partial class ServiceWorkspaceBackend : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _backendServiceFabricCluster = DefineModelProperty<BackendServiceFabricClusterProperties>("BackendServiceFabricCluster", ["properties", "properties", "serviceFabricCluster"]);
         _circuitBreakerRules = DefineListProperty<CircuitBreakerRule>("CircuitBreakerRules", ["properties", "circuitBreaker", "rules"]);
         _credentials = DefineModelProperty<BackendCredentialsContract>("Credentials", ["properties", "credentials"]);

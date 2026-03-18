@@ -18,11 +18,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ServiceWorkspaceCertificate : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -134,7 +135,7 @@ public partial class ServiceWorkspaceCertificate : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _data = DefineProperty<string>("Data", ["properties", "data"]);
         _keyVaultDetails = DefineModelProperty<KeyVaultContractCreateProperties>("KeyVaultDetails", ["properties", "keyVault"]);
         _password = DefineProperty<string>("Password", ["properties", "password"]);

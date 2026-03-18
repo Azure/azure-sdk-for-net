@@ -19,11 +19,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class ServiceWorkspaceLogger : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -130,7 +131,7 @@ public partial class ServiceWorkspaceLogger : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _credentials = DefineDictionaryProperty<string>("Credentials", ["properties", "credentials"]);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _isBuffered = DefineProperty<bool>("IsBuffered", ["properties", "isBuffered"]);

@@ -19,11 +19,12 @@ namespace Azure.Provisioning.ApiManagement;
 public partial class PortalConfigContract : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -136,7 +137,7 @@ public partial class PortalConfigContract : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _corsAllowedOrigins = DefineListProperty<string>("CorsAllowedOrigins", ["properties", "cors", "allowedOrigins"]);
         _csp = DefineModelProperty<PortalConfigCspProperties>("Csp", ["properties", "csp"]);
         _delegation = DefineModelProperty<PortalConfigDelegationProperties>("Delegation", ["properties", "delegation"]);
