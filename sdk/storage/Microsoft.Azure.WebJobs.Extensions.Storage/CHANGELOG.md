@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.8 (2026-03-18)
+## 5.3.8 (2026-03-19)
 
 ### Bugs Fixed
 - Fixed a bug where `MaxDequeueCount` was being applied to messages in the poison queue itself, leading to poison messages being silently skipped and left unprocessed indefinitely.
