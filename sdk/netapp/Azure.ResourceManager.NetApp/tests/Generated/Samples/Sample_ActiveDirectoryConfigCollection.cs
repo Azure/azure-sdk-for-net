@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                     Administrators = { "admin1" },
                     SecurityOperators = { "secOp1" },
                 },
-                Identity = new ResourceManager.Models.ManagedServiceIdentity("UserAssigned")
+                Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {

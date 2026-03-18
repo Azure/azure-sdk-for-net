@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Advanced Ransomware Protection reports Properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RansomwareReportData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, RansomwareReportProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RansomwareReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RansomwareReportProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

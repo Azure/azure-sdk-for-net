@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp
         /// 2. These properties are mutually exclusive with the server.certificateObject property.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BucketData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, CredentialsStatus? status, BucketServerProperties server, BucketPermission? permissions, AzureKeyVaultDetails akvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, FileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, CredentialsStatus? status, BucketServerProperties server, BucketPermission? permissions, AzureKeyVaultDetails akvDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             FileSystemUser = fileSystemUser;
