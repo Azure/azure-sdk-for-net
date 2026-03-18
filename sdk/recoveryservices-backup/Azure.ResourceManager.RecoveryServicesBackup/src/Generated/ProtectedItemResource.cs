@@ -428,8 +428,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryPointResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecoveryPointResourceData> GetAllAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecoveryPointResource> GetAllAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RecoveryPointResourceData, RecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context);
+                context), data => new RecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -473,8 +473,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryPointResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecoveryPointResourceData> GetAll(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecoveryPointResource> GetAll(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
+            return new PageableWrapper<RecoveryPointResourceData, RecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context);
+                context), data => new RecoveryPointResource(Client, data));
         }
 
         /// <summary>

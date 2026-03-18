@@ -5300,7 +5300,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null,
                 location,
                 tags,
-                eTag,
+                eTag?.ToString(),
                 properties);
         }
 
@@ -5331,7 +5331,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null,
                 location,
                 tags,
-                eTag,
+                eTag?.ToString(),
                 properties);
         }
 
@@ -5362,7 +5362,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null,
                 location,
                 tags,
-                eTag,
+                eTag?.ToString(),
                 properties);
         }
 
@@ -5393,7 +5393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null,
                 location,
                 tags,
-                eTag,
+                eTag?.ToString(),
                 properties);
         }
 

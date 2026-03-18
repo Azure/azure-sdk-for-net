@@ -11,52 +11,52 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> SqlDataDirectory info. </summary>
-    public partial class SqlDataDirectory : IJsonModel<SqlDataDirectory>
+    /// <summary> The name of usage. </summary>
+    public partial class NameInfo : IJsonModel<NameInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlDataDirectory PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NameInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NameInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSqlDataDirectory(document.RootElement, options);
+                        return DeserializeNameInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NameInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NameInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NameInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlDataDirectory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NameInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlDataDirectory IPersistableModel<SqlDataDirectory>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NameInfo IPersistableModel<NameInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlDataDirectory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NameInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SqlDataDirectory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NameInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -67,25 +67,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NameInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NameInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Path))
+            if (Optional.IsDefined(LocalizedValue))
             {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsDefined(LogicalName))
-            {
-                writer.WritePropertyName("logicalName"u8);
-                writer.WriteStringValue(LogicalName);
+                writer.WritePropertyName("localizedValue"u8);
+                writer.WriteStringValue(LocalizedValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -106,52 +101,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SqlDataDirectory IJsonModel<SqlDataDirectory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NameInfo IJsonModel<NameInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlDataDirectory JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NameInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NameInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDataDirectory)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NameInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSqlDataDirectory(document.RootElement, options);
+            return DeserializeNameInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SqlDataDirectory DeserializeSqlDataDirectory(JsonElement element, ModelReaderWriterOptions options)
+        internal static NameInfo DeserializeNameInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SqlDataDirectoryType? @type = default;
-            string path = default;
-            string logicalName = default;
+            string value = default;
+            string localizedValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @type = new SqlDataDirectoryType(prop.Value.GetString());
+                    value = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("path"u8))
+                if (prop.NameEquals("localizedValue"u8))
                 {
-                    path = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("logicalName"u8))
-                {
-                    logicalName = prop.Value.GetString();
+                    localizedValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SqlDataDirectory(@type, path, logicalName, additionalBinaryDataProperties);
+            return new NameInfo(value, localizedValue, additionalBinaryDataProperties);
         }
     }
 }

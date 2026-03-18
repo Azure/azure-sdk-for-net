@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadContainer"/>. </summary>
-        public WorkloadContainer() : base("AzureWorkloadContainer")
+        public WorkloadContainer() : base(ProtectableContainerType.AzureWorkloadContainer)
         {
         }
 

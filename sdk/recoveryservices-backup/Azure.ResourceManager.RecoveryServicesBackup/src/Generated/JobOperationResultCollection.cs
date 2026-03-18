@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(true, response);
             }
             catch (Exception e)
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(true, response);
             }
             catch (Exception e)
             {
@@ -263,11 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<JobOperationResultResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new JobOperationResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobOperationResultResource(Client, JobOperationResultResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), response);
             }
             catch (Exception e)
             {
@@ -311,11 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                if (response.Value == null)
-                {
-                    return new NoValueResponse<JobOperationResultResource>(response.GetRawResponse());
-                }
-                return Response.FromValue(new JobOperationResultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobOperationResultResource(Client, JobOperationResultResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), response);
             }
             catch (Exception e)
             {
