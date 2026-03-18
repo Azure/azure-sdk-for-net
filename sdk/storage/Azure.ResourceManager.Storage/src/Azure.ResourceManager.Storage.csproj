@@ -9,17 +9,4 @@
     <AotCompatOptOut>true</AotCompatOptOut>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <!--
-      The TypeSpec generator automatically detects partial class customizations in Customize/
-      and suppresses the corresponding generated members. No explicit <Compile Remove> entries
-      are needed. The comments below document the customization intent for each replaced file.
-    -->
-    <!-- Replace generated files to change internal parameterless constructors to public (CannotSealType fix) -->
-    <!-- Replace generated enum with backward-compatible readonly struct -->
-    <!-- Replace generated struct that conflicts with custom backward-compat version -->
-    <!-- Change internal string ResourceType to public Azure.Core.ResourceType for backward compat -->
-    <!-- Add setter to Rules property for backward compat -->
-    <!-- Replace Action property type from StorageAccountIPRuleAction/StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction for backward compat -->
-  </ItemGroup>
 </Project>
