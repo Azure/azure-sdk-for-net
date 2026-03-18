@@ -1,6 +1,16 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.10.0 (2026-03-16)
 
 ### Features Added
 
@@ -8,12 +18,12 @@
 - Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
 - Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
 - Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
+- Added `ConfigurationSchema.json` to the NuGet package via the MSBuild `JsonSchemaSegment` feature, enabling automatic JSON IntelliSense and validation for `appsettings.json` when configuring System.ClientModel-based clients.
+- Updated BCL dependencies to 10.x.
 
 ### Bugs Fixed
 
 - Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
-
-### Other Changes
 
 ### Breaking Changes
 

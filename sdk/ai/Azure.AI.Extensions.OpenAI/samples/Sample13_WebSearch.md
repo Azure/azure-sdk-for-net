@@ -9,8 +9,8 @@ In this example we will use the Agent to perform the web search in given locatio
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_WebSearch
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 

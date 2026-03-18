@@ -283,7 +283,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
         memoryDefinitions.Options = new(true, true);
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         ResponseItem userItem = ResponseItem.CreateUserMessageItem("My favorite animal is Plagiarus praepotens.");
@@ -528,7 +528,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             instructions = ToolInstructions[toolType];
         }
 
-        return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
+        return new PromptAgentDefinition(model ?? TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = instructions,
             Tools = { tool },
@@ -541,7 +541,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        Uri connectionString = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
 
         // Remove conversations.

@@ -13,118 +13,159 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary>
-    /// A class representing the CommunicationServiceResource data model.
-    /// A class representing a CommunicationService resource.
-    /// </summary>
+    /// <summary> A class representing a CommunicationService resource. </summary>
     public partial class CommunicationServiceResourceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public CommunicationServiceResourceData(AzureLocation location) : base(location)
         {
-            LinkedDomains = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
-        /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
-        /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
-        /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
-        /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
-        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains, CommunicationPublicNetworkAccess? publicNetworkAccess, bool? isLocalAuthDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the service. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CommunicationServiceProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            HostName = hostName;
-            DataLocation = dataLocation;
-            NotificationHubId = notificationHubId;
-            Version = version;
-            ImmutableResourceId = immutableResourceId;
-            LinkedDomains = linkedDomains;
-            PublicNetworkAccess = publicNetworkAccess;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/> for deserialization. </summary>
-        internal CommunicationServiceResourceData()
-        {
-        }
+        /// <summary> The properties of the service. </summary>
+        [WirePath("properties")]
+        internal CommunicationServiceProperties Properties { get; set; }
 
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public CommunicationServicesProvisioningState? ProvisioningState { get; }
+        public CommunicationServicesProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> FQDN of the CommunicationService instance. </summary>
         [WirePath("properties.hostName")]
-        public string HostName { get; }
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+        }
+
         /// <summary> The location where the communication service stores its data at rest. </summary>
         [WirePath("properties.dataLocation")]
-        public string DataLocation { get; set; }
+        public string DataLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceProperties();
+                }
+                Properties.DataLocation = value;
+            }
+        }
+
         /// <summary> Resource ID of an Azure Notification Hub linked to this resource. </summary>
         [WirePath("properties.notificationHubId")]
-        public ResourceIdentifier NotificationHubId { get; }
+        public ResourceIdentifier NotificationHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotificationHubId;
+            }
+        }
+
         /// <summary> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </summary>
         [WirePath("properties.version")]
-        public string Version { get; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
         /// <summary> The immutable resource Id of the communication service. </summary>
         [WirePath("properties.immutableResourceId")]
-        public Guid? ImmutableResourceId { get; }
+        public Guid? ImmutableResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImmutableResourceId;
+            }
+        }
+
         /// <summary> List of email Domain resource Ids. </summary>
         [WirePath("properties.linkedDomains")]
-        public IList<string> LinkedDomains { get; }
+        public IList<string> LinkedDomains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceProperties();
+                }
+                return Properties.LinkedDomains;
+            }
+        }
+
         /// <summary> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public CommunicationPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public CommunicationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> Disable local authentication for the CommunicationService. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? IsLocalAuthDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceProperties();
+                }
+                Properties.IsLocalAuthDisabled = value.Value;
+            }
+        }
     }
 }
