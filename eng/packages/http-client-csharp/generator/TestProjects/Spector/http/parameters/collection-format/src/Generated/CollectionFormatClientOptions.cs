@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Parameters.CollectionFormat
 {
     public partial class CollectionFormatClientOptions : ClientOptions
     {
+        public CollectionFormatClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal CollectionFormatClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

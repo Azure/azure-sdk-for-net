@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication.Models
@@ -17,35 +18,75 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
         public CommunicationServiceResourcePatch()
         {
-            LinkedDomains = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the service. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="disableLocalAuth"> Disable local authentication for the CommunicationService. </param>
-        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity, IList<string> linkedDomains, CommunicationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth) : base(tags, serializedAdditionalRawData)
+        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunicationServiceUpdateProperties properties, ManagedServiceIdentity identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
-            LinkedDomains = linkedDomains;
-            PublicNetworkAccess = publicNetworkAccess;
-            DisableLocalAuth = disableLocalAuth;
         }
+
+        /// <summary> The properties of the service. </summary>
+        [WirePath("properties")]
+        internal CommunicationServiceUpdateProperties Properties { get; set; }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> List of email Domain resource Ids. </summary>
         [WirePath("properties.linkedDomains")]
-        public IList<string> LinkedDomains { get; }
+        public IList<string> LinkedDomains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceUpdateProperties();
+                }
+                return Properties.LinkedDomains;
+            }
+        }
+
         /// <summary> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public CommunicationPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public CommunicationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> Disable local authentication for the CommunicationService. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CommunicationServiceUpdateProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
     }
 }

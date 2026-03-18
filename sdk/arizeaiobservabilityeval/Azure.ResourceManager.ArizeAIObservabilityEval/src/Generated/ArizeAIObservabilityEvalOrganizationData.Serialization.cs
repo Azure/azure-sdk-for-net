@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(arizeAIObservabilityEvalOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(arizeAIObservabilityEvalOrganizationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ArizeAIObservabilityEvalOrganizationData"/> from. </param>

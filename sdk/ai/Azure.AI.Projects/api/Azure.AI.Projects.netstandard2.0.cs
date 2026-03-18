@@ -80,6 +80,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : System.ClientModel.Primitives.ClientConnectionProvider
     {
         protected AIProjectClient() : base (default(int)) { }
+        public AIProjectClient(Azure.AI.Projects.AIProjectClientSettings settings) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public virtual Azure.AI.Projects.Agents.AgentsClient Agents { get { throw null; } }
@@ -109,6 +110,13 @@ namespace Azure.AI.Projects
             V2025_05_01 = 1,
             V1 = 2,
         }
+    }
+    public partial class AIProjectClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public AIProjectClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Projects.AIProjectClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class AIProjectConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AIProjectConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AIProjectConnection>
     {
@@ -496,7 +504,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AttackStrategy Moderate { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy Morse { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy MultiTurn { get { throw null; } }
-        public static Azure.AI.Projects.AttackStrategy ROT13 { get { throw null; } }
+        public static Azure.AI.Projects.AttackStrategy Rot13 { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy StringJoin { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy SuffixAppend { get { throw null; } }
         public static Azure.AI.Projects.AttackStrategy Tense { get { throw null; } }
@@ -607,10 +615,10 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.FolderDataset FolderDataset(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.HourlyRecurrenceSchedule HourlyRecurrenceSchedule() { throw null; }
         public static Azure.AI.Projects.HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = null) { throw null; }
-        public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId = null, string filename = null, string fileData = null, System.Uri fileUrl = null) { throw null; }
+        public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId = null, string filename = null, string fileData = null, System.Uri fileUri = null) { throw null; }
         public static Azure.AI.Projects.InputImageContentParamAutoParam InputImageContentParamAutoParam(System.Uri imageUrl = null, string fileId = null, Azure.AI.Projects.DetailEnum? detail = default(Azure.AI.Projects.DetailEnum?)) { throw null; }
         public static Azure.AI.Projects.InputTextContentParam InputTextContentParam(string text = null) { throw null; }
-        public static Azure.AI.Projects.Insight Insight(string id = null, Azure.AI.Projects.InsightsMetadata metadata = null, Azure.Core.Foundations.OperationStatus state = default(Azure.Core.Foundations.OperationStatus), string displayName = null, Azure.AI.Projects.InsightRequest request = null, Azure.AI.Projects.InsightResult result = null) { throw null; }
+        public static Azure.AI.Projects.Insight Insight(string id = null, Azure.AI.Projects.InsightsMetadata metadata = null, Azure.AI.Projects.OperationStatus state = default(Azure.AI.Projects.OperationStatus), string displayName = null, Azure.AI.Projects.InsightRequest request = null, Azure.AI.Projects.InsightResult result = null) { throw null; }
         public static Azure.AI.Projects.InsightCluster InsightCluster(string id = null, string label = null, string suggestion = null, string suggestionTitle = null, string description = null, int weight = 0, System.Collections.Generic.IEnumerable<Azure.AI.Projects.InsightCluster> subClusters = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.InsightSample> samples = null) { throw null; }
         public static Azure.AI.Projects.InsightModelConfiguration InsightModelConfiguration(string modelDeploymentName = null) { throw null; }
         public static Azure.AI.Projects.InsightRequest InsightRequest(string type = null) { throw null; }
@@ -658,7 +666,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ToolDescription ToolDescription(string name = null, string description = null) { throw null; }
         public static Azure.AI.Projects.Trigger Trigger(string type = null) { throw null; }
         public static Azure.AI.Projects.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
-        public static Azure.AI.Projects.WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(System.Collections.Generic.IEnumerable<Azure.AI.Projects.DayOfWeek> daysOfWeek = null) { throw null; }
+        public static Azure.AI.Projects.WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(System.Collections.Generic.IEnumerable<System.DayOfWeek> daysOfWeek = null) { throw null; }
     }
     public partial class AzureAISearchIndex : Azure.AI.Projects.AIProjectIndex, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>
     {
@@ -866,28 +874,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.DatasetCredential System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DayOfWeek : System.IEquatable<Azure.AI.Projects.DayOfWeek>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DayOfWeek(string value) { throw null; }
-        public static Azure.AI.Projects.DayOfWeek Friday { get { throw null; } }
-        public static Azure.AI.Projects.DayOfWeek Monday { get { throw null; } }
-        public static Azure.AI.Projects.DayOfWeek Saturday { get { throw null; } }
-        public static Azure.AI.Projects.DayOfWeek Sunday { get { throw null; } }
-        public static Azure.AI.Projects.DayOfWeek Thursday { get { throw null; } }
-        public static Azure.AI.Projects.DayOfWeek Tuesday { get { throw null; } }
-        public static Azure.AI.Projects.DayOfWeek Wednesday { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.DayOfWeek other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.DayOfWeek left, Azure.AI.Projects.DayOfWeek right) { throw null; }
-        public static implicit operator Azure.AI.Projects.DayOfWeek (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.DayOfWeek? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.DayOfWeek left, Azure.AI.Projects.DayOfWeek right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DeleteMemoryStoreResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DeleteMemoryStoreResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DeleteMemoryStoreResponse>
     {
@@ -1511,7 +1497,7 @@ namespace Azure.AI.Projects
         public string FileData { get { throw null; } set { } }
         public string FileId { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
-        public System.Uri FileUrl { get { throw null; } set { } }
+        public System.Uri FileUri { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.InputFileContentParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.InputFileContentParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1560,7 +1546,7 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.InsightsMetadata Metadata { get { throw null; } }
         public Azure.AI.Projects.InsightRequest Request { get { throw null; } set { } }
         public Azure.AI.Projects.InsightResult Result { get { throw null; } }
-        public Azure.Core.Foundations.OperationStatus State { get { throw null; } }
+        public Azure.AI.Projects.OperationStatus State { get { throw null; } }
         protected virtual Azure.AI.Projects.Insight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.Insight (System.ClientModel.ClientResult result) { throw null; }
@@ -1638,18 +1624,18 @@ namespace Azure.AI.Projects
     {
         protected Insights() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Insight> Generate(Azure.AI.Projects.Insight insight, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult Generate(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Insight>> GenerateAsync(Azure.AI.Projects.Insight insight, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GenerateAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.ClientResult Get(string id, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Insight> Get(string id, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Insight> GetAll(Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Insight> GetAllAsync(Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Insight>> GetAsync(string id, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Insight> Generate(Azure.AI.Projects.Insight insight, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Generate(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Insight>> GenerateAsync(Azure.AI.Projects.Insight insight, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GenerateAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Insight> Get(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult Get(string id, string foundryFeatures, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Insight> GetAll(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Insight> GetAllAsync(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Insight>> GetAsync(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, string foundryFeatures, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
     public abstract partial class InsightSample : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InsightSample>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InsightSample>
     {
@@ -2152,6 +2138,26 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OneTimeTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OneTimeTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationStatus : System.IEquatable<Azure.AI.Projects.OperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationStatus(string value) { throw null; }
+        public static Azure.AI.Projects.OperationStatus Canceled { get { throw null; } }
+        public static Azure.AI.Projects.OperationStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.OperationStatus NotStarted { get { throw null; } }
+        public static Azure.AI.Projects.OperationStatus Running { get { throw null; } }
+        public static Azure.AI.Projects.OperationStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.OperationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.OperationStatus left, Azure.AI.Projects.OperationStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.OperationStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.OperationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.OperationStatus left, Azure.AI.Projects.OperationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PendingUploadConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PendingUploadConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PendingUploadConfiguration>
     {
         public PendingUploadConfiguration() { }
@@ -2599,8 +2605,8 @@ namespace Azure.AI.Projects
     }
     public partial class WeeklyRecurrenceSchedule : Azure.AI.Projects.RecurrenceSchedule, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>
     {
-        public WeeklyRecurrenceSchedule(System.Collections.Generic.IEnumerable<Azure.AI.Projects.DayOfWeek> daysOfWeek) { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.DayOfWeek> DaysOfWeek { get { throw null; } }
+        public WeeklyRecurrenceSchedule(System.Collections.Generic.IEnumerable<System.DayOfWeek> daysOfWeek) { }
+        public System.Collections.Generic.IList<System.DayOfWeek> DaysOfWeek { get { throw null; } }
         protected override Azure.AI.Projects.RecurrenceSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.RecurrenceSchedule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2610,29 +2616,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.WeeklyRecurrenceSchedule System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Azure.Core.Foundations
-{
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationStatus : System.IEquatable<Azure.Core.Foundations.OperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OperationStatus(string value) { throw null; }
-        public static Azure.Core.Foundations.OperationStatus Canceled { get { throw null; } }
-        public static Azure.Core.Foundations.OperationStatus Failed { get { throw null; } }
-        public static Azure.Core.Foundations.OperationStatus NotStarted { get { throw null; } }
-        public static Azure.Core.Foundations.OperationStatus Running { get { throw null; } }
-        public static Azure.Core.Foundations.OperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.Core.Foundations.OperationStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.Foundations.OperationStatus left, Azure.Core.Foundations.OperationStatus right) { throw null; }
-        public static implicit operator Azure.Core.Foundations.OperationStatus (string value) { throw null; }
-        public static implicit operator Azure.Core.Foundations.OperationStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.Core.Foundations.OperationStatus left, Azure.Core.Foundations.OperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
 namespace OpenAI

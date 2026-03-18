@@ -19,7 +19,7 @@ public class TestPipelinePolicy() : PipelinePolicy()
     public TestPipelinePolicy(Action<PipelineRequest>? requestAction, Action<PipelineResponse>? responseAction) : this()
     {
         if (requestAction != null) BeforeRequest += (s, e) => requestAction(e);
-        
+
         if (responseAction != null) AfterResponse += (s, e) => responseAction(e);
     }
 

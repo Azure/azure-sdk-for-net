@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fleetUpdateStrategyData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(fleetUpdateStrategyData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FleetUpdateStrategyData"/> from. </param>

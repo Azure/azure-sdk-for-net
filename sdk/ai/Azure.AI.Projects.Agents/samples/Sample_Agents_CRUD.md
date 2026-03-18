@@ -5,13 +5,9 @@ In this example we will demonstrate creation and basic use of an agent step by s
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint)
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create two versioned agent objects.

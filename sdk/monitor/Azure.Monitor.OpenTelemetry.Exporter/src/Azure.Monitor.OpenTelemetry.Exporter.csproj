@@ -17,7 +17,6 @@
          IConfiguration. -->
     <NoWarn>$(NoWarn);SYSLIB1100;SYSLIB1101</NoWarn>
     <DefineConstants>$(DefineConstants);AZURE_MONITOR_EXPORTER;</DefineConstants>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,6 +4,7 @@ import "@azure-tools/typespec-azure-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
+using TypeSpec.Versioning;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
@@ -168,6 +169,7 @@ model FooDependency {
   version?: string;
 }
 
+@added(Versions.v2024_05_01)
 @singleton
 model FooSettings is ProxyResource<FooSettingsProperties> {
   @doc("The default Foo settings.")
@@ -179,6 +181,7 @@ model FooSettings is ProxyResource<FooSettingsProperties> {
   name: string;
 }
 
+@added(Versions.v2024_05_01)
 @armResourceOperations
 interface FooSettingsOperations {
   get is ArmResourceRead<FooSettings>;

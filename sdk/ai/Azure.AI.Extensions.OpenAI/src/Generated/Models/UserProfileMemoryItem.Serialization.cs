@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
-    public partial class UserProfileMemoryItem : MemoryItem, IJsonModel<UserProfileMemoryItem>
+    public partial class UserProfileMemoryItem : MemoryOutputItem, IJsonModel<UserProfileMemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/> for deserialization. </summary>
         internal UserProfileMemoryItem()
@@ -19,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MemoryItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MemoryOutputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UserProfileMemoryItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MemoryItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MemoryOutputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UserProfileMemoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
