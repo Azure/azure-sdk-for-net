@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// Channel definition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlexaChannel"/>, <see cref="FacebookChannel"/>, <see cref="EmailChannel"/>, <see cref="OutlookChannel"/>, <see cref="MsTeamsChannel"/>, <see cref="SkypeChannel"/>, <see cref="KikChannel"/>, <see cref="WebChatChannel"/>, <see cref="DirectLineChannel"/>, <see cref="TelegramChannel"/>, <see cref="SmsChannel"/>, <see cref="SlackChannel"/>, <see cref="LineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Omnichannel"/>, <see cref="TelephonyChannel"/>, <see cref="AcsChatChannel"/>, <see cref="SearchAssistant"/>, and <see cref="M365Extensions"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBotChannelProperties))]
+    [PersistableModelProxy(typeof(UnknownChannel))]
     public abstract partial class BotChannelProperties : IJsonModel<BotChannelProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return M365Extensions.DeserializeM365Extensions(element, options);
                 }
             }
-            return UnknownBotChannelProperties.DeserializeUnknownBotChannelProperties(element, options);
+            return UnknownChannel.DeserializeUnknownChannel(element, options);
         }
     }
 }

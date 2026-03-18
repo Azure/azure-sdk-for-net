@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
-    /// A class representing a NetworkSecurityPerimeterConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BotResource"/> using the GetNetworkSecurityPerimeterConfigurations method.
+    /// A class representing a BotServiceNetworkSecurityPerimeterConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BotResource"/> using the GetBotServiceNetworkSecurityPerimeterConfigurations method.
     /// </summary>
-    public partial class NetworkSecurityPerimeterConfigurationResource : ArmResource
+    public partial class BotServiceNetworkSecurityPerimeterConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationsClientDiagnostics;
         private readonly NetworkSecurityPerimeterConfigurations _networkSecurityPerimeterConfigurationsRestClient;
-        private readonly NetworkSecurityPerimeterConfigurationData _data;
+        private readonly BotServiceNetworkSecurityPerimeterConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/networkSecurityPerimeterConfigurations";
 
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfigurationResource for mocking. </summary>
-        protected NetworkSecurityPerimeterConfigurationResource()
+        /// <summary> Initializes a new instance of BotServiceNetworkSecurityPerimeterConfigurationResource for mocking. </summary>
+        protected BotServiceNetworkSecurityPerimeterConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkSecurityPerimeterConfigurationResource(ArmClient client, NetworkSecurityPerimeterConfigurationData data) : this(client, data.Id)
+        internal BotServiceNetworkSecurityPerimeterConfigurationResource(ArmClient client, BotServiceNetworkSecurityPerimeterConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NetworkSecurityPerimeterConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BotServiceNetworkSecurityPerimeterConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
+            TryGetApiVersion(ResourceType, out string botServiceNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2023-09-15-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, botServiceNetworkSecurityPerimeterConfigurationApiVersion ?? "2023-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BotService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NetworkSecurityPerimeterConfigurationData Data
+        public virtual BotServiceNetworkSecurityPerimeterConfigurationData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkSecurityPerimeterConfigurationResource"/>. </description>
+        /// <description> <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotServiceNetworkSecurityPerimeterConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationResource.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("BotServiceNetworkSecurityPerimeterConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.BotService
                 };
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
+                Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(BotServiceNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkSecurityPerimeterConfigurationResource"/>. </description>
+        /// <description> <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<BotServiceNetworkSecurityPerimeterConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationResource.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("BotServiceNetworkSecurityPerimeterConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.BotService
                 };
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
+                Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(BotServiceNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,15 +204,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkSecurityPerimeterConfigurationResource"/>. </description>
+        /// <description> <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationResource.Reconcile");
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("BotServiceNetworkSecurityPerimeterConfigurationResource.Reconcile");
             scope.Start();
             try
             {
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.BotService
                 };
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BotServiceArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new BotServiceArmOperation<NetworkSecurityPerimeterConfigurationResource>(
-                    new NetworkSecurityPerimeterConfigurationOperationSource(Client),
+                BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource> operation = new BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource>(
+                    new BotServiceNetworkSecurityPerimeterConfigurationOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -259,15 +259,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NetworkSecurityPerimeterConfigurationResource"/>. </description>
+        /// <description> <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkSecurityPerimeterConfigurationResource> Reconcile(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource> Reconcile(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationResource.Reconcile");
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("BotServiceNetworkSecurityPerimeterConfigurationResource.Reconcile");
             scope.Start();
             try
             {
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.BotService
                 };
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BotServiceArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new BotServiceArmOperation<NetworkSecurityPerimeterConfigurationResource>(
-                    new NetworkSecurityPerimeterConfigurationOperationSource(Client),
+                BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource> operation = new BotServiceArmOperation<BotServiceNetworkSecurityPerimeterConfigurationResource>(
+                    new BotServiceNetworkSecurityPerimeterConfigurationOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

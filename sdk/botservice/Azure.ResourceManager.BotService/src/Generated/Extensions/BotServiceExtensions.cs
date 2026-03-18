@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public static NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBotServiceArmClient(client).GetNetworkSecurityPerimeterConfigurationResource(id);
+            return GetMockableBotServiceArmClient(client).GetBotServiceNetworkSecurityPerimeterConfigurationResource(id);
         }
 
         /// <summary>

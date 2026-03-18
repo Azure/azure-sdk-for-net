@@ -15,7 +15,7 @@ using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    internal partial class NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT : AsyncPageable<NetworkSecurityPerimeterConfigurationData>
+    internal partial class NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT : AsyncPageable<BotServiceNetworkSecurityPerimeterConfigurationData>
     {
         private readonly NetworkSecurityPerimeterConfigurations _client;
         private readonly string _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NetworkSecurityPerimeterConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BotServiceNetworkSecurityPerimeterConfigurationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BotService
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationList result = NetworkSecurityPerimeterConfigurationList.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterConfigurationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BotServiceNetworkSecurityPerimeterConfigurationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.BotService
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NetworkSecurityPerimeterConfigurationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BotServiceNetworkSecurityPerimeterConfigurationCollection.GetAll");
             scope.Start();
             try
             {

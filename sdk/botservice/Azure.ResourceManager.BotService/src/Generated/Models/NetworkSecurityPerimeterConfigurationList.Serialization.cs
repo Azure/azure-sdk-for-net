@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeterConfigurationData item in Value)
+                foreach (BotServiceNetworkSecurityPerimeterConfigurationData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value = default;
+            IReadOnlyList<BotServiceNetworkSecurityPerimeterConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
+                    List<BotServiceNetworkSecurityPerimeterConfigurationData> array = new List<BotServiceNetworkSecurityPerimeterConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
+                        array.Add(BotServiceNetworkSecurityPerimeterConfigurationData.DeserializeBotServiceNetworkSecurityPerimeterConfigurationData(item, options));
                     }
                     value = array;
                     continue;

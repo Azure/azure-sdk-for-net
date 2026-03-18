@@ -15,10 +15,10 @@ using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    internal partial class UnknownBotChannelProperties : BotChannelProperties, IJsonModel<BotChannelProperties>
+    internal partial class UnknownChannel : BotChannelProperties, IJsonModel<BotChannelProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBotChannelProperties"/> for deserialization. </summary>
-        internal UnknownBotChannelProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownChannel"/> for deserialization. </summary>
+        internal UnknownChannel()
         {
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownBotChannelProperties DeserializeUnknownBotChannelProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownChannel DeserializeUnknownChannel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.BotService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownBotChannelProperties(channelName, eTag, provisioningState, location, additionalBinaryDataProperties);
+            return new UnknownChannel(channelName, eTag, provisioningState, location, additionalBinaryDataProperties);
         }
     }
 }

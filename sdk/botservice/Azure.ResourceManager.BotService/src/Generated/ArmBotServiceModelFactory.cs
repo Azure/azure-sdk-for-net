@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
         /// <returns> A new <see cref="Models.BotProperties"/> instance for mocking. </returns>
-        public static BotProperties BotProperties(string displayName = default, string description = default, Uri iconUri = default, Uri endpoint = default, string endpointVersion = default, IDictionary<string, string> allSettings = default, IDictionary<string, string> parameters = default, Uri manifestUri = default, BotMsaAppType? msaAppType = default, string msaAppId = default, string msaAppTenantId = default, ResourceIdentifier msaAppMSIResourceId = default, IEnumerable<string> configuredChannels = default, IEnumerable<string> enabledChannels = default, string developerAppInsightKey = default, string developerAppInsightsApiKey = default, string developerAppInsightsApplicationId = default, IEnumerable<string> luisAppIds = default, string luisKey = default, bool? isCmekEnabled = default, Uri cmekKeyVaultUri = default, string cmekEncryptionStatus = default, Guid? tenantId = default, BotServicePublicNetworkAccess? publicNetworkAccess = default, bool? isStreamingSupported = default, bool? isDeveloperAppInsightsApiKeySet = default, string migrationToken = default, bool? isLocalAuthDisabled = default, string schemaTransformationVersion = default, ResourceIdentifier storageResourceId = default, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<NetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations = default, string openWithHint = default, string appPasswordHint = default, string provisioningState = default, string publishingCredentials = default)
+        public static BotProperties BotProperties(string displayName = default, string description = default, Uri iconUri = default, Uri endpoint = default, string endpointVersion = default, IDictionary<string, string> allSettings = default, IDictionary<string, string> parameters = default, Uri manifestUri = default, BotMsaAppType? msaAppType = default, string msaAppId = default, string msaAppTenantId = default, ResourceIdentifier msaAppMSIResourceId = default, IEnumerable<string> configuredChannels = default, IEnumerable<string> enabledChannels = default, string developerAppInsightKey = default, string developerAppInsightsApiKey = default, string developerAppInsightsApplicationId = default, IEnumerable<string> luisAppIds = default, string luisKey = default, bool? isCmekEnabled = default, Uri cmekKeyVaultUri = default, string cmekEncryptionStatus = default, Guid? tenantId = default, BotServicePublicNetworkAccess? publicNetworkAccess = default, bool? isStreamingSupported = default, bool? isDeveloperAppInsightsApiKeySet = default, string migrationToken = default, bool? isLocalAuthDisabled = default, string schemaTransformationVersion = default, ResourceIdentifier storageResourceId = default, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<BotServiceNetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations = default, string openWithHint = default, string appPasswordHint = default, string provisioningState = default, string publishingCredentials = default)
         {
             allSettings ??= new ChangeTrackingDictionary<string, string>();
             parameters ??= new ChangeTrackingDictionary<string, string>();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.BotService.Models
             enabledChannels ??= new ChangeTrackingList<string>();
             luisAppIds ??= new ChangeTrackingList<string>();
             privateEndpointConnections ??= new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
-            networkSecurityPerimeterConfigurations ??= new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>();
+            networkSecurityPerimeterConfigurations ??= new ChangeTrackingList<BotServiceNetworkSecurityPerimeterConfigurationData>();
 
             return new BotProperties(
                 displayName,
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the Network Security Perimeter configuration. </param>
-        /// <returns> A new <see cref="BotService.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        /// <returns> A new <see cref="BotService.BotServiceNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static BotServiceNetworkSecurityPerimeterConfigurationData BotServiceNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
         {
-            return new NetworkSecurityPerimeterConfigurationData(
+            return new BotServiceNetworkSecurityPerimeterConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.BotChannelProperties"/> instance for mocking. </returns>
         public static BotChannelProperties BotChannelProperties(string channelName = default, ETag? etag = default, string provisioningState = default, AzureLocation? location = default)
         {
-            return new UnknownBotChannelProperties(channelName, etag, provisioningState, location, additionalBinaryDataProperties: null);
+            return new UnknownChannel(channelName, etag, provisioningState, location, additionalBinaryDataProperties: null);
         }
 
         /// <param name="etag"> Entity Tag of the resource. </param>

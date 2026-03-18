@@ -1,4 +1,4 @@
 directory: specification/botservice/resource-manager/Microsoft.BotService/BotService
-commit: 6ec58b05e47de03201b662ab0a509cbf73ed91e8
+commit: 54ddaf026319ff21eb9af624f9f78933c716ae49
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -902,11 +902,11 @@ namespace Azure.ResourceManager.BotService
             return GetBotServicePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityPerimeterConfigurations in the <see cref="BotResource"/>. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterConfigurations and their operations over a NetworkSecurityPerimeterConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations()
+        /// <summary> Gets a collection of BotServiceNetworkSecurityPerimeterConfigurations in the <see cref="BotResource"/>. </summary>
+        /// <returns> An object representing collection of BotServiceNetworkSecurityPerimeterConfigurations and their operations over a BotServiceNetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual BotServiceNetworkSecurityPerimeterConfigurationCollection GetBotServiceNetworkSecurityPerimeterConfigurations()
         {
-            return GetCachedClient(client => new NetworkSecurityPerimeterConfigurationCollection(client, Id));
+            return GetCachedClient(client => new BotServiceNetworkSecurityPerimeterConfigurationCollection(client, Id));
         }
 
         /// <summary> Gets the specified Network Security Perimeter configuration associated with the Bot. </summary>
@@ -915,11 +915,11 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotServiceNetworkSecurityPerimeterConfigurationResource>> GetBotServiceNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            return await GetNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetBotServiceNetworkSecurityPerimeterConfigurations().GetAsync(networkSecurityPerimeterConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified Network Security Perimeter configuration associated with the Bot. </summary>
@@ -928,11 +928,11 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<BotServiceNetworkSecurityPerimeterConfigurationResource> GetBotServiceNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            return GetNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
+            return GetBotServiceNetworkSecurityPerimeterConfigurations().Get(networkSecurityPerimeterConfigurationName, cancellationToken);
         }
     }
 }

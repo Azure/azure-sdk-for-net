@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.BotService.Mocking
             return new BotServicePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+            BotServiceNetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new BotServiceNetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

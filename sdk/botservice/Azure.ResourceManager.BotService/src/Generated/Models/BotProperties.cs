@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BotService.Models
             EnabledChannels = new ChangeTrackingList<string>();
             LuisAppIds = new ChangeTrackingList<string>();
             PrivateEndpointConnections = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
-            NetworkSecurityPerimeterConfigurations = new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>();
+            NetworkSecurityPerimeterConfigurations = new ChangeTrackingList<BotServiceNetworkSecurityPerimeterConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<NetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<BotServiceNetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.BotService.Models
         public IReadOnlyList<BotServicePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
 
         /// <summary> List of Network Security Perimeter configurations for the bot. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterConfigurationData> NetworkSecurityPerimeterConfigurations { get; }
+        public IReadOnlyList<BotServiceNetworkSecurityPerimeterConfigurationData> NetworkSecurityPerimeterConfigurations { get; }
 
         /// <summary> The hint to browser (e.g. protocol handler) on how to open the bot for authoring. </summary>
         public string OpenWithHint { get; set; }

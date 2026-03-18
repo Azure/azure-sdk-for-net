@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("networkSecurityPerimeterConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeterConfigurationData item in NetworkSecurityPerimeterConfigurations)
+                foreach (BotServiceNetworkSecurityPerimeterConfigurationData item in NetworkSecurityPerimeterConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.BotService.Models
             string schemaTransformationVersion = default;
             ResourceIdentifier storageResourceId = default;
             IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
-            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations = default;
+            IReadOnlyList<BotServiceNetworkSecurityPerimeterConfigurationData> networkSecurityPerimeterConfigurations = default;
             string openWithHint = default;
             string appPasswordHint = default;
             string provisioningState = default;
@@ -697,10 +697,10 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
+                    List<BotServiceNetworkSecurityPerimeterConfigurationData> array = new List<BotServiceNetworkSecurityPerimeterConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
+                        array.Add(BotServiceNetworkSecurityPerimeterConfigurationData.DeserializeBotServiceNetworkSecurityPerimeterConfigurationData(item, options));
                     }
                     networkSecurityPerimeterConfigurations = array;
                     continue;
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.BotService.Models
                 schemaTransformationVersion,
                 storageResourceId,
                 privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(),
-                networkSecurityPerimeterConfigurations ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>(),
+                networkSecurityPerimeterConfigurations ?? new ChangeTrackingList<BotServiceNetworkSecurityPerimeterConfigurationData>(),
                 openWithHint,
                 appPasswordHint,
                 provisioningState,
