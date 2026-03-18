@@ -13,6 +13,7 @@ namespace Azure.AI.Projects
     internal partial class InsightsGetAllCollectionResult : CollectionResult
     {
         private readonly Insights _client;
+        private readonly string _foundryFeatures;
         private readonly string _type;
         private readonly string _evalId;
         private readonly string _runId;
@@ -22,15 +23,17 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of InsightsGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Insights client used to send requests. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
         /// <param name="runId"> Filter by the evaluation run ID. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public InsightsGetAllCollectionResult(Insights client, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public InsightsGetAllCollectionResult(Insights client, string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             _client = client;
+            _foundryFeatures = foundryFeatures;
             _type = @type;
             _evalId = evalId;
             _runId = runId;
@@ -43,7 +46,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetAllRequest(_type, _evalId, _runId, _agentName, _includeCoordinates, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_foundryFeatures, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -55,7 +58,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetAllRequest(nextPageUri, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
+                message = _client.CreateNextGetAllRequest(nextPageUri, _foundryFeatures, _type, _evalId, _runId, _agentName, _includeCoordinates, _options);
             }
         }
 

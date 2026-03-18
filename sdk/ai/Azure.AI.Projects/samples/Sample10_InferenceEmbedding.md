@@ -12,8 +12,8 @@ This sample demonstrates how to use the synchronous and asynchronous `GetEmbeddi
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_EmbeddingSync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
@@ -40,8 +40,8 @@ foreach (EmbeddingItem item in response.Value.Data)
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_EmbeddingAsync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();

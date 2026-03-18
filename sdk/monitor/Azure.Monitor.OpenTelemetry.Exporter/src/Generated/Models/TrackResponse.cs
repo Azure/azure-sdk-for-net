@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    /// <summary> Response containing the status of each telemetry item. </summary>
     internal partial class TrackResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TrackResponse"/>. </summary>
         internal TrackResponse()
         {
@@ -22,18 +26,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="itemsReceived"> The number of items received. </param>
         /// <param name="itemsAccepted"> The number of items accepted. </param>
         /// <param name="errors"> An array of error detail objects. </param>
-        internal TrackResponse(int? itemsReceived, int? itemsAccepted, IReadOnlyList<TelemetryErrorDetails> errors)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TrackResponse(int? itemsReceived, int? itemsAccepted, IList<TelemetryErrorDetails> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ItemsReceived = itemsReceived;
             ItemsAccepted = itemsAccepted;
             Errors = errors;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of items received. </summary>
         public int? ItemsReceived { get; }
+
         /// <summary> The number of items accepted. </summary>
         public int? ItemsAccepted { get; }
+
         /// <summary> An array of error detail objects. </summary>
-        public IReadOnlyList<TelemetryErrorDetails> Errors { get; }
+        public IList<TelemetryErrorDetails> Errors { get; }
     }
 }

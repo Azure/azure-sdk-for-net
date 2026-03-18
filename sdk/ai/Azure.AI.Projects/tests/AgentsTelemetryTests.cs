@@ -79,9 +79,9 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
     private string GetModelDeploymentName()
     {
-        //string modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        //string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         //return modelDeploymentName;
-        return TestEnvironment.MODELDEPLOYMENTNAME;
+        return TestEnvironment.FOUNDRY_MODEL_NAME;
     }
 
     [RecordedTest]

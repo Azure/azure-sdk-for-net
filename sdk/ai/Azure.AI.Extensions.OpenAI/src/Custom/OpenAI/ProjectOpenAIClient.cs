@@ -9,7 +9,6 @@ using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -28,6 +27,14 @@ public partial class ProjectOpenAIClient : OpenAIClient
     private readonly ProjectOpenAIClientOptions _options;
 
     private static string s_defaultAuthorizationScope = "https://ai.azure.com/.default";
+
+    /// <summary> Initializes a new instance of ProjectOpenAIClient from a <see cref="ProjectOpenAIClientSettings"/>. </summary>
+    /// <param name="settings"> The settings for ProjectOpenAIClient. </param>
+    [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+    public ProjectOpenAIClient(ProjectOpenAIClientSettings settings)
+        : this(AuthenticationPolicy.Create(settings), GetMergedOptions(settings?.Endpoint, settings?.Options))
+    {
+    }
 
     public ProjectOpenAIClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
         : base(

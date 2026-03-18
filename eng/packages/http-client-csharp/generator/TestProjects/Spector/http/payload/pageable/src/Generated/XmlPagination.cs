@@ -17,6 +17,8 @@ namespace Payload.Pageable._XmlPagination
     {
         protected XmlPagination() => throw null;
 
+        internal XmlPagination(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Pageable<BinaryData> GetWithContinuation(string marker, RequestContext context) => throw null;
