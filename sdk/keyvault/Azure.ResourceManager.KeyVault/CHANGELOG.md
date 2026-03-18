@@ -6,12 +6,6 @@
 
 - Upgraded API version to `2026-02-01`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.3 (2025-09-15)
 
 ### Features Added
