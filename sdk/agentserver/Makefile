@@ -1,4 +1,4 @@
-.PHONY: all restore build test lint format clean pack generate-models generate-openapi generate-validators generate-contracts samples npm-install dev
+.PHONY: all restore build test lint format clean pack generate-responses-contracts samples npm-install dev
 
 REPO_ROOT := $(shell git rev-parse --show-toplevel 2>/dev/null || echo "../..")
 
@@ -63,11 +63,16 @@ node_modules: package.json
 
 npm-install: node_modules
 
-generate-models: node_modules
+OPENAPI_YAML := $(TSP_OUT)/openapi.virtual-public-preview.yaml
+VALIDATORS_DIR := Azure.AI.AgentServer.Responses.Contracts/src/Generated/Validators
+OVERLAY_YAML := Azure.AI.AgentServer.Responses.Contracts/src/Validation/validation-overlay.yaml
+VALIDATORS_NAMESPACE := Azure.AI.AgentServer.Responses
+
+generate-responses-contracts: node_modules
 	@echo "🔄 Syncing upstream TypeSpec sources..."
 	npx tsp-client sync --output-dir Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec
 	@echo "✅ TypeSpec sources synced"
-	@echo "🔨 Compiling TypeSpec view → C# models..."
+	@echo "🔨 Compiling TypeSpec → C# models + OpenAPI spec..."
 	cd $(TSP_DIR) && npx tsp compile .
 	@echo "📦 Copying generated models into Contracts..."
 	rm -rf Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models Azure.AI.AgentServer.Responses.Contracts/src/Generated/Internal
@@ -75,20 +80,7 @@ generate-models: node_modules
 	cp -r $(TSP_OUT)/src/Generated/Models/* Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
 	cp $(TSP_OUT)/src/Generated/AzureAIAgentServerResponsesModelFactory.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
 	cp $(TSP_OUT)/src/Generated/Internal/*.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Internal/ 2>/dev/null || true
-	@echo "✅ Models generated to Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/"
-	@echo "   NOTE: Custom model overrides are in Azure.AI.AgentServer.Responses.Contracts/src/Custom/."
-
-OPENAPI_YAML := $(TSP_OUT)/openapi.virtual-public-preview.yaml
-VALIDATORS_DIR := Azure.AI.AgentServer.Responses.Contracts/src/Generated/Validators
-OVERLAY_YAML := Azure.AI.AgentServer.Responses.Contracts/src/Validation/validation-overlay.yaml
-VALIDATORS_NAMESPACE := Azure.AI.AgentServer.Responses
-
-generate-openapi: node_modules
-	@echo "🔨 Compiling TypeSpec → OpenAPI 3.0 YAML..."
-	cd $(TSP_DIR) && npx tsp compile .
-	@echo "✅ OpenAPI spec generated at $(OPENAPI_YAML)"
-
-generate-validators: generate-openapi
+	@echo "✅ Models generated"
 	@echo "🔨 Generating C# validators from OpenAPI spec..."
 	python3 scripts/generate-validators.py \
 		--input $(OPENAPI_YAML) \
@@ -96,11 +88,9 @@ generate-validators: generate-openapi
 		--overlay $(OVERLAY_YAML) \
 		--namespace $(VALIDATORS_NAMESPACE) \
 		--root-schemas OpenAI.Response
-	@echo "✅ Validators generated to $(VALIDATORS_DIR)/"
-
-generate-contracts: generate-models generate-validators
+	@echo "✅ Validators generated"
 	@echo "🧹 Cleaning up tsp-output intermediates..."
 	@# Preserve only the hand-written Custom stubs; remove everything else.
 	find $(TSP_OUT) -mindepth 1 -maxdepth 1 ! -name src -exec rm -rf {} +
 	find $(TSP_OUT)/src -mindepth 1 -maxdepth 1 ! -name Custom -exec rm -rf {} +
-	@echo "✅ All generated artifacts are up to date."
+	@echo "✅ All Responses contracts generated and cleaned up."

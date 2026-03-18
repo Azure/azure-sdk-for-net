@@ -447,12 +447,12 @@ make pack       # dotnet pack → ./nupkg/
 make clean      # clean build artifacts
 ```
 
-### Model Generation
+### Contract Generation
 
-Models are generated from TypeSpec definitions. To regenerate after TypeSpec changes:
+Models and validators are generated from TypeSpec definitions. To regenerate after TypeSpec changes:
 
 ```bash
-make generate-models
+make generate-responses-contracts
 ```
 
 ## License
