@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "agentserver",
+      "path": "."
+    },
+    {
+      "name": "azure-sdk-for-net",
+      "path": "../.."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/bin": true,
+      "**/obj": true,
+      "**/nupkg": true
+    },
+    "git.autoRepositoryDetection": "openEditors",
+    "git.repositoryScanMaxDepth": 4
+  }
+}

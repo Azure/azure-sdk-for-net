@@ -34,6 +34,7 @@
 
 ### Build & Test
 ```bash
+make dev        # open dev container (from repo root via VS Code / devcontainer CLI)
 make restore    # dotnet restore
 make build      # dotnet build
 make test       # dotnet test (NUnit)
@@ -42,6 +43,16 @@ make format     # dotnet format
 make pack       # dotnet pack (NuGet)
 make all        # restore → build → test → lint
 ```
+
+### Dev Container Setup
+The dev container config lives at the **monorepo root** (`.devcontainer/agentserver/`), not in this subfolder. This is the standard named-config pattern for monorepos — it lets you open the repo root in VS Code, select "Reopen in Container → AgentServer", and get git working at every level.
+
+Three ways to launch:
+1. `make dev` — auto-detects `devcontainer` CLI or falls back to `code` CLI
+2. Open repo root in VS Code → Ctrl+Shift+P → "Reopen in Container" → select "AgentServer"
+3. `devcontainer open --workspace-folder <repo-root> --config .devcontainer/agentserver/devcontainer.json`
+
+For a multi-root workspace view (agentserver + monorepo root in file explorer), open `agentserver.code-workspace`.
 
 ### Code Style
 - .NET 8, C# with nullable reference types enabled

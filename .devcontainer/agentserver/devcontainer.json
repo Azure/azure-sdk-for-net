@@ -14,9 +14,16 @@
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
 
+  // Mount the entire monorepo so git works at every level.
+  // VS Code auto-mounts the git root by default, but being explicit avoids
+  // surprises when the repo is opened from different locations.
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/azure-sdk-for-net,type=bind,consistency=cached",
+
+  // Focus VS Code's file explorer on the agentserver subfolder.
+  // Git still works — VS Code detects the parent .git directory automatically.
   "workspaceFolder": "/workspaces/azure-sdk-for-net/sdk/agentserver",
 
-  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postCreateCommand": "bash ../../.devcontainer/agentserver/post-create.sh",
   "postStartCommand": "git config --global --add safe.directory /workspaces/azure-sdk-for-net",
 
   "forwardPorts": [5000, 5001],
@@ -32,6 +39,8 @@
         "mhutchie.git-graph"
       ],
       "settings": {
+        "git.autoRepositoryDetection": "openEditors",
+        "git.repositoryScanMaxDepth": 4,
         "chat.promptFiles.recommended": {
           ".specify/commands/speckit.constitution.md": true,
           ".specify/commands/speckit.specify.md": true,

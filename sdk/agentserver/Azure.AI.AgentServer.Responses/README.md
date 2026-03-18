@@ -417,9 +417,22 @@ See [samples/README.md](samples/README.md) for details.
 
 ## Development
 
+### Dev Container (recommended)
+
+The dev container config is at the **monorepo root** (`.devcontainer/agentserver/`) — the standard named-config pattern for monorepos. This mounts the entire repo so git works, while focusing VS Code on `sdk/agentserver/`.
+
+```bash
+# From sdk/agentserver/ — auto-detects devcontainer CLI or falls back to code CLI
+make dev
+```
+
+Or manually: open the repo root in VS Code → Ctrl+Shift+P → **Reopen in Container** → select **AgentServer**.
+
+For a multi-root workspace (agentserver + monorepo root in explorer), open `agentserver.code-workspace`.
+
 ### Prerequisites
 
-- .NET 8 SDK
+- .NET 8/9 SDK
 - Node.js (for TypeSpec model generation)
 
 ### Build & Test
@@ -427,7 +440,7 @@ See [samples/README.md](samples/README.md) for details.
 ```bash
 make all        # restore → build → test → lint
 make build      # dotnet build
-make test       # dotnet test (xUnit)
+make test       # dotnet test (NUnit)
 make lint       # dotnet format --verify-no-changes
 make format     # dotnet format (auto-fix)
 make pack       # dotnet pack → ./nupkg/

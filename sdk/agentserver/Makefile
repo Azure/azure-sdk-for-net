@@ -1,6 +1,29 @@
-.PHONY: all restore build test lint format clean pack generate-models generate-openapi generate-validators generate-contracts samples npm-install
+.PHONY: all restore build test lint format clean pack generate-models generate-openapi generate-validators generate-contracts samples npm-install dev
+
+REPO_ROOT := $(shell git rev-parse --show-toplevel 2>/dev/null || echo "../..")
 
 all: restore build test lint
+
+## Open the monorepo in VS Code.  When prompted, select "Reopen in Container"
+## and choose the "AgentServer" configuration.  If the devcontainer CLI is
+## installed (`npm i -g @devcontainers/cli`), the container starts directly.
+dev:
+	@if command -v devcontainer >/dev/null 2>&1; then \
+		echo "🐳 Starting AgentServer dev container..."; \
+		devcontainer open \
+			--workspace-folder "$(REPO_ROOT)" \
+			--config "$(REPO_ROOT)/.devcontainer/agentserver/devcontainer.json"; \
+	elif command -v code >/dev/null 2>&1; then \
+		echo "📂 Opening monorepo in VS Code..."; \
+		echo "   → Select 'Reopen in Container' then choose 'AgentServer'."; \
+		code "$(REPO_ROOT)"; \
+	else \
+		echo "❌ Neither 'devcontainer' CLI nor 'code' CLI found on PATH."; \
+		echo "   Install one of:"; \
+		echo "     npm i -g @devcontainers/cli"; \
+		echo "     https://code.visualstudio.com/docs/editor/command-line"; \
+		exit 1; \
+	fi
 
 restore:
 	dotnet restore
