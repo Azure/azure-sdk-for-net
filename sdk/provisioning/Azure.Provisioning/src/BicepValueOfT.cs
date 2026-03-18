@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Net;
 using Azure.Core;
@@ -186,6 +187,7 @@ public class BicepValue<T> : BicepValue
         Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
         // Other extensible enums like AzureLocation (AzureLocation has been handled above)
         ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, Format)),
+        IJsonModel<T> model => BicepValueJsonConverter.ConvertFromJsonModel(model),
         _ => throw new InvalidOperationException($"Cannot convert {Value} to a Bicep expression.")
     };
 }
