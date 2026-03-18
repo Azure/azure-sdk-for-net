@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Verified CI pipeline compatibility with current codebase.
+
 ## 1.3.0 (2025-05-21)
 
 ### Features Added
