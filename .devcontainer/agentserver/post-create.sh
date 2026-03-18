@@ -34,12 +34,14 @@ fi
 
 # --- UV (Python package manager for spec-kit) ---
 echo -e "\n🐍 Installing UV..."
-run_command "pip install uv"
+run_command "curl -LsSf https://astral.sh/uv/install.sh | sh"
+export PATH="$HOME/.local/bin:$PATH"
 echo "✅ Done"
 
 # --- Specify CLI (spec-kit) ---
 echo -e "\n📋 Installing Specify CLI (spec-kit)..."
 run_command "uv tool install specify-cli --from git+https://github.com/github/spec-kit.git"
+export PATH="$HOME/.local/bin:$PATH"
 echo "✅ Done"
 
 # --- Python dependencies for codegen scripts ---
