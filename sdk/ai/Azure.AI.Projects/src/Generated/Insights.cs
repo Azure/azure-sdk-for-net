@@ -7,7 +7,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.AI.Projects
 {
@@ -205,10 +204,17 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetAll(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public virtual CollectionResult GetAll(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetAllRequest(foundryFeatures, @type, evalId, runId, agentName, includeCoordinates, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            return new InsightsGetAllCollectionResult(
+                this,
+                foundryFeatures,
+                @type,
+                evalId,
+                runId,
+                agentName,
+                includeCoordinates,
+                options);
         }
 
         /// <summary>
@@ -228,10 +234,17 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAllAsync(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetAllRequest(foundryFeatures, @type, evalId, runId, agentName, includeCoordinates, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            return new InsightsGetAllAsyncCollectionResult(
+                this,
+                foundryFeatures,
+                @type,
+                evalId,
+                runId,
+                agentName,
+                includeCoordinates,
+                options);
         }
 
         /// <summary> List all insights in reverse chronological order (newest first). </summary>
@@ -243,10 +256,17 @@ namespace Azure.AI.Projects
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<PagedInsight> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Insight> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetAll(foundryFeatures?.ToSerialString(), @type?.ToString(), evalId, runId, agentName, includeCoordinates, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((PagedInsight)result, result.GetRawResponse());
+            return new InsightsGetAllCollectionResultOfT(
+                this,
+                foundryFeatures?.ToSerialString(),
+                @type?.ToString(),
+                evalId,
+                runId,
+                agentName,
+                includeCoordinates,
+                cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all insights in reverse chronological order (newest first). </summary>
@@ -258,10 +278,17 @@ namespace Azure.AI.Projects
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<PagedInsight>> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Insight> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetAllAsync(foundryFeatures?.ToSerialString(), @type?.ToString(), evalId, runId, agentName, includeCoordinates, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((PagedInsight)result, result.GetRawResponse());
+            return new InsightsGetAllAsyncCollectionResultOfT(
+                this,
+                foundryFeatures?.ToSerialString(),
+                @type?.ToString(),
+                evalId,
+                runId,
+                agentName,
+                includeCoordinates,
+                cancellationToken.ToRequestOptions());
         }
     }
 }

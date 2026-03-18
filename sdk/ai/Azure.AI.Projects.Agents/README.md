@@ -55,11 +55,7 @@ To be able to create, update and delete Agents, please use `AgentsClient`. It is
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint)
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -73,12 +69,8 @@ When clients send REST requests to the endpoint, one of the query parameters is 
 The API version may be set supplying `version` parameter to `AgentClientOptions` constructor as shown in the example code below.
 
 ```C# Snippet:Sample_Agents_API_version
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint),
-    ApiVersion = "2025-11-15-preview"
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+AgentsClientOptions options = new(version: AgentsClientOptions.ServiceVersion.V1);
+AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
 ### Additional concepts
