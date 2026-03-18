@@ -153,7 +153,7 @@ yield return text.EmitDelta("According to the docs");
 yield return text.EmitDelta(", the answer is 42.");
 
 // Emit an annotation (e.g. a URL citation)
-var citation = AzureAIResponsesServerSdkModelFactory.UrlCitationBody(
+var citation = AzureAIAgentServerResponsesModelFactory.UrlCitationBody(
     url: new Uri("https://example.com/docs"), title: "Official Docs",
     startIndex: 0, endIndex: 22);
 yield return text.EmitAnnotationAdded(citation);
