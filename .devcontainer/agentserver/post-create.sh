@@ -49,6 +49,14 @@ echo -e "\n🔨 Installing Python codegen dependencies..."
 run_command "pip install pyyaml"
 echo "✅ Done"
 
+# --- Azure Artifacts Credential Provider ---
+# The monorepo NuGet.Config uses a single Azure DevOps feed whose upstream
+# (nuget.org) requires auth to resolve uncached packages.  Install the
+# credential provider so dotnet restore can authenticate automatically.
+echo -e "\n🔑 Installing Azure Artifacts Credential Provider..."
+run_command "sh -c 'wget -qO- https://aka.ms/install-artifacts-credprovider.sh | bash'"
+echo "✅ Done"
+
 # --- .NET restore ---
 echo -e "\n🔧 Restoring .NET dependencies..."
 run_command "dotnet restore Azure.AI.AgentServer.sln"

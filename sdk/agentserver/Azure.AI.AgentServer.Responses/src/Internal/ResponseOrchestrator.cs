@@ -277,7 +277,10 @@ internal sealed class ResponseOrchestrator
 
                     // Signal that response.created has been processed — unblocks
                     // the bg non-streaming endpoint path waiting for the handler's response.
-                    execution.ResponseCreatedSignal.TrySetResult(execution.Response!);
+                    // Snapshot before signaling: the background task continues to mutate
+                    // execution.Response (output items, terminal status) concurrently.
+                    // Passing a live reference would race with Snapshot() on the request thread.
+                    execution.ResponseCreatedSignal.TrySetResult(execution.Response!.Snapshot());
 
                     yield return evt;
                     continue;

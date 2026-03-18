@@ -172,8 +172,9 @@ internal sealed class ResponseEndpointHandler
             // Await the handler's response.created (or a pre-created error).
             // If the handler fails before response.created, the signal faults
             // and the exception propagates to the exception filter → HTTP 500.
+            // The signal delivers an independent snapshot — no re-snapshot needed.
             var handlerResponse = await execution.ResponseCreatedSignal.Task;
-            return Results.Json(handlerResponse.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+            return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
         }
         else
         {

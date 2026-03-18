@@ -40,7 +40,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIResponsesServerSdkContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIAgentServerResponsesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ToolChoiceWebSearchPreview)} does not support writing '{options.Format}' format.");
             }

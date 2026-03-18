@@ -1,0 +1,9 @@
+.claude/
+
+# TypeSpec emitter output (intermediate; committed files are in Generated/)
+Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/**
+!Azure.AI.AgentServer.Responses.Contracts/src/TypeSpec/tsp-output/src/Custom/
+
+# npm
+package-lock.json
+CLAUDE.md

@@ -402,7 +402,7 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(WebSearchTool))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
     [ModelReaderWriterBuildable(typeof(WorkflowActionOutputItem))]
-    public partial class AzureAIResponsesServerSdkContext : ModelReaderWriterContext
+    public partial class AzureAIAgentServerResponsesContext : ModelReaderWriterContext
     {
     }
 }

@@ -10,7 +10,7 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AzureAIResponsesServerSdkModelFactory
+    public static partial class AzureAIAgentServerResponsesModelFactory
     {
         /// <summary>
         /// Set of 16 key-value pairs that can be attached to an object. This can be

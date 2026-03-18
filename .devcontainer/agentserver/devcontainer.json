@@ -4,8 +4,8 @@
 
   "features": {
     "ghcr.io/devcontainers/features/dotnet:2": {
-      "version": "9.0",
-      "additionalVersions": "8.0"
+      "version": "10.0",
+      "additionalVersions": "9.0,8.0"
     },
     "ghcr.io/devcontainers/features/node:1": {
       "version": "lts"

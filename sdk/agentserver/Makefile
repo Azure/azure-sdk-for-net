@@ -35,10 +35,14 @@ test: build
 	dotnet test --no-build --verbosity normal
 
 lint:
-	dotnet format --verify-no-changes
+	dotnet format --verify-no-changes Azure.AI.AgentServer.Responses/src/Azure.AI.AgentServer.Responses.csproj
+	dotnet format --verify-no-changes Azure.AI.AgentServer.Responses/tests/Azure.AI.AgentServer.Responses.Tests.csproj
+	dotnet format --verify-no-changes Azure.AI.AgentServer.Responses.Contracts/src/Azure.AI.AgentServer.Responses.Contracts.csproj
 
 format:
-	dotnet format
+	dotnet format Azure.AI.AgentServer.Responses/src/Azure.AI.AgentServer.Responses.csproj
+	dotnet format Azure.AI.AgentServer.Responses/tests/Azure.AI.AgentServer.Responses.Tests.csproj
+	dotnet format Azure.AI.AgentServer.Responses.Contracts/src/Azure.AI.AgentServer.Responses.Contracts.csproj
 
 samples:
 	dotnet build Azure.AI.AgentServer.Responses/samples/Samples.slnx
@@ -69,8 +73,7 @@ generate-models: node_modules
 	rm -rf Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models Azure.AI.AgentServer.Responses.Contracts/src/Generated/Internal
 	mkdir -p Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models Azure.AI.AgentServer.Responses.Contracts/src/Generated/Internal
 	cp -r $(TSP_OUT)/src/Generated/Models/* Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
-	cp $(TSP_OUT)/src/Generated/AzureAIResponsesServerSdkContext.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
-	cp $(TSP_OUT)/src/Generated/AzureAIResponsesServerSdkModelFactory.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
+	cp $(TSP_OUT)/src/Generated/AzureAIAgentServerResponsesModelFactory.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
 	cp $(TSP_OUT)/src/Generated/Internal/*.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Internal/ 2>/dev/null || true
 	@echo "🧹 Cleaning up regenerated artifacts..."
 	rm -f $(TSP_OUT)/Azure.AI.AgentServer.Responses.sln
@@ -78,9 +81,7 @@ generate-models: node_modules
 	rm -f $(TSP_OUT)/src/Azure.AI.AgentServer.Responses.csproj
 	rm -rf $(TSP_OUT)/src/Generated
 	@echo "✅ Models generated to Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/"
-	@echo "   NOTE: DeleteResponseResult.cs and AzureAIResponsesServerSdkModelFactory.cs are"
-	@echo "   excluded from compilation via Contracts.csproj due to codegen bugs."
-	@echo "   Custom replacements are in Azure.AI.AgentServer.Responses.Contracts/src/Custom/."
+	@echo "   NOTE: Custom model overrides are in Azure.AI.AgentServer.Responses.Contracts/src/Custom/."
 
 OPENAPI_YAML := $(TSP_OUT)/openapi.virtual-public-preview.yaml
 VALIDATORS_DIR := Azure.AI.AgentServer.Responses.Contracts/src/Generated/Validators
