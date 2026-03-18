@@ -6,6 +6,7 @@
 // Backward-compat: Adds extension method shims on SubscriptionResource preserving
 // prior GA method names and signatures.
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,13 +39,23 @@ namespace Azure.ResourceManager.Storage
             => GetMockableStorageSubscriptionResource(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
 
         /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
+        [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+        {
+#pragma warning disable CS0619 // Obsolete member
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+#pragma warning restore CS0619
+        }
 
         /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
+        [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
+        {
+#pragma warning disable CS0619 // Obsolete member
+            return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
+#pragma warning restore CS0619
+        }
     }
 }

@@ -3,12 +3,10 @@
 
 #nullable disable
 
-// Backward-compat: Restores GetAll/GetAllAsync overloads returning Pageable<ListContainerItem>
-// that existed in prior GA. The generator now returns Pageable<BlobContainerResource> instead.
-// Also implements IEnumerable/IAsyncEnumerable (throwing) to match old interface surface.
-// TODO: Generator should support @@markAsPageable or custom return types for list operations.
+// Backward-compat: Restores GetAll/GetAllAsync overloads and IEnumerable/IAsyncEnumerable
+// implementations matching the prior GA surface. The new generator moves list operations to
+// the parent BlobServiceResource, so these overloads delegate there via PageableWrapper.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,30 +16,24 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     // The prior GA SDK implemented IEnumerable<BlobContainerResource> on this collection type.
-    // The new generator no longer emits that interface. These explicit implementations throw
-    // NotSupportedException to preserve compile-compat; callers should use GetAll/GetAllAsync instead.
+    // The new generator no longer emits that interface. These explicit implementations delegate
+    // to the backward-compat GetAll/GetAllAsync overloads below.
     public partial class BlobContainerCollection : IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
     {
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator<BlobContainerResource> IEnumerable<BlobContainerResource>.GetEnumerator()
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAll((string)null, null, null, default).GetEnumerator();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAll((string)null, null, null, default).GetEnumerator();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IAsyncEnumerator<BlobContainerResource> IAsyncEnumerable<BlobContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAllAsync((string)null, null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         /// <summary> Lists all containers. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -841,11 +841,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetAccountSasResult>> GetAccountSASAsync(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSAS");
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
             scope.Start();
             try
             {
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetAccountSASRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetAccountSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetAccountSasResult> response = Response.FromValue(GetAccountSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -893,11 +893,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetAccountSasResult> GetAccountSAS(AccountSasContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSAS");
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetAccountSas");
             scope.Start();
             try
             {
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetAccountSASRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetAccountSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetAccountSasResult> response = Response.FromValue(GetAccountSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1139,11 +1139,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetServiceSasResult>> GetServiceSASAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSAS");
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
             scope.Start();
             try
             {
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetServiceSASRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetServiceSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetServiceSasResult> response = Response.FromValue(GetServiceSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1191,11 +1191,11 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetServiceSasResult> GetServiceSAS(ServiceSasContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSAS");
+            using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetServiceSas");
             scope.Start();
             try
             {
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetServiceSASRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetServiceSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetServiceSasResult> response = Response.FromValue(GetServiceSasResult.FromResponse(result), result);
                 if (response.Value == null)

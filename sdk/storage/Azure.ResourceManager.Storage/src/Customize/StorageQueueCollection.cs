@@ -4,10 +4,9 @@
 #nullable disable
 
 // Backward-compat: Restores GetAll/GetAllAsync overloads and IEnumerable/IAsyncEnumerable
-// implementations matching prior GA surface.
-// TODO: Generator should support @@markAsPageable or custom return types for list operations.
+// implementations matching the prior GA surface. The new generator moves list operations to
+// the parent QueueServiceResource, so these overloads delegate there via PageableWrapper.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,23 +20,17 @@ namespace Azure.ResourceManager.Storage
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator<StorageQueueResource> IEnumerable<StorageQueueResource>.GetEnumerator()
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAll((string)null, null, default).GetEnumerator();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAll((string)null, null, default).GetEnumerator();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IAsyncEnumerator<StorageQueueResource> IAsyncEnumerable<StorageQueueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAllAsync((string)null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         /// <summary> Lists all queues. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

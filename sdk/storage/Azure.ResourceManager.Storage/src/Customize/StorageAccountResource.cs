@@ -48,26 +48,6 @@ namespace Azure.ResourceManager.Storage
         public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             Failover(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken);
 
-        /// <summary> GetAccountSas with old casing. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
-            => GetAccountSAS(content, cancellationToken);
-
-        /// <summary> GetAccountSasAsync with old casing. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
-            => GetAccountSASAsync(content, cancellationToken);
-
-        /// <summary> GetServiceSas with old casing. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
-            => GetServiceSAS(content, cancellationToken);
-
-        /// <summary> GetServiceSasAsync with old casing. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
-            => GetServiceSASAsync(content, cancellationToken);
-
         /// <summary> EnableHierarchicalNamespace is not available in this API version. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)

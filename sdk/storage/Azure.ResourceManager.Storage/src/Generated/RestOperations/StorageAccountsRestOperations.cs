@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateGetAccountSASRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetAccountSasRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Storage
             return message;
         }
 
-        internal HttpMessage CreateGetServiceSASRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetServiceSasRequest(Guid subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

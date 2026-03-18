@@ -592,6 +592,17 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobRestoreContent(timeToRestore, blobRanges.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
+        /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
+        /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
+        /// <param name="startOn"> This property represents the sku conversion start time. </param>
+        /// <param name="endOn"> This property represents the sku conversion end time. </param>
+        /// <returns> A new <see cref="Models.StorageAccountSkuConversionStatus"/> instance for mocking. </returns>
+        public static StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus = default, StorageSkuName? targetSkuName = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        {
+            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startOn, endOn, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
@@ -2004,18 +2015,6 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageAccountSkuConversionStatus"/>. </summary>
-        /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
-        /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
-        /// <param name="startOn"> This property represents the sku conversion start time. </param>
-        /// <param name="endOn"> This property represents the sku conversion end time. </param>
-        /// <returns> A new <see cref="Models.StorageAccountSkuConversionStatus"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus, StorageSkuName? targetSkuName, DateTimeOffset? startOn, DateTimeOffset? endOn)
-        {
-            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, default, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.DeletedAccountData"/>. </summary>

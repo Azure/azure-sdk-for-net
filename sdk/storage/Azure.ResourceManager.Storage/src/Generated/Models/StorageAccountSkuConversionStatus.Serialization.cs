@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("targetSkuName"u8);
                 writer.WriteStringValue(TargetSkuName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
         }
 
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageAccountSkuConversionState? skuConversionStatus = default;
             StorageSkuName? targetSkuName = default;
-            string startTime = default;
-            string endTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,16 +148,24 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, additionalBinaryDataProperties);
+            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startOn, endOn, additionalBinaryDataProperties);
         }
     }
 }

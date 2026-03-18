@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="createdOn"> Creation time of the deleted account. </param>
         /// <param name="deletedOn"> Deletion time of the deleted account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedAccountProperties(ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, string createdOn, string deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedAccountProperties(ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Creation time of the deleted account. </summary>
         [WirePath("creationTime")]
-        public string CreatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Deletion time of the deleted account. </summary>
         [WirePath("deletionTime")]
-        public string DeletedOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
     }
 }

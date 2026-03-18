@@ -10,7 +10,11 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Exclude generated files that are replaced by customizations in Customize/ -->
+    <!--
+      The TypeSpec generator automatically detects partial class customizations in Customize/
+      and suppresses the corresponding generated members. No explicit <Compile Remove> entries
+      are needed. The comments below document the customization intent for each replaced file.
+    -->
     <!-- Replace generated files to change internal parameterless constructors to public (CannotSealType fix) -->
     <!-- Replace generated enum with backward-compatible readonly struct -->
     <!-- Replace generated struct that conflicts with custom backward-compat version -->

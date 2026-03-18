@@ -5,10 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
     public partial class StorageAccountSkuConversionStatus
     {
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
+        /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
+        /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
+        /// <param name="startOn"> This property represents the sku conversion start time. </param>
+        /// <param name="endOn"> This property represents the sku conversion end time. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus, StorageSkuName? targetSkuName, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            SkuConversionStatus = skuConversionStatus;
+            TargetSkuName = targetSkuName;
+            StartOn = startOn;
+            EndOn = endOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> This property represents the sku conversion start time. </summary>
+        [WirePath("startTime")]
+        public DateTimeOffset? StartOn { get; }
+
+        /// <summary> This property represents the sku conversion end time. </summary>
+        [WirePath("endTime")]
+        public DateTimeOffset? EndOn { get; }
     }
 }

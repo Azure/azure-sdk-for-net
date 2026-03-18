@@ -3,12 +3,10 @@
 
 #nullable disable
 
-// Backward-compat: Restores GetAll/GetAllAsync overloads returning Pageable<FileShareItem>
-// that existed in prior GA. Generator now returns Pageable<FileShareResource>.
-// Also implements IEnumerable/IAsyncEnumerable (throwing) to match old interface surface.
-// TODO: Generator should support @@markAsPageable or custom return types for list operations.
+// Backward-compat: Restores GetAll/GetAllAsync overloads and IEnumerable/IAsyncEnumerable
+// implementations matching the prior GA surface. The new generator moves list operations to
+// the parent FileServiceResource, so these overloads delegate there via PageableWrapper.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,23 +20,17 @@ namespace Azure.ResourceManager.Storage
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator<FileShareResource> IEnumerable<FileShareResource>.GetEnumerator()
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAll((string)null, null, null, default).GetEnumerator();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAll((string)null, null, null, default).GetEnumerator();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         IAsyncEnumerator<FileShareResource> IAsyncEnumerable<FileShareResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
-        }
+            => GetAllAsync((string)null, null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         /// <summary> Lists all file shares. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

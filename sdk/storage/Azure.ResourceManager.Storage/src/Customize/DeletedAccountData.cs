@@ -5,15 +5,12 @@
 
 // Backward-compat (Compile Remove replacement): Replaces generated file to keep parameterless
 // constructor public (generator makes it internal, causing CannotSealType ApiCompat violation)
-// and adds DateTimeOffset accessors (CreatedOn, DeletedOn) over generated string fields.
-// TODO: Generator bug - internal parameterless constructors break subclassability.
+// and manually flattens properties from the Properties envelope.
 
 #nullable disable
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -74,35 +71,10 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Creation time of the deleted account. </summary>
         [WirePath("properties.creationTime")]
-        public string CreationTime
-        {
-            get
-            {
-                return Properties.CreatedOn;
-            }
-        }
+        public DateTimeOffset? CreatedOn => Properties?.CreatedOn;
 
         /// <summary> Deletion time of the deleted account. </summary>
         [WirePath("properties.deletionTime")]
-        public string DeletionTime
-        {
-            get
-            {
-                return Properties.DeletedOn;
-            }
-        }
-
-        // Backward-compat: prior GA exposed these as DateTimeOffset? properties.
-        // The new spec uses string-typed CreationTime/DeletionTime instead.
-
-        /// <summary> Creation time of the deleted account. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn => CreationTime == null ? null : DateTimeOffset.Parse(CreationTime, CultureInfo.InvariantCulture);
-
-        /// <summary> Deletion time of the deleted account. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [WirePath("properties.deletionTime")]
-        public DateTimeOffset? DeletedOn => DeletionTime == null ? null : DateTimeOffset.Parse(DeletionTime, CultureInfo.InvariantCulture);
+        public DateTimeOffset? DeletedOn => Properties?.DeletedOn;
     }
 }

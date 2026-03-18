@@ -193,12 +193,6 @@ namespace Azure.ResourceManager.Storage.Models
             };
         }
 
-        /// <summary> Creates a new <see cref="Models.StorageAccountSkuConversionStatus"/> instance for mocking. </summary>
-        public static StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus = default, StorageSkuName? targetSkuName = default, string startTime = default, string endTime = default)
-        {
-            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of BlobContainerData for mocking. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobContainerData BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag)
