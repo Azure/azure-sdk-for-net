@@ -20,9 +20,9 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient_ConversationCRUD
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
@@ -70,9 +70,9 @@ public class Sample_conversation_CRUD : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 

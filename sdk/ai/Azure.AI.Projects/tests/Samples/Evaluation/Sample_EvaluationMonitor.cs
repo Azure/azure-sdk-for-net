@@ -283,16 +283,16 @@ public class Sample_EvaluationsMonitor : SamplesBase
     {
         #region Snippet:Sample_CreateClients_EvaluationsMonitor
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-        var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+        var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var applicationInsightsResourceId = TestEnvironment.APPLICATIONINSIGHTS_RESOURCE_ID;
-        var agentId = TestEnvironment.AGENT_ID;
+        var agentId = TestEnvironment.FOUNDRY_AGENT_ID;
         var lookbackHours = int.Parse(TestEnvironment.TRACE_LOOKBACK_HOURS);
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;
@@ -380,16 +380,16 @@ public class Sample_EvaluationsMonitor : SamplesBase
     public void EvaluationsMonitorExampleSync()
     {
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-        var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+        var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var applicationInsightsResourceId = TestEnvironment.APPLICATIONINSIGHTS_RESOURCE_ID;
-        var agentId = TestEnvironment.AGENT_ID;
+        var agentId = TestEnvironment.FOUNDRY_AGENT_ID;
         var lookbackHours = int.Parse(TestEnvironment.TRACE_LOOKBACK_HOURS);
 #endif
         DateTimeOffset endTime = DateTimeOffset.Now;

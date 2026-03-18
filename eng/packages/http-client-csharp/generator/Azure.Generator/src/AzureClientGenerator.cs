@@ -95,5 +95,6 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new MultiPartFormDataVisitor());
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
+        AddVisitor(new ClientSettingsVisitor());
     }
 }

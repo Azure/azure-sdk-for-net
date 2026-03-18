@@ -9,6 +9,7 @@ description: |
 on:
   issues:
     types: [opened]
+  roles: all
   reaction: eyes
 
 permissions: read-all
@@ -20,6 +21,8 @@ safe-outputs:
     max: 7
   add-comment:
     max: 2
+  noop:
+    report-as-issue: false
 
 tools:
   web-fetch:
@@ -90,7 +93,7 @@ The following accounts are treated as customer-reported regardless of organizati
 - `copilot-swe-agent[bot]`
 - `microsoft-github-policy-service[bot]`
 
-If the author matches the bot allowlist, add "customer-reported" and "question" labels, set `is_customer = true`, and continue to Step 3
+If the author matches the bot allowlist, add "bot" label, set `is_customer = true`, and continue to Step 3
 
 ### Organization and Permission Checks
 
@@ -116,15 +119,14 @@ This returns one of: "admin", "write", "read", or "none"
 
 ```
 IF the author matches the bot allowlist:
-    - Add "customer-reported" label
-    - Add "question" label
+    - Add "bot" label
     - is_customer = true
     - Continue to Step 3
 
 IF the user IS a public member of the Azure organization
    OR has "admin" or "write" permission:
-    - is_customer = false
-    - Continue to Step 3
+    - IF the issue has no labels: Add "needs-triage" label
+    - Exit the workflow (team members label their own issues)
 
 ELSE (external customer):
     - Add "customer-reported" label
@@ -137,53 +139,77 @@ Note: Azure organization members are expected to have public membership per the 
 
 ## Step 3: Predict Labels
 
+All issues reaching this step are treated as customer-reported (`is_customer = true`) for label prediction
+
 Analyze the issue title and body to determine appropriate labels
 
-- **Category label** (color #ffeb77): Exactly one of "Client", "Service", "Mgmt", or "Provisioning"
+### Label Identification
+
+Labels classification is distinguished by color. Actively inspect label colors when examining repository labels and previous issues:
+
+- **Category label** (color #ffeb77): Exactly one of "Client", "Service", "Central-EngSys", "Mgmt", or "Provisioning"
   - "Client" for issues with SDK code or behavior
   - "Service" for issues with the REST API or Azure service behavior outside SDK control
   - "Mgmt" for issues relevant to SDKs starting with "Azure.ResourceManager" or "Microsoft.Azure.Management"
   - "Provisioning" for issues relevant to SDKs starting with "Azure.Provisioning"
-- **Service label** (color #e99695): Exactly one label identifying the Azure service, which typically matches the service directory name
+- **Service label** (color #e99695): Exactly one label identifying the Azure service, which typically matches the service directory name or the end of the package name
   - Example: Azure.Storage.Blobs in /sdk/storage → "Storage"
   - Example: Azure.Identity → "Azure.Identity"
   - Example: Azure.Provisioning.Storage → category "Provisioning", service "Storage"
-  - Example: Azure.Provisioning (base library) → category "Provisioning", service "Provisioning"
-  - Non-service issues such as engineering systems, scripts, workflows, or pipelines in /eng folder in this repository → "Central-EngSys"
+  - Example: Code generation issues (emitter, generator in /eng/packages/) → service "CodeGen"
+
+### Excluded Category and Service Labels
+
+The following labels require human judgment and are never assigned by automatic triage:
+- **"Central-EngSys"** (color #ffeb77): For non-service issues such as engineering systems, scripts, workflows, or pipelines in the /eng folder. 
+- **"Service"** (color #ffeb77): For issues with the REST API or Azure service behavior outside SDK control. 
+
+If any of these labels are part of the most confident label prediction, treat the prediction as low confidence and fall back to applying "needs-triage" only.  Any labels applied in earlier steps should be removed, leaving ONLY `needs-triage`
+
+### Using Previous Issues as Reference
 
 When selecting labels, use repository context and previously seen issues for guidance; do not run `gh label list` and only use labels that already exist in this repository
 
 You may use `search_issues` or `list_issues` to find similar issues for reference; if you find a very close match to an OPEN issue, consider also adding the "duplicate" label
 
+For a previous issue to serve as a quality reference for label prediction, it must have ALL of:
+- Exactly 1 category label (color #ffeb77) — never more than one
+- Exactly 1 service label (color #e99695) — never more than one
+- The "customer-reported" label
+- The "issue-addressed" label
+
+Other labels on the issue (routing labels, "question", "duplicate", etc.) are fine, but skip any issue that has more than 1 category or more than 1 service label, or is missing "customer-reported" or "issue-addressed"
+
 ### Confidence Criteria
 
 A prediction is confident — targeting 96% accuracy — when ALL of the following are true:
 - The issue clearly names or references a specific Azure SDK package, service, or `/sdk/` path
-- There is no ambiguity between multiple services
-- The category (Client/Service/Mgmt/Provisioning) is clearly implied by the issue content
-- The prediction aligns with patterns seen in previously resolved issues; those with "customer-reported" and "issue-addressed" labels are good indicators of correct labeling
+- There is no ambiguity between multiple services; if multiple service labels are plausible and you cannot confidently narrow to exactly one, confidence is not met
+- The category (Client/Mgmt/Provisioning) is clearly implied by the issue content; if multiple categories are plausible and you cannot confidently narrow to exactly one, confidence is not met
+- The predicted category label is not "Service"
+- The predicted category label is not "Central-EngSys"
+- The prediction aligns with patterns seen in quality reference issues (see criteria above)
 - There is no reasonable doubt about either label
 
 When the above criteria cannot be met, prefer applying "needs-triage" for manual review over risking an incorrect assignment
 
 ### Label Decision
 
+Category (color #ffeb77) and service (color #e99695) labels are always applied as a pair; applying one without the other is never valid. "needs-triage" alone is the only valid single-label outcome from this step
+
 ```
 IF you can confidently predict exactly one category label AND exactly one service label:
     - Apply both labels to the issue
-    - IF is_customer: Continue to Step 4
-    - IF NOT is_customer: Skip to Step 6 (no owner routing for team issues)
+    - Continue to Step 4
 
 ELSE:
-    - Apply only the "needs-triage" label to the issue
+    - Remove any labels applied in earlier steps, leaving ONLY "needs-triage"
     - Skip to Step 6
 ```
 
-Non-customer (team member) issues receive only service and category labels; no assignment, no routing labels, no CODEOWNERS owner lookup
+## Step 4: Owner Lookup and Routing
 
-## Step 4: Owner Lookup and Routing (is_customer Only)
-
-All issues reaching this step are customer-reported
+All issues reaching this step are customer-reported with predicted labels
 
 Read the `.github/CODEOWNERS` file to look up owners for the predicted label combination
 
@@ -215,7 +241,7 @@ The following simplified excerpt illustrates the structure (line numbers referen
 
 # AzureSdkOwners:                   @jsquire                   ← line 328
 # ServiceLabel: %Event Hubs                                    ← line 329
-# ServiceOwners:                    @axisc @hmlam               ← line 330
+# ServiceOwners:                    @axisc @hmlam              ← line 330
 
 # --- Management catch-all ---
 
@@ -225,10 +251,10 @@ The following simplified excerpt illustrates the structure (line numbers referen
 # --- Management-specific overrides (after catch-all) ---
 
 # ServiceLabel: %ARM %Mgmt                                     ← line 924
-# ServiceOwners:                    @Azure/arm-sdk-owners       ← line 925
+# ServiceOwners:                    @Azure/arm-sdk-owners      ← line 925
 
 # ServiceLabel: %ARM - Templates %Mgmt                         ← line 945
-# ServiceOwners:                    @armleads-azure             ← line 946
+# ServiceOwners:                    @armleads-azure            ← line 946
 ```
 
 **Example 1 — Predicted labels: "ARM" + "Mgmt"**
@@ -307,6 +333,7 @@ Add a single analysis comment to the issue:
 - Suggest relevant resources or links that might help resolve the issue
 - If appropriate, break the issue into sub-tasks as a checklist
 - Note any similar open issues found via `search_issues`
+- Include analysis about label selection confidence and what other labels were considered
 - Use collapsed-by-default sections in GitHub markdown to keep the comment tidy; collapse all sections except the short main summary at the top
 - Limit all user-facing communication to this single analysis comment
 - Leave issue closure decisions to human reviewers; the "issue-addressed" label is not used during initial triage

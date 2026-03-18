@@ -16,6 +16,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -52,7 +53,20 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly InputModelType _inputModel;
         private readonly ArmResourceMetadata? _resourceMetadata;
         private readonly string? _defaultApiVersion;
+        /// <summary>
+        /// All collected properties for the resource, including flattened and inherited ones,
+        /// with their resolved isOutput/isRequired/bicepPath metadata.
+        /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
+        /// </summary>
         private readonly List<ResourcePropertyInfo> _allProperties;
+        /// <summary>
+        /// Serialized property names that are writable in the create/update request body model.
+        /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
+        /// its properties may be marked readOnly even though the create body accepts them as input.
+        /// This set is used during <see cref="_allProperties"/> construction to avoid incorrectly
+        /// marking such properties as output-only.
+        /// </summary>
+        private readonly HashSet<string> _createBodyWritableProperties;
 
         private FieldProvider? _parentField;
         private PropertyProvider? _parentProperty;
@@ -92,7 +106,10 @@ namespace Azure.Generator.Provisioning.Providers
         {
             _inputModel = inputModel;
             _resourceMetadata = metadata;
-            _defaultApiVersion = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
+            _defaultApiVersion = metadata.ApiVersions.Count > 0
+                ? metadata.ApiVersions.Last()
+                : null;
+            _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
         }
 
@@ -105,6 +122,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceMetadata = null;
             _defaultApiVersion = null;
+            _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
         }
 
@@ -217,14 +235,17 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             // Base resource: base(bicepIdentifier, "ResourceType", resourceVersion ?? "defaultVersion")
+            var resourceVersionArg = _defaultApiVersion != null
+                ? (ValueExpression)new BinaryOperatorExpression("??",
+                    resourceVersionParam,
+                    Literal(_defaultApiVersion))
+                : resourceVersionParam;
             var baseInitializer = new ConstructorInitializer(
                 true,
                 [
                     bicepIdentifierParam,
                     Literal(_resourceMetadata!.ResourceType),
-                    new BinaryOperatorExpression("??",
-                        resourceVersionParam,
-                        Literal(_defaultApiVersion!))
+                    resourceVersionArg
                 ]);
 
             var baseSig = new ConstructorSignature(
@@ -270,18 +291,62 @@ namespace Azure.Generator.Provisioning.Providers
             if (_inputModel.DiscriminatorValue != null)
                 return [];
 
-            var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
-            if (apiVersions.Count == 0)
+            var apiVersions = _resourceMetadata?.ApiVersions;
+            if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
             // ResourceVersions nested class
-            return [new ResourceVersionsProvider(this, _defaultApiVersion!)];
+            return [new ResourceVersionsProvider(this, apiVersions)];
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
             => [];
 
         // ── Property collection ──────────────────────────────────────
+
+        /// <summary>
+        /// Builds a set of serialized property names that are writable in the create/update request body.
+        /// When the resource model is output-only (e.g., ProxyResource with separate create body),
+        /// its properties may be marked readOnly even though the create body has them as writable.
+        /// </summary>
+        private HashSet<string> BuildCreateBodyWritableProperties()
+        {
+            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (_resourceMetadata == null) return result;
+
+            var createMethod = _resourceMetadata.Methods
+                .FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputMethod;
+            if (createMethod == null) return result;
+
+            foreach (var parameter in createMethod.Parameters)
+            {
+                if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType bodyModel)
+                {
+                    CollectWritableProperties(bodyModel, result);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Collects serialized names of writable properties from a model and its base model chain.
+        /// </summary>
+        private static void CollectWritableProperties(InputModelType model, HashSet<string> result)
+        {
+            var current = model;
+            while (current != null)
+            {
+                foreach (var prop in current.Properties)
+                {
+                    if (!prop.IsReadOnly)
+                    {
+                        result.Add(prop.SerializedName ?? prop.Name);
+                    }
+                }
+                current = current.BaseModel;
+            }
+        }
 
         private List<ResourcePropertyInfo> CollectAllProperties()
         {
@@ -349,7 +414,8 @@ namespace Azure.Generator.Provisioning.Providers
                         ? [.. basePath, serializedName]
                         : new[] { serializedName };
 
-                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName))
+                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                            && !_createBodyWritableProperties.Contains(serializedName))
                         || OutputOnlyProperties.Contains(serializedName);
                     var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
@@ -641,12 +707,12 @@ namespace Azure.Generator.Provisioning.Providers
         private class ResourceVersionsProvider : TypeProvider
         {
             private readonly ProvisioningResourceProvider _parent;
-            private readonly string _defaultApiVersion;
+            private readonly IReadOnlyList<string> _apiVersions;
 
-            public ResourceVersionsProvider(ProvisioningResourceProvider parent, string defaultApiVersion)
+            public ResourceVersionsProvider(ProvisioningResourceProvider parent, IReadOnlyList<string> apiVersions)
             {
                 _parent = parent;
-                _defaultApiVersion = defaultApiVersion;
+                _apiVersions = apiVersions;
             }
 
             protected override string BuildName() => "ResourceVersions";
@@ -662,19 +728,26 @@ namespace Azure.Generator.Provisioning.Providers
 
             protected override FieldProvider[] BuildFields()
             {
-                var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
                 var fields = new List<FieldProvider>();
 
-                foreach (var version in apiVersions.Reverse())
+                foreach (var version in _apiVersions.Reverse())
                 {
-                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_');
+                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
+
+                    // Preview API versions are marked with [Experimental] to signal they may change or be removed.
+                    var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+                    var attributes = isPreview
+                        ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
+                        : Array.Empty<AttributeStatement>();
+
                     fields.Add(new FieldProvider(
                         FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly,
                         typeof(string),
                         fieldName,
                         this,
                         description: $"API version \"{version}\".",
-                        initializationValue: Literal(version)));
+                        initializationValue: Literal(version),
+                        attributes: attributes));
                 }
 
                 return [.. fields];

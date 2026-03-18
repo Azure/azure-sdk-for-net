@@ -16,8 +16,8 @@ To enable continuous evaluation, please assign project managed identity with the
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` to create evaluation.
 
 ```C# Snippet:Sample_CreateClients_EvaluationRules
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
 ```
