@@ -7,6 +7,10 @@ using System.Linq;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary> A resource that supports private link capabilities. </summary>
+    // This customization is for API backward compatibility.
+    // In the baseline API version, the types of RequiredMembers and RequiredZoneNames are IReadOnlyList<string>,
+    // but in the current generated code they are IList<string> (on RelayPrivateLinkResourceProperties).
+    // We wrap them here to preserve the original IReadOnlyList<string> return type.
     public partial class RelayPrivateLinkResourceData
     {
         /// <summary> The private link resource required member names. </summary>
