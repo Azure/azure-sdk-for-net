@@ -284,6 +284,7 @@ stages:
                     - pwsh: |
                         eng/scripts/Sync-ReleaseArtifacts.ps1 -PackageName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' -SourceCommit '$(Build.SourceVersion)'
                       displayName: Sync release artifacts into main
+                      workingDirectory: $(System.DefaultWorkingDirectory)
                     - pwsh: |
                         eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -SkipCpmUpdate $false
                       displayName: Increment package version
