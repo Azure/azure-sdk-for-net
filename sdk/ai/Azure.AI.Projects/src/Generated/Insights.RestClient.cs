@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
-        internal PipelineMessage CreateGenerateRequest(BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateGenerateRequest(BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -29,6 +29,10 @@ namespace Azure.AI.Projects
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Repeatability-Request-ID", Guid.NewGuid().ToString());
             request.Headers.Set("Repeatability-First-Sent", TypeFormatters.ConvertToString(DateTimeOffset.Now, SerializationFormat.DateTime_RFC7231));
             request.Headers.Set("Content-Type", "application/json");
@@ -38,36 +42,36 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(string id, bool? includeCoordinates, RequestOptions options)
+        internal PipelineMessage CreateGetRequest(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/insights/", false);
             uri.AppendPath(id, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
             if (includeCoordinates != null)
             {
                 uri.AppendQuery("includeCoordinates", TypeFormatters.ConvertToString(includeCoordinates), true);
             }
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetAllRequest(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/insights", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
             if (@type != null)
             {
                 uri.AppendQuery("type", @type, true);
@@ -88,30 +92,16 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("includeCoordinates", TypeFormatters.ConvertToString(includeCoordinates), true);
             }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
             if (_apiVersion != null)
             {
-                uri.UpdateQuery("api-version", _apiVersion);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;

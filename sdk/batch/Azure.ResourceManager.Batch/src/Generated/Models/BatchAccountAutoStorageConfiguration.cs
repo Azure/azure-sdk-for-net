@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -29,16 +30,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="storageAccountId"> The resource ID of the storage account to be used for auto-storage account. </param>
         /// <param name="authenticationMode"> The authentication mode which the Batch service will use to manage the auto-storage account. </param>
         /// <param name="nodeIdentity"> The identity referenced here must be assigned to pools which have compute nodes that need access to auto-storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lastKeySyncedOn"> The UTC time at which storage keys were last synchronized with the Batch account. </param>
-        internal BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, BatchAutoStorageAuthenticationMode? authenticationMode, ComputeNodeIdentityReference nodeIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset lastKeySyncedOn) : base(storageAccountId, authenticationMode, nodeIdentity, serializedAdditionalRawData)
+        internal BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId, BatchAutoStorageAuthenticationMode? authenticationMode, ComputeNodeIdentityReference nodeIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset lastKeySyncedOn) : base(storageAccountId, authenticationMode, nodeIdentity, additionalBinaryDataProperties)
         {
             LastKeySyncedOn = lastKeySyncedOn;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchAccountAutoStorageConfiguration"/> for deserialization. </summary>
-        internal BatchAccountAutoStorageConfiguration()
-        {
         }
 
         /// <summary> The UTC time at which storage keys were last synchronized with the Batch account. </summary>

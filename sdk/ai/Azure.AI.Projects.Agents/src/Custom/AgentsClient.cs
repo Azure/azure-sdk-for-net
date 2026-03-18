@@ -32,8 +32,12 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AgentsClient
 {
-    public AgentsClient(AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
+   public AgentsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentsClientOptions options=null)
     {
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+        Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
+        options ??= new();
+
         Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
         {
             new Dictionary<string, object>
@@ -42,10 +46,26 @@ public partial class AgentsClient
                 { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
             }
         };
-        _endpoint = options.Endpoint;
-        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());;
-        _apiVersion = options.ApiVersion;
+        _endpoint = endpoint;
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+        _apiVersion = options.Version;
     }
+
+    /// <summary> Initializes a new instance of AgentsClient. </summary>
+    /// <param name="endpoint"> Service endpoint. </param>
+    /// <param name="options"> The options for configuring the client. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+    public AgentsClient(Uri endpoint, AgentsClientOptions options)
+    {
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+        options ??= new AgentsClientOptions();
+
+        _endpoint = endpoint;
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+        _apiVersion = options.Version;
+    }
+
 
     /// <summary> Retrieves the agent. </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>

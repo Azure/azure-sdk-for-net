@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,7 +18,12 @@ namespace Client.AlternateApiVersion.Service.Query
     {
         public QueryClient() : this(new Uri("http://localhost:3000"), new QueryClientOptions()) => throw null;
 
-        public QueryClient(Uri endpoint, QueryClientOptions options) => throw null;
+        internal QueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, QueryClientOptions options) => throw null;
+
+        public QueryClient(Uri endpoint, QueryClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public QueryClient(QueryClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

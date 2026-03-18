@@ -1,0 +1,6 @@
+# AzureMonitorOpenTelemetryExporterContext was a source-generated infrastructure class
+# marked [EditorBrowsable(EditorBrowsableState.Never)], never intended for direct use.
+# The source generator now emits a private constructor (singleton via Default property)
+# which is a safe change since no consumers should be instantiating this class.
+CannotSealType : Type 'Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext' is effectively (has a private constructor) sealed in the implementation but not sealed in the contract.
+MembersMustExist : Member 'public void Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext..ctor()' does not exist in the implementation but it does exist in the contract.

@@ -23,8 +23,8 @@ Supported models: Ministral-3B
 ```C# Snippet:AI_Projects_FineTuning_OSS_CreateClientsAsync
 string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
@@ -36,8 +36,8 @@ FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```C# Snippet:AI_Projects_FineTuning_OSS_CreateClients
 string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ProjectOpenAIClient oaiClient = projectClient.OpenAI;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
