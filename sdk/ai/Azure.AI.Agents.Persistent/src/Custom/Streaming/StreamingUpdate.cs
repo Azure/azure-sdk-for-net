@@ -46,37 +46,44 @@ public abstract partial class StreamingUpdate
 
     internal static IEnumerable<StreamingUpdate> FromEvent(SseItem<byte[]> sseItem)
     {
-        StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(sseItem.EventType);
-        using JsonDocument dataDocument = JsonDocument.Parse(sseItem.Data);
-        JsonElement e = dataDocument.RootElement;
-
-        return updateKind switch
+        try
         {
-            StreamingUpdateReason.ThreadCreated => ThreadUpdate.DeserializeThreadCreationUpdates(e, updateKind),
-            StreamingUpdateReason.RunCreated
-            or StreamingUpdateReason.RunQueued
-            or StreamingUpdateReason.RunInProgress
-            or StreamingUpdateReason.RunCompleted
-            or StreamingUpdateReason.RunIncomplete
-            or StreamingUpdateReason.RunFailed
-            or StreamingUpdateReason.RunCancelling
-            or StreamingUpdateReason.RunCancelled
-            or StreamingUpdateReason.RunExpired => RunUpdate.DeserializeRunUpdates(e, updateKind),
-            StreamingUpdateReason.RunRequiresAction => DeserializeRequiredActionUpdate(e),
-            StreamingUpdateReason.RunStepCreated
-            or StreamingUpdateReason.RunStepInProgress
-            or StreamingUpdateReason.RunStepCompleted
-            or StreamingUpdateReason.RunStepFailed
-            or StreamingUpdateReason.RunStepCancelled
-            or StreamingUpdateReason.RunStepExpired => RunStepUpdate.DeserializeRunStepUpdates(e, updateKind),
-            StreamingUpdateReason.MessageCreated
-            or StreamingUpdateReason.MessageInProgress
-            or StreamingUpdateReason.MessageCompleted
-            or StreamingUpdateReason.MessageFailed => MessageStatusUpdate.DeserializeMessageStatusUpdates(e, updateKind),
-            StreamingUpdateReason.RunStepUpdated => RunStepDetailsUpdate.DeserializeRunStepDetailsUpdates(e, updateKind),
-            StreamingUpdateReason.MessageUpdated => MessageContentUpdate.DeserializeMessageContentUpdates(e, updateKind),
-            _ => null,
-        };
+            StreamingUpdateReason updateKind = StreamingUpdateReasonExtensions.FromSseEventLabel(sseItem.EventType);
+            using JsonDocument dataDocument = JsonDocument.Parse(sseItem.Data);
+            JsonElement e = dataDocument.RootElement;
+
+            return updateKind switch
+            {
+                StreamingUpdateReason.ThreadCreated => ThreadUpdate.DeserializeThreadCreationUpdates(e, updateKind),
+                StreamingUpdateReason.RunCreated
+                or StreamingUpdateReason.RunQueued
+                or StreamingUpdateReason.RunInProgress
+                or StreamingUpdateReason.RunCompleted
+                or StreamingUpdateReason.RunIncomplete
+                or StreamingUpdateReason.RunFailed
+                or StreamingUpdateReason.RunCancelling
+                or StreamingUpdateReason.RunCancelled
+                or StreamingUpdateReason.RunExpired => RunUpdate.DeserializeRunUpdates(e, updateKind),
+                StreamingUpdateReason.RunRequiresAction => DeserializeRequiredActionUpdate(e),
+                StreamingUpdateReason.RunStepCreated
+                or StreamingUpdateReason.RunStepInProgress
+                or StreamingUpdateReason.RunStepCompleted
+                or StreamingUpdateReason.RunStepFailed
+                or StreamingUpdateReason.RunStepCancelled
+                or StreamingUpdateReason.RunStepExpired => RunStepUpdate.DeserializeRunStepUpdates(e, updateKind),
+                StreamingUpdateReason.MessageCreated
+                or StreamingUpdateReason.MessageInProgress
+                or StreamingUpdateReason.MessageCompleted
+                or StreamingUpdateReason.MessageFailed => MessageStatusUpdate.DeserializeMessageStatusUpdates(e, updateKind),
+                StreamingUpdateReason.RunStepUpdated => RunStepDetailsUpdate.DeserializeRunStepDetailsUpdates(e, updateKind),
+                StreamingUpdateReason.MessageUpdated => MessageContentUpdate.DeserializeMessageContentUpdates(e, updateKind),
+                _ => null,
+            };
+        }
+        catch (JsonException e)
+        {
+            throw new InvalidOperationException($"The stream returned invalid JSON: {System.Text.Encoding.Default.GetString(sseItem.Data)}. Original error: {e.Message}");
+        }
     }
 
     internal static IEnumerable<StreamingUpdate> DeserializeRequiredActionUpdate(JsonElement e)
