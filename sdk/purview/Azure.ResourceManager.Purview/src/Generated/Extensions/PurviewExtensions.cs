@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Purview
         /// Gets details from a list of feature names.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetAsync(string, PurviewBatchFeatureContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeatureAsync(string, PurviewBatchFeatureContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetAsync(this SubscriptionResource subscriptionResource, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(this SubscriptionResource subscriptionResource, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePurviewSubscriptionResource(subscriptionResource).SubscriptionGetAsync(locations, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewSubscriptionResource(subscriptionResource).SubscriptionGetFeatureAsync(locations, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets details from a list of feature names.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGet(string, PurviewBatchFeatureContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string, PurviewBatchFeatureContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -276,18 +276,18 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<PurviewBatchFeatureStatus> SubscriptionGet(this SubscriptionResource subscriptionResource, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        public static Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(this SubscriptionResource subscriptionResource, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePurviewSubscriptionResource(subscriptionResource).SubscriptionGet(locations, content, cancellationToken);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).SubscriptionGetFeature(locations, content, cancellationToken);
         }
 
         /// <summary>
         /// Get the usage quota configuration
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsagesAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -295,18 +295,18 @@ namespace Azure.ResourceManager.Purview
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<UsageList>> GetAsync(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<UsageList>> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePurviewSubscriptionResource(subscriptionResource).GetAsync(location, filter, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the usage quota configuration
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.Get(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsages(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<UsageList> Get(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
+        public static Response<UsageList> GetUsages(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePurviewSubscriptionResource(subscriptionResource).Get(location, filter, cancellationToken);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
 
         /// <summary>

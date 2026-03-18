@@ -17,14 +17,10 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
+    // CUSTOMIZED: Changed base class from ResourceData to TrackedResourceData
     /// <summary> Account resource. </summary>
     public partial class PurviewAccountData : TrackedResourceData, IJsonModel<PurviewAccountData>
     {
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/> for deserialization. </summary>
-        internal PurviewAccountData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -148,9 +144,9 @@ namespace Azure.ResourceManager.Purview
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             PurviewAccountProperties properties = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
             ManagedServiceIdentity identity = default;
             PurviewAccountSku sku = default;
             foreach (var prop in element.EnumerateObject())
@@ -187,6 +183,15 @@ namespace Azure.ResourceManager.Purview
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPurviewContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PurviewAccountProperties.DeserializePurviewAccountProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -210,16 +215,11 @@ namespace Azure.ResourceManager.Purview
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = PurviewAccountProperties.DeserializePurviewAccountProperties(prop.Value, options);
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -251,9 +251,9 @@ namespace Azure.ResourceManager.Purview
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
                 identity,
                 sku);
         }

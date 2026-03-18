@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Purview.Models
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The account properties. </summary>
+        // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
         public PurviewAccountProperties Properties { get; set; }
 
         /// <summary> Tags on the azure resource. </summary>

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Purview
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
+        internal HttpMessage CreateGetIngestionPrivateEndpointConnectionsRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
+        internal HttpMessage CreateNextGetIngestionPrivateEndpointConnectionsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Purview
             return message;
         }
 
-        internal HttpMessage CreateUpdateStatusRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

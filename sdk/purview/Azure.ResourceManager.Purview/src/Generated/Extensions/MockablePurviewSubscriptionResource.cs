@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetAsync(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGet");
+            using DiagnosticScope scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
             try
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,12 +279,12 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PurviewBatchFeatureStatus> SubscriptionGet(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGet");
+            using DiagnosticScope scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
             try
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<UsageList>> GetAsync(string location, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UsageList>> GetUsagesAsync(string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = UsagesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.Get");
+            using DiagnosticScope scope = UsagesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetUsages");
             scope.Start();
             try
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter, context);
+                HttpMessage message = UsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UsageList> response = Response.FromValue(UsageList.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<UsageList> Get(string location, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Response<UsageList> GetUsages(string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = UsagesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.Get");
+            using DiagnosticScope scope = UsagesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetUsages");
             scope.Start();
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter, context);
+                HttpMessage message = UsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UsageList> response = Response.FromValue(UsageList.FromResponse(result), result);
                 if (response.Value == null)

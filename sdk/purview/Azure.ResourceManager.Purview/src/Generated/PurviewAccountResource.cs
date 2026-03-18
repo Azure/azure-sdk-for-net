@@ -437,11 +437,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PurviewBatchFeatureStatus>> AccountGetAsync(PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewBatchFeatureStatus>> AccountGetFeatureAsync(PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("PurviewAccountResource.AccountGet");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("PurviewAccountResource.AccountGetFeature");
             scope.Start();
             try
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateAccountGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                HttpMessage message = _featuresRestClient.CreateAccountGetFeatureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -489,11 +489,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PurviewBatchFeatureStatus> AccountGet(PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewBatchFeatureStatus> AccountGetFeature(PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("PurviewAccountResource.AccountGet");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("PurviewAccountResource.AccountGetFeature");
             scope.Start();
             try
             {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateAccountGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                HttpMessage message = _featuresRestClient.CreateAccountGetFeatureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -634,13 +634,13 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PurviewPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -666,13 +666,13 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PurviewPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnections(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetAllCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<PurviewPrivateEndpointConnectionData, PurviewPrivateEndpointConnectionResource>(new IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsCollectionResultOfT(_ingestionPrivateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new PurviewPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -795,11 +795,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> The ingestion private endpoint connection status update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PrivateEndpointConnectionStatusUpdateResult>> UpdateStatusAsync(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointConnectionStatusUpdateResult>> UpdateStatusIngestionPrivateEndpointConnectionAsync(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _ingestionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewAccountResource.UpdateStatus");
+            using DiagnosticScope scope = _ingestionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewAccountResource.UpdateStatusIngestionPrivateEndpointConnection");
             scope.Start();
             try
             {
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateEndpointConnectionStatusUpdateResult> response = Response.FromValue(PrivateEndpointConnectionStatusUpdateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -847,11 +847,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> The ingestion private endpoint connection status update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PrivateEndpointConnectionStatusUpdateResult> UpdateStatus(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnectionStatusUpdateResult> UpdateStatusIngestionPrivateEndpointConnection(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _ingestionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewAccountResource.UpdateStatus");
+            using DiagnosticScope scope = _ingestionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewAccountResource.UpdateStatusIngestionPrivateEndpointConnection");
             scope.Start();
             try
             {
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateEndpointConnectionStatusUpdateResult> response = Response.FromValue(PrivateEndpointConnectionStatusUpdateResult.FromResponse(result), result);
                 if (response.Value == null)

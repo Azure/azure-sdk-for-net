@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    internal partial class IngestionPrivateEndpointConnectionsGetAllCollectionResultOfT : Pageable<PurviewPrivateEndpointConnectionData>
+    internal partial class IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT : AsyncPageable<PurviewPrivateEndpointConnectionData>
     {
         private readonly IngestionPrivateEndpointConnections _client;
         private readonly string _subscriptionId;
@@ -22,13 +23,13 @@ namespace Azure.ResourceManager.Purview
         private readonly string _accountName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of IngestionPrivateEndpointConnectionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The IngestionPrivateEndpointConnections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public IngestionPrivateEndpointConnectionsGetAllCollectionResultOfT(IngestionPrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string accountName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT(IngestionPrivateEndpointConnections client, string subscriptionId, string resourceGroupName, string accountName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,16 +38,16 @@ namespace Azure.ResourceManager.Purview
             _context = context;
         }
 
-        /// <summary> Gets the pages of IngestionPrivateEndpointConnectionsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of IngestionPrivateEndpointConnectionsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PurviewPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of IngestionPrivateEndpointConnectionsGetIngestionPrivateEndpointConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<PurviewPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.Purview
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PurviewAccountResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetIngestionPrivateEndpointConnectionsRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetIngestionPrivateEndpointConnectionsRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PurviewAccountResource.GetIngestionPrivateEndpointConnections");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

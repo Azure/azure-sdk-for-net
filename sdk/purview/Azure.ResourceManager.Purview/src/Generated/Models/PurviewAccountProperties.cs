@@ -11,6 +11,7 @@ using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
+    // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
     /// <summary> The account properties. </summary>
     public partial class PurviewAccountProperties
     {
