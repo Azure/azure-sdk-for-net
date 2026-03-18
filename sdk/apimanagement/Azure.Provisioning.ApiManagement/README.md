@@ -87,6 +87,23 @@ ProvisioningParameter publisherName =
     };
 infra.Add(publisherName);
 
+ProvisioningParameter tenantPolicy =
+    new(nameof(tenantPolicy), typeof(string)) { Description = "Tenant policy XML." };
+infra.Add(tenantPolicy);
+
+ProvisioningParameter apiPolicy =
+    new(nameof(apiPolicy), typeof(string)) { Description = "API policy XML." };
+infra.Add(apiPolicy);
+
+ProvisioningParameter operationPolicy =
+    new(nameof(operationPolicy), typeof(string)) { Description = "Operation policy XML." };
+infra.Add(operationPolicy);
+
+ProvisioningParameter productPolicy =
+    new(nameof(productPolicy), typeof(string)) { Description = "Product policy XML." };
+infra.Add(productPolicy);
+
+// Service
 ApiManagementService apiService =
     new(nameof(apiService), ApiManagementService.ResourceVersions.V2024_05_01)
     {
@@ -100,6 +117,16 @@ ApiManagementService apiService =
     };
 infra.Add(apiService);
 
+// Tenant policy
+ApiManagementPolicy tenantPolicyResource =
+    new("tenantPolicyResource", ApiManagementPolicy.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        Value = tenantPolicy
+    };
+infra.Add(tenantPolicyResource);
+
+// API
 ApiManagementApi exampleApi =
     new("exampleApi", ApiManagementApi.ResourceVersions.V2024_05_01)
     {
@@ -111,6 +138,59 @@ ApiManagementApi exampleApi =
     };
 infra.Add(exampleApi);
 
+// Operations
+ApiOperation exampleOperationDelete =
+    new("exampleOperationDelete", ApiOperation.ResourceVersions.V2024_05_01)
+    {
+        Parent = exampleApi,
+        DisplayName = "DELETE resource",
+        Method = "DELETE",
+        UriTemplate = "/resource",
+        Description = "A demonstration of a DELETE call"
+    };
+infra.Add(exampleOperationDelete);
+
+ApiOperation exampleOperationGet =
+    new("exampleOperationGet", ApiOperation.ResourceVersions.V2024_05_01)
+    {
+        Parent = exampleApi,
+        DisplayName = "GET resource",
+        Method = "GET",
+        UriTemplate = "/resource",
+        Description = "A demonstration of a GET call"
+    };
+infra.Add(exampleOperationGet);
+
+// Operation policy
+ApiOperationPolicy exampleOperationGetPolicy =
+    new("exampleOperationGetPolicy", ApiOperationPolicy.ResourceVersions.V2024_05_01)
+    {
+        Parent = exampleOperationGet,
+        Value = operationPolicy
+    };
+infra.Add(exampleOperationGetPolicy);
+
+// API with policy
+ApiManagementApi exampleApiWithPolicy =
+    new("exampleApiWithPolicy", ApiManagementApi.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        DisplayName = "Example API Name with Policy",
+        Description = "Description for example API with policy",
+        Path = "exampleapiwithpolicypath",
+        Protocols = { ApiOperationInvokableProtocol.Https }
+    };
+infra.Add(exampleApiWithPolicy);
+
+ApiPolicy exampleApiWithPolicyPolicy =
+    new("exampleApiWithPolicyPolicy", ApiPolicy.ResourceVersions.V2024_05_01)
+    {
+        Parent = exampleApiWithPolicy,
+        Value = apiPolicy
+    };
+infra.Add(exampleApiWithPolicyPolicy);
+
+// Product with policy
 ApiManagementProduct exampleProduct =
     new("exampleProduct", ApiManagementProduct.ResourceVersions.V2024_05_01)
     {
@@ -123,6 +203,82 @@ ApiManagementProduct exampleProduct =
         State = ApiManagementProductState.Published
     };
 infra.Add(exampleProduct);
+
+ApiManagementProductPolicy exampleProductPolicy =
+    new("exampleProductPolicy", ApiManagementProductPolicy.ResourceVersions.V2024_05_01)
+    {
+        Parent = exampleProduct,
+        Value = productPolicy
+    };
+infra.Add(exampleProductPolicy);
+
+// Users
+ApiManagementUser exampleUser1 =
+    new("exampleUser1", ApiManagementUser.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        FirstName = "ExampleFirstName1",
+        LastName = "ExampleLastName1",
+        Email = "examplefirst1@example.com",
+        State = ApiManagementUserState.Active,
+        Note = "note for example user 1"
+    };
+infra.Add(exampleUser1);
+
+ApiManagementUser exampleUser2 =
+    new("exampleUser2", ApiManagementUser.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        FirstName = "ExampleFirstName2",
+        LastName = "ExampleLastName2",
+        Email = "examplefirst2@example.com",
+        State = ApiManagementUserState.Active,
+        Note = "note for example user 2"
+    };
+infra.Add(exampleUser2);
+
+// Named value
+ApiManagementNamedValue exampleNamedValue =
+    new("exampleNamedValue", ApiManagementNamedValue.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        DisplayName = "propertyExampleName",
+        Value = "propertyExampleValue",
+        Tags = { "exampleTag" }
+    };
+infra.Add(exampleNamedValue);
+
+// Group
+ApiManagementGroup exampleGroup =
+    new("exampleGroup", ApiManagementGroup.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        DisplayName = "Example Group Name",
+        Description = "Example group description"
+    };
+infra.Add(exampleGroup);
+
+// OpenId Connect provider
+ApiManagementOpenIdConnectProvider exampleOpenIdConnectProvider =
+    new("exampleOpenIdConnectProvider", ApiManagementOpenIdConnectProvider.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        DisplayName = "exampleOpenIdConnectProviderName",
+        Description = "Description for example OpenId Connect provider",
+        MetadataEndpoint = "https://example-openIdConnect-url.net",
+        ClientId = "exampleClientId"
+    };
+infra.Add(exampleOpenIdConnectProvider);
+
+// Logger
+ApiManagementLogger exampleLogger =
+    new("exampleLogger", ApiManagementLogger.ResourceVersions.V2024_05_01)
+    {
+        Parent = apiService,
+        LoggerType = LoggerType.AzureEventHub,
+        Description = "Description for example logger"
+    };
+infra.Add(exampleLogger);
 
 infra.Add(new ProvisioningOutput("name", typeof(string)) { Value = apiService.Name });
 infra.Add(new ProvisioningOutput("resourceId", typeof(string)) { Value = apiService.Id });

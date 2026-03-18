@@ -25,9 +25,9 @@ public class BasicLiveApiManagementTests(bool async)
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.apimanagement/api-management-create-all-resources/azuredeploy.json")]
     [LiveOnly]
-    public async Task CreateApiManagementWithApi()
+    public async Task CreateApiManagementWithAllResources()
     {
-        await using Trycep test = BasicApiManagementTests.CreateApiManagementWithApiTest();
+        await using Trycep test = BasicApiManagementTests.CreateApiManagementWithAllResourcesTest();
         await test.SetupLiveCalls(this)
             .Lint()
             .ValidateAsync();
