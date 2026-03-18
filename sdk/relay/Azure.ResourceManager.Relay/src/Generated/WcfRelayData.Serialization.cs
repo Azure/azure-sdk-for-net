@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(wcfRelayData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(wcfRelayData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WcfRelayData"/> from. </param>

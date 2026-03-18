@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(relayNamespaceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(relayNamespaceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RelayNamespaceData"/> from. </param>
