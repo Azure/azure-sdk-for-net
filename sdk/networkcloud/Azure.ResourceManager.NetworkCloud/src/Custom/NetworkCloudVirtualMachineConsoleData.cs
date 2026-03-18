@@ -18,12 +18,6 @@ namespace Azure.ResourceManager.NetworkCloud
         public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ExtendedLocation extendedLocation, ConsoleEnabled enabled, NetworkCloudSshPublicKey sshPublicKey)
             : this(location, enabled, sshPublicKey?.KeyData, extendedLocation) { }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
-        {
-            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
-                ? custom
-                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
-            set => ExtendedLocationInternal = value;
-        }
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }
 }

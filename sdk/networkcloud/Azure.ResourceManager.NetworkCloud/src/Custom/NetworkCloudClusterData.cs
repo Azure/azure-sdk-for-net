@@ -30,28 +30,30 @@ namespace Azure.ResourceManager.NetworkCloud
         public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId)
             : this(location, aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId, extendedLocation) { }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
-        {
-            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
-                ? custom
-                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
-            set => ExtendedLocationInternal = value;
-        }
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The extended location (custom location) that represents the cluster's control plane location. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ClusterExtendedLocation
         {
-            get => ClusterExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
-                ? custom
-                : (ClusterExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ClusterExtendedLocationInternal.Name, ClusterExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            get
+            {
+                var baseLoc = Properties?.ClusterExtendedLocation;
+                if (baseLoc == null) return null;
+                if (baseLoc is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom) return custom;
+                return new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
+            }
         }
 
         /// <summary> Field Deprecated. The extended location (custom location) that represents the Hybrid AKS control plane location. </summary>
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation HybridAksExtendedLocation
         {
-            get => HybridAksExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
-                ? custom
-                : (HybridAksExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(HybridAksExtendedLocationInternal.Name, HybridAksExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
+            get
+            {
+                var baseLoc = Properties?.HybridAksExtendedLocation;
+                if (baseLoc == null) return null;
+                if (baseLoc is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom) return custom;
+                return new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
+            }
         }
     }
 }
