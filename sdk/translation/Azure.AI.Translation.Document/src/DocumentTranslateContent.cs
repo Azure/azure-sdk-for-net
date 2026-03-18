@@ -58,10 +58,7 @@ namespace Azure.AI.Translation.Document
         {
             MultipartDocument = document;
             MultipartGlossary = glossary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = serializedAdditionalRawData;
         }
-
-        // Field used by serialization
-        private protected readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
     }
 }
