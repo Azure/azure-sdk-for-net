@@ -41,9 +41,25 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         internal static class RecordingUrlValidation
         {
-            // ACS recording endpoints
-            public const string AsmSkypeHostSuffix = ".asm.skype.com";
-            public const string AzureBlobStorageHostSuffix = ".blob.core.windows.net";
+            /// <summary>
+            /// Allowed recording endpoint host suffixes.
+            /// </summary>
+            internal static readonly string[] AllowedHostSuffixes = new[]
+            {
+                ".asm.skype.com",
+                ".asyncgw.teams.microsoft.com",
+                ".blob.core.windows.net"
+            };
         }
+
+        ///// <summary>
+        ///// Recording URL validation values.
+        ///// </summary>
+        //internal static class RecordingUrlValidation
+        //{
+        //    // ACS recording endpoints
+        //    public const string AsmSkypeHostSuffix = ".asm.skype.com";
+        //    public const string AzureBlobStorageHostSuffix = ".blob.core.windows.net";
+        //}
     }
 }

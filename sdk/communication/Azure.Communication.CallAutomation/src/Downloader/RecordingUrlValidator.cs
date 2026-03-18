@@ -42,10 +42,21 @@ namespace Azure.Communication.CallAutomation
 
             string host = recordingUrl.Host.ToLowerInvariant();
 
-            // Validate against known endpoints
-            bool isValidEndpoint =
-                host.EndsWith(Constants.RecordingUrlValidation.AsmSkypeHostSuffix, StringComparison.OrdinalIgnoreCase) ||
-                host.EndsWith(Constants.RecordingUrlValidation.AzureBlobStorageHostSuffix, StringComparison.OrdinalIgnoreCase);
+            //// Validate against known endpoints
+            //bool isValidEndpoint =
+            //    host.EndsWith(Constants.RecordingUrlValidation.AsmSkypeHostSuffix, StringComparison.OrdinalIgnoreCase) ||
+            //    host.EndsWith(Constants.RecordingUrlValidation.AzureBlobStorageHostSuffix, StringComparison.OrdinalIgnoreCase);
+
+            // Check against allowed suffixes
+            bool isValidEndpoint = false;
+            foreach (var suffix in Constants.RecordingUrlValidation.AllowedHostSuffixes)
+            {
+                if (host.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+                {
+                    isValidEndpoint = true;
+                    break;
+                }
+            }
 
             if (!isValidEndpoint)
             {
