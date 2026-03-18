@@ -140,6 +140,19 @@ jobs:
         image: $(WINDOWSVMIMAGE)
         os: windows
       steps:
+        - checkout: self
+          fetchDepth: 1
+          fetchTags: false
+
+        - pwsh: |
+            $targetBranch = "${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"
+            if (-not $targetBranch) {
+              $targetBranch = "main"
+            }
+            Write-Host "Fetching origin/$targetBranch for diff comparison"
+            git fetch --depth=1 origin "${targetBranch}:refs/remotes/origin/${targetBranch}"
+          displayName: Fetch target branch for diff comparison
+
         - task: UsePythonVersion@0
           displayName: "Use Python 3.11"
           inputs:
