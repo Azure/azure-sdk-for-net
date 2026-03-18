@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary> Bot channel resource definition. </summary>
+    /// <summary> Connection setting resource definition. </summary>
     public partial class BotConnectionSettingData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> Gets or sets the SKU of the resource. </param>
         /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
         /// <param name="eTag"> Entity Tag. </param>
         /// <param name="zones"> Entity zones. </param>
-        internal BotConnectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BotConnectionSettingProperties properties, BotServiceSku sku, BotServiceKind? kind, ETag? eTag, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        internal BotConnectionSettingData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, BotConnectionSettingProperties properties, IDictionary<string, string> tags, BotServiceSku sku, BotServiceKind? kind, ETag? eTag, IReadOnlyList<string> zones, SystemData systemData) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

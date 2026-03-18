@@ -166,7 +166,6 @@ namespace Azure.ResourceManager.BotService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -175,6 +174,7 @@ namespace Azure.ResourceManager.BotService
             BotServiceKind? kind = default;
             ETag? eTag = default;
             IReadOnlyList<string> zones = default;
+            SystemData systemData = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -198,15 +198,6 @@ namespace Azure.ResourceManager.BotService
                         continue;
                     }
                     resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBotServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -292,6 +283,15 @@ namespace Azure.ResourceManager.BotService
                     zones = array;
                     continue;
                 }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBotServiceContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -301,7 +301,6 @@ namespace Azure.ResourceManager.BotService
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
@@ -309,7 +308,8 @@ namespace Azure.ResourceManager.BotService
                 sku,
                 kind,
                 eTag,
-                zones ?? new ChangeTrackingList<string>());
+                zones ?? new ChangeTrackingList<string>(),
+                systemData);
         }
     }
 }
