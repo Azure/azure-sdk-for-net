@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
-    [ModelReaderWriterBuildable(typeof(ResourceNamespacePatch))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuleListResult))]
     [ModelReaderWriterBuildable(typeof(Ruleproperties))]

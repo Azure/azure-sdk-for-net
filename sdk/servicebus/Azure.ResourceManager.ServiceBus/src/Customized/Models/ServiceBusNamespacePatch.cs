@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             ServiceBusSku sku = default;
             SBNamespaceUpdateProperties properties = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku,
+                location,
                 properties,
+                sku,
                 identity);
         }
     }
