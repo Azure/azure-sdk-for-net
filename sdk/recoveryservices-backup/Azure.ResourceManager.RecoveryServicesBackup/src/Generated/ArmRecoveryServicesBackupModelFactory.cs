@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
         /// <param name="isSoftDeleteFeatureStateEditable"> This flag is no longer in use. Please use 'softDeleteFeatureState' to set the soft delete state for the vault. </param>
         /// <returns> A new <see cref="Models.BackupResourceVaultConfigProperties"/> instance for mocking. </returns>
-        public static BackupResourceVaultConfigProperties BackupResourceVaultConfigProperties(StorageType? storageModelType = default, StorageType? storageType = default, StorageTypeState? storageTypeState = default, EnhancedSecurityState? enhancedSecurityState = default, SoftDeleteFeatureState? softDeleteFeatureState = default, int? softDeleteRetentionPeriodInDays = default, IEnumerable<string> resourceGuardOperationRequests = default, bool? isSoftDeleteFeatureStateEditable = default)
+        public static BackupResourceVaultConfigProperties BackupResourceVaultConfigProperties(BackupStorageType? storageModelType = default, BackupStorageType? storageType = default, BackupStorageTypeState? storageTypeState = default, EnhancedSecurityState? enhancedSecurityState = default, SoftDeleteFeatureState? softDeleteFeatureState = default, int? softDeleteRetentionPeriodInDays = default, IEnumerable<string> resourceGuardOperationRequests = default, bool? isSoftDeleteFeatureStateEditable = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="userAssignedIdentity"> User Assigned Identity Id. </param>
         /// <param name="useSystemAssignedIdentity"> bool to indicate whether to use system Assigned Identity or not. </param>
         /// <returns> A new <see cref="Models.BackupResourceEncryptionConfigExtendedProperties"/> instance for mocking. </returns>
-        public static BackupResourceEncryptionConfigExtendedProperties BackupResourceEncryptionConfigExtendedProperties(EncryptionAtRestType? encryptionAtRestType = default, string keyUri = default, string subscriptionId = default, LastUpdateStatus? lastUpdateStatus = default, InfrastructureEncryptionState? infrastructureEncryptionState = default, string userAssignedIdentity = default, bool? useSystemAssignedIdentity = default)
+        public static BackupResourceEncryptionConfigExtendedProperties BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType = default, string keyUri = default, string subscriptionId = default, LastUpdateStatus? lastUpdateStatus = default, InfrastructureEncryptionState? infrastructureEncryptionState = default, string userAssignedIdentity = default, bool? useSystemAssignedIdentity = default)
         {
             return new BackupResourceEncryptionConfigExtendedProperties(
                 encryptionAtRestType,
@@ -304,12 +304,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ProtectedItemResourceData"/> instance for mocking. </returns>
-        public static ProtectedItemResourceData ProtectedItemResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectedItem properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
+        public static BackupProtectedItemData BackupProtectedItemData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectedItem properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProtectedItemResourceData(
+            return new BackupProtectedItemData(
                 id,
                 name,
                 resourceType,
@@ -1537,12 +1537,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.RecoveryPointResourceData"/> instance for mocking. </returns>
-        public static RecoveryPointResourceData RecoveryPointResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryPoint properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/> instance for mocking. </returns>
+        public static BackupRecoveryPointData BackupRecoveryPointData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryPoint properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RecoveryPointResourceData(
+            return new BackupRecoveryPointData(
                 id,
                 name,
                 resourceType,
@@ -1556,7 +1556,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRecoveryPoint"/>, <see cref="Models.WorkloadPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaRecoveryPoint"/>, <see cref="Models.WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapAseRecoveryPoint"/>, <see cref="Models.WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSqlRecoveryPoint"/>, <see cref="Models.GenericRecoveryPoint"/>, and <see cref="Models.IaasVmRecoveryPoint"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRecoveryPoint"/>, <see cref="Models.WorkloadPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaRecoveryPoint"/>, <see cref="Models.WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapAseRecoveryPoint"/>, <see cref="Models.WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSqlRecoveryPoint"/>, <see cref="Models.BackupGenericRecoveryPoint"/>, and <see cref="Models.IaasVmRecoveryPoint"/>.
         /// </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
@@ -1918,9 +1918,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
         /// <param name="includedDatabases"> List of databases included in recovery point. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlRecoveryPointExtendedInfo"/> instance for mocking. </returns>
-        public static WorkloadSqlRecoveryPointExtendedInfo WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryTimeInUTC = default, IEnumerable<Models.SqlDataDirectory> dataDirectoryPaths = default, IEnumerable<DatabaseInRP> includedDatabases = default)
+        public static WorkloadSqlRecoveryPointExtendedInfo WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryTimeInUTC = default, IEnumerable<SqlDataDirectory> dataDirectoryPaths = default, IEnumerable<DatabaseInRP> includedDatabases = default)
         {
-            dataDirectoryPaths ??= new ChangeTrackingList<Models.SqlDataDirectory>();
+            dataDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectory>();
             includedDatabases ??= new ChangeTrackingList<DatabaseInRP>();
 
             return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryTimeInUTC, dataDirectoryPaths.ToList(), includedDatabases.ToList(), additionalBinaryDataProperties: null);
@@ -1943,12 +1943,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        /// <returns> A new <see cref="Models.GenericRecoveryPoint"/> instance for mocking. </returns>
-        public static GenericRecoveryPoint GenericRecoveryPoint(ThreatStatus? threatStatus = default, IEnumerable<ThreatInfo> threatInfo = default, string friendlyName = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, string recoveryPointAdditionalInfo = default, RecoveryPointProperties recoveryPointProperties = default)
+        /// <returns> A new <see cref="Models.BackupGenericRecoveryPoint"/> instance for mocking. </returns>
+        public static BackupGenericRecoveryPoint BackupGenericRecoveryPoint(ThreatStatus? threatStatus = default, IEnumerable<ThreatInfo> threatInfo = default, string friendlyName = default, string recoveryPointType = default, DateTimeOffset? recoveryPointOn = default, string recoveryPointAdditionalInfo = default, RecoveryPointProperties recoveryPointProperties = default)
         {
             threatInfo ??= new ChangeTrackingList<ThreatInfo>();
 
-            return new GenericRecoveryPoint(
+            return new BackupGenericRecoveryPoint(
                 "GenericRecoveryPoint",
                 threatStatus,
                 threatInfo.ToList(),
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="bekDetails"> BEK is bitlocker encryption key. </param>
         /// <param name="encryptionMechanism"> Encryption mechanism: None/ SinglePass/ DoublePass. </param>
         /// <returns> A new <see cref="Models.KeyAndSecretDetails"/> instance for mocking. </returns>
-        public static KeyAndSecretDetails KeyAndSecretDetails(KEKDetails kekDetails = default, BEKDetails bekDetails = default, string encryptionMechanism = default)
+        public static KeyAndSecretDetails KeyAndSecretDetails(KekDetails kekDetails = default, BekDetails bekDetails = default, string encryptionMechanism = default)
         {
             return new KeyAndSecretDetails(kekDetails, bekDetails, encryptionMechanism, additionalBinaryDataProperties: null);
         }
@@ -2039,20 +2039,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="keyUri"> Key is KEK. </param>
         /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
         /// <param name="keyBackupData"> KEK data. </param>
-        /// <returns> A new <see cref="Models.KEKDetails"/> instance for mocking. </returns>
-        public static KEKDetails KEKDetails(string keyUri = default, string keyVaultId = default, string keyBackupData = default)
+        /// <returns> A new <see cref="Models.KekDetails"/> instance for mocking. </returns>
+        public static KekDetails KekDetails(string keyUri = default, string keyVaultId = default, string keyBackupData = default)
         {
-            return new KEKDetails(keyUri, keyVaultId, keyBackupData, additionalBinaryDataProperties: null);
+            return new KekDetails(keyUri, keyVaultId, keyBackupData, additionalBinaryDataProperties: null);
         }
 
         /// <summary> BEK is bitlocker encryption key. </summary>
         /// <param name="secretUri"> Secret is BEK. </param>
         /// <param name="secretVaultId"> ID of the Key Vault where this Secret is stored. </param>
         /// <param name="secretData"> BEK data. </param>
-        /// <returns> A new <see cref="Models.BEKDetails"/> instance for mocking. </returns>
-        public static BEKDetails BEKDetails(string secretUri = default, string secretVaultId = default, string secretData = default)
+        /// <returns> A new <see cref="Models.BekDetails"/> instance for mocking. </returns>
+        public static BekDetails BekDetails(string secretUri = default, string secretVaultId = default, string secretData = default)
         {
-            return new BEKDetails(secretUri, secretVaultId, secretData, additionalBinaryDataProperties: null);
+            return new BekDetails(secretUri, secretVaultId, secretData, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Disk configuration. </summary>
@@ -2086,12 +2086,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ProtectionContainerResourceData"/> instance for mocking. </returns>
-        public static ProtectionContainerResourceData ProtectionContainerResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericProtectionContainer properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
+        public static BackupProtectionContainerData BackupProtectionContainerData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericProtectionContainer properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProtectionContainerResourceData(
+            return new BackupProtectionContainerData(
                 id,
                 name,
                 resourceType,
@@ -2503,9 +2503,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="dataDirectoryPaths"> Data Directory Paths for default directories. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSqlInstanceWorkloadItem"/> instance for mocking. </returns>
-        public static VmWorkloadSqlInstanceWorkloadItem VmWorkloadSqlInstanceWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subinquireditemcount = default, int? subWorkloadItemCount = default, IEnumerable<Models.SqlDataDirectory> dataDirectoryPaths = default)
+        public static VmWorkloadSqlInstanceWorkloadItem VmWorkloadSqlInstanceWorkloadItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentName = default, string serverName = default, bool? isAutoProtectable = default, int? subinquireditemcount = default, int? subWorkloadItemCount = default, IEnumerable<SqlDataDirectory> dataDirectoryPaths = default)
         {
-            dataDirectoryPaths ??= new ChangeTrackingList<Models.SqlDataDirectory>();
+            dataDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectory>();
 
             return new VmWorkloadSqlInstanceWorkloadItem(
                 backupManagementType,
@@ -2570,7 +2570,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
         /// <param name="targetDetails"> Target File Share Details. </param>
         /// <returns> A new <see cref="Models.FileShareRestoreContent"/> instance for mocking. </returns>
-        public static FileShareRestoreContent FileShareRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, CopyOptions? copyOptions = default, RestoreRequestType? restoreRequestType = default, IEnumerable<RestoreFileSpecs> restoreFileSpecs = default, TargetAFSRestoreInfo targetDetails = default)
+        public static FileShareRestoreContent FileShareRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, FileShareCopyOption? copyOptions = default, FileShareRestoreType? restoreRequestType = default, IEnumerable<RestoreFileSpecs> restoreFileSpecs = default, TargetAfsRestoreInfo targetDetails = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             restoreFileSpecs ??= new ChangeTrackingList<RestoreFileSpecs>();
@@ -2609,7 +2609,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <returns> A new <see cref="Models.WorkloadPointInTimeRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadPointInTimeRestoreContent WorkloadPointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default)
+        public static WorkloadPointInTimeRestoreContent WorkloadPointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2651,7 +2651,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </param>
         /// <returns> A new <see cref="Models.WorkloadRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadRestoreContent WorkloadRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default)
+        public static WorkloadRestoreContent WorkloadRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2693,7 +2693,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <returns> A new <see cref="Models.WorkloadSapHanaPointInTimeRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadSapHanaPointInTimeRestoreContent WorkloadSapHanaPointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default)
+        public static WorkloadSapHanaPointInTimeRestoreContent WorkloadSapHanaPointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2735,7 +2735,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </param>
         /// <returns> A new <see cref="Models.WorkloadSapHanaRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadSapHanaRestoreContent WorkloadSapHanaRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default)
+        public static WorkloadSapHanaRestoreContent WorkloadSapHanaRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2778,7 +2778,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
         /// <returns> A new <see cref="Models.WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/> instance for mocking. </returns>
-        public static WorkloadSapHanaPointInTimeRestoreWithRehydrateContent WorkloadSapHanaPointInTimeRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
+        public static WorkloadSapHanaPointInTimeRestoreWithRehydrateContent WorkloadSapHanaPointInTimeRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2822,7 +2822,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
         /// <returns> A new <see cref="Models.WorkloadSapHanaRestoreWithRehydrateContent"/> instance for mocking. </returns>
-        public static WorkloadSapHanaRestoreWithRehydrateContent WorkloadSapHanaRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
+        public static WorkloadSapHanaRestoreWithRehydrateContent WorkloadSapHanaRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2865,7 +2865,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <returns> A new <see cref="Models.WorkloadSapAsePointInTimeRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadSapAsePointInTimeRestoreContent WorkloadSapAsePointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default)
+        public static WorkloadSapAsePointInTimeRestoreContent WorkloadSapAsePointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, DateTimeOffset? pointInTime = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2907,7 +2907,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </param>
         /// <returns> A new <see cref="Models.WorkloadSapAseRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadSapAseRestoreContent WorkloadSapAseRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default)
+        public static WorkloadSapAseRestoreContent WorkloadSapAseRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
@@ -2952,11 +2952,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlPointInTimeRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadSqlPointInTimeRestoreContent WorkloadSqlPointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<Models.SqlDataDirectoryMapping> alternateDirectoryPaths = default, DateTimeOffset? pointInTime = default)
+        public static WorkloadSqlPointInTimeRestoreContent WorkloadSqlPointInTimeRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<SqlDataDirectoryMapping> alternateDirectoryPaths = default, DateTimeOffset? pointInTime = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
-            alternateDirectoryPaths ??= new ChangeTrackingList<Models.SqlDataDirectoryMapping>();
+            alternateDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectoryMapping>();
 
             return new WorkloadSqlPointInTimeRestoreContent(
                 "AzureWorkloadRestoreRequest",
@@ -3001,11 +3001,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlRestoreContent"/> instance for mocking. </returns>
-        public static WorkloadSqlRestoreContent WorkloadSqlRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<Models.SqlDataDirectoryMapping> alternateDirectoryPaths = default)
+        public static WorkloadSqlRestoreContent WorkloadSqlRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<SqlDataDirectoryMapping> alternateDirectoryPaths = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
-            alternateDirectoryPaths ??= new ChangeTrackingList<Models.SqlDataDirectoryMapping>();
+            alternateDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectoryMapping>();
 
             return new WorkloadSqlRestoreContent(
                 "AzureWorkloadRestoreRequest",
@@ -3051,11 +3051,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="pointInTime"> PointInTime value. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlPointInTimeRestoreWithRehydrateContent"/> instance for mocking. </returns>
-        public static WorkloadSqlPointInTimeRestoreWithRehydrateContent WorkloadSqlPointInTimeRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<Models.SqlDataDirectoryMapping> alternateDirectoryPaths = default, DateTimeOffset? pointInTime = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
+        public static WorkloadSqlPointInTimeRestoreWithRehydrateContent WorkloadSqlPointInTimeRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<SqlDataDirectoryMapping> alternateDirectoryPaths = default, DateTimeOffset? pointInTime = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
-            alternateDirectoryPaths ??= new ChangeTrackingList<Models.SqlDataDirectoryMapping>();
+            alternateDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectoryMapping>();
 
             return new WorkloadSqlPointInTimeRestoreWithRehydrateContent(
                 "AzureWorkloadRestoreRequest",
@@ -3102,11 +3102,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
         /// <returns> A new <see cref="Models.WorkloadSqlRestoreWithRehydrateContent"/> instance for mocking. </returns>
-        public static WorkloadSqlRestoreWithRehydrateContent WorkloadSqlRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, RecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<Models.SqlDataDirectoryMapping> alternateDirectoryPaths = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
+        public static WorkloadSqlRestoreWithRehydrateContent WorkloadSqlRestoreWithRehydrateContent(IEnumerable<string> resourceGuardOperationRequests = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, IDictionary<string, string> propertyBag = default, TargetRestoreInfo targetInfo = default, RecoveryMode? recoveryMode = default, string targetResourceGroupName = default, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails = default, SnapshotRestoreContent snapshotRestoreParameters = default, string targetVirtualMachineId = default, bool? shouldUseAlternateTargetLocation = default, bool? isNonRecoverable = default, IEnumerable<SqlDataDirectoryMapping> alternateDirectoryPaths = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             propertyBag ??= new ChangeTrackingDictionary<string, string>();
-            alternateDirectoryPaths ??= new ChangeTrackingList<Models.SqlDataDirectoryMapping>();
+            alternateDirectoryPaths ??= new ChangeTrackingList<SqlDataDirectoryMapping>();
 
             return new WorkloadSqlRestoreWithRehydrateContent(
                 "AzureWorkloadRestoreRequest",
@@ -3174,7 +3174,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="securedVMOsDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
         /// <returns> A new <see cref="Models.IaasVmRestoreContent"/> instance for mocking. </returns>
-        public static IaasVmRestoreContent IaasVmRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, RecoveryType? recoveryType = default, string sourceResourceId = default, string targetVirtualMachineId = default, string targetResourceGroupId = default, string storageAccountId = default, string virtualNetworkId = default, string subnetId = default, string targetDomainNameId = default, string region = default, string affinityGroup = default, bool? createNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? restoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, string securedVMOsDiskEncryptionSetId = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default)
+        public static IaasVmRestoreContent IaasVmRestoreContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, string targetVirtualMachineId = default, string targetResourceGroupId = default, string storageAccountId = default, string virtualNetworkId = default, string subnetId = default, string targetDomainNameId = default, string region = default, string affinityGroup = default, bool? createNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? restoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, string securedVMOsDiskEncryptionSetId = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             restoreDiskLunList ??= new ChangeTrackingList<int>();
@@ -3257,7 +3257,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
         /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
         /// <returns> A new <see cref="Models.IaasVmRestoreWithRehydrationContent"/> instance for mocking. </returns>
-        public static IaasVmRestoreWithRehydrationContent IaasVmRestoreWithRehydrationContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, RecoveryType? recoveryType = default, string sourceResourceId = default, string targetVirtualMachineId = default, string targetResourceGroupId = default, string storageAccountId = default, string virtualNetworkId = default, string subnetId = default, string targetDomainNameId = default, string region = default, string affinityGroup = default, bool? createNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? restoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, string securedVMOsDiskEncryptionSetId = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
+        public static IaasVmRestoreWithRehydrationContent IaasVmRestoreWithRehydrationContent(IEnumerable<string> resourceGuardOperationRequests = default, string recoveryPointId = default, FileShareRecoveryType? recoveryType = default, string sourceResourceId = default, string targetVirtualMachineId = default, string targetResourceGroupId = default, string storageAccountId = default, string virtualNetworkId = default, string subnetId = default, string targetDomainNameId = default, string region = default, string affinityGroup = default, bool? createNewCloudService = default, bool? originalStorageAccountOption = default, VmEncryptionDetails encryptionDetails = default, IEnumerable<int> restoreDiskLunList = default, bool? restoreWithManagedDisks = default, string diskEncryptionSetId = default, IEnumerable<string> zones = default, BackupIdentityInfo identityInfo = default, IdentityBasedRestoreDetails identityBasedRestoreDetails = default, ExtendedLocation extendedLocation = default, string securedVMOsDiskEncryptionSetId = default, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings = default, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             restoreDiskLunList ??= new ChangeTrackingList<int>();
@@ -3326,12 +3326,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ProtectionPolicyResourceData"/> instance for mocking. </returns>
-        public static ProtectionPolicyResourceData ProtectionPolicyResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectionPolicy properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
+        public static BackupProtectionPolicyData BackupProtectionPolicyData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectionPolicy properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProtectionPolicyResourceData(
+            return new BackupProtectionPolicyData(
                 id,
                 name,
                 resourceType,
@@ -3345,7 +3345,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmWorkloadProtectionPolicy"/>, <see cref="Models.FileShareProtectionPolicy"/>, <see cref="Models.IaasVmProtectionPolicy"/>, <see cref="Models.SqlProtectionPolicy"/>, <see cref="Models.GenericProtectionPolicy"/>, and <see cref="Models.MabProtectionPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmWorkloadProtectionPolicy"/>, <see cref="Models.FileShareProtectionPolicy"/>, <see cref="Models.IaasVmProtectionPolicy"/>, <see cref="Models.SqlProtectionPolicy"/>, <see cref="Models.BackupGenericProtectionPolicy"/>, and <see cref="Models.MabProtectionPolicy"/>.
         /// </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
@@ -3367,7 +3367,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
         /// <param name="makePolicyConsistent"> Fix the policy inconsistency. </param>
         /// <returns> A new <see cref="Models.VmWorkloadProtectionPolicy"/> instance for mocking. </returns>
-        public static VmWorkloadProtectionPolicy VmWorkloadProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, WorkloadType? workLoadType = default, VMWorkloadPolicyType? vmWorkloadPolicyType = default, BackupCommonSettings settings = default, IEnumerable<SubProtectionPolicy> subProtectionPolicy = default, bool? makePolicyConsistent = default)
+        public static VmWorkloadProtectionPolicy VmWorkloadProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupWorkloadType? workLoadType = default, VMWorkloadPolicyType? vmWorkloadPolicyType = default, BackupCommonSettings settings = default, IEnumerable<SubProtectionPolicy> subProtectionPolicy = default, bool? makePolicyConsistent = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             subProtectionPolicy ??= new ChangeTrackingList<SubProtectionPolicy>();
@@ -3395,7 +3395,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="snapshotBackupAdditionalDetails"> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </param>
         /// <returns> A new <see cref="Models.SubProtectionPolicy"/> instance for mocking. </returns>
-        public static SubProtectionPolicy SubProtectionPolicy(PolicyType? policyType = default, BackupSchedulePolicy schedulePolicy = default, BackupRetentionPolicy retentionPolicy = default, IDictionary<string, BackupTieringPolicy> tieringPolicy = default, SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails = default)
+        public static SubProtectionPolicy SubProtectionPolicy(SubProtectionPolicyType? policyType = default, BackupSchedulePolicy schedulePolicy = default, BackupRetentionPolicy retentionPolicy = default, IDictionary<string, BackupTieringPolicy> tieringPolicy = default, SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails = default)
         {
             tieringPolicy ??= new ChangeTrackingDictionary<string, BackupTieringPolicy>();
 
@@ -3528,7 +3528,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="vaultRetentionPolicy"> Retention policy with the details on hardened backup copy retention ranges. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <returns> A new <see cref="Models.FileShareProtectionPolicy"/> instance for mocking. </returns>
-        public static FileShareProtectionPolicy FileShareProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, WorkloadType? workLoadType = default, BackupSchedulePolicy schedulePolicy = default, BackupRetentionPolicy retentionPolicy = default, VaultRetentionPolicy vaultRetentionPolicy = default, string timeZone = default)
+        public static FileShareProtectionPolicy FileShareProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupWorkloadType? workLoadType = default, BackupSchedulePolicy schedulePolicy = default, BackupRetentionPolicy retentionPolicy = default, VaultRetentionPolicy vaultRetentionPolicy = default, string timeZone = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
@@ -3560,7 +3560,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyType"></param>
         /// <param name="snapshotConsistencyType"></param>
         /// <returns> A new <see cref="Models.IaasVmProtectionPolicy"/> instance for mocking. </returns>
-        public static IaasVmProtectionPolicy IaasVmProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, InstantRPAdditionalDetails instantRPDetails = default, BackupSchedulePolicy schedulePolicy = default, BackupRetentionPolicy retentionPolicy = default, IDictionary<string, BackupTieringPolicy> tieringPolicy = default, int? instantRpRetentionRangeInDays = default, string timeZone = default, IAASVMPolicyType? policyType = default, IaasVMSnapshotConsistencyType? snapshotConsistencyType = default)
+        public static IaasVmProtectionPolicy IaasVmProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, InstantRPAdditionalDetails instantRPDetails = default, BackupSchedulePolicy schedulePolicy = default, BackupRetentionPolicy retentionPolicy = default, IDictionary<string, BackupTieringPolicy> tieringPolicy = default, int? instantRpRetentionRangeInDays = default, string timeZone = default, IaasVmPolicyType? policyType = default, IaasVmSnapshotConsistencyType? snapshotConsistencyType = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             tieringPolicy ??= new ChangeTrackingDictionary<string, BackupTieringPolicy>();
@@ -3598,13 +3598,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="fabricName"> Name of this policy's fabric. </param>
-        /// <returns> A new <see cref="Models.GenericProtectionPolicy"/> instance for mocking. </returns>
-        public static GenericProtectionPolicy GenericProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<SubProtectionPolicy> subProtectionPolicy = default, string timeZone = default, string fabricName = default)
+        /// <returns> A new <see cref="Models.BackupGenericProtectionPolicy"/> instance for mocking. </returns>
+        public static BackupGenericProtectionPolicy BackupGenericProtectionPolicy(int? protectedItemsCount = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<SubProtectionPolicy> subProtectionPolicy = default, string timeZone = default, string fabricName = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             subProtectionPolicy ??= new ChangeTrackingList<SubProtectionPolicy>();
 
-            return new GenericProtectionPolicy(
+            return new BackupGenericProtectionPolicy(
                 protectedItemsCount,
                 "GenericProtectionPolicy",
                 resourceGuardOperationRequests.ToList(),
@@ -3641,12 +3641,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.JobResourceData"/> instance for mocking. </returns>
-        public static JobResourceData JobResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericJob properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
+        public static BackupJobData BackupJobData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericJob properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new JobResourceData(
+            return new BackupJobData(
                 id,
                 name,
                 resourceType,
@@ -4079,7 +4079,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="errorDetails"> The errors. </param>
         /// <param name="extendedInfo"> Additional information on the job. </param>
         /// <returns> A new <see cref="Models.MabBackupJob"/> instance for mocking. </returns>
-        public static MabBackupJob MabBackupJob(string entityFriendlyName = default, BackupManagementType? backupManagementType = default, string operation = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string activityId = default, TimeSpan? duration = default, IEnumerable<JobSupportedAction> actionsInfo = default, string mabServerName = default, MabServerType? mabServerType = default, WorkloadType? workloadType = default, IEnumerable<MabErrorInfo> errorDetails = default, MabBackupJobExtendedInfo extendedInfo = default)
+        public static MabBackupJob MabBackupJob(string entityFriendlyName = default, BackupManagementType? backupManagementType = default, string operation = default, string status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string activityId = default, TimeSpan? duration = default, IEnumerable<JobSupportedAction> actionsInfo = default, string mabServerName = default, MabServerType? mabServerType = default, BackupWorkloadType? workloadType = default, IEnumerable<MabErrorInfo> errorDetails = default, MabBackupJobExtendedInfo extendedInfo = default)
         {
             actionsInfo ??= new ChangeTrackingList<JobSupportedAction>();
             errorDetails ??= new ChangeTrackingList<MabErrorInfo>();
@@ -4248,12 +4248,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineBaseResourceData"/> instance for mocking. </returns>
-        public static BackupEngineBaseResourceData BackupEngineBaseResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupEngineBase properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
+        public static BackupEngineData BackupEngineData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericEngine properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BackupEngineBaseResourceData(
+            return new BackupEngineData(
                 id,
                 name,
                 resourceType,
@@ -4282,10 +4282,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
         /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
         /// <param name="extendedInfo"> Extended info of the backupengine. </param>
-        /// <returns> A new <see cref="Models.BackupEngineBase"/> instance for mocking. </returns>
-        public static BackupEngineBase BackupEngineBase(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string backupEngineState = default, string healthStatus = default, string backupEngineType = default, bool? canReRegister = default, string backupEngineId = default, string dpmVersion = default, string azureBackupAgentVersion = default, bool? isAzureBackupAgentUpgradeAvailable = default, bool? isDpmUpgradeAvailable = default, BackupEngineExtendedInfo extendedInfo = default)
+        /// <returns> A new <see cref="Models.BackupGenericEngine"/> instance for mocking. </returns>
+        public static BackupGenericEngine BackupGenericEngine(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string backupEngineState = default, string healthStatus = default, string backupEngineType = default, bool? canReRegister = default, string backupEngineId = default, string dpmVersion = default, string azureBackupAgentVersion = default, bool? isAzureBackupAgentUpgradeAvailable = default, bool? isDpmUpgradeAvailable = default, BackupEngineExtendedInfo extendedInfo = default)
         {
-            return new UnknownBackupEngineBase(
+            return new UnknownBackupGenericEngine(
                 friendlyName,
                 backupManagementType,
                 registrationStatus,
@@ -4400,12 +4400,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyBaseResourceData"/> instance for mocking. </returns>
-        public static ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceGuardProxyBase properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
+        public static ResourceGuardProxyData ResourceGuardProxyData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceGuardProxyBase properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ResourceGuardProxyBaseResourceData(
+            return new ResourceGuardProxyData(
                 id,
                 name,
                 resourceType,
@@ -4482,7 +4482,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Response for feature support requests for Azure IaasVm. </summary>
         /// <param name="supportStatus"> Support status of feature. </param>
         /// <returns> A new <see cref="Models.VmResourceFeatureSupportResult"/> instance for mocking. </returns>
-        public static VmResourceFeatureSupportResult VmResourceFeatureSupportResult(SupportStatus? supportStatus = default)
+        public static VmResourceFeatureSupportResult VmResourceFeatureSupportResult(VmResourceFeatureSupportStatus? supportStatus = default)
         {
             return new VmResourceFeatureSupportResult(supportStatus, additionalBinaryDataProperties: null);
         }
@@ -4495,12 +4495,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ProtectionIntentResourceData"/> instance for mocking. </returns>
-        public static ProtectionIntentResourceData ProtectionIntentResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericProtectionIntent properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
+        public static BackupProtectionIntentData BackupProtectionIntentData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupGenericProtectionIntent properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ProtectionIntentResourceData(
+            return new BackupProtectionIntentData(
                 id,
                 name,
                 resourceType,
@@ -4526,6 +4526,58 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static ValidateOperationsResponse ValidateOperationsResponse(IEnumerable<BackupErrorDetail> validateOperationResponseValidationResults = default)
         {
             return new ValidateOperationsResponse(validateOperationResponseValidationResults is null ? default : new ValidateOperationResponse((validateOperationResponseValidationResults ?? new ChangeTrackingList<BackupErrorDetail>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Protectable Container Class. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="location"></param>
+        /// <param name="tags"></param>
+        /// <param name="eTag"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.ProtectableContainerResource"/> instance for mocking. </returns>
+        public static ProtectableContainerResource ProtectableContainerResource(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, IDictionary<string, string> tags = default, string eTag = default, ProtectableContainer properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ProtectableContainerResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                eTag,
+                properties);
+        }
+
+        /// <summary> Base class for backup item. Workload-specific backup items are derived from this class. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="location"></param>
+        /// <param name="tags"></param>
+        /// <param name="eTag"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
+        public static WorkloadProtectableItemResource WorkloadProtectableItemResource(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, IDictionary<string, string> tags = default, string eTag = default, WorkloadProtectableItem properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WorkloadProtectableItemResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                eTag,
+                properties);
         }
 
         /// <summary>
@@ -4558,7 +4610,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="parentContainerFriendlyName"> Friendly name of container to which this protectable item belongs. </param>
         /// <param name="azureFileShareType"> File Share type XSync or XSMB. </param>
         /// <returns> A new <see cref="Models.FileShareProtectableItem"/> instance for mocking. </returns>
-        public static FileShareProtectableItem FileShareProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentContainerFabricId = default, string parentContainerFriendlyName = default, AzureFileShareType? azureFileShareType = default)
+        public static FileShareProtectableItem FileShareProtectableItem(string backupManagementType = default, string workloadType = default, string friendlyName = default, BackupProtectionStatus? protectionState = default, string parentContainerFabricId = default, string parentContainerFriendlyName = default, BackupFileShareType? azureFileShareType = default)
         {
             return new FileShareProtectableItem(
                 backupManagementType,
@@ -5201,7 +5253,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="protectedItemName"> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal. </param>
         /// <returns> A new <see cref="Models.PreValidateEnableBackupResult"/> instance for mocking. </returns>
-        public static PreValidateEnableBackupResult PreValidateEnableBackupResult(ValidationStatus? status = default, string errorCode = default, string errorMessage = default, string recommendation = default, string containerName = default, string protectedItemName = default)
+        public static PreValidateEnableBackupResult PreValidateEnableBackupResult(BackupValidationStatus? status = default, string errorCode = default, string errorMessage = default, string recommendation = default, string containerName = default, string protectedItemName = default)
         {
             return new PreValidateEnableBackupResult(
                 status,
@@ -5221,12 +5273,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.PrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionResourceData PrivateEndpointConnectionResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupPrivateEndpointConnectionProperties properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupPrivateEndpointConnectionProperties properties = default, IDictionary<string, string> tags = default, string location = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PrivateEndpointConnectionResourceData(
+            return new BackupPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -5243,11 +5295,89 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
         /// <returns> A new <see cref="Models.BackupPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static BackupPrivateEndpointConnectionProperties BackupPrivateEndpointConnectionProperties(ProvisioningState? provisioningState = default, string privateEndpointId = default, IEnumerable<VaultSubResourceType> groupIds = default, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
+        public static BackupPrivateEndpointConnectionProperties BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, IEnumerable<VaultSubResourceType> groupIds = default, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
         {
             groupIds ??= new ChangeTrackingList<VaultSubResourceType>();
 
             return new BackupPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), groupIds.ToList(), privateLinkServiceConnectionState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectionIntentResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericProtectionIntent properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionIntentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupManagementUsage"/>. </summary>
+        /// <param name="unit"> Unit of the usage. </param>
+        /// <param name="quotaPeriod"> Quota period of usage. </param>
+        /// <param name="nextResetOn"> Next reset time of usage. </param>
+        /// <param name="currentValue"> Current value of usage. </param>
+        /// <param name="limit"> Limit of usage. </param>
+        /// <param name="name"> Name of usage. </param>
+        /// <returns> A new <see cref="Models.BackupManagementUsage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupManagementUsage BackupManagementUsage(UsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, NameInfo name)
+        {
+            return new BackupManagementUsage(
+                unit,
+                quotaPeriod,
+                currentValue,
+                limit,
+                name,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupPrivateEndpointConnectionProperties properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerDataMoveContent"/>. </summary>
@@ -5271,6 +5401,68 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 sourceContainerArmIds.ToList(),
                 default,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectedItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectedItemResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectedItem properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectedItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// RecoveryPointResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupRecoveryPointData BackupRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericRecoveryPoint properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupRecoveryPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerRestoreContent"/>. </summary>
@@ -5302,6 +5494,161 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 eTag?.ToString(),
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectionPolicyResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericProtectionPolicy properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// JobResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupJobData BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericJob properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupEngineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// BackupEngineBaseResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupEngineData BackupEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericEngine properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupEngineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainerResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectableContainerResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="Models.ProtectableContainerResource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProtectableContainerResource ProtectableContainerResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectableContainer properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ProtectableContainerResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                eTag?.ToString(),
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectionContainerResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericProtectionContainer properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadItemResource"/>. </summary>
@@ -5395,6 +5742,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 tags,
                 eTag?.ToString(),
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadProtectableItemResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// WorkloadProtectableItemResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadProtectableItemResource WorkloadProtectableItemResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadProtectableItem properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WorkloadProtectableItemResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                tags,
+                eTag?.ToString(),
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyBase properties, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceGuardProxyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                tags,
+                location,
+                eTag?.ToString());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UnlockDeleteResult"/>. </summary>

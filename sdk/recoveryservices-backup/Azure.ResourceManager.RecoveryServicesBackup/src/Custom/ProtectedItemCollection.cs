@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<ProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, ProtectedItemResourceData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<ProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, protectedItemName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<ProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, ProtectedItemResourceData data, CancellationToken cancellationToken)
+        public virtual Task<ArmOperation<ProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdateAsync(waitUntil, protectedItemName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }

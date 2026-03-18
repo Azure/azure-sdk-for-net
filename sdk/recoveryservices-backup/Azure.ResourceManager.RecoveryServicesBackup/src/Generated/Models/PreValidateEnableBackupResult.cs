@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="protectedItemName"> Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PreValidateEnableBackupResult(ValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PreValidateEnableBackupResult(BackupValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ErrorCode = errorCode;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Validation Status. </summary>
-        public ValidationStatus? Status { get; }
+        public BackupValidationStatus? Status { get; }
 
         /// <summary> Response error code. </summary>
         public string ErrorCode { get; }

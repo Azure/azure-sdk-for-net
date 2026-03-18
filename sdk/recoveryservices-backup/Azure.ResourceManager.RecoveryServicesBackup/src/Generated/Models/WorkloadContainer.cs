@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional details of a workload container. </param>
         /// <param name="workloadType"> Workload type for which registration was sent. </param>
         /// <param name="operationType"> Re-Do Operation. </param>
-        internal WorkloadContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, WorkloadType? workloadType, OperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
+        internal WorkloadContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, BackupWorkloadType? workloadType, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             LastUpdatedOn = lastUpdatedOn;
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public WorkloadContainerExtendedInfo ExtendedInfo { get; set; }
 
         /// <summary> Workload type for which registration was sent. </summary>
-        public WorkloadType? WorkloadType { get; set; }
+        public BackupWorkloadType? WorkloadType { get; set; }
 
         /// <summary> Re-Do Operation. </summary>
-        public OperationType? OperationType { get; set; }
+        public WorkloadOperationType? OperationType { get; set; }
     }
 }

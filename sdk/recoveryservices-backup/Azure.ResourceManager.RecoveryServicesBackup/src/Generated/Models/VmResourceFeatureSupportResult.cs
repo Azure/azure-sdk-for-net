@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportResult"/>. </summary>
         /// <param name="supportStatus"> Support status of feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmResourceFeatureSupportResult(SupportStatus? supportStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmResourceFeatureSupportResult(VmResourceFeatureSupportStatus? supportStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SupportStatus = supportStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Support status of feature. </summary>
-        public SupportStatus? SupportStatus { get; }
+        public VmResourceFeatureSupportStatus? SupportStatus { get; }
     }
 }

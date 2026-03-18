@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, PrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, BackupPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, PrivateEndpointConnectionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource>(
                     new PrivateEndpointConnectionOperationSource(Client),
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, PrivateEndpointConnectionResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, BackupPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, PrivateEndpointConnectionResourceData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<PrivateEndpointConnectionResource>(
                     new PrivateEndpointConnectionOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PrivateEndpointConnectionResourceData> response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                Response<BackupPrivateEndpointConnectionData> response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PrivateEndpointConnectionResourceData> response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                Response<BackupPrivateEndpointConnectionData> response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<PrivateEndpointConnectionResourceData> response = default;
+                Response<BackupPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PrivateEndpointConnectionResourceData)null, result);
+                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<PrivateEndpointConnectionResourceData> response = default;
+                Response<BackupPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PrivateEndpointConnectionResourceData)null, result);
+                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<PrivateEndpointConnectionResourceData> response = default;
+                Response<BackupPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PrivateEndpointConnectionResourceData)null, result);
+                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -494,14 +494,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _privateEndpointConnectionRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<PrivateEndpointConnectionResourceData> response = default;
+                Response<BackupPrivateEndpointConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PrivateEndpointConnectionResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PrivateEndpointConnectionResourceData)null, result);
+                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

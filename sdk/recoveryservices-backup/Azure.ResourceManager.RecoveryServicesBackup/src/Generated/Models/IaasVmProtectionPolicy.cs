@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="policyType"></param>
         /// <param name="snapshotConsistencyType"></param>
-        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRpRetentionRangeInDays, string timeZone, IAASVMPolicyType? policyType, IaasVMSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRpRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType, IaasVmSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TimeZone { get; set; }
 
         /// <summary> Gets or sets the PolicyType. </summary>
-        public IAASVMPolicyType? PolicyType { get; set; }
+        public IaasVmPolicyType? PolicyType { get; set; }
 
         /// <summary> Gets or sets the SnapshotConsistencyType. </summary>
-        public IaasVMSnapshotConsistencyType? SnapshotConsistencyType { get; set; }
+        public IaasVmSnapshotConsistencyType? SnapshotConsistencyType { get; set; }
     }
 }

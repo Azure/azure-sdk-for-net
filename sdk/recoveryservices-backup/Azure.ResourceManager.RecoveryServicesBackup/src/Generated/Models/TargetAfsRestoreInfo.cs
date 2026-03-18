@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Target Azure File Share Info. </summary>
-    public partial class TargetAFSRestoreInfo
+    public partial class TargetAfsRestoreInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TargetAFSRestoreInfo"/>. </summary>
-        public TargetAFSRestoreInfo()
+        /// <summary> Initializes a new instance of <see cref="TargetAfsRestoreInfo"/>. </summary>
+        public TargetAfsRestoreInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetAFSRestoreInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetAfsRestoreInfo"/>. </summary>
         /// <param name="name"> File share name. </param>
         /// <param name="targetResourceId"> Target file share resource ARM ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetAFSRestoreInfo(string name, string targetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetAfsRestoreInfo(string name, string targetResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TargetResourceId = targetResourceId;

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="bekDetails"> BEK is bitlocker encryption key. </param>
         /// <param name="encryptionMechanism"> Encryption mechanism: None/ SinglePass/ DoublePass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyAndSecretDetails(KEKDetails kekDetails, BEKDetails bekDetails, string encryptionMechanism, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyAndSecretDetails(KekDetails kekDetails, BekDetails bekDetails, string encryptionMechanism, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KekDetails = kekDetails;
             BekDetails = bekDetails;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> KEK is encryption key for BEK. </summary>
-        public KEKDetails KekDetails { get; }
+        public KekDetails KekDetails { get; }
 
         /// <summary> BEK is bitlocker encryption key. </summary>
-        public BEKDetails BekDetails { get; }
+        public BekDetails BekDetails { get; }
 
         /// <summary> Encryption mechanism: None/ SinglePass/ DoublePass. </summary>
         public string EncryptionMechanism { get; }

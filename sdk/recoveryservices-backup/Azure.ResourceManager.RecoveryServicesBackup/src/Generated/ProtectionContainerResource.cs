@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly ProtectionContainers _protectionContainersRestClient;
         private readonly ClientDiagnostics _backupWorkloadItemsClientDiagnostics;
         private readonly BackupWorkloadItems _backupWorkloadItemsRestClient;
-        private readonly ProtectionContainerResourceData _data;
+        private readonly BackupProtectionContainerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="ProtectionContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProtectionContainerResource(ArmClient client, ProtectionContainerResourceData data) : this(client, data.Id)
+        internal ProtectionContainerResource(ArmClient client, BackupProtectionContainerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProtectionContainerResourceData Data
+        public virtual BackupProtectionContainerData Data
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProtectionContainerResource>> UpdateAsync(WaitUntil waitUntil, ProtectionContainerResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProtectionContainerResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProtectionContainerResourceData.ToRequestContent(data), context);
+                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<ProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<ProtectionContainerResource>(
                     new ProtectionContainerOperationSource(Client),
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProtectionContainerResource> Update(WaitUntil waitUntil, ProtectionContainerResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProtectionContainerResource> Update(WaitUntil waitUntil, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProtectionContainerResourceData.ToRequestContent(data), context);
+                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectionContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<ProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<ProtectionContainerResource>(
                     new ProtectionContainerOperationSource(Client),
@@ -618,12 +618,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                    Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionContainerResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectionContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<ProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -661,12 +661,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                    Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionContainerResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectionContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<ProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -703,12 +703,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                    Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionContainerResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectionContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<ProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -745,12 +745,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                    Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionContainerResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectionContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<ProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -786,12 +786,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                    Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionContainerResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectionContainerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<ProtectionContainerResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -827,12 +827,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectionContainerResourceData> response = Response.FromValue(ProtectionContainerResourceData.FromResponse(result), result);
+                    Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionContainerResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionContainerResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectionContainerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<ProtectionContainerResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

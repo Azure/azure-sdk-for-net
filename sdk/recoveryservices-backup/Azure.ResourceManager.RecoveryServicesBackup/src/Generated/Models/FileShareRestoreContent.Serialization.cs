@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = "AzureFileShareRestoreRequest";
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RecoveryType? recoveryType = default;
+            FileShareRecoveryType? recoveryType = default;
             string sourceResourceId = default;
-            CopyOptions? copyOptions = default;
-            RestoreRequestType? restoreRequestType = default;
+            FileShareCopyOption? copyOptions = default;
+            FileShareRestoreType? restoreRequestType = default;
             IList<RestoreFileSpecs> restoreFileSpecs = default;
-            TargetAFSRestoreInfo targetDetails = default;
+            TargetAfsRestoreInfo targetDetails = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryType = new RecoveryType(prop.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    copyOptions = new CopyOptions(prop.Value.GetString());
+                    copyOptions = new FileShareCopyOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("restoreRequestType"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    restoreRequestType = new RestoreRequestType(prop.Value.GetString());
+                    restoreRequestType = new FileShareRestoreType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("restoreFileSpecs"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    targetDetails = TargetAFSRestoreInfo.DeserializeTargetAFSRestoreInfo(prop.Value, options);
+                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

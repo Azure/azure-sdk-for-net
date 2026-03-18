@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (BackupEngineBaseResourceData item in Value)
+                foreach (BackupEngineData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<BackupEngineBaseResourceData> value = default;
+            IList<BackupEngineData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<BackupEngineBaseResourceData> array = new List<BackupEngineBaseResourceData>();
+                    List<BackupEngineData> array = new List<BackupEngineData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(item, options));
+                        array.Add(BackupEngineData.DeserializeBackupEngineData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupEngineBaseResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupEngineBaseResourceData>());
+            return new BackupEngineBaseResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupEngineData>());
         }
     }
 }

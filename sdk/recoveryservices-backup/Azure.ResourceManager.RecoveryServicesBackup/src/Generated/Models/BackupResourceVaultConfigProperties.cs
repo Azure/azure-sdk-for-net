@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
         /// <param name="isSoftDeleteFeatureStateEditable"> This flag is no longer in use. Please use 'softDeleteFeatureState' to set the soft delete state for the vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupResourceVaultConfigProperties(StorageType? storageModelType, StorageType? storageType, StorageTypeState? storageTypeState, EnhancedSecurityState? enhancedSecurityState, SoftDeleteFeatureState? softDeleteFeatureState, int? softDeleteRetentionPeriodInDays, IList<string> resourceGuardOperationRequests, bool? isSoftDeleteFeatureStateEditable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupResourceVaultConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, EnhancedSecurityState? enhancedSecurityState, SoftDeleteFeatureState? softDeleteFeatureState, int? softDeleteRetentionPeriodInDays, IList<string> resourceGuardOperationRequests, bool? isSoftDeleteFeatureStateEditable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Storage type. </summary>
-        public StorageType? StorageModelType { get; set; }
+        public BackupStorageType? StorageModelType { get; set; }
 
         /// <summary> Storage type. </summary>
-        public StorageType? StorageType { get; set; }
+        public BackupStorageType? StorageType { get; set; }
 
         /// <summary> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </summary>
-        public StorageTypeState? StorageTypeState { get; set; }
+        public BackupStorageTypeState? StorageTypeState { get; set; }
 
         /// <summary> Enabled or Disabled. </summary>
         public EnhancedSecurityState? EnhancedSecurityState { get; set; }

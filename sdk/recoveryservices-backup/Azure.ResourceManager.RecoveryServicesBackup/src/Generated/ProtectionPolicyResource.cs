@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupPolicies _backupPoliciesRestClient;
         private readonly ClientDiagnostics _protectionPolicyOperationStatusesClientDiagnostics;
         private readonly ProtectionPolicyOperationStatuses _protectionPolicyOperationStatusesRestClient;
-        private readonly ProtectionPolicyResourceData _data;
+        private readonly BackupProtectionPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupPolicies";
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="ProtectionPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProtectionPolicyResource(ArmClient client, ProtectionPolicyResourceData data) : this(client, data.Id)
+        internal ProtectionPolicyResource(ArmClient client, BackupProtectionPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProtectionPolicyResourceData Data
+        public virtual BackupProtectionPolicyData Data
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProtectionPolicyResource>> UpdateAsync(WaitUntil waitUntil, ProtectionPolicyResourceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProtectionPolicyResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectionPolicyData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -448,9 +448,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProtectionPolicyResourceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupProtectionPolicyData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 RecoveryServicesBackupArmOperation<ProtectionPolicyResource> operation = new RecoveryServicesBackupArmOperation<ProtectionPolicyResource>(Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProtectionPolicyResource> Update(WaitUntil waitUntil, ProtectionPolicyResourceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProtectionPolicyResource> Update(WaitUntil waitUntil, BackupProtectionPolicyData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -505,9 +505,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProtectionPolicyResourceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupProtectionPolicyData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 RecoveryServicesBackupArmOperation<ProtectionPolicyResource> operation = new RecoveryServicesBackupArmOperation<ProtectionPolicyResource>(Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -549,12 +549,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                    Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionPolicyResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectionPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<ProtectionPolicyResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -592,12 +592,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                    Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionPolicyResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectionPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<ProtectionPolicyResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -634,12 +634,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                    Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionPolicyResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectionPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<ProtectionPolicyResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -676,12 +676,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                    Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionPolicyResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectionPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<ProtectionPolicyResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -717,12 +717,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                    Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionPolicyResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectionPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<ProtectionPolicyResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -758,12 +758,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                    Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                     return Response.FromValue(new ProtectionPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectionPolicyResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectionPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<ProtectionPolicyResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());

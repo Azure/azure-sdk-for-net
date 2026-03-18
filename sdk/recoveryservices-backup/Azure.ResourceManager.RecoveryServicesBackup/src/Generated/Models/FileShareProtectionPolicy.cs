@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="retentionPolicy"> Retention policy with the details on backup copy retention ranges. </param>
         /// <param name="vaultRetentionPolicy"> Retention policy with the details on hardened backup copy retention ranges. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
-        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, WorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, VaultRetentionPolicy vaultRetentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupWorkloadType? workLoadType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, VaultRetentionPolicy vaultRetentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             WorkLoadType = workLoadType;
             SchedulePolicy = schedulePolicy;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of workload for the backup management. </summary>
-        public WorkloadType? WorkLoadType { get; set; }
+        public BackupWorkloadType? WorkLoadType { get; set; }
 
         /// <summary> Backup schedule specified as part of backup policy. </summary>
         public BackupSchedulePolicy SchedulePolicy { get; set; }

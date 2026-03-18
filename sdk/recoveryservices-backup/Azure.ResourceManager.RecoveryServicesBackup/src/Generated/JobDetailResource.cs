@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupJobs _backupJobsRestClient;
         private readonly ClientDiagnostics _jobCancellationsClientDiagnostics;
         private readonly JobCancellations _jobCancellationsRestClient;
-        private readonly JobResourceData _data;
+        private readonly BackupJobData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupJobs";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="JobDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobDetailResource(ArmClient client, JobResourceData data) : this(client, data.Id)
+        internal JobDetailResource(ArmClient client, BackupJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual JobResourceData Data
+        public virtual BackupJobData Data
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                Response<BackupJobData> response = Response.FromValue(BackupJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                Response<BackupJobData> response = Response.FromValue(BackupJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

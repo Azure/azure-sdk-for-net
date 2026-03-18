@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> KEK is encryption key for BEK. </summary>
-    public partial class KEKDetails
+    public partial class KekDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KEKDetails"/>. </summary>
-        internal KEKDetails()
+        /// <summary> Initializes a new instance of <see cref="KekDetails"/>. </summary>
+        internal KekDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KEKDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KekDetails"/>. </summary>
         /// <param name="keyUri"> Key is KEK. </param>
         /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
         /// <param name="keyBackupData"> KEK data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KEKDetails(string keyUri, string keyVaultId, string keyBackupData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KekDetails(string keyUri, string keyVaultId, string keyBackupData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             KeyVaultId = keyVaultId;

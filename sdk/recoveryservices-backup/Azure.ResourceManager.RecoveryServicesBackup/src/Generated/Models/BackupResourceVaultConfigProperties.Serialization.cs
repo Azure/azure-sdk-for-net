@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            StorageType? storageModelType = default;
-            StorageType? storageType = default;
-            StorageTypeState? storageTypeState = default;
+            BackupStorageType? storageModelType = default;
+            BackupStorageType? storageType = default;
+            BackupStorageTypeState? storageTypeState = default;
             EnhancedSecurityState? enhancedSecurityState = default;
             SoftDeleteFeatureState? softDeleteFeatureState = default;
             int? softDeleteRetentionPeriodInDays = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageModelType = new StorageType(prop.Value.GetString());
+                    storageModelType = new BackupStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageType"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageType = new StorageType(prop.Value.GetString());
+                    storageType = new BackupStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageTypeState"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageTypeState = new StorageTypeState(prop.Value.GetString());
+                    storageTypeState = new BackupStorageTypeState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enhancedSecurityState"u8))

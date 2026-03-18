@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _protectionPolicyOperationResultsClientDiagnostics;
         private readonly ProtectionPolicyOperationResults _protectionPolicyOperationResultsRestClient;
-        private readonly ProtectionPolicyResourceData _data;
+        private readonly BackupProtectionPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupPolicies/operationResults";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="ProtectionPolicyOperationResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProtectionPolicyOperationResultResource(ArmClient client, ProtectionPolicyResourceData data) : this(client, data.Id)
+        internal ProtectionPolicyOperationResultResource(ArmClient client, BackupProtectionPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProtectionPolicyResourceData Data
+        public virtual BackupProtectionPolicyData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string backupManagementType = "AzureStorage";
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            WorkloadType? workLoadType = default;
+            BackupWorkloadType? workLoadType = default;
             BackupSchedulePolicy schedulePolicy = default;
             BackupRetentionPolicy retentionPolicy = default;
             VaultRetentionPolicy vaultRetentionPolicy = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    workLoadType = new WorkloadType(prop.Value.GetString());
+                    workLoadType = new BackupWorkloadType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("schedulePolicy"u8))

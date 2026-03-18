@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string sourceResourceId = default;
             DateTimeOffset? lastUpdatedOn = default;
             WorkloadContainerExtendedInfo extendedInfo = default;
-            WorkloadType? workloadType = default;
-            OperationType? operationType = default;
+            BackupWorkloadType? workloadType = default;
+            WorkloadOperationType? operationType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("friendlyName"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    workloadType = new WorkloadType(prop.Value.GetString());
+                    workloadType = new BackupWorkloadType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("operationType"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    operationType = new OperationType(prop.Value.GetString());
+                    operationType = new WorkloadOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

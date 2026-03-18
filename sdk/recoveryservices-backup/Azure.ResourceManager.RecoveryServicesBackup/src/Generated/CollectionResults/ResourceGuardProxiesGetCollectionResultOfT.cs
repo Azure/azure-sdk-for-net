@@ -14,7 +14,7 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal partial class ResourceGuardProxiesGetCollectionResultOfT : Pageable<ResourceGuardProxyBaseResourceData>
+    internal partial class ResourceGuardProxiesGetCollectionResultOfT : Pageable<ResourceGuardProxyData>
     {
         private readonly ResourceGuardProxies _client;
         private readonly string _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ResourceGuardProxiesGetCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ResourceGuardProxyBaseResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ResourceGuardProxyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     yield break;
                 }
                 ResourceGuardProxyBaseResourceList result = ResourceGuardProxyBaseResourceList.FromResponse(response);
-                yield return Page<ResourceGuardProxyBaseResourceData>.FromValues((IReadOnlyList<ResourceGuardProxyBaseResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ResourceGuardProxyData>.FromValues((IReadOnlyList<ResourceGuardProxyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _context) : _client.CreateGetRequest(_subscriptionId, _resourceGroupName, _vaultName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardProxyCollection.GetAll");
             scope.Start();
             try
             {

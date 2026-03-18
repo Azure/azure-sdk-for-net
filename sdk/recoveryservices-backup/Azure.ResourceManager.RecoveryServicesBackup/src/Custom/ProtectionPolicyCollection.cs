@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<ProtectionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, ProtectionPolicyResourceData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<ProtectionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdate(waitUntil, policyName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<ProtectionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, ProtectionPolicyResourceData data, CancellationToken cancellationToken)
+        public virtual Task<ArmOperation<ProtectionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken)
         {
             return CreateOrUpdateAsync(waitUntil, policyName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }

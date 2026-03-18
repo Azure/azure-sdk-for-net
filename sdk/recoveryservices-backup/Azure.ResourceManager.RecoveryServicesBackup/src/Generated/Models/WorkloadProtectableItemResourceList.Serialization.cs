@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Models.WorkloadProtectableItemResource item in Value)
+                foreach (WorkloadProtectableItemResource item in Value)
                 {
-                    writer.WriteObjectValue<Models.WorkloadProtectableItemResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<Models.WorkloadProtectableItemResource> value = default;
+            IList<WorkloadProtectableItemResource> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.WorkloadProtectableItemResource> array = new List<Models.WorkloadProtectableItemResource>();
+                    List<WorkloadProtectableItemResource> array = new List<WorkloadProtectableItemResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(item, options));
+                        array.Add(WorkloadProtectableItemResource.DeserializeWorkloadProtectableItemResource(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadProtectableItemResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<Models.WorkloadProtectableItemResource>());
+            return new WorkloadProtectableItemResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<WorkloadProtectableItemResource>());
         }
     }
 }

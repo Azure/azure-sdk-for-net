@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (JobResourceData item in Value)
+                foreach (BackupJobData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<JobResourceData> value = default;
+            IList<BackupJobData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<JobResourceData> array = new List<JobResourceData>();
+                    List<BackupJobData> array = new List<BackupJobData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JobResourceData.DeserializeJobResourceData(item, options));
+                        array.Add(BackupJobData.DeserializeBackupJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JobResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<JobResourceData>());
+            return new JobResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupJobData>());
         }
     }
 }

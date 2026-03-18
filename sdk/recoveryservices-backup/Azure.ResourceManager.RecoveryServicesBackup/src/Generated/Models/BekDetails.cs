@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> BEK is bitlocker encryption key. </summary>
-    public partial class BEKDetails
+    public partial class BekDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BEKDetails"/>. </summary>
-        internal BEKDetails()
+        /// <summary> Initializes a new instance of <see cref="BekDetails"/>. </summary>
+        internal BekDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BEKDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BekDetails"/>. </summary>
         /// <param name="secretUri"> Secret is BEK. </param>
         /// <param name="secretVaultId"> ID of the Key Vault where this Secret is stored. </param>
         /// <param name="secretData"> BEK data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BEKDetails(string secretUri, string secretVaultId, string secretData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BekDetails(string secretUri, string secretVaultId, string secretData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             SecretVaultId = secretVaultId;

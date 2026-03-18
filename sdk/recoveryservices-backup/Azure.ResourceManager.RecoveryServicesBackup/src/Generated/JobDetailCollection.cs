@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                Response<BackupJobData> response = Response.FromValue(BackupJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                Response<BackupJobData> response = Response.FromValue(BackupJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JobResourceData, JobDetailResource>(new BackupJobsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupJobData, JobDetailResource>(new BackupJobsGetAllAsyncCollectionResultOfT(
                 _backupJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JobResourceData, JobDetailResource>(new BackupJobsGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupJobData, JobDetailResource>(new BackupJobsGetAllCollectionResultOfT(
                 _backupJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -275,14 +275,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<JobResourceData> response = default;
+                Response<BackupJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JobResourceData)null, result);
+                        response = Response.FromValue((BackupJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -332,14 +332,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<JobResourceData> response = default;
+                Response<BackupJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JobResourceData)null, result);
+                        response = Response.FromValue((BackupJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -389,14 +389,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<JobResourceData> response = default;
+                Response<BackupJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JobResourceData)null, result);
+                        response = Response.FromValue((BackupJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -450,14 +450,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _jobDetailsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<JobResourceData> response = default;
+                Response<BackupJobData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(JobResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupJobData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((JobResourceData)null, result);
+                        response = Response.FromValue((BackupJobData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

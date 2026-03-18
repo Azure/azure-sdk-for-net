@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ProtectionPolicyResourceData item in Value)
+                foreach (BackupProtectionPolicyData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ProtectionPolicyResourceData> value = default;
+            IList<BackupProtectionPolicyData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ProtectionPolicyResourceData> array = new List<ProtectionPolicyResourceData>();
+                    List<BackupProtectionPolicyData> array = new List<BackupProtectionPolicyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionPolicyResourceData.DeserializeProtectionPolicyResourceData(item, options));
+                        array.Add(BackupProtectionPolicyData.DeserializeBackupProtectionPolicyData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProtectionPolicyResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ProtectionPolicyResourceData>());
+            return new ProtectionPolicyResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupProtectionPolicyData>());
         }
     }
 }

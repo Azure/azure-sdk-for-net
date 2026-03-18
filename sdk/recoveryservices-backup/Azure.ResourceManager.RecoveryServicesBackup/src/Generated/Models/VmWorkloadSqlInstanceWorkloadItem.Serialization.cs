@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
-                foreach (Models.SqlDataDirectory item in DataDirectoryPaths)
+                foreach (SqlDataDirectory item in DataDirectoryPaths)
                 {
-                    writer.WriteObjectValue<Models.SqlDataDirectory>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isAutoProtectable = default;
             int? subinquireditemcount = default;
             int? subWorkloadItemCount = default;
-            IList<Models.SqlDataDirectory> dataDirectoryPaths = default;
+            IList<SqlDataDirectory> dataDirectoryPaths = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("backupManagementType"u8))
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.SqlDataDirectory> array = new List<Models.SqlDataDirectory>();
+                    List<SqlDataDirectory> array = new List<SqlDataDirectory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
+                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
                     }
                     dataDirectoryPaths = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isAutoProtectable,
                 subinquireditemcount,
                 subWorkloadItemCount,
-                dataDirectoryPaths ?? new ChangeTrackingList<Models.SqlDataDirectory>());
+                dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>());
         }
     }
 }

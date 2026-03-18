@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            BackupPrivateEndpointConnectionProvisioningState? provisioningState = default;
             PrivateEndpoint privateEndpoint = default;
             IList<VaultSubResourceType> groupIds = default;
             RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new BackupPrivateEndpointConnectionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpoint"u8))

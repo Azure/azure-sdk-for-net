@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="BackupGenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownProtectionPolicy))]
     public abstract partial class ProtectionPolicy : IJsonModel<ProtectionPolicy>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureSql":
                         return SqlProtectionPolicy.DeserializeSqlProtectionPolicy(element, options);
                     case "GenericProtectionPolicy":
-                        return GenericProtectionPolicy.DeserializeGenericProtectionPolicy(element, options);
+                        return BackupGenericProtectionPolicy.DeserializeBackupGenericProtectionPolicy(element, options);
                     case "MAB":
                         return MabProtectionPolicy.DeserializeMabProtectionPolicy(element, options);
                 }

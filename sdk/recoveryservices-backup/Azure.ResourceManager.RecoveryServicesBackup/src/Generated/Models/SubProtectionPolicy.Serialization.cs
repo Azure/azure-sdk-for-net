@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            PolicyType? policyType = default;
+            SubProtectionPolicyType? policyType = default;
             BackupSchedulePolicy schedulePolicy = default;
             BackupRetentionPolicy retentionPolicy = default;
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    policyType = new PolicyType(prop.Value.GetString());
+                    policyType = new SubProtectionPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("schedulePolicy"u8))

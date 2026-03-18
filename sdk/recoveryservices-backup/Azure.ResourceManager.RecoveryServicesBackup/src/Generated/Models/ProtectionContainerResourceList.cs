@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="ProtectionContainerResourceList"/>. </summary>
         internal ProtectionContainerResourceList()
         {
-            Value = new ChangeTrackingList<ProtectionContainerResourceData>();
+            Value = new ChangeTrackingList<BackupProtectionContainerData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProtectionContainerResourceList"/>. </summary>
         /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> List of resources. </param>
-        internal ProtectionContainerResourceList(string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProtectionContainerResourceData> value) : base(nextLink, additionalBinaryDataProperties)
+        internal ProtectionContainerResourceList(string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<BackupProtectionContainerData> value) : base(nextLink, additionalBinaryDataProperties)
         {
             Value = value;
         }
 
         /// <summary> List of resources. </summary>
-        public IList<ProtectionContainerResourceData> Value { get; }
+        public IList<BackupProtectionContainerData> Value { get; }
     }
 }

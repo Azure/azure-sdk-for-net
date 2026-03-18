@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItemResourceList"/>. </summary>
         internal WorkloadProtectableItemResourceList()
         {
-            Value = new ChangeTrackingList<Models.WorkloadProtectableItemResource>();
+            Value = new ChangeTrackingList<WorkloadProtectableItemResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadProtectableItemResourceList"/>. </summary>
         /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> List of resources. </param>
-        internal WorkloadProtectableItemResourceList(string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Models.WorkloadProtectableItemResource> value) : base(nextLink, additionalBinaryDataProperties)
+        internal WorkloadProtectableItemResourceList(string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WorkloadProtectableItemResource> value) : base(nextLink, additionalBinaryDataProperties)
         {
             Value = value;
         }
 
         /// <summary> List of resources. </summary>
-        public IList<Models.WorkloadProtectableItemResource> Value { get; }
+        public IList<WorkloadProtectableItemResource> Value { get; }
     }
 }

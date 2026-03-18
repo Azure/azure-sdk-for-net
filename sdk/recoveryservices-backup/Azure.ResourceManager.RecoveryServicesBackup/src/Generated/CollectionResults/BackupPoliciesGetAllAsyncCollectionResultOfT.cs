@@ -15,7 +15,7 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal partial class BackupPoliciesGetAllAsyncCollectionResultOfT : AsyncPageable<ProtectionPolicyResourceData>
+    internal partial class BackupPoliciesGetAllAsyncCollectionResultOfT : AsyncPageable<BackupProtectionPolicyData>
     {
         private readonly BackupPolicies _client;
         private readonly string _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BackupPoliciesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ProtectionPolicyResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BackupProtectionPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     yield break;
                 }
                 ProtectionPolicyResourceList result = ProtectionPolicyResourceList.FromResponse(response);
-                yield return Page<ProtectionPolicyResourceData>.FromValues((IReadOnlyList<ProtectionPolicyResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BackupProtectionPolicyData>.FromValues((IReadOnlyList<BackupProtectionPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

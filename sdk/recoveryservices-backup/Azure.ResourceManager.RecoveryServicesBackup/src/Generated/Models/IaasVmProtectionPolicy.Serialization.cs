@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
             int? instantRpRetentionRangeInDays = default;
             string timeZone = default;
-            IAASVMPolicyType? policyType = default;
-            IaasVMSnapshotConsistencyType? snapshotConsistencyType = default;
+            IaasVmPolicyType? policyType = default;
+            IaasVmSnapshotConsistencyType? snapshotConsistencyType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protectedItemsCount"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    policyType = new IAASVMPolicyType(prop.Value.GetString());
+                    policyType = new IaasVmPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("snapshotConsistencyType"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    snapshotConsistencyType = new IaasVMSnapshotConsistencyType(prop.Value.GetString());
+                    snapshotConsistencyType = new IaasVmSnapshotConsistencyType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

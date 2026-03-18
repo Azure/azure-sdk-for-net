@@ -14,7 +14,7 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal partial class BackupEnginesGetAllCollectionResultOfT : Pageable<BackupEngineBaseResourceData>
+    internal partial class BackupEnginesGetAllCollectionResultOfT : Pageable<BackupEngineData>
     {
         private readonly BackupEngines _client;
         private readonly string _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BackupEnginesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BackupEngineBaseResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<BackupEngineData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     yield break;
                 }
                 BackupEngineBaseResourceList result = BackupEngineBaseResourceList.FromResponse(response);
-                yield return Page<BackupEngineBaseResourceData>.FromValues((IReadOnlyList<BackupEngineBaseResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BackupEngineData>.FromValues((IReadOnlyList<BackupEngineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _vaultName, _filter, _skipToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _vaultName, _filter, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupEngineBaseResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BackupEngineCollection.GetAll");
             scope.Start();
             try
             {

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            OverwriteOptions? overwriteOption = default;
+            RestoreOverwriteOption? overwriteOption = default;
             string containerId = default;
             string databaseName = default;
             string targetDirectoryForFileRestore = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    overwriteOption = new OverwriteOptions(prop.Value.GetString());
+                    overwriteOption = new RestoreOverwriteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("containerId"u8))

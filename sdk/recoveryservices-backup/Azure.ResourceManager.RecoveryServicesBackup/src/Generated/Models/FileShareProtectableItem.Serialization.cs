@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string parentContainerFabricId = default;
             string parentContainerFriendlyName = default;
-            AzureFileShareType? azureFileShareType = default;
+            BackupFileShareType? azureFileShareType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("backupManagementType"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    azureFileShareType = new AzureFileShareType(prop.Value.GetString());
+                    azureFileShareType = new BackupFileShareType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

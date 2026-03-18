@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _protectedItemOperationStatusesClientDiagnostics;
         private readonly ProtectedItemOperationStatuses _protectedItemOperationStatusesRestClient;
-        private readonly ProtectedItemResourceData _data;
+        private readonly BackupProtectedItemData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/operationsStatus";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="ProtectedItemOperationStatusResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProtectedItemOperationStatusResource(ArmClient client, ProtectedItemResourceData data) : this(client, data.Id)
+        internal ProtectedItemOperationStatusResource(ArmClient client, BackupProtectedItemData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProtectedItemResourceData Data
+        public virtual BackupProtectedItemData Data
         {
             get
             {

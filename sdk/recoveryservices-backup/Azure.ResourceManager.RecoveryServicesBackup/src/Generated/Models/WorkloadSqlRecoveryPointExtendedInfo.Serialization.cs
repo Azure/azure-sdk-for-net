@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
-                foreach (Models.SqlDataDirectory item in DataDirectoryPaths)
+                foreach (SqlDataDirectory item in DataDirectoryPaths)
                 {
-                    writer.WriteObjectValue<Models.SqlDataDirectory>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             DateTimeOffset? dataDirectoryTimeInUTC = default;
-            IList<Models.SqlDataDirectory> dataDirectoryPaths = default;
+            IList<SqlDataDirectory> dataDirectoryPaths = default;
             IList<DatabaseInRP> includedDatabases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.SqlDataDirectory> array = new List<Models.SqlDataDirectory>();
+                    List<SqlDataDirectory> array = new List<SqlDataDirectory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
+                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
                     }
                     dataDirectoryPaths = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryTimeInUTC, dataDirectoryPaths ?? new ChangeTrackingList<Models.SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<DatabaseInRP>(), additionalBinaryDataProperties);
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryTimeInUTC, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<DatabaseInRP>(), additionalBinaryDataProperties);
         }
     }
 }

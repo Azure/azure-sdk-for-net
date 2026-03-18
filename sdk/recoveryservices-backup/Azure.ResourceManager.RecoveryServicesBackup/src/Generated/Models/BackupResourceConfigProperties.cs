@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="dedupState"> Vault Dedup state. </param>
         /// <param name="xcoolState"> Vault x-cool state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupResourceConfigProperties(StorageType? storageModelType, StorageType? storageType, StorageTypeState? storageTypeState, bool? crossRegionRestoreFlag, DedupState? dedupState, XcoolState? xcoolState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, bool? crossRegionRestoreFlag, VaultDedupState? dedupState, VaultXcoolState? xcoolState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -41,21 +41,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Storage type. </summary>
-        public StorageType? StorageModelType { get; set; }
+        public BackupStorageType? StorageModelType { get; set; }
 
         /// <summary> Storage type. </summary>
-        public StorageType? StorageType { get; set; }
+        public BackupStorageType? StorageType { get; set; }
 
         /// <summary> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </summary>
-        public StorageTypeState? StorageTypeState { get; set; }
+        public BackupStorageTypeState? StorageTypeState { get; set; }
 
         /// <summary> Opt in details of Cross Region Restore feature. </summary>
         public bool? CrossRegionRestoreFlag { get; set; }
 
         /// <summary> Vault Dedup state. </summary>
-        public DedupState? DedupState { get; set; }
+        public VaultDedupState? DedupState { get; set; }
 
         /// <summary> Vault x-cool state. </summary>
-        public XcoolState? XcoolState { get; set; }
+        public VaultXcoolState? XcoolState { get; set; }
     }
 }

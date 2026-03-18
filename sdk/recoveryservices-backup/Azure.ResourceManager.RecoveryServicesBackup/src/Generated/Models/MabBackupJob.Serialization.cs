@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<JobSupportedAction> actionsInfo = default;
             string mabServerName = default;
             MabServerType? mabServerType = default;
-            WorkloadType? workloadType = default;
+            BackupWorkloadType? workloadType = default;
             IList<MabErrorInfo> errorDetails = default;
             MabBackupJobExtendedInfo extendedInfo = default;
             foreach (var prop in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    workloadType = new WorkloadType(prop.Value.GetString());
+                    workloadType = new BackupWorkloadType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))

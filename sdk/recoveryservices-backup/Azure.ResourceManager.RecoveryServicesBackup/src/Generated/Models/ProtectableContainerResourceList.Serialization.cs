@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Models.ProtectableContainerResource item in Value)
+                foreach (ProtectableContainerResource item in Value)
                 {
-                    writer.WriteObjectValue<Models.ProtectableContainerResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<Models.ProtectableContainerResource> value = default;
+            IList<ProtectableContainerResource> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.ProtectableContainerResource> array = new List<Models.ProtectableContainerResource>();
+                    List<ProtectableContainerResource> array = new List<ProtectableContainerResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
+                        array.Add(ProtectableContainerResource.DeserializeProtectableContainerResource(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProtectableContainerResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<Models.ProtectableContainerResource>());
+            return new ProtectableContainerResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ProtectableContainerResource>());
         }
     }
 }

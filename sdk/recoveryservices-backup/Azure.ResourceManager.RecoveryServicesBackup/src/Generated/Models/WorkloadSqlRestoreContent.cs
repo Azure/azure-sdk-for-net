@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
         public WorkloadSqlRestoreContent()
         {
-            AlternateDirectoryPaths = new ChangeTrackingList<Models.SqlDataDirectoryMapping>();
+            AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="shouldUseAlternateTargetLocation"> Default option set to true. If this is set to false, alternate data directory must be provided. </param>
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
-        internal WorkloadSqlRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryType? recoveryType, string sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, string targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<Models.SqlDataDirectoryMapping> alternateDirectoryPaths) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId)
+        internal WorkloadSqlRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, string sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetResourceGroupName, UserAssignedManagedIdentityDetails userAssignedManagedIdentityDetails, SnapshotRestoreContent snapshotRestoreParameters, string targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetResourceGroupName, userAssignedManagedIdentityDetails, snapshotRestoreParameters, targetVirtualMachineId)
         {
             ShouldUseAlternateTargetLocation = shouldUseAlternateTargetLocation;
             IsNonRecoverable = isNonRecoverable;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         private protected WorkloadSqlRestoreContent(string objectType) : base("AzureWorkloadSQLRestoreRequest")
         {
-            AlternateDirectoryPaths = new ChangeTrackingList<Models.SqlDataDirectoryMapping>();
+            AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
         }
 
         /// <summary> Default option set to true. If this is set to false, alternate data directory must be provided. </summary>
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? IsNonRecoverable { get; set; }
 
         /// <summary> Data directory details. </summary>
-        public IList<Models.SqlDataDirectoryMapping> AlternateDirectoryPaths { get; }
+        public IList<SqlDataDirectoryMapping> AlternateDirectoryPaths { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         ProtectedItemResource IOperationSource<ProtectedItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProtectedItemResourceData data = ProtectedItemResourceData.DeserializeProtectedItemResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BackupProtectedItemData data = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ProtectedItemResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         async ValueTask<ProtectedItemResource> IOperationSource<ProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProtectedItemResourceData data = ProtectedItemResourceData.DeserializeProtectedItemResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BackupProtectedItemData data = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ProtectedItemResource(_client, data);
         }
     }

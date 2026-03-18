@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string backupManagementType = "AzureWorkload";
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            WorkloadType? workLoadType = default;
+            BackupWorkloadType? workLoadType = default;
             VMWorkloadPolicyType? vmWorkloadPolicyType = default;
             BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    workLoadType = new WorkloadType(prop.Value.GetString());
+                    workLoadType = new BackupWorkloadType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vmWorkloadPolicyType"u8))

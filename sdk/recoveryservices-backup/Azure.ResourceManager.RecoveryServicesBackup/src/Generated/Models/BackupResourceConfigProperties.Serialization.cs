@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            StorageType? storageModelType = default;
-            StorageType? storageType = default;
-            StorageTypeState? storageTypeState = default;
+            BackupStorageType? storageModelType = default;
+            BackupStorageType? storageType = default;
+            BackupStorageTypeState? storageTypeState = default;
             bool? crossRegionRestoreFlag = default;
-            DedupState? dedupState = default;
-            XcoolState? xcoolState = default;
+            VaultDedupState? dedupState = default;
+            VaultXcoolState? xcoolState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageModelType = new StorageType(prop.Value.GetString());
+                    storageModelType = new BackupStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageType"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageType = new StorageType(prop.Value.GetString());
+                    storageType = new BackupStorageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageTypeState"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    storageTypeState = new StorageTypeState(prop.Value.GetString());
+                    storageTypeState = new BackupStorageTypeState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("crossRegionRestoreFlag"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dedupState = new DedupState(prop.Value.GetString());
+                    dedupState = new VaultDedupState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("xcoolState"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    xcoolState = new XcoolState(prop.Value.GetString());
+                    xcoolState = new VaultXcoolState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

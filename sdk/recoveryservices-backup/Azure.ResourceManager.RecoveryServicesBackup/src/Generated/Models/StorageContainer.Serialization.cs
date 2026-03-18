@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string resourceGroup = default;
             long? protectedItemCount = default;
             AcquireStorageAccountLock? acquireStorageAccountLock = default;
-            OperationType? operationType = default;
+            WorkloadOperationType? operationType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("friendlyName"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    operationType = new OperationType(prop.Value.GetString());
+                    operationType = new WorkloadOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

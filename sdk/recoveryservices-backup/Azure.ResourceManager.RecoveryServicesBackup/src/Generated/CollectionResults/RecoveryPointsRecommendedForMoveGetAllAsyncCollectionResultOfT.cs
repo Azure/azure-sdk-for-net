@@ -15,7 +15,7 @@ using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    internal partial class RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT : AsyncPageable<RecoveryPointResourceData>
+    internal partial class RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT : AsyncPageable<BackupRecoveryPointData>
     {
         private readonly RecoveryPointsRecommendedForMove _client;
         private readonly string _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RecoveryPointResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<BackupRecoveryPointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     yield break;
                 }
                 RecoveryPointResourceList result = RecoveryPointResourceList.FromResponse(response);
-                yield return Page<RecoveryPointResourceData>.FromValues((IReadOnlyList<RecoveryPointResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<BackupRecoveryPointData>.FromValues((IReadOnlyList<BackupRecoveryPointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

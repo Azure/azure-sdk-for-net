@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Backup engine type when Azure Backup Server is used to manage the backups. </summary>
-    public partial class BackupServerEngine : BackupEngineBase
+    public partial class BackupServerEngine : BackupGenericEngine
     {
         /// <summary> Initializes a new instance of <see cref="BackupServerEngine"/>. </summary>
         internal BackupServerEngine() : base(BackupEngineType.AzureBackupServerEngine)

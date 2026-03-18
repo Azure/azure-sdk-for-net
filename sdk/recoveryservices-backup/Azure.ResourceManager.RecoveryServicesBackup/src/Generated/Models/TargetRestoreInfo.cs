@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="databaseName"> Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana. </param>
         /// <param name="targetDirectoryForFileRestore"> Target directory location for restore as files. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetRestoreInfo(OverwriteOptions? overwriteOption, string containerId, string databaseName, string targetDirectoryForFileRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetRestoreInfo(RestoreOverwriteOption? overwriteOption, string containerId, string databaseName, string targetDirectoryForFileRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OverwriteOption = overwriteOption;
             ContainerId = containerId;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Can Overwrite if Target DataBase already exists. </summary>
-        public OverwriteOptions? OverwriteOption { get; set; }
+        public RestoreOverwriteOption? OverwriteOption { get; set; }
 
         /// <summary> Resource Id name of the container in which Target DataBase resides. </summary>
         public string ContainerId { get; set; }

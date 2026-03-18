@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
         internal WorkloadSqlRecoveryPointExtendedInfo()
         {
-            DataDirectoryPaths = new ChangeTrackingList<Models.SqlDataDirectory>();
+            DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
             IncludedDatabases = new ChangeTrackingList<DatabaseInRP>();
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
         /// <param name="includedDatabases"> List of databases included in recovery point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryTimeInUTC, IList<Models.SqlDataDirectory> dataDirectoryPaths, IList<DatabaseInRP> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryTimeInUTC, IList<SqlDataDirectory> dataDirectoryPaths, IList<DatabaseInRP> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataDirectoryTimeInUTC = dataDirectoryTimeInUTC;
             DataDirectoryPaths = dataDirectoryPaths;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? DataDirectoryTimeInUTC { get; }
 
         /// <summary> List of data directory paths during restore operation. </summary>
-        public IList<Models.SqlDataDirectory> DataDirectoryPaths { get; }
+        public IList<SqlDataDirectory> DataDirectoryPaths { get; }
 
         /// <summary> List of databases included in recovery point. </summary>
         public IList<DatabaseInRP> IncludedDatabases { get; }

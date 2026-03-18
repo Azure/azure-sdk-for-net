@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ProtectedItemResourceData item in Value)
+                foreach (BackupProtectedItemData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ProtectedItemResourceData> value = default;
+            IList<BackupProtectedItemData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ProtectedItemResourceData> array = new List<ProtectedItemResourceData>();
+                    List<BackupProtectedItemData> array = new List<BackupProtectedItemData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProtectedItemResourceData.DeserializeProtectedItemResourceData(item, options));
+                        array.Add(BackupProtectedItemData.DeserializeBackupProtectedItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProtectedItemResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ProtectedItemResourceData>());
+            return new ProtectedItemResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupProtectedItemData>());
         }
     }
 }

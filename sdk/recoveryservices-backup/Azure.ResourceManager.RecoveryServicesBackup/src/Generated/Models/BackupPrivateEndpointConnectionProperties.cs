@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPrivateEndpointConnectionProperties(ProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IList<VaultSubResourceType> groupIds, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState, PrivateEndpoint privateEndpoint, IList<VaultSubResourceType> groupIds, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public BackupPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> Gets or sets private endpoint associated with the private endpoint connection. </summary>
         internal PrivateEndpoint PrivateEndpoint { get; set; }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _privateEndpointClientDiagnostics;
         private readonly PrivateEndpoint _privateEndpointRestClient;
-        private readonly PrivateEndpointConnectionResourceData _data;
+        private readonly BackupPrivateEndpointConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/privateEndpointConnections/operationsStatus";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointResource(ArmClient client, PrivateEndpointConnectionResourceData data) : this(client, data.Id)
+        internal PrivateEndpointResource(ArmClient client, BackupPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PrivateEndpointConnectionResourceData Data
+        public virtual BackupPrivateEndpointConnectionData Data
         {
             get
             {

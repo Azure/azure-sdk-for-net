@@ -517,12 +517,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             return GetExportJobsOperationResults().Get(vaultName, operationId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BackupEngineBaseResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of BackupEngines in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="vaultName"> The vaultName for the resource. </param>
-        /// <returns> An object representing collection of BackupEngineBaseResources and their operations over a BackupEngineBaseResource. </returns>
-        public virtual BackupEngineBaseResourceCollection GetBackupEngineBaseResources(string vaultName)
+        /// <returns> An object representing collection of BackupEngines and their operations over a BackupEngineResource. </returns>
+        public virtual BackupEngineCollection GetBackupEngines(string vaultName)
         {
-            return GetCachedClient(client => new BackupEngineBaseResourceCollection(client, Id, vaultName));
+            return GetCachedClient(client => new BackupEngineCollection(client, Id, vaultName));
         }
 
         /// <summary>
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BackupEngineBaseResource>> GetBackupEngineBaseResourceAsync(string vaultName, string backupEngineName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupEngineResource>> GetBackupEngineAsync(string vaultName, string backupEngineName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
-            return await GetBackupEngineBaseResources(vaultName).GetAsync(backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
+            return await GetBackupEngines(vaultName).GetAsync(backupEngineName, filter, skipToken, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -582,19 +582,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackupEngineBaseResource> GetBackupEngineBaseResource(string vaultName, string backupEngineName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Response<BackupEngineResource> GetBackupEngine(string vaultName, string backupEngineName, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
-            return GetBackupEngineBaseResources(vaultName).Get(backupEngineName, filter, skipToken, cancellationToken);
+            return GetBackupEngines(vaultName).Get(backupEngineName, filter, skipToken, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGuardProxyBaseResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of ResourceGuardProxies in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="vaultName"> The vaultName for the resource. </param>
-        /// <returns> An object representing collection of ResourceGuardProxyBaseResources and their operations over a ResourceGuardProxyBaseResource. </returns>
-        public virtual ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources(string vaultName)
+        /// <returns> An object representing collection of ResourceGuardProxies and their operations over a ResourceGuardProxyResource. </returns>
+        public virtual ResourceGuardProxyCollection GetResourceGuardProxies(string vaultName)
         {
-            return GetCachedClient(client => new ResourceGuardProxyBaseResourceCollection(client, Id, vaultName));
+            return GetCachedClient(client => new ResourceGuardProxyCollection(client, Id, vaultName));
         }
 
         /// <summary>
@@ -620,11 +620,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceGuardProxyBaseResource>> GetResourceGuardProxyBaseResourceAsync(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProxyResource>> GetResourceGuardProxyAsync(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            return await GetResourceGuardProxyBaseResources(vaultName).GetAsync(resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGuardProxies(vaultName).GetAsync(resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -650,18 +650,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceGuardProxyBaseResource> GetResourceGuardProxyBaseResource(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProxyResource> GetResourceGuardProxy(string vaultName, string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
 
-            return GetResourceGuardProxyBaseResources(vaultName).Get(resourceGuardProxyName, cancellationToken);
+            return GetResourceGuardProxies(vaultName).Get(resourceGuardProxyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProtectionIntentResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ProtectionIntentResources and their operations over a ProtectionIntentResource. </returns>
-        public virtual ProtectionIntentResourceCollection GetProtectionIntentResources()
+        /// <summary> Gets a collection of BackupProtectionIntents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of BackupProtectionIntents and their operations over a BackupProtectionIntentResource. </returns>
+        public virtual BackupProtectionIntentCollection GetBackupProtectionIntents()
         {
-            return GetCachedClient(client => new ProtectionIntentResourceCollection(client, Id));
+            return GetCachedClient(client => new BackupProtectionIntentCollection(client, Id));
         }
 
         /// <summary>
@@ -689,13 +689,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProtectionIntentResource>> GetProtectionIntentResourceAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupProtectionIntentResource>> GetBackupProtectionIntentAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            return await GetProtectionIntentResources().GetAsync(vaultName, fabricName, intentObjectName, cancellationToken).ConfigureAwait(false);
+            return await GetBackupProtectionIntents().GetAsync(vaultName, fabricName, intentObjectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -723,13 +723,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProtectionIntentResource> GetProtectionIntentResource(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
+        public virtual Response<BackupProtectionIntentResource> GetBackupProtectionIntent(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            return GetProtectionIntentResources().Get(vaultName, fabricName, intentObjectName, cancellationToken);
+            return GetBackupProtectionIntents().Get(vaultName, fabricName, intentObjectName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="ResourceGroupResource"/>. </summary>

@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (Models.BackupManagementUsage item in Value)
+                foreach (BackupManagementUsage item in Value)
                 {
-                    writer.WriteObjectValue<Models.BackupManagementUsage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<Models.BackupManagementUsage> value = default;
+            IList<BackupManagementUsage> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.BackupManagementUsage> array = new List<Models.BackupManagementUsage>();
+                    List<BackupManagementUsage> array = new List<BackupManagementUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.BackupManagementUsage.DeserializeBackupManagementUsage(item, options));
+                        array.Add(BackupManagementUsage.DeserializeBackupManagementUsage(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupManagementUsageList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<Models.BackupManagementUsage>());
+            return new BackupManagementUsageList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupManagementUsage>());
         }
     }
 }

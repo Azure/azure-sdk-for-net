@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="snapshotBackupAdditionalDetails"> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubProtectionPolicy(PolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of backup policy type. </summary>
-        public PolicyType? PolicyType { get; set; }
+        public SubProtectionPolicyType? PolicyType { get; set; }
 
         /// <summary> Backup schedule specified as part of backup policy. </summary>
         public BackupSchedulePolicy SchedulePolicy { get; set; }

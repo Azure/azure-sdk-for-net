@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ResourceGuardProxyBaseResourceData item in Value)
+                foreach (ResourceGuardProxyData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ResourceGuardProxyBaseResourceData> value = default;
+            IList<ResourceGuardProxyData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ResourceGuardProxyBaseResourceData> array = new List<ResourceGuardProxyBaseResourceData>();
+                    List<ResourceGuardProxyData> array = new List<ResourceGuardProxyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(item, options));
+                        array.Add(ResourceGuardProxyData.DeserializeResourceGuardProxyData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceGuardProxyBaseResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ResourceGuardProxyBaseResourceData>());
+            return new ResourceGuardProxyBaseResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ResourceGuardProxyData>());
         }
     }
 }

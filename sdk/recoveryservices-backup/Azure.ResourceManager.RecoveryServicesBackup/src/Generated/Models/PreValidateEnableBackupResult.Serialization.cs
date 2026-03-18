@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            ValidationStatus? status = default;
+            BackupValidationStatus? status = default;
             string errorCode = default;
             string errorMessage = default;
             string recommendation = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(prop.Value.GetString());
+                    status = new BackupValidationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorCode"u8))

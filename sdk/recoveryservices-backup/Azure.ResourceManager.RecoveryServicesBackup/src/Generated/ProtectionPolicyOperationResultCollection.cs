@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectionPolicyResourceData> response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProtectionPolicyResourceData> response = default;
+                Response<BackupProtectionPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectionPolicyResourceData)null, result);
+                        response = Response.FromValue((BackupProtectionPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProtectionPolicyResourceData> response = default;
+                Response<BackupProtectionPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectionPolicyResourceData)null, result);
+                        response = Response.FromValue((BackupProtectionPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProtectionPolicyResourceData> response = default;
+                Response<BackupProtectionPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectionPolicyResourceData)null, result);
+                        response = Response.FromValue((BackupProtectionPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectionPolicyOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProtectionPolicyResourceData> response = default;
+                Response<BackupProtectionPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectionPolicyResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectionPolicyResourceData)null, result);
+                        response = Response.FromValue((BackupProtectionPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("alternateDirectoryPaths"u8);
                 writer.WriteStartArray();
-                foreach (Models.SqlDataDirectoryMapping item in AlternateDirectoryPaths)
+                foreach (SqlDataDirectoryMapping item in AlternateDirectoryPaths)
                 {
-                    writer.WriteObjectValue<Models.SqlDataDirectoryMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

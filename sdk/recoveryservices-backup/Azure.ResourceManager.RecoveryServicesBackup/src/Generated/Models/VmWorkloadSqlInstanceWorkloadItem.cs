@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceWorkloadItem"/>. </summary>
         internal VmWorkloadSqlInstanceWorkloadItem()
         {
-            DataDirectoryPaths = new ChangeTrackingList<Models.SqlDataDirectory>();
+            DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceWorkloadItem"/>. </summary>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="dataDirectoryPaths"> Data Directory Paths for default directories. </param>
-        internal VmWorkloadSqlInstanceWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string serverName, bool? isAutoProtectable, int? subinquireditemcount, int? subWorkloadItemCount, IList<Models.SqlDataDirectory> dataDirectoryPaths) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
+        internal VmWorkloadSqlInstanceWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string serverName, bool? isAutoProtectable, int? subinquireditemcount, int? subWorkloadItemCount, IList<SqlDataDirectory> dataDirectoryPaths) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
         {
             DataDirectoryPaths = dataDirectoryPaths;
         }
 
         /// <summary> Data Directory Paths for default directories. </summary>
-        public IList<Models.SqlDataDirectory> DataDirectoryPaths { get; }
+        public IList<SqlDataDirectory> DataDirectoryPaths { get; }
     }
 }

@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     return new NoValueResponse<PrivateEndpointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointResource(Client, PrivateEndpointResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, Id), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     return new NoValueResponse<PrivateEndpointResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointResource(Client, PrivateEndpointResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), response.GetRawResponse());
+                return Response.FromValue(new PrivateEndpointResource(Client, Id), response.GetRawResponse());
             }
             catch (Exception e)
             {

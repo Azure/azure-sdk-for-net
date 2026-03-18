@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RecoveryPointResourceData item in Value)
+                foreach (BackupRecoveryPointData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<RecoveryPointResourceData> value = default;
+            IList<BackupRecoveryPointData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<RecoveryPointResourceData> array = new List<RecoveryPointResourceData>();
+                    List<BackupRecoveryPointData> array = new List<BackupRecoveryPointData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointResourceData.DeserializeRecoveryPointResourceData(item, options));
+                        array.Add(BackupRecoveryPointData.DeserializeBackupRecoveryPointData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecoveryPointResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<RecoveryPointResourceData>());
+            return new RecoveryPointResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupRecoveryPointData>());
         }
     }
 }

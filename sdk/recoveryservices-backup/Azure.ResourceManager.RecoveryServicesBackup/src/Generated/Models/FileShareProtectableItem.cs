@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="parentContainerFabricId"> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </param>
         /// <param name="parentContainerFriendlyName"> Friendly name of container to which this protectable item belongs. </param>
         /// <param name="azureFileShareType"> File Share type XSync or XSMB. </param>
-        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentContainerFabricId, string parentContainerFriendlyName, AzureFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties)
+        internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties)
         {
             ParentContainerFabricId = parentContainerFabricId;
             ParentContainerFriendlyName = parentContainerFriendlyName;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ParentContainerFriendlyName { get; }
 
         /// <summary> File Share type XSync or XSMB. </summary>
-        public AzureFileShareType? AzureFileShareType { get; }
+        public BackupFileShareType? AzureFileShareType { get; }
     }
 }

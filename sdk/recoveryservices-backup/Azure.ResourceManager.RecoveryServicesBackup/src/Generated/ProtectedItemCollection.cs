@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, ProtectedItemResourceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
             Argument.AssertNotNull(data, nameof(data));
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, ProtectedItemResourceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<ProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<ProtectedItemResource>(
                     new ProtectedItemOperationSource(Client),
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, ProtectedItemResourceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
             Argument.AssertNotNull(data, nameof(data));
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, ProtectedItemResourceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<ProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<ProtectedItemResource>(
                     new ProtectedItemOperationSource(Client),
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -319,14 +319,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProtectedItemResourceData> response = default;
+                Response<BackupProtectedItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectedItemResourceData)null, result);
+                        response = Response.FromValue((BackupProtectedItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -377,14 +377,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProtectedItemResourceData> response = default;
+                Response<BackupProtectedItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectedItemResourceData)null, result);
+                        response = Response.FromValue((BackupProtectedItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -435,14 +435,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ProtectedItemResourceData> response = default;
+                Response<BackupProtectedItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectedItemResourceData)null, result);
+                        response = Response.FromValue((BackupProtectedItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -497,14 +497,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, protectedItemName, filter, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ProtectedItemResourceData> response = default;
+                Response<BackupProtectedItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                        response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ProtectedItemResourceData)null, result);
+                        response = Response.FromValue((BackupProtectedItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

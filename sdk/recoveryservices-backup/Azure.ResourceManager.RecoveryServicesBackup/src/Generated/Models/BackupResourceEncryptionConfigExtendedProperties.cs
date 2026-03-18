@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userAssignedIdentity"> User Assigned Identity Id. </param>
         /// <param name="useSystemAssignedIdentity"> bool to indicate whether to use system Assigned Identity or not. </param>
-        internal BackupResourceEncryptionConfigExtendedProperties(EncryptionAtRestType? encryptionAtRestType, string keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState, additionalBinaryDataProperties)
+        internal BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType, string keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState, additionalBinaryDataProperties)
         {
             UserAssignedIdentity = userAssignedIdentity;
             UseSystemAssignedIdentity = useSystemAssignedIdentity;

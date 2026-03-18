@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly Backups _backupsRestClient;
         private readonly ClientDiagnostics _recoveryPointsRecommendedForMoveClientDiagnostics;
         private readonly RecoveryPointsRecommendedForMove _recoveryPointsRecommendedForMoveRestClient;
-        private readonly ProtectedItemResourceData _data;
+        private readonly BackupProtectedItemData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems";
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="ProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProtectedItemResource(ArmClient client, ProtectedItemResourceData data) : this(client, data.Id)
+        internal ProtectedItemResource(ArmClient client, BackupProtectedItemData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProtectedItemResourceData Data
+        public virtual BackupProtectedItemData Data
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -428,8 +428,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecoveryPointResource> GetAllAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupRecoveryPointResource> GetAllAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryPointResourceData, RecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllAsyncCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context), data => new RecoveryPointResource(Client, data));
+                context), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -473,8 +473,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="RecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecoveryPointResource> GetAll(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupRecoveryPointResource> GetAll(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryPointResourceData, RecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupRecoveryPointData, BackupRecoveryPointResource>(new RecoveryPointsRecommendedForMoveGetAllCollectionResultOfT(
                 _recoveryPointsRecommendedForMoveRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 Id.Parent.Name,
                 Id.Name,
                 RecoveryPointsRecommendedForMoveContent.ToRequestContent(content),
-                context), data => new RecoveryPointResource(Client, data));
+                context), data => new BackupRecoveryPointResource(Client, data));
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, ProtectedItemResourceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectedItemData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProtectedItemResourceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<ProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<ProtectedItemResource>(
                     new ProtectedItemOperationSource(Client),
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="xMsAuthorizationAuxiliary"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProtectedItemResource> Update(WaitUntil waitUntil, ProtectedItemResourceData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ProtectedItemResource> Update(WaitUntil waitUntil, BackupProtectedItemData data, string xMsAuthorizationAuxiliary = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ProtectedItemResourceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                HttpMessage message = _protectedItemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupProtectedItemData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<ProtectedItemResource> operation = new RecoveryServicesBackupArmOperation<ProtectedItemResource>(
                     new ProtectedItemOperationSource(Client),
@@ -639,12 +639,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                    Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                     return Response.FromValue(new ProtectedItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectedItemResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectedItemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<ProtectedItemResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -682,12 +682,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                    Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                     return Response.FromValue(new ProtectedItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectedItemResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectedItemData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
                     ArmOperation<ProtectedItemResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -724,12 +724,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                    Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                     return Response.FromValue(new ProtectedItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectedItemResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectedItemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<ProtectedItemResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -766,12 +766,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                    Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                     return Response.FromValue(new ProtectedItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectedItemResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectedItemData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
                     ArmOperation<ProtectedItemResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -807,12 +807,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                    Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                     return Response.FromValue(new ProtectedItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectedItemResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BackupProtectedItemData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<ProtectedItemResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -848,12 +848,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     };
                     HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ProtectedItemResourceData> response = Response.FromValue(ProtectedItemResourceData.FromResponse(result), result);
+                    Response<BackupProtectedItemData> response = Response.FromValue(BackupProtectedItemData.FromResponse(result), result);
                     return Response.FromValue(new ProtectedItemResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ProtectedItemResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BackupProtectedItemData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
                     ArmOperation<ProtectedItemResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -940,11 +940,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return GetProtectedItemOperationResults().Get(operationId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RecoveryPointResources in the <see cref="ProtectedItemResource"/>. </summary>
-        /// <returns> An object representing collection of RecoveryPointResources and their operations over a RecoveryPointResource. </returns>
-        public virtual RecoveryPointResourceCollection GetRecoveryPointResources()
+        /// <summary> Gets a collection of BackupRecoveryPoints in the <see cref="ProtectedItemResource"/>. </summary>
+        /// <returns> An object representing collection of BackupRecoveryPoints and their operations over a BackupRecoveryPointResource. </returns>
+        public virtual BackupRecoveryPointCollection GetBackupRecoveryPoints()
         {
-            return GetCachedClient(client => new RecoveryPointResourceCollection(client, Id));
+            return GetCachedClient(client => new BackupRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -956,11 +956,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RecoveryPointResource>> GetRecoveryPointResourceAsync(string recoveryPointId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupRecoveryPointResource>> GetBackupRecoveryPointAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            return await GetRecoveryPointResources().GetAsync(recoveryPointId, cancellationToken).ConfigureAwait(false);
+            return await GetBackupRecoveryPoints().GetAsync(recoveryPointId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -972,11 +972,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RecoveryPointResource> GetRecoveryPointResource(string recoveryPointId, CancellationToken cancellationToken = default)
+        public virtual Response<BackupRecoveryPointResource> GetBackupRecoveryPoint(string recoveryPointId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
 
-            return GetRecoveryPointResources().Get(recoveryPointId, cancellationToken);
+            return GetBackupRecoveryPoints().Get(recoveryPointId, cancellationToken);
         }
     }
 }

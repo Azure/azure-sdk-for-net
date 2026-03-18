@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<ProtectedItemResource> Update(WaitUntil waitUntil, ProtectedItemResourceData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<ProtectedItemResource> Update(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken)
         {
             return Update(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<ProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, ProtectedItemResourceData data, CancellationToken cancellationToken)
+        public virtual Task<ArmOperation<ProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken)
         {
             return UpdateAsync(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }

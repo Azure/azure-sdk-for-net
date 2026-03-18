@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _jobOperationResultsClientDiagnostics;
         private readonly JobOperationResults _jobOperationResultsRestClient;
-        private readonly JobResourceData _data;
+        private readonly BackupJobData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupJobs/operationResults";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary> Initializes a new instance of <see cref="JobOperationResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobOperationResultResource(ArmClient client, JobResourceData data) : this(client, data.Id)
+        internal JobOperationResultResource(ArmClient client, BackupJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual JobResourceData Data
+        public virtual BackupJobData Data
         {
             get
             {

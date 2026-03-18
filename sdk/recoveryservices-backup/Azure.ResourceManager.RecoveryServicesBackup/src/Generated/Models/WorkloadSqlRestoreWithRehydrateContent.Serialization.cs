@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = "AzureWorkloadSQLRestoreWithRehydrateRequest";
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RecoveryType? recoveryType = default;
+            FileShareRecoveryType? recoveryType = default;
             string sourceResourceId = default;
             IDictionary<string, string> propertyBag = default;
             TargetRestoreInfo targetInfo = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string targetVirtualMachineId = default;
             bool? shouldUseAlternateTargetLocation = default;
             bool? isNonRecoverable = default;
-            IList<Models.SqlDataDirectoryMapping> alternateDirectoryPaths = default;
+            IList<SqlDataDirectoryMapping> alternateDirectoryPaths = default;
             RecoveryPointRehydrationInfo recoveryPointRehydrationInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryType = new RecoveryType(prop.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<Models.SqlDataDirectoryMapping> array = new List<Models.SqlDataDirectoryMapping>();
+                    List<SqlDataDirectoryMapping> array = new List<SqlDataDirectoryMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item, options));
+                        array.Add(SqlDataDirectoryMapping.DeserializeSqlDataDirectoryMapping(item, options));
                     }
                     alternateDirectoryPaths = array;
                     continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 targetVirtualMachineId,
                 shouldUseAlternateTargetLocation,
                 isNonRecoverable,
-                alternateDirectoryPaths ?? new ChangeTrackingList<Models.SqlDataDirectoryMapping>(),
+                alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>(),
                 recoveryPointRehydrationInfo);
         }
     }

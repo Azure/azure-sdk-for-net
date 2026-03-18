@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         ProtectionContainerResource IOperationSource<ProtectionContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProtectionContainerResourceData data = ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BackupProtectionContainerData data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ProtectionContainerResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         async ValueTask<ProtectionContainerResource> IOperationSource<ProtectionContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProtectionContainerResourceData data = ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BackupProtectionContainerData data = BackupProtectionContainerData.DeserializeBackupProtectionContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ProtectionContainerResource(_client, data);
         }
     }

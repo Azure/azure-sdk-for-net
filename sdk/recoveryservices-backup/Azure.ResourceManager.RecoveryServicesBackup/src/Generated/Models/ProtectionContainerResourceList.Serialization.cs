@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ProtectionContainerResourceData item in Value)
+                foreach (BackupProtectionContainerData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ProtectionContainerResourceData> value = default;
+            IList<BackupProtectionContainerData> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("nextLink"u8))
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<ProtectionContainerResourceData> array = new List<ProtectionContainerResourceData>();
+                    List<BackupProtectionContainerData> array = new List<BackupProtectionContainerData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(item, options));
+                        array.Add(BackupProtectionContainerData.DeserializeBackupProtectionContainerData(item, options));
                     }
                     value = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProtectionContainerResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<ProtectionContainerResourceData>());
+            return new ProtectionContainerResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<BackupProtectionContainerData>());
         }
     }
 }

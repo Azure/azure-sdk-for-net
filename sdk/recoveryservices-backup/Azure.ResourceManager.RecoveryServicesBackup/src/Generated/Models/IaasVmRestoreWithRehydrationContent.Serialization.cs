@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string recoveryPointId = default;
-            RecoveryType? recoveryType = default;
+            FileShareRecoveryType? recoveryType = default;
             string sourceResourceId = default;
             string targetVirtualMachineId = default;
             string targetResourceGroupId = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryType = new RecoveryType(prop.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))

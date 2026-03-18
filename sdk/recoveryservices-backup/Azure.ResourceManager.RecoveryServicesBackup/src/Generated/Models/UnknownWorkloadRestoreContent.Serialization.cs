@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = "unknown";
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RecoveryType? recoveryType = default;
+            FileShareRecoveryType? recoveryType = default;
             string sourceResourceId = default;
             IDictionary<string, string> propertyBag = default;
             TargetRestoreInfo targetInfo = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryType = new RecoveryType(prop.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))

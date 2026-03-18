@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="restoreRequestType"> Restore Type (FullShareRestore or ItemLevelRestore). </param>
         /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
         /// <param name="targetDetails"> Target File Share Details. </param>
-        internal FileShareRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryType? recoveryType, string sourceResourceId, CopyOptions? copyOptions, RestoreRequestType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAFSRestoreInfo targetDetails) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal FileShareRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareRecoveryType? recoveryType, string sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -41,21 +41,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of this recovery. </summary>
-        public RecoveryType? RecoveryType { get; set; }
+        public FileShareRecoveryType? RecoveryType { get; set; }
 
         /// <summary> Source storage account ARM Id. </summary>
         public string SourceResourceId { get; set; }
 
         /// <summary> Options to resolve copy conflicts. </summary>
-        public CopyOptions? CopyOptions { get; set; }
+        public FileShareCopyOption? CopyOptions { get; set; }
 
         /// <summary> Restore Type (FullShareRestore or ItemLevelRestore). </summary>
-        public RestoreRequestType? RestoreRequestType { get; set; }
+        public FileShareRestoreType? RestoreRequestType { get; set; }
 
         /// <summary> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </summary>
         public IList<RestoreFileSpecs> RestoreFileSpecs { get; }
 
         /// <summary> Target File Share Details. </summary>
-        public TargetAFSRestoreInfo TargetDetails { get; set; }
+        public TargetAfsRestoreInfo TargetDetails { get; set; }
     }
 }

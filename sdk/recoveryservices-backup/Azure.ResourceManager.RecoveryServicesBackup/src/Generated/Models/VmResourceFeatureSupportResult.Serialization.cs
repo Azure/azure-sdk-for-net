@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            SupportStatus? supportStatus = default;
+            VmResourceFeatureSupportStatus? supportStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    supportStatus = new SupportStatus(prop.Value.GetString());
+                    supportStatus = new VmResourceFeatureSupportStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

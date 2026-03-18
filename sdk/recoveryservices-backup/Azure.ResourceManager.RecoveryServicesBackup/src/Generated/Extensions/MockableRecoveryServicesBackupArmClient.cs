@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             return new ProtectionContainerOperationResultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoveryPointResource"/> object. </returns>
-        public virtual RecoveryPointResource GetRecoveryPointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupRecoveryPointResource"/> object. </returns>
+        public virtual BackupRecoveryPointResource GetBackupRecoveryPointResource(ResourceIdentifier id)
         {
-            RecoveryPointResource.ValidateResourceId(id);
-            return new RecoveryPointResource(Client, id);
+            BackupRecoveryPointResource.ValidateResourceId(id);
+            return new BackupRecoveryPointResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ProtectionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -170,31 +170,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             return new ExportJobsOperationResultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BackupEngineBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BackupEngineResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupEngineBaseResource"/> object. </returns>
-        public virtual BackupEngineBaseResource GetBackupEngineBaseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupEngineResource"/> object. </returns>
+        public virtual BackupEngineResource GetBackupEngineResource(ResourceIdentifier id)
         {
-            BackupEngineBaseResource.ValidateResourceId(id);
-            return new BackupEngineBaseResource(Client, id);
+            BackupEngineResource.ValidateResourceId(id);
+            return new BackupEngineResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ResourceGuardProxyBaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceGuardProxyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource"/> object. </returns>
-        public virtual ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGuardProxyResource"/> object. </returns>
+        public virtual ResourceGuardProxyResource GetResourceGuardProxyResource(ResourceIdentifier id)
         {
-            ResourceGuardProxyBaseResource.ValidateResourceId(id);
-            return new ResourceGuardProxyBaseResource(Client, id);
+            ResourceGuardProxyResource.ValidateResourceId(id);
+            return new ResourceGuardProxyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProtectionIntentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BackupProtectionIntentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProtectionIntentResource"/> object. </returns>
-        public virtual ProtectionIntentResource GetProtectionIntentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupProtectionIntentResource"/> object. </returns>
+        public virtual BackupProtectionIntentResource GetBackupProtectionIntentResource(ResourceIdentifier id)
         {
-            ProtectionIntentResource.ValidateResourceId(id);
-            return new ProtectionIntentResource(Client, id);
+            BackupProtectionIntentResource.ValidateResourceId(id);
+            return new BackupProtectionIntentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
