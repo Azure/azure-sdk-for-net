@@ -7,32 +7,32 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AgentsClient sub-client. </summary>
-    public partial class AgentsClient
+    /// <summary> The AgentAdministrationClient sub-client. </summary>
+    public partial class AgentAdministrationClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AgentsClient for mocking. </summary>
-        protected AgentsClient()
+        /// <summary> Initializes a new instance of AgentAdministrationClient for mocking. </summary>
+        protected AgentAdministrationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentsClient. </summary>
+        /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentsClient(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentAdministrationClient(ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Initializes a new instance of AgentsClient. </summary>
+        /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AgentsClient(Uri endpoint) : this(endpoint, new AgentsClientOptions())
+        public AgentAdministrationClient(Uri endpoint) : this(endpoint, new AgentAdministrationClientOptions())
         {
         }
 

@@ -55,7 +55,7 @@ To be able to create, update and delete Agents, please use `AgentsClient`. It is
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -69,8 +69,8 @@ When clients send REST requests to the endpoint, one of the query parameters is 
 The API version may be set supplying `version` parameter to `AgentClientOptions` constructor as shown in the example code below.
 
 ```C# Snippet:Sample_Agents_API_version
-AgentsClientOptions options = new(version: AgentsClientOptions.ServiceVersion.V1);
-AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClientOptions options = new(version: AgentAdministrationClientOptions.ServiceVersion.V1);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
 ### Additional concepts
@@ -78,7 +78,7 @@ The Azure.AI.Projects.Agents framework organized in a way that for each call, re
 
 Synchronous call:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -95,7 +95,7 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 Asynchronous call:
 
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -118,7 +118,7 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `PromptAgentDefinition`:
 
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };

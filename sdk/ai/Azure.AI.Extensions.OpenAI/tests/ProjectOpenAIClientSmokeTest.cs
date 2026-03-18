@@ -82,12 +82,12 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
                 UserAgentApplicationId = "MyOtherApplication",
             }));
 
-        async Task DoCreateAgentAsync(AgentsClient agentsClient)
+        async Task DoCreateAgentAsync(AgentAdministrationClient agentsClient)
         {
             await agentsClient.CreateAgentVersionAsync(
                 agentName: "foobar",
                 options: new AgentVersionCreationOptions(
-                    definition: new PromptAgentDefinition("mock-model")));
+                    definition: new DeclarativeAgentDefinition("mock-model")));
         }
 
         ProjectResponsesClient responsesClientWithoutApp = new(

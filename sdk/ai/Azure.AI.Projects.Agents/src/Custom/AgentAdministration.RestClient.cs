@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents.Telemetry;
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class AgentsClient
+public partial class AgentAdministrationClient
 {
     /// <summary>
     /// [Protocol Method] Creates the agent.

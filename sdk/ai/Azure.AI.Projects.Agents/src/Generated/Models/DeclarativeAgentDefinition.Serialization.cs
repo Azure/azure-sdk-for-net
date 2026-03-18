@@ -11,10 +11,10 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The prompt agent definition. </summary>
-    public partial class PromptAgentDefinition : AgentDefinition, IJsonModel<PromptAgentDefinition>
+    public partial class DeclarativeAgentDefinition : AgentDefinition, IJsonModel<DeclarativeAgentDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="PromptAgentDefinition"/> for deserialization. </summary>
-        internal PromptAgentDefinition()
+        /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/> for deserialization. </summary>
+        internal DeclarativeAgentDefinition()
         {
         }
 
@@ -22,45 +22,45 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePromptAgentDefinition(document.RootElement, options);
+                        return DeserializeDeclarativeAgentDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PromptAgentDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PromptAgentDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PromptAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeclarativeAgentDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PromptAgentDefinition IPersistableModel<PromptAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (PromptAgentDefinition)PersistableModelCreateCore(data, options);
+        DeclarativeAgentDefinition IPersistableModel<DeclarativeAgentDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeclarativeAgentDefinition)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PromptAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeclarativeAgentDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PromptAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeclarativeAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,10 +71,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PromptAgentDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("model"u8);
@@ -141,24 +141,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PromptAgentDefinition IJsonModel<PromptAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PromptAgentDefinition)JsonModelCreateCore(ref reader, options);
+        DeclarativeAgentDefinition IJsonModel<DeclarativeAgentDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeclarativeAgentDefinition)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PromptAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PromptAgentDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePromptAgentDefinition(document.RootElement, options);
+            return DeserializeDeclarativeAgentDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PromptAgentDefinition DeserializePromptAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeclarativeAgentDefinition DeserializeDeclarativeAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -270,7 +270,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PromptAgentDefinition(
+            return new DeclarativeAgentDefinition(
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,

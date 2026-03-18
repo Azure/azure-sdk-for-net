@@ -10,13 +10,13 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Client options for <see cref="InternalProjectsClient"/>. </summary>
-    public partial class AgentsClientOptions : ClientPipelineOptions
+    public partial class AgentAdministrationClientOptions : ClientPipelineOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         /// <summary> Initializes a new instance of InternalProjectsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public AgentsClientOptions(ServiceVersion version = LatestVersion)
+        public AgentAdministrationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of InternalProjectsClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal AgentsClientOptions(IConfigurationSection section) : base(section)
+        internal AgentAdministrationClientOptions(IConfigurationSection section) : base(section)
         {
             Version = "v1";
             if (section is null || !section.Exists())

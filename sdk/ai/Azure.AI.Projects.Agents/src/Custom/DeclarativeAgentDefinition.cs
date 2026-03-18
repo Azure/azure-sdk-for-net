@@ -10,11 +10,11 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("PromptAgentDefinition")]
+[CodeGenType("DeclarativeAgentDefinition")]
 [CodeGenSerialization(nameof(Tools), DeserializationValueHook = nameof(DeserializeToolsValue))]
 [CodeGenSerialization(propertyName: nameof(ReasoningOptions), SerializationName = "reasoning", DeserializationValueHook = nameof(DeserializeReasoningValue))]
 [CodeGenSerialization(propertyName: nameof(TextOptions), SerializationName = "text", DeserializationValueHook = nameof(DeserializeTextValue))]
-public partial class PromptAgentDefinition
+public partial class DeclarativeAgentDefinition
 {
     /// <summary>
     /// An array of tools the model may call while generating a response. You
@@ -47,10 +47,10 @@ public partial class PromptAgentDefinition
         tools = replacementTools;
     }
 
-    /// <summary> Initializes a new instance of <see cref="PromptAgentDefinition"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
     /// <param name="model"> The model deployment to use for this agent. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-    public PromptAgentDefinition(string model) : base(AgentKind.Prompt)
+    public DeclarativeAgentDefinition(string model) : base(AgentKind.Prompt)
     {
         Argument.AssertNotNull(model, nameof(model));
 
@@ -59,7 +59,7 @@ public partial class PromptAgentDefinition
         StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
     }
 
-    /// <summary> Initializes a new instance of <see cref="PromptAgentDefinition"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
     /// <param name="kind"></param>
     /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -84,7 +84,7 @@ public partial class PromptAgentDefinition
     /// </param>
     /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
     /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
-    internal PromptAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+    internal DeclarativeAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
     {
         Model = model;
         Instructions = instructions;

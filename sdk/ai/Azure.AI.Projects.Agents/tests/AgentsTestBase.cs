@@ -105,9 +105,9 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         });
     }
 
-    protected AgentsClient GetTestClient()
+    protected AgentAdministrationClient GetTestClient()
     {
-        AgentsClientOptions options = new();
+        AgentAdministrationClientOptions options = new();
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
         options.AddPolicy(
             new TestPipelinePolicy(message =>
@@ -123,7 +123,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 }
             }),
             PipelinePosition.PerCall);
-        return CreateProxyFromClient(new AgentsClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), InstrumentClientOptions(options)));
+        return CreateProxyFromClient(new AgentAdministrationClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), InstrumentClientOptions(options)));
     }
 
     protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime = 500)
@@ -188,8 +188,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        AgentsClientOptions options = new();
-        AgentsClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
+        AgentAdministrationClientOptions options = new();
+        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
 
         // Remove Agents.
         foreach (AgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))

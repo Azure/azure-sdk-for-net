@@ -30,9 +30,9 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentAsync", typeof(string), typeof(AgentDefinition), typeof(IDictionary<string, string>), typeof(string), typeof(AgentDefinitionOptInKeys), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifest", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
-public partial class AgentsClient
+public partial class AgentAdministrationClient
 {
-   public AgentsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentsClientOptions options=null)
+   public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
@@ -55,14 +55,14 @@ public partial class AgentsClient
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="options"> The options for configuring the client. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-    public AgentsClient(Uri endpoint, AgentsClientOptions options)
+    public AgentAdministrationClient(Uri endpoint, AgentAdministrationClientOptions options)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        options ??= new AgentsClientOptions();
+        options ??= new AgentAdministrationClientOptions();
 
         _endpoint = endpoint;
-        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
     }
 

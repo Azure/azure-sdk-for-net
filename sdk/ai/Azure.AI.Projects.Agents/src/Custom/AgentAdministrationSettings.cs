@@ -8,15 +8,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Represents the settings used to configure a <see cref="AgentsClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
+    /// <summary> Represents the settings used to configure a <see cref="AgentAdministrationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class AgentsClientSettings : ClientSettings
+    public partial class AgentAdministrationSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
-        public AgentsClientOptions Options { get; set; }
+        public AgentAdministrationClientOptions Options { get; set; }
 
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new AgentsClientOptions();
+                Options = new AgentAdministrationClientOptions();
             }
         }
     }

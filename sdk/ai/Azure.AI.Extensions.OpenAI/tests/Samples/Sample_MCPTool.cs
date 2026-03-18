@@ -31,7 +31,7 @@ public class Sample_MCPTool : ProjectsOpenAITestBase
 
         #endregion
         #region Snippet:Sample_CreateAgent_MCPTool_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
             Tools = { ResponseTool.CreateMcpTool(
@@ -104,7 +104,7 @@ public class Sample_MCPTool : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgent_MCPTool_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
             Tools = { ResponseTool.CreateMcpTool(

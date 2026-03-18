@@ -27,7 +27,7 @@ BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearch
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { customBingSearchAgentTool, }
@@ -44,7 +44,7 @@ BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearch
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { customBingSearchAgentTool, }
