@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="identity"> The Managed Identity of the resource. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
         /// <returns> A new <see cref="Purview.PurviewAccountData"/> instance for mocking. </returns>
-        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewAccountStatus accountStatus = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, string defaultDomain = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, PurviewIngestionStorage ingestionStorage = default, PurviewManagedEventHubState? managedEventHubState = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default, PurviewAccountMergeInfo mergeInfo = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, TenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedServiceIdentity identity = default, PurviewAccountSku sku = default)
+        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewAccountStatus accountStatus = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, string defaultDomain = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, PurviewIngestionStorage ingestionStorage = default, PurviewManagedEventHubState? managedEventHubState = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default, PurviewAccountMergeInfo mergeInfo = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, TenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedServiceIdentity identity = default, PurviewAccountSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// </param>
         /// <param name="tags"> Tags on the azure resource. </param>
         /// <returns> A new <see cref="Models.PurviewAccountPatch"/> instance for mocking. </returns>
-        public static PurviewAccountPatch PurviewAccountPatch(ManagedServiceIdentity identity = default, PurviewAccountStatus accountStatus = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, string defaultDomain = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, PurviewIngestionStorage ingestionStorage = default, PurviewManagedEventHubState? managedEventHubState = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default, PurviewAccountMergeInfo mergeInfo = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, TenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, IDictionary<string, string> tags = default)
+        public static PurviewAccountPatch PurviewAccountPatch(ManagedServiceIdentity identity = default, PurviewAccountStatus accountStatus = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, string defaultDomain = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, PurviewIngestionStorage ingestionStorage = default, PurviewManagedEventHubState? managedEventHubState = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default, PurviewAccountMergeInfo mergeInfo = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, TenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -335,19 +335,6 @@ namespace Azure.ResourceManager.Purview.Models
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new PurviewPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
-        /// <summary> A privately linkable resource properties. </summary>
-        /// <param name="groupId"> The private link resource group identifier. </param>
-        /// <param name="requiredMembers"> This translates to how many Private IPs should be created for each privately linkable resource. </param>
-        /// <param name="requiredZoneNames"> The required zone names for private link resource. </param>
-        /// <returns> A new <see cref="Models.PurviewPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static PurviewPrivateLinkResourceProperties PurviewPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new PurviewPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Feature request model. </summary>
         /// <param name="features"> Set of features. </param>
         /// <returns> A new <see cref="Models.PurviewBatchFeatureContent"/> instance for mocking. </returns>
@@ -375,17 +362,6 @@ namespace Azure.ResourceManager.Purview.Models
         public static PrivateEndpointConnectionStatusUpdateResult PrivateEndpointConnectionStatusUpdateResult(string privateEndpointId = default, string status = default)
         {
             return new PrivateEndpointConnectionStatusUpdateResult(privateEndpointId, status, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> List of usage information. </summary>
-        /// <param name="value"> The Usage items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.UsageList"/> instance for mocking. </returns>
-        public static UsageList UsageList(IEnumerable<PurviewUsage> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<PurviewUsage>();
-
-            return new UsageList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response for usage information. </summary>

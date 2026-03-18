@@ -295,11 +295,12 @@ namespace Azure.ResourceManager.Purview
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<UsageList>> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PurviewUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePurviewSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken).ConfigureAwait(false);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +315,8 @@ namespace Azure.ResourceManager.Purview
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<UsageList> GetUsages(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PurviewUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

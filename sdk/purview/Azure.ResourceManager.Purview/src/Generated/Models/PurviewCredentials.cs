@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Initializes a new instance of <see cref="PurviewCredentials"/>. </summary>
         /// <param name="identityId"> Identity identifier for UserAssign type. </param>
-        /// <param name="type"> Identity Type. </param>
+        /// <param name="credentialsType"> Identity Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewCredentials(string identityId, PurviewCredentialsType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewCredentials(string identityId, PurviewCredentialsType? credentialsType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityId = identityId;
-            Type = @type;
+            CredentialsType = credentialsType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Purview.Models
         public string IdentityId { get; set; }
 
         /// <summary> Identity Type. </summary>
-        public PurviewCredentialsType? Type { get; set; }
+        public PurviewCredentialsType? CredentialsType { get; set; }
     }
 }

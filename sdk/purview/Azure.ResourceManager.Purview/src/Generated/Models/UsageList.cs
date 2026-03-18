@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> List of usage information. </summary>
-    public partial class UsageList
+    internal partial class UsageList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

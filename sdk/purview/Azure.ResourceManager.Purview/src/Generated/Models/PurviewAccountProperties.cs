@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
         /// <param name="tenantEndpointState"> Gets or sets the state of tenant endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountProperties(PurviewAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, string defaultDomain, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess, PurviewAccountMergeInfo mergeInfo, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, TenantEndpointState? tenantEndpointState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountProperties(PurviewAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, string defaultDomain, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, PurviewAccountMergeInfo mergeInfo, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, TenantEndpointState? tenantEndpointState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountStatus = accountStatus;
             CloudConnectors = cloudConnectors;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Purview.Models
         public PurviewManagedResource ManagedResources { get; }
 
         /// <summary> Gets or sets the public network access for managed resources. </summary>
-        public PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get; set; }
+        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get; set; }
 
         /// <summary> Gets or sets the Merge Info. </summary>
         public PurviewAccountMergeInfo MergeInfo { get; set; }

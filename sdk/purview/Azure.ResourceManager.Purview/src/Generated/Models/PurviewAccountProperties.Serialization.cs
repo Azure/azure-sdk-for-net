@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Purview.Models
             PurviewManagedEventHubState? managedEventHubState = default;
             string managedResourceGroupName = default;
             PurviewManagedResource managedResources = default;
-            PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
+            ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
             PurviewAccountMergeInfo mergeInfo = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default;
             PurviewProvisioningState? provisioningState = default;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    managedResourcesPublicNetworkAccess = new PurviewPublicNetworkAccess(prop.Value.GetString());
+                    managedResourcesPublicNetworkAccess = new ManagedResourcesPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mergeInfo"u8))

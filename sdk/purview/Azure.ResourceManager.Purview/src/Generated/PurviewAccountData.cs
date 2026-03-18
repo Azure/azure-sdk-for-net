@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary> Gets or sets the public network access for managed resources. </summary>
-        public PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
+        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
         {
             get
             {

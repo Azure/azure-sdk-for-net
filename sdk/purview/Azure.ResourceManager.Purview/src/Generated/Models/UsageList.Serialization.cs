@@ -15,7 +15,7 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> List of usage information. </summary>
-    public partial class UsageList : IJsonModel<UsageList>
+    internal partial class UsageList : IJsonModel<UsageList>
     {
         /// <summary> Initializes a new instance of <see cref="UsageList"/> for deserialization. </summary>
         internal UsageList()

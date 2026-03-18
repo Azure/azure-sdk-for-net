@@ -330,32 +330,16 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<UsageList>> GetUsagesAsync(string location, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PurviewUsage> GetUsagesAsync(string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = UsagesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetUsages");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = UsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, filter, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UsageList> response = Response.FromValue(UsageList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesAsyncCollectionResultOfT(UsagesRestClient, Id.SubscriptionId, location, filter, context);
         }
 
         /// <summary>
@@ -380,32 +364,16 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<UsageList> GetUsages(string location, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewUsage> GetUsages(string location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = UsagesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetUsages");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = UsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, filter, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<UsageList> response = Response.FromValue(UsageList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesCollectionResultOfT(UsagesRestClient, Id.SubscriptionId, location, filter, context);
         }
     }
 }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("identityId"u8);
                 writer.WriteStringValue(IdentityId);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(CredentialsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(CredentialsType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             string identityId = default;
-            PurviewCredentialsType? @type = default;
+            PurviewCredentialsType? credentialsType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    @type = new PurviewCredentialsType(prop.Value.GetString());
+                    credentialsType = new PurviewCredentialsType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PurviewCredentials(identityId, @type, additionalBinaryDataProperties);
+            return new PurviewCredentials(identityId, credentialsType, additionalBinaryDataProperties);
         }
     }
 }
