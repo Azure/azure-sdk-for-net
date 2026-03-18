@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.ServerSentEvents;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent;
@@ -80,9 +81,16 @@ public abstract partial class StreamingUpdate
                 _ => null,
             };
         }
-        catch (JsonException e)
+        catch (JsonException ex)
         {
-            throw new InvalidOperationException($"The stream returned invalid JSON: {System.Text.Encoding.Default.GetString(sseItem.Data)}. Original error: {e.Message}");
+            string invalidJson = sseItem.Data is null ? "" : Encoding.UTF8.GetString(sseItem.Data);
+            if (invalidJson.Length > 500)
+            {
+                invalidJson = invalidJson.Remove(500);
+                invalidJson += "...";
+            }
+            string invalidEvent = string.IsNullOrEmpty(sseItem.EventType) ? "<Unknown>" : sseItem.EventType;
+            throw new InvalidOperationException($"The stream returned invalid JSON: \"{invalidJson}\" for event of type {invalidEvent}. Original error: {ex.Message}", ex);
         }
     }
 
