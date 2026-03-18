@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(purviewAccountNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(purviewAccountNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -92,10 +90,10 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +149,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +157,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PurviewAccountNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new PurviewAccountNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

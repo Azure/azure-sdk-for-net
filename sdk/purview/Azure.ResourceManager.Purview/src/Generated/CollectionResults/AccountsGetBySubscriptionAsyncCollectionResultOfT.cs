@@ -15,7 +15,7 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    internal partial class AccountsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<AccountData>
+    internal partial class AccountsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<PurviewAccountData>
     {
         private readonly Accounts _client;
         private readonly string _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AccountsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AccountData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<PurviewAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
                     yield break;
                 }
                 AccountList result = AccountList.FromResponse(response);
-                yield return Page<AccountData>.FromValues((IReadOnlyList<AccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<PurviewAccountData>.FromValues((IReadOnlyList<PurviewAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Purview
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _skipToken, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetAccounts");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.GetPurviewAccounts");
             scope.Start();
             try
             {

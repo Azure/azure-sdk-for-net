@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Purview
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AccountResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PurviewAccountResource.GetAll");
             scope.Start();
             try
             {

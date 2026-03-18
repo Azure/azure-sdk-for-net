@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 throw new FormatException($"The model {nameof(CloudConnectors)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(AwsExternalId))
+            if (options.Format != "W" && Optional.IsDefined(CloudConnectorsAwsExternalId))
             {
                 writer.WritePropertyName("awsExternalId"u8);
-                writer.WriteStringValue(AwsExternalId);
+                writer.WriteStringValue(CloudConnectorsAwsExternalId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            string awsExternalId = default;
+            string cloudConnectorsAwsExternalId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("awsExternalId"u8))
                 {
-                    awsExternalId = prop.Value.GetString();
+                    cloudConnectorsAwsExternalId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CloudConnectors(awsExternalId, additionalBinaryDataProperties);
+            return new CloudConnectors(cloudConnectorsAwsExternalId, additionalBinaryDataProperties);
         }
     }
 }

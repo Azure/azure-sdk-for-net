@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetAsync(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
 
-            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.Get");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
             scope0.Start();
             try
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateGetRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DefaultPurviewAccountPayload> Get(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
 
-            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.Get");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
             scope0.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateGetRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> RemoveAsync(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveDefaultAccountAsync(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
 
-            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.Remove");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
             scope0.Start();
             try
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateRemoveRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeTenantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopeTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Remove(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
+        public virtual Response RemoveDefaultAccount(string scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeTenantId, nameof(scopeTenantId));
 
-            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.Remove");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
             scope0.Start();
             try
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateRemoveRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="defaultAccountPayload"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public virtual async Task<Response<DefaultPurviewAccountPayload>> SetAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
-            using DiagnosticScope scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.Set");
+            using DiagnosticScope scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateSetRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
+                HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="defaultAccountPayload"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public virtual Response<DefaultPurviewAccountPayload> Set(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
-            using DiagnosticScope scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.Set");
+            using DiagnosticScope scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateSetRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
+                HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)

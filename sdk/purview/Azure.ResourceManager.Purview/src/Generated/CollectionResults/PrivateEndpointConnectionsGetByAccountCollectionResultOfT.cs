@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Purview
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _skipToken, _context) : _client.CreateGetByAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateEndpointConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

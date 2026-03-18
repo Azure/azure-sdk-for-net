@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Purview
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(purviewPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(purviewPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PurviewPrivateEndpointConnectionData"/> from. </param>

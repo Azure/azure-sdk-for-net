@@ -26,40 +26,40 @@ namespace Azure.ResourceManager.Purview.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="AccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PurviewAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountResource"/> object. </returns>
-        public virtual AccountResource GetAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PurviewAccountResource"/> object. </returns>
+        public virtual PurviewAccountResource GetPurviewAccountResource(ResourceIdentifier id)
         {
-            AccountResource.ValidateResourceId(id);
-            return new AccountResource(Client, id);
+            PurviewAccountResource.ValidateResourceId(id);
+            return new PurviewAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="KafkaConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PurviewKafkaConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KafkaConfigurationResource"/> object. </returns>
-        public virtual KafkaConfigurationResource GetKafkaConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PurviewKafkaConfigurationResource"/> object. </returns>
+        public virtual PurviewKafkaConfigurationResource GetPurviewKafkaConfigurationResource(ResourceIdentifier id)
         {
-            KafkaConfigurationResource.ValidateResourceId(id);
-            return new KafkaConfigurationResource(Client, id);
+            PurviewKafkaConfigurationResource.ValidateResourceId(id);
+            return new PurviewKafkaConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PurviewPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PurviewPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PurviewPrivateEndpointConnectionResource GetPurviewPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            PurviewPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PurviewPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PurviewPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PurviewPrivateLinkResource"/> object. </returns>
+        public virtual PurviewPrivateLinkResource GetPurviewPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            PurviewPrivateLinkResource.ValidateResourceId(id);
+            return new PurviewPrivateLinkResource(Client, id);
         }
     }
 }

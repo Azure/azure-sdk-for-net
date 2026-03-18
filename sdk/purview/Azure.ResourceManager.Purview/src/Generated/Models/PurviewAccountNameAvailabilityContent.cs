@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify for availability. </param>
-        /// <param name="type"> Fully qualified resource type which includes provider namespace. </param>
+        /// <param name="resourceType"> Fully qualified resource type which includes provider namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountNameAvailabilityContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Purview.Models
         public string Name { get; set; }
 
         /// <summary> Fully qualified resource type which includes provider namespace. </summary>
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
     }
 }

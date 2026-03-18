@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccountData, AccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context), data => new AccountResource(Client, data));
+            return new AsyncPageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewAccountResource> GetPurviewAccounts(string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccountData, AccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context), data => new AccountResource(Client, data));
+            return new PageableWrapper<PurviewAccountData, PurviewAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, skipToken, context), data => new PurviewAccountResource(Client, data));
         }
 
         /// <summary>
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PurviewAccountNameAvailabilityResult>> CheckNameAvailabilityAsync(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = AccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = AccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
             scope.Start();
             try
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AccountsRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewAccountNameAvailabilityResult> response = Response.FromValue(PurviewAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PurviewAccountNameAvailabilityResult> CheckNameAvailability(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = AccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = AccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
             scope.Start();
             try
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AccountsRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewAccountNameAvailabilityResult> response = Response.FromValue(PurviewAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

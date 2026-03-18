@@ -7,17 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The managed resources in customer subscription. </summary>
-    public partial class PurviewManagedResource
+    /// <summary> Gets the resource identifiers of the managed resources. </summary>
+    public partial class PurviewManagedResource : ManagedResources
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
-        internal PurviewManagedResource()
+        public PurviewManagedResource()
         {
         }
 
@@ -26,21 +24,8 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="resourceGroup"> Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account. </param>
         /// <param name="storageAccount"> Gets the managed storage account resource identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewManagedResource(string eventHubNamespace, string resourceGroup, string storageAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewManagedResource(ResourceIdentifier eventHubNamespace, ResourceIdentifier resourceGroup, ResourceIdentifier storageAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(eventHubNamespace, resourceGroup, storageAccount, additionalBinaryDataProperties)
         {
-            EventHubNamespace = eventHubNamespace;
-            ResourceGroup = resourceGroup;
-            StorageAccount = storageAccount;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the managed event hub namespace resource identifier. </summary>
-        public string EventHubNamespace { get; }
-
-        /// <summary> Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account. </summary>
-        public string ResourceGroup { get; }
-
-        /// <summary> Gets the managed storage account resource identifier. </summary>
-        public string StorageAccount { get; }
     }
 }

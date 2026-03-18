@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -23,13 +24,13 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint information. </param>
-        /// <param name="privateLinkServiceConnectionState"> The private link service connection state. </param>
+        /// <param name="connectionState"> The private link service connection state. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, PurviewPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, PurviewPrivateLinkServiceConnectionState connectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,13 +39,13 @@ namespace Azure.ResourceManager.Purview.Models
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> The private link service connection state. </summary>
-        public PurviewPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public PurviewPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
 
         /// <summary> The private endpoint identifier. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

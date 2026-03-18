@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             PrivateEndpoint privateEndpoint = default;
-            PurviewPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            PurviewPrivateLinkServiceConnectionState connectionState = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = PurviewPrivateLinkServiceConnectionState.DeserializePurviewPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = PurviewPrivateLinkServiceConnectionState.DeserializePurviewPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

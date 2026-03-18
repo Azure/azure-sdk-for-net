@@ -9,8 +9,7 @@
 
 ### Breaking Changes
 
-- Resource types have been renamed: `PurviewAccountResource` → `AccountResource`, `PurviewAccountCollection` → `AccountCollection`, etc.
-- `PurviewKafkaConfigurationResource` → `KafkaConfigurationResource`, `PurviewKafkaConfigurationCollection` → `KafkaConfigurationCollection`, etc.
+### Other Changes
 
 ## 1.2.0-beta.2 (2025-03-11)
 

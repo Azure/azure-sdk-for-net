@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AccountData item in Value)
+            foreach (PurviewAccountData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            IList<AccountData> value = default;
+            IList<PurviewAccountData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AccountData> array = new List<AccountData>();
+                    List<PurviewAccountData> array = new List<PurviewAccountData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccountData.DeserializeAccountData(item, options));
+                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item, options));
                     }
                     value = array;
                     continue;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KafkaConfigurationData item in Value)
+            foreach (PurviewKafkaConfigurationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            IList<KafkaConfigurationData> value = default;
+            IList<PurviewKafkaConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KafkaConfigurationData> array = new List<KafkaConfigurationData>();
+                    List<PurviewKafkaConfigurationData> array = new List<PurviewKafkaConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KafkaConfigurationData.DeserializeKafkaConfigurationData(item, options));
+                        array.Add(PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(item, options));
                     }
                     value = array;
                     continue;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary> The private link resource properties. </summary>
-        internal PurviewPrivateLinkResourceProperties Properties { get; }
+        public PurviewPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The private link resource group identifier. </summary>
         public string GroupId

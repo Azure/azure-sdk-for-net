@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(defaultPurviewAccountPayload, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(defaultPurviewAccountPayload, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DefaultPurviewAccountPayload"/> from. </param>
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (Optional.IsDefined(ScopeTenantId))
             {
                 writer.WritePropertyName("scopeTenantId"u8);
-                writer.WriteStringValue(ScopeTenantId);
+                writer.WriteStringValue(ScopeTenantId.Value);
             }
             if (Optional.IsDefined(ScopeType))
             {
@@ -170,7 +168,7 @@ namespace Azure.ResourceManager.Purview.Models
             string accountName = default;
             string resourceGroupName = default;
             string scope = default;
-            string scopeTenantId = default;
+            Guid? scopeTenantId = default;
             PurviewAccountScopeType? scopeType = default;
             string subscriptionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -193,7 +191,11 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (prop.NameEquals("scopeTenantId"u8))
                 {
-                    scopeTenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scopeTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scopeType"u8))

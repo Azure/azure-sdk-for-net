@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         {
         }
 
-        /// <summary> Gets a collection of Accounts in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Accounts and their operations over a AccountResource. </returns>
-        public virtual AccountCollection GetAccounts()
+        /// <summary> Gets a collection of PurviewAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PurviewAccounts and their operations over a PurviewAccountResource. </returns>
+        public virtual PurviewAccountCollection GetPurviewAccounts()
         {
-            return GetCachedClient(client => new AccountCollection(client, Id));
+            return GetCachedClient(client => new PurviewAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountResource>> GetAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewAccountResource>> GetPurviewAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return await GetAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetPurviewAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountResource> GetAccount(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewAccountResource> GetPurviewAccount(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetAccounts().Get(accountName, cancellationToken);
+            return GetPurviewAccounts().Get(accountName, cancellationToken);
         }
     }
 }

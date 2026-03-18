@@ -14,7 +14,7 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The account properties. </summary>
-    internal partial class PurviewAccountProperties : IJsonModel<PurviewAccountProperties>
+    public partial class PurviewAccountProperties : IJsonModel<PurviewAccountProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -211,20 +211,20 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            AccountPropertiesAccountStatus accountStatus = default;
+            PurviewAccountStatus accountStatus = default;
             CloudConnectors cloudConnectors = default;
             DateTimeOffset? createdOn = default;
             string createdBy = default;
             string createdByObjectId = default;
             string defaultDomain = default;
-            AccountPropertiesEndpoints endpoints = default;
+            PurviewAccountEndpoint endpoints = default;
             string friendlyName = default;
             PurviewIngestionStorage ingestionStorage = default;
             PurviewManagedEventHubState? managedEventHubState = default;
             string managedResourceGroupName = default;
-            AccountPropertiesManagedResources managedResources = default;
+            PurviewManagedResource managedResources = default;
             PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
-            AccountMergeInfo mergeInfo = default;
+            PurviewAccountMergeInfo mergeInfo = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default;
             PurviewProvisioningState? provisioningState = default;
             PurviewPublicNetworkAccess? publicNetworkAccess = default;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    accountStatus = AccountPropertiesAccountStatus.DeserializeAccountPropertiesAccountStatus(prop.Value, options);
+                    accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cloudConnectors"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    endpoints = AccountPropertiesEndpoints.DeserializeAccountPropertiesEndpoints(prop.Value, options);
+                    endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    managedResources = AccountPropertiesManagedResources.DeserializeAccountPropertiesManagedResources(prop.Value, options);
+                    managedResources = PurviewManagedResource.DeserializePurviewManagedResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedResourcesPublicNetworkAccess"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    mergeInfo = AccountMergeInfo.DeserializeAccountMergeInfo(prop.Value, options);
+                    mergeInfo = PurviewAccountMergeInfo.DeserializePurviewAccountMergeInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))

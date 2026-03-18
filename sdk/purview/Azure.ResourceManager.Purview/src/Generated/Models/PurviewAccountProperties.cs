@@ -12,7 +12,7 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The account properties. </summary>
-    internal partial class PurviewAccountProperties
+    public partial class PurviewAccountProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
         /// <param name="tenantEndpointState"> Gets or sets the state of tenant endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountProperties(AccountPropertiesAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, string defaultDomain, AccountPropertiesEndpoints endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, AccountPropertiesManagedResources managedResources, PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess, AccountMergeInfo mergeInfo, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, TenantEndpointState? tenantEndpointState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountProperties(PurviewAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, string defaultDomain, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess, PurviewAccountMergeInfo mergeInfo, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, TenantEndpointState? tenantEndpointState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountStatus = accountStatus;
             CloudConnectors = cloudConnectors;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Gets or sets the status of the account. </summary>
-        public AccountPropertiesAccountStatus AccountStatus { get; }
+        public PurviewAccountStatus AccountStatus { get; }
 
         /// <summary> External Cloud Service connectors. </summary>
         internal CloudConnectors CloudConnectors { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Purview.Models
         public string DefaultDomain { get; }
 
         /// <summary> The URIs that are the public endpoints of the account. </summary>
-        public AccountPropertiesEndpoints Endpoints { get; }
+        public PurviewAccountEndpoint Endpoints { get; }
 
         /// <summary> Gets or sets the friendly name. </summary>
         public string FriendlyName { get; }
@@ -100,13 +100,13 @@ namespace Azure.ResourceManager.Purview.Models
         public string ManagedResourceGroupName { get; set; }
 
         /// <summary> Gets the resource identifiers of the managed resources. </summary>
-        public AccountPropertiesManagedResources ManagedResources { get; }
+        public PurviewManagedResource ManagedResources { get; }
 
         /// <summary> Gets or sets the public network access for managed resources. </summary>
         public PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get; set; }
 
         /// <summary> Gets or sets the Merge Info. </summary>
-        public AccountMergeInfo MergeInfo { get; set; }
+        public PurviewAccountMergeInfo MergeInfo { get; set; }
 
         /// <summary> Gets the private endpoint connections information. </summary>
         public IReadOnlyList<PurviewPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Purview.Models
         {
             get
             {
-                return CloudConnectors is null ? default : CloudConnectors.AwsExternalId;
+                return CloudConnectors is null ? default : CloudConnectors.CloudConnectorsAwsExternalId;
             }
         }
     }

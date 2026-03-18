@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudConnectors"/>. </summary>
-        /// <param name="awsExternalId">
+        /// <param name="cloudConnectorsAwsExternalId">
         /// AWS external identifier.
         /// Configured in AWS to allow use of the role arn used for scanning
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudConnectors(string awsExternalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudConnectors(string cloudConnectorsAwsExternalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AwsExternalId = awsExternalId;
+            CloudConnectorsAwsExternalId = cloudConnectorsAwsExternalId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// AWS external identifier.
         /// Configured in AWS to allow use of the role arn used for scanning
         /// </summary>
-        public string AwsExternalId { get; }
+        public string CloudConnectorsAwsExternalId { get; }
     }
 }

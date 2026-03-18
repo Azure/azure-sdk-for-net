@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ErrorModel"/>. </summary>
-        internal ErrorModel()
+        public ErrorModel()
         {
             Details = new ChangeTrackingList<ErrorModel>();
         }

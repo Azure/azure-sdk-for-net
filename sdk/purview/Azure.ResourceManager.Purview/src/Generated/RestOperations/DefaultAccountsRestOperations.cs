@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Purview
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string scopeTenantId, string scopeType, string scope, RequestContext context)
+        internal HttpMessage CreateGetDefaultAccountRequest(string scopeTenantId, string scopeType, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview
             return message;
         }
 
-        internal HttpMessage CreateRemoveRequest(string scopeTenantId, string scopeType, string scope, RequestContext context)
+        internal HttpMessage CreateRemoveDefaultAccountRequest(string scopeTenantId, string scopeType, string scope, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Purview
             return message;
         }
 
-        internal HttpMessage CreateSetRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateSetDefaultAccountRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Purview
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPurviewAccountNameAvailabilityRequest(string subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

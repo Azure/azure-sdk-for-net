@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="scopeType"> The scope where the default account is set. </param>
         /// <param name="subscriptionId"> The subscription ID of the account that is set as the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultPurviewAccountPayload(string accountName, string resourceGroupName, string scope, string scopeTenantId, PurviewAccountScopeType? scopeType, string subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultPurviewAccountPayload(string accountName, string resourceGroupName, string scope, Guid? scopeTenantId, PurviewAccountScopeType? scopeType, string subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
             ResourceGroupName = resourceGroupName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview.Models
         public string Scope { get; set; }
 
         /// <summary> The scope tenant in which the default account is set. </summary>
-        public string ScopeTenantId { get; set; }
+        public Guid? ScopeTenantId { get; set; }
 
         /// <summary> The scope where the default account is set. </summary>
         public PurviewAccountScopeType? ScopeType { get; set; }
