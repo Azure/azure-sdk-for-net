@@ -75,11 +75,6 @@ generate-models: node_modules
 	cp -r $(TSP_OUT)/src/Generated/Models/* Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
 	cp $(TSP_OUT)/src/Generated/AzureAIAgentServerResponsesModelFactory.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/ 2>/dev/null || true
 	cp $(TSP_OUT)/src/Generated/Internal/*.cs Azure.AI.AgentServer.Responses.Contracts/src/Generated/Internal/ 2>/dev/null || true
-	@echo "🧹 Cleaning up regenerated artifacts..."
-	rm -f $(TSP_OUT)/Azure.AI.AgentServer.Responses.sln
-	rm -f $(TSP_OUT)/Configuration.json $(TSP_OUT)/tspCodeModel.json
-	rm -f $(TSP_OUT)/src/Azure.AI.AgentServer.Responses.csproj
-	rm -rf $(TSP_OUT)/src/Generated
 	@echo "✅ Models generated to Azure.AI.AgentServer.Responses.Contracts/src/Generated/Models/"
 	@echo "   NOTE: Custom model overrides are in Azure.AI.AgentServer.Responses.Contracts/src/Custom/."
 
@@ -104,4 +99,8 @@ generate-validators: generate-openapi
 	@echo "✅ Validators generated to $(VALIDATORS_DIR)/"
 
 generate-contracts: generate-models generate-validators
+	@echo "🧹 Cleaning up tsp-output intermediates..."
+	@# Preserve only the hand-written Custom stubs; remove everything else.
+	find $(TSP_OUT) -mindepth 1 -maxdepth 1 ! -name src -exec rm -rf {} +
+	find $(TSP_OUT)/src -mindepth 1 -maxdepth 1 ! -name Custom -exec rm -rf {} +
 	@echo "✅ All generated artifacts are up to date."
