@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -27,14 +26,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vlans"> The list of vlans that are selected from the isolation domains for trunking. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="isolationDomainIds"/>, <paramref name="vlans"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudTrunkedNetworkData(AzureLocation location, IEnumerable<ResourceIdentifier> isolationDomainIds, IEnumerable<long> vlans, Resources.Models.ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudTrunkedNetworkData(AzureLocation location, IEnumerable<ResourceIdentifier> isolationDomainIds, IEnumerable<long> vlans, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(isolationDomainIds, nameof(isolationDomainIds));
             Argument.AssertNotNull(vlans, nameof(vlans));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             Properties = new TrunkedNetworkProperties(isolationDomainIds, vlans);
-            ExtendedLocationInternal = extendedLocation;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkData"/>. </summary>
@@ -48,12 +47,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudTrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TrunkedNetworkProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudTrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TrunkedNetworkProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocationInternal = extendedLocation;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> The list of the resource properties. </summary>
@@ -61,9 +60,6 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-
-        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> Field Deprecated. The field was previously optional, now it will have no defined behavior and will be ignored. The network plugin type for Hybrid AKS. </summary>
         public HybridAksPluginType? HybridAksPluginType

@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.NetworkCloud
         public NetworkCloudStorageApplianceData(AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId)
             : this(location, rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials, extendedLocation) { }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation
-        {
-            get => ExtendedLocationInternal is Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation custom
-                ? custom
-                : (ExtendedLocationInternal != null ? new Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation(ExtendedLocationInternal.Name, ExtendedLocationInternal.ExtendedLocationType?.ToString()) : null);
-            set => ExtendedLocationInternal = value;
-        }
+        public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get; set; }
     }
 }

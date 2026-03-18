@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     [CodeGenSuppress("ExtendedLocation", typeof(string), typeof(ExtendedLocationType))]
     [CodeGenSuppress("ExtendedLocation", typeof(string), typeof(ExtendedLocationType), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppress("DeserializeExtendedLocation", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class ExtendedLocation : Azure.ResourceManager.Resources.Models.ExtendedLocation, IJsonModel<ExtendedLocation>, IPersistableModel<ExtendedLocation>
     {
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
@@ -81,6 +82,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
             return ((IPersistableModel<Azure.ResourceManager.Resources.Models.ExtendedLocation>)this).Write(options);
+        }
+
+        // Deserialization helper used by generated serialization code.
+        // The generated code calls ExtendedLocation.DeserializeExtendedLocation(element, options).
+        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            string name = null;
+            string extendedLocationType = null;
+
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    extendedLocationType = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new ExtendedLocation(name, extendedLocationType);
         }
     }
 }

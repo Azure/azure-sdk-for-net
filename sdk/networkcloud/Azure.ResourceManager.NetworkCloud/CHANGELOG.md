@@ -8,11 +8,9 @@
 - Added support for API version `2026-01-01-preview`.
 - Added new resource types: `AccessBridge`, `KubernetesVersion`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Updated custom code to adapt to new TypeSpec generator output for ExtendedLocation handling.
 
 ## 1.3.0 (2026-01-26)
 

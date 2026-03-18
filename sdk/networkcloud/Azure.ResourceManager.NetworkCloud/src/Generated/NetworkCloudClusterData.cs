@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/>, <paramref name="networkFabricId"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, Resources.Models.ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
-            ExtendedLocationInternal = extendedLocation;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
@@ -53,12 +52,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation, ManagedServiceIdentity identity, DeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ETag? eTag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, DeploymentType? kind) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocationInternal = extendedLocation;
+            ExtendedLocation = extendedLocation;
             Identity = identity;
             Kind = kind;
         }
@@ -68,9 +67,6 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-
-        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
@@ -390,15 +386,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </summary>
-        internal Resources.Models.ExtendedLocation ClusterExtendedLocationInternal
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterExtendedLocation;
-            }
-        }
-
         /// <summary> The latest connectivity status between cluster manager and the cluster. </summary>
         public ClusterManagerConnectionStatus? ClusterManagerConnectionStatus
         {
@@ -432,15 +419,6 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 return Properties is null ? default : Properties.DetailedStatusMessage;
-            }
-        }
-
-        /// <summary> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
-        internal Resources.Models.ExtendedLocation HybridAksExtendedLocationInternal
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HybridAksExtendedLocation;
             }
         }
 

@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="rackSkuId"> The SKU for the rack. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityZone"/>, <paramref name="rackLocation"/>, <paramref name="rackSerialNumber"/>, <paramref name="rackSkuId"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudRackData(AzureLocation location, string availabilityZone, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId, Resources.Models.ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudRackData(AzureLocation location, string availabilityZone, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(availabilityZone, nameof(availabilityZone));
             Argument.AssertNotNull(rackLocation, nameof(rackLocation));
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             Properties = new RackProperties(availabilityZone, rackLocation, rackSerialNumber, rackSkuId);
-            ExtendedLocationInternal = extendedLocation;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudRackData"/>. </summary>
@@ -52,12 +51,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RackProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RackProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
-            ExtendedLocationInternal = extendedLocation;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> The list of the resource properties. </summary>
@@ -65,9 +64,6 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-
-        /// <summary> The extended location of the resource. This property is required when creating the resource. </summary>
-        internal Resources.Models.ExtendedLocation ExtendedLocationInternal { get; set; }
 
         /// <summary> The value that will be used for machines in this rack to represent the availability zones that can be referenced by Hybrid AKS Clusters for node arrangement. </summary>
         public string AvailabilityZone

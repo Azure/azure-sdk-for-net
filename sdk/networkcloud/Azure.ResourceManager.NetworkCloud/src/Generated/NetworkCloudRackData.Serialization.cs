@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("extendedLocation"u8);
-            ((IJsonModel<Resources.Models.ExtendedLocation>)ExtendedLocationInternal).Write(writer, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.NetworkCloud
             AzureLocation location = default;
             RackProperties properties = default;
             ETag? eTag = default;
-            Resources.Models.ExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (prop.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
