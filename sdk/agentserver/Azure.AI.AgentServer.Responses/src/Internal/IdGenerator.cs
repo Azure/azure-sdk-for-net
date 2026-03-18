@@ -220,7 +220,7 @@ internal static class IdGenerator
     // ─── Item dispatch ──────────────────────────────────────────────
 
     /// <summary>
-    /// Generates a correctly prefixed ID for the given <see cref="Item"/> subtype.
+    /// Generates a correctly prefixed ID for the given <see cref="Models.Item"/> subtype.
     /// Each item type receives a distinct prefix so IDs are self-describing.
     /// </summary>
     /// <param name="item">The input item whose type determines the ID prefix.</param>

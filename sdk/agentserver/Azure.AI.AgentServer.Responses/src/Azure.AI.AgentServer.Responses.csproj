@@ -9,7 +9,7 @@
     <PackageTags>Azure.AI.AgentServer.Responses</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0011;AZC0014;AZC0100;AZC0112;SA1633;SA1316;SA1507;CS0419;CS1574;CS8604;</NoWarn>
+    <NoWarn>$(NoWarn);AZC0014;AZC0100;AZC0112;SA1633;SA1316;CS8604;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

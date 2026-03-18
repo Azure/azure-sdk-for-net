@@ -70,7 +70,7 @@ public class ResponsesActivitySource
 
     /// <summary>
     /// Gets the underlying <see cref="ActivitySource"/> instance.
-    /// Subclasses may use this to call <see cref="ActivitySource.StartActivity(string)"/>.
+    /// Subclasses may use this to call <see cref="ActivitySource.StartActivity(string, ActivityKind)"/>.
     /// </summary>
     protected ActivitySource Source => _source;
 

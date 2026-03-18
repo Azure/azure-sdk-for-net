@@ -597,7 +597,7 @@ internal sealed class ResponseOrchestrator
     /// </summary>
     /// <remarks>
     /// Every path through this method must reach <see cref="ResponseExecutionTracker.MarkCompleted"/>
-    /// and must attempt <see cref="TaskCompletionSource{T}.TrySetException"/> when
+    /// and must attempt <see cref="TaskCompletionSource{T}.TrySetException(Exception)"/> when
     /// <c>execution.Response</c> is null. Failures in the publisher or provider
     /// are logged and swallowed — they must never prevent the signal from being
     /// faulted (which would deadlock bg-non-streaming callers) or the tracker
