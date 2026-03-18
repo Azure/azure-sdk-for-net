@@ -900,5 +900,34 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.AreEqual(1, arguments.Count);
             Assert.That(arguments[0].ToDisplayString(), Does.Contain("default"));
         }
+        [TestCase]
+        public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
+        {
+            // When the body parameter is a string (framework type), should generate
+            // RequestContent.Create(BinaryData.FromObjectAsJson(body)) instead of
+            // string.ToRequestContent(body) which doesn't exist.
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(string), isNullable: true));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.AreEqual(1, arguments.Count);
+            var displayString = arguments[0].ToDisplayString();
+            // Should use RequestContent.Create(body), not string.ToRequestContent(body)
+            Assert.That(displayString, Does.Not.Contain("string.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent"));
+            Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
+        }
     }
 }

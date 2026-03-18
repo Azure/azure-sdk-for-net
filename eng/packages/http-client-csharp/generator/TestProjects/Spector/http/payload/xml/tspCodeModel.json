@@ -86,7 +86,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "XmlErrorContentType",
+      "name": "GetResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "XmlErrorContentType1",
+      "name": "GetResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "XmlErrorContentType2",
+      "name": "GetResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "16",
       "kind": "constant",
-      "name": "XmlErrorContentType3",
+      "name": "GetResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -166,7 +166,7 @@
     {
       "$id": "18",
       "kind": "constant",
-      "name": "XmlErrorContentType4",
+      "name": "GetResponseContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -182,7 +182,7 @@
     {
       "$id": "20",
       "kind": "constant",
-      "name": "XmlErrorContentType5",
+      "name": "GetResponseContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -214,7 +214,7 @@
     {
       "$id": "24",
       "kind": "constant",
-      "name": "XmlErrorContentType6",
+      "name": "GetResponseContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -230,7 +230,7 @@
     {
       "$id": "26",
       "kind": "constant",
-      "name": "XmlErrorContentType7",
+      "name": "GetResponseContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -246,7 +246,7 @@
     {
       "$id": "28",
       "kind": "constant",
-      "name": "XmlErrorContentType8",
+      "name": "GetResponseContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -278,7 +278,7 @@
     {
       "$id": "32",
       "kind": "constant",
-      "name": "XmlErrorContentType9",
+      "name": "GetResponseContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -294,7 +294,7 @@
     {
       "$id": "34",
       "kind": "constant",
-      "name": "XmlErrorContentType10",
+      "name": "GetResponseContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -310,7 +310,7 @@
     {
       "$id": "36",
       "kind": "constant",
-      "name": "XmlErrorContentType11",
+      "name": "GetResponseContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -342,7 +342,7 @@
     {
       "$id": "40",
       "kind": "constant",
-      "name": "XmlErrorContentType12",
+      "name": "GetResponseContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -358,7 +358,7 @@
     {
       "$id": "42",
       "kind": "constant",
-      "name": "XmlErrorContentType13",
+      "name": "GetResponseContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -374,7 +374,7 @@
     {
       "$id": "44",
       "kind": "constant",
-      "name": "XmlErrorContentType14",
+      "name": "GetResponseContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -406,7 +406,7 @@
     {
       "$id": "48",
       "kind": "constant",
-      "name": "XmlErrorContentType15",
+      "name": "GetResponseContentType15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -422,7 +422,7 @@
     {
       "$id": "50",
       "kind": "constant",
-      "name": "XmlErrorContentType16",
+      "name": "GetResponseContentType16",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -438,7 +438,7 @@
     {
       "$id": "52",
       "kind": "constant",
-      "name": "XmlErrorContentType17",
+      "name": "GetResponseContentType17",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -470,7 +470,7 @@
     {
       "$id": "56",
       "kind": "constant",
-      "name": "XmlErrorContentType18",
+      "name": "GetResponseContentType18",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -486,7 +486,7 @@
     {
       "$id": "58",
       "kind": "constant",
-      "name": "XmlErrorContentType19",
+      "name": "GetResponseContentType19",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -502,7 +502,7 @@
     {
       "$id": "60",
       "kind": "constant",
-      "name": "XmlErrorContentType20",
+      "name": "GetResponseContentType20",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -534,7 +534,7 @@
     {
       "$id": "64",
       "kind": "constant",
-      "name": "XmlErrorContentType21",
+      "name": "GetResponseContentType21",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -550,7 +550,7 @@
     {
       "$id": "66",
       "kind": "constant",
-      "name": "XmlErrorContentType22",
+      "name": "GetResponseContentType22",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -566,7 +566,7 @@
     {
       "$id": "68",
       "kind": "constant",
-      "name": "XmlErrorContentType23",
+      "name": "GetResponseContentType23",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -598,7 +598,7 @@
     {
       "$id": "72",
       "kind": "constant",
-      "name": "XmlErrorContentType24",
+      "name": "GetResponseContentType24",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -614,7 +614,7 @@
     {
       "$id": "74",
       "kind": "constant",
-      "name": "XmlErrorContentType25",
+      "name": "GetResponseContentType25",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -630,7 +630,7 @@
     {
       "$id": "76",
       "kind": "constant",
-      "name": "XmlErrorContentType26",
+      "name": "GetResponseContentType26",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -662,7 +662,7 @@
     {
       "$id": "80",
       "kind": "constant",
-      "name": "XmlErrorContentType27",
+      "name": "GetResponseContentType27",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -678,7 +678,7 @@
     {
       "$id": "82",
       "kind": "constant",
-      "name": "XmlErrorContentType28",
+      "name": "GetResponseContentType28",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -694,7 +694,7 @@
     {
       "$id": "84",
       "kind": "constant",
-      "name": "XmlErrorContentType29",
+      "name": "GetResponseContentType29",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -726,7 +726,7 @@
     {
       "$id": "88",
       "kind": "constant",
-      "name": "XmlErrorContentType30",
+      "name": "GetResponseContentType30",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -742,7 +742,7 @@
     {
       "$id": "90",
       "kind": "constant",
-      "name": "XmlErrorContentType31",
+      "name": "GetResponseContentType31",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -758,7 +758,7 @@
     {
       "$id": "92",
       "kind": "constant",
-      "name": "XmlErrorContentType32",
+      "name": "GetResponseContentType32",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -790,7 +790,7 @@
     {
       "$id": "96",
       "kind": "constant",
-      "name": "XmlErrorContentType33",
+      "name": "GetResponseContentType33",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -806,7 +806,7 @@
     {
       "$id": "98",
       "kind": "constant",
-      "name": "XmlErrorContentType34",
+      "name": "GetResponseContentType34",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -822,7 +822,7 @@
     {
       "$id": "100",
       "kind": "constant",
-      "name": "XmlErrorContentType35",
+      "name": "GetResponseContentType35",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -854,7 +854,7 @@
     {
       "$id": "104",
       "kind": "constant",
-      "name": "XmlErrorContentType36",
+      "name": "GetResponseContentType36",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -870,7 +870,7 @@
     {
       "$id": "106",
       "kind": "constant",
-      "name": "XmlErrorContentType37",
+      "name": "GetResponseContentType37",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -886,7 +886,7 @@
     {
       "$id": "108",
       "kind": "constant",
-      "name": "XmlErrorContentType38",
+      "name": "GetResponseContentType38",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -918,7 +918,7 @@
     {
       "$id": "112",
       "kind": "constant",
-      "name": "XmlErrorContentType39",
+      "name": "GetResponseContentType39",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -934,7 +934,7 @@
     {
       "$id": "114",
       "kind": "constant",
-      "name": "XmlErrorContentType40",
+      "name": "GetResponseContentType40",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -950,7 +950,7 @@
     {
       "$id": "116",
       "kind": "constant",
-      "name": "XmlErrorContentType41",
+      "name": "GetResponseContentType41",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -982,7 +982,7 @@
     {
       "$id": "120",
       "kind": "constant",
-      "name": "XmlErrorContentType42",
+      "name": "GetResponseContentType42",
       "namespace": "",
       "usage": "None",
       "valueType": {

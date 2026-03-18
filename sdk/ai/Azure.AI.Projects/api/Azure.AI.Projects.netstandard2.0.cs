@@ -646,7 +646,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.MonthlyRecurrenceSchedule MonthlyRecurrenceSchedule(System.Collections.Generic.IEnumerable<int> daysOfMonth = null) { throw null; }
         public static Azure.AI.Projects.NoAuthenticationCredentials NoAuthenticationCredentials() { throw null; }
         public static Azure.AI.Projects.OneTimeTrigger OneTimeTrigger(string triggerAt = null, string timeZone = null) { throw null; }
-        public static Azure.Core.PagedInsight PagedInsight(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Insight> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.AI.Projects.PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = null, string connectionName = null) { throw null; }
         public static Azure.AI.Projects.PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId, string connectionName, Azure.AI.Projects.PendingUploadType pendingUploadType) { throw null; }
         public static Azure.AI.Projects.PendingUploadResult PendingUploadResult(Azure.AI.Projects.AIProjectBlobReference blobReference = null, string pendingUploadId = null, string version = null) { throw null; }
@@ -1631,10 +1630,10 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GenerateAsync(System.ClientModel.BinaryContent content, string foundryFeatures = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Insight> Get(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string id, string foundryFeatures, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.Core.PagedInsight> GetAll(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult GetAll(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.Core.PagedInsight>> GetAllAsync(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAllAsync(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Insight> GetAll(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Insight> GetAllAsync(Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), Azure.AI.Projects.InsightType? type = default(Azure.AI.Projects.InsightType?), string evalId = null, string runId = null, string agentName = null, bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string foundryFeatures, string type, string evalId, string runId, string agentName, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Insight>> GetAsync(string id, Azure.AI.Projects.FoundryFeaturesOptInKeys? foundryFeatures = default(Azure.AI.Projects.FoundryFeaturesOptInKeys?), bool? includeCoordinates = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string id, string foundryFeatures, bool? includeCoordinates, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
@@ -2617,25 +2616,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.WeeklyRecurrenceSchedule System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.WeeklyRecurrenceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Azure.Core
-{
-    public partial class PagedInsight : System.ClientModel.Primitives.IJsonModel<Azure.Core.PagedInsight>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.PagedInsight>
-    {
-        internal PagedInsight() { }
-        public System.Uri NextLink { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Insight> Value { get { throw null; } }
-        protected virtual Azure.Core.PagedInsight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Core.PagedInsight (System.ClientModel.ClientResult result) { throw null; }
-        protected virtual Azure.Core.PagedInsight PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Core.PagedInsight System.ClientModel.Primitives.IJsonModel<Azure.Core.PagedInsight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Core.PagedInsight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Core.PagedInsight System.ClientModel.Primitives.IPersistableModel<Azure.Core.PagedInsight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.PagedInsight>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.PagedInsight>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace OpenAI
