@@ -18,9 +18,9 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a DisasterRecoveryConfig along with the instance operations that can be performed on it.
+    /// A class representing a ServiceBusDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusDisasterRecoveryResource"/> using the GetDisasterRecoveryConfigs method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusDisasterRecoveryResource"/> using the GetServiceBusDisasterRecoveryAuthorizationRules method.
     /// </summary>
     public partial class ServiceBusDisasterRecoveryAuthorizationRuleResource : ArmResource
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusDisasterRecoveryAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string disasterRecoveryConfigApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceBusDisasterRecoveryAuthorizationRuleApiVersion);
             _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, disasterRecoveryConfigApiVersion ?? "2025-05-01-preview");
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, serviceBusDisasterRecoveryAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

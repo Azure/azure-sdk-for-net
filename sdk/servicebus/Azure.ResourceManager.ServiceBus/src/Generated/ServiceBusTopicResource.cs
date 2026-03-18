@@ -401,9 +401,9 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        /// <summary> Gets a collection of Topics in the <see cref="ServiceBusTopicResource"/>. </summary>
-        /// <returns> An object representing collection of Topics and their operations over a ServiceBusTopicAuthorizationRuleResource. </returns>
-        public virtual ServiceBusTopicAuthorizationRuleCollection GetTopics()
+        /// <summary> Gets a collection of ServiceBusTopicAuthorizationRules in the <see cref="ServiceBusTopicResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceBusTopicAuthorizationRules and their operations over a ServiceBusTopicAuthorizationRuleResource. </returns>
+        public virtual ServiceBusTopicAuthorizationRuleCollection GetServiceBusTopicAuthorizationRules()
         {
             return GetCachedClient(client => new ServiceBusTopicAuthorizationRuleCollection(client, Id));
         }
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceBusTopicAuthorizationRuleResource>> GetTopicAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusTopicAuthorizationRuleResource>> GetServiceBusTopicAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return await GetTopics().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceBusTopicAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Returns the specified authorization rule. </summary>
@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceBusTopicAuthorizationRuleResource> GetTopic(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusTopicAuthorizationRuleResource> GetServiceBusTopicAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            return GetTopics().Get(authorizationRuleName, cancellationToken);
+            return GetServiceBusTopicAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceBusSubscriptions in the <see cref="ServiceBusTopicResource"/>. </summary>

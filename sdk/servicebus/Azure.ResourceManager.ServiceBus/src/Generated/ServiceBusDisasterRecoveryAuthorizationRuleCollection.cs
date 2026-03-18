@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary>
     /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> and their operations.
     /// Each <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="ServiceBusDisasterRecoveryResource"/>.
-    /// To get a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleCollection"/> instance call the GetDisasterRecoveryConfigs method from an instance of <see cref="ServiceBusDisasterRecoveryResource"/>.
+    /// To get a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleCollection"/> instance call the GetServiceBusDisasterRecoveryAuthorizationRules method from an instance of <see cref="ServiceBusDisasterRecoveryResource"/>.
     /// </summary>
     public partial class ServiceBusDisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusDisasterRecoveryAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusDisasterRecoveryAuthorizationRuleResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusDisasterRecoveryAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceBusDisasterRecoveryAuthorizationRuleResource.ResourceType, out string disasterRecoveryConfigApiVersion);
+            TryGetApiVersion(ServiceBusDisasterRecoveryAuthorizationRuleResource.ResourceType, out string serviceBusDisasterRecoveryAuthorizationRuleApiVersion);
             _disasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusDisasterRecoveryAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, disasterRecoveryConfigApiVersion ?? "2025-05-01-preview");
+            _disasterRecoveryConfigsRestClient = new DisasterRecoveryConfigs(_disasterRecoveryConfigsClientDiagnostics, Pipeline, Endpoint, serviceBusDisasterRecoveryAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
