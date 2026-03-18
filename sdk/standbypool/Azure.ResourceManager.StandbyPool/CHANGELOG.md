@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0 (Unreleased)
+## 1.2.0 (2026-04-01)
 
 ### Features Added
 
@@ -10,10 +10,6 @@
 ### Breaking Changes
 
 - Removed upper limit of 2000 on `MaxReadyCapacity` and `MinReadyCapacity`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2025-05-10)
 
