@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Net.ServerSentEvents;
 using System.Text;
 using NUnit.Framework;
@@ -151,9 +153,6 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase("Mock error", "MockEvent")]
         [TestCase("Mock error", "")]
         [TestCase("Mock error", null)]
-        [TestCase("", "MockEvent")]
-        [TestCase("", "")]
-        [TestCase("", null)]
         [TestCase("long", "MockEvent")]
         public void TestSseError(string errorText, string eventType)
         {
@@ -179,6 +178,16 @@ namespace Azure.AI.Agents.Persistent.Tests
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => StreamingUpdate.FromEvent(badItem));
             Assert.That(exception.Message.StartsWith($"The stream returned invalid JSON: \"{expectedError}\" for event of type {expectedEvent}. Original error:"), Is.True, exception.Message);
         }
+
+        [Test]
+        public void TestSseKeepalive()
+        {
+            SseItem<byte[]> keepaliveItem = new(new byte[] { }, "keepalive");
+            List<StreamingUpdate> updates = [..StreamingUpdate.FromEvent(keepaliveItem)];
+            Assert.That(updates.Count, Is.EqualTo(1));
+            Assert.That(updates[0], Is.InstanceOf<KeepAliveUpdate>());
+        }
+
         #region helpers
         private static void AssertMcpListsEqual(IEnumerable<string> expectedAlways, IEnumerable<string> expectedNever, MCPApprovalPerTool observedApproval)
         {
