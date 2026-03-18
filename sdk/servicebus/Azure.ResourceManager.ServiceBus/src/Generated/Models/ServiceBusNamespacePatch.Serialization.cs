@@ -14,12 +14,17 @@ using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Description of a namespace resource. </summary>
-    public partial class ServiceBusNamespacePatch : ResourceNamespacePatch, IJsonModel<ServiceBusNamespacePatch>
+    /// <summary> Parameters supplied to the Patch Namespace operation. </summary>
+    public partial class ServiceBusNamespacePatch : TrackedResourceData, IJsonModel<ServiceBusNamespacePatch>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespacePatch"/> for deserialization. </summary>
+        internal ServiceBusNamespacePatch()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,15 +91,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 throw new FormatException($"The model {nameof(ServiceBusNamespacePatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -109,7 +114,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

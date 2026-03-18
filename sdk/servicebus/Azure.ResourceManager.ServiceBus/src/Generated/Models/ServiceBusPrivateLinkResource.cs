@@ -7,59 +7,55 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Information of the private link resource. </summary>
-    public partial class ServiceBusPrivateLinkResource
+    /// <summary> A private link resource. </summary>
+    public partial class ServiceBusPrivateLinkResource : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkResource"/>. </summary>
-        internal ServiceBusPrivateLinkResource()
+        public ServiceBusPrivateLinkResource()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkResource"/>. </summary>
-        /// <param name="properties"> Properties of the private link resource. </param>
-        /// <param name="id"> Fully qualified identifier of the resource. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusPrivateLinkResource(ServiceBusPrivateLinkResourceProperties properties, string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"></param>
+        internal ServiceBusPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceBusPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
-            Id = id;
-            Name = name;
-            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Properties of the private link resource. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
-        internal ServiceBusPrivateLinkResourceProperties Properties { get; }
+        internal ServiceBusPrivateLinkResourceProperties Properties { get; set; }
 
-        /// <summary> Fully qualified identifier of the resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> Name of the resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Type of the resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
-
-        /// <summary> Gets the GroupId. </summary>
+        /// <summary> Gets or sets the GroupId. </summary>
         [WirePath("properties.groupId")]
         public string GroupId
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceBusPrivateLinkResourceProperties();
+                }
+                Properties.GroupId = value;
             }
         }
     }

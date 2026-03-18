@@ -550,75 +550,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> Properties of SKU. </param>
-        /// <param name="provisioningState"> Provisioning state of the namespace. </param>
-        /// <param name="status"> Status of the namespace. </param>
-        /// <param name="createdOn"> The time the namespace was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        /// <param name="alternateName"> Alternate name for namespace. </param>
-        /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNamespacePatch"/> instance for mocking. </returns>
-        public static ServiceBusNamespacePatch ServiceBusNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, IDictionary<string, string> tags = default, ServiceBusSku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceBusNamespacePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                sku,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null ? default : new SBNamespaceUpdateProperties(
-                    provisioningState,
-                    status,
-                    createdOn,
-                    updatedOn,
-                    serviceBusEndpoint,
-                    metricId,
-                    encryption,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>()).ToList(),
-                    disableLocalAuth,
-                    alternateName,
-                    null),
-                identity);
-        }
-
-        /// <summary> The Resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ResourceNamespacePatch"/> instance for mocking. </returns>
-        public static ResourceNamespacePatch ResourceNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceNamespacePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
@@ -644,16 +575,23 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 location);
         }
 
-        /// <param name="groupId"> Gets the GroupId. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> Gets or sets the GroupId. </param>
         /// <param name="requiredMembers"> Required Members. </param>
         /// <param name="requiredZoneNames"> Required Zone Names. </param>
-        /// <param name="id"> Fully qualified identifier of the resource. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.ServiceBusPrivateLinkResource"/> instance for mocking. </returns>
-        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, string id = default, string name = default, string @type = default)
+        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
-            return new ServiceBusPrivateLinkResource(groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ServiceBusPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null), id, name, @type, additionalBinaryDataProperties: null);
+            return new ServiceBusPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ServiceBusPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -787,8 +725,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
         /// <param name="alternateName"> Alternate name for namespace. </param>
         /// <returns> A new <see cref="Models.ServiceBusNamespacePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusNamespacePatch ServiceBusNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, ServiceBusEncryption encryption, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName)
+        public static ServiceBusNamespacePatch ServiceBusNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             privateEndpointConnections ??= new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
@@ -799,29 +736,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                location,
                 tags,
-                sku,
+                location,
                 default,
+                sku,
                 identity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"></param>
-        /// <param name="requiredMembers"> Required Members. </param>
-        /// <param name="requiredZoneNames"> Required Zone Names. </param>
-        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new ServiceBusPrivateLinkResource(default, id, name, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusQueueData"/>. </summary>

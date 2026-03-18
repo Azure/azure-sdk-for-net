@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkResourceProperties"/>. </summary>
-        internal ServiceBusPrivateLinkResourceProperties()
+        public ServiceBusPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the GroupId. </summary>
+        /// <summary> Gets or sets the GroupId. </summary>
         [WirePath("groupId")]
-        public string GroupId { get; }
+        public string GroupId { get; set; }
 
         /// <summary> Required Members. </summary>
         [WirePath("requiredMembers")]
