@@ -18,9 +18,9 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a Topic along with the instance operations that can be performed on it.
+    /// A class representing a ServiceBusTopicAuthorizationRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusTopicAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource"/> using the GetTopics method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusTopicResource"/> using the GetServiceBusTopicAuthorizationRules method.
     /// </summary>
     public partial class ServiceBusTopicAuthorizationRuleResource : ArmResource
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusTopicAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string topicApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceBusTopicAuthorizationRuleApiVersion);
             _topicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Endpoint, topicApiVersion ?? "2025-05-01-preview");
+            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Endpoint, serviceBusTopicAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Update a Topic.
+        /// Update a ServiceBusTopicAuthorizationRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Update a Topic.
+        /// Update a ServiceBusTopicAuthorizationRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

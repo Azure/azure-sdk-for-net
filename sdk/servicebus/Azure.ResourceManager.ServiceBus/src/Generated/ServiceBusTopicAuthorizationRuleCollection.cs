@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary>
     /// A class representing a collection of <see cref="ServiceBusTopicAuthorizationRuleResource"/> and their operations.
     /// Each <see cref="ServiceBusTopicAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="ServiceBusTopicResource"/>.
-    /// To get a <see cref="ServiceBusTopicAuthorizationRuleCollection"/> instance call the GetTopics method from an instance of <see cref="ServiceBusTopicResource"/>.
+    /// To get a <see cref="ServiceBusTopicAuthorizationRuleCollection"/> instance call the GetServiceBusTopicAuthorizationRules method from an instance of <see cref="ServiceBusTopicResource"/>.
     /// </summary>
     public partial class ServiceBusTopicAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusTopicAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusTopicAuthorizationRuleResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusTopicAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceBusTopicAuthorizationRuleResource.ResourceType, out string topicApiVersion);
+            TryGetApiVersion(ServiceBusTopicAuthorizationRuleResource.ResourceType, out string serviceBusTopicAuthorizationRuleApiVersion);
             _topicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusTopicAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Endpoint, topicApiVersion ?? "2025-05-01-preview");
+            _topicsRestClient = new Topics(_topicsClientDiagnostics, Pipeline, Endpoint, serviceBusTopicAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

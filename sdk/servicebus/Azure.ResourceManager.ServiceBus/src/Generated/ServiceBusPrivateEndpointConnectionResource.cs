@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a PrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// A class representing a ServiceBusPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetPrivateEndpointConnections method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetServiceBusPrivateEndpointConnections method.
     /// </summary>
     public partial class ServiceBusPrivateEndpointConnectionResource : ArmResource
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceBusPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2025-05-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, serviceBusPrivateEndpointConnectionApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Update a PrivateEndpointConnection.
+        /// Update a ServiceBusPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Update a PrivateEndpointConnection.
+        /// Update a ServiceBusPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

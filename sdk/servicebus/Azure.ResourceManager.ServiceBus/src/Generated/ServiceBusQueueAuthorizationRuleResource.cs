@@ -18,9 +18,9 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a Queue along with the instance operations that can be performed on it.
+    /// A class representing a ServiceBusQueueAuthorizationRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusQueueAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusQueueResource"/> using the GetQueues method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusQueueResource"/> using the GetServiceBusQueueAuthorizationRules method.
     /// </summary>
     public partial class ServiceBusQueueAuthorizationRuleResource : ArmResource
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusQueueAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string queueApiVersion);
+            TryGetApiVersion(ResourceType, out string serviceBusQueueAuthorizationRuleApiVersion);
             _queuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Endpoint, queueApiVersion ?? "2025-05-01-preview");
+            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Endpoint, serviceBusQueueAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Update a Queue.
+        /// Update a ServiceBusQueueAuthorizationRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Update a Queue.
+        /// Update a ServiceBusQueueAuthorizationRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

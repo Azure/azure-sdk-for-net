@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary>
     /// A class representing a collection of <see cref="ServiceBusPrivateEndpointConnectionResource"/> and their operations.
     /// Each <see cref="ServiceBusPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
-    /// To get a <see cref="ServiceBusPrivateEndpointConnectionCollection"/> instance call the GetPrivateEndpointConnections method from an instance of <see cref="ServiceBusNamespaceResource"/>.
+    /// To get a <see cref="ServiceBusPrivateEndpointConnectionCollection"/> instance call the GetServiceBusPrivateEndpointConnections method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
     public partial class ServiceBusPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ServiceBusPrivateEndpointConnectionResource>, IAsyncEnumerable<ServiceBusPrivateEndpointConnectionResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceBusPrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
+            TryGetApiVersion(ServiceBusPrivateEndpointConnectionResource.ResourceType, out string serviceBusPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2025-05-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, serviceBusPrivateEndpointConnectionApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

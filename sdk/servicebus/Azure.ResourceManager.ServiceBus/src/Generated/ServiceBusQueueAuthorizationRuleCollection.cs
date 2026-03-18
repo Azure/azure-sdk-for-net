@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary>
     /// A class representing a collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> and their operations.
     /// Each <see cref="ServiceBusQueueAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="ServiceBusQueueResource"/>.
-    /// To get a <see cref="ServiceBusQueueAuthorizationRuleCollection"/> instance call the GetQueues method from an instance of <see cref="ServiceBusQueueResource"/>.
+    /// To get a <see cref="ServiceBusQueueAuthorizationRuleCollection"/> instance call the GetServiceBusQueueAuthorizationRules method from an instance of <see cref="ServiceBusQueueResource"/>.
     /// </summary>
     public partial class ServiceBusQueueAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusQueueAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusQueueAuthorizationRuleResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusQueueAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceBusQueueAuthorizationRuleResource.ResourceType, out string queueApiVersion);
+            TryGetApiVersion(ServiceBusQueueAuthorizationRuleResource.ResourceType, out string serviceBusQueueAuthorizationRuleApiVersion);
             _queuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusQueueAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Endpoint, queueApiVersion ?? "2025-05-01-preview");
+            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Endpoint, serviceBusQueueAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
