@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.NewRelicObservability
     /// <summary> A tag rule belonging to NewRelic account. </summary>
     public partial class NewRelicObservabilityTagRuleData : ResourceData, IJsonModel<NewRelicObservabilityTagRuleData>
     {
-        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleData"/> for deserialization. </summary>
-        internal NewRelicObservabilityTagRuleData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

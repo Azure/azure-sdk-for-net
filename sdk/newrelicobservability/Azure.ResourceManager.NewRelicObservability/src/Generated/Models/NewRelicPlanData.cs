@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -18,11 +17,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="NewRelicPlanData"/>. </summary>
-        internal NewRelicPlanData()
-        {
-        }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicPlanData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -35,40 +29,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-        }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        [WirePath("properties")]
-        internal PlanDataProperties Properties { get; }
-
-        /// <summary> Plan details. </summary>
-        [WirePath("properties.planData")]
-        public NewRelicPlanDetails PlanData
-        {
-            get
-            {
-                return Properties.PlanData;
-            }
-        }
-
-        /// <summary> Source of org creation. </summary>
-        [WirePath("properties.orgCreationSource")]
-        public NewRelicObservabilityOrgCreationSource? OrgCreationSource
-        {
-            get
-            {
-                return Properties.OrgCreationSource;
-            }
-        }
-
-        /// <summary> Source of account creation. </summary>
-        [WirePath("properties.accountCreationSource")]
-        public NewRelicObservabilityAccountCreationSource? AccountCreationSource
-        {
-            get
-            {
-                return Properties.AccountCreationSource;
-            }
         }
     }
 }

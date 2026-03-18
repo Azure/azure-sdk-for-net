@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -359,64 +360,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicConnectedPartnerResourceProperties(accountName, accountId, azureResourceId, location, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="accountId"> account id. </param>
-        /// <param name="accountName"> account name. </param>
-        /// <param name="region"> Region where New Relic account is present. </param>
-        /// <returns> A new <see cref="Models.NewRelicAccountResourceData"/> instance for mocking. </returns>
-        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string organizationId = default, string accountId = default, string accountName = default, AzureLocation? region = default)
-        {
-            return new NewRelicAccountResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                organizationId is null && accountId is null && accountName is null && region is null ? default : new AccountProperties(organizationId, accountId, accountName, region, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="organizationId"> organization id. </param>
-        /// <param name="organizationName"> organization name. </param>
-        /// <param name="billingSource"> Billing source. </param>
-        /// <returns> A new <see cref="Models.NewRelicOrganizationResourceData"/> instance for mocking. </returns>
-        public static NewRelicOrganizationResourceData NewRelicOrganizationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string organizationId = default, string organizationName = default, NewRelicObservabilityBillingSource? billingSource = default)
-        {
-            return new NewRelicOrganizationResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                organizationId is null && organizationName is null && billingSource is null ? default : new OrganizationProperties(organizationId, organizationName, billingSource, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <returns> A new <see cref="Models.NewRelicPlanData"/> instance for mocking. </returns>
-        public static NewRelicPlanData NewRelicPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NewRelicPlanDetails planData = default, NewRelicObservabilityOrgCreationSource? orgCreationSource = default, NewRelicObservabilityAccountCreationSource? accountCreationSource = default)
-        {
-            return new NewRelicPlanData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                planData is null && orgCreationSource is null && accountCreationSource is null ? default : new PlanDataProperties(planData, orgCreationSource, accountCreationSource, null));
-        }
-
         /// <summary> SaaS guid &amp; PublishedId for Activate and Validate SaaS Resource. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for NewRelic resource. </param>
@@ -442,6 +385,70 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 saasId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicAccountResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="organizationId"> organization id. </param>
+        /// <param name="accountId"> account id. </param>
+        /// <param name="accountName"> account name. </param>
+        /// <param name="region"> Region where New Relic account is present. </param>
+        /// <returns> A new <see cref="Models.NewRelicAccountResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicAccountResourceData NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region)
+        {
+            return new NewRelicAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicOrganizationResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="organizationId"> organization id. </param>
+        /// <param name="organizationName"> organization name. </param>
+        /// <param name="billingSource"> Billing source. </param>
+        /// <returns> A new <see cref="Models.NewRelicOrganizationResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicOrganizationResourceData NewRelicOrganizationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string organizationName, NewRelicObservabilityBillingSource? billingSource)
+        {
+            return new NewRelicOrganizationResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NewRelicPlanData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="orgCreationSource"> Source of org creation. </param>
+        /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <returns> A new <see cref="Models.NewRelicPlanData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NewRelicPlanData NewRelicPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NewRelicPlanDetails planData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource)
+        {
+            return new NewRelicPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
         }
     }
 }
