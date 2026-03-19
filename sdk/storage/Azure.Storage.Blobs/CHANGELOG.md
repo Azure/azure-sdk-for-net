@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added support for service version 2026-06-06.
-- Aded support for Blob Smart Tier.
+- Added support for Blob Smart Tier.
 
 ## 12.28.0-beta.1 (2026-01-20)
 
