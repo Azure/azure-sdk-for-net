@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -58,25 +56,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     yield break;
                 }
-            }
-        }
-
-        /// <summary> Get next page. </summary>
-        /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
-        {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleCollection.GetAll");
-            scope.Start();
-            try
-            {
-                return _client.Pipeline.ProcessMessage(message, _context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
             }
         }
     }
