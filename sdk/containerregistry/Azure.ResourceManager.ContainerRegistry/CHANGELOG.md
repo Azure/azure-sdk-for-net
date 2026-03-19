@@ -12,12 +12,6 @@
 - Added new properties to `ConnectedRegistryData`: `GarbageCollection`, `RegistrySyncResult`.
 - Added `Identity` property to `ContainerRegistryCacheRuleData`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0-beta.1 (2025-12-10)
 
 ### Features Added
