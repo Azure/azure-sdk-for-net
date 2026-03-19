@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath("/AuthorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             if (_apiVersion != null)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath("/AuthorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             if (_apiVersion != null)
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath("/AuthorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             if (_apiVersion != null)
             {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath("/AuthorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendPath("/listKeys", false);
             if (_apiVersion != null)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ServiceBus
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
             uri.AppendPath(namespaceName, true);
-            uri.AppendPath("/authorizationRules/", false);
+            uri.AppendPath("/AuthorizationRules/", false);
             uri.AppendPath(authorizationRuleName, true);
             uri.AppendPath("/regenerateKeys", false);
             if (_apiVersion != null)

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ServiceBus
     {
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _sbAuthorizationRulesClientDiagnostics;
+        private readonly SBAuthorizationRules _sbAuthorizationRulesRestClient;
         private readonly ClientDiagnostics _sbNamespacesClientDiagnostics;
         private readonly SBNamespaces _sbNamespacesRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.ServiceBus
             TryGetApiVersion(ServiceBusNamespaceResource.ResourceType, out string serviceBusNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
             _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2025-05-01-preview");
+            _sbAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
+            _sbAuthorizationRulesRestClient = new SBAuthorizationRules(_sbAuthorizationRulesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2025-05-01-preview");
             _sbNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
             _sbNamespacesRestClient = new SBNamespaces(_sbNamespacesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceApiVersion ?? "2025-05-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
