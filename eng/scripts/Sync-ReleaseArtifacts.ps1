@@ -52,6 +52,8 @@ function Merge-ChangeLogEntries {
   For each entry in the release changelog:
     - If the version does not exist in main, add it.
     - If main has the version as (Unreleased) but release has a date, replace it.
+    - If both have a dated entry for the same version, release wins (it has
+      the latest content from prepare-release).
     - Otherwise keep main's entry.
   Returns the merged entries (unordered — Set-ChangeLogContent handles sorting).
   #>
@@ -73,6 +75,11 @@ function Merge-ChangeLogEntries {
             $releaseEntry.ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS) {
       $MainEntries[$version] = $releaseEntry
       Write-Host "  Updated changelog entry for $version with release date"
+    }
+    elseif ($releaseEntry.ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS -and
+            $MainEntries[$version].ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS) {
+      $MainEntries[$version] = $releaseEntry
+      Write-Host "  Replaced changelog entry for $version with release content"
     }
   }
 

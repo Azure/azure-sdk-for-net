@@ -44,6 +44,11 @@ BeforeAll {
                 $MainEntries[$version] = $releaseEntry
                 Write-Host "  Updated changelog entry for $version with release date"
             }
+            elseif ($releaseEntry.ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS -and
+                    $MainEntries[$version].ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS) {
+                $MainEntries[$version] = $releaseEntry
+                Write-Host "  Replaced changelog entry for $version with release content"
+            }
         }
 
         return $MainEntries
@@ -167,7 +172,7 @@ Describe "Merge-ChangeLogEntries" {
         $result["1.1.1"].ReleaseStatus | Should -Be "(2026-03-17)"
     }
 
-    It "Does not overwrite a dated entry on main with a different dated entry from release" {
+    It "Dated entry on both branches — release content wins" {
         $mainChangelog = Build-Changelog @(
             @{ Version = "1.0.0"; Status = "(2026-01-15)"; Content = @("", "### Features Added", "", "- from main") }
         )
@@ -179,8 +184,40 @@ Describe "Merge-ChangeLogEntries" {
 
         $result = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
 
-        # Main's entry should be preserved (both have dates — no overwrite)
-        $result["1.0.0"].ReleaseStatus | Should -Be "(2026-01-15)"
+        # Release content wins when both are dated
+        $result["1.0.0"].ReleaseStatus | Should -Be "(2026-01-01)"
+    }
+
+    It "Dated entry with different content — release content replaces main" {
+        $mainChangelog = Build-Changelog @(
+            @{ Version = "1.1.0"; Status = "(2026-03-17)"; Content = @("", "### Features Added", "", "- old content from main") }
+        )
+        $releaseChangelog = Build-Changelog @(
+            @{ Version = "1.1.0"; Status = "(2026-03-17)"; Content = @("", "### Features Added", "", "- updated content from release", "- extra fix") }
+        )
+        $mainEntries = Get-ChangeLogEntriesFromContent $mainChangelog
+        $releaseEntries = Get-ChangeLogEntriesFromContent $releaseChangelog
+
+        $result = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
+
+        $result["1.1.0"].ReleaseContent | Should -Contain "- updated content from release"
+        $result["1.1.0"].ReleaseContent | Should -Contain "- extra fix"
+    }
+
+    It "Unreleased entry on both branches — main's unreleased content is kept" {
+        $mainChangelog = Build-Changelog @(
+            @{ Version = "1.2.0"; Status = "(Unreleased)"; Content = @("", "### Features Added", "", "- main work in progress") }
+        )
+        $releaseChangelog = Build-Changelog @(
+            @{ Version = "1.2.0"; Status = "(Unreleased)"; Content = @("", "### Features Added", "", "- release branch wip") }
+        )
+        $mainEntries = Get-ChangeLogEntriesFromContent $mainChangelog
+        $releaseEntries = Get-ChangeLogEntriesFromContent $releaseChangelog
+
+        $result = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
+
+        # Both unreleased — main wins (no overwrite)
+        $result["1.2.0"].ReleaseContent | Should -Contain "- main work in progress"
     }
 
     It "Handles version ordering correctly after merge via Set-ChangeLogContent" {
