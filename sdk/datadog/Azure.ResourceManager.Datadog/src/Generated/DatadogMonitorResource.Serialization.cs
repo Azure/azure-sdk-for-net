@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Datadog
 {
+    /// <summary></summary>
     public partial class DatadogMonitorResource : IJsonModel<DatadogMonitorData>
     {
-        private static DatadogMonitorData s_dataDeserializationInstance;
-        private static DatadogMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatadogMonitorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatadogMonitorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatadogMonitorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatadogMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatadogMonitorData>)Data).Write(writer, options);
 
-        DatadogMonitorData IJsonModel<DatadogMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatadogMonitorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorData IJsonModel<DatadogMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatadogMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatadogMonitorData>(Data, options, AzureResourceManagerDatadogContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatadogMonitorData IPersistableModel<DatadogMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatadogMonitorData>(data, options, AzureResourceManagerDatadogContext.Default);
 
-        string IPersistableModel<DatadogMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatadogMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatadogMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

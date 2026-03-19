@@ -9,7 +9,7 @@ library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
 # Temporarily releasing the SDK from the Swagger specification; this will be updated once support for generating SDKs from multiple TypeSpec sources is available.
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/8d49f2f199f76eb8a80662de72a30909699f5c28/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/containerregistry.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/4ab67896de206f57818ab7a3fa32bcc2745c8198/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/containerregistry.json
   - https://github.com/Azure/azure-rest-api-specs/blob/6fb4ee637122d3105eaa2d3cf4ed7689d3407413/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/containerregistry_build.json
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -72,6 +72,12 @@ prepend-rp-prefix:
   - AgentPoolListResult
   - AgentPoolQueueStatus
   - AgentProperties
+  - Archive
+  - ArchiveListResult
+  - ArchivePackageSourceProperties
+  - ArchivePatch
+  - ArchiveVersion
+  - ArchiveVersionListResult
   - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
@@ -87,6 +93,10 @@ prepend-rp-prefix:
   - DockerBuildStep
   - EncodedTaskStep
   - EncryptionStatus
+  - EndpointProtocol
+  - ExportPipeline
+  - ExportPipelineListResult
+  - ExportPipelineTargetProperties
   - ExportPolicy
   - ExportPolicyStatus
   - FileTaskStep
@@ -95,19 +105,38 @@ prepend-rp-prefix:
   - ImageUpdateTrigger
   - ImportImageParameters
   - ImportMode
+  - ImportPipeline
+  - ImportPipelineListResult
+  - ImportPipelineSourceProperties
   - ImportSource
   - ImportSourceCredentials
   - IPRule
   - KeyVaultProperties
+  - MetadataSearch
   - NetworkRuleSet
   - OverrideTaskStepProperties
+  - PackageSourceType
   - PasswordName
+  - PipelineOption
+  - PipelineRun
+  - PipelineRunListResult
+  - PipelineRunSourceProperties
+  - PipelineRunSourceType
+  - PipelineRunTargetProperties
+  - PipelineRunTargetType
+  - PipelineSourceTriggerDescriptor
+  - PipelineSourceTriggerProperties
+  - PipelineSourceType
+  - PipelineTriggerDescriptor
+  - PipelineTriggerProperties
   - PlatformProperties
   - Policies
   - PolicyStatus
+  - ProgressProperties
   - ProvisioningState
   - PublicNetworkAccess
   - QuarantinePolicy
+  - RegionalEndpoint
   - Replication
   - ReplicationListResult
   - RetentionPolicy
@@ -118,9 +147,13 @@ prepend-rp-prefix:
   - RunType
   - SecretObject
   - SecretObjectType
+  - SoftDeletePolicy
   - SourceTrigger
   - SourceTriggerDescriptor
   - SourceTriggerEvent
+  - StorageAccessMode
+  - SyncState
+  - SyncTrigger
   - Task
   - TaskListResult
   - TaskRun
@@ -199,9 +232,12 @@ rename-mapping:
   OS: ContainerRegistryOS
   ParentProperties: ConnectedRegistryParent
   ParentProperties.id: -|arm-id
+  PipelineRunRequest: ContainerRegistryPipelineRunContent
+  PipelineRunResponse: ContainerRegistryPipelineRunResult
   PlatformUpdateParameters: ContainerRegistryPlatformUpdateContent
   RegenerateCredentialParameters: ContainerRegistryCredentialRegenerateContent
   Registry: ContainerRegistry
+  RegistrySyncResult: ContainerRegistrySyncResult
   Registry.properties.adminUserEnabled: IsAdminUserEnabled
   Registry.properties.anonymousPullEnabled: IsAnonymousPullEnabled
   Registry.properties.dataEndpointEnabled: IsDataEndpointEnabled

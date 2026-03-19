@@ -14,21 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppContainers", "Azure.Provisioning.AppContainers\src\Azure.Provisioning.AppContainers.csproj", "{4BE13B88-0D63-4196-8BCA-ADBBBB367B91}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppContainers.Tests", "Azure.Provisioning.AppContainers\tests\Azure.Provisioning.AppContainers.Tests.csproj", "{2E72581F-330E-48CC-A459-C386656E163B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ApplicationInsights", "Azure.Provisioning.ApplicationInsights\src\Azure.Provisioning.ApplicationInsights.csproj", "{F187C26D-0A14-4CA8-A1BC-84528C627DA5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ApplicationInsights.Tests", "Azure.Provisioning.ApplicationInsights\tests\Azure.Provisioning.ApplicationInsights.Tests.csproj", "{2A1C6C90-415C-4AD1-97D0-E84BBFE681C5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppService", "Azure.Provisioning.AppService\src\Azure.Provisioning.AppService.csproj", "{E411C2F1-CCA2-4D95-B1C1-D8FED3421C70}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppService.Tests", "Azure.Provisioning.AppService\tests\Azure.Provisioning.AppService.Tests.csproj", "{76098A77-CF29-421E-AC8A-BF94239B56C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerService", "Azure.Provisioning.ContainerService\src\Azure.Provisioning.ContainerService.csproj", "{432AB987-6CFA-4590-9C23-36765E47B836}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ContainerService.Tests", "Azure.Provisioning.ContainerService\tests\Azure.Provisioning.ContainerService.Tests.csproj", "{182DB588-C4D2-439F-AAD1-BDFB26AB59CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernetes", "Azure.Provisioning.Kubernetes\src\Azure.Provisioning.Kubernetes.csproj", "{ED3BF558-C208-4245-A310-1C95936C2030}"
 EndProject
