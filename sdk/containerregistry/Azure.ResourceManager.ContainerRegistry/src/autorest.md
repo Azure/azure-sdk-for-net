@@ -72,6 +72,12 @@ prepend-rp-prefix:
   - AgentPoolListResult
   - AgentPoolQueueStatus
   - AgentProperties
+  - Archive
+  - ArchiveListResult
+  - ArchivePackageSourceProperties
+  - ArchivePatch
+  - ArchiveVersion
+  - ArchiveVersionListResult
   - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
@@ -87,6 +93,10 @@ prepend-rp-prefix:
   - DockerBuildStep
   - EncodedTaskStep
   - EncryptionStatus
+  - EndpointProtocol
+  - ExportPipeline
+  - ExportPipelineListResult
+  - ExportPipelineTargetProperties
   - ExportPolicy
   - ExportPolicyStatus
   - FileTaskStep
@@ -95,19 +105,38 @@ prepend-rp-prefix:
   - ImageUpdateTrigger
   - ImportImageParameters
   - ImportMode
+  - ImportPipeline
+  - ImportPipelineListResult
+  - ImportPipelineSourceProperties
   - ImportSource
   - ImportSourceCredentials
   - IPRule
   - KeyVaultProperties
+  - MetadataSearch
   - NetworkRuleSet
   - OverrideTaskStepProperties
+  - PackageSourceType
   - PasswordName
+  - PipelineOption
+  - PipelineRun
+  - PipelineRunListResult
+  - PipelineRunSourceProperties
+  - PipelineRunSourceType
+  - PipelineRunTargetProperties
+  - PipelineRunTargetType
+  - PipelineSourceTriggerDescriptor
+  - PipelineSourceTriggerProperties
+  - PipelineSourceType
+  - PipelineTriggerDescriptor
+  - PipelineTriggerProperties
   - PlatformProperties
   - Policies
   - PolicyStatus
+  - ProgressProperties
   - ProvisioningState
   - PublicNetworkAccess
   - QuarantinePolicy
+  - RegionalEndpoint
   - Replication
   - ReplicationListResult
   - RetentionPolicy
@@ -118,9 +147,13 @@ prepend-rp-prefix:
   - RunType
   - SecretObject
   - SecretObjectType
+  - SoftDeletePolicy
   - SourceTrigger
   - SourceTriggerDescriptor
   - SourceTriggerEvent
+  - StorageAccessMode
+  - SyncState
+  - SyncTrigger
   - Task
   - TaskListResult
   - TaskRun
@@ -199,9 +232,12 @@ rename-mapping:
   OS: ContainerRegistryOS
   ParentProperties: ConnectedRegistryParent
   ParentProperties.id: -|arm-id
+  PipelineRunRequest: ContainerRegistryPipelineRunContent
+  PipelineRunResponse: ContainerRegistryPipelineRunResult
   PlatformUpdateParameters: ContainerRegistryPlatformUpdateContent
   RegenerateCredentialParameters: ContainerRegistryCredentialRegenerateContent
   Registry: ContainerRegistry
+  RegistrySyncResult: ContainerRegistrySyncResult
   Registry.properties.adminUserEnabled: IsAdminUserEnabled
   Registry.properties.anonymousPullEnabled: IsAnonymousPullEnabled
   Registry.properties.dataEndpointEnabled: IsDataEndpointEnabled
