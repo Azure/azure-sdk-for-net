@@ -13,6 +13,7 @@ using LiftrBase;
 namespace MgmtTypeSpec;
 
 @resource("foos")
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
 model Foo is TrackedResource<FooProperties, false> {
   ...ResourceNameParameter<Foo, SegmentName = "foos">;
 
@@ -206,3 +207,9 @@ model FooSettingsProperties is BaseResourceProperties {
 model FooSettingsPropertiesMetaData {
   metaDatas?: string[];
 }
+
+@@clientOption(Foo, "resource-rbac-roles", #{
+  FooContributor: "00000000-0000-0000-0000-000000000001",
+  FooReader: "00000000-0000-0000-0000-000000000002",
+  FooDataOperator: "00000000-0000-0000-0000-000000000003",
+}, "csharp");

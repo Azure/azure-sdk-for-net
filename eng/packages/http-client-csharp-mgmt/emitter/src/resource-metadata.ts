@@ -56,6 +56,16 @@ export interface NameConstraints {
   maxLength?: number;
 }
 
+/**
+ * Represents a single RBAC role definition for a resource.
+ */
+export interface RbacRole {
+  /** The role name (e.g., "KeyVaultContributor") */
+  name: string;
+  /** The role GUID (e.g., "f25e0fa2-a7c8-4377-a976-54943a77a395") */
+  value: string;
+}
+
 export interface ResourceMetadata {
   resourceIdPattern: string;
   resourceType: string;
@@ -69,6 +79,8 @@ export interface ResourceMetadata {
   nameConstraints: NameConstraints;
   /** The API versions that this resource is available in */
   apiVersions: string[];
+  /** The RBAC roles defined for this resource via @@clientOption */
+  rbacRoles: RbacRole[];
 }
 
 export function convertResourceMetadataToArguments(
@@ -83,6 +95,30 @@ export function convertResourceMetadataToArguments(
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
+}
+
+const clientOptionDecorator = "Azure.ClientGenerator.Core.@clientOption";
+const rbacRolesKey = "resource-rbac-roles";
+
+/**
+ * Extracts RBAC roles from a model's @@clientOption decorator with key "resource-rbac-roles".
+ * The decorator value is expected to be a record of role name to role GUID.
+ */
+export function extractRbacRoles(
+  decorators: { name: string; arguments: Record<string, any> }[] | undefined
+): RbacRole[] {
+  if (!decorators) return [];
+  const decorator = decorators.find(
+    (d) =>
+      d.name === clientOptionDecorator && d.arguments?.["name"] === rbacRolesKey
+  );
+  if (!decorator) return [];
+  const value = decorator.arguments?.["value"];
+  if (!value || typeof value !== "object") return [];
+  return Object.entries(value).map(([name, guid]) => ({
+    name,
+    value: guid as string
+  }));
 }
 
 export interface NonResourceMethod {
@@ -253,7 +289,8 @@ export function convertArmProviderSchemaToArguments(
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName,
       nameConstraints: r.metadata.nameConstraints,
-      apiVersions: r.metadata.apiVersions
+      apiVersions: r.metadata.apiVersions,
+      rbacRoles: r.metadata.rbacRoles
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
