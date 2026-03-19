@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Lists all of the features and SKUs offered by the Azure AI Search service in each region. </summary>
+        /// <summary> Lists all of the features and SKUs offered by the Azure AI Search service in each region. Note: This API returns a non-ARM resource collection and is not RPC-compliant. It will be replaced with an action-style API in the next preview as a breaking change. Customers should avoid taking new dependencies on the current shape. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<OfferingsListResult>> ListAsync(CancellationToken cancellationToken = default)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Lists all of the features and SKUs offered by the Azure AI Search service in each region. </summary>
+        /// <summary> Lists all of the features and SKUs offered by the Azure AI Search service in each region. Note: This API returns a non-ARM resource collection and is not RPC-compliant. It will be replaced with an action-style API in the next preview as a breaking change. Customers should avoid taking new dependencies on the current shape. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<OfferingsListResult> List(CancellationToken cancellationToken = default)
         {
