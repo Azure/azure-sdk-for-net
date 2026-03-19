@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         public static StorageAccountVirtualNetworkRuleAction Allow { get; } = new StorageAccountVirtualNetworkRuleAction(AllowValue);
 
-        /// <summary> Implicit conversion to backward-compatible <see cref="StorageAccountNetworkRuleAction"/>. </summary>
+        // Backward-compatible: Implicit conversion to StorageAccountNetworkRuleAction.
         public static implicit operator StorageAccountNetworkRuleAction(StorageAccountVirtualNetworkRuleAction value) => new StorageAccountNetworkRuleAction(value.ToString());
 
-        /// <summary> Implicit conversion from unified <see cref="StorageAccountNetworkRuleAction"/>. </summary>
+        // Implicit conversion from unified StorageAccountNetworkRuleAction.
         public static implicit operator StorageAccountVirtualNetworkRuleAction(StorageAccountNetworkRuleAction value) => new StorageAccountVirtualNetworkRuleAction(value.ToString());
 
         [EditorBrowsable(EditorBrowsableState.Never)]

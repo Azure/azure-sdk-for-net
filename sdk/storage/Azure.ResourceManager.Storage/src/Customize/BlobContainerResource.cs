@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class BlobContainerResource
     {
-        /// <summary> EnableVersionLevelImmutability renamed to ObjectLevelWorm. Backward-compatible overload. </summary>
+        // Backward-compatible overload: EnableVersionLevelImmutability renamed to ObjectLevelWorm.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation EnableVersionLevelImmutability(WaitUntil waitUntil, CancellationToken cancellationToken = default)
             => ObjectLevelWorm(waitUntil, cancellationToken);
 
-        /// <summary> EnableVersionLevelImmutabilityAsync renamed to ObjectLevelWormAsync. Backward-compatible overload. </summary>
+        // Backward-compatible overload: EnableVersionLevelImmutabilityAsync renamed to ObjectLevelWormAsync.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation> EnableVersionLevelImmutabilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
             => ObjectLevelWormAsync(waitUntil, cancellationToken);

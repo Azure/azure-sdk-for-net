@@ -32,26 +32,26 @@ namespace Azure.ResourceManager.Storage
         IAsyncEnumerator<StorageQueueResource> IAsyncEnumerable<StorageQueueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
             => GetAllAsync((string)null, null, cancellationToken).GetAsyncEnumerator(cancellationToken);
 
-        /// <summary> Lists all queues. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Lists all queues.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageQueueResource> GetAll(string maxpagesize, string filter, CancellationToken cancellationToken)
             => new PageableWrapper<ListQueue, StorageQueueResource>(
                 Client.GetQueueServiceResource(Id).GetAll(maxpagesize, filter, cancellationToken),
                 item => Client.GetStorageQueueResource(item.Id));
 
-        /// <summary> Lists all queues. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Lists all queues.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<StorageQueueResource> GetAllAsync(string maxpagesize, string filter, CancellationToken cancellationToken)
             => new AsyncPageableWrapper<ListQueue, StorageQueueResource>(
                 Client.GetQueueServiceResource(Id).GetAllAsync(maxpagesize, filter, cancellationToken),
                 item => Client.GetStorageQueueResource(item.Id));
 
-        /// <summary> Lists all queues. Backward-compatible overload with int maxpagesize. </summary>
+        // Backward-compatible overload with int maxpagesize: Lists all queues.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageQueueResource> GetAll(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAll(maxpagesize?.ToString(), filter, cancellationToken);
 
-        /// <summary> Lists all queues. Backward-compatible overload with int maxpagesize. </summary>
+        // Backward-compatible overload with int maxpagesize: Lists all queues.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<StorageQueueResource> GetAllAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize?.ToString(), filter, cancellationToken);

@@ -30,39 +30,39 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Gets the status of the storage account at the time the operation was called. Backward-compatible alias. </summary>
+        // Backward-compatible alias for StorageAccountProvisioningState.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.provisioningState")]
         public Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? StorageAccountProvisioningState => Properties?.ProvisioningState;
 
         // --- Renamed property aliases (backward-compat, different name from generated) ---
 
-        /// <summary> Backward-compatible alias for AccountMigrationInProgress. </summary>
+        // Backward-compatible alias for AccountMigrationInProgress.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.accountMigrationInProgress")]
         public bool? IsAccountMigrationInProgress { get => Properties?.IsAccountMigrationInProgress; }
 
-        /// <summary> Backward-compatible alias for IsDefaultToOAuthAuthentication. </summary>
+        // Backward-compatible alias for IsDefaultToOAuthAuthentication.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.defaultToOAuthAuthentication")]
         public bool? IsDefaultToOAuthAuthentication { get => Properties?.IsDefaultToOAuthAuthentication; set { } }
 
-        /// <summary> Backward-compatible alias for IsExtendedGroupEnabled. </summary>
+        // Backward-compatible alias for IsExtendedGroupEnabled.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.enableExtendedGroups")]
         public bool? IsExtendedGroupEnabled { get => Properties?.IsExtendedGroupEnabled; set { } }
 
-        /// <summary> Backward-compatible alias for IsFailoverInProgress. </summary>
+        // Backward-compatible alias for IsFailoverInProgress.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.failoverInProgress")]
         public bool? IsFailoverInProgress { get => Properties?.IsFailoverInProgress; }
 
-        /// <summary> Backward-compatible alias for IsIPv6EndpointToBePublished. </summary>
+        // Backward-compatible alias for IsIPv6EndpointToBePublished.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
         public bool? IsIPv6EndpointToBePublished { get => Properties?.IsIPv6EndpointToBePublished; set { } }
 
-        /// <summary> Backward-compatible alias for IsNfsV3Enabled. </summary>
+        // Backward-compatible alias for IsNfsV3Enabled.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.isNfsV3Enabled")]
         public bool? IsNfsV3Enabled { get => Properties?.IsNfsV3Enabled; set { } }

@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        /// <summary> Converts to the backward-compatible <see cref="StorageListKeyExpand"/>. </summary>
+        // Backward-compatible: Converts to StorageListKeyExpand.
         public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value._value);
-        /// <summary> Converts from the backward-compatible <see cref="StorageListKeyExpand"/>. </summary>
+        // Backward-compatible: Converts from StorageListKeyExpand.
         public static implicit operator ListKeysRequestExpand(StorageListKeyExpand value) => new ListKeysRequestExpand(value.ToString());
     }
 
-    /// <summary> Backward-compatible alias for <see cref="ListKeysRequestExpand"/>. </summary>
+    // Backward-compatible alias for ListKeysRequestExpand.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct StorageListKeyExpand : IEquatable<StorageListKeyExpand>
     {

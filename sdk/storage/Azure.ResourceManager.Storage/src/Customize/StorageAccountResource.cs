@@ -28,59 +28,59 @@ namespace Azure.ResourceManager.Storage
     [CodeGenSuppress("RegenerateKey", typeof(StorageAccountRegenerateKeyContent), typeof(CancellationToken))]
     public partial class StorageAccountResource
     {
-        /// <summary> Failover with no failoverType parameter. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Failover with no failoverType parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken) =>
             await FailoverAsync(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Failover with no failoverType parameter. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Failover with no failoverType parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Failover(WaitUntil waitUntil, CancellationToken cancellationToken) =>
             Failover(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken);
 
-        /// <summary> Failover with StorageAccountFailoverType parameter. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Failover with StorageAccountFailoverType parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             await FailoverAsync(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Failover with StorageAccountFailoverType parameter. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Failover with StorageAccountFailoverType parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             Failover(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken);
 
-        /// <summary> EnableHierarchicalNamespace is not available in this API version. Backward-compatible overload. </summary>
+        // Backward-compatible overload: EnableHierarchicalNamespace is not available in this API version.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("EnableHierarchicalNamespace is not supported in this version of the SDK. This operation has been removed from the API.");
 
-        /// <summary> EnableHierarchicalNamespaceAsync is not available in this API version. Backward-compatible overload. </summary>
+        // Backward-compatible overload: EnableHierarchicalNamespaceAsync is not available in this API version.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("EnableHierarchicalNamespace is not supported in this version of the SDK. This operation has been removed from the API.");
 
-        /// <summary> Parameterless GetBlobInventoryPolicy. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Parameterless GetBlobInventoryPolicy.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
             => GetBlobInventoryPolicy(BlobInventoryPolicyName.Default).Value;
 
-        /// <summary> Parameterless GetStorageAccountManagementPolicy. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Parameterless GetStorageAccountManagementPolicy.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
             => GetStorageAccountManagementPolicy(ManagementPolicyName.Default).Value;
 
-        /// <summary> GetStorageTaskAssignmentsInstancesReports renamed to GetAll. Backward-compatible overload. </summary>
+        // Backward-compatible overload: GetStorageTaskAssignmentsInstancesReports renamed to GetAll.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReports(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAll(maxpagesize, filter, cancellationToken);
 
-        /// <summary> GetStorageTaskAssignmentsInstancesReportsAsync renamed to GetAllAsync. Backward-compatible overload. </summary>
+        // Backward-compatible overload: GetStorageTaskAssignmentsInstancesReportsAsync renamed to GetAllAsync.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReportsAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize, filter, cancellationToken);
 
         // Backward-compat: prior GA returned Pageable<StorageAccountKey> instead of Response<StorageAccountListKeysResult>.
 
-        /// <summary> GetKeys with old StorageListKeyExpand parameter type. Backward-compatible overload. </summary>
+        // Backward-compatible overload: GetKeys with old StorageListKeyExpand parameter type.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage
             return new SinglePagePageable<StorageAccountKey>(response.Value.Keys.ToList(), response.GetRawResponse());
         }
 
-        /// <summary> GetKeysAsync with old StorageListKeyExpand parameter type. Backward-compatible overload. </summary>
+        // Backward-compatible overload: GetKeysAsync with old StorageListKeyExpand parameter type.
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0107 // async call wraps result, no sync alternative available
         public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage
         }
 #pragma warning restore AZC0107
 
-        /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Gets the private link resources that need to be created for a storage account.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken)
         {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
+        // Backward-compatible overload: Gets the private link resources that need to be created for a storage account.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken)
         {

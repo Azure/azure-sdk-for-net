@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class BlobInventoryPolicyResource
     {
-        /// <summary> CreateOrUpdate renamed to Update. Backward-compatible overload. </summary>
+        // Backward-compatible overload: CreateOrUpdate renamed to Update.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BlobInventoryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
             => Update(waitUntil, data, cancellationToken);
 
-        /// <summary> CreateOrUpdateAsync renamed to UpdateAsync. Backward-compatible overload. </summary>
+        // Backward-compatible overload: CreateOrUpdateAsync renamed to UpdateAsync.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<BlobInventoryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
             => UpdateAsync(waitUntil, data, cancellationToken);

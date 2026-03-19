@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("provisioningState")]
         public StorageProvisioningState? ProvisioningState { get; }
 
-        /// <summary> Represents the provisioning state of the storage task assignment. Backward-compatible alias. </summary>
+        // Backward-compatible alias for ProvisioningState.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("provisioningState")]
         public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState

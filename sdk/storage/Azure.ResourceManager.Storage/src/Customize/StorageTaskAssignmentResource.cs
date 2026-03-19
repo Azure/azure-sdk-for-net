@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Storage
         internal StorageTaskAssignmentResource(ArmClient client, string id) : base(client, new ResourceIdentifier(id))
         {
         }
-        /// <summary> GetStorageTaskAssignmentInstancesReports renamed to GetAll. Backward-compatible overload. </summary>
+        // Backward-compatible overload: GetStorageTaskAssignmentInstancesReports renamed to GetAll.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReports(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAll(maxpagesize, filter, cancellationToken);
 
-        /// <summary> GetStorageTaskAssignmentInstancesReportsAsync renamed to GetAllAsync. Backward-compatible overload. </summary>
+        // Backward-compatible overload: GetStorageTaskAssignmentInstancesReportsAsync renamed to GetAllAsync.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReportsAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize, filter, cancellationToken);

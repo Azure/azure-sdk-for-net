@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageTableAccessPolicy
     {
-        /// <summary> Backward-compatible alias for ExpireOn. </summary>
+        // Backward-compatible alias for ExpireOn.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("expiryTime")]
         public DateTimeOffset? ExpiresOn

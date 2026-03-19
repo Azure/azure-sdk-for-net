@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageTaskAssignmentData
     {
-        /// <summary> Backward-compatible constructor. </summary>
+        // Backward-compatible constructor.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageTaskAssignmentData(StorageTaskAssignmentProperties properties)
         {

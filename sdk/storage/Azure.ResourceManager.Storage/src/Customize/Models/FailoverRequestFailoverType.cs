@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        /// <summary> Converts to the backward-compatible <see cref="StorageAccountFailoverType"/>. </summary>
+        // Backward-compatible: Converts to StorageAccountFailoverType.
         public static implicit operator StorageAccountFailoverType(FailoverRequestFailoverType value) => new StorageAccountFailoverType(value._value);
-        /// <summary> Converts from the backward-compatible <see cref="StorageAccountFailoverType"/>. </summary>
+        // Backward-compatible: Converts from StorageAccountFailoverType.
         public static implicit operator FailoverRequestFailoverType(StorageAccountFailoverType value) => new FailoverRequestFailoverType(value.ToString());
     }
 
-    /// <summary> Backward-compatible alias for <see cref="FailoverRequestFailoverType"/>. </summary>
+    // Backward-compatible alias for FailoverRequestFailoverType.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct StorageAccountFailoverType : IEquatable<StorageAccountFailoverType>
     {

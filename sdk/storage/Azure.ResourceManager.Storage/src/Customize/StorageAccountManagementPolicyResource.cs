@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageAccountManagementPolicyResource
     {
-        /// <summary> CreateOrUpdate renamed to Update. Backward-compatible overload. </summary>
+        // Backward-compatible overload: CreateOrUpdate renamed to Update.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StorageAccountManagementPolicyResource> CreateOrUpdate(WaitUntil waitUntil, StorageAccountManagementPolicyData data, CancellationToken cancellationToken = default)
             => Update(waitUntil, data, cancellationToken);
 
-        /// <summary> CreateOrUpdateAsync renamed to UpdateAsync. Backward-compatible overload. </summary>
+        // Backward-compatible overload: CreateOrUpdateAsync renamed to UpdateAsync.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<StorageAccountManagementPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, StorageAccountManagementPolicyData data, CancellationToken cancellationToken = default)
             => UpdateAsync(waitUntil, data, cancellationToken);

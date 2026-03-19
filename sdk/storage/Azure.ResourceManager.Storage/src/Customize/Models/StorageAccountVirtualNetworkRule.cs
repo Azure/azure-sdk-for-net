@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Backward-compatible constructor. </summary>
+        // Backward-compatible constructor.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId) : this(virtualNetworkResourceId, default(StorageAccountVirtualNetworkRuleAction?), default, default)
         {
