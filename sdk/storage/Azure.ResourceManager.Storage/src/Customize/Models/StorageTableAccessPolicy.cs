@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageTableAccessPolicy
     {
         // Backward-compatible alias for ExpireOn.
+        /// <summary> The deleted date. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("expiryTime")]
         public DateTimeOffset? ExpiresOn

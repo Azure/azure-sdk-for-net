@@ -3,9 +3,6 @@
 
 #nullable disable
 
-// Backward-compat: Adds constructor overload and typed TriggerType facade.
-// The generated type uses string-backed type; old GA used a typed enum.
-
 using System;
 using System.ComponentModel;
 

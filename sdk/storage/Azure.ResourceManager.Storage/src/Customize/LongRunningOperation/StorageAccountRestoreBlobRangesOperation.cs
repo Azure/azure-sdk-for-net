@@ -3,10 +3,6 @@
 
 #nullable disable
 
-// Helper: Custom ARM LRO wrapper for blob restore that exposes interim status accessors.
-// Required because the generated LRO pattern doesn't provide access to intermediate
-// BlobRestoreStatus values during the restore operation.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;

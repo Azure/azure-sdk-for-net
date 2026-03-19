@@ -3,9 +3,6 @@
 
 #nullable disable
 
-// Backward-compat: Adds GetAll/GetAllAsync overloads accepting only CancellationToken
-// (prior GA signature). New generated methods have additional parameters.
-
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
