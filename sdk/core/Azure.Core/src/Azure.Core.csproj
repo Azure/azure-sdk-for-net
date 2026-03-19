@@ -31,18 +31,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Numerics.Vectors" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="Microsoft.Identity.Client" />
-    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
-    <PackageReference Include="System.Memory" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+    <PackageReference Include="Microsoft.Identity.Client" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
+    <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Numerics.Vectors" />
+    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
