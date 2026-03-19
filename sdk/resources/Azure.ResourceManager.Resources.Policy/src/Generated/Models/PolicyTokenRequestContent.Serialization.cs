@@ -9,61 +9,72 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Policy;
 
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
-    /// <summary> A message that describes why a resource is non-compliant with the policy. This is shown in 'deny' error messages and on resource's non-compliant compliance results. </summary>
-    public partial class NonComplianceMessage : IJsonModel<NonComplianceMessage>
+    /// <summary> The policy token request properties. </summary>
+    public partial class PolicyTokenRequestContent : IJsonModel<PolicyTokenRequestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="NonComplianceMessage"/> for deserialization. </summary>
-        internal NonComplianceMessage()
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequestContent"/> for deserialization. </summary>
+        internal PolicyTokenRequestContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NonComplianceMessage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PolicyTokenRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NonComplianceMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNonComplianceMessage(document.RootElement, options);
+                        return DeserializePolicyTokenRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NonComplianceMessage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyTokenRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NonComplianceMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NonComplianceMessage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyTokenRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NonComplianceMessage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicyTokenRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NonComplianceMessage IPersistableModel<NonComplianceMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PolicyTokenRequestContent IPersistableModel<PolicyTokenRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NonComplianceMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyTokenRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="policyTokenRequestContent"> The <see cref="PolicyTokenRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PolicyTokenRequestContent policyTokenRequestContent)
+        {
+            if (policyTokenRequestContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(policyTokenRequestContent, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NonComplianceMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyTokenRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +85,17 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NonComplianceMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NonComplianceMessage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyTokenRequestContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("message"u8);
-            writer.WriteStringValue(Message);
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            writer.WritePropertyName("operation"u8);
+            writer.WriteObjectValue(Operation, options);
+            if (Optional.IsDefined(ChangeReference))
             {
-                writer.WritePropertyName("policyDefinitionReferenceId"u8);
-                writer.WriteStringValue(PolicyDefinitionReferenceId);
+                writer.WritePropertyName("changeReference"u8);
+                writer.WriteStringValue(ChangeReference);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,42 +116,42 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NonComplianceMessage IJsonModel<NonComplianceMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PolicyTokenRequestContent IJsonModel<PolicyTokenRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NonComplianceMessage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PolicyTokenRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NonComplianceMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyTokenRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NonComplianceMessage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyTokenRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNonComplianceMessage(document.RootElement, options);
+            return DeserializePolicyTokenRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NonComplianceMessage DeserializeNonComplianceMessage(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicyTokenRequestContent DeserializePolicyTokenRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string message = default;
-            string policyDefinitionReferenceId = default;
+            PolicyTokenOperationInfo operation = default;
+            string changeReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("message"u8))
+                if (prop.NameEquals("operation"u8))
                 {
-                    message = prop.Value.GetString();
+                    operation = PolicyTokenOperationInfo.DeserializePolicyTokenOperationInfo(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("policyDefinitionReferenceId"u8))
+                if (prop.NameEquals("changeReference"u8))
                 {
-                    policyDefinitionReferenceId = prop.Value.GetString();
+                    changeReference = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NonComplianceMessage(message, policyDefinitionReferenceId, additionalBinaryDataProperties);
+            return new PolicyTokenRequestContent(operation, changeReference, additionalBinaryDataProperties);
         }
     }
 }

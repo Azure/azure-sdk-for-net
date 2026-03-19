@@ -12,26 +12,26 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The policy token request properties. </summary>
-    public partial class PolicyTokenRequest
+    public partial class PolicyTokenRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequestContent"/>. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operation"/> is null. </exception>
-        public PolicyTokenRequest(PolicyTokenOperation operation)
+        public PolicyTokenRequestContent(PolicyTokenOperationInfo operation)
         {
             Argument.AssertNotNull(operation, nameof(operation));
 
             Operation = operation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenRequestContent"/>. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <param name="changeReference"> The change reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenRequest(PolicyTokenOperation operation, string changeReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyTokenRequestContent(PolicyTokenOperationInfo operation, string changeReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Operation = operation;
             ChangeReference = changeReference;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The resource operation to acquire a token for. </summary>
-        public PolicyTokenOperation Operation { get; }
+        public PolicyTokenOperationInfo Operation { get; }
 
         /// <summary> The change reference. </summary>
         public string ChangeReference { get; set; }

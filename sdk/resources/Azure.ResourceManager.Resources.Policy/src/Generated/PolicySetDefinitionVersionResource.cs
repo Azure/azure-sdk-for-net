@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicySetDefinitionVersionResource(ArmClient client, PolicySetDefinitionVersionData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicySetDefinitionVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string policySetDefinitionVersionApiVersion);
+            TryGetApiVersion(ResourceType, out string policySetDefinitionVersionApiVersion);
             _policySetDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", ResourceType.Namespace, Diagnostics);
             _policySetDefinitionVersionsRestClient = new PolicySetDefinitionVersions(_policySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionVersionApiVersion ?? "2025-11-01");
-            PolicySetDefinitionVersionResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="managementGroupName"> The managementGroupName. </param>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="policySetDefinitionName"> The policySetDefinitionName. </param>
         /// <param name="policyDefinitionVersion"> The policyDefinitionVersion. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupName, string policySetDefinitionName, string policyDefinitionVersion)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policySetDefinitionName, string policyDefinitionVersion)
         {
-            string resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation retrieves the policy set definition version in the given management group with the given name and version.
+        /// This operation retrieves the policy set definition version in the given subscription with the given name and version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitionVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetAtManagementGroupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -140,15 +140,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation retrieves the policy set definition version in the given management group with the given name and version.
+        /// This operation retrieves the policy set definition version in the given subscription with the given name and version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitionVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetAtManagementGroupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation deletes the policy set definition version in the given management group with the given name and version.
+        /// This operation deletes the policy set definition version in the given subscription with the given name and version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersions_DeleteAtManagementGroup. </description>
+        /// <description> PolicySetDefinitionVersions_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateDeleteAtManagementGroupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -240,15 +240,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation deletes the policy set definition version in the given management group with the given name and version.
+        /// This operation deletes the policy set definition version in the given subscription with the given name and version.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersions_DeleteAtManagementGroup. </description>
+        /// <description> PolicySetDefinitionVersions_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateDeleteAtManagementGroupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -295,11 +295,11 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersions_CreateOrUpdateAtManagementGroup. </description>
+        /// <description> PolicySetDefinitionVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The policy set definition version properties. </param>
+        /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PolicySetDefinitionVersionResource>> UpdateAsync(WaitUntil waitUntil, PolicySetDefinitionVersionData data, CancellationToken cancellationToken = default)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateAtManagementGroupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PolicySetDefinitionVersionData.ToRequestContent(data), context);
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, PolicySetDefinitionVersionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupName}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/versions/{policyDefinitionVersion}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitionVersions_CreateOrUpdateAtManagementGroup. </description>
+        /// <description> PolicySetDefinitionVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The policy set definition version properties. </param>
+        /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PolicySetDefinitionVersionResource> Update(WaitUntil waitUntil, PolicySetDefinitionVersionData data, CancellationToken cancellationToken = default)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateAtManagementGroupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PolicySetDefinitionVersionData.ToRequestContent(data), context);
+                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, PolicySetDefinitionVersionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

@@ -86,42 +86,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             return new PolicyDefinitionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PolicyDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyDefinitionResource"/> object. </returns>
-        public virtual PolicyDefinitionResource GetPolicyDefinitionResource(ResourceIdentifier id)
-        {
-            PolicyDefinitionResource.ValidateResourceId(id);
-            return new PolicyDefinitionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicyDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyDefinitionResource"/> object. </returns>
-        public virtual PolicyDefinitionResource GetPolicyDefinitionResource(ResourceIdentifier id)
-        {
-            PolicyDefinitionResource.ValidateResourceId(id);
-            return new PolicyDefinitionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicyDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyDefinitionVersionResource"/> object. </returns>
-        public virtual PolicyDefinitionVersionResource GetPolicyDefinitionVersionResource(ResourceIdentifier id)
-        {
-            PolicyDefinitionVersionResource.ValidateResourceId(id);
-            return new PolicyDefinitionVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicyDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyDefinitionVersionResource"/> object. </returns>
-        public virtual PolicyDefinitionVersionResource GetPolicyDefinitionVersionResource(ResourceIdentifier id)
-        {
-            PolicyDefinitionVersionResource.ValidateResourceId(id);
-            return new PolicyDefinitionVersionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="PolicyDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicyDefinitionVersionResource"/> object. </returns>
@@ -138,42 +102,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         {
             PolicySetDefinitionResource.ValidateResourceId(id);
             return new PolicySetDefinitionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicySetDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinitionResource"/> object. </returns>
-        public virtual PolicySetDefinitionResource GetPolicySetDefinitionResource(ResourceIdentifier id)
-        {
-            PolicySetDefinitionResource.ValidateResourceId(id);
-            return new PolicySetDefinitionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicySetDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinitionResource"/> object. </returns>
-        public virtual PolicySetDefinitionResource GetPolicySetDefinitionResource(ResourceIdentifier id)
-        {
-            PolicySetDefinitionResource.ValidateResourceId(id);
-            return new PolicySetDefinitionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicySetDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinitionVersionResource"/> object. </returns>
-        public virtual PolicySetDefinitionVersionResource GetPolicySetDefinitionVersionResource(ResourceIdentifier id)
-        {
-            PolicySetDefinitionVersionResource.ValidateResourceId(id);
-            return new PolicySetDefinitionVersionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicySetDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicySetDefinitionVersionResource"/> object. </returns>
-        public virtual PolicySetDefinitionVersionResource GetPolicySetDefinitionVersionResource(ResourceIdentifier id)
-        {
-            PolicySetDefinitionVersionResource.ValidateResourceId(id);
-            return new PolicySetDefinitionVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PolicySetDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

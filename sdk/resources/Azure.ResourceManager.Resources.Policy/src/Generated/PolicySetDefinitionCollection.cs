@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Azure.ResourceManager.Resources.Policy
     /// Each <see cref="PolicySetDefinitionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="PolicySetDefinitionCollection"/> instance call the GetPolicySetDefinitions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class PolicySetDefinitionCollection : ArmCollection
+    public partial class PolicySetDefinitionCollection : ArmCollection, IEnumerable<PolicySetDefinitionResource>, IAsyncEnumerable<PolicySetDefinitionResource>
     {
         private readonly ClientDiagnostics _policySetDefinitionsClientDiagnostics;
         private readonly PolicySetDefinitions _policySetDefinitionsRestClient;
+        private readonly ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
+        private readonly PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
 
         /// <summary> Initializes a new instance of PolicySetDefinitionCollection for mocking. </summary>
         protected PolicySetDefinitionCollection()
@@ -37,10 +41,12 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicySetDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(PolicySetDefinitionResource.ResourceType, out string policySetDefinitionApiVersion);
+            TryGetApiVersion(PolicySetDefinitionResource.ResourceType, out string policySetDefinitionApiVersion);
             _policySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicySetDefinitionResource.ResourceType.Namespace, Diagnostics);
             _policySetDefinitionsRestClient = new PolicySetDefinitions(_policySetDefinitionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionApiVersion ?? "2025-11-01");
-            PolicySetDefinitionCollection.ValidateResourceId(id);
+            _policySetDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicySetDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _policySetDefinitionVersionsRestClient = new PolicySetDefinitionVersions(_policySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionApiVersion ?? "2025-11-01");
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -54,15 +60,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation creates or updates a policy set definition in the given management group with the given name.
+        /// This operation creates or updates a policy set definition in the given subscription with the given name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_CreateOrUpdateAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -71,15 +77,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policySetDefinitionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PolicySetDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<PolicySetDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -111,15 +115,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation creates or updates a policy set definition in the given management group with the given name.
+        /// This operation creates or updates a policy set definition in the given subscription with the given name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_CreateOrUpdateAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -128,15 +132,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="data"> The policy set definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="policySetDefinitionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PolicySetDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string managementGroupId, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<PolicySetDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string policySetDefinitionName, PolicySetDefinitionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateAtManagementGroupRequest(managementGroupId, policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -168,15 +170,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation retrieves the policy set definition in the given management group with the given name.
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -184,15 +186,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PolicySetDefinitionResource>> GetAsync(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using DiagnosticScope scope = _policySetDefinitionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.Get");
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName, expand, context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,15 +220,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation retrieves the policy set definition in the given management group with the given name.
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,15 +236,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PolicySetDefinitionResource> Get(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PolicySetDefinitionResource> Get(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using DiagnosticScope scope = _policySetDefinitionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.Get");
@@ -255,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName, expand, context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -272,15 +270,15 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// This operation retrieves a list of all the policy set definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy set definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn and Custom. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -288,15 +286,87 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySetDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicySetDefinitionResource> GetAllAsync(string filter = default, string expand = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicySetDefinitionData, PolicySetDefinitionResource>(new PolicySetDefinitionsGetAllAsyncCollectionResultOfT(
+                _policySetDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                filter,
+                expand,
+                top,
+                context), data => new PolicySetDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// This operation retrieves a list of all the policy set definitions in a given subscription that match the optional given $filter. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, the unfiltered list includes all policy set definitions associated with the subscription, including those that apply directly or from management groups that contain the given subscription. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given subscription. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn and Custom. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicySetDefinitions_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy set definitions that at the given scope. If $filter='policyType -eq {value}' is provided, the returned list only includes all policy set definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided, the returned list only includes all policy set definitions whose category match the {value}. </param>
+        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
+        /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySetDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicySetDefinitionResource> GetAll(string filter = default, string expand = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicySetDefinitionData, PolicySetDefinitionResource>(new PolicySetDefinitionsGetAllCollectionResultOfT(
+                _policySetDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                filter,
+                expand,
+                top,
+                context), data => new PolicySetDefinitionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicySetDefinitions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using DiagnosticScope scope = _policySetDefinitionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.Exists");
@@ -307,7 +377,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName, expand, context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -336,11 +406,11 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -348,15 +418,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using DiagnosticScope scope = _policySetDefinitionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.Exists");
@@ -367,7 +435,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName, expand, context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -396,11 +464,11 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,15 +476,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PolicySetDefinitionResource>> GetIfExistsAsync(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<PolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using DiagnosticScope scope = _policySetDefinitionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetIfExists");
@@ -427,7 +493,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName, expand, context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -460,11 +526,11 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
+        /// <description> PolicySetDefinitions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -472,15 +538,13 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PolicySetDefinitionResource> GetIfExists(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<PolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
             using DiagnosticScope scope = _policySetDefinitionsClientDiagnostics.CreateScope("PolicySetDefinitionCollection.GetIfExists");
@@ -491,7 +555,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetAtManagementGroupRequest(managementGroupId, policySetDefinitionName, expand, context);
+                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -517,6 +581,22 @@ namespace Azure.ResourceManager.Resources.Policy
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<PolicySetDefinitionResource> IEnumerable<PolicySetDefinitionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<PolicySetDefinitionResource> IAsyncEnumerable<PolicySetDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

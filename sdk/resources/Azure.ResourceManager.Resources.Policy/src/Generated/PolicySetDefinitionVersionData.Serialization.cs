@@ -20,6 +20,63 @@ namespace Azure.ResourceManager.Resources.Policy
     /// <summary> The policy set definition version. </summary>
     public partial class PolicySetDefinitionVersionData : ResourceData, IJsonModel<PolicySetDefinitionVersionData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePolicySetDefinitionVersionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicySetDefinitionVersionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicySetDefinitionVersionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PolicySetDefinitionVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicySetDefinitionVersionData IPersistableModel<PolicySetDefinitionVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PolicySetDefinitionVersionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicySetDefinitionVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="policySetDefinitionVersionData"> The <see cref="PolicySetDefinitionVersionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PolicySetDefinitionVersionData policySetDefinitionVersionData)
+        {
+            if (policySetDefinitionVersionData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(policySetDefinitionVersionData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PolicySetDefinitionVersionData"/> from. </param>
+        internal static PolicySetDefinitionVersionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePolicySetDefinitionVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicySetDefinitionVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,65 +189,6 @@ namespace Azure.ResourceManager.Resources.Policy
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PolicySetDefinitionVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionVersionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PolicySetDefinitionVersionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PolicySetDefinitionVersionData IPersistableModel<PolicySetDefinitionVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PolicySetDefinitionVersionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PolicySetDefinitionVersionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePolicySetDefinitionVersionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PolicySetDefinitionVersionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PolicySetDefinitionVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="policySetDefinitionVersionData"> The <see cref="PolicySetDefinitionVersionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PolicySetDefinitionVersionData policySetDefinitionVersionData)
-        {
-            if (policySetDefinitionVersionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(policySetDefinitionVersionData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PolicySetDefinitionVersionData"/> from. </param>
-        internal static PolicySetDefinitionVersionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePolicySetDefinitionVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

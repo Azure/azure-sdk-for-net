@@ -113,7 +113,11 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties is null ? default : Properties.Parameters;
+                if (Properties is null)
+                {
+                    Properties = new PolicySetDefinitionProperties();
+                }
+                return Properties.Parameters;
             }
         }
 
@@ -122,7 +126,11 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties is null ? default : Properties.PolicyDefinitions;
+                if (Properties is null)
+                {
+                    Properties = new PolicySetDefinitionProperties();
+                }
+                return Properties.PolicyDefinitions;
             }
         }
 
@@ -131,7 +139,11 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties is null ? default : Properties.PolicyDefinitionGroups;
+                if (Properties is null)
+                {
+                    Properties = new PolicySetDefinitionProperties();
+                }
+                return Properties.PolicyDefinitionGroups;
             }
         }
 
@@ -157,7 +169,11 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             get
             {
-                return Properties is null ? default : Properties.Versions;
+                if (Properties is null)
+                {
+                    Properties = new PolicySetDefinitionProperties();
+                }
+                return Properties.Versions;
             }
         }
     }

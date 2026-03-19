@@ -13,16 +13,16 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The resource operation to acquire a token for. </summary>
-    public partial class PolicyTokenOperation
+    public partial class PolicyTokenOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperationInfo"/>. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="httpMethod"/> is null. </exception>
-        public PolicyTokenOperation(string uri, string httpMethod)
+        public PolicyTokenOperationInfo(string uri, string httpMethod)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(httpMethod, nameof(httpMethod));
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             HttpMethod = httpMethod;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenOperationInfo"/>. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <param name="content"> The payload of the resource operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenOperation(string uri, string httpMethod, BinaryData content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyTokenOperationInfo(string uri, string httpMethod, BinaryData content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             HttpMethod = httpMethod;

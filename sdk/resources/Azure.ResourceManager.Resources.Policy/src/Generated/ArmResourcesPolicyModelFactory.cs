@@ -379,20 +379,20 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> The policy token request properties. </summary>
         /// <param name="operation"> The resource operation to acquire a token for. </param>
         /// <param name="changeReference"> The change reference. </param>
-        /// <returns> A new <see cref="Models.PolicyTokenRequest"/> instance for mocking. </returns>
-        public static PolicyTokenRequest PolicyTokenRequest(PolicyTokenOperation operation = default, string changeReference = default)
+        /// <returns> A new <see cref="Models.PolicyTokenRequestContent"/> instance for mocking. </returns>
+        public static PolicyTokenRequestContent PolicyTokenRequestContent(PolicyTokenOperationInfo operation = default, string changeReference = default)
         {
-            return new PolicyTokenRequest(operation, changeReference, additionalBinaryDataProperties: null);
+            return new PolicyTokenRequestContent(operation, changeReference, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The resource operation to acquire a token for. </summary>
         /// <param name="uri"> The request URI of the resource operation. </param>
         /// <param name="httpMethod"> The http method of the resource operation. </param>
         /// <param name="content"> The payload of the resource operation. </param>
-        /// <returns> A new <see cref="Models.PolicyTokenOperation"/> instance for mocking. </returns>
-        public static PolicyTokenOperation PolicyTokenOperation(string uri = default, string httpMethod = default, BinaryData content = default)
+        /// <returns> A new <see cref="Models.PolicyTokenOperationInfo"/> instance for mocking. </returns>
+        public static PolicyTokenOperationInfo PolicyTokenOperationInfo(string uri = default, string httpMethod = default, BinaryData content = default)
         {
-            return new PolicyTokenOperation(uri, httpMethod, content, additionalBinaryDataProperties: null);
+            return new PolicyTokenOperationInfo(uri, httpMethod, content, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The policy token response properties. </summary>
@@ -405,12 +405,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="token"> The issued policy token. </param>
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
         /// <param name="expiration"> The expiration of the policy token. </param>
-        /// <returns> A new <see cref="Models.PolicyTokenResponse"/> instance for mocking. </returns>
-        public static PolicyTokenResponse PolicyTokenResponse(PolicyTokenResult? result = default, PolicyTokenEvaluatedRequestDetails requestDetails = default, string message = default, DateTimeOffset? retryAfter = default, IEnumerable<ExternalEvaluationEndpointInvocationResult> results = default, string changeReference = default, string token = default, string tokenId = default, DateTimeOffset? expiration = default)
+        /// <returns> A new <see cref="Models.PolicyTokenResponseResult"/> instance for mocking. </returns>
+        public static PolicyTokenResponseResult PolicyTokenResponseResult(PolicyTokenResult? result = default, PolicyTokenEvaluatedRequestDetails requestDetails = default, string message = default, DateTimeOffset? retryAfter = default, IEnumerable<ExternalEvaluationEndpointInvocationResult> results = default, string changeReference = default, string token = default, string tokenId = default, DateTimeOffset? expiration = default)
         {
             results ??= new ChangeTrackingList<ExternalEvaluationEndpointInvocationResult>();
 
-            return new PolicyTokenResponse(
+            return new PolicyTokenResponseResult(
                 result,
                 requestDetails,
                 message,

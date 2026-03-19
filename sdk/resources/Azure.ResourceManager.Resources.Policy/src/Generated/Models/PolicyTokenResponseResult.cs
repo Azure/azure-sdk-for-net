@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The policy token response properties. </summary>
-    public partial class PolicyTokenResponse
+    public partial class PolicyTokenResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponse"/>. </summary>
-        internal PolicyTokenResponse()
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponseResult"/>. </summary>
+        internal PolicyTokenResponseResult()
         {
             Results = new ChangeTrackingList<ExternalEvaluationEndpointInvocationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponseResult"/>. </summary>
         /// <param name="result"> The result of the completed token acquisition operation. Possible values are Succeeded and Failed. </param>
         /// <param name="requestDetails"> The external evaluation request details. </param>
         /// <param name="message"> Status message with additional details about the token acquisition operation result. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
         /// <param name="expiration"> The expiration of the policy token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenResponse(PolicyTokenResult? result, PolicyTokenEvaluatedRequestDetails requestDetails, string message, DateTimeOffset? retryAfter, IList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyTokenResponseResult(PolicyTokenResult? result, PolicyTokenEvaluatedRequestDetails requestDetails, string message, DateTimeOffset? retryAfter, IList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Result = result;
             RequestDetails = requestDetails;

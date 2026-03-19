@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyAssignmentPatch"> Parameters for policy assignment patch request. </param>
+        /// <param name="patch"> Parameters for policy assignment patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentPatch"/> is null. </exception>
-        public virtual async Task<Response<PolicyAssignmentResource>> UpdateAsync(PolicyAssignmentPatch policyAssignmentPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PolicyAssignmentResource>> UpdateAsync(PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyAssignmentPatch, nameof(policyAssignmentPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _policyAssignmentsClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyAssignmentPatch.ToRequestContent(policyAssignmentPatch), context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyAssignmentPatch"> Parameters for policy assignment patch request. </param>
+        /// <param name="patch"> Parameters for policy assignment patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentPatch"/> is null. </exception>
-        public virtual Response<PolicyAssignmentResource> Update(PolicyAssignmentPatch policyAssignmentPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PolicyAssignmentResource> Update(PolicyAssignmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyAssignmentPatch, nameof(policyAssignmentPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _policyAssignmentsClientDiagnostics.CreateScope("PolicyAssignmentResource.Update");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyAssignmentPatch.ToRequestContent(policyAssignmentPatch), context);
+                HttpMessage message = _policyAssignmentsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, PolicyAssignmentPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)

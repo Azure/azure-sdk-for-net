@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <returns> An object representing collection of PolicyDefinitions and their operations over a PolicyDefinitionResource. </returns>
         public virtual PolicyDefinitionCollection GetPolicyDefinitions()
         {
-            return this.GetCachedClient(client => new PolicyDefinitionCollection(client, Id));
+            return GetCachedClient(client => new PolicyDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            return await this.GetPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,148 +108,14 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            return this.GetPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PolicyDefinitions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of PolicyDefinitions and their operations over a PolicyDefinitionResource. </returns>
-        public virtual PolicyDefinitionCollection GetPolicyDefinitions()
-        {
-            return this.GetCachedClient(client => new PolicyDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// This operation retrieves the built-in policy definition with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitions_GetBuiltIn. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyDefinitionResource>> GetPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return await this.GetPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This operation retrieves the built-in policy definition with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitions_GetBuiltIn. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicyDefinitionResource> GetPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return this.GetPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PolicyDefinitions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of PolicyDefinitions and their operations over a PolicyDefinitionResource. </returns>
-        public virtual PolicyDefinitionCollection GetPolicyDefinitions()
-        {
-            return this.GetCachedClient(client => new PolicyDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// This operation retrieves the policy definition in the given management group with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitions_GetAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyDefinitionResource>> GetPolicyDefinitionAsync(string managementGroupId, string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return await this.GetPolicyDefinitions().GetAsync(managementGroupId, policyDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This operation retrieves the policy definition in the given management group with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyDefinitions_GetAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicyDefinitionResource> GetPolicyDefinition(string managementGroupId, string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return this.GetPolicyDefinitions().Get(managementGroupId, policyDefinitionName, cancellationToken);
+            return GetPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PolicySetDefinitions in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of PolicySetDefinitions and their operations over a PolicySetDefinitionResource. </returns>
         public virtual PolicySetDefinitionCollection GetPolicySetDefinitions()
         {
-            return this.GetCachedClient(client => new PolicySetDefinitionCollection(client, Id));
+            return GetCachedClient(client => new PolicySetDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -279,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            return await this.GetPolicySetDefinitions().GetAsync(policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetPolicySetDefinitions().GetAsync(policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -309,145 +175,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         {
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            return this.GetPolicySetDefinitions().Get(policySetDefinitionName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PolicySetDefinitions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of PolicySetDefinitions and their operations over a PolicySetDefinitionResource. </returns>
-        public virtual PolicySetDefinitionCollection GetPolicySetDefinitions()
-        {
-            return this.GetCachedClient(client => new PolicySetDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// This operation retrieves the built-in policy set definition with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetBuiltIn. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicySetDefinitionResource>> GetPolicySetDefinitionAsync(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return await this.GetPolicySetDefinitions().GetAsync(policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This operation retrieves the built-in policy set definition with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetBuiltIn. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicySetDefinitionResource> GetPolicySetDefinition(string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return this.GetPolicySetDefinitions().Get(policySetDefinitionName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PolicySetDefinitions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of PolicySetDefinitions and their operations over a PolicySetDefinitionResource. </returns>
-        public virtual PolicySetDefinitionCollection GetPolicySetDefinitions()
-        {
-            return this.GetCachedClient(client => new PolicySetDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// This operation retrieves the policy set definition in the given management group with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicySetDefinitionResource>> GetPolicySetDefinitionAsync(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return await this.GetPolicySetDefinitions().GetAsync(managementGroupId, policySetDefinitionName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This operation retrieves the policy set definition in the given management group with the given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicySetDefinitions_GetAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="managementGroupId"> The ID of the management group. </param>
-        /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Supported values are 'LatestDefinitionVersion, EffectiveDefinitionVersion'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicySetDefinitionResource> GetPolicySetDefinition(string managementGroupId, string policySetDefinitionName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return this.GetPolicySetDefinitions().Get(managementGroupId, policySetDefinitionName, expand, cancellationToken);
+            return GetPolicySetDefinitions().Get(policySetDefinitionName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -541,12 +269,12 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyTokenRequest"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
-        public virtual async Task<Response<PolicyTokenResponse>> AcquireAsync(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PolicyTokenResponseResult>> AcquireAsync(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyTokenRequest, nameof(policyTokenRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = PolicyTokensClientDiagnostics.CreateScope("MockableResourcesPolicySubscriptionResource.Acquire");
             scope.Start();
@@ -556,9 +284,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyTokensRestClient.CreateAcquireRequest(Guid.Parse(Id.SubscriptionId), PolicyTokenRequest.ToRequestContent(policyTokenRequest), context);
+                HttpMessage message = PolicyTokensRestClient.CreateAcquireRequest(Guid.Parse(Id.SubscriptionId), PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyTokenResponse> response = Response.FromValue(PolicyTokenResponse.FromResponse(result), result);
+                Response<PolicyTokenResponseResult> response = Response.FromValue(PolicyTokenResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -589,12 +317,12 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyTokenRequest"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyTokenRequest"/> is null. </exception>
-        public virtual Response<PolicyTokenResponse> Acquire(PolicyTokenRequest policyTokenRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PolicyTokenResponseResult> Acquire(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(policyTokenRequest, nameof(policyTokenRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = PolicyTokensClientDiagnostics.CreateScope("MockableResourcesPolicySubscriptionResource.Acquire");
             scope.Start();
@@ -604,9 +332,9 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyTokensRestClient.CreateAcquireRequest(Guid.Parse(Id.SubscriptionId), PolicyTokenRequest.ToRequestContent(policyTokenRequest), context);
+                HttpMessage message = PolicyTokensRestClient.CreateAcquireRequest(Guid.Parse(Id.SubscriptionId), PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyTokenResponse> response = Response.FromValue(PolicyTokenResponse.FromResponse(result), result);
+                Response<PolicyTokenResponseResult> response = Response.FromValue(PolicyTokenResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
