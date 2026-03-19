@@ -81,9 +81,14 @@ function Read-Host {
     return "y"
   }
   elseif ($promptStr -match "group id") {
-    $gid = if ($GroupId) { $GroupId } else { "com.azure" }
-    Write-Host "${promptStr}: $gid (non-interactive)"
-    return $gid
+    if ($GroupId) {
+      Write-Host "${promptStr}: $GroupId (non-interactive)"
+      return $GroupId
+    }
+    else {
+      Write-Host "${promptStr}: <default> (non-interactive - using Prepare-Release.ps1 default)"
+      return ""
+    }
   }
   elseif ($promptStr -match "Input the display name") {
     Write-Error "Display name prompt encountered in non-interactive mode. The package may not have release tracking metadata configured."
