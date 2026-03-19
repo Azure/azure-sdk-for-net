@@ -22,6 +22,25 @@ dotnet add package Azure.Provisioning.Kubernetes --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a Connected Cluster
+
+This example demonstrates how to define an Azure Arc-enabled Kubernetes connected cluster resource.
+
+```csharp
+Infrastructure infra = new();
+
+ConnectedCluster cluster =
+    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2024_01_01)
+    {
+        AgentPublicKeyCertificate = "<base64-encoded-certificate>",
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        Distribution = "AKS"
+    };
+infra.Add(cluster);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

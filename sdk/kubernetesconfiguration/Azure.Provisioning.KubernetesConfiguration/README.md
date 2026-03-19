@@ -22,6 +22,23 @@ dotnet add package Azure.Provisioning.KubernetesConfiguration --prerelease
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a Kubernetes Cluster Extension
+
+This example demonstrates how to define a Kubernetes cluster extension resource for an Azure Arc-enabled cluster.
+
+```csharp
+Infrastructure infra = new();
+
+KubernetesClusterExtension extension =
+    new(nameof(extension), KubernetesClusterExtension.ResourceVersions.V2024_11_01)
+    {
+        ExtensionType = "microsoft.flux"
+    };
+infra.Add(extension);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
