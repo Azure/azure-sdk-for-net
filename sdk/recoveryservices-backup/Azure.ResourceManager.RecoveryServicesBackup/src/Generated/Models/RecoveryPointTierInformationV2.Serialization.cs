@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(RecoveryPointTierInformationV2)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToSerialString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -102,10 +107,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            RecoveryPointTierType? @type = default;
+            RecoveryPointTierType? tierType = default;
             RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            RecoveryPointTierType? @type = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToRecoveryPointTierType();
+                    tierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -147,12 +153,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedInfo = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @type = prop.Value.GetString().ToRecoveryPointTierType();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecoveryPointTierInformationV2(@type, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new RecoveryPointTierInformationV2(tierType, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, @type);
         }
     }
 }

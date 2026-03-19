@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(RecoveryPointProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpiryTime))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiryTime);
+                writer.WriteStringValue(ExpireOn);
             }
             if (Optional.IsDefined(RuleName))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            string expiryTime = default;
+            string expireOn = default;
             string ruleName = default;
             bool? isSoftDeleted = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (prop.NameEquals("expiryTime"u8))
                 {
-                    expiryTime = prop.Value.GetString();
+                    expireOn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ruleName"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecoveryPointProperties(expiryTime, ruleName, isSoftDeleted, additionalBinaryDataProperties);
+            return new RecoveryPointProperties(expireOn, ruleName, isSoftDeleted, additionalBinaryDataProperties);
         }
     }
 }

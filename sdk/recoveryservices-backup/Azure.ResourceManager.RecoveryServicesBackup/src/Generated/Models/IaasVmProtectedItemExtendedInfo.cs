@@ -22,40 +22,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IaasVmProtectedItemExtendedInfo"/>. </summary>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this backup item across all tiers. </param>
-        /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
-        /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
-        /// <param name="newestRecoveryPointInArchive"> The latest backup copy available for this backup item in archive tier. </param>
+        /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
+        /// <param name="oldestRecoverOnInVault"> The oldest backup copy available for this backup item in vault tier. </param>
+        /// <param name="oldestRecoverOnInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
+        /// <param name="newestRecoverOnInArchive"> The latest backup copy available for this backup item in archive tier. </param>
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
-        /// <param name="policyInconsistent"> Specifies if backup policy associated with the backup item is inconsistent. </param>
+        /// <param name="isPolicyInconsistent"> Specifies if backup policy associated with the backup item is inconsistent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, bool? policyInconsistent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoverOnInVault, DateTimeOffset? oldestRecoverOnInArchive, DateTimeOffset? newestRecoverOnInArchive, int? recoveryPointCount, bool? isPolicyInconsistent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OldestRecoveryPoint = oldestRecoveryPoint;
-            OldestRecoveryPointInVault = oldestRecoveryPointInVault;
-            OldestRecoveryPointInArchive = oldestRecoveryPointInArchive;
-            NewestRecoveryPointInArchive = newestRecoveryPointInArchive;
+            OldestRecoverOn = oldestRecoverOn;
+            OldestRecoverOnInVault = oldestRecoverOnInVault;
+            OldestRecoverOnInArchive = oldestRecoverOnInArchive;
+            NewestRecoverOnInArchive = newestRecoverOnInArchive;
             RecoveryPointCount = recoveryPointCount;
-            PolicyInconsistent = policyInconsistent;
+            IsPolicyInconsistent = isPolicyInconsistent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The oldest backup copy available for this backup item across all tiers. </summary>
-        public DateTimeOffset? OldestRecoveryPoint { get; set; }
+        public DateTimeOffset? OldestRecoverOn { get; set; }
 
         /// <summary> The oldest backup copy available for this backup item in vault tier. </summary>
-        public DateTimeOffset? OldestRecoveryPointInVault { get; set; }
+        public DateTimeOffset? OldestRecoverOnInVault { get; set; }
 
         /// <summary> The oldest backup copy available for this backup item in archive tier. </summary>
-        public DateTimeOffset? OldestRecoveryPointInArchive { get; set; }
+        public DateTimeOffset? OldestRecoverOnInArchive { get; set; }
 
         /// <summary> The latest backup copy available for this backup item in archive tier. </summary>
-        public DateTimeOffset? NewestRecoveryPointInArchive { get; set; }
+        public DateTimeOffset? NewestRecoverOnInArchive { get; set; }
 
         /// <summary> Number of backup copies available for this backup item. </summary>
         public int? RecoveryPointCount { get; set; }
 
         /// <summary> Specifies if backup policy associated with the backup item is inconsistent. </summary>
-        public bool? PolicyInconsistent { get; set; }
+        public bool? IsPolicyInconsistent { get; set; }
     }
 }

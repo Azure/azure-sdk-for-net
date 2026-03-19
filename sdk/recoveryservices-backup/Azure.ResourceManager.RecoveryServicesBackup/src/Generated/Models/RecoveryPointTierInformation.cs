@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformation"/>. </summary>
-        /// <param name="type"> Recovery point tier type. </param>
+        /// <param name="tierType"> Recovery point tier type. </param>
         /// <param name="status"> Recovery point tier status. </param>
         /// <param name="extendedInfo"> Recovery point tier status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointTierInformation(RecoveryPointTierType? @type, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointTierInformation(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            TierType = tierType;
             Status = status;
             ExtendedInfo = extendedInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Recovery point tier type. </summary>
-        public RecoveryPointTierType? Type { get; }
+        public RecoveryPointTierType? TierType { get; }
 
         /// <summary> Recovery point tier status. </summary>
         public RecoveryPointTierStatus? Status { get; }

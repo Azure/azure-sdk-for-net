@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
         /// <param name="threatInfo"> Recovery point threat information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="recoveryPointTimeInUTC"> UTC time at which recovery point was created. </param>
+        /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
         /// <param name="type"> Type of restore point. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal WorkloadRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? @type, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
+        internal WorkloadRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? @type, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
-            RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
+            RecoveryPointCreatedOn = recoveryPointCreatedOn;
             Type = @type;
             RecoveryPointTierDetails = recoveryPointTierDetails;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> UTC time at which recovery point was created. </summary>
-        public DateTimeOffset? RecoveryPointTimeInUTC { get; }
+        public DateTimeOffset? RecoveryPointCreatedOn { get; }
 
         /// <summary> Type of restore point. </summary>
         public RestorePointType? Type { get; }

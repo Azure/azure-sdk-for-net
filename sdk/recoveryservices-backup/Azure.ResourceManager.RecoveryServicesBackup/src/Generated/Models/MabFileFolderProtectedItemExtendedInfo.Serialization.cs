@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             DateTimeOffset? lastRefreshedOn = default;
-            DateTimeOffset? oldestRecoveryPoint = default;
+            DateTimeOffset? oldestRecoverOn = default;
             int? recoveryPointCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoveryPoint = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointCount"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MabFileFolderProtectedItemExtendedInfo(lastRefreshedOn, oldestRecoveryPoint, recoveryPointCount, additionalBinaryDataProperties);
+            return new MabFileFolderProtectedItemExtendedInfo(lastRefreshedOn, oldestRecoverOn, recoveryPointCount, additionalBinaryDataProperties);
         }
     }
 }

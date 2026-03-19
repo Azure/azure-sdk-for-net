@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointType"> Type of the backup copy. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
-        /// <param name="sourceVMStorageType"> Storage type of the VM whose backup copy is created. </param>
-        /// <param name="isSourceVMEncrypted"> Identifies whether the VM was encrypted when the backup copy is created. </param>
+        /// <param name="sourceVmStorageType"> Storage type of the VM whose backup copy is created. </param>
+        /// <param name="isSourceVmEncrypted"> Identifies whether the VM was encrypted when the backup copy is created. </param>
         /// <param name="keyAndSecret"> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </param>
         /// <param name="isInstantIlrSessionActive"> Is the session to recover items from this backup copy still active. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
@@ -49,20 +49,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Extended location of the VM recovery point,
         /// should be null if VM is in public cloud
         /// </param>
-        internal IaasVmRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVMStorageType, bool? isSourceVMEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
+        internal IaasVmRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointAdditionalInfo = recoveryPointAdditionalInfo;
-            SourceVMStorageType = sourceVMStorageType;
-            IsSourceVMEncrypted = isSourceVMEncrypted;
+            SourceVmStorageType = sourceVmStorageType;
+            IsSourceVmEncrypted = isSourceVmEncrypted;
             KeyAndSecret = keyAndSecret;
             IsInstantIlrSessionActive = isInstantIlrSessionActive;
             RecoveryPointTierDetails = recoveryPointTierDetails;
             IsManagedVirtualMachine = isManagedVirtualMachine;
             VirtualMachineSize = virtualMachineSize;
             OriginalStorageAccountOption = originalStorageAccountOption;
-            OsType = osType;
+            OSType = osType;
             RecoveryPointDiskConfiguration = recoveryPointDiskConfiguration;
             Zones = zones;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string RecoveryPointAdditionalInfo { get; }
 
         /// <summary> Storage type of the VM whose backup copy is created. </summary>
-        public string SourceVMStorageType { get; }
+        public string SourceVmStorageType { get; }
 
         /// <summary> Identifies whether the VM was encrypted when the backup copy is created. </summary>
-        public bool? IsSourceVMEncrypted { get; }
+        public bool? IsSourceVmEncrypted { get; }
 
         /// <summary> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </summary>
         public KeyAndSecretDetails KeyAndSecret { get; }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? OriginalStorageAccountOption { get; }
 
         /// <summary> OS type. </summary>
-        public string OsType { get; }
+        public string OSType { get; }
 
         /// <summary> Disk configuration. </summary>
         public RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get; }

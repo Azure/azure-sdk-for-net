@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Protectable Container Class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageProtectableContainer"/> and <see cref="AzureVMAppContainerProtectableContainer"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownProtectableContainer))]
     public abstract partial class ProtectableContainer : IJsonModel<ProtectableContainer>
     {
         /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/> for deserialization. </summary>

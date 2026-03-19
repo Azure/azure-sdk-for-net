@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         private readonly string _value;
         private const string InvalidValue = "Invalid";
-        private const string VMValue = "VM";
+        private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDbValue = "AzureSqlDb";
-        private const string SQLDBValue = "SQLDB";
+        private const string AzureSqlDBValue = "AzureSqlDb";
+        private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
-        private const string VMwareVMValue = "VMwareVM";
+        private const string VMwareVmValue = "VMwareVM";
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SqlDatabaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SAPAseDatabaseValue = "SAPAseDatabase";
-        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SapAseDatabaseValue = "SAPAseDatabase";
+        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary> Initializes a new instance of <see cref="BackupItemType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Invalid. </summary>
         public static BackupItemType Invalid { get; } = new BackupItemType(InvalidValue);
 
-        /// <summary> Gets the VM. </summary>
-        public static BackupItemType VM { get; } = new BackupItemType(VMValue);
+        /// <summary> Gets the Vm. </summary>
+        public static BackupItemType Vm { get; } = new BackupItemType(VmValue);
 
         /// <summary> Gets the FileFolder. </summary>
         public static BackupItemType FileFolder { get; } = new BackupItemType(FileFolderValue);
 
-        /// <summary> Gets the AzureSqlDb. </summary>
-        public static BackupItemType AzureSqlDb { get; } = new BackupItemType(AzureSqlDbValue);
+        /// <summary> Gets the AzureSqlDB. </summary>
+        public static BackupItemType AzureSqlDB { get; } = new BackupItemType(AzureSqlDBValue);
 
-        /// <summary> Gets the SQLDB. </summary>
-        public static BackupItemType SQLDB { get; } = new BackupItemType(SQLDBValue);
+        /// <summary> Gets the SqlDB. </summary>
+        public static BackupItemType SqlDB { get; } = new BackupItemType(SqlDBValue);
 
         /// <summary> Gets the Exchange. </summary>
         public static BackupItemType Exchange { get; } = new BackupItemType(ExchangeValue);
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Sharepoint. </summary>
         public static BackupItemType Sharepoint { get; } = new BackupItemType(SharepointValue);
 
-        /// <summary> Gets the VMwareVM. </summary>
-        public static BackupItemType VMwareVM { get; } = new BackupItemType(VMwareVMValue);
+        /// <summary> Gets the VMwareVm. </summary>
+        public static BackupItemType VMwareVm { get; } = new BackupItemType(VMwareVmValue);
 
         /// <summary> Gets the SystemState. </summary>
         public static BackupItemType SystemState { get; } = new BackupItemType(SystemStateValue);
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the GenericDataSource. </summary>
         public static BackupItemType GenericDataSource { get; } = new BackupItemType(GenericDataSourceValue);
 
-        /// <summary> Gets the SQLDataBase. </summary>
-        public static BackupItemType SQLDataBase { get; } = new BackupItemType(SQLDataBaseValue);
+        /// <summary> Gets the SqlDatabase. </summary>
+        public static BackupItemType SqlDatabase { get; } = new BackupItemType(SqlDatabaseValue);
 
         /// <summary> Gets the AzureFileShare. </summary>
         public static BackupItemType AzureFileShare { get; } = new BackupItemType(AzureFileShareValue);
 
-        /// <summary> Gets the SAPHanaDatabase. </summary>
-        public static BackupItemType SAPHanaDatabase { get; } = new BackupItemType(SAPHanaDatabaseValue);
+        /// <summary> Gets the SapHanaDatabase. </summary>
+        public static BackupItemType SapHanaDatabase { get; } = new BackupItemType(SapHanaDatabaseValue);
 
-        /// <summary> Gets the SAPAseDatabase. </summary>
-        public static BackupItemType SAPAseDatabase { get; } = new BackupItemType(SAPAseDatabaseValue);
+        /// <summary> Gets the SapAseDatabase. </summary>
+        public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
 
-        /// <summary> Gets the SAPHanaDBInstance. </summary>
-        public static BackupItemType SAPHanaDBInstance { get; } = new BackupItemType(SAPHanaDBInstanceValue);
+        /// <summary> Gets the SapHanaDBInstance. </summary>
+        public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
 
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

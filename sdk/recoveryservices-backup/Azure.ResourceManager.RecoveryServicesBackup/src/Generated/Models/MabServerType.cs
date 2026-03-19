@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private readonly string _value;
         private const string InvalidValue = "Invalid";
         private const string UnknownValue = "Unknown";
-        private const string IaasVMContainerValue = "IaasVMContainer";
-        private const string IaasVMServiceContainerValue = "IaasVMServiceContainer";
-        private const string DPMContainerValue = "DPMContainer";
+        private const string IaasVmContainerValue = "IaasVMContainer";
+        private const string IaasVmServiceContainerValue = "IaasVMServiceContainer";
+        private const string DpmContainerValue = "DPMContainer";
         private const string AzureBackupServerContainerValue = "AzureBackupServerContainer";
-        private const string MABContainerValue = "MABContainer";
+        private const string MabContainerValue = "MABContainer";
         private const string ClusterValue = "Cluster";
         private const string AzureSqlContainerValue = "AzureSqlContainer";
         private const string WindowsValue = "Windows";
         private const string VCenterValue = "VCenter";
-        private const string VMAppContainerValue = "VMAppContainer";
-        private const string SQLAGWorkLoadContainerValue = "SQLAGWorkLoadContainer";
+        private const string VmAppContainerValue = "VMAppContainer";
+        private const string SqlAvailabilityGroupWorkLoadContainerValue = "SQLAGWorkLoadContainer";
         private const string StorageContainerValue = "StorageContainer";
         private const string GenericContainerValue = "GenericContainer";
 
@@ -47,20 +47,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Unknown. </summary>
         public static MabServerType Unknown { get; } = new MabServerType(UnknownValue);
 
-        /// <summary> Gets the IaasVMContainer. </summary>
-        public static MabServerType IaasVMContainer { get; } = new MabServerType(IaasVMContainerValue);
+        /// <summary> Gets the IaasVmContainer. </summary>
+        public static MabServerType IaasVmContainer { get; } = new MabServerType(IaasVmContainerValue);
 
-        /// <summary> Gets the IaasVMServiceContainer. </summary>
-        public static MabServerType IaasVMServiceContainer { get; } = new MabServerType(IaasVMServiceContainerValue);
+        /// <summary> Gets the IaasVmServiceContainer. </summary>
+        public static MabServerType IaasVmServiceContainer { get; } = new MabServerType(IaasVmServiceContainerValue);
 
-        /// <summary> Gets the DPMContainer. </summary>
-        public static MabServerType DPMContainer { get; } = new MabServerType(DPMContainerValue);
+        /// <summary> Gets the DpmContainer. </summary>
+        public static MabServerType DpmContainer { get; } = new MabServerType(DpmContainerValue);
 
         /// <summary> Gets the AzureBackupServerContainer. </summary>
         public static MabServerType AzureBackupServerContainer { get; } = new MabServerType(AzureBackupServerContainerValue);
 
-        /// <summary> Gets the MABContainer. </summary>
-        public static MabServerType MABContainer { get; } = new MabServerType(MABContainerValue);
+        /// <summary> Gets the MabContainer. </summary>
+        public static MabServerType MabContainer { get; } = new MabServerType(MabContainerValue);
 
         /// <summary> Gets the Cluster. </summary>
         public static MabServerType Cluster { get; } = new MabServerType(ClusterValue);
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the VCenter. </summary>
         public static MabServerType VCenter { get; } = new MabServerType(VCenterValue);
 
-        /// <summary> Gets the VMAppContainer. </summary>
-        public static MabServerType VMAppContainer { get; } = new MabServerType(VMAppContainerValue);
+        /// <summary> Gets the VmAppContainer. </summary>
+        public static MabServerType VmAppContainer { get; } = new MabServerType(VmAppContainerValue);
 
-        /// <summary> Gets the SQLAGWorkLoadContainer. </summary>
-        public static MabServerType SQLAGWorkLoadContainer { get; } = new MabServerType(SQLAGWorkLoadContainerValue);
+        /// <summary> Gets the SqlAvailabilityGroupWorkLoadContainer. </summary>
+        public static MabServerType SqlAvailabilityGroupWorkLoadContainer { get; } = new MabServerType(SqlAvailabilityGroupWorkLoadContainerValue);
 
         /// <summary> Gets the StorageContainer. </summary>
         public static MabServerType StorageContainer { get; } = new MabServerType(StorageContainerValue);

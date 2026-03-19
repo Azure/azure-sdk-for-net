@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Optional.IsDefined(CrossRegionRestoreFlag))
+            if (Optional.IsDefined(EnableCrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestoreFlag"u8);
-                writer.WriteBooleanValue(CrossRegionRestoreFlag.Value);
+                writer.WriteBooleanValue(EnableCrossRegionRestore.Value);
             }
             if (Optional.IsDefined(DedupState))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupStorageType? storageModelType = default;
             BackupStorageType? storageType = default;
             BackupStorageTypeState? storageTypeState = default;
-            bool? crossRegionRestoreFlag = default;
+            bool? enableCrossRegionRestore = default;
             VaultDedupState? dedupState = default;
             VaultXcoolState? xcoolState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    crossRegionRestoreFlag = prop.Value.GetBoolean();
+                    enableCrossRegionRestore = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dedupState"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 storageModelType,
                 storageType,
                 storageTypeState,
-                crossRegionRestoreFlag,
+                enableCrossRegionRestore,
                 dedupState,
                 xcoolState,
                 additionalBinaryDataProperties);

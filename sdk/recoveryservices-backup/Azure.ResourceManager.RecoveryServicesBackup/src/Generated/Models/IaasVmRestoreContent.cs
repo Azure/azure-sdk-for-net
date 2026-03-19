@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="region"> Region in which the virtual machine is restored. </param>
         /// <param name="affinityGroup"> Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines. </param>
-        /// <param name="createNewCloudService">
+        /// <param name="doesCreateNewCloudService">
         /// Should a new cloud service be created while restoring the VM. If this is false, VM will be restored to the same
         /// cloud service as it was at the time of backup.
         /// </param>
         /// <param name="originalStorageAccountOption"> Original Storage Account Option. </param>
         /// <param name="encryptionDetails"> Details needed if the VM was encrypted at the time of backup. </param>
         /// <param name="restoreDiskLunList"> List of Disk LUNs for partial restore. </param>
-        /// <param name="restoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
+        /// <param name="doesRestoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
         /// <param name="diskEncryptionSetId"> DiskEncryptionSet's ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
         /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
         /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="securedVMDetails"> Stores Secured VM Details. </param>
         /// <param name="targetDiskNetworkAccessSettings"> Specifies target network access settings for disks of VM to be restored,. </param>
-        internal IaasVmRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, FileShareRecoveryType? recoveryType, string sourceResourceId, string targetVirtualMachineId, string targetResourceGroupId, string storageAccountId, string virtualNetworkId, string subnetId, string targetDomainNameId, string region, string affinityGroup, bool? createNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? restoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVMDetails securedVMDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal IaasVmRestoreContent(string objectType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, FileShareRecoveryType? recoveryType, string sourceResourceId, string targetVirtualMachineId, string targetResourceGroupId, string storageAccountId, string virtualNetworkId, string subnetId, string targetDomainNameId, string region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, BackupIdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails, ExtendedLocation extendedLocation, SecuredVMDetails securedVMDetails, BackupTargetDiskNetworkAccessSettings targetDiskNetworkAccessSettings) : base(objectType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetDomainNameId = targetDomainNameId;
             Region = region;
             AffinityGroup = affinityGroup;
-            CreateNewCloudService = createNewCloudService;
+            DoesCreateNewCloudService = doesCreateNewCloudService;
             OriginalStorageAccountOption = originalStorageAccountOption;
             EncryptionDetails = encryptionDetails;
             RestoreDiskLunList = restoreDiskLunList;
-            RestoreWithManagedDisks = restoreWithManagedDisks;
+            DoesRestoreWithManagedDisks = doesRestoreWithManagedDisks;
             DiskEncryptionSetId = diskEncryptionSetId;
             Zones = zones;
             IdentityInfo = identityInfo;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Should a new cloud service be created while restoring the VM. If this is false, VM will be restored to the same
         /// cloud service as it was at the time of backup.
         /// </summary>
-        public bool? CreateNewCloudService { get; set; }
+        public bool? DoesCreateNewCloudService { get; set; }
 
         /// <summary> Original Storage Account Option. </summary>
         public bool? OriginalStorageAccountOption { get; set; }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<int> RestoreDiskLunList { get; }
 
         /// <summary> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </summary>
-        public bool? RestoreWithManagedDisks { get; set; }
+        public bool? DoesRestoreWithManagedDisks { get; set; }
 
         /// <summary> DiskEncryptionSet's ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </summary>
         public string DiskEncryptionSetId { get; set; }
@@ -197,11 +197,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupTargetDiskNetworkAccessSettings TargetDiskNetworkAccessSettings { get; set; }
 
         /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
-        public string SecuredVMOsDiskEncryptionSetId
+        public string SecuredVmOSDiskEncryptionSetId
         {
             get
             {
-                return SecuredVMDetails is null ? default : SecuredVMDetails.SecuredVMOsDiskEncryptionSetId;
+                return SecuredVMDetails is null ? default : SecuredVMDetails.SecuredVmOSDiskEncryptionSetId;
             }
             set
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     SecuredVMDetails = new SecuredVMDetails();
                 }
-                SecuredVMDetails.SecuredVMOsDiskEncryptionSetId = value;
+                SecuredVMDetails.SecuredVmOSDiskEncryptionSetId = value;
             }
         }
     }

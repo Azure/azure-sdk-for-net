@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="TokenInformation"/>. </summary>
         /// <param name="token"> Token value. </param>
         /// <param name="expiryTimeInUtcTicks"> Expiry time of token. </param>
-        /// <param name="securityPIN"> Security PIN. </param>
+        /// <param name="securityPin"> Security PIN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPIN, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             ExpiryTimeInUtcTicks = expiryTimeInUtcTicks;
-            SecurityPIN = securityPIN;
+            SecurityPin = securityPin;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public long? ExpiryTimeInUtcTicks { get; }
 
         /// <summary> Security PIN. </summary>
-        public string SecurityPIN { get; }
+        public string SecurityPin { get; }
     }
 }

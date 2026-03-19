@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
-            if (Optional.IsDefined(SourceVMStorageType))
+            if (Optional.IsDefined(SourceVmStorageType))
             {
                 writer.WritePropertyName("sourceVMStorageType"u8);
-                writer.WriteStringValue(SourceVMStorageType);
+                writer.WriteStringValue(SourceVmStorageType);
             }
-            if (Optional.IsDefined(IsSourceVMEncrypted))
+            if (Optional.IsDefined(IsSourceVmEncrypted))
             {
                 writer.WritePropertyName("isSourceVMEncrypted"u8);
-                writer.WriteBooleanValue(IsSourceVMEncrypted.Value);
+                writer.WriteBooleanValue(IsSourceVmEncrypted.Value);
             }
             if (Optional.IsDefined(KeyAndSecret))
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string recoveryPointType = default;
             DateTimeOffset? recoveryPointOn = default;
             string recoveryPointAdditionalInfo = default;
-            string sourceVMStorageType = default;
-            bool? isSourceVMEncrypted = default;
+            string sourceVmStorageType = default;
+            bool? isSourceVmEncrypted = default;
             KeyAndSecretDetails keyAndSecret = default;
             bool? isInstantIlrSessionActive = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("sourceVMStorageType"u8))
                 {
-                    sourceVMStorageType = prop.Value.GetString();
+                    sourceVmStorageType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("isSourceVMEncrypted"u8))
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    isSourceVMEncrypted = prop.Value.GetBoolean();
+                    isSourceVmEncrypted = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("keyAndSecret"u8))
@@ -453,8 +453,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 recoveryPointType,
                 recoveryPointOn,
                 recoveryPointAdditionalInfo,
-                sourceVMStorageType,
-                isSourceVMEncrypted,
+                sourceVmStorageType,
+                isSourceVmEncrypted,
                 keyAndSecret,
                 isInstantIlrSessionActive,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),

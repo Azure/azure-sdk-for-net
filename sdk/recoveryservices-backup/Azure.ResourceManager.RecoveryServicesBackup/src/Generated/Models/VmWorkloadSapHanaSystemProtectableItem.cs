@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
         /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
-        /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB's present. </param>
-        /// <param name="subprotectableitemcount"> For instance or AG, indicates number of DB's to be protected. </param>
-        /// <param name="prebackupvalidation"> Pre-backup validation for protectable objects. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
         /// <param name="isProtectable"> Indicates if item is protectable. </param>
-        internal VmWorkloadSapHanaSystemProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subinquireditemcount, int? subprotectableitemcount, PreBackupValidation prebackupvalidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subinquireditemcount, subprotectableitemcount, prebackupvalidation, isProtectable)
+        internal VmWorkloadSapHanaSystemProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
         {
         }
     }

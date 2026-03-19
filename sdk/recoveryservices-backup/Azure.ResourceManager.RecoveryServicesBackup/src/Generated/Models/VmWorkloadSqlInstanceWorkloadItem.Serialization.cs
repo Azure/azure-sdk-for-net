@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string parentName = default;
             string serverName = default;
             bool? isAutoProtectable = default;
-            int? subinquireditemcount = default;
+            int? subInquiredItemCount = default;
             int? subWorkloadItemCount = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
             foreach (var prop in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    subinquireditemcount = prop.Value.GetInt32();
+                    subInquiredItemCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("subWorkloadItemCount"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 parentName,
                 serverName,
                 isAutoProtectable,
-                subinquireditemcount,
+                subInquiredItemCount,
                 subWorkloadItemCount,
                 dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>());
         }

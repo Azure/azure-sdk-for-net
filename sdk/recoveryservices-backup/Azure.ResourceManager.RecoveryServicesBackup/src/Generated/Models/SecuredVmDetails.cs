@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecuredVMDetails"/>. </summary>
-        /// <param name="securedVMOsDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
+        /// <param name="securedVmOSDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuredVMDetails(string securedVMOsDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuredVMDetails(string securedVmOSDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SecuredVMOsDiskEncryptionSetId = securedVMOsDiskEncryptionSetId;
+            SecuredVmOSDiskEncryptionSetId = securedVmOSDiskEncryptionSetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
-        public string SecuredVMOsDiskEncryptionSetId { get; set; }
+        public string SecuredVmOSDiskEncryptionSetId { get; set; }
     }
 }

@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointProperties"/>. </summary>
-        /// <param name="expiryTime"> Expiry time of Recovery Point in UTC. </param>
+        /// <param name="expireOn"> Expiry time of Recovery Point in UTC. </param>
         /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
         /// <param name="isSoftDeleted"> Bool to indicate whether RP is in soft delete state or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointProperties(string expiryTime, string ruleName, bool? isSoftDeleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointProperties(string expireOn, string ruleName, bool? isSoftDeleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpiryTime = expiryTime;
+            ExpireOn = expireOn;
             RuleName = ruleName;
             IsSoftDeleted = isSoftDeleted;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Expiry time of Recovery Point in UTC. </summary>
-        public string ExpiryTime { get; }
+        public string ExpireOn { get; }
 
         /// <summary> Rule name tagged on Recovery Point that governs life cycle. </summary>
         public string RuleName { get; }

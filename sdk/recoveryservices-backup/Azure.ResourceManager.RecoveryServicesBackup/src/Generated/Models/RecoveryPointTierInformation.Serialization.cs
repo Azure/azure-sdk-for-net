@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(TierType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(TierType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Status))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            RecoveryPointTierType? @type = default;
+            RecoveryPointTierType? tierType = default;
             RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToRecoveryPointTierType();
+                    tierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecoveryPointTierInformation(@type, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new RecoveryPointTierInformation(tierType, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

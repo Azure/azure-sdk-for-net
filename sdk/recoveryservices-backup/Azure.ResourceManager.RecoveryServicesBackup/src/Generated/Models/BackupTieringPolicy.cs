@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering Mode to control automatic tiering of recovery points. Supported values are:
         /// <list type="number"><item><description>TierRecommended: Tier all recovery points recommended to be tiered</description></item><item><description>TierAfter: Tier all recovery points after a fixed period, as specified in duration + durationType below.</description></item><item><description>DoNotTier: Do not tier any recovery points</description></item></list>
         /// </param>
-        /// <param name="duration">
+        /// <param name="durationValue">
         /// Number of days/weeks/months/years to retain backups in current tier before tiering.
         /// Used only if TieringMode is set to TierAfter
         /// </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Used only if TieringMode is set to TierAfter
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupTieringPolicy(TieringMode? tieringMode, int? duration, RetentionDurationType? durationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupTieringPolicy(TieringMode? tieringMode, int? durationValue, RetentionDurationType? durationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TieringMode = tieringMode;
-            Duration = duration;
+            DurationValue = durationValue;
             DurationType = durationType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Number of days/weeks/months/years to retain backups in current tier before tiering.
         /// Used only if TieringMode is set to TierAfter
         /// </summary>
-        public int? Duration { get; set; }
+        public int? DurationValue { get; set; }
 
         /// <summary>
         /// Retention duration type: days/weeks/months/years

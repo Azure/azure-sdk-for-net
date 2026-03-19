@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="IaasVmBackupContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="recoveryPointExpiryTimeInUTC"> Backup copy will expire after the time specified (UTC). </param>
-        internal IaasVmBackupContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType, additionalBinaryDataProperties)
+        /// <param name="recoveryPointExpireOn"> Backup copy will expire after the time specified (UTC). </param>
+        internal IaasVmBackupContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? recoveryPointExpireOn) : base(objectType, additionalBinaryDataProperties)
         {
-            RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
+            RecoveryPointExpireOn = recoveryPointExpireOn;
         }
 
         /// <summary> Backup copy will expire after the time specified (UTC). </summary>
-        public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
+        public DateTimeOffset? RecoveryPointExpireOn { get; set; }
     }
 }

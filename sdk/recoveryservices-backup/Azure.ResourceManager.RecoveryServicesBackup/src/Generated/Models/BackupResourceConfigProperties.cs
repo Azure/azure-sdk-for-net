@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="storageModelType"> Storage type. </param>
         /// <param name="storageType"> Storage type. </param>
         /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>
-        /// <param name="crossRegionRestoreFlag"> Opt in details of Cross Region Restore feature. </param>
+        /// <param name="enableCrossRegionRestore"> Opt in details of Cross Region Restore feature. </param>
         /// <param name="dedupState"> Vault Dedup state. </param>
         /// <param name="xcoolState"> Vault x-cool state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, bool? crossRegionRestoreFlag, VaultDedupState? dedupState, VaultXcoolState? xcoolState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, bool? enableCrossRegionRestore, VaultDedupState? dedupState, VaultXcoolState? xcoolState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
             StorageTypeState = storageTypeState;
-            CrossRegionRestoreFlag = crossRegionRestoreFlag;
+            EnableCrossRegionRestore = enableCrossRegionRestore;
             DedupState = dedupState;
             XcoolState = xcoolState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupStorageTypeState? StorageTypeState { get; set; }
 
         /// <summary> Opt in details of Cross Region Restore feature. </summary>
-        public bool? CrossRegionRestoreFlag { get; set; }
+        public bool? EnableCrossRegionRestore { get; set; }
 
         /// <summary> Vault Dedup state. </summary>
         public VaultDedupState? DedupState { get; set; }

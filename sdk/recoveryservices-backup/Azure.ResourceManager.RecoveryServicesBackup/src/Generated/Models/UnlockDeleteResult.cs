@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UnlockDeleteResult"/>. </summary>
-        /// <param name="unlockDeleteExpiryTime"> This is the time when unlock delete privileges will get expired. </param>
+        /// <param name="unlockDeleteExpireOn"> This is the time when unlock delete privileges will get expired. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnlockDeleteResult(string unlockDeleteExpiryTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnlockDeleteResult(string unlockDeleteExpireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UnlockDeleteExpiryTime = unlockDeleteExpiryTime;
+            UnlockDeleteExpireOn = unlockDeleteExpireOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is the time when unlock delete privileges will get expired. </summary>
-        public string UnlockDeleteExpiryTime { get; }
+        public string UnlockDeleteExpireOn { get; }
     }
 }

@@ -49,20 +49,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
-            if (Optional.IsDefined(Subinquireditemcount))
+            if (Optional.IsDefined(SubInquiredItemCount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
-                writer.WriteNumberValue(Subinquireditemcount.Value);
+                writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (Optional.IsDefined(Subprotectableitemcount))
+            if (Optional.IsDefined(SubProtectableItemCount))
             {
                 writer.WritePropertyName("subprotectableitemcount"u8);
-                writer.WriteNumberValue(Subprotectableitemcount.Value);
+                writer.WriteNumberValue(SubProtectableItemCount.Value);
             }
-            if (Optional.IsDefined(Prebackupvalidation))
+            if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(Prebackupvalidation);
+                writer.WriteObjectValue(PreBackupValidation);
             }
             if (Optional.IsDefined(IsProtectable))
             {

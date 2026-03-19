@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(WorkloadRecoveryPoint)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(RecoveryPointTimeInUTC))
+            if (Optional.IsDefined(RecoveryPointCreatedOn))
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC"u8);
-                writer.WriteStringValue(RecoveryPointTimeInUTC.Value, "O");
+                writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Type))
             {

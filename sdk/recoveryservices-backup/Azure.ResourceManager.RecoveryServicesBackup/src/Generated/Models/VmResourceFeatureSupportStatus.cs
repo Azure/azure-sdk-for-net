@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private readonly string _value;
         private const string InvalidValue = "Invalid";
         private const string SupportedValue = "Supported";
-        private const string DefaultOFFValue = "DefaultOFF";
-        private const string DefaultONValue = "DefaultON";
+        private const string DefaultOffValue = "DefaultOFF";
+        private const string DefaultOnValue = "DefaultON";
         private const string NotSupportedValue = "NotSupported";
 
         /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportStatus"/>. </summary>
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Supported. </summary>
         public static VmResourceFeatureSupportStatus Supported { get; } = new VmResourceFeatureSupportStatus(SupportedValue);
 
-        /// <summary> Gets the DefaultOFF. </summary>
-        public static VmResourceFeatureSupportStatus DefaultOFF { get; } = new VmResourceFeatureSupportStatus(DefaultOFFValue);
+        /// <summary> Gets the DefaultOff. </summary>
+        public static VmResourceFeatureSupportStatus DefaultOff { get; } = new VmResourceFeatureSupportStatus(DefaultOffValue);
 
-        /// <summary> Gets the DefaultON. </summary>
-        public static VmResourceFeatureSupportStatus DefaultON { get; } = new VmResourceFeatureSupportStatus(DefaultONValue);
+        /// <summary> Gets the DefaultOn. </summary>
+        public static VmResourceFeatureSupportStatus DefaultOn { get; } = new VmResourceFeatureSupportStatus(DefaultOnValue);
 
         /// <summary> Gets the NotSupported. </summary>
         public static VmResourceFeatureSupportStatus NotSupported { get; } = new VmResourceFeatureSupportStatus(NotSupportedValue);

@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("expiryTimeInUtcTicks"u8);
                 writer.WriteNumberValue(ExpiryTimeInUtcTicks.Value);
             }
-            if (Optional.IsDefined(SecurityPIN))
+            if (Optional.IsDefined(SecurityPin))
             {
                 writer.WritePropertyName("securityPIN"u8);
-                writer.WriteStringValue(SecurityPIN);
+                writer.WriteStringValue(SecurityPin);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string token = default;
             long? expiryTimeInUtcTicks = default;
-            string securityPIN = default;
+            string securityPin = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("securityPIN"u8))
                 {
-                    securityPIN = prop.Value.GetString();
+                    securityPin = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TokenInformation(token, expiryTimeInUtcTicks, securityPIN, additionalBinaryDataProperties);
+            return new TokenInformation(token, expiryTimeInUtcTicks, securityPin, additionalBinaryDataProperties);
         }
     }
 }

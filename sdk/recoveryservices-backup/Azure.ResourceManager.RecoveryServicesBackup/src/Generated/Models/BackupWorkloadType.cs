@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         private readonly string _value;
         private const string InvalidValue = "Invalid";
-        private const string VMValue = "VM";
+        private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDbValue = "AzureSqlDb";
-        private const string SQLDBValue = "SQLDB";
+        private const string AzureSqlDBValue = "AzureSqlDb";
+        private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
-        private const string VMwareVMValue = "VMwareVM";
+        private const string VMwareVmValue = "VMwareVM";
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SqlDatabaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SAPAseDatabaseValue = "SAPAseDatabase";
-        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SapAseDatabaseValue = "SAPAseDatabase";
+        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary> Initializes a new instance of <see cref="BackupWorkloadType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Invalid. </summary>
         public static BackupWorkloadType Invalid { get; } = new BackupWorkloadType(InvalidValue);
 
-        /// <summary> Gets the VM. </summary>
-        public static BackupWorkloadType VM { get; } = new BackupWorkloadType(VMValue);
+        /// <summary> Gets the Vm. </summary>
+        public static BackupWorkloadType Vm { get; } = new BackupWorkloadType(VmValue);
 
         /// <summary> Gets the FileFolder. </summary>
         public static BackupWorkloadType FileFolder { get; } = new BackupWorkloadType(FileFolderValue);
 
-        /// <summary> Gets the AzureSqlDb. </summary>
-        public static BackupWorkloadType AzureSqlDb { get; } = new BackupWorkloadType(AzureSqlDbValue);
+        /// <summary> Gets the AzureSqlDB. </summary>
+        public static BackupWorkloadType AzureSqlDB { get; } = new BackupWorkloadType(AzureSqlDBValue);
 
-        /// <summary> Gets the SQLDB. </summary>
-        public static BackupWorkloadType SQLDB { get; } = new BackupWorkloadType(SQLDBValue);
+        /// <summary> Gets the SqlDB. </summary>
+        public static BackupWorkloadType SqlDB { get; } = new BackupWorkloadType(SqlDBValue);
 
         /// <summary> Gets the Exchange. </summary>
         public static BackupWorkloadType Exchange { get; } = new BackupWorkloadType(ExchangeValue);
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Sharepoint. </summary>
         public static BackupWorkloadType Sharepoint { get; } = new BackupWorkloadType(SharepointValue);
 
-        /// <summary> Gets the VMwareVM. </summary>
-        public static BackupWorkloadType VMwareVM { get; } = new BackupWorkloadType(VMwareVMValue);
+        /// <summary> Gets the VMwareVm. </summary>
+        public static BackupWorkloadType VMwareVm { get; } = new BackupWorkloadType(VMwareVmValue);
 
         /// <summary> Gets the SystemState. </summary>
         public static BackupWorkloadType SystemState { get; } = new BackupWorkloadType(SystemStateValue);
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the GenericDataSource. </summary>
         public static BackupWorkloadType GenericDataSource { get; } = new BackupWorkloadType(GenericDataSourceValue);
 
-        /// <summary> Gets the SQLDataBase. </summary>
-        public static BackupWorkloadType SQLDataBase { get; } = new BackupWorkloadType(SQLDataBaseValue);
+        /// <summary> Gets the SqlDatabase. </summary>
+        public static BackupWorkloadType SqlDatabase { get; } = new BackupWorkloadType(SqlDatabaseValue);
 
         /// <summary> Gets the AzureFileShare. </summary>
         public static BackupWorkloadType AzureFileShare { get; } = new BackupWorkloadType(AzureFileShareValue);
 
-        /// <summary> Gets the SAPHanaDatabase. </summary>
-        public static BackupWorkloadType SAPHanaDatabase { get; } = new BackupWorkloadType(SAPHanaDatabaseValue);
+        /// <summary> Gets the SapHanaDatabase. </summary>
+        public static BackupWorkloadType SapHanaDatabase { get; } = new BackupWorkloadType(SapHanaDatabaseValue);
 
-        /// <summary> Gets the SAPAseDatabase. </summary>
-        public static BackupWorkloadType SAPAseDatabase { get; } = new BackupWorkloadType(SAPAseDatabaseValue);
+        /// <summary> Gets the SapAseDatabase. </summary>
+        public static BackupWorkloadType SapAseDatabase { get; } = new BackupWorkloadType(SapAseDatabaseValue);
 
-        /// <summary> Gets the SAPHanaDBInstance. </summary>
-        public static BackupWorkloadType SAPHanaDBInstance { get; } = new BackupWorkloadType(SAPHanaDBInstanceValue);
+        /// <summary> Gets the SapHanaDBInstance. </summary>
+        public static BackupWorkloadType SapHanaDBInstance { get; } = new BackupWorkloadType(SapHanaDBInstanceValue);
 
         /// <summary> Determines if two <see cref="BackupWorkloadType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

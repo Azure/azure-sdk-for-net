@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(UnlockDeleteResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(UnlockDeleteExpiryTime))
+            if (Optional.IsDefined(UnlockDeleteExpireOn))
             {
                 writer.WritePropertyName("unlockDeleteExpiryTime"u8);
-                writer.WriteStringValue(UnlockDeleteExpiryTime);
+                writer.WriteStringValue(UnlockDeleteExpireOn);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            string unlockDeleteExpiryTime = default;
+            string unlockDeleteExpireOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("unlockDeleteExpiryTime"u8))
                 {
-                    unlockDeleteExpiryTime = prop.Value.GetString();
+                    unlockDeleteExpireOn = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnlockDeleteResult(unlockDeleteExpiryTime, additionalBinaryDataProperties);
+            return new UnlockDeleteResult(unlockDeleteExpireOn, additionalBinaryDataProperties);
         }
     }
 }

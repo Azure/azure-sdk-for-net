@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PauseGC))
+            if (Optional.IsDefined(DoesPauseGC))
             {
                 writer.WritePropertyName("pauseGC"u8);
-                writer.WriteBooleanValue(PauseGC.Value);
+                writer.WriteBooleanValue(DoesPauseGC.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DataMoveLevel dataMoveLevel = default;
             string correlationId = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
-            bool? pauseGC = default;
+            bool? doesPauseGC = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    pauseGC = prop.Value.GetBoolean();
+                    doesPauseGC = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 dataMoveLevel,
                 correlationId,
                 sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                pauseGC,
+                doesPauseGC,
                 additionalBinaryDataProperties);
         }
     }

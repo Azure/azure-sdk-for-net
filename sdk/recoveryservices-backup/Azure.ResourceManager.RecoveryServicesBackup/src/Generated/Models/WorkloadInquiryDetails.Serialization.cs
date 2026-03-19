@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(WorkloadInquiryDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(WorkloadInquiryDetailsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(WorkloadInquiryDetailsType);
             }
             if (Optional.IsDefined(ItemCount))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            string @type = default;
+            string workloadInquiryDetailsType = default;
             long? itemCount = default;
             InquiryValidation inquiryValidation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    workloadInquiryDetailsType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("itemCount"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadInquiryDetails(@type, itemCount, inquiryValidation, additionalBinaryDataProperties);
+            return new WorkloadInquiryDetails(workloadInquiryDetailsType, itemCount, inquiryValidation, additionalBinaryDataProperties);
         }
     }
 }

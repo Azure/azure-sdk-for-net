@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             long? protectedItemCount = default;
             string dpmAgentVersion = default;
             IList<string> dpmServers = default;
-            bool? upgradeAvailable = default;
+            bool? isUpgradeAvailable = default;
             string protectionStatus = default;
             DPMContainerExtendedInfo extendedInfo = default;
             foreach (var prop in element.EnumerateObject())
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    upgradeAvailable = prop.Value.GetBoolean();
+                    isUpgradeAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("protectionStatus"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 protectedItemCount,
                 dpmAgentVersion,
                 dpmServers ?? new ChangeTrackingList<string>(),
-                upgradeAvailable,
+                isUpgradeAvailable,
                 protectionStatus,
                 extendedInfo);
         }

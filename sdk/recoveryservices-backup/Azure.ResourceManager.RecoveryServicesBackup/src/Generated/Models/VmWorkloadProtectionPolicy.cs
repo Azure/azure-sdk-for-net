@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="vmWorkloadPolicyType"> Type of the protection policy. </param>
         /// <param name="settings"> Common settings for the backup management. </param>
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
-        /// <param name="makePolicyConsistent"> Fix the policy inconsistency. </param>
-        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupWorkloadType? workLoadType, VMWorkloadPolicyType? vmWorkloadPolicyType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? makePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        /// <param name="doesMakePolicyConsistent"> Fix the policy inconsistency. </param>
+        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupWorkloadType? workLoadType, VMWorkloadPolicyType? vmWorkloadPolicyType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             WorkLoadType = workLoadType;
             VmWorkloadPolicyType = vmWorkloadPolicyType;
             Settings = settings;
             SubProtectionPolicy = subProtectionPolicy;
-            MakePolicyConsistent = makePolicyConsistent;
+            DoesMakePolicyConsistent = doesMakePolicyConsistent;
         }
 
         /// <summary> Type of workload for the backup management. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<SubProtectionPolicy> SubProtectionPolicy { get; }
 
         /// <summary> Fix the policy inconsistency. </summary>
-        public bool? MakePolicyConsistent { get; set; }
+        public bool? DoesMakePolicyConsistent { get; set; }
     }
 }

@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
-            if (Optional.IsDefined(RecoveryPointExpiryTimeInUTC))
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
-                writer.WriteStringValue(RecoveryPointExpiryTimeInUTC.Value, "O");
+                writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BackupType? backupType = default;
             bool? enableCompression = default;
-            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
+            DateTimeOffset? recoveryPointExpireOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointExpiryTimeInUTC = prop.Value.GetDateTimeOffset("O");
+                    recoveryPointExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadBackupContent(objectType, additionalBinaryDataProperties, backupType, enableCompression, recoveryPointExpiryTimeInUTC);
+            return new WorkloadBackupContent(objectType, additionalBinaryDataProperties, backupType, enableCompression, recoveryPointExpireOn);
         }
     }
 }

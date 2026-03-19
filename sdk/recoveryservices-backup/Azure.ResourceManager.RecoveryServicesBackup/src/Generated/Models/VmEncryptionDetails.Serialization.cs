@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EncryptionEnabled))
+            if (Optional.IsDefined(IsEncryptionEnabled))
             {
                 writer.WritePropertyName("encryptionEnabled"u8);
-                writer.WriteBooleanValue(EncryptionEnabled.Value);
+                writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(KekUri))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            bool? encryptionEnabled = default;
+            bool? isEncryptionEnabled = default;
             string kekUri = default;
             string secretKeyUri = default;
             string kekVaultId = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    encryptionEnabled = prop.Value.GetBoolean();
+                    isEncryptionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kekUrl"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             return new VmEncryptionDetails(
-                encryptionEnabled,
+                isEncryptionEnabled,
                 kekUri,
                 secretKeyUri,
                 kekVaultId,

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
-            if (Optional.IsDefined(Subinquireditemcount))
+            if (Optional.IsDefined(SubInquiredItemCount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
-                writer.WriteNumberValue(Subinquireditemcount.Value);
+                writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
             if (Optional.IsDefined(SubWorkloadItemCount))
             {

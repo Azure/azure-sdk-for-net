@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isPresentOnCloud"> To check if backup item is cloud protected. </param>
         /// <param name="lastBackupStatus"> Last backup status information on backup item. </param>
         /// <param name="lastRefreshedOn"> Last refresh time on backup item. </param>
-        /// <param name="oldestRecoveryPoint"> Oldest cloud recovery point time. </param>
+        /// <param name="oldestRecoverOn"> Oldest cloud recovery point time. </param>
         /// <param name="recoveryPointCount"> cloud recovery point count. </param>
         /// <param name="onPremiseOldestRecoveryPoint"> Oldest disk recovery point time. </param>
         /// <param name="onPremiseLatestRecoveryPoint"> latest disk recovery point time. </param>
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="diskStorageUsedInBytes"> Used Disk storage in bytes. </param>
         /// <param name="totalDiskStorageSizeInBytes"> total Disk storage in bytes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? @protected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoveryPoint, DateTimeOffset? onPremiseLatestRecoveryPoint, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? @protected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoveryPoint, DateTimeOffset? onPremiseLatestRecoveryPoint, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectableObjectLoadPath = protectableObjectLoadPath;
             Protected = @protected;
             IsPresentOnCloud = isPresentOnCloud;
             LastBackupStatus = lastBackupStatus;
             LastRefreshedOn = lastRefreshedOn;
-            OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoverOn = oldestRecoverOn;
             RecoveryPointCount = recoveryPointCount;
             OnPremiseOldestRecoveryPoint = onPremiseOldestRecoveryPoint;
             OnPremiseLatestRecoveryPoint = onPremiseLatestRecoveryPoint;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? LastRefreshedOn { get; set; }
 
         /// <summary> Oldest cloud recovery point time. </summary>
-        public DateTimeOffset? OldestRecoveryPoint { get; set; }
+        public DateTimeOffset? OldestRecoverOn { get; set; }
 
         /// <summary> cloud recovery point count. </summary>
         public int? RecoveryPointCount { get; set; }

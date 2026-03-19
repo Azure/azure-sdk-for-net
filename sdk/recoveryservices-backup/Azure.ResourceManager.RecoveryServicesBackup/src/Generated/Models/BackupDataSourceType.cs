@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         private readonly string _value;
         private const string InvalidValue = "Invalid";
-        private const string VMValue = "VM";
+        private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDbValue = "AzureSqlDb";
-        private const string SQLDBValue = "SQLDB";
+        private const string AzureSqlDBValue = "AzureSqlDb";
+        private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
-        private const string VMwareVMValue = "VMwareVM";
+        private const string VMwareVmValue = "VMwareVM";
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SqlDatabaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SAPAseDatabaseValue = "SAPAseDatabase";
-        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SapAseDatabaseValue = "SAPAseDatabase";
+        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary> Initializes a new instance of <see cref="BackupDataSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Invalid. </summary>
         public static BackupDataSourceType Invalid { get; } = new BackupDataSourceType(InvalidValue);
 
-        /// <summary> Gets the VM. </summary>
-        public static BackupDataSourceType VM { get; } = new BackupDataSourceType(VMValue);
+        /// <summary> Gets the Vm. </summary>
+        public static BackupDataSourceType Vm { get; } = new BackupDataSourceType(VmValue);
 
         /// <summary> Gets the FileFolder. </summary>
         public static BackupDataSourceType FileFolder { get; } = new BackupDataSourceType(FileFolderValue);
 
-        /// <summary> Gets the AzureSqlDb. </summary>
-        public static BackupDataSourceType AzureSqlDb { get; } = new BackupDataSourceType(AzureSqlDbValue);
+        /// <summary> Gets the AzureSqlDB. </summary>
+        public static BackupDataSourceType AzureSqlDB { get; } = new BackupDataSourceType(AzureSqlDBValue);
 
-        /// <summary> Gets the SQLDB. </summary>
-        public static BackupDataSourceType SQLDB { get; } = new BackupDataSourceType(SQLDBValue);
+        /// <summary> Gets the SqlDB. </summary>
+        public static BackupDataSourceType SqlDB { get; } = new BackupDataSourceType(SqlDBValue);
 
         /// <summary> Gets the Exchange. </summary>
         public static BackupDataSourceType Exchange { get; } = new BackupDataSourceType(ExchangeValue);
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Sharepoint. </summary>
         public static BackupDataSourceType Sharepoint { get; } = new BackupDataSourceType(SharepointValue);
 
-        /// <summary> Gets the VMwareVM. </summary>
-        public static BackupDataSourceType VMwareVM { get; } = new BackupDataSourceType(VMwareVMValue);
+        /// <summary> Gets the VMwareVm. </summary>
+        public static BackupDataSourceType VMwareVm { get; } = new BackupDataSourceType(VMwareVmValue);
 
         /// <summary> Gets the SystemState. </summary>
         public static BackupDataSourceType SystemState { get; } = new BackupDataSourceType(SystemStateValue);
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the GenericDataSource. </summary>
         public static BackupDataSourceType GenericDataSource { get; } = new BackupDataSourceType(GenericDataSourceValue);
 
-        /// <summary> Gets the SQLDataBase. </summary>
-        public static BackupDataSourceType SQLDataBase { get; } = new BackupDataSourceType(SQLDataBaseValue);
+        /// <summary> Gets the SqlDatabase. </summary>
+        public static BackupDataSourceType SqlDatabase { get; } = new BackupDataSourceType(SqlDatabaseValue);
 
         /// <summary> Gets the AzureFileShare. </summary>
         public static BackupDataSourceType AzureFileShare { get; } = new BackupDataSourceType(AzureFileShareValue);
 
-        /// <summary> Gets the SAPHanaDatabase. </summary>
-        public static BackupDataSourceType SAPHanaDatabase { get; } = new BackupDataSourceType(SAPHanaDatabaseValue);
+        /// <summary> Gets the SapHanaDatabase. </summary>
+        public static BackupDataSourceType SapHanaDatabase { get; } = new BackupDataSourceType(SapHanaDatabaseValue);
 
-        /// <summary> Gets the SAPAseDatabase. </summary>
-        public static BackupDataSourceType SAPAseDatabase { get; } = new BackupDataSourceType(SAPAseDatabaseValue);
+        /// <summary> Gets the SapAseDatabase. </summary>
+        public static BackupDataSourceType SapAseDatabase { get; } = new BackupDataSourceType(SapAseDatabaseValue);
 
-        /// <summary> Gets the SAPHanaDBInstance. </summary>
-        public static BackupDataSourceType SAPHanaDBInstance { get; } = new BackupDataSourceType(SAPHanaDBInstanceValue);
+        /// <summary> Gets the SapHanaDBInstance. </summary>
+        public static BackupDataSourceType SapHanaDBInstance { get; } = new BackupDataSourceType(SapHanaDBInstanceValue);
 
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (Optional.IsDefined(DefaultResourceRequest))
+            if (Optional.IsDefined(DefaultResourceId))
             {
                 writer.WritePropertyName("defaultResourceRequest"u8);
-                writer.WriteStringValue(DefaultResourceRequest);
+                writer.WriteStringValue(DefaultResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string vaultCriticalOperation = default;
-            string defaultResourceRequest = default;
+            string defaultResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("defaultResourceRequest"u8))
                 {
-                    defaultResourceRequest = prop.Value.GetString();
+                    defaultResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceGuardOperationDetail(vaultCriticalOperation, defaultResourceRequest, additionalBinaryDataProperties);
+            return new ResourceGuardOperationDetail(vaultCriticalOperation, defaultResourceId, additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            DateTimeOffset? oldestRecoveryPoint = default;
+            DateTimeOffset? oldestRecoverOn = default;
             int? recoveryPointCount = default;
             string policyState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoveryPoint = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointCount"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SqlProtectedItemExtendedInfo(oldestRecoveryPoint, recoveryPointCount, policyState, additionalBinaryDataProperties);
+            return new SqlProtectedItemExtendedInfo(oldestRecoverOn, recoveryPointCount, policyState, additionalBinaryDataProperties);
         }
     }
 }

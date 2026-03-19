@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("tieringMode"u8);
                 writer.WriteStringValue(TieringMode.Value.ToString());
             }
-            if (Optional.IsDefined(Duration))
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteNumberValue(Duration.Value);
+                writer.WriteNumberValue(DurationValue.Value);
             }
             if (Optional.IsDefined(DurationType))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             TieringMode? tieringMode = default;
-            int? duration = default;
+            int? durationValue = default;
             RetentionDurationType? durationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    duration = prop.Value.GetInt32();
+                    durationValue = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("durationType"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupTieringPolicy(tieringMode, duration, durationType, additionalBinaryDataProperties);
+            return new BackupTieringPolicy(tieringMode, durationValue, durationType, additionalBinaryDataProperties);
         }
     }
 }

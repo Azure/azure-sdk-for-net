@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isPresentOnCloud = default;
             string lastBackupStatus = default;
             DateTimeOffset? lastRefreshedOn = default;
-            DateTimeOffset? oldestRecoveryPoint = default;
+            DateTimeOffset? oldestRecoverOn = default;
             int? recoveryPointCount = default;
             DateTimeOffset? onPremiseOldestRecoveryPoint = default;
             DateTimeOffset? onPremiseLatestRecoveryPoint = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoveryPoint = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointCount"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isPresentOnCloud,
                 lastBackupStatus,
                 lastRefreshedOn,
-                oldestRecoveryPoint,
+                oldestRecoverOn,
                 recoveryPointCount,
                 onPremiseOldestRecoveryPoint,
                 onPremiseLatestRecoveryPoint,

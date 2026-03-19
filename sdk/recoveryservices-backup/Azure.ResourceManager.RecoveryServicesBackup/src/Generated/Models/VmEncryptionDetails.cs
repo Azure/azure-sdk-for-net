@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VmEncryptionDetails"/>. </summary>
-        /// <param name="encryptionEnabled"> Identifies whether this backup copy represents an encrypted VM at the time of backup. </param>
+        /// <param name="isEncryptionEnabled"> Identifies whether this backup copy represents an encrypted VM at the time of backup. </param>
         /// <param name="kekUri"> Key Url. </param>
         /// <param name="secretKeyUri"> Secret Url. </param>
         /// <param name="kekVaultId"> ID of Key Vault where KEK is stored. </param>
         /// <param name="secretKeyVaultId"> ID of Key Vault where Secret is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmEncryptionDetails(bool? encryptionEnabled, string kekUri, string secretKeyUri, string kekVaultId, string secretKeyVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmEncryptionDetails(bool? isEncryptionEnabled, string kekUri, string secretKeyUri, string kekVaultId, string secretKeyVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EncryptionEnabled = encryptionEnabled;
+            IsEncryptionEnabled = isEncryptionEnabled;
             KekUri = kekUri;
             SecretKeyUri = secretKeyUri;
             KekVaultId = kekVaultId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Identifies whether this backup copy represents an encrypted VM at the time of backup. </summary>
-        public bool? EncryptionEnabled { get; set; }
+        public bool? IsEncryptionEnabled { get; set; }
 
         /// <summary> Key Url. </summary>
         public string KekUri { get; set; }

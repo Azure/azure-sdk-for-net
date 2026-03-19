@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backupType"> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </param>
         /// <param name="enableCompression"> Bool for Compression setting. </param>
-        /// <param name="recoveryPointExpiryTimeInUTC"> Backup copy will expire after the time specified (UTC). </param>
-        internal WorkloadBackupContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupType? backupType, bool? enableCompression, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType, additionalBinaryDataProperties)
+        /// <param name="recoveryPointExpireOn"> Backup copy will expire after the time specified (UTC). </param>
+        internal WorkloadBackupContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupType? backupType, bool? enableCompression, DateTimeOffset? recoveryPointExpireOn) : base(objectType, additionalBinaryDataProperties)
         {
             BackupType = backupType;
             EnableCompression = enableCompression;
-            RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
+            RecoveryPointExpireOn = recoveryPointExpireOn;
         }
 
         /// <summary> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </summary>
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? EnableCompression { get; set; }
 
         /// <summary> Backup copy will expire after the time specified (UTC). </summary>
-        public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
+        public DateTimeOffset? RecoveryPointExpireOn { get; set; }
     }
 }

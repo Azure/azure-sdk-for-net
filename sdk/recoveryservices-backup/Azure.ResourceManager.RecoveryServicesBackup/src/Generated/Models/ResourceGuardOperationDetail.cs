@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         /// <param name="vaultCriticalOperation"></param>
-        /// <param name="defaultResourceRequest"></param>
+        /// <param name="defaultResourceId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGuardOperationDetail(string vaultCriticalOperation, string defaultResourceRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceGuardOperationDetail(string vaultCriticalOperation, string defaultResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultCriticalOperation = vaultCriticalOperation;
-            DefaultResourceRequest = defaultResourceRequest;
+            DefaultResourceId = defaultResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the VaultCriticalOperation. </summary>
         public string VaultCriticalOperation { get; set; }
 
-        /// <summary> Gets or sets the DefaultResourceRequest. </summary>
-        public string DefaultResourceRequest { get; set; }
+        /// <summary> Gets or sets the DefaultResourceId. </summary>
+        public string DefaultResourceId { get; set; }
     }
 }

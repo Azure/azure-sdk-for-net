@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
-        /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB's present. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="dataDirectoryPaths"> Data Directory Paths for default directories. </param>
-        internal VmWorkloadSqlInstanceWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string serverName, bool? isAutoProtectable, int? subinquireditemcount, int? subWorkloadItemCount, IList<SqlDataDirectory> dataDirectoryPaths) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
+        internal VmWorkloadSqlInstanceWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount, IList<SqlDataDirectory> dataDirectoryPaths) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, serverName, isAutoProtectable, subInquiredItemCount, subWorkloadItemCount)
         {
             DataDirectoryPaths = dataDirectoryPaths;
         }

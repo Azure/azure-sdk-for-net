@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(SecuredVMDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecuredVMOsDiskEncryptionSetId))
+            if (Optional.IsDefined(SecuredVmOSDiskEncryptionSetId))
             {
                 writer.WritePropertyName("securedVMOsDiskEncryptionSetId"u8);
-                writer.WriteStringValue(SecuredVMOsDiskEncryptionSetId);
+                writer.WriteStringValue(SecuredVmOSDiskEncryptionSetId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            string securedVMOsDiskEncryptionSetId = default;
+            string securedVmOSDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("securedVMOsDiskEncryptionSetId"u8))
                 {
-                    securedVMOsDiskEncryptionSetId = prop.Value.GetString();
+                    securedVmOSDiskEncryptionSetId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecuredVMDetails(securedVMOsDiskEncryptionSetId, additionalBinaryDataProperties);
+            return new SecuredVMDetails(securedVmOSDiskEncryptionSetId, additionalBinaryDataProperties);
         }
     }
 }

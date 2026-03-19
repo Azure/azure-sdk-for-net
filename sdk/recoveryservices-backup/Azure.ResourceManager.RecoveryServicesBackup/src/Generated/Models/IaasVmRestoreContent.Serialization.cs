@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("affinityGroup"u8);
                 writer.WriteStringValue(AffinityGroup);
             }
-            if (Optional.IsDefined(CreateNewCloudService))
+            if (Optional.IsDefined(DoesCreateNewCloudService))
             {
                 writer.WritePropertyName("createNewCloudService"u8);
-                writer.WriteBooleanValue(CreateNewCloudService.Value);
+                writer.WriteBooleanValue(DoesCreateNewCloudService.Value);
             }
             if (Optional.IsDefined(OriginalStorageAccountOption))
             {
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RestoreWithManagedDisks))
+            if (Optional.IsDefined(DoesRestoreWithManagedDisks))
             {
                 writer.WritePropertyName("restoreWithManagedDisks"u8);
-                writer.WriteBooleanValue(RestoreWithManagedDisks.Value);
+                writer.WriteBooleanValue(DoesRestoreWithManagedDisks.Value);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {

@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="dataMoveLevel"> DataMove Level. </param>
         /// <param name="correlationId"> Correlation Id. </param>
         /// <param name="sourceContainerArmIds"> Source Container ArmIds. </param>
-        /// <param name="pauseGC"> Pause GC. </param>
+        /// <param name="doesPauseGC"> Pause GC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId, IList<ResourceIdentifier> sourceContainerArmIds, bool? pauseGC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId, IList<ResourceIdentifier> sourceContainerArmIds, bool? doesPauseGC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             SourceRegion = sourceRegion;
             DataMoveLevel = dataMoveLevel;
             CorrelationId = correlationId;
             SourceContainerArmIds = sourceContainerArmIds;
-            PauseGC = pauseGC;
+            DoesPauseGC = doesPauseGC;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<ResourceIdentifier> SourceContainerArmIds { get; }
 
         /// <summary> Pause GC. </summary>
-        public bool? PauseGC { get; set; }
+        public bool? DoesPauseGC { get; set; }
     }
 }

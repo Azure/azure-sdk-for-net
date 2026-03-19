@@ -174,8 +174,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(response.Status != 404, response);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                switch (result.Status)
+                {
+                    case 200:
+                    case 202:
+                        return Response.FromValue(true, result);
+                    case 404:
+                        return Response.FromValue(false, result);
+                    default:
+                        throw new RequestFailedException(result);
+                }
             }
             catch (Exception e)
             {
@@ -218,8 +228,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(response.Status != 404, response);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                switch (result.Status)
+                {
+                    case 200:
+                    case 202:
+                        return Response.FromValue(true, result);
+                    case 404:
+                        return Response.FromValue(false, result);
+                    default:
+                        throw new RequestFailedException(result);
+                }
             }
             catch (Exception e)
             {
@@ -262,12 +282,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                if (response.Status == 404)
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                switch (result.Status)
                 {
-                    return new NoValueResponse<JobOperationResultResource>(response);
+                    case 200:
+                    case 202:
+                        return Response.FromValue(new JobOperationResultResource(Client, JobOperationResultResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), result);
+                    case 404:
+                        return new NoValueResponse<JobOperationResultResource>(result);
+                    default:
+                        throw new RequestFailedException(result);
                 }
-                return Response.FromValue(new JobOperationResultResource(Client, Id), response);
             }
             catch (Exception e)
             {
@@ -310,12 +336,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _jobOperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                if (response.Status == 404)
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                switch (result.Status)
                 {
-                    return new NoValueResponse<JobOperationResultResource>(response);
+                    case 200:
+                    case 202:
+                        return Response.FromValue(new JobOperationResultResource(Client, JobOperationResultResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId)), result);
+                    case 404:
+                        return new NoValueResponse<JobOperationResultResource>(result);
+                    default:
+                        throw new RequestFailedException(result);
                 }
-                return Response.FromValue(new JobOperationResultResource(Client, Id), response);
             }
             catch (Exception e)
             {

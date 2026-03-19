@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         private readonly string _value;
         private const string InvalidValue = "Invalid";
-        private const string XSMBValue = "XSMB";
+        private const string XsmbValue = "XSMB";
         private const string XSyncValue = "XSync";
 
         /// <summary> Initializes a new instance of <see cref="BackupFileShareType"/>. </summary>
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the Invalid. </summary>
         public static BackupFileShareType Invalid { get; } = new BackupFileShareType(InvalidValue);
 
-        /// <summary> Gets the XSMB. </summary>
-        public static BackupFileShareType XSMB { get; } = new BackupFileShareType(XSMBValue);
+        /// <summary> Gets the Xsmb. </summary>
+        public static BackupFileShareType Xsmb { get; } = new BackupFileShareType(XsmbValue);
 
         /// <summary> Gets the XSync. </summary>
         public static BackupFileShareType XSync { get; } = new BackupFileShareType(XSyncValue);

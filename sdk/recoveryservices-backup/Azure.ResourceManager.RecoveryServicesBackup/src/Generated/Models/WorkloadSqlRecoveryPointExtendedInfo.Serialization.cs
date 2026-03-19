@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DataDirectoryTimeInUTC))
+            if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
-                writer.WriteStringValue(DataDirectoryTimeInUTC.Value, "O");
+                writer.WriteStringValue(DataDirectoryInfoCapturedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(DataDirectoryPaths))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            DateTimeOffset? dataDirectoryTimeInUTC = default;
+            DateTimeOffset? dataDirectoryInfoCapturedOn = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
             IList<DatabaseInRP> includedDatabases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dataDirectoryTimeInUTC = prop.Value.GetDateTimeOffset("O");
+                    dataDirectoryInfoCapturedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("dataDirectoryPaths"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryTimeInUTC, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<DatabaseInRP>(), additionalBinaryDataProperties);
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<DatabaseInRP>(), additionalBinaryDataProperties);
         }
     }
 }

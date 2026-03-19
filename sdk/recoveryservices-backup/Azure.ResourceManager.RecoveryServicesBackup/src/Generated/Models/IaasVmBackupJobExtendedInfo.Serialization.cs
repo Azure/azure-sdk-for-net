@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (Optional.IsDefined(EstimatedRemainingDuration))
+            if (Optional.IsDefined(EstimatedRemainingDurationValue))
             {
                 writer.WritePropertyName("estimatedRemainingDuration"u8);
-                writer.WriteStringValue(EstimatedRemainingDuration);
+                writer.WriteStringValue(EstimatedRemainingDurationValue);
             }
             if (Optional.IsDefined(DynamicErrorMessage))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IDictionary<string, string> propertyBag = default;
             IDictionary<string, string> internalPropertyBag = default;
             double? progressPercentage = default;
-            string estimatedRemainingDuration = default;
+            string estimatedRemainingDurationValue = default;
             string dynamicErrorMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("estimatedRemainingDuration"u8))
                 {
-                    estimatedRemainingDuration = prop.Value.GetString();
+                    estimatedRemainingDurationValue = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("dynamicErrorMessage"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 propertyBag ?? new ChangeTrackingDictionary<string, string>(),
                 internalPropertyBag ?? new ChangeTrackingDictionary<string, string>(),
                 progressPercentage,
-                estimatedRemainingDuration,
+                estimatedRemainingDurationValue,
                 dynamicErrorMessage,
                 additionalBinaryDataProperties);
         }

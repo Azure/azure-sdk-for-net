@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupCommonSettings"/>. </summary>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
-        /// <param name="issqlcompression"> SQL compression flag. </param>
+        /// <param name="isSqlCompression"> SQL compression flag. </param>
         /// <param name="isCompression">
         /// Workload compression flag. This has been added so that 'isSqlCompression'
         /// will be deprecated once clients upgrade to consider this flag.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupCommonSettings(string timeZone, bool? issqlcompression, bool? isCompression, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupCommonSettings(string timeZone, bool? isSqlCompression, bool? isCompression, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeZone = timeZone;
-            Issqlcompression = issqlcompression;
+            IsSqlCompression = isSqlCompression;
             IsCompression = isCompression;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TimeZone { get; set; }
 
         /// <summary> SQL compression flag. </summary>
-        public bool? Issqlcompression { get; set; }
+        public bool? IsSqlCompression { get; set; }
 
         /// <summary>
         /// Workload compression flag. This has been added so that 'isSqlCompression'

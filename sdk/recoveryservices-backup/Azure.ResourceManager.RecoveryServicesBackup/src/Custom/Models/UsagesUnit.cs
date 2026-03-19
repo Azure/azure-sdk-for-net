@@ -48,24 +48,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets the BytesPerSecond. </summary>
         public static UsagesUnit BytesPerSecond { get; } = new UsagesUnit(BytesPerSecondValue);
 
-        /// <summary> Determines if two <see cref="UsagesUnit"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(UsagesUnit left, UsagesUnit right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="UsagesUnit"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(UsagesUnit left, UsagesUnit right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="UsagesUnit"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator UsagesUnit(string value) => new UsagesUnit(value);
-
-        /// <summary> Converts a string to a <see cref="UsagesUnit"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator UsagesUnit?(string value) => value == null ? null : new UsagesUnit(value);
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UsagesUnit other && Equals(other);

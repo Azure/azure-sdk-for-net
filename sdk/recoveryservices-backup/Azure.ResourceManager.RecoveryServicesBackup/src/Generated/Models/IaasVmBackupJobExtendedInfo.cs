@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="propertyBag"> Job properties. </param>
         /// <param name="internalPropertyBag"> Job internal properties. </param>
         /// <param name="progressPercentage"> Indicates progress of the job. Null if it has not started or completed. </param>
-        /// <param name="estimatedRemainingDuration"> Time remaining for execution of this job. </param>
+        /// <param name="estimatedRemainingDurationValue"> Time remaining for execution of this job. </param>
         /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDuration, string dynamicErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IaasVmBackupJobExtendedInfo(IList<IaasVmBackupJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TasksList = tasksList;
             PropertyBag = propertyBag;
             InternalPropertyBag = internalPropertyBag;
             ProgressPercentage = progressPercentage;
-            EstimatedRemainingDuration = estimatedRemainingDuration;
+            EstimatedRemainingDurationValue = estimatedRemainingDurationValue;
             DynamicErrorMessage = dynamicErrorMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public double? ProgressPercentage { get; }
 
         /// <summary> Time remaining for execution of this job. </summary>
-        public string EstimatedRemainingDuration { get; }
+        public string EstimatedRemainingDurationValue { get; }
 
         /// <summary> Non localized error message on job execution. </summary>
         public string DynamicErrorMessage { get; }

@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InstantRpRetentionRangeInDays))
+            if (Optional.IsDefined(InstantRPRetentionRangeInDays))
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
-                writer.WriteNumberValue(InstantRpRetentionRangeInDays.Value);
+                writer.WriteNumberValue(InstantRPRetentionRangeInDays.Value);
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupSchedulePolicy schedulePolicy = default;
             BackupRetentionPolicy retentionPolicy = default;
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
-            int? instantRpRetentionRangeInDays = default;
+            int? instantRPRetentionRangeInDays = default;
             string timeZone = default;
             IaasVmPolicyType? policyType = default;
             IaasVmSnapshotConsistencyType? snapshotConsistencyType = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    instantRpRetentionRangeInDays = prop.Value.GetInt32();
+                    instantRPRetentionRangeInDays = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 schedulePolicy,
                 retentionPolicy,
                 tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
-                instantRpRetentionRangeInDays,
+                instantRPRetentionRangeInDays,
                 timeZone,
                 policyType,
                 snapshotConsistencyType);

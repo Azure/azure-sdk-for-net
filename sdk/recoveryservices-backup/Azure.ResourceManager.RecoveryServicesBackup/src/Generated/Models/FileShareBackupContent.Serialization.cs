@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(RecoveryPointExpiryTimeInUTC))
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
-                writer.WriteStringValue(RecoveryPointExpiryTimeInUTC.Value, "O");
+                writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string objectType = "AzureFileShareBackupRequest";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
+            DateTimeOffset? recoveryPointExpireOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointExpiryTimeInUTC = prop.Value.GetDateTimeOffset("O");
+                    recoveryPointExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileShareBackupContent(objectType, additionalBinaryDataProperties, recoveryPointExpiryTimeInUTC);
+            return new FileShareBackupContent(objectType, additionalBinaryDataProperties, recoveryPointExpireOn);
         }
     }
 }

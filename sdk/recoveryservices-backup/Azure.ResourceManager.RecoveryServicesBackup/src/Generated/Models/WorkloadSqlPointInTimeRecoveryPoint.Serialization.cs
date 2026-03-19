@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ThreatStatus? threatStatus = default;
             IList<ThreatInfo> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? recoveryPointTimeInUTC = default;
+            DateTimeOffset? recoveryPointCreatedOn = default;
             RestorePointType? @type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    recoveryPointTimeInUTC = prop.Value.GetDateTimeOffset("O");
+                    recoveryPointCreatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 threatStatus,
                 threatInfo ?? new ChangeTrackingList<ThreatInfo>(),
                 additionalBinaryDataProperties,
-                recoveryPointTimeInUTC,
+                recoveryPointCreatedOn,
                 @type,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
                 recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),

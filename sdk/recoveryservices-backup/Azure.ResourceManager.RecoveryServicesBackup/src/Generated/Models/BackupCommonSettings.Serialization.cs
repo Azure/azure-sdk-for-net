@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(Issqlcompression))
+            if (Optional.IsDefined(IsSqlCompression))
             {
                 writer.WritePropertyName("issqlcompression"u8);
-                writer.WriteBooleanValue(Issqlcompression.Value);
+                writer.WriteBooleanValue(IsSqlCompression.Value);
             }
             if (Optional.IsDefined(IsCompression))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string timeZone = default;
-            bool? issqlcompression = default;
+            bool? isSqlCompression = default;
             bool? isCompression = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    issqlcompression = prop.Value.GetBoolean();
+                    isSqlCompression = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isCompression"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupCommonSettings(timeZone, issqlcompression, isCompression, additionalBinaryDataProperties);
+            return new BackupCommonSettings(timeZone, isSqlCompression, isCompression, additionalBinaryDataProperties);
         }
     }
 }

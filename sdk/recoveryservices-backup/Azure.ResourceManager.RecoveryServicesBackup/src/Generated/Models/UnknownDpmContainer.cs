@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
         /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
         /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
-        /// <param name="upgradeAvailable"> To check if upgrade available. </param>
+        /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
         /// <param name="protectionStatus"> Protection status of the container. </param>
         /// <param name="extendedInfo"> Extended Info of the container. </param>
-        internal UnknownDpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DPMContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, upgradeAvailable, protectionStatus, extendedInfo)
+        internal UnknownDpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? isUpgradeAvailable, string protectionStatus, DPMContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, isUpgradeAvailable, protectionStatus, extendedInfo)
         {
         }
     }

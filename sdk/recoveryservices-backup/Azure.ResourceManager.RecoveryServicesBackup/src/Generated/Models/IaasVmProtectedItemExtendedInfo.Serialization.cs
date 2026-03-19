@@ -74,35 +74,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OldestRecoveryPoint))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
-                writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
+                writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPointInVault))
+            if (Optional.IsDefined(OldestRecoverOnInVault))
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
-                writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
+                writer.WriteStringValue(OldestRecoverOnInVault.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoveryPointInArchive))
+            if (Optional.IsDefined(OldestRecoverOnInArchive))
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
-                writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
+                writer.WriteStringValue(OldestRecoverOnInArchive.Value, "O");
             }
-            if (Optional.IsDefined(NewestRecoveryPointInArchive))
+            if (Optional.IsDefined(NewestRecoverOnInArchive))
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
-                writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
+                writer.WriteStringValue(NewestRecoverOnInArchive.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(PolicyInconsistent))
+            if (Optional.IsDefined(IsPolicyInconsistent))
             {
                 writer.WritePropertyName("policyInconsistent"u8);
-                writer.WriteBooleanValue(PolicyInconsistent.Value);
+                writer.WriteBooleanValue(IsPolicyInconsistent.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            DateTimeOffset? oldestRecoveryPoint = default;
-            DateTimeOffset? oldestRecoveryPointInVault = default;
-            DateTimeOffset? oldestRecoveryPointInArchive = default;
-            DateTimeOffset? newestRecoveryPointInArchive = default;
+            DateTimeOffset? oldestRecoverOn = default;
+            DateTimeOffset? oldestRecoverOnInVault = default;
+            DateTimeOffset? oldestRecoverOnInArchive = default;
+            DateTimeOffset? newestRecoverOnInArchive = default;
             int? recoveryPointCount = default;
-            bool? policyInconsistent = default;
+            bool? isPolicyInconsistent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoveryPoint = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("oldestRecoveryPointInVault"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoveryPointInVault = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoverOnInVault = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("oldestRecoveryPointInArchive"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoveryPointInArchive = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoverOnInArchive = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("newestRecoveryPointInArchive"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    newestRecoveryPointInArchive = prop.Value.GetDateTimeOffset("O");
+                    newestRecoverOnInArchive = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointCount"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    policyInconsistent = prop.Value.GetBoolean();
+                    isPolicyInconsistent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             return new IaasVmProtectedItemExtendedInfo(
-                oldestRecoveryPoint,
-                oldestRecoveryPointInVault,
-                oldestRecoveryPointInArchive,
-                newestRecoveryPointInArchive,
+                oldestRecoverOn,
+                oldestRecoverOnInVault,
+                oldestRecoverOnInArchive,
+                newestRecoverOnInArchive,
                 recoveryPointCount,
-                policyInconsistent,
+                isPolicyInconsistent,
                 additionalBinaryDataProperties);
         }
     }

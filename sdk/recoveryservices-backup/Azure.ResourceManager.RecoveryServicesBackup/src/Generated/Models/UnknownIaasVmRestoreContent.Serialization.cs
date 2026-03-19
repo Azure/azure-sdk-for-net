@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string targetDomainNameId = default;
             string region = default;
             string affinityGroup = default;
-            bool? createNewCloudService = default;
+            bool? doesCreateNewCloudService = default;
             bool? originalStorageAccountOption = default;
             VmEncryptionDetails encryptionDetails = default;
             IList<int> restoreDiskLunList = default;
-            bool? restoreWithManagedDisks = default;
+            bool? doesRestoreWithManagedDisks = default;
             string diskEncryptionSetId = default;
             IList<string> zones = default;
             BackupIdentityInfo identityInfo = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    createNewCloudService = prop.Value.GetBoolean();
+                    doesCreateNewCloudService = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("originalStorageAccountOption"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    restoreWithManagedDisks = prop.Value.GetBoolean();
+                    doesRestoreWithManagedDisks = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSetId"u8))
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 targetDomainNameId,
                 region,
                 affinityGroup,
-                createNewCloudService,
+                doesCreateNewCloudService,
                 originalStorageAccountOption,
                 encryptionDetails,
                 restoreDiskLunList ?? new ChangeTrackingList<int>(),
-                restoreWithManagedDisks,
+                doesRestoreWithManagedDisks,
                 diskEncryptionSetId,
                 zones ?? new ChangeTrackingList<string>(),
                 identityInfo,

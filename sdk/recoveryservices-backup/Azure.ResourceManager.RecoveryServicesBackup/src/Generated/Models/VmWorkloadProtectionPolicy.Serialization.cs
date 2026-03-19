@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MakePolicyConsistent))
+            if (Optional.IsDefined(DoesMakePolicyConsistent))
             {
                 writer.WritePropertyName("makePolicyConsistent"u8);
-                writer.WriteBooleanValue(MakePolicyConsistent.Value);
+                writer.WriteBooleanValue(DoesMakePolicyConsistent.Value);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             VMWorkloadPolicyType? vmWorkloadPolicyType = default;
             BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
-            bool? makePolicyConsistent = default;
+            bool? doesMakePolicyConsistent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protectedItemsCount"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    makePolicyConsistent = prop.Value.GetBoolean();
+                    doesMakePolicyConsistent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 vmWorkloadPolicyType,
                 settings,
                 subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
-                makePolicyConsistent);
+                doesMakePolicyConsistent);
         }
     }
 }

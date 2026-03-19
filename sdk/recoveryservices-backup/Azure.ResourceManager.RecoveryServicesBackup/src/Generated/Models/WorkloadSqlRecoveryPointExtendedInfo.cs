@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
-        /// <param name="dataDirectoryTimeInUTC"> UTC time at which data directory info was captured. </param>
+        /// <param name="dataDirectoryInfoCapturedOn"> UTC time at which data directory info was captured. </param>
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
         /// <param name="includedDatabases"> List of databases included in recovery point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryTimeInUTC, IList<SqlDataDirectory> dataDirectoryPaths, IList<DatabaseInRP> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, IList<DatabaseInRP> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DataDirectoryTimeInUTC = dataDirectoryTimeInUTC;
+            DataDirectoryInfoCapturedOn = dataDirectoryInfoCapturedOn;
             DataDirectoryPaths = dataDirectoryPaths;
             IncludedDatabases = includedDatabases;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> UTC time at which data directory info was captured. </summary>
-        public DateTimeOffset? DataDirectoryTimeInUTC { get; }
+        public DateTimeOffset? DataDirectoryInfoCapturedOn { get; }
 
         /// <summary> List of data directory paths during restore operation. </summary>
         public IList<SqlDataDirectory> DataDirectoryPaths { get; }

@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string serverName = default;
             bool? isAutoProtectable = default;
             bool? isAutoProtected = default;
-            int? subinquireditemcount = default;
-            int? subprotectableitemcount = default;
-            PreBackupValidation prebackupvalidation = default;
+            int? subInquiredItemCount = default;
+            int? subProtectableItemCount = default;
+            PreBackupValidation preBackupValidation = default;
             bool? isProtectable = default;
             IList<DistributedNodesInfo> nodesList = default;
             foreach (var prop in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    subinquireditemcount = prop.Value.GetInt32();
+                    subInquiredItemCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("subprotectableitemcount"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    subprotectableitemcount = prop.Value.GetInt32();
+                    subProtectableItemCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("prebackupvalidation"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(prop.Value, options);
+                    preBackupValidation = PreBackupValidation.DeserializePreBackupValidation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isProtectable"u8))
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 serverName,
                 isAutoProtectable,
                 isAutoProtected,
-                subinquireditemcount,
-                subprotectableitemcount,
-                prebackupvalidation,
+                subInquiredItemCount,
+                subProtectableItemCount,
+                preBackupValidation,
                 isProtectable,
                 nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }
