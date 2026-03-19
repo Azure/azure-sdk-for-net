@@ -32,7 +32,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Replace with the path to your local document file.
             string filePath = "<localDocumentFilePath>";
 #else
-            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_invoices.pdf");
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
 #endif
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
