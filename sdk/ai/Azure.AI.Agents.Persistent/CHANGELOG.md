@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Improved error reporting during streaming response processing.
+- Fix OpenAPI tool call serialization during telemetry collection [issue](https://github.com/Azure/azure-sdk-for-net/issues/57183).
 
 ### Other Changes
 
