@@ -36,7 +36,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
 
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };
@@ -65,7 +65,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
         ProjectOpenAIClient openaiClient = projectClient.GetProjectOpenAIClient();
         #region Snippet:CreateAgent_Basic_Async
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
@@ -114,7 +114,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential());
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a physics teacher with a sense of humor.",
         };
@@ -194,7 +194,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         // Create an agent version for a new prompt agent
         //
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(MODEL_DEPLOYMENT)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(MODEL_DEPLOYMENT)
         {
             Instructions = "You are a foo bar agent. In EVERY response you give, ALWAYS include both `foo` and `bar` strings somewhere in the response.",
         };

@@ -14,7 +14,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeInterpreter_File_Generation_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID.",
     Tools = {
@@ -32,7 +32,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_CodeInterpreter_File_Generation_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID.",
     Tools = {

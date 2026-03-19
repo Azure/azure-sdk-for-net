@@ -11,3 +11,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventGrid
       safeName: AzureResourceManagerEventGrid
+    - name: Azure.Provisioning.EventGrid
+      safeName: AzureProvisioningEventGrid

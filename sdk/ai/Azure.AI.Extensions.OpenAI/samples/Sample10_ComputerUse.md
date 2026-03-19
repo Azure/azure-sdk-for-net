@@ -56,7 +56,7 @@ Dictionary<string, string> screenshots = new() {
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_ComputerUse_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -76,7 +76,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_ComputerUse_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a computer automation assistant.\n\n" +
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
