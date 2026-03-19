@@ -12,16 +12,16 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
-    public partial class ExecuteCreateFlexRequest
+    public partial class ExecuteCreateFlexContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexContent"/>. </summary>
         /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceConfigParameters"/> or <paramref name="executionParameters"/> is null. </exception>
-        public ExecuteCreateFlexRequest(ResourceProvisionFlexPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters)
+        public ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters)
         {
             Argument.AssertNotNull(resourceConfigParameters, nameof(resourceConfigParameters));
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ExecutionParameters = executionParameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexContent"/>. </summary>
         /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="correlationid"> Correlationid item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteCreateFlexRequest(ResourceProvisionFlexPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters, string correlationid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters, string correlationid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceConfigParameters = resourceConfigParameters;
             ExecutionParameters = executionParameters;

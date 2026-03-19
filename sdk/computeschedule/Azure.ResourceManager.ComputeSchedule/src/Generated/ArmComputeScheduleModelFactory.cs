@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="correlationid"> Correlationid item. </param>
-        /// <returns> A new <see cref="Models.ExecuteCreateFlexRequest"/> instance for mocking. </returns>
-        public static ExecuteCreateFlexRequest ExecuteCreateFlexRequest(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationid = default)
+        /// <returns> A new <see cref="Models.ExecuteCreateFlexContent"/> instance for mocking. </returns>
+        public static ExecuteCreateFlexContent ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationid = default)
         {
-            return new ExecuteCreateFlexRequest(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties: null);
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Resource creation data model for flex VM provisioning. </summary>
@@ -285,12 +285,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="type"> The type of resources used in the create flex request eg virtual machines. </param>
         /// <param name="location"> The location of the create flex request eg westus. </param>
         /// <param name="results"> The results from the create flex request if no errors exist. </param>
-        /// <returns> A new <see cref="Models.CreateFlexResourceOperationResponse"/> instance for mocking. </returns>
-        public static CreateFlexResourceOperationResponse CreateFlexResourceOperationResponse(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
+        /// <returns> A new <see cref="Models.CreateFlexResourceOperationResult"/> instance for mocking. </returns>
+        public static CreateFlexResourceOperationResult CreateFlexResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ResourceOperationResult>();
 
-            return new CreateFlexResourceOperationResponse(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new CreateFlexResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ExecuteCreateRequest request for create operations. </summary>

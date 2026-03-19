@@ -15,66 +15,66 @@ using Azure.ResourceManager.ComputeSchedule;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
-    public partial class ExecuteCreateFlexRequest : IJsonModel<ExecuteCreateFlexRequest>
+    public partial class ExecuteCreateFlexContent : IJsonModel<ExecuteCreateFlexContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexRequest"/> for deserialization. </summary>
-        internal ExecuteCreateFlexRequest()
+        /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexContent"/> for deserialization. </summary>
+        internal ExecuteCreateFlexContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteCreateFlexRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExecuteCreateFlexContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExecuteCreateFlexRequest(document.RootElement, options);
+                        return DeserializeExecuteCreateFlexContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteCreateFlexRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteCreateFlexContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteCreateFlexRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteCreateFlexContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExecuteCreateFlexRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExecuteCreateFlexContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteCreateFlexRequest IPersistableModel<ExecuteCreateFlexRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExecuteCreateFlexContent IPersistableModel<ExecuteCreateFlexContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExecuteCreateFlexRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExecuteCreateFlexContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="executeCreateFlexRequest"> The <see cref="ExecuteCreateFlexRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExecuteCreateFlexRequest executeCreateFlexRequest)
+        /// <param name="executeCreateFlexContent"> The <see cref="ExecuteCreateFlexContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExecuteCreateFlexContent executeCreateFlexContent)
         {
-            if (executeCreateFlexRequest == null)
+            if (executeCreateFlexContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(executeCreateFlexRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(executeCreateFlexContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExecuteCreateFlexRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExecuteCreateFlexContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteCreateFlexRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteCreateFlexContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resourceConfigParameters"u8);
             writer.WriteObjectValue(ResourceConfigParameters, options);
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteCreateFlexRequest IJsonModel<ExecuteCreateFlexRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExecuteCreateFlexContent IJsonModel<ExecuteCreateFlexContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteCreateFlexRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExecuteCreateFlexContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteCreateFlexContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteCreateFlexRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteCreateFlexContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecuteCreateFlexRequest(document.RootElement, options);
+            return DeserializeExecuteCreateFlexContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExecuteCreateFlexRequest DeserializeExecuteCreateFlexRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExecuteCreateFlexContent DeserializeExecuteCreateFlexContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExecuteCreateFlexRequest(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties);
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties);
         }
     }
 }
