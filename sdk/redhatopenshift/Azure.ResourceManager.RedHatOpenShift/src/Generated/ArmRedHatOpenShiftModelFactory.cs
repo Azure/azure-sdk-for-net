@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity stores information about the cluster MSI(s) in a workload identity cluster. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="provisioningState"> The cluster provisioning state. </param>
         /// <param name="clusterProfile"> The cluster profile. </param>
         /// <param name="consoleUrl"> The console profile. </param>

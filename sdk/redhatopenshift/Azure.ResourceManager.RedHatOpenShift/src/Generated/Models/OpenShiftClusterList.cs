@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterList"/>. </summary>
-        internal OpenShiftClusterList()
+        /// <param name="value"> The OpenShiftCluster items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal OpenShiftClusterList(IEnumerable<OpenShiftClusterData> value)
         {
-            Value = new ChangeTrackingList<OpenShiftClusterData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftClusterList"/>. </summary>
-        /// <param name="value"> The list of OpenShift clusters. </param>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
+        /// <param name="value"> The OpenShiftCluster items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftClusterList(IReadOnlyList<OpenShiftClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenShiftClusterList(IReadOnlyList<OpenShiftClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of OpenShift clusters. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftClusterList"/> for deserialization. </summary>
+        internal OpenShiftClusterList()
+        {
+        }
+
+        /// <summary> The OpenShiftCluster items on this page. </summary>
         public IReadOnlyList<OpenShiftClusterData> Value { get; }
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.RedHatOpenShift.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetList"/>. </summary>
-        internal OpenShiftPlatformWorkloadIdentityRoleSetList()
+        /// <param name="value"> The PlatformWorkloadIdentityRoleSet items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal OpenShiftPlatformWorkloadIdentityRoleSetList(IEnumerable<PlatformWorkloadIdentityRoleSetData> value)
         {
-            Value = new ChangeTrackingList<PlatformWorkloadIdentityRoleSetData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetList"/>. </summary>
-        /// <param name="value"> The list of role sets. </param>
-        /// <param name="nextLink"> Next Link to next operation. </param>
+        /// <param name="value"> The PlatformWorkloadIdentityRoleSet items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenShiftPlatformWorkloadIdentityRoleSetList(IReadOnlyList<PlatformWorkloadIdentityRoleSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenShiftPlatformWorkloadIdentityRoleSetList(IReadOnlyList<PlatformWorkloadIdentityRoleSetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of role sets. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenShiftPlatformWorkloadIdentityRoleSetList"/> for deserialization. </summary>
+        internal OpenShiftPlatformWorkloadIdentityRoleSetList()
+        {
+        }
+
+        /// <summary> The PlatformWorkloadIdentityRoleSet items on this page. </summary>
         public IReadOnlyList<PlatformWorkloadIdentityRoleSetData> Value { get; }
-        /// <summary> Next Link to next operation. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
