@@ -38,9 +38,9 @@ namespace IotHubToEventHubsSample
         ///
         /// <exception cref="InvalidOperationException">The Event Hubs host information was not returned by the IoT Hub service.</exception>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-endpoints" />
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-read-builtin" />
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-amqp-support#receive-telemetry-messages-service-client" />
+        /// <seealso href="https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-endpoints" />
+        /// <seealso href="https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin" />
+        /// <seealso href="https://learn.microsoft.com/azure/iot-hub/iot-hub-amqp-support#receive-telemetry-messages-service-client" />
         ///
         public static async Task<string> RequestEventHubsConnectionStringAsync(string iotHubConnectionString,
                                                                                TimeSpan? timeout = default)
@@ -139,7 +139,7 @@ namespace IotHubToEventHubsSample
         ///
         /// <returns>An <see cref="AmqpConnection" /> to the requested IoT Hub.</returns>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-amqp-support"/>
+        /// <seealso href="https://learn.microsoft.com/azure/iot-hub/iot-hub-amqp-support"/>
         ///
         private static async Task<AmqpConnection> CreateAndOpenConnectionAsync(Uri serviceEndpoint,
                                                                                string iotHubName,
@@ -229,7 +229,7 @@ namespace IotHubToEventHubsSample
         ///   the redirection error.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-amqp-support"/>
+        /// <seealso href="https://learn.microsoft.com/azure/iot-hub/iot-hub-amqp-support"/>
         ///
         private static async Task<AmqpLink> CreateRedirectLinkAsync(AmqpConnection connection,
                                                                     Uri serviceEndpoint,
@@ -279,7 +279,7 @@ namespace IotHubToEventHubsSample
         ///
         /// <returns>The shared access signature, encoded and suitable for use as a credential in service communication.</returns>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-security#security-tokens" />
+        /// <seealso href="https://learn.microsoft.com/azure/iot-hub/iot-hub-devguide-security#security-tokens" />
         ///
         private static string BuildSignature(string resourceUri,
                                              string keyName,
