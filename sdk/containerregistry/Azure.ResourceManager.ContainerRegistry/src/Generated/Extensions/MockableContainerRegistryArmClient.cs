@@ -95,6 +95,66 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ExportPipelineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ExportPipelineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExportPipelineResource"/> object. </returns>
+        public virtual ExportPipelineResource GetExportPipelineResource(ResourceIdentifier id)
+        {
+            ExportPipelineResource.ValidateResourceId(id);
+            return new ExportPipelineResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ImportPipelineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ImportPipelineResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ImportPipelineResource"/> object. </returns>
+        public virtual ImportPipelineResource GetImportPipelineResource(ResourceIdentifier id)
+        {
+            ImportPipelineResource.ValidateResourceId(id);
+            return new ImportPipelineResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArchiveResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArchiveResource.CreateResourceIdentifier" /> to create an <see cref="ArchiveResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArchiveResource"/> object. </returns>
+        public virtual ArchiveResource GetArchiveResource(ResourceIdentifier id)
+        {
+            ArchiveResource.ValidateResourceId(id);
+            return new ArchiveResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArchiveVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArchiveVersionResource.CreateResourceIdentifier" /> to create an <see cref="ArchiveVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArchiveVersionResource"/> object. </returns>
+        public virtual ArchiveVersionResource GetArchiveVersionResource(ResourceIdentifier id)
+        {
+            ArchiveVersionResource.ValidateResourceId(id);
+            return new ArchiveVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PipelineRunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PipelineRunResource.CreateResourceIdentifier" /> to create a <see cref="PipelineRunResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PipelineRunResource"/> object. </returns>
+        public virtual PipelineRunResource GetPipelineRunResource(ResourceIdentifier id)
+        {
+            PipelineRunResource.ValidateResourceId(id);
+            return new PipelineRunResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerRegistryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
