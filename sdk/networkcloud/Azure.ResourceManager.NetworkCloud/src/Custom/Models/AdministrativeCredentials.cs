@@ -10,10 +10,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class AdministrativeCredentials
     {
         /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>
-        /// <param name="password"> The password of the administrator of the device used during initialization. </param>
+        /// <param name="username"> The username of the administrator of the device used during initialization. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public AdministrativeCredentials(string password)
-            : this(password, null, null)
+        public AdministrativeCredentials(string username)
+            : this(null, username)
         {
         }
     }
