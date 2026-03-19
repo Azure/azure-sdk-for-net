@@ -24,7 +24,7 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool }
@@ -41,7 +41,7 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool }

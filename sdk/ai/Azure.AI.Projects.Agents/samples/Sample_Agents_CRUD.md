@@ -7,14 +7,14 @@ In this example we will demonstrate creation and basic use of an agent step by s
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentsClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create two versioned agent objects.
 
 Synchronous sample:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -30,7 +30,7 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 Asynchronous sample:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };

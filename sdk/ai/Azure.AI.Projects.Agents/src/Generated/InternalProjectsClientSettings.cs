@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
-        public AgentsClientOptions Options { get; set; }
+        public AgentAdministrationClientOptions Options { get; set; }
 
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new AgentsClientOptions(optionsSection);
+                Options = new AgentAdministrationClientOptions(optionsSection);
             }
         }
     }

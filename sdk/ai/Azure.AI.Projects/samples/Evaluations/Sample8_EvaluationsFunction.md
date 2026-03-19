@@ -45,7 +45,7 @@ private static readonly FunctionTool horoscopeTool = ResponseTool.CreateFunction
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_EvaluationsFunction_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that can use function tools.",
     Tools = { horoscopeTool }
@@ -58,7 +58,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_EvaluationsFunction_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant that can use function tools.",
     Tools = { horoscopeTool }

@@ -35,7 +35,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateAgent_MemoryTool_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -143,7 +143,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
 #endif
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_MemoryTool_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };

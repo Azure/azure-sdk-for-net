@@ -175,7 +175,7 @@ Create Agent
 
 Synchronous call:
 ```C# Snippet:Sample_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
@@ -191,7 +191,7 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 Asynchronous call:
 ```C# Snippet:Sample_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
