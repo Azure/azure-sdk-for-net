@@ -231,5 +231,39 @@ namespace Azure.Generator.Management.Tests.Providers
                 .FirstOrDefault(p => p.Name == "nestedTypeName");
             Assert.NotNull(asyncNestedTypeParam, "GetChildTypeAsync should include 'nestedTypeName' path parameter");
         }
+
+        /// <summary>
+        /// Demonstrates that ArmResource.GetCachedClient uses typeof(T) as cache key,
+        /// so different parameter values captured in the factory closure are silently ignored
+        /// after the first call. This means parameterized collection getters that use
+        /// GetCachedClient will return stale instances when called with different path parameters.
+        /// </summary>
+        [TestCase]
+        public void Verify_GetCachedClient_IgnoresParameterChanges()
+        {
+            // ArmResource._clientCache is ConcurrentDictionary<Type, object>
+            // GetCachedClient<T> calls: _clientCache.GetOrAdd(typeof(T), _ => clientFactory(Client))
+            // This means the cache key is ONLY the type T, not the parameters.
+
+            // Simulate the exact same caching mechanism used by ArmResource.GetCachedClient
+            var cache = new System.Collections.Concurrent.ConcurrentDictionary<System.Type, object>();
+
+            // First call with nestedTypeName = "typeA"
+            var collection1 = cache.GetOrAdd(typeof(FakeCollection), _ => new FakeCollection("typeA")) as FakeCollection;
+
+            // Second call with nestedTypeName = "typeB" — expects a DIFFERENT collection
+            var collection2 = cache.GetOrAdd(typeof(FakeCollection), _ => new FakeCollection("typeB")) as FakeCollection;
+
+            // BUG: Both return the same instance — the second parameter is silently ignored
+            Assert.AreSame(collection1, collection2, "GetCachedClient returns the same instance regardless of parameter values");
+            Assert.AreEqual("typeA", collection2!.NestedTypeName,
+                "Second call should have nestedTypeName='typeB' but got 'typeA' because GetCachedClient ignores the closure parameters after first call");
+        }
+
+        private class FakeCollection
+        {
+            public string NestedTypeName { get; }
+            public FakeCollection(string nestedTypeName) => NestedTypeName = nestedTypeName;
+        }
     }
 }
