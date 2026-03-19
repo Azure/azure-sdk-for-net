@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 return null;
             }
             PolicyAssignmentUpdateProperties properties = default;
-            string location = default;
-            Identity identity = default;
+            AzureLocation? location = default;
+            PolicyAssignmentIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,11 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(prop.Value, options);
+                    identity = PolicyAssignmentIdentity.DeserializePolicyAssignmentIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

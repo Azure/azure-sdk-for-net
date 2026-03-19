@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentUpdateProperties"/>. </summary>
         public PolicyAssignmentUpdateProperties()
         {
-            ResourceSelectors = new ChangeTrackingList<ResourceSelector>();
-            Overrides = new ChangeTrackingList<Override>();
+            ResourceSelectors = new ChangeTrackingList<PolicyResourceSelector>();
+            Overrides = new ChangeTrackingList<PolicyOverride>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentUpdateProperties"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="overrides"> The policy property value override. </param>
         /// <param name="selfServeExemptionSettings"> The self-serve exemption settings for the policy assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentUpdateProperties(IList<ResourceSelector> resourceSelectors, IList<Override> overrides, SelfServeExemptionSettings selfServeExemptionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAssignmentUpdateProperties(IList<PolicyResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, PolicySelfServeExemptionSettings selfServeExemptionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceSelectors = resourceSelectors;
             Overrides = overrides;
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The resource selector list to filter policies by resource properties. </summary>
-        public IList<ResourceSelector> ResourceSelectors { get; } = new ChangeTrackingList<ResourceSelector>();
+        public IList<PolicyResourceSelector> ResourceSelectors { get; } = new ChangeTrackingList<PolicyResourceSelector>();
 
         /// <summary> The policy property value override. </summary>
-        public IList<Override> Overrides { get; } = new ChangeTrackingList<Override>();
+        public IList<PolicyOverride> Overrides { get; } = new ChangeTrackingList<PolicyOverride>();
 
         /// <summary> The self-serve exemption settings for the policy assignment. </summary>
-        public SelfServeExemptionSettings SelfServeExemptionSettings { get; set; }
+        public PolicySelfServeExemptionSettings SelfServeExemptionSettings { get; set; }
     }
 }

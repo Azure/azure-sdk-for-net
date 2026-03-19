@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="identity"> The managed identity associated with the policy assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentPatch(PolicyAssignmentUpdateProperties properties, string location, Identity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAssignmentPatch(PolicyAssignmentUpdateProperties properties, AzureLocation? location, PolicyAssignmentIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Location = location;
@@ -38,13 +39,13 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         internal PolicyAssignmentUpdateProperties Properties { get; set; }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The managed identity associated with the policy assignment. </summary>
-        public Identity Identity { get; set; }
+        public PolicyAssignmentIdentity Identity { get; set; }
 
         /// <summary> The resource selector list to filter policies by resource properties. </summary>
-        public IList<ResourceSelector> ResourceSelectors
+        public IList<PolicyResourceSelector> ResourceSelectors
         {
             get
             {
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The policy property value override. </summary>
-        public IList<Override> Overrides
+        public IList<PolicyOverride> Overrides
         {
             get
             {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The self-serve exemption settings for the policy assignment. </summary>
-        public SelfServeExemptionSettings SelfServeExemptionSettings
+        public PolicySelfServeExemptionSettings SelfServeExemptionSettings
         {
             get
             {

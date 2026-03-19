@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("nonComplianceMessages"u8);
                 writer.WriteStartArray();
-                foreach (NonComplianceMessage item in NonComplianceMessages)
+                foreach (PolicyNonComplianceMessage item in NonComplianceMessages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
-                foreach (ResourceSelector item in ResourceSelectors)
+                foreach (PolicyResourceSelector item in ResourceSelectors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
-                foreach (Override item in Overrides)
+                foreach (PolicyOverride item in Overrides)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -246,16 +246,16 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string effectiveDefinitionVersion = default;
             string scope = default;
             IList<string> notScopes = default;
-            IDictionary<string, ParameterValuesValue> parameters = default;
+            IDictionary<string, PolicyParameterValue> parameters = default;
             string description = default;
             BinaryData metadata = default;
-            EnforcementMode? enforcementMode = default;
-            IList<NonComplianceMessage> nonComplianceMessages = default;
-            IList<ResourceSelector> resourceSelectors = default;
-            IList<Override> overrides = default;
-            AssignmentType? assignmentType = default;
+            PolicyEnforcementMode? enforcementMode = default;
+            IList<PolicyNonComplianceMessage> nonComplianceMessages = default;
+            IList<PolicyResourceSelector> resourceSelectors = default;
+            IList<PolicyOverride> overrides = default;
+            PolicyAssignmentType? assignmentType = default;
             string instanceId = default;
-            SelfServeExemptionSettings selfServeExemptionSettings = default;
+            PolicySelfServeExemptionSettings selfServeExemptionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -316,10 +316,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
+                    Dictionary<string, PolicyParameterValue> dictionary = new Dictionary<string, PolicyParameterValue>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ParameterValuesValue.DeserializeParameterValuesValue(prop0.Value, options));
+                        dictionary.Add(prop0.Name, PolicyParameterValue.DeserializePolicyParameterValue(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    enforcementMode = new EnforcementMode(prop.Value.GetString());
+                    enforcementMode = new PolicyEnforcementMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nonComplianceMessages"u8))
@@ -353,10 +353,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<NonComplianceMessage> array = new List<NonComplianceMessage>();
+                    List<PolicyNonComplianceMessage> array = new List<PolicyNonComplianceMessage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NonComplianceMessage.DeserializeNonComplianceMessage(item, options));
+                        array.Add(PolicyNonComplianceMessage.DeserializePolicyNonComplianceMessage(item, options));
                     }
                     nonComplianceMessages = array;
                     continue;
@@ -367,10 +367,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<ResourceSelector> array = new List<ResourceSelector>();
+                    List<PolicyResourceSelector> array = new List<PolicyResourceSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSelector.DeserializeResourceSelector(item, options));
+                        array.Add(PolicyResourceSelector.DeserializePolicyResourceSelector(item, options));
                     }
                     resourceSelectors = array;
                     continue;
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<Override> array = new List<Override>();
+                    List<PolicyOverride> array = new List<PolicyOverride>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Override.DeserializeOverride(item, options));
+                        array.Add(PolicyOverride.DeserializePolicyOverride(item, options));
                     }
                     overrides = array;
                     continue;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    assignmentType = new AssignmentType(prop.Value.GetString());
+                    assignmentType = new PolicyAssignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instanceId"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    selfServeExemptionSettings = SelfServeExemptionSettings.DeserializeSelfServeExemptionSettings(prop.Value, options);
+                    selfServeExemptionSettings = PolicySelfServeExemptionSettings.DeserializePolicySelfServeExemptionSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -425,13 +425,13 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 effectiveDefinitionVersion,
                 scope,
                 notScopes ?? new ChangeTrackingList<string>(),
-                parameters ?? new ChangeTrackingDictionary<string, ParameterValuesValue>(),
+                parameters ?? new ChangeTrackingDictionary<string, PolicyParameterValue>(),
                 description,
                 metadata,
                 enforcementMode,
-                nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(),
-                resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(),
-                overrides ?? new ChangeTrackingList<Override>(),
+                nonComplianceMessages ?? new ChangeTrackingList<PolicyNonComplianceMessage>(),
+                resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>(),
+                overrides ?? new ChangeTrackingList<PolicyOverride>(),
                 assignmentType,
                 instanceId,
                 selfServeExemptionSettings,

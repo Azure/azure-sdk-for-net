@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Expiration))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration"u8);
-                writer.WriteStringValue(Expiration.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 return null;
             }
             PolicyLogInfo policyInfo = default;
-            ExternalEndpointResult? result = default;
+            PolicyExternalEndpointResult? result = default;
             string endpointKind = default;
             string message = default;
             DateTimeOffset? retryAfter = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             PolicyAction? policyAction = default;
             BinaryData policyEvaluationDetails = default;
             BinaryData additionalInfo = default;
-            DateTimeOffset? expiration = default;
+            DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    result = new ExternalEndpointResult(prop.Value.GetString());
+                    result = new PolicyExternalEndpointResult(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointKind"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    expiration = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 policyAction,
                 policyEvaluationDetails,
                 additionalInfo,
-                expiration,
+                expiresOn,
                 additionalBinaryDataProperties);
         }
     }

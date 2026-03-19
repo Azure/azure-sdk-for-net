@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="changeReference"> The change reference associated with the operation for which the token is acquired. </param>
         /// <param name="token"> The issued policy token. </param>
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
-        /// <param name="expiration"> The expiration of the policy token. </param>
+        /// <param name="expiresOn"> The expiration of the policy token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenResponseResult(PolicyTokenResult? result, PolicyTokenEvaluatedRequestDetails requestDetails, string message, DateTimeOffset? retryAfter, IList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyTokenResponseResult(PolicyTokenResult? result, PolicyTokenEvaluatedRequestDetails requestDetails, string message, DateTimeOffset? retryAfter, IList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Result = result;
             RequestDetails = requestDetails;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             ChangeReference = changeReference;
             Token = token;
             TokenId = tokenId;
-            Expiration = expiration;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public string TokenId { get; }
 
         /// <summary> The expiration of the policy token. </summary>
-        public DateTimeOffset? Expiration { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

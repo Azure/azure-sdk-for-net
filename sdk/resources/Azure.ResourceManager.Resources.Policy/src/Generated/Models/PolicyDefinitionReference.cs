@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
 
             PolicyDefinitionId = policyDefinitionId;
-            Parameters = new ChangeTrackingDictionary<string, ParameterValuesValue>();
+            Parameters = new ChangeTrackingDictionary<string, PolicyParameterValue>();
             GroupNames = new ChangeTrackingList<string>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
         /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyDefinitionReference(string policyDefinitionId, string definitionVersion, string latestDefinitionVersion, string effectiveDefinitionVersion, IDictionary<string, ParameterValuesValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyDefinitionReference(string policyDefinitionId, string definitionVersion, string latestDefinitionVersion, string effectiveDefinitionVersion, IDictionary<string, PolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyDefinitionId = policyDefinitionId;
             DefinitionVersion = definitionVersion;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public string EffectiveDefinitionVersion { get; }
 
         /// <summary> The parameter values for the referenced policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters { get; }
+        public IDictionary<string, PolicyParameterValue> Parameters { get; }
 
         /// <summary> A unique id (within the policy set definition) for this policy definition reference. </summary>
         public string PolicyDefinitionReferenceId { get; set; }

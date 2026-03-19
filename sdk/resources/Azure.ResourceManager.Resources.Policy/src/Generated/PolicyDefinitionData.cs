@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters
+        public IDictionary<string, PolicyParameterMetadata> Parameters
         {
             get
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The details of the source of external evaluation results required by the policy during enforcement evaluation. </summary>
-        public ExternalEvaluationEnforcementSettings ExternalEvaluationEnforcementSettings
+        public PolicyExternalEvaluationEnforcementSettings ExternalEvaluationEnforcementSettings
         {
             get
             {

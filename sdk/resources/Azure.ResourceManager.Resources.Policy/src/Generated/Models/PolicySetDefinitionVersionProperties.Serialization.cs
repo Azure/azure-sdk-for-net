@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string displayName = default;
             string description = default;
             BinaryData metadata = default;
-            IDictionary<string, ParameterDefinitionsValue> parameters = default;
+            IDictionary<string, PolicyParameterMetadata> parameters = default;
             IList<PolicyDefinitionReference> policyDefinitions = default;
             IList<PolicyDefinitionGroup> policyDefinitionGroups = default;
             string version = default;
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ParameterDefinitionsValue> dictionary = new Dictionary<string, ParameterDefinitionsValue>();
+                    Dictionary<string, PolicyParameterMetadata> dictionary = new Dictionary<string, PolicyParameterMetadata>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ParameterDefinitionsValue.DeserializeParameterDefinitionsValue(prop0.Value, options));
+                        dictionary.Add(prop0.Name, PolicyParameterMetadata.DeserializePolicyParameterMetadata(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 displayName,
                 description,
                 metadata,
-                parameters ?? new ChangeTrackingDictionary<string, ParameterDefinitionsValue>(),
+                parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
                 policyDefinitions,
                 policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
                 version,

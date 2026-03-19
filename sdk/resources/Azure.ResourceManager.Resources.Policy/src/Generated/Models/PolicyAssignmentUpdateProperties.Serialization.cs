@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
-                foreach (ResourceSelector item in ResourceSelectors)
+                foreach (PolicyResourceSelector item in ResourceSelectors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
-                foreach (Override item in Overrides)
+                foreach (PolicyOverride item in Overrides)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 return null;
             }
-            IList<ResourceSelector> resourceSelectors = default;
-            IList<Override> overrides = default;
-            SelfServeExemptionSettings selfServeExemptionSettings = default;
+            IList<PolicyResourceSelector> resourceSelectors = default;
+            IList<PolicyOverride> overrides = default;
+            PolicySelfServeExemptionSettings selfServeExemptionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<ResourceSelector> array = new List<ResourceSelector>();
+                    List<PolicyResourceSelector> array = new List<PolicyResourceSelector>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSelector.DeserializeResourceSelector(item, options));
+                        array.Add(PolicyResourceSelector.DeserializePolicyResourceSelector(item, options));
                     }
                     resourceSelectors = array;
                     continue;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<Override> array = new List<Override>();
+                    List<PolicyOverride> array = new List<PolicyOverride>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Override.DeserializeOverride(item, options));
+                        array.Add(PolicyOverride.DeserializePolicyOverride(item, options));
                     }
                     overrides = array;
                     continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    selfServeExemptionSettings = SelfServeExemptionSettings.DeserializeSelfServeExemptionSettings(prop.Value, options);
+                    selfServeExemptionSettings = PolicySelfServeExemptionSettings.DeserializePolicySelfServeExemptionSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyAssignmentUpdateProperties(resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<Override>(), selfServeExemptionSettings, additionalBinaryDataProperties);
+            return new PolicyAssignmentUpdateProperties(resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), selfServeExemptionSettings, additionalBinaryDataProperties);
         }
     }
 }

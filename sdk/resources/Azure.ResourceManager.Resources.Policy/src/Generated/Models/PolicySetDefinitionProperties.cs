@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             Argument.AssertNotNull(policyDefinitions, nameof(policyDefinitions));
 
-            Parameters = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+            Parameters = new ChangeTrackingDictionary<string, PolicyParameterMetadata>();
             PolicyDefinitions = policyDefinitions.ToList();
             PolicyDefinitionGroups = new ChangeTrackingList<PolicyDefinitionGroup>();
             Versions = new ChangeTrackingList<string>();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="version"> The policy set definition version in #.#.# format. </param>
         /// <param name="versions"> A list of available versions for this policy set definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySetDefinitionProperties(PolicyType? policyType, string displayName, string description, BinaryData metadata, IDictionary<string, ParameterDefinitionsValue> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups, string version, IList<string> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicySetDefinitionProperties(PolicyType? policyType, string displayName, string description, BinaryData metadata, IDictionary<string, PolicyParameterMetadata> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups, string version, IList<string> versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             DisplayName = displayName;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public BinaryData Metadata { get; set; }
 
         /// <summary> The policy set definition parameters that can be used in policy definition references. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; } = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+        public IDictionary<string, PolicyParameterMetadata> Parameters { get; } = new ChangeTrackingDictionary<string, PolicyParameterMetadata>();
 
         /// <summary> An array of policy definition references. </summary>
         public IList<PolicyDefinitionReference> PolicyDefinitions { get; } = new ChangeTrackingList<PolicyDefinitionReference>();

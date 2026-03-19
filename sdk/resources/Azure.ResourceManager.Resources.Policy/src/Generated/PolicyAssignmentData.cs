@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="properties"> Properties for the policy assignment. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="identity"> The managed identity associated with the policy assignment. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyAssignmentProperties properties, string location, Identity identity) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyAssignmentProperties properties, string location, PolicyAssignmentIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Policy
         public string Location { get; set; }
 
         /// <summary> The managed identity associated with the policy assignment. </summary>
-        public Identity Identity { get; set; }
+        public PolicyAssignmentIdentity Identity { get; set; }
 
         /// <summary> The display name of the policy assignment. </summary>
         public string DisplayName
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters
+        public IDictionary<string, PolicyParameterValue> Parameters
         {
             get
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </summary>
-        public EnforcementMode? EnforcementMode
+        public PolicyEnforcementMode? EnforcementMode
         {
             get
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The messages that describe why a resource is non-compliant with the policy. </summary>
-        public IList<NonComplianceMessage> NonComplianceMessages
+        public IList<PolicyNonComplianceMessage> NonComplianceMessages
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The resource selector list to filter policies by resource properties. </summary>
-        public IList<ResourceSelector> ResourceSelectors
+        public IList<PolicyResourceSelector> ResourceSelectors
         {
             get
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The policy property value override. </summary>
-        public IList<Override> Overrides
+        public IList<PolicyOverride> Overrides
         {
             get
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </summary>
-        public AssignmentType? AssignmentType
+        public PolicyAssignmentType? AssignmentType
         {
             get
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The self-serve exemption settings for the policy assignment. </summary>
-        public SelfServeExemptionSettings SelfServeExemptionSettings
+        public PolicySelfServeExemptionSettings SelfServeExemptionSettings
         {
             get
             {

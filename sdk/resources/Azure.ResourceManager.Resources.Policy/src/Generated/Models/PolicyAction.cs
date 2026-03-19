@@ -17,12 +17,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         private readonly string _value;
         /// <summary> The effective outcome of policy evaluation is unknown. </summary>
         private const string UnknownValue = "Unknown";
-        /// <summary>
-        /// The effective outcome of policy evaluation is to allow the request.
-        ///   Allow: "Allow",
-        ///   /**
-        /// The effective outcome of policy evaluation is to audit the request.
-        /// </summary>
+        /// <summary> The effective outcome of policy evaluation is to allow the request. </summary>
+        private const string AllowValue = "Allow";
+        /// <summary> The effective outcome of policy evaluation is to audit the request. </summary>
         private const string AuditValue = "Audit";
         /// <summary> The effective outcome of policy evaluation is to deny the request. </summary>
         private const string DenyValue = "Deny";
@@ -42,12 +39,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> The effective outcome of policy evaluation is unknown. </summary>
         public static PolicyAction Unknown { get; } = new PolicyAction(UnknownValue);
 
-        /// <summary>
-        /// The effective outcome of policy evaluation is to allow the request.
-        ///   Allow: "Allow",
-        ///   /**
-        /// The effective outcome of policy evaluation is to audit the request.
-        /// </summary>
+        /// <summary> The effective outcome of policy evaluation is to allow the request. </summary>
+        public static PolicyAction Allow { get; } = new PolicyAction(AllowValue);
+
+        /// <summary> The effective outcome of policy evaluation is to audit the request. </summary>
         public static PolicyAction Audit { get; } = new PolicyAction(AuditValue);
 
         /// <summary> The effective outcome of policy evaluation is to deny the request. </summary>

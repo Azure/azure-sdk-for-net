@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The policy set definition parameters that can be used in policy definition references. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters
+        public IDictionary<string, PolicyParameterMetadata> Parameters
         {
             get
             {

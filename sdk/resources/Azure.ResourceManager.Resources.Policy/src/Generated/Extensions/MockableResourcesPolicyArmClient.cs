@@ -77,6 +77,15 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             return await GetPolicyAssignments(scope).GetAsync(policyAssignmentName, expand, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="DataPolicyManifestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataPolicyManifestResource"/> object. </returns>
+        public virtual DataPolicyManifestResource GetDataPolicyManifestResource(ResourceIdentifier id)
+        {
+            DataPolicyManifestResource.ValidateResourceId(id);
+            return new DataPolicyManifestResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="PolicyDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicyDefinitionResource"/> object. </returns>
@@ -95,6 +104,51 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             return new PolicyDefinitionVersionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PolicyExemptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyExemptionResource"/> object. </returns>
+        public virtual PolicyExemptionResource GetPolicyExemptionResource(ResourceIdentifier id)
+        {
+            PolicyExemptionResource.ValidateResourceId(id);
+            return new PolicyExemptionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="PolicyExemptionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="PolicyExemptionResource"/> objects. </returns>
+        public virtual PolicyExemptionCollection GetPolicyExemptions(ResourceIdentifier scope)
+        {
+            return new PolicyExemptionCollection(Client, scope);
+        }
+
+        /// <summary> This operation retrieves a single policy exemption, given its name and the scope it was created at. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="policyExemptionName"> The name of the policy exemption to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyExemptionResource> GetPolicyExemption(ResourceIdentifier scope, string policyExemptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
+
+            return GetPolicyExemptions(scope).Get(policyExemptionName, cancellationToken);
+        }
+
+        /// <summary> This operation retrieves a single policy exemption, given its name and the scope it was created at. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="policyExemptionName"> The name of the policy exemption to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyExemptionResource>> GetPolicyExemptionAsync(ResourceIdentifier scope, string policyExemptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
+
+            return await GetPolicyExemptions(scope).GetAsync(policyExemptionName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="PolicySetDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicySetDefinitionResource"/> object. </returns>
@@ -111,6 +165,24 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         {
             PolicySetDefinitionVersionResource.ValidateResourceId(id);
             return new PolicySetDefinitionVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VariableResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VariableResource"/> object. </returns>
+        public virtual VariableResource GetVariableResource(ResourceIdentifier id)
+        {
+            VariableResource.ValidateResourceId(id);
+            return new VariableResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VariableValueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VariableValueResource"/> object. </returns>
+        public virtual VariableValueResource GetVariableValueResource(ResourceIdentifier id)
+        {
+            VariableValueResource.ValidateResourceId(id);
+            return new VariableValueResource(Client, id);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionVersionProperties"/>. </summary>
         public PolicyDefinitionVersionProperties()
         {
-            Parameters = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+            Parameters = new ChangeTrackingDictionary<string, PolicyParameterMetadata>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionVersionProperties"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="version"> The policy definition version in #.#.# format. </param>
         /// <param name="externalEvaluationEnforcementSettings"> The details of the source of external evaluation results required by the policy during enforcement evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyDefinitionVersionProperties(PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ParameterDefinitionsValue> parameters, string version, ExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyDefinitionVersionProperties(PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, PolicyParameterMetadata> parameters, string version, PolicyExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public BinaryData Metadata { get; set; }
 
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; } = new ChangeTrackingDictionary<string, ParameterDefinitionsValue>();
+        public IDictionary<string, PolicyParameterMetadata> Parameters { get; } = new ChangeTrackingDictionary<string, PolicyParameterMetadata>();
 
         /// <summary> The policy definition version in #.#.# format. </summary>
         public string Version { get; set; }
 
         /// <summary> The details of the source of external evaluation results required by the policy during enforcement evaluation. </summary>
-        public ExternalEvaluationEnforcementSettings ExternalEvaluationEnforcementSettings { get; set; }
+        public PolicyExternalEvaluationEnforcementSettings ExternalEvaluationEnforcementSettings { get; set; }
     }
 }

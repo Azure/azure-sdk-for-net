@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string description = default;
             BinaryData policyRule = default;
             BinaryData metadata = default;
-            IDictionary<string, ParameterDefinitionsValue> parameters = default;
+            IDictionary<string, PolicyParameterMetadata> parameters = default;
             string version = default;
-            ExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = default;
+            PolicyExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ParameterDefinitionsValue> dictionary = new Dictionary<string, ParameterDefinitionsValue>();
+                    Dictionary<string, PolicyParameterMetadata> dictionary = new Dictionary<string, PolicyParameterMetadata>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ParameterDefinitionsValue.DeserializeParameterDefinitionsValue(prop0.Value, options));
+                        dictionary.Add(prop0.Name, PolicyParameterMetadata.DeserializePolicyParameterMetadata(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    externalEvaluationEnforcementSettings = ExternalEvaluationEnforcementSettings.DeserializeExternalEvaluationEnforcementSettings(prop.Value, options);
+                    externalEvaluationEnforcementSettings = PolicyExternalEvaluationEnforcementSettings.DeserializePolicyExternalEvaluationEnforcementSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 description,
                 policyRule,
                 metadata,
-                parameters ?? new ChangeTrackingDictionary<string, ParameterDefinitionsValue>(),
+                parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
                 version,
                 externalEvaluationEnforcementSettings,
                 additionalBinaryDataProperties);

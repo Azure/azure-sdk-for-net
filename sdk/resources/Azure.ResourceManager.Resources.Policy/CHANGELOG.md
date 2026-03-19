@@ -4,4 +4,5 @@
 
 ### Features Added
 
-- Migrated from Swagger to TypeSpec-based generation
+- Initial release of `Azure.ResourceManager.Resources.Policy` for managing Policy resources (Policy Definitions, Policy Definition Versions, Policy Set Definitions, Policy Set Definition Versions, Policy Assignments, and Policy Tokens).
+- This package provides dedicated management of the `Microsoft.Authorization/Policy` resource provider, separated from the `Azure.ResourceManager.Resources` package where these resources were previously included.

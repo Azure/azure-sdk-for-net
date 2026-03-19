@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="policyAction"> The effective outcome of the policy evaluation based on both the policy effect and evaluation result. Possible values are Unknown, Allow, Audit, Deny, Error. </param>
         /// <param name="policyEvaluationDetails"> The evaluation details returned by the policy evaluation engine. </param>
         /// <param name="additionalInfo"> The endpoint specific metadata. </param>
-        /// <param name="expiration"> The expiration of the results. </param>
+        /// <param name="expiresOn"> The expiration of the results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo, ExternalEndpointResult? result, string endpointKind, string message, DateTimeOffset? retryAfter, BinaryData claims, PolicyAction? policyAction, BinaryData policyEvaluationDetails, BinaryData additionalInfo, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo, PolicyExternalEndpointResult? result, string endpointKind, string message, DateTimeOffset? retryAfter, BinaryData claims, PolicyAction? policyAction, BinaryData policyEvaluationDetails, BinaryData additionalInfo, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyInfo = policyInfo;
             Result = result;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             PolicyAction = policyAction;
             PolicyEvaluationDetails = policyEvaluationDetails;
             AdditionalInfo = additionalInfo;
-            Expiration = expiration;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public PolicyLogInfo PolicyInfo { get; }
 
         /// <summary> The result of the external endpoint. Possible values are Succeeded and Failed. </summary>
-        public ExternalEndpointResult? Result { get; }
+        public PolicyExternalEndpointResult? Result { get; }
 
         /// <summary> The external evaluation endpoint kind. </summary>
         public string EndpointKind { get; }
@@ -152,6 +152,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public BinaryData AdditionalInfo { get; }
 
         /// <summary> The expiration of the results. </summary>
-        public DateTimeOffset? Expiration { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

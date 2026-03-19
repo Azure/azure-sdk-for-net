@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Policy
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PolicyAssignmentProperties properties = default;
             string location = default;
-            Identity identity = default;
+            PolicyAssignmentIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Resources.Policy
                     {
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(prop.Value, options);
+                    identity = PolicyAssignmentIdentity.DeserializePolicyAssignmentIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

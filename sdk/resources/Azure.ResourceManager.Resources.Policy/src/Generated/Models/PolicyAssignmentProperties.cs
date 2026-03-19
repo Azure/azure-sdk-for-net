@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public PolicyAssignmentProperties()
         {
             NotScopes = new ChangeTrackingList<string>();
-            Parameters = new ChangeTrackingDictionary<string, ParameterValuesValue>();
-            NonComplianceMessages = new ChangeTrackingList<NonComplianceMessage>();
-            ResourceSelectors = new ChangeTrackingList<ResourceSelector>();
-            Overrides = new ChangeTrackingList<Override>();
+            Parameters = new ChangeTrackingDictionary<string, PolicyParameterValue>();
+            NonComplianceMessages = new ChangeTrackingList<PolicyNonComplianceMessage>();
+            ResourceSelectors = new ChangeTrackingList<PolicyResourceSelector>();
+            Overrides = new ChangeTrackingList<PolicyOverride>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="instanceId"> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </param>
         /// <param name="selfServeExemptionSettings"> The self-serve exemption settings for the policy assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentProperties(string displayName, string policyDefinitionId, string definitionVersion, string latestDefinitionVersion, string effectiveDefinitionVersion, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages, IList<ResourceSelector> resourceSelectors, IList<Override> overrides, AssignmentType? assignmentType, string instanceId, SelfServeExemptionSettings selfServeExemptionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAssignmentProperties(string displayName, string policyDefinitionId, string definitionVersion, string latestDefinitionVersion, string effectiveDefinitionVersion, string scope, IList<string> notScopes, IDictionary<string, PolicyParameterValue> parameters, string description, BinaryData metadata, PolicyEnforcementMode? enforcementMode, IList<PolicyNonComplianceMessage> nonComplianceMessages, IList<PolicyResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, PolicyAssignmentType? assignmentType, string instanceId, PolicySelfServeExemptionSettings selfServeExemptionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public IList<string> NotScopes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters { get; } = new ChangeTrackingDictionary<string, ParameterValuesValue>();
+        public IDictionary<string, PolicyParameterValue> Parameters { get; } = new ChangeTrackingDictionary<string, PolicyParameterValue>();
 
         /// <summary> This message will be part of response in case of policy violation. </summary>
         public string Description { get; set; }
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public BinaryData Metadata { get; set; }
 
         /// <summary> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </summary>
-        public EnforcementMode? EnforcementMode { get; set; }
+        public PolicyEnforcementMode? EnforcementMode { get; set; }
 
         /// <summary> The messages that describe why a resource is non-compliant with the policy. </summary>
-        public IList<NonComplianceMessage> NonComplianceMessages { get; } = new ChangeTrackingList<NonComplianceMessage>();
+        public IList<PolicyNonComplianceMessage> NonComplianceMessages { get; } = new ChangeTrackingList<PolicyNonComplianceMessage>();
 
         /// <summary> The resource selector list to filter policies by resource properties. </summary>
-        public IList<ResourceSelector> ResourceSelectors { get; } = new ChangeTrackingList<ResourceSelector>();
+        public IList<PolicyResourceSelector> ResourceSelectors { get; } = new ChangeTrackingList<PolicyResourceSelector>();
 
         /// <summary> The policy property value override. </summary>
-        public IList<Override> Overrides { get; } = new ChangeTrackingList<Override>();
+        public IList<PolicyOverride> Overrides { get; } = new ChangeTrackingList<PolicyOverride>();
 
         /// <summary> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </summary>
-        public AssignmentType? AssignmentType { get; set; }
+        public PolicyAssignmentType? AssignmentType { get; set; }
 
         /// <summary> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </summary>
         public string InstanceId { get; }
 
         /// <summary> The self-serve exemption settings for the policy assignment. </summary>
-        public SelfServeExemptionSettings SelfServeExemptionSettings { get; set; }
+        public PolicySelfServeExemptionSettings SelfServeExemptionSettings { get; set; }
     }
 }

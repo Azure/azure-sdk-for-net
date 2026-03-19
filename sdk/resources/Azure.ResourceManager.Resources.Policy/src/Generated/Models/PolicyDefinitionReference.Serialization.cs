@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string definitionVersion = default;
             string latestDefinitionVersion = default;
             string effectiveDefinitionVersion = default;
-            IDictionary<string, ParameterValuesValue> parameters = default;
+            IDictionary<string, PolicyParameterValue> parameters = default;
             string policyDefinitionReferenceId = default;
             IList<string> groupNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
+                    Dictionary<string, PolicyParameterValue> dictionary = new Dictionary<string, PolicyParameterValue>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ParameterValuesValue.DeserializeParameterValuesValue(prop0.Value, options));
+                        dictionary.Add(prop0.Name, PolicyParameterValue.DeserializePolicyParameterValue(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 definitionVersion,
                 latestDefinitionVersion,
                 effectiveDefinitionVersion,
-                parameters ?? new ChangeTrackingDictionary<string, ParameterValuesValue>(),
+                parameters ?? new ChangeTrackingDictionary<string, PolicyParameterValue>(),
                 policyDefinitionReferenceId,
                 groupNames ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

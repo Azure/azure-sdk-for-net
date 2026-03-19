@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 writer.WritePropertyName("tokenId"u8);
                 writer.WriteStringValue(TokenId);
             }
-            if (Optional.IsDefined(Expiration))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration"u8);
-                writer.WriteStringValue(Expiration.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string changeReference = default;
             string token = default;
             string tokenId = default;
-            DateTimeOffset? expiration = default;
+            DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    expiration = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 changeReference,
                 token,
                 tokenId,
-                expiration,
+                expiresOn,
                 additionalBinaryDataProperties);
         }
     }
