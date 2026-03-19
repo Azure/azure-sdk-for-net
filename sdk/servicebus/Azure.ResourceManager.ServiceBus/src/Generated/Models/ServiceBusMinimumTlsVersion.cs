@@ -11,13 +11,14 @@ using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.3'. </summary>
     public readonly partial struct ServiceBusMinimumTlsVersion : IEquatable<ServiceBusMinimumTlsVersion>
     {
         private readonly string _value;
         private const string Tls10Value = "1.0";
         private const string Tls11Value = "1.1";
         private const string Tls12Value = "1.2";
+        private const string _13Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusMinimumTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Gets the Tls12. </summary>
         public static ServiceBusMinimumTlsVersion Tls12 { get; } = new ServiceBusMinimumTlsVersion(Tls12Value);
+
+        /// <summary> Gets the _13. </summary>
+        public static ServiceBusMinimumTlsVersion _13 { get; } = new ServiceBusMinimumTlsVersion(_13Value);
 
         /// <summary> Determines if two <see cref="ServiceBusMinimumTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

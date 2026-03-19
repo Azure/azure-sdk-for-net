@@ -1,4 +1,4 @@
 directory: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus
-commit: 6a588a6ce9322ca9d67263681d0b558abfad46d3
+commit: f2fe3461dc18a443853634759bf1d2718dc02d12
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
