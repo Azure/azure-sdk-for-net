@@ -12,6 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Details of the device code to present to a user to allow them to authenticate through the device code authentication flow.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public struct DeviceCodeInfo
     {
         internal DeviceCodeInfo(DeviceCodeResult deviceCode)
@@ -65,4 +66,5 @@ namespace Azure.Identity
         /// </summary>
         public IReadOnlyCollection<string> Scopes { get; private set; }
     }
+#pragma warning restore AZC0034
 }

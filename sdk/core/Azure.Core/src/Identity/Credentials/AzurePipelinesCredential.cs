@@ -5,6 +5,7 @@
 
 using System;
 using System.Text.Json;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,6 +19,8 @@ namespace Azure.Identity
     /// <see href="https://aka.ms/azsdk/net/identity/azurepipelinescredential/usage">Authenticating in Azure
     /// Pipelines with service connections</see>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class AzurePipelinesCredential : TokenCredential
     {
         internal const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/azurepipelinescredential/troubleshoot";
@@ -165,4 +168,5 @@ namespace Azure.Identity
             return oidcToken;
         }
     }
+#pragma warning restore AZC0034
 }

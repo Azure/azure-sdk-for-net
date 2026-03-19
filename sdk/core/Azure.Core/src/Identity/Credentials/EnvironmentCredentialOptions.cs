@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="EnvironmentCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class EnvironmentCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
@@ -75,4 +76,5 @@ namespace Azure.Identity
         /// </remarks>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
     }
+#pragma warning restore AZC0034
 }

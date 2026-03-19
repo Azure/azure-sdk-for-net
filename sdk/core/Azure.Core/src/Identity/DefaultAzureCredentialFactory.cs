@@ -6,11 +6,13 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal class DefaultAzureCredentialFactory
     {
         private readonly string _customEnvironmentVariableName;

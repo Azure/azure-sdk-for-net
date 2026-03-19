@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,6 +18,8 @@ namespace Azure.Identity
     /// to configure a client secret can be found at
     /// <see href="https://learn.microsoft.com/entra/identity-platform/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class ClientSecretCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
@@ -159,4 +162,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,6 +19,8 @@ namespace Azure.Identity
     /// <seealso href="https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow" /> for more information
     /// about the authorization code authentication flow.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class AuthorizationCodeCredential : TokenCredential
     {
         private readonly string _authCode;
@@ -201,4 +204,5 @@ namespace Azure.Identity
             return result.ToAccessToken();
         }
     }
+#pragma warning restore AZC0034
 }

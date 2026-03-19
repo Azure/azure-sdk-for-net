@@ -11,6 +11,7 @@ namespace Azure.Identity
     /// <summary>
     /// Model factory that enables mocking for the Azure Identity library.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public static class IdentityModelFactory
     {
         /// <summary>
@@ -39,4 +40,5 @@ namespace Azure.Identity
         public static DeviceCodeInfo DeviceCodeInfo(string userCode, string deviceCode, Uri verificationUri, DateTimeOffset expiresOn, string message, string clientId, IReadOnlyCollection<string> scopes)
             => new DeviceCodeInfo(userCode, deviceCode, verificationUri, expiresOn, message, clientId, scopes);
     }
+#pragma warning restore AZC0034
 }

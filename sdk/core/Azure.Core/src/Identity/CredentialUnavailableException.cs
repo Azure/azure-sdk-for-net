@@ -15,6 +15,7 @@ namespace Azure.Identity
     /// An exception indicating a <see cref="TokenCredential"/> did not attempt to authenticate and retrieve <see cref="AccessToken"/>, as its prerequisite information or state was not available.
     /// </summary>
     [Serializable]
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class CredentialUnavailableException : AuthenticationFailedException
     {
         /// <summary>
@@ -68,4 +69,5 @@ namespace Azure.Identity
         {
         }
     }
+#pragma warning restore AZC0034
 }

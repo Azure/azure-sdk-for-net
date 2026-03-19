@@ -14,6 +14,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure requests made to the OAUTH identity service.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class TokenCredentialOptions : ClientOptions
     {
         private Uri _authorityHost;
@@ -153,4 +154,5 @@ namespace Azure.Identity
         /// </summary>
         public new TokenCredentialDiagnosticsOptions Diagnostics => base.Diagnostics as TokenCredentialDiagnosticsOptions;
     }
+#pragma warning restore AZC0034
 }

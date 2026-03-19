@@ -11,6 +11,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="AzurePipelinesCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class AzurePipelinesCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions
     {
         internal CredentialPipeline Pipeline { get; set; }
@@ -31,4 +32,5 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
+#pragma warning restore AZC0034
 }

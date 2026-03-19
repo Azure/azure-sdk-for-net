@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,6 +14,7 @@ using Azure.Core;
 namespace Azure.Identity
 {
     [Experimental("SCME0002")]
+    [UnsupportedOSPlatform("browser")]
     internal class ConfigurableCredential : TokenCredential
     {
         private TokenCredential _tokenCredential;

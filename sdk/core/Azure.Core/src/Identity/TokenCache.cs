@@ -6,6 +6,7 @@
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +20,7 @@ namespace Azure.Identity
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     // SemaphoreSlim only needs to be disposed when AvailableWaitHandle is called.
+    [UnsupportedOSPlatform("browser")]
     internal class TokenCache
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {

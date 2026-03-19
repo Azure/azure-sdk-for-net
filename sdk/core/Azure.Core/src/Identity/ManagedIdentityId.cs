@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Defines the configuration for a managed identity enabled on a resource.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class ManagedIdentityId
     {
         internal string _userAssignedId;
@@ -61,6 +62,7 @@ namespace Azure.Identity
             };
         }
     }
+#pragma warning restore AZC0034
 
     internal enum ManagedIdentityIdType
     {

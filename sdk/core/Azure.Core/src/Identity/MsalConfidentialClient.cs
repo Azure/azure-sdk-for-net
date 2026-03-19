@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Microsoft.Identity.Client.Extensibility;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
         internal readonly string _clientSecret;

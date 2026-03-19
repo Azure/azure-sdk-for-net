@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,6 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal class BrokerCredential : InteractiveBrowserCredential
     {
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/brokercredential/troubleshoot";

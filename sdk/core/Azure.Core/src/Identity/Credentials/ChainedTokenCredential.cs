@@ -30,6 +30,7 @@ namespace Azure.Identity
     /// var eventHubProducerClient = new EventHubProducerClient(&quot;myeventhub.eventhubs.windows.net&quot;, &quot;myhubpath&quot;, credential);
     /// </code>
     /// </example>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class ChainedTokenCredential : TokenCredential
     {
         private const string AggregateAllUnavailableErrorMessage = "The ChainedTokenCredential failed to retrieve a token from the included credentials.";
@@ -132,4 +133,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

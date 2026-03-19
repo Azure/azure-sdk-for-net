@@ -14,6 +14,7 @@ namespace Azure.Identity
     /// </summary>
     [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsTenantId
     {
         private string _tenantId;
@@ -86,4 +87,5 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
     }
+#pragma warning restore AZC0034
 }

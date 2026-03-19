@@ -6,9 +6,11 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal class ProcessService : IProcessService
     {
         public static IProcessService Default { get; } = new ProcessService();

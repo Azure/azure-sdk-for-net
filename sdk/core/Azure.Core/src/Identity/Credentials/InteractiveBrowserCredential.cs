@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +20,8 @@ namespace Azure.Identity
     /// For usage instructions, see <see href="https://aka.ms/azsdk/net/identity/interactivebrowsercredential/usage">Interactive browser authentication</see>.
     /// </summary>
     /// <remarks>Implements the <see href="https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow">OAuth 2.0 authorization code flow</see>.</remarks>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class InteractiveBrowserCredential : TokenCredential
     {
         internal string TenantId { get; }
@@ -296,4 +299,5 @@ namespace Azure.Identity
             return result.ToAccessToken();
         }
     }
+#pragma warning restore AZC0034
 }

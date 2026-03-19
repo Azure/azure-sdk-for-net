@@ -7,6 +7,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Versioning;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ namespace Azure.Identity
     /// Provides extension methods for <see cref="IConfiguration"/> interface.
     /// </summary>
     [Experimental("SCME0002")]
+    [UnsupportedOSPlatform("browser")]
     public static class ConfigurationExtensions
     {
         /// <summary>

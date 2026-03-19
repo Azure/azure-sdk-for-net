@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="ClientCertificateCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class ClientCertificateCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
@@ -30,4 +31,5 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
     }
+#pragma warning restore AZC0034
 }

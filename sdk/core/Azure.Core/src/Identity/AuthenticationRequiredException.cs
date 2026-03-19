@@ -13,6 +13,7 @@ namespace Azure.Identity
     /// An exception indicating that interactive authentication is required.
     /// </summary>
     [Serializable]
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class AuthenticationRequiredException : CredentialUnavailableException
     {
         /// <summary>
@@ -55,4 +56,5 @@ namespace Azure.Identity
         /// </summary>
         public TokenRequestContext TokenRequestContext { get; }
     }
+#pragma warning restore AZC0034
 }

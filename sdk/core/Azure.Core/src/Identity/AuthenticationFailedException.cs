@@ -15,6 +15,7 @@ namespace Azure.Identity
     /// An exception class raised for errors in authenticating client requests.
     /// </summary>
     [Serializable]
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class AuthenticationFailedException : Exception
     {
         /// <summary>
@@ -49,4 +50,5 @@ namespace Azure.Identity
         {
         }
     }
+#pragma warning restore AZC0034
 }

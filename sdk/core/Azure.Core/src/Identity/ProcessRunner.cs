@@ -6,11 +6,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal sealed class ProcessRunner : IDisposable
     {
         private readonly IProcess _process;

@@ -12,6 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options for configuring the <see cref="VisualStudioCodeCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class VisualStudioCodeCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
@@ -32,4 +33,5 @@ namespace Azure.Identity
         /// </summary>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
     }
+#pragma warning restore AZC0034
 }

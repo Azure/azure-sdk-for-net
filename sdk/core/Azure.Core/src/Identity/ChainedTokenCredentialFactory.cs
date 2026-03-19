@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -15,6 +16,7 @@ namespace Azure.Identity
     /// their public constructors with credential-specific options rather than routing through
     /// DefaultAzureCredentialFactory.
     /// </summary>
+    [UnsupportedOSPlatform("browser")]
     internal static class ChainedTokenCredentialFactory
     {
         private static readonly string s_validSources =

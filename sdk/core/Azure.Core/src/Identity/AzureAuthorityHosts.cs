@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Defines fields exposing the well known authority hosts for the Azure Public Cloud and sovereign clouds.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public static class AzureAuthorityHosts
     {
         private const string AzurePublicCloudHostUrl = "https://login.microsoftonline.com/";
@@ -70,4 +71,5 @@ namespace Azure.Identity
             return new Uri(authorityHost, "/common/oauth2/nativeclient");
         }
     }
+#pragma warning restore AZC0034
 }

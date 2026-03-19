@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,6 +60,8 @@ namespace Azure.Identity
     ///     credential);
     /// </code>
     /// </example>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class DefaultAzureCredential : TokenCredential
     {
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot";
@@ -232,4 +235,5 @@ namespace Azure.Identity
             return options;
         }
     }
+#pragma warning restore AZC0034
 }

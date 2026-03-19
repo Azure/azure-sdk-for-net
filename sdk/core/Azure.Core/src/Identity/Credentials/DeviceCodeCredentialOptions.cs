@@ -13,6 +13,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class DeviceCodeCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
@@ -64,4 +65,5 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
     }
+#pragma warning restore AZC0034
 }

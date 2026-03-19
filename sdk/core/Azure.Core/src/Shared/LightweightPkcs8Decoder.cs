@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -21,6 +22,7 @@ namespace Azure.Core
     ///
     /// This code is able to decode RSA keys (without any attributes) from well formed PKCS#8 blobs.
     /// </summary>
+        [UnsupportedOSPlatform("browser")]
     internal static partial class LightweightPkcs8Decoder
     {
         private static readonly byte[] s_derIntegerZero = { 0x02, 0x01, 0x00 };

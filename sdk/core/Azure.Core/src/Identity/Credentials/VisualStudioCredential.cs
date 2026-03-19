@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -23,6 +24,8 @@ namespace Azure.Identity
     /// <seealso href="https://learn.microsoft.com/dotnet/azure/configure-visual-studio" /> for more information
     /// on how to configure Visual Studio for Azure development.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class VisualStudioCredential : TokenCredential
     {
         private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
@@ -329,4 +332,5 @@ namespace Azure.Identity
             public int CompareTo(VisualStudioTokenProvider other) => _preference.CompareTo(other._preference);
         }
     }
+#pragma warning restore AZC0034
 }

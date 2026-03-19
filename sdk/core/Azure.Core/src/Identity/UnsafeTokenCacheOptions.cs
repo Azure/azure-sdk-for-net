@@ -12,6 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options controlling the storage of the token cache.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public abstract class UnsafeTokenCacheOptions : TokenCachePersistenceOptions
     {
         /// <summary>
@@ -35,4 +36,5 @@ namespace Azure.Identity
         protected internal virtual async Task<TokenCacheData> RefreshCacheAsync(TokenCacheRefreshArgs args, CancellationToken cancellationToken = default) =>
              new TokenCacheData(await RefreshCacheAsync().ConfigureAwait(false));
     }
+#pragma warning restore AZC0034
 }

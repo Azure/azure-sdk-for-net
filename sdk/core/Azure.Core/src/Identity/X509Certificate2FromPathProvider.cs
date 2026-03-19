@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,6 +19,7 @@ namespace Azure.Identity
     /// X509Certificate2FromPathProvider provides an X509Certificate2 from "pfx"- and "pem"-encoded certificates
     /// on disk and the platform certificate store.
     /// </summary>
+    [UnsupportedOSPlatform("browser")]
     internal sealed class X509Certificate2FromPathProvider : IX509Certificate2Provider
     {
         // Lazy initialized on the first call to GetCertificateAsync, based on CertificatePath.

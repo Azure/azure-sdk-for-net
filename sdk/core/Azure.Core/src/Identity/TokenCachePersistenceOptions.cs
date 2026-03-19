@@ -58,6 +58,7 @@ namespace Azure.Identity
     /// var client = new SecretClient(new Uri(&quot;https://myvault.vault.azure.net/&quot;), credential);
     /// </code>
     /// </example>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class TokenCachePersistenceOptions
     {
         /// <summary>
@@ -96,4 +97,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

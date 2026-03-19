@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Details related to a <see cref="UnsafeTokenCacheOptions"/> cache delegate.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public struct TokenCacheData
     {
         /// <summary>
@@ -26,4 +27,5 @@ namespace Azure.Identity
         /// </summary>
         public ReadOnlyMemory<byte> CacheBytes { get; }
     }
+#pragma warning restore AZC0034
 }

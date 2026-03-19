@@ -8,6 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="ManagedIdentityCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class ManagedIdentityCredentialOptions : TokenCredentialOptions
     {
         internal ManagedIdentityCredentialOptions() : this(null)
@@ -26,4 +27,5 @@ namespace Azure.Identity
         /// </summary>
         internal ManagedIdentityId ManagedIdentityId { get; }
     }
+#pragma warning restore AZC0034
 }

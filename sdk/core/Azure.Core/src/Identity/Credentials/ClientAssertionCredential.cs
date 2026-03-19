@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,6 +18,8 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication of a Microsoft Entra service principal using a signed client assertion.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class ClientAssertionCredential : TokenCredential
     {
         internal readonly string[] AdditionallyAllowedTenantIds;
@@ -122,4 +125,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Microsoft Entra ID using Azure PowerShell to obtain an access token.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class AzurePowerShellCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
@@ -360,4 +363,5 @@ return $x.Objects.FirstChild.OuterXml
             return Convert.ToBase64String(plainTextBytes);
         }
     }
+#pragma warning restore AZC0034
 }

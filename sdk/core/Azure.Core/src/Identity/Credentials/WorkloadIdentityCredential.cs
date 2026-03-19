@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,8 @@ namespace Azure.Identity
     /// WorkloadIdentityCredential supports Microsoft Entra Workload ID authentication on Kubernetes and other hosts supporting workload identity.
     /// Refer to <a href="https://learn.microsoft.com/azure/aks/workload-identity-overview">Microsoft Entra Workload ID</a> for more information.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class WorkloadIdentityCredential : TokenCredential
     {
         private const string UnavailableErrorMessage = "WorkloadIdentityCredential authentication unavailable. The workload options are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/workloadidentitycredential/troubleshoot";
@@ -109,4 +112,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

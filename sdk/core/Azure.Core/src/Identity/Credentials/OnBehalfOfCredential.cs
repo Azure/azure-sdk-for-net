@@ -5,6 +5,7 @@
 
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,6 +17,8 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Microsoft Entra ID using an On-Behalf-Of flow.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class OnBehalfOfCredential : TokenCredential
     {
         internal MsalConfidentialClient Client { get; }
@@ -257,4 +260,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

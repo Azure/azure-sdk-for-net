@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -20,6 +21,8 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Microsoft Entra ID using Azure CLI to obtain an access token.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class AzureCliCredential : TokenCredential
     {
         internal const string AzureCLINotInstalled = "Azure CLI not installed";
@@ -266,4 +269,5 @@ namespace Azure.Identity
             return new AccessToken(accessToken, expiresOn);
         }
     }
+#pragma warning restore AZC0034
 }

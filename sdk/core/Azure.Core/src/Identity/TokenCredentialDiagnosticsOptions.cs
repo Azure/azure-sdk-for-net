@@ -15,6 +15,7 @@ namespace Azure.Identity
     /// <summary>
     /// Exposes client options related to logging, telemetry, and distributed tracing.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class TokenCredentialDiagnosticsOptions : DiagnosticsOptions
     {
         /// <summary>
@@ -51,4 +52,5 @@ namespace Azure.Identity
         /// </summary>
         public bool IsAccountIdentifierLoggingEnabled { get; set; }
     }
+#pragma warning restore AZC0034
 }

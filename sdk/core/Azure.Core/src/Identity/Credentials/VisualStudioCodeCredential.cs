@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,6 +23,8 @@ namespace Azure.Identity
     /// <item><description><see href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups">Azure Resources extension</see></description></item>
     /// </list>
     /// </remarks>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class VisualStudioCodeCredential : InteractiveBrowserCredential
     {
         private const string CredentialsSection = "VS Code Azure";
@@ -78,4 +81,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

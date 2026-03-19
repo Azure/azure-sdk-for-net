@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     ///
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class OnBehalfOfCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
@@ -30,4 +31,5 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
     }
+#pragma warning restore AZC0034
 }

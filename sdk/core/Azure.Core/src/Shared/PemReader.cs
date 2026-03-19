@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Versioning;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
@@ -20,6 +21,7 @@ namespace Azure.Core
     /// The <c>PemEncoding</c> class takes advantage of other implementation changes in net5.0 and,
     /// based on conversations with the .NET team, runtime changes.
     /// </remarks>
+        [UnsupportedOSPlatform("browser")]
     internal static partial class PemReader
     {
         // The following implementation was based on PemEncoding and reviewed by @bartonjs on the .NET / cryptography team.

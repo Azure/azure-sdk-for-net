@@ -11,6 +11,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options for configuring the <see cref="AzureCliCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class AzureCliCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _subscription;
@@ -49,4 +50,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

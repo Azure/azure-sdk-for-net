@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,6 +15,7 @@ using MSAL = Microsoft.Identity.Client.ManagedIdentity;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal class ManagedIdentityClient
     {
         internal const string MsiUnavailableError =

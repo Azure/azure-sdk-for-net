@@ -10,12 +10,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Runtime.Versioning;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Identity
 {
     [Experimental("SCME0002")]
+    [UnsupportedOSPlatform("browser")]
     internal static class ConfigurableCredentialCache
     {
         private static ConcurrentDictionary<string, ConfigurableCredential>? s_cache;

@@ -15,6 +15,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to customize browser view.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class BrowserCustomizationOptions
     {
         /// <summary>
@@ -111,4 +112,5 @@ namespace Azure.Identity
             return clone;
         }
     }
+#pragma warning restore AZC0034
 }

@@ -13,6 +13,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
@@ -138,4 +139,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

@@ -10,6 +10,7 @@ namespace Azure.Identity
     /// <summary>
     /// Args sent to TokenCache OnBefore and OnAfter events.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class TokenCacheRefreshArgs
     {
         /// <summary>
@@ -40,4 +41,5 @@ namespace Azure.Identity
             IsCaeEnabled = enableCae;
         }
     }
+#pragma warning restore AZC0034
 }

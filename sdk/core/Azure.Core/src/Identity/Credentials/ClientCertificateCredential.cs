@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace Azure.Identity
     /// on how to configure certificate authentication can be found at
     /// <see href="https://learn.microsoft.com/entra/identity-platform/certificate-credentials#register-your-certificate-with-microsoft-identity-platform"/>.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class ClientCertificateCredential : TokenCredential
     {
         internal const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/clientcertificatecredential/troubleshoot";
@@ -251,4 +254,5 @@ namespace Azure.Identity
             }
         }
     }
+#pragma warning restore AZC0034
 }

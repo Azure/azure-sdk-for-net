@@ -14,6 +14,7 @@ namespace Azure.Identity
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
     public class UsernamePasswordCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         /// <summary>
@@ -31,4 +32,5 @@ namespace Azure.Identity
 
         internal AuthenticationRecord AuthenticationRecord { get; set; }
     }
+#pragma warning restore AZC0034
 }

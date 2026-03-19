@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,6 +18,8 @@ namespace Azure.Identity
     /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
+#pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
+    [UnsupportedOSPlatform("browser")]
     public class DeviceCodeCredential : TokenCredential
     {
         private readonly string _tenantId;
@@ -273,4 +276,5 @@ namespace Azure.Identity
             return DeviceCodeCallback(new DeviceCodeInfo(deviceCode), cancellationToken);
         }
     }
+#pragma warning restore AZC0034
 }

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,6 +12,7 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal abstract class MsalClientBase<TClient>
         where TClient : IClientApplicationBase
     {

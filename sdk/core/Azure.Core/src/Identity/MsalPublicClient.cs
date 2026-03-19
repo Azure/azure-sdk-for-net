@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,6 +14,7 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
+    [UnsupportedOSPlatform("browser")]
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;

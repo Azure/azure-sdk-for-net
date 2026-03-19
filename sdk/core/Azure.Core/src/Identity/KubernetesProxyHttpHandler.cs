@@ -5,6 +5,7 @@
 
 using System;
 using System.Net.Http;
+using System.Runtime.Versioning;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Azure.Identity
     /// HTTP message handler that redirects all requests to a Kubernetes token proxy.
     /// Handles custom CA certificates and monitors CA file changes for automatic reloading.
     /// </summary>
+    [UnsupportedOSPlatform("browser")]
     internal class KubernetesProxyHttpHandler : DelegatingHandler
     {
         private readonly KubernetesProxyConfig _config;

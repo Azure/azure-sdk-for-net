@@ -5,10 +5,12 @@
 
 using System;
 using System.IO;
+using System.Runtime.Versioning;
 using Microsoft.Extensions.Options;
 
 namespace Azure.Identity;
 
+[UnsupportedOSPlatform("browser")]
 internal class CredentialOptionsMapper
 {
     /// <summary>

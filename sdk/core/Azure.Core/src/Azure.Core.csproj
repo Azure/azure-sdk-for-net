@@ -12,7 +12,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <NoWarn>$(NoWarn);CA1416;AZC0011;AZC0034</NoWarn>
     <AotAnalyzersOptOut>true</AotAnalyzersOptOut>
   </PropertyGroup>
 
@@ -91,6 +90,7 @@
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
+    <Compile Include="Shared\UnsupportedOSPlatformAttribute.cs" />
   </ItemGroup>
 
 </Project>
