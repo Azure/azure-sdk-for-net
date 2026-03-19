@@ -406,24 +406,30 @@ namespace Azure.Generator.Management.Providers
             methods.AddRange(operationMethods);
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
-            if (HasTags() && _readMethod is not null && updateMethodProvider is not null)
+            if (HasTags() && _readMethod is not null)
             {
-                (bool isPatch, InputClient? inputUpdateClient) = PopulateUpdateClient();
-                var inputReadMethod = _readMethod.InputMethod;
-                var inputReadClient = _readMethod.InputClient;
-                if (inputUpdateClient is not null && inputReadClient is not null)
+                (bool isPatch, ResourceMethod? tagUpdateMethod) = PopulateUpdateMethod();
+                if (tagUpdateMethod is not null)
                 {
-                    var updateRestClientInfo = _clientInfos[inputUpdateClient];
-                    var getRestClientInfo = _clientInfos[inputReadClient];
+                    var inputReadMethod = _readMethod.InputMethod;
+                    var inputReadClient = _readMethod.InputClient;
+                    var inputUpdateClient = tagUpdateMethod.InputClient;
+                    if (inputReadClient is not null)
+                    {
+                        var updateRestClientInfo = _clientInfos[inputUpdateClient];
+                        var getRestClientInfo = _clientInfos[inputReadClient];
+                        var isFakeLro = ResourceHelpers.ShouldMakeLro(tagUpdateMethod.Kind);
+                        var tagUpdateMethodProvider = new UpdateOperationMethodProvider(this, _operationContext, updateRestClientInfo, tagUpdateMethod.InputMethod, false, tagUpdateMethod.Kind, isFakeLro);
 
-                    methods.AddRange([
-                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new AddTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new SetTagsMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
-                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
-                        new RemoveTagMethodProvider(this, _operationContext, updateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
-                    ]);
+                        methods.AddRange([
+                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                            new AddTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                            new SetTagsMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false),
+                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, true),
+                            new RemoveTagMethodProvider(this, _operationContext, tagUpdateMethodProvider, inputReadMethod, updateRestClientInfo, getRestClientInfo, isPatch, false)
+                        ]);
+                    }
                 }
             }
 
@@ -445,7 +451,7 @@ namespace Azure.Generator.Management.Providers
             return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
         }
 
-        private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
+        private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()
         {
             // First try to find a patch method that has a body parameter.
             // A bodyless PATCH cannot carry tag changes, so skip it.
@@ -453,12 +459,12 @@ namespace Azure.Generator.Management.Providers
             var hasBodyParameter = patchMethod?.InputMethod.Operation.Parameters.Any(p => p is InputBodyParameter) == true;
             if (patchMethod is not null && hasBodyParameter)
             {
-                return (true, patchMethod.InputClient);
+                return (true, patchMethod);
             }
 
             // If there is no patch method with a body, fall back to the put method
-            var putClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputClient;
-            return (false, putClient);
+            var putMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create);
+            return (false, putMethod);
         }
 
         private List<MethodProvider> BuildGetChildResourceMethods()
