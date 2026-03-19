@@ -28,7 +28,7 @@ This library allows you to specify your infrastructure in a declarative style us
 
 This example demonstrates how to define a Kubernetes cluster extension resource for an Azure Arc-enabled cluster.
 
-```csharp
+```C# Snippet:KubernetesConfigurationBasic
 Infrastructure infra = new();
 
 KubernetesClusterExtension extension =

@@ -28,15 +28,17 @@ This library allows you to specify your infrastructure in a declarative style us
 
 This example demonstrates how to define an Azure Arc-enabled Kubernetes connected cluster resource.
 
-```csharp
+```C# Snippet:KubernetesBasic
 Infrastructure infra = new();
 
 ConnectedCluster cluster =
     new(nameof(cluster), ConnectedCluster.ResourceVersions.V2024_01_01)
     {
-        AgentPublicKeyCertificate = "<base64-encoded-certificate>",
-        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
-        Distribution = "AKS"
+        AgentPublicKeyCertificate = "base64cert",
+        Identity = new ManagedServiceIdentity
+        {
+            ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
+        }
     };
 infra.Add(cluster);
 ```
