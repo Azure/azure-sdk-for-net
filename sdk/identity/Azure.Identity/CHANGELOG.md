@@ -1,6 +1,6 @@
 # Release History
 
-## 1.20.0-beta.1 (Unreleased)
+## 1.52.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- All Azure.Identity types have been moved to Azure.Core and are now available through TypeForwardedTo attributes. This is a non-breaking change — existing code continues to work transparently.
 
 ## 1.19.0 (2026-03-11)
 
