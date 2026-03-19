@@ -538,7 +538,7 @@ export function buildArmProviderSchema(
     };
 
     // Extract RBAC roles from @@clientOption decorator
-    resource.metadata.rbacRoles = extractRbacRoles(sdkModel?.decorators);
+    resource.metadata.rbacRoles = extractRbacRoles(sdkModel);
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.

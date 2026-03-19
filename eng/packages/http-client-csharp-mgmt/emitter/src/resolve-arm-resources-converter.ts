@@ -432,7 +432,7 @@ function convertResolvedResourceToMetadata(
     sdkContext,
     resolvedResource.type
   ) as SdkModelType;
-  const rbacRoles = extractRbacRoles(sdkModel?.decorators);
+  const rbacRoles = extractRbacRoles(sdkModel);
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty

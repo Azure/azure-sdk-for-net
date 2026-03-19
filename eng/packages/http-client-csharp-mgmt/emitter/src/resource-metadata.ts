@@ -6,6 +6,10 @@ import {
   findLongestPrefixMatch,
   countProviderSegments
 } from "./utils.js";
+import {
+  DecoratedType,
+  getClientOptions
+} from "@azure-tools/typespec-client-generator-core";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -97,28 +101,23 @@ export function convertResourceMetadataToArguments(
   };
 }
 
-const clientOptionDecorator = "Azure.ClientGenerator.Core.@clientOption";
 const rbacRolesKey = "resource-rbac-roles";
 
 /**
  * Extracts RBAC roles from a model's @@clientOption decorator with key "resource-rbac-roles".
- * The decorator value is expected to be a record of role name to role GUID.
+ * Uses TCGC's getClientOptions API which handles scope filtering.
+ * The value is expected to be a record of role name to role GUID.
  */
-export function extractRbacRoles(
-  decorators: { name: string; arguments: Record<string, any> }[] | undefined
-): RbacRole[] {
-  if (!decorators) return [];
-  const decorator = decorators.find(
-    (d) =>
-      d.name === clientOptionDecorator && d.arguments?.["name"] === rbacRolesKey
-  );
-  if (!decorator) return [];
-  const value = decorator.arguments?.["value"];
+export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
+  if (!model) return [];
+  const value = getClientOptions(model, rbacRolesKey);
   if (!value || typeof value !== "object") return [];
-  return Object.entries(value).map(([name, guid]) => ({
-    name,
-    value: guid as string
-  }));
+  return Object.entries(value as Record<string, string>).map(
+    ([name, guid]) => ({
+      name,
+      value: guid
+    })
+  );
 }
 
 export interface NonResourceMethod {
