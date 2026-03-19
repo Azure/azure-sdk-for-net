@@ -28,6 +28,7 @@ namespace Azure.Identity
         public AuthenticationRequiredException(string message, Azure.Core.TokenRequestContext context, System.Exception innerException) : base (default(string)) { }
         public Azure.Core.TokenRequestContext TokenRequestContext { get { throw null; } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AuthorizationCodeCredential : Azure.Core.TokenCredential
     {
         protected AuthorizationCodeCredential() { }
@@ -52,6 +53,7 @@ namespace Azure.Identity
         public static System.Uri AzureGovernment { get { throw null; } }
         public static System.Uri AzurePublicCloud { get { throw null; } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzureCliCredential : Azure.Core.TokenCredential
     {
         public AzureCliCredential() { }
@@ -67,6 +69,7 @@ namespace Azure.Identity
         public string Subscription { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
     {
         public AzureDeveloperCliCredential() { }
@@ -81,6 +84,7 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzurePipelinesCredential : Azure.Core.TokenCredential
     {
         protected AzurePipelinesCredential() { }
@@ -95,6 +99,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
         public AzurePowerShellCredential() { }
@@ -124,6 +129,7 @@ namespace Azure.Identity
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ClientAssertionCredential : Azure.Core.TokenCredential
     {
         protected ClientAssertionCredential() { }
@@ -139,6 +145,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
         protected ClientCertificateCredential() { }
@@ -159,6 +166,7 @@ namespace Azure.Identity
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ClientSecretCredential : Azure.Core.TokenCredential
     {
         protected ClientSecretCredential() { }
@@ -176,6 +184,7 @@ namespace Azure.Identity
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public static partial class ConfigurationExtensions
     {
         public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
@@ -193,6 +202,7 @@ namespace Azure.Identity
         public CredentialUnavailableException(string message) : base (default(string)) { }
         public CredentialUnavailableException(string message, System.Exception innerException) : base (default(string)) { }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class DefaultAzureCredential : Azure.Core.TokenCredential
     {
         public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
@@ -233,6 +243,7 @@ namespace Azure.Identity
         public string VisualStudioTenantId { get { throw null; } set { } }
         public string WorkloadIdentityClientId { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
         public DeviceCodeCredential() { }
@@ -271,6 +282,7 @@ namespace Azure.Identity
         public string UserCode { get { throw null; } }
         public System.Uri VerificationUri { get { throw null; } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class EnvironmentCredential : Azure.Core.TokenCredential
     {
         public EnvironmentCredential() { }
@@ -290,6 +302,7 @@ namespace Azure.Identity
         public static Azure.Identity.AuthenticationRecord AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId) { throw null; }
         public static Azure.Identity.DeviceCodeInfo DeviceCodeInfo(string userCode, string deviceCode, System.Uri verificationUri, System.DateTimeOffset expiresOn, string message, string clientId, System.Collections.Generic.IReadOnlyCollection<string> scopes) { throw null; }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class InteractiveBrowserCredential : Azure.Core.TokenCredential
     {
         public InteractiveBrowserCredential() { }
@@ -317,6 +330,7 @@ namespace Azure.Identity
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class ManagedIdentityCredential : Azure.Core.TokenCredential
     {
         protected ManagedIdentityCredential() { }
@@ -342,6 +356,7 @@ namespace Azure.Identity
         public static Azure.Identity.ManagedIdentityId FromUserAssignedResourceId(Azure.Core.ResourceIdentifier id) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class OnBehalfOfCredential : Azure.Core.TokenCredential
     {
         protected OnBehalfOfCredential() { }
@@ -363,6 +378,7 @@ namespace Azure.Identity
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
     [System.ObsoleteAttribute("This credential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {
         public SharedTokenCacheCredential() { }
@@ -430,6 +446,7 @@ namespace Azure.Identity
         protected internal abstract System.Threading.Tasks.Task TokenCacheUpdatedAsync(Azure.Identity.TokenCacheUpdatedArgs tokenCacheUpdatedArgs);
     }
     [System.ObsoleteAttribute("This credential is deprecated because it doesn't support multifactor authentication (MFA). See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement for Microsoft Entra ID and migration guidance.")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class UsernamePasswordCredential : Azure.Core.TokenCredential
     {
         protected UsernamePasswordCredential() { }
@@ -451,6 +468,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class VisualStudioCodeCredential : Azure.Identity.InteractiveBrowserCredential
     {
         public VisualStudioCodeCredential() { }
@@ -464,6 +482,7 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class VisualStudioCredential : Azure.Core.TokenCredential
     {
         public VisualStudioCredential() { }
@@ -478,6 +497,7 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
     {
         public WorkloadIdentityCredential() { }
