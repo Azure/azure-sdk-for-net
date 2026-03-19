@@ -447,14 +447,15 @@ namespace Azure.Generator.Management.Providers
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {
-            // first try to find a patch method
-            var patchClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update)?.InputClient;
-            if (patchClient is not null)
+            // first try to find a patch method with a body parameter
+            // A bodyless PATCH cannot carry tag changes, so skip it
+            var patchMethod = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Update);
+            if (patchMethod is not null && patchMethod.InputMethod.Operation.Parameters.Any(p => p is InputBodyParameter))
             {
-                return (true, patchClient);
+                return (true, patchMethod.InputClient);
             }
 
-            // if there is no tags patch method, fall back to the put method
+            // if there is no patch method with a body, fall back to the put method
             var putClient = _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputClient;
             return (false, putClient);
         }

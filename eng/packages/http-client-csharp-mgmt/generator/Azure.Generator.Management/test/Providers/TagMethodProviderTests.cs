@@ -144,6 +144,23 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(expected, bodyStatements);
         }
 
+        [TestCase]
+        public void Verify_NoTagMethods_WhenPatchHasNoBody()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceBodylessPatch();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.IsNotNull(resourceClientProvider);
+
+            // Verify that no tag methods are generated
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH has no body parameter.");
+            }
+        }
+
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
         {
             var (resource, restClient) = GetResourceClientProvider();
