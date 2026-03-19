@@ -1,14 +1,10 @@
 # Release History
 
-## 12.28.0-beta.2 (Unreleased)
+## 12.29.0-beta.1 (2026-03-24)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2026-06-06.
+- Aded support for Blob Smart Tier.
 
 ## 12.28.0-beta.1 (2026-01-20)
 
