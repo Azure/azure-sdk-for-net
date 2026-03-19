@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    [CodeGenSuppress("RequiredMembers")]
-    [CodeGenSuppress("RequiredZoneNames")]
+    /// <summary>
+    /// Backward compatibility: Keep the type of RequiredMembers and RequiredZoneNames
+    /// as IReadOnlyList&lt;string&gt; as they are in the baseline version.
+    /// </summary>
     public partial class ServiceBusPrivateLinkResource
     {
         /// <summary> Required Members. </summary>

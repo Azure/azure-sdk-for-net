@@ -3,6 +3,10 @@
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
+    /// <summary>
+    /// Backward compatibility: The previous SDK used underscore-separated names (Tls1_0)
+    /// while the TypeSpec generator produces names without underscores (Tls10).
+    /// </summary>
     public partial struct ServiceBusMinimumTlsVersion
     {
         /// <summary> TLS 1.0 </summary>

@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ServiceBus
 {
+    /// <summary>
+    /// Backward compatibility: The previous AutoRest-generated SDK exposed Update as a non-LRO operation.
+    /// These overloads preserve that API surface for existing consumers.
+    /// </summary>
     public partial class ServiceBusNamespaceResource
     {
         /// <summary>
