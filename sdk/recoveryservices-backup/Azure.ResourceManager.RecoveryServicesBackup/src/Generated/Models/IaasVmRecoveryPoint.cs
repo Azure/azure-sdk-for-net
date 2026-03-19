@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasVmRecoveryPoint : RecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
-        internal IaasVmRecoveryPoint() : base("IaasVMRecoveryPoint")
+        public IaasVmRecoveryPoint() : base("IaasVMRecoveryPoint")
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
             Zones = new ChangeTrackingList<string>();
@@ -73,43 +73,43 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of the backup copy. </summary>
-        public string RecoveryPointType { get; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary> Time at which this backup copy was created. </summary>
-        public DateTimeOffset? RecoveryPointOn { get; }
+        public DateTimeOffset? RecoveryPointOn { get; set; }
 
         /// <summary> Additional information associated with this backup copy. </summary>
-        public string RecoveryPointAdditionalInfo { get; }
+        public string RecoveryPointAdditionalInfo { get; set; }
 
         /// <summary> Storage type of the VM whose backup copy is created. </summary>
-        public string SourceVmStorageType { get; }
+        public string SourceVmStorageType { get; set; }
 
         /// <summary> Identifies whether the VM was encrypted when the backup copy is created. </summary>
-        public bool? IsSourceVmEncrypted { get; }
+        public bool? IsSourceVmEncrypted { get; set; }
 
         /// <summary> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </summary>
-        public KeyAndSecretDetails KeyAndSecret { get; }
+        public KeyAndSecretDetails KeyAndSecret { get; set; }
 
         /// <summary> Is the session to recover items from this backup copy still active. </summary>
-        public bool? IsInstantIlrSessionActive { get; }
+        public bool? IsInstantIlrSessionActive { get; set; }
 
         /// <summary> Recovery point tier information. </summary>
         public IList<RecoveryPointTierInformationV2> RecoveryPointTierDetails { get; }
 
         /// <summary> Whether VM is with Managed Disks. </summary>
-        public bool? IsManagedVirtualMachine { get; }
+        public bool? IsManagedVirtualMachine { get; set; }
 
         /// <summary> Virtual Machine Size. </summary>
-        public string VirtualMachineSize { get; }
+        public string VirtualMachineSize { get; set; }
 
         /// <summary> Original Storage Account Option. </summary>
-        public bool? OriginalStorageAccountOption { get; }
+        public bool? OriginalStorageAccountOption { get; set; }
 
         /// <summary> OS type. </summary>
-        public string OSType { get; }
+        public string OSType { get; set; }
 
         /// <summary> Disk configuration. </summary>
-        public RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get; }
+        public RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get; set; }
 
         /// <summary> Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms. </summary>
         public IList<string> Zones { get; }
@@ -118,18 +118,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
 
         /// <summary> Security Type of the Disk. </summary>
-        public string SecurityType { get; }
+        public string SecurityType { get; set; }
 
         /// <summary> Properties of Recovery Point. </summary>
-        public RecoveryPointProperties RecoveryPointProperties { get; }
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
 
         /// <summary> This flag denotes if any of the disks in the VM are using Private access network setting. </summary>
-        public bool? IsPrivateAccessEnabledOnAnyDisk { get; }
+        public bool? IsPrivateAccessEnabledOnAnyDisk { get; set; }
 
         /// <summary>
         /// Extended location of the VM recovery point,
         /// should be null if VM is in public cloud
         /// </summary>
-        public ExtendedLocation ExtendedLocation { get; }
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

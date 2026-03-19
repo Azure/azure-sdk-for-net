@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskInformation"/>. </summary>
-        internal DiskInformation()
+        public DiskInformation()
         {
         }
 
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Lun. </summary>
-        public int? Lun { get; }
+        /// <summary> Gets or sets the Lun. </summary>
+        public int? Lun { get; set; }
 
-        /// <summary> Gets the Name. </summary>
-        public string Name { get; }
+        /// <summary> Gets or sets the Name. </summary>
+        public string Name { get; set; }
     }
 }

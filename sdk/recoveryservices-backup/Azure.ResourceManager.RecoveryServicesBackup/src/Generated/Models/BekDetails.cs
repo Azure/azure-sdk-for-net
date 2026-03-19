@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BekDetails"/>. </summary>
-        internal BekDetails()
+        public BekDetails()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Secret is BEK. </summary>
-        public string SecretUri { get; }
+        public string SecretUri { get; set; }
 
         /// <summary> ID of the Key Vault where this Secret is stored. </summary>
-        public string SecretVaultId { get; }
+        public string SecretVaultId { get; set; }
 
         /// <summary> BEK data. </summary>
-        public string SecretData { get; }
+        public string SecretData { get; set; }
     }
 }

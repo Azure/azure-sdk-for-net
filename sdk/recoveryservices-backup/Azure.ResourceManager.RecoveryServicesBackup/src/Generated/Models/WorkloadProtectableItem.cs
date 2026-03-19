@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of backup management to backup an item. </summary>
-        public string BackupManagementType { get; }
+        public string BackupManagementType { get; set; }
 
         /// <summary> Type of workload for the backup management. </summary>
-        public string WorkloadType { get; }
+        public string WorkloadType { get; set; }
 
         /// <summary> Type of the backup item. </summary>
         internal string ProtectableItemType { get; set; }
 
         /// <summary> Friendly name of the backup item. </summary>
-        public string FriendlyName { get; }
+        public string FriendlyName { get; set; }
 
         /// <summary> State of the back up item. </summary>
-        public BackupProtectionStatus? ProtectionState { get; }
+        public BackupProtectionStatus? ProtectionState { get; set; }
     }
 }

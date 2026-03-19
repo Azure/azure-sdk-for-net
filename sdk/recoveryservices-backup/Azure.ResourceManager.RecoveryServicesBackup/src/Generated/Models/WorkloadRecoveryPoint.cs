@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadRecoveryPoint : RecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadRecoveryPoint"/>. </summary>
-        internal WorkloadRecoveryPoint() : base("AzureWorkloadRecoveryPoint")
+        public WorkloadRecoveryPoint() : base("AzureWorkloadRecoveryPoint")
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
             RecoveryPointMoveReadinessInfo = new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> UTC time at which recovery point was created. </summary>
-        public DateTimeOffset? RecoveryPointCreatedOn { get; }
+        public DateTimeOffset? RecoveryPointCreatedOn { get; set; }
 
         /// <summary> Type of restore point. </summary>
-        public RestorePointType? Type { get; }
+        public RestorePointType? Type { get; set; }
 
         /// <summary> Recovery point tier information. </summary>
         public IList<RecoveryPointTierInformationV2> RecoveryPointTierDetails { get; }
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
 
         /// <summary> Properties of Recovery Point. </summary>
-        public RecoveryPointProperties RecoveryPointProperties { get; }
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DpmErrorInfo"/>. </summary>
-        internal DpmErrorInfo()
+        public DpmErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Localized error string. </summary>
-        public string ErrorString { get; }
+        public string ErrorString { get; set; }
 
         /// <summary> List of localized recommendations for above error code. </summary>
         public IList<string> Recommendations { get; }

@@ -60,42 +60,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Friendly name of the backup engine. </summary>
-        public string FriendlyName { get; }
+        public string FriendlyName { get; set; }
 
         /// <summary> Type of backup management for the backup engine. </summary>
-        public BackupManagementType? BackupManagementType { get; }
+        public BackupManagementType? BackupManagementType { get; set; }
 
         /// <summary> Registration status of the backup engine with the Recovery Services Vault. </summary>
-        public string RegistrationStatus { get; }
+        public string RegistrationStatus { get; set; }
 
         /// <summary> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </summary>
-        public string BackupEngineState { get; }
+        public string BackupEngineState { get; set; }
 
         /// <summary> Backup status of the backup engine. </summary>
-        public string HealthStatus { get; }
+        public string HealthStatus { get; set; }
 
         /// <summary> Type of the backup engine. </summary>
         internal BackupEngineType BackupEngineType { get; set; }
 
         /// <summary> Flag indicating if the backup engine be registered, once already registered. </summary>
-        public bool? CanReRegister { get; }
+        public bool? CanReRegister { get; set; }
 
         /// <summary> ID of the backup engine. </summary>
-        public string BackupEngineId { get; }
+        public string BackupEngineId { get; set; }
 
         /// <summary> Backup engine version. </summary>
-        public string DpmVersion { get; }
+        public string DpmVersion { get; set; }
 
         /// <summary> Backup agent version. </summary>
-        public string AzureBackupAgentVersion { get; }
+        public string AzureBackupAgentVersion { get; set; }
 
         /// <summary> To check if backup agent upgrade available. </summary>
-        public bool? IsAzureBackupAgentUpgradeAvailable { get; }
+        public bool? IsAzureBackupAgentUpgradeAvailable { get; set; }
 
         /// <summary> To check if backup engine upgrade available. </summary>
-        public bool? IsDpmUpgradeAvailable { get; }
+        public bool? IsDpmUpgradeAvailable { get; set; }
 
         /// <summary> Extended info of the backupengine. </summary>
-        public BackupEngineExtendedInfo ExtendedInfo { get; }
+        public BackupEngineExtendedInfo ExtendedInfo { get; set; }
     }
 }

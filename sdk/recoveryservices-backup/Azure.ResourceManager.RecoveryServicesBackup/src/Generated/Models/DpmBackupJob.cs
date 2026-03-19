@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class DpmBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="DpmBackupJob"/>. </summary>
-        internal DpmBackupJob() : base("DpmJob")
+        public DpmBackupJob() : base("DpmJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<DpmErrorInfo>();
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Time elapsed for job. </summary>
-        public TimeSpan? Duration { get; }
+        public TimeSpan? Duration { get; set; }
 
         /// <summary> DPM server name managing the backup item or backup job. </summary>
-        public string DpmServerName { get; }
+        public string DpmServerName { get; set; }
 
         /// <summary> Name of cluster/server protecting current backup item, if any. </summary>
-        public string ContainerName { get; }
+        public string ContainerName { get; set; }
 
         /// <summary> Type of container. </summary>
-        public string ContainerType { get; }
+        public string ContainerType { get; set; }
 
         /// <summary> Type of backup item. </summary>
-        public string WorkloadType { get; }
+        public string WorkloadType { get; set; }
 
         /// <summary> The state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<DpmErrorInfo> ErrorDetails { get; }
 
         /// <summary> Additional information for this job. </summary>
-        public DpmBackupJobExtendedInfo ExtendedInfo { get; }
+        public DpmBackupJobExtendedInfo ExtendedInfo { get; set; }
     }
 }

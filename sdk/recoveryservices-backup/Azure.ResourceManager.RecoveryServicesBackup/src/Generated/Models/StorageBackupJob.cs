@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class StorageBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="StorageBackupJob"/>. </summary>
-        internal StorageBackupJob() : base("AzureStorageJob")
+        public StorageBackupJob() : base("AzureStorageJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<StorageErrorInfo>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Time elapsed during the execution of this job. </summary>
-        public TimeSpan? Duration { get; }
+        public TimeSpan? Duration { get; set; }
 
         /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<StorageErrorInfo> ErrorDetails { get; }
 
         /// <summary> Specifies friendly name of the storage account. </summary>
-        public string StorageAccountName { get; }
+        public string StorageAccountName { get; set; }
 
         /// <summary> Specifies whether the Storage account is a Classic or an Azure Resource Manager Storage account. </summary>
-        public string StorageAccountVersion { get; }
+        public string StorageAccountVersion { get; set; }
 
         /// <summary> Additional information about the job. </summary>
-        public StorageBackupJobExtendedInfo ExtendedInfo { get; }
+        public StorageBackupJobExtendedInfo ExtendedInfo { get; set; }
 
         /// <summary> Indicated that whether the job is adhoc(true) or scheduled(false). </summary>
-        public bool? IsUserTriggered { get; }
+        public bool? IsUserTriggered { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class RecoveryPointTierInformationV2 : RecoveryPointTierInformation
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformationV2"/>. </summary>
-        internal RecoveryPointTierInformationV2()
+        public RecoveryPointTierInformationV2()
         {
         }
 
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Recovery point tier type. </summary>
-        public RecoveryPointTierType? Type { get; }
+        public RecoveryPointTierType? Type { get; set; }
     }
 }

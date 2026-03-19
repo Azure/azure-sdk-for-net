@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasVmBackupJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of <see cref="IaasVmBackupJob"/>. </summary>
-        internal IaasVmBackupJob() : base("AzureIaaSVMJob")
+        public IaasVmBackupJob() : base("AzureIaaSVMJob")
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
             ErrorDetails = new ChangeTrackingList<IaasVmErrorInfo>();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Time elapsed during the execution of this job. </summary>
-        public TimeSpan? Duration { get; }
+        public TimeSpan? Duration { get; set; }
 
         /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<IaasVmErrorInfo> ErrorDetails { get; }
 
         /// <summary> Specifies whether the backup item is a Classic or an Azure Resource Manager VM. </summary>
-        public string VirtualMachineVersion { get; }
+        public string VirtualMachineVersion { get; set; }
 
         /// <summary> Additional information for this job. </summary>
-        public IaasVmBackupJobExtendedInfo ExtendedInfo { get; }
+        public IaasVmBackupJobExtendedInfo ExtendedInfo { get; set; }
 
         /// <summary> Container name of the entity on which the current job is executing. </summary>
-        public string ContainerName { get; }
+        public string ContainerName { get; set; }
 
         /// <summary> Indicated that whether the job is adhoc(true) or scheduled(false). </summary>
-        public bool? IsUserTriggered { get; }
+        public bool? IsUserTriggered { get; set; }
     }
 }

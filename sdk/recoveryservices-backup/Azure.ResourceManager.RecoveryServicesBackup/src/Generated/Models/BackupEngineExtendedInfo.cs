@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupEngineExtendedInfo"/>. </summary>
-        internal BackupEngineExtendedInfo()
+        public BackupEngineExtendedInfo()
         {
         }
 
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Database name of backup engine. </summary>
-        public string DatabaseName { get; }
+        public string DatabaseName { get; set; }
 
         /// <summary> Number of protected items in the backup engine. </summary>
-        public int? ProtectedItemsCount { get; }
+        public int? ProtectedItemsCount { get; set; }
 
         /// <summary> Number of protected servers in the backup engine. </summary>
-        public int? ProtectedServersCount { get; }
+        public int? ProtectedServersCount { get; set; }
 
         /// <summary> Number of disks in the backup engine. </summary>
-        public int? DiskCount { get; }
+        public int? DiskCount { get; set; }
 
         /// <summary> Disk space used in the backup engine. </summary>
-        public double? UsedDiskSpace { get; }
+        public double? UsedDiskSpace { get; set; }
 
         /// <summary> Disk space currently available in the backup engine. </summary>
-        public double? AvailableDiskSpace { get; }
+        public double? AvailableDiskSpace { get; set; }
 
         /// <summary> Last refresh time in the backup engine. </summary>
-        public DateTimeOffset? RefreshedOn { get; }
+        public DateTimeOffset? RefreshedOn { get; set; }
 
         /// <summary> Protected instances in the backup engine. </summary>
-        public int? AzureProtectedInstances { get; }
+        public int? AzureProtectedInstances { get; set; }
     }
 }

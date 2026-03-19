@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadSqlInstanceWorkloadItem : VmWorkloadItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceWorkloadItem"/>. </summary>
-        internal VmWorkloadSqlInstanceWorkloadItem()
+        public VmWorkloadSqlInstanceWorkloadItem()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
         }

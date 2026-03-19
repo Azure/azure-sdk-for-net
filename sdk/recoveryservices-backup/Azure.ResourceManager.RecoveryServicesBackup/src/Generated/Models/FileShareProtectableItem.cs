@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class FileShareProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="FileShareProtectableItem"/>. </summary>
-        internal FileShareProtectableItem() : base("AzureFileShare")
+        public FileShareProtectableItem() : base("AzureFileShare")
         {
         }
 
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </summary>
-        public string ParentContainerFabricId { get; }
+        public string ParentContainerFabricId { get; set; }
 
         /// <summary> Friendly name of container to which this protectable item belongs. </summary>
-        public string ParentContainerFriendlyName { get; }
+        public string ParentContainerFriendlyName { get; set; }
 
         /// <summary> File Share type XSync or XSMB. </summary>
-        public BackupFileShareType? AzureFileShareType { get; }
+        public BackupFileShareType? AzureFileShareType { get; set; }
     }
 }

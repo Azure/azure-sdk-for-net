@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VaultJobExtendedInfo"/>. </summary>
-        internal VaultJobExtendedInfo()
+        public VaultJobExtendedInfo()
         {
             PropertyBag = new ChangeTrackingDictionary<string, string>();
         }

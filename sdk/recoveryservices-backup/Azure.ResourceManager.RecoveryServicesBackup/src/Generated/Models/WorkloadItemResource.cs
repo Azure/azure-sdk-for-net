@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <param name="properties"> WorkloadItemResource properties. </param>
-        internal WorkloadItemResource(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, string eTag, WorkloadItem properties) : base(new ResourceIdentifier(id), name, resourceType, systemData)
+        internal WorkloadItemResource(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, string eTag, WorkloadItem properties) : base(string.IsNullOrEmpty(id) ? null : new ResourceIdentifier(id), name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;

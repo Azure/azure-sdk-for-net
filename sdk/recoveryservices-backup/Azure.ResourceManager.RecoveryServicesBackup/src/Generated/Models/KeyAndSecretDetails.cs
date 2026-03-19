@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyAndSecretDetails"/>. </summary>
-        internal KeyAndSecretDetails()
+        public KeyAndSecretDetails()
         {
         }
 
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> KEK is encryption key for BEK. </summary>
-        public KekDetails KekDetails { get; }
+        public KekDetails KekDetails { get; set; }
 
         /// <summary> BEK is bitlocker encryption key. </summary>
-        public BekDetails BekDetails { get; }
+        public BekDetails BekDetails { get; set; }
 
         /// <summary> Encryption mechanism: None/ SinglePass/ DoublePass. </summary>
-        public string EncryptionMechanism { get; }
+        public string EncryptionMechanism { get; set; }
     }
 }

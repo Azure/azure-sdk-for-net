@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseInRP"/>. </summary>
-        internal DatabaseInRP()
+        public DatabaseInRP()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Datasource Id for the database. </summary>
-        public string DatasourceId { get; }
+        public string DatasourceId { get; set; }
 
         /// <summary> Datasource name for the database. </summary>
-        public string DatasourceName { get; }
+        public string DatasourceName { get; set; }
     }
 }

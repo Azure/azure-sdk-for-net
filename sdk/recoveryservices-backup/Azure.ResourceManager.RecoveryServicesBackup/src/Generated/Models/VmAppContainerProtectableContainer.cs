@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmAppContainerProtectableContainer : ProtectableContainer
     {
         /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectableContainer"/>. </summary>
-        internal VmAppContainerProtectableContainer() : base(ProtectableContainerType.VMAppContainer)
+        public VmAppContainerProtectableContainer() : base(ProtectableContainerType.VMAppContainer)
         {
         }
 

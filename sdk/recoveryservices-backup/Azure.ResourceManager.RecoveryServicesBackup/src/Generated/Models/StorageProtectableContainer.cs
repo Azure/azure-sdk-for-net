@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class StorageProtectableContainer : ProtectableContainer
     {
         /// <summary> Initializes a new instance of <see cref="StorageProtectableContainer"/>. </summary>
-        internal StorageProtectableContainer() : base(ProtectableContainerType.StorageContainer)
+        public StorageProtectableContainer() : base(ProtectableContainerType.StorageContainer)
         {
         }
 

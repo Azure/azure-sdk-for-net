@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageErrorInfo"/>. </summary>
-        internal StorageErrorInfo()
+        public StorageErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Error code. </summary>
-        public int? ErrorCode { get; }
+        public int? ErrorCode { get; set; }
 
         /// <summary> Localized error string. </summary>
-        public string ErrorString { get; }
+        public string ErrorString { get; set; }
 
         /// <summary> List of localized recommendations for above error code. </summary>
         public IList<string> Recommendations { get; }

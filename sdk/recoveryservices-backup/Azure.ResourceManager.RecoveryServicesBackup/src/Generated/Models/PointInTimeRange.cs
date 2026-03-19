@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PointInTimeRange"/>. </summary>
-        internal PointInTimeRange()
+        public PointInTimeRange()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Start time of the time range for log recovery. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time of the time range for log recovery. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreBackupValidation"/>. </summary>
-        internal PreBackupValidation()
+        public PreBackupValidation()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Status of protectable item, i.e. InProgress,Succeeded,Failed. </summary>
-        public InquiryStatus? Status { get; }
+        public InquiryStatus? Status { get; set; }
 
         /// <summary> Error code of protectable item. </summary>
-        public string Code { get; }
+        public string Code { get; set; }
 
         /// <summary> Message corresponding to the error code for the protectable item. </summary>
-        public string Message { get; }
+        public string Message { get; set; }
     }
 }

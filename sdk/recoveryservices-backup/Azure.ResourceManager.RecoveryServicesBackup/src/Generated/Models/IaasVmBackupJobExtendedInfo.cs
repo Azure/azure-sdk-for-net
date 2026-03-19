@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobExtendedInfo"/>. </summary>
-        internal IaasVmBackupJobExtendedInfo()
+        public IaasVmBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<IaasVmBackupJobTaskDetails>();
             PropertyBag = new ChangeTrackingDictionary<string, string>();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IDictionary<string, string> InternalPropertyBag { get; }
 
         /// <summary> Indicates progress of the job. Null if it has not started or completed. </summary>
-        public double? ProgressPercentage { get; }
+        public double? ProgressPercentage { get; set; }
 
         /// <summary> Time remaining for execution of this job. </summary>
-        public string EstimatedRemainingDurationValue { get; }
+        public string EstimatedRemainingDurationValue { get; set; }
 
         /// <summary> Non localized error message on job execution. </summary>
-        public string DynamicErrorMessage { get; }
+        public string DynamicErrorMessage { get; set; }
     }
 }

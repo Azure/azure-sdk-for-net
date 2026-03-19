@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDiskConfiguration"/>. </summary>
-        internal RecoveryPointDiskConfiguration()
+        public RecoveryPointDiskConfiguration()
         {
             IncludedDiskList = new ChangeTrackingList<DiskInformation>();
             ExcludedDiskList = new ChangeTrackingList<DiskInformation>();
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Number of disks included in backup. </summary>
-        public int? NumberOfDisksIncludedInBackup { get; }
+        public int? NumberOfDisksIncludedInBackup { get; set; }
 
         /// <summary> Number of disks attached to the VM. </summary>
-        public int? NumberOfDisksAttachedToVm { get; }
+        public int? NumberOfDisksAttachedToVm { get; set; }
 
         /// <summary> Information of disks included in backup. </summary>
         public IList<DiskInformation> IncludedDiskList { get; }

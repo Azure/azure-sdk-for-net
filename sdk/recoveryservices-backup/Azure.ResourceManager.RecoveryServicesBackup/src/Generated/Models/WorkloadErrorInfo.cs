@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadErrorInfo"/>. </summary>
-        internal WorkloadErrorInfo()
+        public WorkloadErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Error code. </summary>
-        public int? ErrorCode { get; }
+        public int? ErrorCode { get; set; }
 
         /// <summary> Localized error string. </summary>
-        public string ErrorString { get; }
+        public string ErrorString { get; set; }
 
         /// <summary> Title: Typically, the entity that the error pertains to. </summary>
-        public string ErrorTitle { get; }
+        public string ErrorTitle { get; set; }
 
         /// <summary> List of localized recommendations for above error code. </summary>
         public IList<string> Recommendations { get; }
 
         /// <summary> Additional details for above error code. </summary>
-        public string AdditionalDetails { get; }
+        public string AdditionalDetails { get; set; }
     }
 }

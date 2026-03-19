@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MabErrorInfo"/>. </summary>
-        internal MabErrorInfo()
+        public MabErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
