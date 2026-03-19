@@ -134,7 +134,7 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppAuthConfig.</param>
     public ContainerAppAuthConfig(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2026-01-01")
+        : base(bicepIdentifier, "Microsoft.App/containerApps/authConfigs", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -161,11 +161,6 @@ public partial class ContainerAppAuthConfig : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2026-01-01.
-        /// </summary>
-        public static readonly string V2026_01_01 = "2026-01-01";
-
         /// <summary>
         /// 2025-07-01.
         /// </summary>

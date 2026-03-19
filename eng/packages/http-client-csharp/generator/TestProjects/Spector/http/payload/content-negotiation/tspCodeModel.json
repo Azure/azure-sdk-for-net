@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "PngImageContentType",
+      "name": "GetAvatarAsPngRequestAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "PngImageContentType1",
+      "name": "GetAvatarAsPngRequestAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "PngImageContentType2",
+      "name": "GetAvatarAsPngRequestAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "JpegImageContentType",
+      "name": "GetAvatarAsJpegRequestAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "JpegImageContentType1",
+      "name": "GetAvatarAsJpegRequestAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "JpegImageContentType2",
+      "name": "GetAvatarAsJpegRequestAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "PngImageContentType3",
+      "name": "GetAvatarAsPngRequestAccept3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "PngImageContentType4",
+      "name": "GetAvatarAsPngRequestAccept4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "PngImageContentType5",
+      "name": "GetAvatarAsPngRequestAccept5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -166,7 +166,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "PngImageAsJsonContentType1",
+      "name": "GetAvatarAsJsonRequestAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -182,7 +182,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "PngImageAsJsonContentType2",
+      "name": "GetAvatarAsJsonRequestAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -198,7 +198,7 @@
     {
       "$id": "25",
       "kind": "constant",
-      "name": "PngImageAsJsonContentType3",
+      "name": "GetAvatarAsJsonRequestAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {

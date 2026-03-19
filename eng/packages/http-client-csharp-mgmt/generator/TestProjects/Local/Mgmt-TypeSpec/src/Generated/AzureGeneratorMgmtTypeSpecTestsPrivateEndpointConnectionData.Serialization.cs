@@ -67,9 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(azureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(azureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> from. </param>

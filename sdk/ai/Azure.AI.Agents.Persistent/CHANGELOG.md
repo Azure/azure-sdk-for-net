@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Improved error reporting during streaming response processing.
 
 ### Other Changes
 

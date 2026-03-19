@@ -7,21 +7,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.Extensions.AI;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Containers;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using System.Linq.Expressions;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -38,7 +41,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentDefinition emptyAgentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
+        AgentDefinition emptyAgentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         const string emptyPromptAgentName = "TestNoVersionAgentFromDotnetTests";
         try
@@ -70,7 +73,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Description, Is.Empty);
         Assert.That(agentVersion.Metadata, Is.Empty);
         // TODO: uncomment this code when the ADO work item 4740406
-        // agentVersionObject_ = await projectClient.Agents.CreateAgentVersionAsync(AGENT_NAME2, new PromptAgentDefinition(MODEL_DEPLOYMENT));
+        // agentVersionObject_ = await projectClient.Agents.CreateAgentVersionAsync(AGENT_NAME2, new DeclarativeAgentDefinition(MODEL_DEPLOYMENT));
         // List<string> agentNames = [.. (await projectClient.Agents.GetAgentsAsync().ToEnumerableAsync()).Select((agv) => agv.Name).Where((name) => name.StartsWith(AGENT_NAME))];
         // AssertListEqual([AGENT_NAME, AGENT_NAME2], agentNames);
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -93,7 +96,7 @@ public class AgentsTests : AgentsTestBase
         {
             for (int i = ids.Count; i < agentLimit; i++)
             {
-                AgentDefinition definition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME);
+                AgentDefinition definition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
                 AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync($"MyAgent{i}", new AgentVersionCreationOptions(definition));
                 ids.Add(agent.Id);
             }
@@ -123,7 +126,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestResponses()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         ResponseResult response = await client.CreateResponseAsync("What is steam reactor?");
         response = await WaitForRun(client, response);
         Assert.That(response.GetOutputText(), Is.Not.Null.Or.Empty);
@@ -133,7 +136,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestResponsesStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         bool isCreated = false;
         bool textReceived = false;
         await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
@@ -312,7 +315,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -340,7 +343,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: useDefaultEndpoint);
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -359,7 +362,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestConversationNoInput()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
         };
@@ -419,7 +422,7 @@ public class AgentsTests : AgentsTestBase
                 jsonSchema: calendatSchema
             )
         };
-        PromptAgentDefinition agentDefinition = new(model: TestEnvironment.MODELDEPLOYMENTNAME)
+        DeclarativeAgentDefinition agentDefinition = new(model: TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                            "and returns it in the desired structured output format.",
@@ -573,7 +576,7 @@ public class AgentsTests : AgentsTestBase
         }
         catch { }
         // Create
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME));
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         // Read
         MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(store.Id, Is.EqualTo(result.Id));
@@ -616,7 +619,7 @@ public class AgentsTests : AgentsTestBase
             await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
         }
         catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MODELDEPLOYMENTNAME, TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME);
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
         memoryDefinitions.Options = new(true, true);
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
@@ -684,9 +687,11 @@ public class AgentsTests : AgentsTestBase
 
     [RecordedTest]
     [TestCase(ToolType.CodeInterpreter)]
+    [TestCase(ToolType.CodeInterpreterGen)]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.ImageGeneration)]
     [TestCase(ToolType.WebSearch)]
+    [TestCase(ToolType.WebSearchCustom)]
     [TestCase(ToolType.Memory)]
     [TestCase(ToolType.AzureAISearch)]
     [TestCase(ToolType.BingGrounding)]
@@ -757,23 +762,36 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(Regex.Match(response.GetOutputText().ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
-        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric)
+        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric | toolType == ToolType.WebSearch | toolType == ToolType.WebSearchCustom)
         {
             bool isUriCitationFound = false;
 
-            // Check Annotation for Azure AI Search tool.
+            // Check Annotation.
             foreach (ResponseItem item in response.OutputItems)
             {
                 isUriCitationFound |= ContainsAnnotation(item, toolType);
             }
             Assert.That(isUriCitationFound, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
         }
+        else if (toolType == ToolType.CodeInterpreterGen)
+        {
+            bool hasDownloadableFile = false;
+            // Check Annotation.
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                hasDownloadableFile |= await ContainsDownloadableFileAnnotation(item, projectClient);
+            }
+            Assert.That(hasDownloadableFile, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
+        }
     }
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.CodeInterpreter)]
+    [TestCase(ToolType.CodeInterpreterGen)]
     [TestCase(ToolType.Memory)]
+    [TestCase(ToolType.WebSearch)]
+    [TestCase(ToolType.WebSearchCustom)]
     [TestCase(ToolType.AzureAISearch)]
     [TestCase(ToolType.BingGrounding)]
     [TestCase(ToolType.BingGroundingCustom)]
@@ -836,9 +854,13 @@ public class AgentsTests : AgentsTestBase
                             }
                         }
                     }
-                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric)
+                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric | toolType == ToolType.WebSearch | toolType == ToolType.WebSearchCustom)
                     {
-                        annotationMet = ContainsAnnotation(itemDoneUpdate.Item, toolType);
+                        annotationMet |= ContainsAnnotation(itemDoneUpdate.Item, toolType);
+                    }
+                    if (toolType == ToolType.CodeInterpreter)
+                    {
+                        annotationMet |= await ContainsDownloadableFileAnnotation(itemDoneUpdate.Item, projectClient);
                     }
                 }
                 else
@@ -887,7 +909,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             new AgentVersionCreationOptions(
-                new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+                new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
                 {
                     Instructions = "Always greet the user by name when possible.",
                     Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
@@ -1239,7 +1261,7 @@ public class AgentsTests : AgentsTestBase
 
         if (agentIsPresent)
         {
-            AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+            AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
             {
                 Instructions = "You are a helpful agent that happens to always talk like a pirate. Arr!",
             };
@@ -1252,7 +1274,7 @@ public class AgentsTests : AgentsTestBase
         }
         else
         {
-            responseOptions.Model = TestEnvironment.MODELDEPLOYMENTNAME;
+            responseOptions.Model = TestEnvironment.FOUNDRY_MODEL_NAME;
         }
 
         if (agentIsPresent)
@@ -1283,7 +1305,7 @@ public class AgentsTests : AgentsTestBase
 
         CancellationTokenSource cts = new(TimeSpan.FromSeconds(60));
 
-        AgentDefinition agentDefinition = new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+        AgentDefinition agentDefinition = new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that happens to always talk like a pirate.",
             Tools =
@@ -1379,7 +1401,7 @@ public class AgentsTests : AgentsTestBase
                 { }
             }),
             PipelinePosition.BeforeTransport);
-        AIProjectClient client = CreateProxyFromClient(new AIProjectClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), TestEnvironment.Credential, options));
+        AIProjectClient client = CreateProxyFromClient(new AIProjectClient(new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options));
 
         RequestOptions protocolRequestOptions = new();
         protocolRequestOptions.AddHeader("User-Agent", "DotnetTestMyProtocolUserAgent");
@@ -1388,7 +1410,7 @@ public class AgentsTests : AgentsTestBase
             BinaryContent.Create(
                 BinaryData.FromString($$"""
                     {
-                      "model": "{{TestEnvironment.MODELDEPLOYMENTNAME}}",
+                      "model": "{{TestEnvironment.FOUNDRY_MODEL_NAME}}",
                       "input": [{"type":"message","role":"user","content":"hello, model!"}]
                     }
                     """)),
@@ -1401,7 +1423,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestHostedAgentCreation()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        Uri uriEndpoint = new(TestEnvironment.PROJECT_ENDPOINT);
+        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
@@ -1414,10 +1436,10 @@ public class AgentsTests : AgentsTestBase
             Image = TestEnvironment.AGENT_DOCKER_IMAGE,
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.MODELDEPLOYMENTNAME },
+                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME },
                 // Optional variables, used for logging
                 { "APPLICATIONINSIGHTS_CONNECTION_STRING", TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING },
-                { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.PROJECT_ENDPOINT },
+                { "AGENT_PROJECT_RESOURCE_ID", TestEnvironment.FOUNDRY_PROJECT_ENDPOINT },
             }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
@@ -1435,7 +1457,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        PromptAgentDefinition agentDefinition = new(TestEnvironment.MODELDEPLOYMENTNAME)
+        DeclarativeAgentDefinition agentDefinition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = "You are a helpful agent that uses tools to answer questions.",
         };
@@ -1519,6 +1541,7 @@ public class AgentsTests : AgentsTestBase
 
     private bool ContainsAnnotation(ResponseItem item, ToolType type)
     {
+        StringBuilder sbAnnotations = new();
         bool isUriCitationFound = false;
         if (item is MessageResponseItem messageItem)
         {
@@ -1529,18 +1552,67 @@ public class AgentsTests : AgentsTestBase
                     if (annotation is UriCitationMessageAnnotation uriAnnotation)
                     {
                         isUriCitationFound = true;
-                        Assert.That(uriAnnotation.Title, Does.Contain(ExpectedAnnotationTitle[type]), $"Wrong citation title {uriAnnotation.Title}, should be \"product_info_7.md\"");
-                        // The next check is disabled, because of an ADO issue 4836442.
-                        // Assert.That(uriAnnotation.Uri, Does.Contain("www.microsoft.com"), $"Wrong citation title {uriAnnotation.Uri}, should be \"www.microsoft.com\"");
+                        if (ExpectedAnnotationTitle.TryGetValue(type,out string expectedTitle))
+                        {
+                            if (uriAnnotation.Title.ToLower().Contains(expectedTitle.ToLower()))
+                            {
+                                isUriCitationFound = true;
+                                break;
+                            }
+                            else
+                            {
+                                sbAnnotations.Append($"[{uriAnnotation.Title}]({uriAnnotation.Uri})\n");
+                                // The next check is disabled, because of an ADO issue 4836442.
+                                // Assert.That(uriAnnotation.Uri, Does.Contain("www.microsoft.com"), $"Wrong citation title {uriAnnotation.Uri}, should be \"www.microsoft.com\"");
+                            }
+                        }
+                        else
+                        {
+                            isUriCitationFound = true;
+                            break;
+                        }
                     }
                     else
                     {
                         Assert.Fail($"Found unexpected annotation {annotation}");
                     }
                 }
+                if (isUriCitationFound)
+                {
+                    break;
+                }
             }
         }
+        if (!isUriCitationFound && sbAnnotations.Length > 0)
+        {
+            Assert.Fail($"Found wrong citations:\n{sbAnnotations}");
+        }
         return isUriCitationFound;
+    }
+
+    private static async Task<bool> ContainsDownloadableFileAnnotation(ResponseItem item, AIProjectClient projectClient)
+    {
+        ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+        ContainerFileCitationMessageAnnotation containerAnnotation = null;
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is ContainerFileCitationMessageAnnotation cntrAnnotation)
+                    {
+                        containerAnnotation = cntrAnnotation;
+                    }
+                }
+            }
+        }
+        if (containerAnnotation is null)
+        {
+            return false;
+        }
+        BinaryData fileData = await containerClient.DownloadContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
+        return !fileData.IsEmpty;
     }
 
     private static readonly string s_HelloWorkflowYaml = """

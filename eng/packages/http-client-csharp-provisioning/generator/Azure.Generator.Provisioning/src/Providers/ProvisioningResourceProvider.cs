@@ -15,6 +15,8 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -22,7 +24,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Provisioning.Providers
 {
     /// <summary>
-    /// Generates a ProvisionableResource subclass from an InputModelType + ResourceMetadata.
+    /// Generates a ProvisionableResource subclass from an InputModelType + ArmResourceMetadata.
     /// Flattens the ARM "properties" bag, includes system properties from the base model chain,
     /// and generates ResourceVersions, FromExisting, and the resource constructor.
     /// </summary>
@@ -49,9 +51,22 @@ namespace Azure.Generator.Provisioning.Providers
         };
 
         private readonly InputModelType _inputModel;
-        private readonly ResourceMetadata? _resourceMetadata;
+        private readonly ArmResourceMetadata? _resourceMetadata;
         private readonly string? _defaultApiVersion;
+        /// <summary>
+        /// All collected properties for the resource, including flattened and inherited ones,
+        /// with their resolved isOutput/isRequired/bicepPath metadata.
+        /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
+        /// </summary>
         private readonly List<ResourcePropertyInfo> _allProperties;
+        /// <summary>
+        /// Serialized property names that are writable in the create/update request body model.
+        /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
+        /// its properties may be marked readOnly even though the create body accepts them as input.
+        /// This set is used during <see cref="_allProperties"/> construction to avoid incorrectly
+        /// marking such properties as output-only.
+        /// </summary>
+        private readonly HashSet<string> _createBodyWritableProperties;
 
         private FieldProvider? _parentField;
         private PropertyProvider? _parentProperty;
@@ -60,7 +75,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Gets the resource metadata, if this is a base resource type.
         /// </summary>
-        internal ResourceMetadata? ResourceMetadata => _resourceMetadata;
+        internal ArmResourceMetadata? ResourceMetadata => _resourceMetadata;
 
         /// <summary>
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
@@ -86,12 +101,15 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(InputModelType inputModel, ResourceMetadata metadata)
+        public ProvisioningResourceProvider(InputModelType inputModel, ArmResourceMetadata metadata)
             : base(inputModel)
         {
             _inputModel = inputModel;
             _resourceMetadata = metadata;
-            _defaultApiVersion = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
+            _defaultApiVersion = metadata.ApiVersions.Count > 0
+                ? metadata.ApiVersions.Last()
+                : null;
+            _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
         }
 
@@ -104,6 +122,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceMetadata = null;
             _defaultApiVersion = null;
+            _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
         }
 
@@ -216,14 +235,17 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             // Base resource: base(bicepIdentifier, "ResourceType", resourceVersion ?? "defaultVersion")
+            var resourceVersionArg = _defaultApiVersion != null
+                ? (ValueExpression)new BinaryOperatorExpression("??",
+                    resourceVersionParam,
+                    Literal(_defaultApiVersion))
+                : resourceVersionParam;
             var baseInitializer = new ConstructorInitializer(
                 true,
                 [
                     bicepIdentifierParam,
                     Literal(_resourceMetadata!.ResourceType),
-                    new BinaryOperatorExpression("??",
-                        resourceVersionParam,
-                        Literal(_defaultApiVersion!))
+                    resourceVersionArg
                 ]);
 
             var baseSig = new ConstructorSignature(
@@ -253,9 +275,12 @@ namespace Azure.Generator.Provisioning.Providers
             // DefineAdditionalProperties() partial method for customization
             methods.Add(BuildDefineAdditionalPropertiesMethod());
 
-            // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56743): Generate
-            // `GetResourceNameRequirements()` override with min/max length and valid characters
-            // parsed from the ARM spec's @pattern/@minLength/@maxLength decorators.
+            // GetResourceNameRequirements() override — only for base resource types
+            var nameRequirementsMethod = BuildGetResourceNameRequirementsMethod(_resourceMetadata, this);
+            if (nameRequirementsMethod != null)
+            {
+                methods.Add(nameRequirementsMethod);
+            }
 
             return [.. methods];
         }
@@ -266,18 +291,62 @@ namespace Azure.Generator.Provisioning.Providers
             if (_inputModel.DiscriminatorValue != null)
                 return [];
 
-            var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
-            if (apiVersions.Count == 0)
+            var apiVersions = _resourceMetadata?.ApiVersions;
+            if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
             // ResourceVersions nested class
-            return [new ResourceVersionsProvider(this, _defaultApiVersion!)];
+            return [new ResourceVersionsProvider(this, apiVersions)];
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
             => [];
 
         // ── Property collection ──────────────────────────────────────
+
+        /// <summary>
+        /// Builds a set of serialized property names that are writable in the create/update request body.
+        /// When the resource model is output-only (e.g., ProxyResource with separate create body),
+        /// its properties may be marked readOnly even though the create body has them as writable.
+        /// </summary>
+        private HashSet<string> BuildCreateBodyWritableProperties()
+        {
+            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (_resourceMetadata == null) return result;
+
+            var createMethod = _resourceMetadata.Methods
+                .FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputMethod;
+            if (createMethod == null) return result;
+
+            foreach (var parameter in createMethod.Parameters)
+            {
+                if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType bodyModel)
+                {
+                    CollectWritableProperties(bodyModel, result);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Collects serialized names of writable properties from a model and its base model chain.
+        /// </summary>
+        private static void CollectWritableProperties(InputModelType model, HashSet<string> result)
+        {
+            var current = model;
+            while (current != null)
+            {
+                foreach (var prop in current.Properties)
+                {
+                    if (!prop.IsReadOnly)
+                    {
+                        result.Add(prop.SerializedName ?? prop.Name);
+                    }
+                }
+                current = current.BaseModel;
+            }
+        }
 
         private List<ResourcePropertyInfo> CollectAllProperties()
         {
@@ -345,7 +414,8 @@ namespace Azure.Generator.Provisioning.Providers
                         ? [.. basePath, serializedName]
                         : new[] { serializedName };
 
-                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName))
+                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
+                            && !_createBodyWritableProperties.Contains(serializedName))
                         || OutputOnlyProperties.Contains(serializedName);
                     var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
@@ -497,6 +567,82 @@ namespace Azure.Generator.Provisioning.Providers
             return new MethodProvider(sig, this);
         }
 
+        private static MethodProvider? BuildGetResourceNameRequirementsMethod(ArmResourceMetadata? resourceMetadata, TypeProvider enclosingType)
+        {
+            if (resourceMetadata is null)
+            {
+                return null;
+            }
+
+            var constraints = resourceMetadata.NameConstraints;
+
+            // Only generate the override when the spec actually specifies name constraints
+            if (constraints.Pattern is null && constraints.MinLength is null && constraints.MaxLength is null)
+            {
+                return null;
+            }
+
+            int minLength = constraints.MinLength ?? 1;
+            int maxLength = constraints.MaxLength ?? 24;
+
+            // Parse valid characters from pattern, or use conservative default
+            var validCharacters = constraints.Pattern != null
+                ? constraints.Pattern.ParsePatternToResourceNameCharacters()
+                : ResourceNameCharacters.LowercaseLetters;
+
+            // If parsing produced no characters, fall back to conservative default
+            if (validCharacters == (ResourceNameCharacters)0)
+            {
+                validCharacters = ResourceNameCharacters.LowercaseLetters;
+            }
+
+            // Build the flags expression by OR-ing the individual flag values
+            ValueExpression flagsExpression = BuildResourceNameCharactersExpression(validCharacters);
+
+            var sig = new MethodSignature(
+                "GetResourceNameRequirements",
+                $"Get the requirements for naming this resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                typeof(ResourceNameRequirements),
+                $"Naming requirements.",
+                [],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), [new MemberExpression(typeof(EditorBrowsableState), nameof(EditorBrowsableState.Never))])]);
+
+            var body = New.Instance(
+                typeof(ResourceNameRequirements),
+                [Literal(minLength), Literal(maxLength), flagsExpression]);
+
+            return new MethodProvider(sig, body, enclosingType);
+        }
+
+        private static ValueExpression BuildResourceNameCharactersExpression(ResourceNameCharacters characters)
+        {
+            var flags = new List<ValueExpression>();
+
+            if (characters.HasFlag(ResourceNameCharacters.LowercaseLetters))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.LowercaseLetters));
+            if (characters.HasFlag(ResourceNameCharacters.UppercaseLetters))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.UppercaseLetters));
+            if (characters.HasFlag(ResourceNameCharacters.Numbers))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.Numbers));
+            if (characters.HasFlag(ResourceNameCharacters.Hyphen))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.Hyphen));
+            if (characters.HasFlag(ResourceNameCharacters.Underscore))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.Underscore));
+            if (characters.HasFlag(ResourceNameCharacters.Period))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.Period));
+            if (characters.HasFlag(ResourceNameCharacters.Parentheses))
+                flags.Add(FrameworkEnumValue(ResourceNameCharacters.Parentheses));
+
+            // OR them together
+            var result = flags[0];
+            for (int i = 1; i < flags.Count; i++)
+            {
+                result = new BinaryOperatorExpression("|", result, flags[i]);
+            }
+            return result;
+        }
+
         // ── Type resolution helpers ──────────────────────────────────
 
         private CSharpType GetPropertyType(InputModelProperty prop)
@@ -561,12 +707,12 @@ namespace Azure.Generator.Provisioning.Providers
         private class ResourceVersionsProvider : TypeProvider
         {
             private readonly ProvisioningResourceProvider _parent;
-            private readonly string _defaultApiVersion;
+            private readonly IReadOnlyList<string> _apiVersions;
 
-            public ResourceVersionsProvider(ProvisioningResourceProvider parent, string defaultApiVersion)
+            public ResourceVersionsProvider(ProvisioningResourceProvider parent, IReadOnlyList<string> apiVersions)
             {
                 _parent = parent;
-                _defaultApiVersion = defaultApiVersion;
+                _apiVersions = apiVersions;
             }
 
             protected override string BuildName() => "ResourceVersions";
@@ -582,19 +728,26 @@ namespace Azure.Generator.Provisioning.Providers
 
             protected override FieldProvider[] BuildFields()
             {
-                var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
                 var fields = new List<FieldProvider>();
 
-                foreach (var version in apiVersions.Reverse())
+                foreach (var version in _apiVersions.Reverse())
                 {
-                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_');
+                    var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
+
+                    // Preview API versions are marked with [Experimental] to signal they may change or be removed.
+                    var isPreview = version.Contains("preview", StringComparison.OrdinalIgnoreCase);
+                    var attributes = isPreview
+                        ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
+                        : Array.Empty<AttributeStatement>();
+
                     fields.Add(new FieldProvider(
                         FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly,
                         typeof(string),
                         fieldName,
                         this,
                         description: $"API version \"{version}\".",
-                        initializationValue: Literal(version)));
+                        initializationValue: Literal(version),
+                        attributes: attributes));
                 }
 
                 return [.. fields];
