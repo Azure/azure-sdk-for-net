@@ -276,19 +276,14 @@ stages:
                         EnableNuGetCache: false
                     # When the release pipeline runs from a release/* branch,
                     # sync the csproj and merge changelog entries from the
-                    # release commit into main's versions.
+                    # release commit into main's versions.  Overlay main's
+                    # sdk/ tree while keeping eng/ from the build branch so
+                    # the script and its dependencies remain available.
                     - pwsh: |
-                        # Copy the sync script before switching to main, since
-                        # the script may not yet exist on main.
-                        $tempScript = Join-Path $env:TEMP 'Sync-ReleaseArtifacts.ps1'
-                        Copy-Item 'eng/scripts/Sync-ReleaseArtifacts.ps1' $tempScript
-
-                        # Switch working tree to main so the version-bump PR
-                        # is based on main, then overlay release artifacts.
                         git fetch origin main
-                        git checkout origin/main
-
-                        & $tempScript -PackageName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' -SourceCommit '$(Build.SourceVersion)'
+                        git checkout origin/main -- sdk/
+                        git checkout origin/main -- eng/centralpackagemanagement/
+                        eng/scripts/Sync-ReleaseArtifacts.ps1 -PackageName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' -SourceCommit '$(Build.SourceVersion)'
                       displayName: Sync release artifacts into main
                     - pwsh: |
                         eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -SkipCpmUpdate $false
