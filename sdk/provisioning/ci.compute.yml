@@ -11,10 +11,6 @@ trigger:
     - sdk/provisioning/ci.compute.yml
     - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
-    - sdk/provisioning/Azure.Provisioning.AppContainers
-    - sdk/provisioning/Azure.Provisioning.ApplicationInsights
-    - sdk/provisioning/Azure.Provisioning.AppService
-    - sdk/provisioning/Azure.Provisioning.ContainerService
     - sdk/provisioning/Azure.Provisioning.Deployment
     exclude:
     - sdk/provisioning/Generator/
@@ -28,13 +24,5 @@ extends:
     Artifacts:
     - name: Azure.Provisioning
       safeName: AzureProvisioning
-    - name: Azure.Provisioning.AppContainers
-      safeName: AzureProvisioningAppContainers
-    - name: Azure.Provisioning.ApplicationInsights
-      safeName: AzureProvisioningApplicationInsights
-    - name: Azure.Provisioning.AppService
-      safeName: AzureProvisioningAppService
-    - name: Azure.Provisioning.ContainerService
-      safeName: AzureProvisioningContainerService
     - name: Azure.Provisioning.Deployment
       safeName: AzureProvisioningDeployment

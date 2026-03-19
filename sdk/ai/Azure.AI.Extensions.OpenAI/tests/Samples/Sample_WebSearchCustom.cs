@@ -37,7 +37,7 @@ public class Sample_WebSearchCustomStreaming : ProjectsOpenAITestBase
         AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
         WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
         webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent.",
             Tools = { webSearchTool }
@@ -111,7 +111,7 @@ public class Sample_WebSearchCustomStreaming : ProjectsOpenAITestBase
         AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
         WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
         webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful agent.",
             Tools = { webSearchTool }

@@ -528,7 +528,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             instructions = ToolInstructions[toolType];
         }
 
-        return new PromptAgentDefinition(model ?? TestEnvironment.FOUNDRY_MODEL_NAME)
+        return new DeclarativeAgentDefinition(model ?? TestEnvironment.FOUNDRY_MODEL_NAME)
         {
             Instructions = instructions,
             Tools = { tool },

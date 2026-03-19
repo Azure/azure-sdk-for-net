@@ -67,7 +67,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                 jsonSchema: s_calendarSchema
             )
         };
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                            "and returns it in the desired structured output format.",
@@ -117,7 +117,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
                 jsonSchema: s_calendarSchema
             )
         };
-        PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+        DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
         {
             Instructions = "You are a helpful assistant that extracts calendar event information from the input user messages," +
                            "and returns it in the desired structured output format.",

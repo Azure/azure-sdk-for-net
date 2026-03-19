@@ -197,7 +197,7 @@ public class Sample_Evaluations : SamplesBase
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateAgent_Evaluations_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -356,7 +356,7 @@ public class Sample_Evaluations : SamplesBase
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
         #region Snippet:Sample_CreateAgent_Evaluations_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };

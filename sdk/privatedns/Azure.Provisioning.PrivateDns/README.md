@@ -9,7 +9,7 @@ Azure.Provisioning.PrivateDns simplifies declarative resource provisioning in .N
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.PrivateDns --prerelease
+dotnet add package Azure.Provisioning.PrivateDns
 ```
 
 ### Prerequisites
