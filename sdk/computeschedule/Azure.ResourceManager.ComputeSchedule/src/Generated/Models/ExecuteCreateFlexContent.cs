@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ExecuteCreateFlexContent"/>. </summary>
         /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="correlationid"> Correlationid item. </param>
+        /// <param name="correlationId"> Correlationid item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters, string correlationid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters, ScheduledActionExecutionParameterDetail executionParameters, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceConfigParameters = resourceConfigParameters;
             ExecutionParameters = executionParameters;
-            Correlationid = correlationid;
+            CorrelationId = correlationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
 
         /// <summary> Correlationid item. </summary>
-        public string Correlationid { get; set; }
+        public string CorrelationId { get; set; }
     }
 }

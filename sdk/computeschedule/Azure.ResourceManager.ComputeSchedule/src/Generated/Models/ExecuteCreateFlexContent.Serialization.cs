@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WriteObjectValue(ResourceConfigParameters, options);
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
-            if (Optional.IsDefined(Correlationid))
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationid"u8);
-                writer.WriteStringValue(Correlationid);
+                writer.WriteStringValue(CorrelationId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             ResourceProvisionFlexPayload resourceConfigParameters = default;
             ScheduledActionExecutionParameterDetail executionParameters = default;
-            string correlationid = default;
+            string correlationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("correlationid"u8))
                 {
-                    correlationid = prop.Value.GetString();
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties);
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties);
         }
     }
 }

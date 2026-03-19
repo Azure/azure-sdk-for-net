@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> The ExecuteCreateFlexRequest request for executeCreateFlex operations. </summary>
         /// <param name="resourceConfigParameters"> Resource creation payload with flex properties. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="correlationid"> Correlationid item. </param>
+        /// <param name="correlationId"> Correlationid item. </param>
         /// <returns> A new <see cref="Models.ExecuteCreateFlexContent"/> instance for mocking. </returns>
-        public static ExecuteCreateFlexContent ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationid = default)
+        public static ExecuteCreateFlexContent ExecuteCreateFlexContent(ResourceProvisionFlexPayload resourceConfigParameters = default, ScheduledActionExecutionParameterDetail executionParameters = default, string correlationId = default)
         {
-            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties: null);
+            return new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Resource creation data model for flex VM provisioning. </summary>
