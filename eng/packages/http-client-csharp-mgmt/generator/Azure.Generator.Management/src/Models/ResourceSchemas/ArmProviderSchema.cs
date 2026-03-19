@@ -73,7 +73,16 @@ public class ArmProviderSchema
         {
             if (resource.ParentResourceId is not null)
             {
-                resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
+                if (resourceChildren.TryGetValue(resource.ParentResourceId, out var parentChildren))
+                {
+                    parentChildren.Add(resource.ResourceIdPattern);
+                }
+                else
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Parent resource '{resource.ParentResourceId}' not found for child '{resource.ResourceName}'.");
+                }
             }
         }
 
