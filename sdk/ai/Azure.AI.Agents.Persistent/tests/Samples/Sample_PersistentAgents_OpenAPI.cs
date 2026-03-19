@@ -4,18 +4,12 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Monitor.OpenTelemetry.Exporter;
 using NUnit.Framework;
-using OpenTelemetry;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace Azure.AI.Agents.Persistent.Tests;
 
@@ -128,107 +122,78 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
-                        .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-                        .AddConsoleExporter() // Export traces to the console
-                        .Build();
+        PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
+        var file_path = GetFile();
 
-        using (tracerProvider)
+        #region Snippet:AgentsOpenAPISyncDefineFunctionTools
+        OpenApiAnonymousAuthDetails oaiAuth = new();
+        OpenApiToolDefinition openapiTool = new(
+            name: "get_weather",
+            description: "Retrieve weather information for a location",
+            spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
+            openApiAuthentication: oaiAuth,
+            defaultParams: ["format"]
+        );
+
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
+        PersistentAgent agent = client.Administration.CreateAgent(
+            model: modelDeploymentName,
+            name: "azure-function-agent-foo",
+            instructions: "You are a helpful agent.",
+            tools: [openapiTool]
+        );
+        #endregion
+
+        #region Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
+        PersistentAgentThread thread = client.Threads.CreateThread();
+        PersistentThreadMessage message = client.Messages.CreateMessage(
+            thread.Id,
+            MessageRole.User,
+            "What's the weather in Seattle?");
+
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
+
+        do
         {
-            PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
-            var file_path = GetFile();
-
-            #region Snippet:AgentsOpenAPISyncDefineFunctionTools
-            OpenApiAnonymousAuthDetails oaiAuth = new();
-            OpenApiToolDefinition openapiTool = new(
-                name: "get_weather",
-                description: "Retrieve weather information for a location",
-                spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
-                openApiAuthentication: oaiAuth,
-                defaultParams: ["format"]
-            );
-
-            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
-            PersistentAgent agent = client.Administration.CreateAgent(
-                model: modelDeploymentName,
-                name: "azure-function-agent-foo",
-                instructions: "You are a helpful agent.",
-                tools: [openapiTool]
-            );
-            #endregion
-
-            #region Snippet:AgentsOpenAPISyncHandlePollingWithRequiredAction
-            PersistentAgentThread thread = client.Threads.CreateThread();
-            PersistentThreadMessage message = client.Messages.CreateMessage(
-                thread.Id,
-                MessageRole.User,
-                "What's the weather in Seattle?");
-
-            //ThreadRun run = client.Runs.CreateRun(thread, agent);
-            foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming(thread.Id, agent.Id))
-            {
-                if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
-                {
-                    Console.WriteLine("--- Run started! ---");
-                }
-                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunStepFailed)
-                {
-                    if (streamingUpdate is RunStepUpdate upd)
-                    {
-                        Console.WriteLine(upd.Value.LastError.Message);
-                    }
-                    Console.WriteLine("--- Run errored out! ---");
-                }
-                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("--- Run completed! ---");
-                }
-            }
-
-            //do
-            //{
-            //    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-            //    run = client.Runs.GetRun(thread.Id, run.Id);
-            //}
-            //while (run.Status == RunStatus.Queued
-            //    || run.Status == RunStatus.InProgress
-            //    || run.Status == RunStatus.RequiresAction);
-            //Assert.AreEqual(
-            //    RunStatus.Completed,
-            //    run.Status,
-            //    run.LastError?.Message);
-            #endregion
-
-            #region Snippet:AgentsOpenAPISync_Print
-            Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
-                threadId: thread.Id,
-                order: ListSortOrder.Ascending
-            );
-
-            foreach (PersistentThreadMessage threadMessage in messages)
-            {
-                Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-                foreach (MessageContent contentItem in threadMessage.ContentItems)
-                {
-                    if (contentItem is MessageTextContent textItem)
-                    {
-                        Console.Write(textItem.Text);
-                    }
-                    else if (contentItem is MessageImageFileContent imageFileItem)
-                    {
-                        Console.Write($"<image from ID: {imageFileItem.FileId}");
-                    }
-                    Console.WriteLine();
-                }
-            }
-            #endregion
-            #region Snippet:AgentsOpenAPISync_Cleanup
-            // NOTE: Comment out these two lines if you plan to reuse the agent later.
-            client.Threads.DeleteThread(thread.Id);
-            client.Administration.DeleteAgent(agent.Id);
-            #endregion
+            Thread.Sleep(TimeSpan.FromMilliseconds(500));
+            run = client.Runs.GetRun(thread.Id, run.Id);
         }
+        while (run.Status == RunStatus.Queued
+            || run.Status == RunStatus.InProgress
+            || run.Status == RunStatus.RequiresAction);
+        Assert.AreEqual(
+            RunStatus.Completed,
+            run.Status,
+            run.LastError?.Message);
+        #endregion
+
+        #region Snippet:AgentsOpenAPISync_Print
+        Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
+            threadId: thread.Id,
+            order: ListSortOrder.Ascending
+        );
+
+        foreach (PersistentThreadMessage threadMessage in messages)
+        {
+            Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+            foreach (MessageContent contentItem in threadMessage.ContentItems)
+            {
+                if (contentItem is MessageTextContent textItem)
+                {
+                    Console.Write(textItem.Text);
+                }
+                else if (contentItem is MessageImageFileContent imageFileItem)
+                {
+                    Console.Write($"<image from ID: {imageFileItem.FileId}");
+                }
+                Console.WriteLine();
+            }
+        }
+        #endregion
+        #region Snippet:AgentsOpenAPISync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
+        client.Threads.DeleteThread(thread.Id);
+        client.Administration.DeleteAgent(agent.Id);
+        #endregion
     }
 }
