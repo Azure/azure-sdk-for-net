@@ -46,7 +46,7 @@ namespace Azure.Storage
         /// </summary>
         public const ServiceVersion LatestVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK || BlobDataMovementSDK || ShareDataMovementSDK
-            ServiceVersion.V2026_04_06;
+            ServiceVersion.V2026_06_06;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
