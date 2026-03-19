@@ -63,17 +63,21 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
+#pragma warning disable CS0618 // Type or member is obsolete
             MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+#pragma warning restore CS0618 // Type or member is obsolete
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
+#pragma warning disable CS0618 // Type or member is obsolete
             if (availableSource == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential && !_probeRequestSent)
             {
                 var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
                 _probeRequestSent = true;
                 return probedFlowTokenResult;
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
             if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,7 +20,12 @@ namespace Resiliency.ServiceDriven
 
         public ResiliencyServiceDrivenClient(Uri endpoint, string serviceDeploymentVersion) : this(endpoint, serviceDeploymentVersion, new ResiliencyServiceDrivenClientOptions()) => throw null;
 
-        public ResiliencyServiceDrivenClient(Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) => throw null;
+        internal ResiliencyServiceDrivenClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) => throw null;
+
+        public ResiliencyServiceDrivenClient(Uri endpoint, string serviceDeploymentVersion, ResiliencyServiceDrivenClientOptions options) : this(null, endpoint, serviceDeploymentVersion, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public ResiliencyServiceDrivenClient(ResiliencyServiceDrivenClientSettings settings) : this(null, settings?.Endpoint, settings?.ServiceDeploymentVersion, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

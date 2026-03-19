@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.Payload.Pageable
 {
     public partial class PageableClientOptions : ClientOptions
     {
+        public PageableClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal PageableClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

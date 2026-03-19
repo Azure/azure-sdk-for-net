@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Text;
 using NUnit.Framework;
 
@@ -146,6 +147,38 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.AreEqual(shouldBeEqual, func1.GetHashCode() == func2.GetHashCode());
         }
 
+        [Test]
+        [TestCase("Mock error", "MockEvent")]
+        [TestCase("Mock error", "")]
+        [TestCase("Mock error", null)]
+        [TestCase("", "MockEvent")]
+        [TestCase("", "")]
+        [TestCase("", null)]
+        [TestCase("long", "MockEvent")]
+        public void TestSseError(string errorText, string eventType)
+        {
+            string expectedError = errorText;
+            string expectedEvent = string.IsNullOrEmpty(eventType) ? "<Unknown>" : eventType;
+            if (eventType == null)
+            {
+                expectedEvent = SseParser.EventTypeDefault;
+            }
+            if (string.Equals(errorText, "long"))
+            {
+                StringBuilder sb = new();
+                for (int i=0; i<500; i++)
+                {
+                    sb.Append("Really long string ");
+                }
+                errorText = sb.ToString();
+                sb.Remove(500, sb.Length - 500);
+                sb.Append("...");
+                expectedError = sb.ToString();
+            }
+            SseItem<byte[]> badItem = new(Encoding.UTF8.GetBytes(errorText), eventType);
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => StreamingUpdate.FromEvent(badItem));
+            Assert.That(exception.Message.StartsWith($"The stream returned invalid JSON: \"{expectedError}\" for event of type {expectedEvent}. Original error:"), Is.True, exception.Message);
+        }
         #region helpers
         private static void AssertMcpListsEqual(IEnumerable<string> expectedAlways, IEnumerable<string> expectedNever, MCPApprovalPerTool observedApproval)
         {

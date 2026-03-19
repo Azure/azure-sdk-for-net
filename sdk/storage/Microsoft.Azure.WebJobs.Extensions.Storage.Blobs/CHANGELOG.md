@@ -1,16 +1,10 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.3.8 (2026-03-19)
 
 ### Bugs Fixed
 - Fixed a bug where polling for new blobs could permanently miss blobs that were created or modified while a multi-request blob listing scan was in progress (#51030).
 - Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
-
-### Other Changes
 
 ## 5.3.7 (2025-10-29)
 

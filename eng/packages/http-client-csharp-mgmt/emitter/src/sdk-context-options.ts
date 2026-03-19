@@ -114,6 +114,11 @@ export const armProviderSchema =
 export const flattenPropertyDecorator =
   "Azure.ResourceManager.@flattenProperty";
 
+// TypeSpec validation decorators for resource name constraints
+const patternRegex = "TypeSpec\\.@pattern";
+const minLengthRegex = "TypeSpec\\.@minLength";
+const maxLengthRegex = "TypeSpec\\.@maxLength";
+
 export const azureSDKContextOptions: CreateSdkContextOptions = {
   versioning: {
     previewStringRegex: /-preview$/
@@ -136,6 +141,9 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     subscriptionResourceRegex,
     tenantResourceRegex,
     armResourceWithParameterRegex,
-    customAzureResourceRegex
+    customAzureResourceRegex,
+    patternRegex,
+    minLengthRegex,
+    maxLengthRegex
   ]
 };

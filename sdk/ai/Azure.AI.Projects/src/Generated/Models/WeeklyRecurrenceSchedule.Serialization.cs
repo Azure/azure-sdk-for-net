@@ -4,7 +4,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
@@ -66,25 +65,6 @@ namespace Azure.AI.Projects
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WeeklyRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(WeeklyRecurrenceSchedule)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("daysOfWeek"u8);
-            writer.WriteStartArray();
-            foreach (DayOfWeek item in DaysOfWeek)
-            {
-                writer.WriteStringValue(item.ToString());
-            }
-            writer.WriteEndArray();
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         WeeklyRecurrenceSchedule IJsonModel<WeeklyRecurrenceSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WeeklyRecurrenceSchedule)JsonModelCreateCore(ref reader, options);
@@ -100,42 +80,6 @@ namespace Azure.AI.Projects
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWeeklyRecurrenceSchedule(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WeeklyRecurrenceSchedule DeserializeWeeklyRecurrenceSchedule(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            RecurrenceType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<DayOfWeek> daysOfWeek = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new RecurrenceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("daysOfWeek"u8))
-                {
-                    List<DayOfWeek> array = new List<DayOfWeek>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new DayOfWeek(item.GetString()));
-                    }
-                    daysOfWeek = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new WeeklyRecurrenceSchedule(@type, additionalBinaryDataProperties, daysOfWeek);
         }
     }
 }

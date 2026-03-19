@@ -23,11 +23,11 @@ public class Sample_AIInference : SamplesBase
     {
         #region Snippet:AI_Projects_ChatClientSync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -59,11 +59,11 @@ public class Sample_AIInference : SamplesBase
     {
         #region Snippet:AI_Projects_ChatClientAsync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -95,11 +95,11 @@ public class Sample_AIInference : SamplesBase
     {
         #region Snippet:AI_Projects_EmbeddingSync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDING_MODEL_NAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -132,11 +132,11 @@ public class Sample_AIInference : SamplesBase
     {
         #region Snippet:AI_Projects_EmbeddingAsync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDING_MODEL_NAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -169,11 +169,11 @@ public class Sample_AIInference : SamplesBase
     {
         #region Snippet:AI_Projects_ImageEmbeddingSync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDING_MODEL_NAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -226,11 +226,11 @@ public class Sample_AIInference : SamplesBase
     {
         #region Snippet:AI_Projects_ImageEmbeddingAsync
 #if SNIPPET
-        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
 #else
-        var projectEndpoint = new Uri(TestEnvironment.PROJECT_ENDPOINT);
-        var modelDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
+        var projectEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        var modelDeploymentName = TestEnvironment.EMBEDDING_MODEL_NAME;
 #endif
         var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -280,8 +280,8 @@ public class Sample_AIInference : SamplesBase
     // [Test]
     // public void ThrowsWhenNoConnection()
     // {
-    //     var endpoint = TestEnvironment.PROJECTENDPOINT;
-    //     var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+    //     var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+    //     var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
     //     AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
     //     var ex = Assert.Throws<InvalidOperationException>(() =>

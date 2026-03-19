@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(weightsAndBiasesInstancePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(weightsAndBiasesInstancePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

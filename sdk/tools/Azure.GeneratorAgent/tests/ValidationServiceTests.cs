@@ -99,4 +99,72 @@ public class ValidationServiceTests
             Directory.Delete(tempPath, true);
         }
     }
+
+    [Test]
+    public void ValidateLocalSpecsPath_WithNullPath_ThrowsArgumentException()
+    {
+        var loggerMock = new Mock<ILogger<ValidationService>>();
+        var validator = new ValidationService(loggerMock.Object);
+
+        Assert.Throws<ArgumentException>(() => validator.ValidateLocalSpecsPath(null!));
+    }
+
+    [Test]
+    public void ValidateLocalSpecsPath_WithEmptyPath_ThrowsArgumentException()
+    {
+        var loggerMock = new Mock<ILogger<ValidationService>>();
+        var validator = new ValidationService(loggerMock.Object);
+
+        Assert.Throws<ArgumentException>(() => validator.ValidateLocalSpecsPath(string.Empty));
+    }
+
+    [Test]
+    public void ValidateLocalSpecsPath_WithNonExistentDirectory_ThrowsDirectoryNotFoundException()
+    {
+        var loggerMock = new Mock<ILogger<ValidationService>>();
+        var validator = new ValidationService(loggerMock.Object);
+        var nonExistentPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
+        Assert.Throws<DirectoryNotFoundException>(() => validator.ValidateLocalSpecsPath(nonExistentPath));
+    }
+
+    [Test]
+    public void ValidateLocalSpecsPath_WithDirectoryMissingTspConfig_ThrowsFileNotFoundException()
+    {
+        var loggerMock = new Mock<ILogger<ValidationService>>();
+        var validator = new ValidationService(loggerMock.Object);
+        var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempPath);
+
+        try
+        {
+            Assert.Throws<FileNotFoundException>(() => validator.ValidateLocalSpecsPath(tempPath));
+        }
+        finally
+        {
+            Directory.Delete(tempPath, true);
+        }
+    }
+
+    [Test]
+    public void ValidateLocalSpecsPath_WithValidDirectory_ReturnsAbsolutePath()
+    {
+        var loggerMock = new Mock<ILogger<ValidationService>>();
+        var validator = new ValidationService(loggerMock.Object);
+        var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Directory.CreateDirectory(tempPath);
+        File.WriteAllText(Path.Combine(tempPath, "tspconfig.yaml"), "emitter: test");
+
+        try
+        {
+            var result = validator.ValidateLocalSpecsPath(tempPath);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(Path.IsPathFullyQualified(result), Is.True);
+        }
+        finally
+        {
+            Directory.Delete(tempPath, true);
+        }
+    }
 }

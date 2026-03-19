@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,6 +16,8 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
     public partial class BlobOperations
     {
         protected BlobOperations() => throw null;
+
+        internal BlobOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string storageAccount) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

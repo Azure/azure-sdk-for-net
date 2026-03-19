@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(virtualEnclaveTransitHubData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(virtualEnclaveTransitHubData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualEnclaveTransitHubData"/> from. </param>
