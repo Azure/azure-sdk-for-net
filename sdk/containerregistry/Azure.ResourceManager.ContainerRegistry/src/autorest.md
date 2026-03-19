@@ -9,7 +9,7 @@ library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
 # Temporarily releasing the SDK from the Swagger specification; this will be updated once support for generating SDKs from multiple TypeSpec sources is available.
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/8d49f2f199f76eb8a80662de72a30909699f5c28/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/containerregistry.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/4ab67896de206f57818ab7a3fa32bcc2745c8198/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/containerregistry.json
   - https://github.com/Azure/azure-rest-api-specs/blob/6fb4ee637122d3105eaa2d3cf4ed7689d3407413/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/RegistryTasks/preview/2025-03-01-preview/containerregistry_build.json
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
