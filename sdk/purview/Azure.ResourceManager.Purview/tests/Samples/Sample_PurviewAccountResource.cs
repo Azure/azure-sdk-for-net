@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            AccountResource result = await purviewAccount.GetAsync();
+            PurviewAccountResource result = await purviewAccount.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PurviewAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
             await purviewAccount.DeleteAsync(WaitUntil.Completed);
@@ -84,28 +84,28 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            AccountPatch patch = new AccountPatch
+            PurviewAccountPatch patch = new PurviewAccountPatch
             {
                 Tags =
 {
 ["newTag"] = "New tag value."
 },
             };
-            ArmOperation<AccountResource> lro = await purviewAccount.UpdateAsync(WaitUntil.Completed, patch);
-            AccountResource result = lro.Value;
+            ArmOperation<PurviewAccountResource> lro = await purviewAccount.UpdateAsync(WaitUntil.Completed, patch);
+            PurviewAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PurviewAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
             CollectionAdminUpdateContent content = new CollectionAdminUpdateContent
@@ -152,13 +152,13 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
             PurviewAccountAccessKey result = await purviewAccount.GetKeysAsync();
@@ -178,20 +178,20 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
             PurviewBatchFeatureContent content = new PurviewBatchFeatureContent
             {
                 Features = { "Feature1", "Feature2", "FeatureThatDoesntExist" },
             };
-            PurviewBatchFeatureStatus result = await purviewAccount.AccountGetAsync(content);
+            PurviewBatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -208,16 +208,16 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PrivateEndpointConnectionResource item in purviewAccount.GetAllAsync())
+            await foreach (PurviewPrivateEndpointConnectionResource item in purviewAccount.GetIngestionPrivateEndpointConnectionsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -241,13 +241,13 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
             PrivateEndpointConnectionStatusUpdateContent content = new PrivateEndpointConnectionStatusUpdateContent
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Purview.Samples
                 PrivateEndpointId = "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/SampleResourceGroup/providers/Microsoft.Purview/accounts/account1/privateEndpointConnections/privateEndpointConnection1",
                 Status = "Approved",
             };
-            PrivateEndpointConnectionStatusUpdateResult result = await purviewAccount.UpdateStatusAsync(content);
+            PrivateEndpointConnectionStatusUpdateResult result = await purviewAccount.UpdateStatusIngestionPrivateEndpointConnectionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

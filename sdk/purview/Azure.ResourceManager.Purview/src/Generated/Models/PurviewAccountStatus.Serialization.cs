@@ -13,12 +13,12 @@ using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Gets or sets the status of the account. </summary>
-    public partial class PurviewAccountStatus : AccountStatus, IJsonModel<PurviewAccountStatus>
+    /// <summary> The account status. </summary>
+    public partial class PurviewAccountStatus : IJsonModel<PurviewAccountStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AccountStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PurviewAccountStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewAccountStatus IPersistableModel<PurviewAccountStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => (PurviewAccountStatus)PersistableModelCreateCore(data, options);
+        PurviewAccountStatus IPersistableModel<PurviewAccountStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PurviewAccountStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,23 +67,47 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewAccountStatus)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(AccountProvisioningState))
+            {
+                writer.WritePropertyName("accountProvisioningState"u8);
+                writer.WriteStringValue(AccountProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteObjectValue(ErrorDetails, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewAccountStatus IJsonModel<PurviewAccountStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PurviewAccountStatus)JsonModelCreateCore(ref reader, options);
+        PurviewAccountStatus IJsonModel<PurviewAccountStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AccountStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PurviewAccountStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

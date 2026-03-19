@@ -14,52 +14,52 @@ using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The managed resources in customer subscription. </summary>
-    public partial class ManagedResources : IJsonModel<ManagedResources>
+    /// <summary> Gets the resource identifiers of the managed resources. </summary>
+    public partial class AccountPropertiesManagedResources : PurviewManagedResource, IJsonModel<AccountPropertiesManagedResources>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedResources PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override PurviewManagedResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedResources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesManagedResources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedResources(document.RootElement, options);
+                        return DeserializeAccountPropertiesManagedResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedResources)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountPropertiesManagedResources)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedResources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesManagedResources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedResources)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountPropertiesManagedResources)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedResources>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AccountPropertiesManagedResources>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedResources IPersistableModel<ManagedResources>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AccountPropertiesManagedResources IPersistableModel<AccountPropertiesManagedResources>.Create(BinaryData data, ModelReaderWriterOptions options) => (AccountPropertiesManagedResources)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AccountPropertiesManagedResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AccountPropertiesManagedResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,65 +68,36 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedResources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesManagedResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedResources)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountPropertiesManagedResources)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(EventHubNamespace))
-            {
-                writer.WritePropertyName("eventHubNamespace"u8);
-                writer.WriteStringValue(EventHubNamespace);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
-            {
-                writer.WritePropertyName("resourceGroup"u8);
-                writer.WriteStringValue(ResourceGroup);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccount))
-            {
-                writer.WritePropertyName("storageAccount"u8);
-                writer.WriteStringValue(StorageAccount);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedResources IJsonModel<ManagedResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AccountPropertiesManagedResources IJsonModel<AccountPropertiesManagedResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AccountPropertiesManagedResources)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedResources JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override PurviewManagedResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedResources>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesManagedResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedResources)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountPropertiesManagedResources)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedResources(document.RootElement, options);
+            return DeserializeAccountPropertiesManagedResources(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedResources DeserializeManagedResources(JsonElement element, ModelReaderWriterOptions options)
+        internal static AccountPropertiesManagedResources DeserializeAccountPropertiesManagedResources(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +141,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedResources(eventHubNamespace, resourceGroup, storageAccount, additionalBinaryDataProperties);
+            return new AccountPropertiesManagedResources(eventHubNamespace, resourceGroup, storageAccount, additionalBinaryDataProperties);
         }
     }
 }

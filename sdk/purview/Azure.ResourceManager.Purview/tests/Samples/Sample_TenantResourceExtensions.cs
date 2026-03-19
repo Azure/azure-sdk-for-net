@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Purview.Samples
             string scopeTenantId = "ee85a74c-405e-4adc-bb47-ffa8ca0c9f31";
             PurviewAccountScopeType scopeType = PurviewAccountScopeType.Tenant;
             string scope = "12345678-1234-1234-1234-12345678abcd";
-            DefaultPurviewAccountPayload result = await tenantResource.GetAsync(scopeTenantId, scopeType, scope: scope);
+            DefaultPurviewAccountPayload result = await tenantResource.GetDefaultAccountAsync(scopeTenantId, scopeType, scope: scope);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Purview.Samples
             string scopeTenantId = "ee85a74c-405e-4adc-bb47-ffa8ca0c9f31";
             PurviewAccountScopeType scopeType = PurviewAccountScopeType.Tenant;
             string scope = "12345678-1234-1234-1234-12345678abcd";
-            await tenantResource.RemoveAsync(scopeTenantId, scopeType, scope: scope);
+            await tenantResource.RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope: scope);
 
             Console.WriteLine("Succeeded");
         }
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Purview.Samples
                 AccountName = "myDefaultAccount",
                 ResourceGroupName = "rg-1",
                 Scope = "12345678-1234-1234-1234-12345678abcd",
-                ScopeTenantId = "12345678-1234-1234-1234-12345678abcd",
+                ScopeTenantId = Guid.Parse("12345678-1234-1234-1234-12345678abcd"),
                 ScopeType = PurviewAccountScopeType.Tenant,
                 SubscriptionId = "12345678-1234-1234-1234-12345678aaaa",
             };
-            DefaultPurviewAccountPayload result = await tenantResource.SetAsync(defaultAccountPayload);
+            DefaultPurviewAccountPayload result = await tenantResource.SetDefaultAccountAsync(defaultAccountPayload);
 
             Console.WriteLine($"Succeeded: {result}");
         }

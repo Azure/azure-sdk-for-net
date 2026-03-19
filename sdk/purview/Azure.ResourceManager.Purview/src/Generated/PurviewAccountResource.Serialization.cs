@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Purview
     {
         private static IJsonModel<PurviewAccountData> s_dataDeserializationInstance;
 
-        private static IJsonModel<PurviewAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PurviewAccountData(default);
+        private static IJsonModel<PurviewAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PurviewAccountData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

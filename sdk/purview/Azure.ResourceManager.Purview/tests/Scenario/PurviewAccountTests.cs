@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
     internal class PurviewAccountTests : PurviewManagementTestBase
     {
         private const string _purviewAccountPrefix = "PurviewAccount";
-        private AccountCollection _purviewAccountCollection;
+        private PurviewAccountCollection _purviewAccountCollection;
 
         public PurviewAccountTests(bool isAsync) : base(isAsync)
         {
@@ -29,15 +29,14 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
         public async Task TestSetUp()
         {
             var rg = await CreateResourceGroup();
-            _purviewAccountCollection = rg.GetAccounts();
+            _purviewAccountCollection = rg.GetPurviewAccounts();
         }
 
-        private async Task<AccountResource> CreatePurviewAccount(string accountName)
+        private async Task<PurviewAccountResource> CreatePurviewAccount(string accountName)
         {
-            AccountData data = new AccountData()
+            PurviewAccountData data = new PurviewAccountData(DefaultLocation)
             {
-                Location = DefaultLocation,
-                Identity = new Azure.ResourceManager.Purview.Models.Identity() { Type = ManagedIdentityType.SystemAssigned }
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             var purviewAccountLro = await _purviewAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
 
@@ -102,14 +101,14 @@ namespace Azure.ResourceManager.Purview.Samples.Scenario
             Assert.AreEqual(0, purviewAccount.Data.Tags.Count);
         }
 
-        private void ValidatePurviewAccount(AccountData purviewAccount, string purviewAccountName)
+        private void ValidatePurviewAccount(PurviewAccountData purviewAccount, string purviewAccountName)
         {
             Assert.IsNotNull(purviewAccount);
             Assert.IsNotEmpty(purviewAccount.Id);
             Assert.AreEqual(purviewAccountName, purviewAccount.Name);
             Assert.AreEqual(DefaultLocation, purviewAccount.Location);
             Assert.AreEqual("Standard", purviewAccount.Sku.Name.ToString());
-            Assert.AreEqual("SystemAssigned", purviewAccount.Identity.Type.ToString());
+            Assert.AreEqual("SystemAssigned", purviewAccount.Identity.ManagedServiceIdentityType.ToString());
         }
     }
 }

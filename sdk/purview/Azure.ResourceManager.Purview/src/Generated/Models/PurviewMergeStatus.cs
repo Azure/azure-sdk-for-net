@@ -12,7 +12,7 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The status of the merge operation. </summary>
-    public readonly partial struct MergeStatus : IEquatable<MergeStatus>
+    public readonly partial struct PurviewMergeStatus : IEquatable<PurviewMergeStatus>
     {
         private readonly string _value;
         /// <summary> Succeeded. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> InProgress. </summary>
         private const string InProgressValue = "InProgress";
 
-        /// <summary> Initializes a new instance of <see cref="MergeStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewMergeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MergeStatus(string value)
+        public PurviewMergeStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Succeeded. </summary>
-        public static MergeStatus Succeeded { get; } = new MergeStatus(SucceededValue);
+        public static PurviewMergeStatus Succeeded { get; } = new PurviewMergeStatus(SucceededValue);
 
         /// <summary> Failed. </summary>
-        public static MergeStatus Failed { get; } = new MergeStatus(FailedValue);
+        public static PurviewMergeStatus Failed { get; } = new PurviewMergeStatus(FailedValue);
 
         /// <summary> InProgress. </summary>
-        public static MergeStatus InProgress { get; } = new MergeStatus(InProgressValue);
+        public static PurviewMergeStatus InProgress { get; } = new PurviewMergeStatus(InProgressValue);
 
-        /// <summary> Determines if two <see cref="MergeStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PurviewMergeStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MergeStatus left, MergeStatus right) => left.Equals(right);
+        public static bool operator ==(PurviewMergeStatus left, PurviewMergeStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MergeStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PurviewMergeStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MergeStatus left, MergeStatus right) => !left.Equals(right);
+        public static bool operator !=(PurviewMergeStatus left, PurviewMergeStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MergeStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PurviewMergeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MergeStatus(string value) => new MergeStatus(value);
+        public static implicit operator PurviewMergeStatus(string value) => new PurviewMergeStatus(value);
 
-        /// <summary> Converts a string to a <see cref="MergeStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PurviewMergeStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MergeStatus?(string value) => value == null ? null : new MergeStatus(value);
+        public static implicit operator PurviewMergeStatus?(string value) => value == null ? null : new PurviewMergeStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MergeStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is PurviewMergeStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MergeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PurviewMergeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

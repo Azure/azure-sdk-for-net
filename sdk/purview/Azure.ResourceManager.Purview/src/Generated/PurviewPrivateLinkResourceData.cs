@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary> The private link resource properties. </summary>
-        // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
         public PurviewPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> The private link resource group identifier. </summary>

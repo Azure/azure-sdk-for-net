@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Purview.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (AccountResource item in subscriptionResource.GetAccountsAsync())
+            await foreach (PurviewAccountResource item in subscriptionResource.GetPurviewAccountsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountData resourceData = item.Data;
+                PurviewAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountNameAvailabilityContent content = new PurviewAccountNameAvailabilityContent
             {
                 Name = "account1",
-                Type = "Microsoft.Purview/accounts",
+                ResourceType = "Microsoft.Purview/accounts",
             };
-            PurviewAccountNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityAsync(content);
+            PurviewAccountNameAvailabilityResult result = await subscriptionResource.CheckPurviewAccountNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Purview.Samples
             {
                 Features = { "Feature1", "Feature2", "FeatureThatDoesntExist" },
             };
-            PurviewBatchFeatureStatus result = await subscriptionResource.SubscriptionGetAsync(locations, content);
+            PurviewBatchFeatureStatus result = await subscriptionResource.SubscriptionGetFeatureAsync(locations, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -126,8 +126,7 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("West US 2");
-            UsageList result = (await subscriptionResource.GetAsync(location)).Value;
-            foreach (PurviewUsage item in result.Value)
+            await foreach (PurviewUsage item in subscriptionResource.GetUsagesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

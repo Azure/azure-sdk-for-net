@@ -14,7 +14,6 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> A privately linkable resource properties. </summary>
-    // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
     public partial class PurviewPrivateLinkResourceProperties : IJsonModel<PurviewPrivateLinkResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>

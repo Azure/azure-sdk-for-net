@@ -12,7 +12,7 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> Gets or sets the state of tenant endpoint. </summary>
-    public readonly partial struct TenantEndpointState : IEquatable<TenantEndpointState>
+    public readonly partial struct PurviewTenantEndpointState : IEquatable<PurviewTenantEndpointState>
     {
         private readonly string _value;
         /// <summary> NotSpecified. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Enabled. </summary>
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Initializes a new instance of <see cref="TenantEndpointState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewTenantEndpointState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TenantEndpointState(string value)
+        public PurviewTenantEndpointState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> NotSpecified. </summary>
-        public static TenantEndpointState NotSpecified { get; } = new TenantEndpointState(NotSpecifiedValue);
+        public static PurviewTenantEndpointState NotSpecified { get; } = new PurviewTenantEndpointState(NotSpecifiedValue);
 
         /// <summary> Disabled. </summary>
-        public static TenantEndpointState Disabled { get; } = new TenantEndpointState(DisabledValue);
+        public static PurviewTenantEndpointState Disabled { get; } = new PurviewTenantEndpointState(DisabledValue);
 
         /// <summary> Enabled. </summary>
-        public static TenantEndpointState Enabled { get; } = new TenantEndpointState(EnabledValue);
+        public static PurviewTenantEndpointState Enabled { get; } = new PurviewTenantEndpointState(EnabledValue);
 
-        /// <summary> Determines if two <see cref="TenantEndpointState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PurviewTenantEndpointState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TenantEndpointState left, TenantEndpointState right) => left.Equals(right);
+        public static bool operator ==(PurviewTenantEndpointState left, PurviewTenantEndpointState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TenantEndpointState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PurviewTenantEndpointState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TenantEndpointState left, TenantEndpointState right) => !left.Equals(right);
+        public static bool operator !=(PurviewTenantEndpointState left, PurviewTenantEndpointState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TenantEndpointState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PurviewTenantEndpointState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TenantEndpointState(string value) => new TenantEndpointState(value);
+        public static implicit operator PurviewTenantEndpointState(string value) => new PurviewTenantEndpointState(value);
 
-        /// <summary> Converts a string to a <see cref="TenantEndpointState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PurviewTenantEndpointState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TenantEndpointState?(string value) => value == null ? null : new TenantEndpointState(value);
+        public static implicit operator PurviewTenantEndpointState?(string value) => value == null ? null : new PurviewTenantEndpointState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TenantEndpointState other && Equals(other);
+        public override bool Equals(object obj) => obj is PurviewTenantEndpointState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TenantEndpointState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PurviewTenantEndpointState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

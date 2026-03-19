@@ -27,20 +27,20 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PrivateLinkResource
-            PrivateLinkResourceCollection collection = purviewAccount.GetPrivateLinkResources();
+            // get the collection of this PurviewPrivateLinkResource
+            PurviewPrivateLinkResourceCollection collection = purviewAccount.GetPurviewPrivateLinkResources();
 
             // invoke the operation
             string groupId = "group1";
-            PrivateLinkResource result = await collection.GetAsync(groupId);
+            PurviewPrivateLinkResource result = await collection.GetAsync(groupId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PrivateLinkResource
-            PrivateLinkResourceCollection collection = purviewAccount.GetPrivateLinkResources();
+            // get the collection of this PurviewPrivateLinkResource
+            PurviewPrivateLinkResourceCollection collection = purviewAccount.GetPurviewPrivateLinkResources();
 
             // invoke the operation and iterate over the result
-            await foreach (PrivateLinkResource item in collection.GetAllAsync())
+            await foreach (PurviewPrivateLinkResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PrivateLinkResource
-            PrivateLinkResourceCollection collection = purviewAccount.GetPrivateLinkResources();
+            // get the collection of this PurviewPrivateLinkResource
+            PurviewPrivateLinkResourceCollection collection = purviewAccount.GetPurviewPrivateLinkResources();
 
             // invoke the operation
             string groupId = "group1";
@@ -127,21 +127,21 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountResource created on azure
-            // for more information of creating AccountResource, please refer to the document of AccountResource
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = AccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            AccountResource purviewAccount = client.GetAccountResource(purviewAccountResourceId);
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this PrivateLinkResource
-            PrivateLinkResourceCollection collection = purviewAccount.GetPrivateLinkResources();
+            // get the collection of this PurviewPrivateLinkResource
+            PurviewPrivateLinkResourceCollection collection = purviewAccount.GetPurviewPrivateLinkResources();
 
             // invoke the operation
             string groupId = "group1";
-            NullableResponse<PrivateLinkResource> response = await collection.GetIfExistsAsync(groupId);
-            PrivateLinkResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PurviewPrivateLinkResource> response = await collection.GetIfExistsAsync(groupId);
+            PurviewPrivateLinkResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

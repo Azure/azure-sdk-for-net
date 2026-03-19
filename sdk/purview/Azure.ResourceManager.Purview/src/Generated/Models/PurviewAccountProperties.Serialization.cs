@@ -14,7 +14,6 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The account properties. </summary>
-    // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
     public partial class PurviewAccountProperties : IJsonModel<PurviewAccountProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -212,24 +211,24 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            PurviewAccountStatus accountStatus = default;
+            AccountPropertiesAccountStatus accountStatus = default;
             CloudConnectors cloudConnectors = default;
             DateTimeOffset? createdOn = default;
             string createdBy = default;
             string createdByObjectId = default;
             string defaultDomain = default;
-            PurviewAccountEndpoint endpoints = default;
+            AccountPropertiesEndpoints endpoints = default;
             string friendlyName = default;
             PurviewIngestionStorage ingestionStorage = default;
             PurviewManagedEventHubState? managedEventHubState = default;
             string managedResourceGroupName = default;
-            PurviewManagedResource managedResources = default;
-            ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
+            AccountPropertiesManagedResources managedResources = default;
+            PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
             PurviewAccountMergeInfo mergeInfo = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default;
             PurviewProvisioningState? provisioningState = default;
             PurviewPublicNetworkAccess? publicNetworkAccess = default;
-            TenantEndpointState? tenantEndpointState = default;
+            PurviewTenantEndpointState? tenantEndpointState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(prop.Value, options);
+                    accountStatus = AccountPropertiesAccountStatus.DeserializeAccountPropertiesAccountStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cloudConnectors"u8))
@@ -281,7 +280,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(prop.Value, options);
+                    endpoints = AccountPropertiesEndpoints.DeserializeAccountPropertiesEndpoints(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    managedResources = PurviewManagedResource.DeserializePurviewManagedResource(prop.Value, options);
+                    managedResources = AccountPropertiesManagedResources.DeserializeAccountPropertiesManagedResources(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managedResourcesPublicNetworkAccess"u8))
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    managedResourcesPublicNetworkAccess = new ManagedResourcesPublicNetworkAccess(prop.Value.GetString());
+                    managedResourcesPublicNetworkAccess = new PurviewPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mergeInfo"u8))
@@ -377,7 +376,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    tenantEndpointState = new TenantEndpointState(prop.Value.GetString());
+                    tenantEndpointState = new PurviewTenantEndpointState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

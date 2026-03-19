@@ -12,7 +12,7 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The account's type for the merge operation. </summary>
-    public readonly partial struct MergeAccountType : IEquatable<MergeAccountType>
+    public readonly partial struct PurviewMergeAccountType : IEquatable<PurviewMergeAccountType>
     {
         private readonly string _value;
         /// <summary> Primary. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Secondary. </summary>
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> Initializes a new instance of <see cref="MergeAccountType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewMergeAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MergeAccountType(string value)
+        public PurviewMergeAccountType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Primary. </summary>
-        public static MergeAccountType Primary { get; } = new MergeAccountType(PrimaryValue);
+        public static PurviewMergeAccountType Primary { get; } = new PurviewMergeAccountType(PrimaryValue);
 
         /// <summary> Secondary. </summary>
-        public static MergeAccountType Secondary { get; } = new MergeAccountType(SecondaryValue);
+        public static PurviewMergeAccountType Secondary { get; } = new PurviewMergeAccountType(SecondaryValue);
 
-        /// <summary> Determines if two <see cref="MergeAccountType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PurviewMergeAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MergeAccountType left, MergeAccountType right) => left.Equals(right);
+        public static bool operator ==(PurviewMergeAccountType left, PurviewMergeAccountType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MergeAccountType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PurviewMergeAccountType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MergeAccountType left, MergeAccountType right) => !left.Equals(right);
+        public static bool operator !=(PurviewMergeAccountType left, PurviewMergeAccountType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MergeAccountType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PurviewMergeAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MergeAccountType(string value) => new MergeAccountType(value);
+        public static implicit operator PurviewMergeAccountType(string value) => new PurviewMergeAccountType(value);
 
-        /// <summary> Converts a string to a <see cref="MergeAccountType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PurviewMergeAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MergeAccountType?(string value) => value == null ? null : new MergeAccountType(value);
+        public static implicit operator PurviewMergeAccountType?(string value) => value == null ? null : new PurviewMergeAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MergeAccountType other && Equals(other);
+        public override bool Equals(object obj) => obj is PurviewMergeAccountType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MergeAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PurviewMergeAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

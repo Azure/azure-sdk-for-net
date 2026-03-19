@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this KafkaConfigurationResource created on azure
-            // for more information of creating KafkaConfigurationResource, please refer to the document of KafkaConfigurationResource
+            // this example assumes you already have this PurviewKafkaConfigurationResource created on azure
+            // for more information of creating PurviewKafkaConfigurationResource, please refer to the document of PurviewKafkaConfigurationResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rgpurview";
             string accountName = "account1";
             string kafkaConfigurationName = "kafkaConfigName";
-            ResourceIdentifier purviewKafkaConfigurationResourceId = KafkaConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, kafkaConfigurationName);
-            KafkaConfigurationResource purviewKafkaConfiguration = client.GetKafkaConfigurationResource(purviewKafkaConfigurationResourceId);
+            ResourceIdentifier purviewKafkaConfigurationResourceId = PurviewKafkaConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, kafkaConfigurationName);
+            PurviewKafkaConfigurationResource purviewKafkaConfiguration = client.GetPurviewKafkaConfigurationResource(purviewKafkaConfigurationResourceId);
 
             // invoke the operation
-            KafkaConfigurationResource result = await purviewKafkaConfiguration.GetAsync();
+            PurviewKafkaConfigurationResource result = await purviewKafkaConfiguration.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KafkaConfigurationData resourceData = result.Data;
+            PurviewKafkaConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this KafkaConfigurationResource created on azure
-            // for more information of creating KafkaConfigurationResource, please refer to the document of KafkaConfigurationResource
+            // this example assumes you already have this PurviewKafkaConfigurationResource created on azure
+            // for more information of creating PurviewKafkaConfigurationResource, please refer to the document of PurviewKafkaConfigurationResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rgpurview";
             string accountName = "account1";
             string kafkaConfigurationName = "kafkaConfigName";
-            ResourceIdentifier purviewKafkaConfigurationResourceId = KafkaConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, kafkaConfigurationName);
-            KafkaConfigurationResource purviewKafkaConfiguration = client.GetKafkaConfigurationResource(purviewKafkaConfigurationResourceId);
+            ResourceIdentifier purviewKafkaConfigurationResourceId = PurviewKafkaConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, kafkaConfigurationName);
+            PurviewKafkaConfigurationResource purviewKafkaConfiguration = client.GetPurviewKafkaConfigurationResource(purviewKafkaConfigurationResourceId);
 
             // invoke the operation
             await purviewKafkaConfiguration.DeleteAsync(WaitUntil.Completed);
@@ -86,23 +86,23 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this KafkaConfigurationResource created on azure
-            // for more information of creating KafkaConfigurationResource, please refer to the document of KafkaConfigurationResource
+            // this example assumes you already have this PurviewKafkaConfigurationResource created on azure
+            // for more information of creating PurviewKafkaConfigurationResource, please refer to the document of PurviewKafkaConfigurationResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rgpurview";
             string accountName = "account1";
             string kafkaConfigurationName = "kafkaConfigName";
-            ResourceIdentifier purviewKafkaConfigurationResourceId = KafkaConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, kafkaConfigurationName);
-            KafkaConfigurationResource purviewKafkaConfiguration = client.GetKafkaConfigurationResource(purviewKafkaConfigurationResourceId);
+            ResourceIdentifier purviewKafkaConfigurationResourceId = PurviewKafkaConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, kafkaConfigurationName);
+            PurviewKafkaConfigurationResource purviewKafkaConfiguration = client.GetPurviewKafkaConfigurationResource(purviewKafkaConfigurationResourceId);
 
             // invoke the operation
-            KafkaConfigurationData data = new KafkaConfigurationData
+            PurviewKafkaConfigurationData data = new PurviewKafkaConfigurationData
             {
                 ConsumerGroup = "consumerGroup",
                 Credentials = new PurviewCredentials
                 {
                     IdentityId = "/subscriptions/47e8596d-ee73-4eb2-b6b4-cc13c2b87ssd/resourceGroups/testRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testId",
-                    Type = PurviewCredentialsType.UserAssigned,
+                    CredentialsType = PurviewCredentialsType.UserAssigned,
                 },
                 EventHubPartitionId = "partitionId",
                 EventHubResourceId = new ResourceIdentifier("/subscriptions/225be6fe-ec1c-4d51-a368-f69348d2e6c5/resourceGroups/testRG/providers/Microsoft.EventHub/namespaces/eventHubNameSpaceName"),
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Purview.Samples
                 EventStreamingState = PurviewEventStreamingState.Enabled,
                 EventStreamingType = PurviewEventStreamingType.Azure,
             };
-            ArmOperation<KafkaConfigurationResource> lro = await purviewKafkaConfiguration.UpdateAsync(WaitUntil.Completed, data);
-            KafkaConfigurationResource result = lro.Value;
+            ArmOperation<PurviewKafkaConfigurationResource> lro = await purviewKafkaConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            PurviewKafkaConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KafkaConfigurationData resourceData = result.Data;
+            PurviewKafkaConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

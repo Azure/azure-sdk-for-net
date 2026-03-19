@@ -36,23 +36,22 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PurviewAccountResource
+            PurviewAccountCollection collection = resourceGroupResource.GetPurviewAccounts();
 
             // invoke the operation
             string accountName = "account1";
-            AccountData data = new AccountData()
+            PurviewAccountData data = new PurviewAccountData(new AzureLocation("West US 2"))
             {
-                Location = "West US 2",
                 ManagedResourceGroupName = "custom-rgname",
                 ManagedResourcesPublicNetworkAccess = PurviewPublicNetworkAccess.Enabled,
             };
-            ArmOperation<AccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
-            AccountResource result = lro.Value;
+            ArmOperation<PurviewAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
+            PurviewAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PurviewAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -76,16 +75,16 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PurviewAccountResource
+            PurviewAccountCollection collection = resourceGroupResource.GetPurviewAccounts();
 
             // invoke the operation
             string accountName = "account1";
-            AccountResource result = await collection.GetAsync(accountName);
+            PurviewAccountResource result = await collection.GetAsync(accountName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountData resourceData = result.Data;
+            PurviewAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,15 +108,15 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PurviewAccountResource
+            PurviewAccountCollection collection = resourceGroupResource.GetPurviewAccounts();
 
             // invoke the operation and iterate over the result
-            await foreach (AccountResource item in collection.GetAllAsync())
+            await foreach (PurviewAccountResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountData resourceData = item.Data;
+                PurviewAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -144,8 +143,8 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PurviewAccountResource
+            PurviewAccountCollection collection = resourceGroupResource.GetPurviewAccounts();
 
             // invoke the operation
             string accountName = "account1";
@@ -173,13 +172,13 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this AccountResource
-            AccountCollection collection = resourceGroupResource.GetAccounts();
+            // get the collection of this PurviewAccountResource
+            PurviewAccountCollection collection = resourceGroupResource.GetPurviewAccounts();
 
             // invoke the operation
             string accountName = "account1";
-            NullableResponse<AccountResource> response = await collection.GetIfExistsAsync(accountName);
-            AccountResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PurviewAccountResource> response = await collection.GetIfExistsAsync(accountName);
+            PurviewAccountResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Purview.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountData resourceData = result.Data;
+                PurviewAccountData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

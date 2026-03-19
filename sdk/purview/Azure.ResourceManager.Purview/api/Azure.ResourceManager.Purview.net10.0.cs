@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview
     public partial class PurviewAccountData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.PurviewAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.PurviewAccountData>
     {
         public PurviewAccountData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Purview.Models.PurviewAccountStatus AccountStatus { get { throw null; } }
+        public Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus AccountStatus { get { throw null; } }
         public string CloudConnectorsAwsExternalId { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public string CreatedByObjectId { get { throw null; } }
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Purview
         public Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? ManagedEventHubState { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewManagedResource ManagedResources { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo MergeInfo { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Purview.Models.PurviewProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewAccountSku Sku { get { throw null; } set { } }
-        public Azure.ResourceManager.Purview.Models.TenantEndpointState? TenantEndpointState { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState? TenantEndpointState { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Purview
         public static Azure.ResourceManager.Purview.PurviewKafkaConfigurationResource GetPurviewKafkaConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionResource GetPurviewPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Purview.PurviewPrivateLinkResource GetPurviewPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response RemoveDefaultAccount(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Guid scopeTenantId, Azure.ResourceManager.Purview.Models.PurviewAccountScopeType scopeType, string scope = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response RemoveDefaultAccount(this Azure.ResourceManager.Resources.TenantResource tenantResource, string scopeTenantId, Azure.ResourceManager.Purview.Models.PurviewAccountScopeType scopeType, string scope = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response> RemoveDefaultAccountAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Guid scopeTenantId, Azure.ResourceManager.Purview.Models.PurviewAccountScopeType scopeType, string scope = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -308,8 +308,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Purview.Models.PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(Azure.ResourceManager.Purview.Models.PurviewAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Purview.PurviewAccountResource> GetPurviewAccounts(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Purview.PurviewAccountResource> GetPurviewAccountsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsages(string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsagesAsync(string location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsages(Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Purview.Models.PurviewUsage> GetUsagesAsync(Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Purview.Models.PurviewBatchFeatureStatus> SubscriptionGetFeature(string locations, Azure.ResourceManager.Purview.Models.PurviewBatchFeatureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Purview.Models.PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, Azure.ResourceManager.Purview.Models.PurviewBatchFeatureContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -330,52 +330,61 @@ namespace Azure.ResourceManager.Purview.Mocking
 }
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class AccountEndpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>
+    public partial class AccountPropertiesAccountStatus : Azure.ResourceManager.Purview.Models.PurviewAccountStatus, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>
     {
-        public AccountEndpoints() { }
-        public string Catalog { get { throw null; } }
-        public string Scan { get { throw null; } }
-        protected virtual Azure.ResourceManager.Purview.Models.AccountEndpoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Purview.Models.AccountEndpoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Purview.Models.AccountEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Purview.Models.AccountEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountEndpoints>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public AccountPropertiesAccountStatus() { }
+        protected override Azure.ResourceManager.Purview.Models.PurviewAccountStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Purview.Models.PurviewAccountStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AccountStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountStatus>
+    public partial class AccountPropertiesEndpoints : Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>
     {
-        public AccountStatus() { }
-        public Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState? AccountProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.PurviewAccountStatusErrorDetails ErrorDetails { get { throw null; } }
-        protected virtual Azure.ResourceManager.Purview.Models.AccountStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Purview.Models.AccountStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Purview.Models.AccountStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Purview.Models.AccountStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public AccountPropertiesEndpoints() { }
+        protected override Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AccountPropertiesManagedResources : Azure.ResourceManager.Purview.Models.PurviewManagedResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>
+    {
+        public AccountPropertiesManagedResources() { }
+        protected override Azure.ResourceManager.Purview.Models.PurviewManagedResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Purview.Models.PurviewManagedResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmPurviewModelFactory
     {
-        public static Azure.ResourceManager.Purview.Models.AccountEndpoints AccountEndpoints(string catalog = null, string scan = null) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.AccountStatus AccountStatus(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState? accountProvisioningState = default(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewAccountStatusErrorDetails errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus AccountPropertiesAccountStatus(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState? accountProvisioningState = default(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewAccountStatusErrorDetails errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints AccountPropertiesEndpoints(string catalog = null, string scan = null) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources AccountPropertiesManagedResources(Azure.Core.ResourceIdentifier eventHubNamespace = null, Azure.Core.ResourceIdentifier resourceGroup = null, Azure.Core.ResourceIdentifier storageAccount = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.ErrorModel ErrorModel(string code = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.Models.ErrorModel> details = null, string message = null, string target = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.ErrorResponseModelError ErrorResponseModelError(string code = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.Models.ErrorModel> details = null, string message = null, string target = null) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.ManagedResources ManagedResources(Azure.Core.ResourceIdentifier eventHubNamespace = null, Azure.Core.ResourceIdentifier resourceGroup = null, Azure.Core.ResourceIdentifier storageAccount = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PrivateEndpointConnectionStatusUpdateResult PrivateEndpointConnectionStatusUpdateResult(string privateEndpointId = null, string status = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountAccessKey PurviewAccountAccessKey(string atlasKafkaPrimaryEndpoint = null, string atlasKafkaSecondaryEndpoint = null) { throw null; }
-        public static Azure.ResourceManager.Purview.PurviewAccountData PurviewAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Purview.Models.PurviewAccountStatus accountStatus = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, string createdByObjectId = null, string defaultDomain = null, Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint endpoints = null, string friendlyName = null, Azure.ResourceManager.Purview.Models.PurviewIngestionStorage ingestionStorage = null, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? managedEventHubState = default(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState?), string managedResourceGroupName = null, Azure.ResourceManager.Purview.Models.PurviewManagedResource managedResources = null, Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo mergeInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState = default(Azure.ResourceManager.Purview.Models.PurviewProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.TenantEndpointState? tenantEndpointState = default(Azure.ResourceManager.Purview.Models.TenantEndpointState?), string cloudConnectorsAwsExternalId = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Purview.Models.PurviewAccountSku sku = null) { throw null; }
+        public static Azure.ResourceManager.Purview.PurviewAccountData PurviewAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus accountStatus = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, string createdByObjectId = null, string defaultDomain = null, Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints endpoints = null, string friendlyName = null, Azure.ResourceManager.Purview.Models.PurviewIngestionStorage ingestionStorage = null, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? managedEventHubState = default(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState?), string managedResourceGroupName = null, Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources managedResources = null, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo mergeInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState = default(Azure.ResourceManager.Purview.Models.PurviewProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState? tenantEndpointState = default(Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState?), string cloudConnectorsAwsExternalId = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Purview.Models.PurviewAccountSku sku = null) { throw null; }
         public static Azure.ResourceManager.Purview.PurviewAccountData PurviewAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Purview.Models.PurviewAccountSku sku, string cloudConnectorsAwsExternalId, System.DateTimeOffset? createdOn, string createdBy, string createdByObjectId, Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, Azure.ResourceManager.Purview.Models.PurviewManagedResource managedResources, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint PurviewAccountEndpoint(string catalog = null, string scan = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint PurviewAccountEndpoint(string catalog, string guardian, string scan) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo PurviewAccountMergeInfo(string accountLocation = null, string accountName = null, string accountResourceGroupName = null, string accountSubscriptionId = null, bool? deprovisioned = default(bool?), Azure.ResourceManager.Purview.Models.MergeStatus? mergeStatus = default(Azure.ResourceManager.Purview.Models.MergeStatus?), Azure.ResourceManager.Purview.Models.MergeAccountType? typeOfAccount = default(Azure.ResourceManager.Purview.Models.MergeAccountType?)) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo PurviewAccountMergeInfo(string accountLocation = null, string accountName = null, string accountResourceGroupName = null, string accountSubscriptionId = null, bool? deprovisioned = default(bool?), Azure.ResourceManager.Purview.Models.PurviewMergeStatus? mergeStatus = default(Azure.ResourceManager.Purview.Models.PurviewMergeStatus?), Azure.ResourceManager.Purview.Models.PurviewMergeAccountType? typeOfAccount = default(Azure.ResourceManager.Purview.Models.PurviewMergeAccountType?)) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountNameAvailabilityResult PurviewAccountNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason? reason = default(Azure.ResourceManager.Purview.Models.PurviewAccountNameUnavailableReason?)) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.PurviewAccountPatch PurviewAccountPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Purview.Models.PurviewAccountStatus accountStatus = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, string createdByObjectId = null, string defaultDomain = null, Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint endpoints = null, string friendlyName = null, Azure.ResourceManager.Purview.Models.PurviewIngestionStorage ingestionStorage = null, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? managedEventHubState = default(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState?), string managedResourceGroupName = null, Azure.ResourceManager.Purview.Models.PurviewManagedResource managedResources = null, Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo mergeInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState = default(Azure.ResourceManager.Purview.Models.PurviewProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.TenantEndpointState? tenantEndpointState = default(Azure.ResourceManager.Purview.Models.TenantEndpointState?), string cloudConnectorsAwsExternalId = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.PurviewAccountPatch PurviewAccountPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus accountStatus = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string createdBy = null, string createdByObjectId = null, string defaultDomain = null, Azure.ResourceManager.Purview.Models.AccountPropertiesEndpoints endpoints = null, string friendlyName = null, Azure.ResourceManager.Purview.Models.PurviewIngestionStorage ingestionStorage = null, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? managedEventHubState = default(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState?), string managedResourceGroupName = null, Azure.ResourceManager.Purview.Models.AccountPropertiesManagedResources managedResources = null, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? managedResourcesPublicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo mergeInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Purview.Models.PurviewProvisioningState? provisioningState = default(Azure.ResourceManager.Purview.Models.PurviewProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess?), Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState? tenantEndpointState = default(Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState?), string cloudConnectorsAwsExternalId = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountSku PurviewAccountSku(int? capacity, Azure.ResourceManager.Purview.Models.PurviewAccountSkuName? name) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountStatus PurviewAccountStatus(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState? accountProvisioningState = default(Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState?), Azure.ResourceManager.Purview.Models.PurviewAccountStatusErrorDetails errorDetails = null) { throw null; }
         public static Azure.ResourceManager.Purview.Models.PurviewAccountStatusErrorDetails PurviewAccountStatusErrorDetails(string code = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Purview.Models.ErrorModel> details = null, string message = null, string target = null) { throw null; }
@@ -455,75 +464,6 @@ namespace Azure.ResourceManager.Purview.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.ErrorResponseModelError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.ErrorResponseModelError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedResources : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.ManagedResources>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.ManagedResources>
-    {
-        public ManagedResources() { }
-        public Azure.Core.ResourceIdentifier EventHubNamespace { get { throw null; } }
-        public Azure.Core.ResourceIdentifier ResourceGroup { get { throw null; } }
-        public Azure.Core.ResourceIdentifier StorageAccount { get { throw null; } }
-        protected virtual Azure.ResourceManager.Purview.Models.ManagedResources JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Purview.Models.ManagedResources PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Purview.Models.ManagedResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.ManagedResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.ManagedResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Purview.Models.ManagedResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.ManagedResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.ManagedResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.ManagedResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedResourcesPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedResourcesPublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess NotSpecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess left, Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess left, Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MergeAccountType : System.IEquatable<Azure.ResourceManager.Purview.Models.MergeAccountType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MergeAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.MergeAccountType Primary { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.MergeAccountType Secondary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Purview.Models.MergeAccountType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Purview.Models.MergeAccountType left, Azure.ResourceManager.Purview.Models.MergeAccountType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.MergeAccountType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.MergeAccountType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Purview.Models.MergeAccountType left, Azure.ResourceManager.Purview.Models.MergeAccountType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MergeStatus : System.IEquatable<Azure.ResourceManager.Purview.Models.MergeStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MergeStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.MergeStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.MergeStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.MergeStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Purview.Models.MergeStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Purview.Models.MergeStatus left, Azure.ResourceManager.Purview.Models.MergeStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.MergeStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.MergeStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Purview.Models.MergeStatus left, Azure.ResourceManager.Purview.Models.MergeStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PrivateEndpointConnectionStatusUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PrivateEndpointConnectionStatusUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PrivateEndpointConnectionStatusUpdateContent>
     {
         public PrivateEndpointConnectionStatusUpdateContent() { }
@@ -569,14 +509,16 @@ namespace Azure.ResourceManager.Purview.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountAccessKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountAccessKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PurviewAccountEndpoint : Azure.ResourceManager.Purview.Models.AccountEndpoints, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>
+    public partial class PurviewAccountEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>
     {
         public PurviewAccountEndpoint() { }
+        public string Catalog { get { throw null; } }
         public string Guardian { get { throw null; } }
-        protected override Azure.ResourceManager.Purview.Models.AccountEndpoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Purview.Models.AccountEndpoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public string Scan { get { throw null; } }
+        protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -591,8 +533,8 @@ namespace Azure.ResourceManager.Purview.Models
         public string AccountResourceGroupName { get { throw null; } }
         public string AccountSubscriptionId { get { throw null; } }
         public bool? Deprovisioned { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.MergeStatus? MergeStatus { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.MergeAccountType? TypeOfAccount { get { throw null; } }
+        public Azure.ResourceManager.Purview.Models.PurviewMergeStatus? MergeStatus { get { throw null; } }
+        public Azure.ResourceManager.Purview.Models.PurviewMergeAccountType? TypeOfAccount { get { throw null; } }
         protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -654,7 +596,7 @@ namespace Azure.ResourceManager.Purview.Models
     public partial class PurviewAccountPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountPatch>
     {
         public PurviewAccountPatch() { }
-        public Azure.ResourceManager.Purview.Models.PurviewAccountStatus AccountStatus { get { throw null; } }
+        public Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus AccountStatus { get { throw null; } }
         public string CloudConnectorsAwsExternalId { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public string CreatedByObjectId { get { throw null; } }
@@ -667,14 +609,14 @@ namespace Azure.ResourceManager.Purview.Models
         public Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? ManagedEventHubState { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewManagedResource ManagedResources { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo MergeInfo { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Purview.Models.PurviewAccountProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.TenantEndpointState? TenantEndpointState { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState? TenantEndpointState { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -688,7 +630,7 @@ namespace Azure.ResourceManager.Purview.Models
     public partial class PurviewAccountProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountProperties>
     {
         public PurviewAccountProperties() { }
-        public Azure.ResourceManager.Purview.Models.PurviewAccountStatus AccountStatus { get { throw null; } }
+        public Azure.ResourceManager.Purview.Models.AccountPropertiesAccountStatus AccountStatus { get { throw null; } }
         public string CloudConnectorsAwsExternalId { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public string CreatedByObjectId { get { throw null; } }
@@ -700,12 +642,12 @@ namespace Azure.ResourceManager.Purview.Models
         public Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState? ManagedEventHubState { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewManagedResource ManagedResources { get { throw null; } }
-        public Azure.ResourceManager.Purview.Models.ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Purview.Models.PurviewAccountMergeInfo MergeInfo { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Purview.PurviewPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Purview.Models.PurviewProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Purview.Models.TenantEndpointState? TenantEndpointState { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState? TenantEndpointState { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -790,13 +732,15 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewAccountSkuName left, Azure.ResourceManager.Purview.Models.PurviewAccountSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PurviewAccountStatus : Azure.ResourceManager.Purview.Models.AccountStatus, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>
+    public partial class PurviewAccountStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>
     {
         public PurviewAccountStatus() { }
-        protected override Azure.ResourceManager.Purview.Models.AccountStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Purview.Models.AccountStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.ResourceManager.Purview.Models.PurviewAccountProvisioningState? AccountProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Purview.Models.PurviewAccountStatusErrorDetails ErrorDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Purview.Models.PurviewAccountStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Purview.Models.PurviewAccountStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Purview.Models.PurviewAccountStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewAccountStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -963,22 +907,60 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState left, Azure.ResourceManager.Purview.Models.PurviewManagedEventHubState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PurviewManagedResource : Azure.ResourceManager.Purview.Models.ManagedResources, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>
+    public partial class PurviewManagedResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>
     {
         public PurviewManagedResource() { }
-        protected override Azure.ResourceManager.Purview.Models.ManagedResources JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Purview.Models.ManagedResources PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.Core.ResourceIdentifier EventHubNamespace { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceGroup { get { throw null; } }
+        public Azure.Core.ResourceIdentifier StorageAccount { get { throw null; } }
+        protected virtual Azure.ResourceManager.Purview.Models.PurviewManagedResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Purview.Models.PurviewManagedResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Purview.Models.PurviewManagedResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Purview.Models.PurviewManagedResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewManagedResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PurviewMergeAccountType : System.IEquatable<Azure.ResourceManager.Purview.Models.PurviewMergeAccountType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PurviewMergeAccountType(string value) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.PurviewMergeAccountType Primary { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewMergeAccountType Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Purview.Models.PurviewMergeAccountType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewMergeAccountType left, Azure.ResourceManager.Purview.Models.PurviewMergeAccountType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewMergeAccountType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewMergeAccountType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewMergeAccountType left, Azure.ResourceManager.Purview.Models.PurviewMergeAccountType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PurviewMergeStatus : System.IEquatable<Azure.ResourceManager.Purview.Models.PurviewMergeStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PurviewMergeStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.PurviewMergeStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewMergeStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewMergeStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Purview.Models.PurviewMergeStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewMergeStatus left, Azure.ResourceManager.Purview.Models.PurviewMergeStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewMergeStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewMergeStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewMergeStatus left, Azure.ResourceManager.Purview.Models.PurviewMergeStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PurviewPrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewPrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewPrivateLinkResourceProperties>
     {
-        internal PurviewPrivateLinkResourceProperties() { }
+        public PurviewPrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
@@ -1085,6 +1067,24 @@ namespace Azure.ResourceManager.Purview.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewQuotaName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewQuotaName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PurviewTenantEndpointState : System.IEquatable<Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PurviewTenantEndpointState(string value) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState NotSpecified { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState left, Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState left, Azure.ResourceManager.Purview.Models.PurviewTenantEndpointState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PurviewUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Purview.Models.PurviewUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewUsage>
     {
         internal PurviewUsage() { }
@@ -1115,23 +1115,5 @@ namespace Azure.ResourceManager.Purview.Models
         Azure.ResourceManager.Purview.Models.PurviewUsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewUsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewUsageName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Purview.Models.PurviewUsageName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TenantEndpointState : System.IEquatable<Azure.ResourceManager.Purview.Models.TenantEndpointState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TenantEndpointState(string value) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.TenantEndpointState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.TenantEndpointState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.TenantEndpointState NotSpecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Purview.Models.TenantEndpointState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Purview.Models.TenantEndpointState left, Azure.ResourceManager.Purview.Models.TenantEndpointState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.TenantEndpointState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.TenantEndpointState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Purview.Models.TenantEndpointState left, Azure.ResourceManager.Purview.Models.TenantEndpointState right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

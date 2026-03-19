@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointConnectionResource created on azure
-            // for more information of creating PrivateEndpointConnectionResource, please refer to the document of PrivateEndpointConnectionResource
+            // this example assumes you already have this PurviewPrivateEndpointConnectionResource created on azure
+            // for more information of creating PurviewPrivateEndpointConnectionResource, please refer to the document of PurviewPrivateEndpointConnectionResource
             string subscriptionId = "12345678-1234-1234-12345678abc";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string privateEndpointConnectionName = "privateEndpointConnection1";
-            ResourceIdentifier purviewPrivateEndpointConnectionResourceId = PrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, privateEndpointConnectionName);
-            PrivateEndpointConnectionResource purviewPrivateEndpointConnection = client.GetPrivateEndpointConnectionResource(purviewPrivateEndpointConnectionResourceId);
+            ResourceIdentifier purviewPrivateEndpointConnectionResourceId = PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, privateEndpointConnectionName);
+            PurviewPrivateEndpointConnectionResource purviewPrivateEndpointConnection = client.GetPurviewPrivateEndpointConnectionResource(purviewPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            PrivateEndpointConnectionResource result = await purviewPrivateEndpointConnection.GetAsync();
+            PurviewPrivateEndpointConnectionResource result = await purviewPrivateEndpointConnection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointConnectionResource created on azure
-            // for more information of creating PrivateEndpointConnectionResource, please refer to the document of PrivateEndpointConnectionResource
+            // this example assumes you already have this PurviewPrivateEndpointConnectionResource created on azure
+            // for more information of creating PurviewPrivateEndpointConnectionResource, please refer to the document of PurviewPrivateEndpointConnectionResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string privateEndpointConnectionName = "privateEndpointConnection1";
-            ResourceIdentifier purviewPrivateEndpointConnectionResourceId = PrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, privateEndpointConnectionName);
-            PrivateEndpointConnectionResource purviewPrivateEndpointConnection = client.GetPrivateEndpointConnectionResource(purviewPrivateEndpointConnectionResourceId);
+            ResourceIdentifier purviewPrivateEndpointConnectionResourceId = PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, privateEndpointConnectionName);
+            PurviewPrivateEndpointConnectionResource purviewPrivateEndpointConnection = client.GetPurviewPrivateEndpointConnectionResource(purviewPrivateEndpointConnectionResourceId);
 
             // invoke the operation
             await purviewPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
@@ -86,26 +86,26 @@ namespace Azure.ResourceManager.Purview.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateEndpointConnectionResource created on azure
-            // for more information of creating PrivateEndpointConnectionResource, please refer to the document of PrivateEndpointConnectionResource
+            // this example assumes you already have this PurviewPrivateEndpointConnectionResource created on azure
+            // for more information of creating PurviewPrivateEndpointConnectionResource, please refer to the document of PurviewPrivateEndpointConnectionResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "SampleResourceGroup";
             string accountName = "account1";
             string privateEndpointConnectionName = "privateEndpointConnection1";
-            ResourceIdentifier purviewPrivateEndpointConnectionResourceId = PrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, privateEndpointConnectionName);
-            PrivateEndpointConnectionResource purviewPrivateEndpointConnection = client.GetPrivateEndpointConnectionResource(purviewPrivateEndpointConnectionResourceId);
+            ResourceIdentifier purviewPrivateEndpointConnectionResourceId = PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, privateEndpointConnectionName);
+            PurviewPrivateEndpointConnectionResource purviewPrivateEndpointConnection = client.GetPurviewPrivateEndpointConnectionResource(purviewPrivateEndpointConnectionResourceId);
 
             // invoke the operation
             PurviewPrivateEndpointConnectionData data = new PurviewPrivateEndpointConnectionData
             {
-                PrivateLinkServiceConnectionState = new PurviewPrivateLinkServiceConnectionState
+                ConnectionState = new PurviewPrivateLinkServiceConnectionState
                 {
                     Description = "Approved by johndoe@company.com",
                     Status = PurviewPrivateLinkServiceStatus.Approved,
                 },
             };
-            ArmOperation<PrivateEndpointConnectionResource> lro = await purviewPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            PrivateEndpointConnectionResource result = lro.Value;
+            ArmOperation<PurviewPrivateEndpointConnectionResource> lro = await purviewPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            PurviewPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

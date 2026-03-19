@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Purview
     {
         private readonly Usages _client;
         private readonly string _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly string _filter;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of UsagesGetUsagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Usages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesGetUsagesCollectionResultOfT(Usages client, string subscriptionId, string location, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UsagesGetUsagesCollectionResultOfT(Usages client, string subscriptionId, AzureLocation location, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

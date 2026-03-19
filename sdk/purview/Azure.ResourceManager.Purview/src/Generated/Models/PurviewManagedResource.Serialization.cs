@@ -14,12 +14,12 @@ using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Gets the resource identifiers of the managed resources. </summary>
-    public partial class PurviewManagedResource : ManagedResources, IJsonModel<PurviewManagedResource>
+    /// <summary> The managed resources in customer subscription. </summary>
+    public partial class PurviewManagedResource : IJsonModel<PurviewManagedResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedResources PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PurviewManagedResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewManagedResource IPersistableModel<PurviewManagedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PurviewManagedResource)PersistableModelCreateCore(data, options);
+        PurviewManagedResource IPersistableModel<PurviewManagedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PurviewManagedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,23 +68,52 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsDefined(EventHubNamespace))
+            {
+                writer.WritePropertyName("eventHubNamespace"u8);
+                writer.WriteStringValue(EventHubNamespace);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageAccount))
+            {
+                writer.WritePropertyName("storageAccount"u8);
+                writer.WriteStringValue(StorageAccount);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewManagedResource IJsonModel<PurviewManagedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PurviewManagedResource)JsonModelCreateCore(ref reader, options);
+        PurviewManagedResource IJsonModel<PurviewManagedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ManagedResources JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PurviewManagedResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

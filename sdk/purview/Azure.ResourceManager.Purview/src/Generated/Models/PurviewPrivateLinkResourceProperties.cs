@@ -12,14 +12,13 @@ using Azure.ResourceManager.Purview;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> A privately linkable resource properties. </summary>
-    // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
     public partial class PurviewPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkResourceProperties"/>. </summary>
-        internal PurviewPrivateLinkResourceProperties()
+        public PurviewPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

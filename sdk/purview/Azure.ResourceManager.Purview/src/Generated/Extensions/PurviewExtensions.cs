@@ -287,16 +287,16 @@ namespace Azure.ResourceManager.Purview
         /// Get the usage quota configuration
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsagesAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsagesAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PurviewUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PurviewUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.Purview
         /// Get the usage quota configuration
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsages(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsages(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PurviewUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<PurviewUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

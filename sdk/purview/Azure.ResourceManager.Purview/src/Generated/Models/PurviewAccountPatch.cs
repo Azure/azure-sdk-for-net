@@ -41,14 +41,13 @@ namespace Azure.ResourceManager.Purview.Models
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The account properties. </summary>
-        // CUSTOMIZED: Changed from internal to public for backward compatibility with old SDK
         public PurviewAccountProperties Properties { get; set; }
 
         /// <summary> Tags on the azure resource. </summary>
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Gets or sets the status of the account. </summary>
-        public PurviewAccountStatus AccountStatus
+        public AccountPropertiesAccountStatus AccountStatus
         {
             get
             {
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Gets or sets the public network access for managed resources. </summary>
-        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
+        public PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
         {
             get
             {
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Gets or sets the state of tenant endpoint. </summary>
-        public TenantEndpointState? TenantEndpointState
+        public PurviewTenantEndpointState? TenantEndpointState
         {
             get
             {

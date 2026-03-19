@@ -10,9 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The URIs that are the public endpoints of the account. </summary>
-    public partial class PurviewAccountEndpoint : AccountEndpoints
+    /// <summary> The account endpoints. </summary>
+    public partial class PurviewAccountEndpoint
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         public PurviewAccountEndpoint()
         {
@@ -22,8 +25,17 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="catalog"> Gets the catalog endpoint. </param>
         /// <param name="scan"> Gets the scan endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountEndpoint(string catalog, string scan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(catalog, scan, additionalBinaryDataProperties)
+        internal PurviewAccountEndpoint(string catalog, string scan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Catalog = catalog;
+            Scan = scan;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets the catalog endpoint. </summary>
+        public string Catalog { get; }
+
+        /// <summary> Gets the scan endpoint. </summary>
+        public string Scan { get; }
     }
 }

@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Purview.Models
             string accountResourceGroupName = default;
             string accountSubscriptionId = default;
             bool? deprovisioned = default;
-            MergeStatus? mergeStatus = default;
-            MergeAccountType? typeOfAccount = default;
+            PurviewMergeStatus? mergeStatus = default;
+            PurviewMergeAccountType? typeOfAccount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    mergeStatus = new MergeStatus(prop.Value.GetString());
+                    mergeStatus = new PurviewMergeStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("typeOfAccount"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    typeOfAccount = new MergeAccountType(prop.Value.GetString());
+                    typeOfAccount = new PurviewMergeAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

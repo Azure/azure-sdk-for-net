@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="mergeStatus"> The status of the merge operation. </param>
         /// <param name="typeOfAccount"> The account's type for the merge operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountMergeInfo(string accountLocation, string accountName, string accountResourceGroupName, string accountSubscriptionId, bool? deprovisioned, MergeStatus? mergeStatus, MergeAccountType? typeOfAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountMergeInfo(string accountLocation, string accountName, string accountResourceGroupName, string accountSubscriptionId, bool? deprovisioned, PurviewMergeStatus? mergeStatus, PurviewMergeAccountType? typeOfAccount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountLocation = accountLocation;
             AccountName = accountName;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Purview.Models
         public bool? Deprovisioned { get; }
 
         /// <summary> The status of the merge operation. </summary>
-        public MergeStatus? MergeStatus { get; }
+        public PurviewMergeStatus? MergeStatus { get; }
 
         /// <summary> The account's type for the merge operation. </summary>
-        public MergeAccountType? TypeOfAccount { get; }
+        public PurviewMergeAccountType? TypeOfAccount { get; }
     }
 }

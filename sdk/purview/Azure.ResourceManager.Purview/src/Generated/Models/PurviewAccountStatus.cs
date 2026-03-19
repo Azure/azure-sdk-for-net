@@ -10,9 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Gets or sets the status of the account. </summary>
-    public partial class PurviewAccountStatus : AccountStatus
+    /// <summary> The account status. </summary>
+    public partial class PurviewAccountStatus
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
         public PurviewAccountStatus()
         {
@@ -22,8 +25,17 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
         /// <param name="errorDetails"> Gets the account error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, PurviewAccountStatusErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(accountProvisioningState, errorDetails, additionalBinaryDataProperties)
+        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, PurviewAccountStatusErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AccountProvisioningState = accountProvisioningState;
+            ErrorDetails = errorDetails;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets the account status code. </summary>
+        public PurviewAccountProvisioningState? AccountProvisioningState { get; }
+
+        /// <summary> Gets the account error details. </summary>
+        public PurviewAccountStatusErrorDetails ErrorDetails { get; }
     }
 }

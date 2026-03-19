@@ -13,9 +13,6 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    // CUSTOMIZED: Changed base class from ResourceData to TrackedResourceData
-    // because the old SDK (1.1.0) used TrackedResourceData, and hierarchyBuilding decorator
-    // cannot handle the location type conflict from Legacy.TrackedResourceWithOptionalLocation.
     /// <summary> Account resource. </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
@@ -23,8 +20,13 @@ namespace Azure.ResourceManager.Purview
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> The location. </param>
         public PurviewAccountData(AzureLocation location) : base(location)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/> for deserialization. </summary>
+        internal PurviewAccountData() : base(default)
         {
         }
 
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The Managed Identity of the resource. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
-        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PurviewAccountProperties properties, IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, PurviewAccountSku sku) : base(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location ?? default)
+        internal PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PurviewAccountProperties properties, IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity, PurviewAccountSku sku) : base(id, name, resourceType, systemData, tags ?? new Dictionary<string, string>(), location ?? default)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Purview
         public PurviewAccountSku Sku { get; set; }
 
         /// <summary> Gets or sets the status of the account. </summary>
-        public PurviewAccountStatus AccountStatus
+        public AccountPropertiesAccountStatus AccountStatus
         {
             get
             {
@@ -180,7 +182,7 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary> Gets or sets the public network access for managed resources. </summary>
-        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
+        public PurviewPublicNetworkAccess? ManagedResourcesPublicNetworkAccess
         {
             get
             {
@@ -253,7 +255,7 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary> Gets or sets the state of tenant endpoint. </summary>
-        public TenantEndpointState? TenantEndpointState
+        public PurviewTenantEndpointState? TenantEndpointState
         {
             get
             {
