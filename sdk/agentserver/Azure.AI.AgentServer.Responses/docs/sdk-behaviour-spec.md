@@ -237,7 +237,7 @@ The SDK MUST support the following configuration options.
 
 - **S-042**: The SDK SHOULD support configurable cancel winddown grace period (default: 10 seconds).
 
-- **S-046**: The SDK MUST expose a configurable `AdditionalServerIdentity` option (default: `null`). When set, the SDK MUST append the value to the `x-platform-server` header using a `; ` separator (e.g., `azure-ai-responses-server-sdk/0.1.0-preview (dotnet/8.0); my-app/1.0`). See S-041, [B19](api-behaviour-contract.md#behavioural-rules-index).
+- **S-046**: The SDK MUST expose a configurable `AdditionalServerIdentity` option (default: `null`). When set, the SDK MUST append the value to the `x-platform-server` header using a `; ` separator (e.g., `azure-ai-agentserver-responses/0.1.0-preview (dotnet/8.0); my-app/1.0`). See S-041, [B19](api-behaviour-contract.md#behavioural-rules-index).
 
 ---
 

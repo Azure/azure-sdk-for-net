@@ -18,7 +18,7 @@ internal sealed class SdkIdentityFilter : IEndpointFilter
 
     /// <summary>
     /// Cached SDK identity header value:
-    /// <c>azure-ai-responses-server-sdk/{version} (dotnet/{runtime-version})</c>
+    /// <c>azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})</c>
     /// </summary>
     private static readonly string s_sdkIdentityValue = BuildSdkIdentityValue();
 
@@ -76,6 +76,6 @@ internal sealed class SdkIdentityFilter : IEndpointFilter
 
         var runtimeVersion = Environment.Version;
 
-        return $"azure-ai-responses-server-sdk/{sdkVersion} (dotnet/{runtimeVersion.Major}.{runtimeVersion.Minor})";
+        return $"azure-ai-agentserver-responses/{sdkVersion} (dotnet/{runtimeVersion.Major}.{runtimeVersion.Minor})";
     }
 }

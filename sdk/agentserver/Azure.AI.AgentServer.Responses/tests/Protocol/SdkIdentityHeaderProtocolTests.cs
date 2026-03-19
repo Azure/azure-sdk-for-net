@@ -9,7 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// <summary>
 /// Protocol conformance tests for the SDK identity response header (US1).
 /// Validates that every HTTP response includes an <c>x-platform-server</c> header
-/// with value <c>azure-ai-responses-server-sdk/{version} (dotnet/{runtime-version})</c>.
+/// with value <c>azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})</c>.
 /// </summary>
 public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
 {
@@ -142,7 +142,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
         Assert.IsTrue(response.Headers.Contains(HeaderName));
 
         var value = response.Headers.GetValues(HeaderName).Single();
-        XAssert.Contains("azure-ai-responses-server-sdk/", value);
+        XAssert.Contains("azure-ai-agentserver-responses/", value);
         XAssert.EndsWith("; my-app/1.0", value);
     }
 
@@ -156,7 +156,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
 
         Assert.IsTrue(response.Headers.Contains(HeaderName));
         var value = response.Headers.GetValues(HeaderName).Single();
-        XAssert.Contains("azure-ai-responses-server-sdk/", value);
+        XAssert.Contains("azure-ai-agentserver-responses/", value);
         XAssert.DoesNotContain("; ", value);
     }
 
@@ -177,7 +177,7 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
 
         // The value should be parseable as a semicolon-separated list
         // and contain the SDK identity component
-        XAssert.Contains("azure-ai-responses-server-sdk/", value);
+        XAssert.Contains("azure-ai-agentserver-responses/", value);
         XAssert.Contains("(dotnet/", value);
     }
 
@@ -185,13 +185,13 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
 
     /// <summary>
     /// Asserts the identity header value matches the format:
-    /// <c>azure-ai-responses-server-sdk/{version} (dotnet/{runtime-version})</c>
+    /// <c>azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})</c>
     /// </summary>
     private static void AssertIdentityHeaderFormat(string headerValue)
     {
         // May contain a prefix from another layer, separated by "; "
         // The SDK's portion should always be present
-        XAssert.Contains("azure-ai-responses-server-sdk/", headerValue);
+        XAssert.Contains("azure-ai-agentserver-responses/", headerValue);
         XAssert.Contains("(dotnet/", headerValue);
         XAssert.EndsWith(")", headerValue);
 
@@ -200,8 +200,8 @@ public class SdkIdentityHeaderProtocolTests : ProtocolTestBase
             ? headerValue[(headerValue.LastIndexOf("; ", StringComparison.Ordinal) + 2)..]
             : headerValue;
 
-        // Verify format: azure-ai-responses-server-sdk/{version} (dotnet/{runtime-version})
-        XAssert.Matches(@"^azure-ai-responses-server-sdk/\S+ \(dotnet/\d+\.\d+(\.\d+)?\)$", sdkPortion);
+        // Verify format: azure-ai-agentserver-responses/{version} (dotnet/{runtime-version})
+        XAssert.Matches(@"^azure-ai-agentserver-responses/\S+ \(dotnet/\d+\.\d+(\.\d+)?\)$", sdkPortion);
     }
 
     // ── Helper event factories ─────────────────────────────────

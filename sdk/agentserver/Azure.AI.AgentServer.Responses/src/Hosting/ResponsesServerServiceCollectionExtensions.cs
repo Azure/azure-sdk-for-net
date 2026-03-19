@@ -39,7 +39,7 @@ public static class ResponsesServerServiceCollectionExtensions
             if (options.SseKeepAliveInterval == Timeout.InfiniteTimeSpan)
             {
                 var envValue = Environment.GetEnvironmentVariable(
-                    "AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL");
+                    "SSE_KEEPALIVE_INTERVAL");
                 if (!string.IsNullOrEmpty(envValue)
                     && int.TryParse(envValue, out var seconds) && seconds > 0)
                 {
@@ -50,7 +50,7 @@ public static class ResponsesServerServiceCollectionExtensions
             if (options.DefaultFetchHistoryCount == ResponsesServerOptions.DefaultFetchHistoryCountValue)
             {
                 var envValue = Environment.GetEnvironmentVariable(
-                    "AZURE_AI_RESPONSES_SERVER_DEFAULT_FETCH_HISTORY_ITEM_COUNT");
+                    "DEFAULT_FETCH_HISTORY_ITEM_COUNT");
                 if (!string.IsNullOrEmpty(envValue)
                     && int.TryParse(envValue, out var count) && count > 0)
                 {

@@ -8,7 +8,8 @@ namespace Azure.AI.AgentServer.Responses;
 /// DI-friendly wrapper around <see cref="ActivitySource"/> that supports
 /// extensible activity creation for distributed tracing.
 /// <para>
-/// The default implementation sets GenAI semantic convention tags and baggage items.
+/// The default implementation sets GenAI semantic convention tags, Core-parity
+/// tags (<c>azure.ai.agentserver.responses.*</c>), and namespaced baggage items.
 /// Subclass to customize tracing — you do <strong>not</strong> need to replicate the
 /// entire method. Because <see cref="Activity.SetTag"/> replaces existing values
 /// and <see cref="Activity.AddBaggage"/> prepends (so
@@ -41,11 +42,17 @@ public class ResponsesActivitySource
     public const string DefaultName = "Azure.AI.AgentServer.Responses";
 
     /// <summary>
-    /// The default service name used for the <c>gen_ai.provider.name</c>,
-    /// <c>gen_ai.system</c>, <c>service.name</c> tags and the
-    /// <c>provider.name</c> baggage item: <c>"azure.ai.responses"</c>.
+    /// The default service name used for the <c>service.name</c> and
+    /// <c>gen_ai.system</c> tags: <c>"azure.ai.agentserver"</c>.
+    /// Matches the Core package for tracing parity.
     /// </summary>
-    public const string DefaultServiceName = "azure.ai.responses";
+    public const string DefaultServiceName = ResponsesTracingConstants.ServiceName;
+
+    /// <summary>
+    /// The default provider name used for the <c>gen_ai.provider.name</c> tag:
+    /// <c>"AzureAI Hosted Agents"</c>. Matches the Core package for tracing parity.
+    /// </summary>
+    public const string DefaultProviderName = ResponsesTracingConstants.ProviderName;
 
     private readonly ActivitySource _source;
 
@@ -87,10 +94,10 @@ public class ResponsesActivitySource
     /// The default implementation sets GenAI semantic convention tags
     /// (<c>gen_ai.response.id</c>, <c>gen_ai.provider.name</c>, <c>gen_ai.system</c>,
     /// <c>gen_ai.operation.name</c>, <c>gen_ai.request.model</c>,
-    /// <c>gen_ai.conversation.id</c>, <c>gen_ai.agent.*</c>, <c>service.name</c>,
-    /// <c>response.mode</c>, <c>request.id</c>) and baggage items
-    /// (<c>response.id</c>, <c>streaming</c>, <c>provider.name</c>,
-    /// <c>conversation.id</c>, <c>agent.name</c>, <c>agent.id</c>, <c>request.id</c>).
+    /// <c>gen_ai.conversation.id</c>, <c>gen_ai.agent.*</c>, <c>service.name</c>),
+    /// Core-parity tags (<c>azure.ai.agentserver.responses.response_id</c>,
+    /// <c>azure.ai.agentserver.responses.conversation_id</c>,
+    /// <c>azure.ai.agentserver.responses.streaming</c>), and namespaced baggage items.
     /// </para>
     /// <para>
     /// Override to customize. Call <c>base</c> first, then use
@@ -115,22 +122,14 @@ public class ResponsesActivitySource
         string responseId,
         IHeaderDictionary headers)
     {
-        // Derive mode from request
+        // Derive mode flags from request
         var isStreaming = request.Stream == true;
         var isBackground = request.Background == true;
 
-        var mode = (isStreaming, isBackground) switch
-        {
-            (true, true) => "streaming+background",
-            (true, false) => "streaming",
-            (false, true) => "background",
-            _ => "default",
-        };
-
         // Activity display name per OTEL GenAI convention
         var activityName = string.IsNullOrEmpty(request.Model)
-            ? "create_response"
-            : $"create_response {request.Model}";
+            ? ResponsesTracingConstants.OperationName
+            : $"{ResponsesTracingConstants.OperationName} {request.Model}";
 
         var activity = _source.StartActivity(activityName);
         if (activity is null)
@@ -138,41 +137,48 @@ public class ResponsesActivitySource
             return null;
         }
 
-        // --- GenAI semantic convention tags ---
-        activity.SetTag("gen_ai.response.id", responseId);
-        activity.SetTag("gen_ai.provider.name", DefaultServiceName);
-        activity.SetTag("service.name", DefaultServiceName);
-        activity.SetTag("response.mode", mode);
-        activity.SetTag("gen_ai.system", DefaultServiceName);
-        activity.SetTag("gen_ai.operation.name", "create_response");
+        // --- Core-parity tags (must match HostedAgentTelemetry exactly) ---
+        activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, DefaultServiceName);
+        activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, DefaultProviderName);
+        activity.SetTag(ResponsesTracingConstants.Tags.ResponseId, responseId);
+
+        // Agent ID: Core emits "" when agent is null, "{Name}:{Version}" when present
+        var agent = request.AgentReference ?? request.Agent;
+        var agentId = agent is not null && !string.IsNullOrEmpty(agent.Name)
+            ? (string.IsNullOrEmpty(agent.Version) ? $"{agent.Name}" : $"{agent.Name}:{agent.Version}")
+            : string.Empty;
+        activity.SetTag(ResponsesTracingConstants.Tags.AgentId, agentId);
+
+        // Namespaced parity tags (match Core's SetResponsesTag pattern)
+        var conversationId = request.GetConversationId() ?? string.Empty;
+        activity.SetTag(ResponsesTracingConstants.Tags.NamespacedResponseId, responseId);
+        activity.SetTag(ResponsesTracingConstants.Tags.NamespacedConversationId, conversationId);
+        activity.SetTag(ResponsesTracingConstants.Tags.NamespacedStreaming, isStreaming);
+
+        // --- GenAI semantic convention tags (Responses-specific additions) ---
+        activity.SetTag(ResponsesTracingConstants.Tags.System, DefaultServiceName);
+        activity.SetTag(ResponsesTracingConstants.Tags.OperationName, ResponsesTracingConstants.OperationName);
 
         if (!string.IsNullOrEmpty(request.Model))
         {
-            activity.SetTag("gen_ai.request.model", request.Model);
+            activity.SetTag(ResponsesTracingConstants.Tags.RequestModel, request.Model);
         }
 
-        var conversationId = request.GetConversationId();
         if (!string.IsNullOrEmpty(conversationId))
         {
-            activity.SetTag("gen_ai.conversation.id", conversationId);
+            activity.SetTag(ResponsesTracingConstants.Tags.ConversationId, conversationId);
         }
 
-        // Agent tags: prefer AgentReference, fall back to Agent (deprecated)
-        var agent = request.AgentReference ?? request.Agent;
         if (agent is not null && !string.IsNullOrEmpty(agent.Name))
         {
-            activity.SetTag("gen_ai.agent.name", agent.Name);
-            var agentId = string.IsNullOrEmpty(agent.Version)
-                ? agent.Name
-                : $"{agent.Name}:{agent.Version}";
-            activity.SetTag("gen_ai.agent.id", agentId);
+            activity.SetTag(ResponsesTracingConstants.Tags.AgentName, agent.Name);
             if (!string.IsNullOrEmpty(agent.Version))
             {
-                activity.SetTag("gen_ai.agent.version", agent.Version);
+                activity.SetTag(ResponsesTracingConstants.Tags.AgentVersion, agent.Version);
             }
         }
 
-        // X-Request-Id header propagation (truncate to 256 chars)
+        // X-Request-Id header — read and truncate for baggage (no span tag)
         string? xRequestId = null;
         if (headers.TryGetValue("X-Request-Id", out var xRequestIdValues)
             && !string.IsNullOrEmpty(xRequestIdValues))
@@ -182,31 +188,16 @@ public class ResponsesActivitySource
             {
                 xRequestId = xRequestId[..256];
             }
-            activity.SetTag("request.id", xRequestId);
         }
 
-        // --- Baggage items ---
-        activity.AddBaggage("response.id", responseId);
-        activity.AddBaggage("streaming", isStreaming.ToString().ToLowerInvariant());
-        activity.AddBaggage("provider.name", DefaultServiceName);
-
-        if (!string.IsNullOrEmpty(conversationId))
-        {
-            activity.AddBaggage("conversation.id", conversationId);
-        }
-
-        if (agent is not null && !string.IsNullOrEmpty(agent.Name))
-        {
-            activity.AddBaggage("agent.name", agent.Name);
-            var agentIdBaggage = string.IsNullOrEmpty(agent.Version)
-                ? agent.Name
-                : $"{agent.Name}:{agent.Version}";
-            activity.AddBaggage("agent.id", agentIdBaggage);
-        }
+        // --- Namespaced baggage items (parity with Core's Baggage.SetBaggage) ---
+        activity.AddBaggage(ResponsesTracingConstants.Baggage.ResponseId, responseId);
+        activity.AddBaggage(ResponsesTracingConstants.Baggage.ConversationId, conversationId);
+        activity.AddBaggage(ResponsesTracingConstants.Baggage.Streaming, isStreaming.ToString());
 
         if (!string.IsNullOrEmpty(xRequestId))
         {
-            activity.AddBaggage("request.id", xRequestId);
+            activity.AddBaggage(ResponsesTracingConstants.Baggage.RequestId, xRequestId);
         }
 
         return activity;

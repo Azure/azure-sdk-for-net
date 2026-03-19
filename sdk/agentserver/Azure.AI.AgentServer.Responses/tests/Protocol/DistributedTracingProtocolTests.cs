@@ -92,8 +92,8 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         // T012 / FR-004: gen_ai.response.id tag
         await PostDefaultAsync(new { model = "test" });
 
-        Assert.IsTrue(_capturedTags.ContainsKey("gen_ai.response.id"), "Should have gen_ai.response.id tag");
-        XAssert.StartsWith("caresp_", _capturedTags["gen_ai.response.id"]?.ToString());
+        Assert.IsTrue(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.ResponseId), "Should have gen_ai.response.id tag");
+        XAssert.StartsWith("caresp_", _capturedTags[ResponsesTracingConstants.Tags.ResponseId]?.ToString());
     }
 
     [Test]
@@ -106,9 +106,9 @@ public sealed class DistributedTracingProtocolTests : IDisposable
             agent_reference = new { type = "agent_reference", name = "my-agent", version = "1.0" }
         });
 
-        Assert.AreEqual("my-agent", _capturedTags["gen_ai.agent.name"]);
-        Assert.AreEqual("my-agent:1.0", _capturedTags["gen_ai.agent.id"]);
-        Assert.AreEqual("1.0", _capturedTags["gen_ai.agent.version"]);
+        Assert.AreEqual("my-agent", _capturedTags[ResponsesTracingConstants.Tags.AgentName]);
+        Assert.AreEqual("my-agent:1.0", _capturedTags[ResponsesTracingConstants.Tags.AgentId]);
+        Assert.AreEqual("1.0", _capturedTags[ResponsesTracingConstants.Tags.AgentVersion]);
     }
 
     [Test]
@@ -121,8 +121,8 @@ public sealed class DistributedTracingProtocolTests : IDisposable
             agent_reference = new { type = "agent_reference", name = "my-agent" }
         });
 
-        Assert.AreEqual("my-agent", _capturedTags["gen_ai.agent.id"]);
-        Assert.IsFalse(_capturedTags.ContainsKey("gen_ai.agent.version"),
+        Assert.AreEqual("my-agent", _capturedTags[ResponsesTracingConstants.Tags.AgentId]);
+        Assert.IsFalse(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.AgentVersion),
             "agent.version should not be set when version not provided");
     }
 
@@ -132,10 +132,10 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         // T015 / FR-008a, FR-008b, FR-009a, FR-009b: always-on tags
         await PostDefaultAsync(new { model = "test" });
 
-        Assert.AreEqual("azure.ai.responses", _capturedTags["gen_ai.provider.name"]);
-        Assert.AreEqual("azure.ai.responses", _capturedTags["gen_ai.system"]);
-        Assert.AreEqual("create_response", _capturedTags["gen_ai.operation.name"]);
-        Assert.AreEqual("azure.ai.responses", _capturedTags["service.name"]);
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, _capturedTags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, _capturedTags[ResponsesTracingConstants.Tags.System]);
+        Assert.AreEqual(ResponsesTracingConstants.OperationName, _capturedTags[ResponsesTracingConstants.Tags.OperationName]);
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, _capturedTags[ResponsesTracingConstants.Tags.ServiceName]);
     }
 
     [Test]
@@ -149,20 +149,21 @@ public sealed class DistributedTracingProtocolTests : IDisposable
             conversation = conversationId
         });
 
-        Assert.AreEqual("gpt-4o", _capturedTags["gen_ai.request.model"]);
-        Assert.AreEqual(conversationId, _capturedTags["gen_ai.conversation.id"]);
+        Assert.AreEqual("gpt-4o", _capturedTags[ResponsesTracingConstants.Tags.RequestModel]);
+        Assert.AreEqual(conversationId, _capturedTags[ResponsesTracingConstants.Tags.ConversationId]);
     }
 
     [Test]
     public async Task Activity_OmitsMissingFields()
     {
-        // T017 / FR-009: missing fields produce no tags
+        // T017 / FR-009: missing fields produce no tags (except gen_ai.agent.id which is always set)
         await PostDefaultAsync(new { model = "test" });
 
-        Assert.IsFalse(_capturedTags.ContainsKey("gen_ai.agent.name"));
-        Assert.IsFalse(_capturedTags.ContainsKey("gen_ai.agent.id"));
-        Assert.IsFalse(_capturedTags.ContainsKey("gen_ai.agent.version"));
-        Assert.IsFalse(_capturedTags.ContainsKey("gen_ai.conversation.id"));
+        Assert.IsFalse(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.AgentName));
+        // gen_ai.agent.id is always set ("" when no agent) for Core parity
+        Assert.AreEqual(string.Empty, _capturedTags[ResponsesTracingConstants.Tags.AgentId]);
+        Assert.IsFalse(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.AgentVersion));
+        Assert.IsFalse(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.ConversationId));
     }
 
     [Test]
@@ -184,12 +185,25 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     }
 
     [Test]
-    public async Task Activity_KeepsResponseModeTag()
+    public async Task Activity_HasNamespacedParityTags()
     {
-        // Existing tag preserved
+        // Parity: azure.ai.agentserver.responses.* tags
         await PostDefaultAsync(new { model = "test" });
 
-        Assert.IsTrue(_capturedTags.ContainsKey("response.mode"));
+        Assert.IsTrue(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.NamespacedResponseId));
+        Assert.IsTrue(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.NamespacedConversationId));
+        Assert.IsTrue(_capturedTags.ContainsKey(ResponsesTracingConstants.Tags.NamespacedStreaming));
+        Assert.AreEqual(false, _capturedTags[ResponsesTracingConstants.Tags.NamespacedStreaming]);
+    }
+
+    [Test]
+    public async Task Activity_RemovedTags_NotPresent()
+    {
+        // response.mode and request.id tags were removed for parity
+        await PostDefaultAsync(new { model = "test" });
+
+        Assert.IsFalse(_capturedTags.ContainsKey("response.mode"));
+        Assert.IsFalse(_capturedTags.ContainsKey("request.id"));
     }
 
     // --- US3: Baggage (T018-T020) ---
@@ -197,19 +211,19 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     [Test]
     public async Task Baggage_HasCoreItems()
     {
-        // T018 / FR-010, FR-011a, FR-011d: core baggage items
+        // T018 / FR-010, FR-011a, FR-011d: core baggage items (namespaced)
         await PostDefaultAsync(new { model = "test" });
 
-        Assert.IsTrue(_capturedBaggage.ContainsKey("response.id"), "Baggage should contain response.id");
-        XAssert.StartsWith("caresp_", _capturedBaggage["response.id"]);
-        Assert.AreEqual("false", _capturedBaggage["streaming"]);
-        Assert.AreEqual("azure.ai.responses", _capturedBaggage["provider.name"]);
+        Assert.IsTrue(_capturedBaggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), "Baggage should contain namespaced response_id");
+        XAssert.StartsWith("caresp_", _capturedBaggage[ResponsesTracingConstants.Baggage.ResponseId]);
+        Assert.AreEqual("False", _capturedBaggage[ResponsesTracingConstants.Baggage.Streaming]);
+        Assert.IsTrue(_capturedBaggage.ContainsKey(ResponsesTracingConstants.Baggage.ConversationId));
     }
 
     [Test]
     public async Task Baggage_HasAgentAndConversation_WhenPresent()
     {
-        // T019 / FR-011, FR-011b, FR-011c: optional baggage items
+        // T019 / FR-011, FR-011b, FR-011c: conversation baggage (namespaced)
         await PostDefaultAsync(new
         {
             model = "test",
@@ -217,9 +231,8 @@ public sealed class DistributedTracingProtocolTests : IDisposable
             agent_reference = new { type = "agent_reference", name = "test-agent", version = "2.0" }
         });
 
-        Assert.AreEqual("conv_xyz", _capturedBaggage["conversation.id"]);
-        Assert.AreEqual("test-agent", _capturedBaggage["agent.name"]);
-        Assert.AreEqual("test-agent:2.0", _capturedBaggage["agent.id"]);
+        Assert.AreEqual("conv_xyz", _capturedBaggage[ResponsesTracingConstants.Baggage.ConversationId]);
+        // Agent baggage no longer set (short-key baggage removed)
     }
 
     [Test]
@@ -229,7 +242,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         await PostDefaultAsync(new { model = "test" });
 
         Assert.IsTrue(_capturedBaggage.Count > 0, "Baggage should be set before handler invocation");
-        Assert.IsTrue(_capturedBaggage.ContainsKey("response.id"));
+        Assert.IsTrue(_capturedBaggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId));
     }
 
     [Test]
@@ -244,16 +257,16 @@ public sealed class DistributedTracingProtocolTests : IDisposable
 
         Assert.IsNotEmpty(_stoppedActivities);
         var activity = _stoppedActivities[^1];
-        var streamingBaggage = activity.Baggage.FirstOrDefault(b => b.Key == "streaming");
-        Assert.AreEqual("true", streamingBaggage.Value);
+        var streamingBaggage = activity.Baggage.FirstOrDefault(b => b.Key == ResponsesTracingConstants.Baggage.Streaming);
+        Assert.AreEqual("True", streamingBaggage.Value);
     }
 
     // --- US4: X-Request-Id (T021-T023) ---
 
     [Test]
-    public async Task XRequestId_SetsTagAndBaggage()
+    public async Task XRequestId_SetsBaggage()
     {
-        // T021 / FR-013, FR-014: X-Request-Id propagated
+        // T021 / FR-013, FR-014: X-Request-Id propagated to namespaced baggage
         var requestId = "req-12345-abc";
         var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
         {
@@ -264,24 +277,25 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         request.Headers.Add("X-Request-Id", requestId);
         await _client.SendAsync(request);
 
-        Assert.AreEqual(requestId, _capturedTags["request.id"]);
-        Assert.AreEqual(requestId, _capturedBaggage["request.id"]);
+        // X-Request-Id is no longer a span tag — only namespaced baggage
+        Assert.IsFalse(_capturedTags.ContainsKey("request.id"));
+        Assert.AreEqual(requestId, _capturedBaggage[ResponsesTracingConstants.Baggage.RequestId]);
     }
 
     [Test]
-    public async Task XRequestId_MissingHeader_NoTagOrBaggage()
+    public async Task XRequestId_MissingHeader_NoBaggage()
     {
-        // T022 / FR-015: no X-Request-Id → no tag or baggage
+        // T022 / FR-015: no X-Request-Id → no baggage
         await PostDefaultAsync(new { model = "test" });
 
         Assert.IsFalse(_capturedTags.ContainsKey("request.id"));
-        Assert.IsFalse(_capturedBaggage.ContainsKey("request.id"));
+        Assert.IsFalse(_capturedBaggage.ContainsKey(ResponsesTracingConstants.Baggage.RequestId));
     }
 
     [Test]
     public async Task XRequestId_LongValue_TruncatedTo256()
     {
-        // T023: long X-Request-Id truncated
+        // T023: long X-Request-Id truncated in baggage
         var longId = new string('x', 512);
         var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
         {
@@ -292,9 +306,9 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         request.Headers.Add("X-Request-Id", longId);
         await _client.SendAsync(request);
 
-        var tagValue = _capturedTags["request.id"]?.ToString();
-        Assert.IsNotNull(tagValue);
-        Assert.AreEqual(256, tagValue!.Length);
+        var baggageValue = _capturedBaggage[ResponsesTracingConstants.Baggage.RequestId];
+        Assert.IsNotNull(baggageValue);
+        Assert.AreEqual(256, baggageValue!.Length);
     }
 
     // --- Helpers ---

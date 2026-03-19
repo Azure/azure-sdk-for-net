@@ -533,6 +533,33 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher,
         Exception exception)
     {
+        // Distributed tracing: record exception and error tags on the current span
+        // matching Core's AgentInvocationBase parity contract.
+        var currentActivity = System.Diagnostics.Activity.Current;
+        if (currentActivity is not null)
+        {
+            currentActivity.AddEvent(new System.Diagnostics.ActivityEvent("exception",
+                tags: new System.Diagnostics.ActivityTagsCollection
+                {
+                    { "exception.type", exception.GetType().FullName },
+                    { "exception.message", exception.Message },
+                }));
+            currentActivity.SetStatus(System.Diagnostics.ActivityStatusCode.Error, exception.Message);
+
+            if (exception is ResponsesApiException apiEx)
+            {
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode,
+                    apiEx.Error.Code ?? "server_error");
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage,
+                    apiEx.Error.Message);
+            }
+            else if (exception is not OperationCanceledException)
+            {
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorCode, "server_error");
+                currentActivity.SetTag(ResponsesTracingConstants.Tags.ErrorMessage, exception.Message);
+            }
+        }
+
         // Log the exception at the appropriate level.
         if (exception is ResponseValidationException valEx)
         {

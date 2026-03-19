@@ -9,7 +9,7 @@ public class ResponsesServerOptions
     /// Gets or sets the interval at which SSE keep-alive comments are sent to prevent
     /// proxy/load-balancer timeouts during streaming. Default: disabled.
     /// Set to a positive <see cref="TimeSpan"/> to enable keep-alive.
-    /// Can also be configured via the <c>AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL</c>
+    /// Can also be configured via the <c>SSE_KEEPALIVE_INTERVAL</c>
     /// environment variable (value in seconds). Programmatic configuration takes precedence.
     /// </summary>
     public TimeSpan SseKeepAliveInterval { get; set; } = Timeout.InfiniteTimeSpan;
@@ -24,7 +24,7 @@ public class ResponsesServerOptions
     /// <summary>
     /// Gets or sets the maximum number of conversation history items that
     /// <see cref="IResponseContext.GetHistoryAsync"/> fetches. Default: 100.
-    /// Can also be configured via the <c>AZURE_AI_RESPONSES_SERVER_DEFAULT_FETCH_HISTORY_ITEM_COUNT</c>
+    /// Can also be configured via the <c>DEFAULT_FETCH_HISTORY_ITEM_COUNT</c>
     /// environment variable (integer value). Programmatic configuration takes precedence.
     /// </summary>
     public int DefaultFetchHistoryCount { get; set; } = DefaultFetchHistoryCountValue;
@@ -32,7 +32,7 @@ public class ResponsesServerOptions
     /// <summary>
     /// Gets or sets an additional identity value to append to the <c>x-platform-server</c>
     /// response header. When set, the SDK appends the value using a <c>; </c> separator
-    /// (e.g., <c>azure-ai-responses-server-sdk/0.1.0-preview (dotnet/8.0); my-app/1.0</c>).
+    /// (e.g., <c>azure-ai-agentserver-responses/0.1.0-preview (dotnet/8.0); my-app/1.0</c>).
     /// Default: <c>null</c> (no additional identity).
     /// </summary>
     public string? AdditionalServerIdentity { get; set; }

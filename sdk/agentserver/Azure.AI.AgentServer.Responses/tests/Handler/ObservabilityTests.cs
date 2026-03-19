@@ -42,17 +42,17 @@ public class ObservabilityTests : IDisposable
 
         var activity = _activities.FirstOrDefault(a =>
             a.OperationName == "create_response obs-test-emit" &&
-            a.GetTagItem("gen_ai.request.model") as string == "obs-test-emit");
+            a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-emit");
 
         Assert.IsNotNull(activity);
 
-        var responseId = activity.GetTagItem("gen_ai.response.id") as string;
+        var responseId = activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId) as string;
         Assert.IsNotNull(responseId);
         XAssert.StartsWith("caresp_", responseId);
     }
 
     [Test]
-    public async Task CreateResponse_DefaultMode_TagsModeAndStatus()
+    public async Task CreateResponse_DefaultMode_SetsParityTags()
     {
         var body = JsonSerializer.Serialize(new { model = "obs-test-default" });
         await _client.PostAsync("/responses",
@@ -60,15 +60,22 @@ public class ObservabilityTests : IDisposable
 
         var activity = _activities.FirstOrDefault(a =>
             a.OperationName == "create_response obs-test-default" &&
-            a.GetTagItem("gen_ai.request.model") as string == "obs-test-default");
+            a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-default");
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("default", activity.GetTagItem("response.mode"));
-        Assert.AreEqual("completed", activity.GetTagItem("response.status"));
+
+        // Core-parity tags
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName));
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
+        Assert.AreEqual(false, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+
+        // Removed tags should not be present
+        Assert.IsNull(activity.GetTagItem("response.mode"));
+        Assert.IsNull(activity.GetTagItem("response.status"));
     }
 
     [Test]
-    public async Task CreateResponse_StreamingMode_TagsMode()
+    public async Task CreateResponse_StreamingMode_SetsStreamingTrue()
     {
         var body = JsonSerializer.Serialize(new { model = "obs-test-stream", stream = true });
         await _client.PostAsync("/responses",
@@ -76,14 +83,14 @@ public class ObservabilityTests : IDisposable
 
         var activity = _activities.FirstOrDefault(a =>
             a.OperationName == "create_response obs-test-stream" &&
-            a.GetTagItem("gen_ai.request.model") as string == "obs-test-stream");
+            a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-stream");
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("streaming", activity.GetTagItem("response.mode"));
+        Assert.AreEqual(true, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
     }
 
     [Test]
-    public async Task CreateResponse_BackgroundMode_TagsMode()
+    public async Task CreateResponse_BackgroundMode_SetsStreamingFalse()
     {
         var body = JsonSerializer.Serialize(new { model = "obs-test-background", background = true });
         await _client.PostAsync("/responses",
@@ -91,10 +98,45 @@ public class ObservabilityTests : IDisposable
 
         var activity = _activities.FirstOrDefault(a =>
             a.OperationName == "create_response obs-test-background" &&
-            a.GetTagItem("gen_ai.request.model") as string == "obs-test-background");
+            a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-background");
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("background", activity.GetTagItem("response.mode"));
+        Assert.AreEqual(false, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
+    }
+
+    [Test]
+    public async Task CreateResponse_SetsNamespacedResponseId()
+    {
+        var body = JsonSerializer.Serialize(new { model = "obs-test-nsid" });
+        await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        var activity = _activities.FirstOrDefault(a =>
+            a.OperationName == "create_response obs-test-nsid" &&
+            a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-nsid");
+
+        Assert.IsNotNull(activity);
+
+        // gen_ai.response.id and azure.ai.agentserver.responses.response_id should match
+        var genAiId = activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId) as string;
+        var namespacedId = activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedResponseId) as string;
+        Assert.IsNotNull(genAiId);
+        Assert.AreEqual(genAiId, namespacedId);
+    }
+
+    [Test]
+    public async Task CreateResponse_NoAgent_SetsEmptyAgentId()
+    {
+        var body = JsonSerializer.Serialize(new { model = "obs-test-no-agent" });
+        await _client.PostAsync("/responses",
+            new StringContent(body, Encoding.UTF8, "application/json"));
+
+        var activity = _activities.FirstOrDefault(a =>
+            a.OperationName == "create_response obs-test-no-agent" &&
+            a.GetTagItem(ResponsesTracingConstants.Tags.RequestModel) as string == "obs-test-no-agent");
+
+        Assert.IsNotNull(activity);
+        Assert.AreEqual(string.Empty, activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
     }
 
     public void Dispose()

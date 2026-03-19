@@ -118,6 +118,15 @@ internal sealed class ResponseEndpointHandler
         using var activity = _activitySource.StartCreateResponseActivity(
             request, responseId, httpContext.Request.Headers);
 
+        // Structured log scope — matches Core's HostedAgentTelemetry.StartActivity
+        // for parity: ResponseId, ConversationId, Streaming appear on all log lines.
+        using var logScope = _logger.BeginScope(new Dictionary<string, object?>
+        {
+            [ResponsesTracingConstants.LogScope.ResponseId] = responseId,
+            [ResponsesTracingConstants.LogScope.ConversationId] = request.GetConversationId() ?? string.Empty,
+            [ResponsesTracingConstants.LogScope.Streaming] = isStreaming,
+        });
+
         var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
         var context = new ResponseContextImpl(
             responseId,
@@ -189,8 +198,7 @@ internal sealed class ResponseEndpointHandler
 
             await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
-            activity?.SetTag("response.status", execution.Response!.Status.ToString()!.ToLowerInvariant());
-            return Results.Json(execution.Response.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+            return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
         }
     }
 

@@ -16,6 +16,7 @@
       "**/nupkg": true
     },
     "git.autoRepositoryDetection": "openEditors",
-    "git.repositoryScanMaxDepth": 4
+    "git.repositoryScanMaxDepth": 4,
+    "dotnet.defaultSolution": "Azure.AI.AgentServer.sln"
   }
 }

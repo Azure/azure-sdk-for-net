@@ -24,7 +24,13 @@ public sealed class ResponsesActivitySourceTests : IDisposable
     [Test]
     public void DefaultServiceName_IsExpected()
     {
-        Assert.AreEqual("azure.ai.responses", ResponsesActivitySource.DefaultServiceName);
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, ResponsesActivitySource.DefaultServiceName);
+    }
+
+    [Test]
+    public void DefaultProviderName_IsExpected()
+    {
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, ResponsesActivitySource.DefaultProviderName);
     }
 
     // ── Constructor / Name ───────────────────────────────────────────────
@@ -65,55 +71,51 @@ public sealed class ResponsesActivitySourceTests : IDisposable
 
         Assert.IsNotNull(activity);
         Assert.AreEqual("create_response gpt-4o", activity.DisplayName);
-        Assert.AreEqual("caresp_123", activity.GetTagItem("gen_ai.response.id"));
-        Assert.AreEqual("azure.ai.responses", activity.GetTagItem("gen_ai.provider.name"));
-        Assert.AreEqual("azure.ai.responses", activity.GetTagItem("service.name"));
-        Assert.AreEqual("azure.ai.responses", activity.GetTagItem("gen_ai.system"));
-        Assert.AreEqual("create_response", activity.GetTagItem("gen_ai.operation.name"));
-        Assert.AreEqual("gpt-4o", activity.GetTagItem("gen_ai.request.model"));
+        Assert.AreEqual("caresp_123", activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId));
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName));
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, activity.GetTagItem(ResponsesTracingConstants.Tags.System));
+        Assert.AreEqual(ResponsesTracingConstants.OperationName, activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName));
+        Assert.AreEqual("gpt-4o", activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel));
     }
 
+    // ── Namespaced parity tags (azure.ai.agentserver.responses.*) ─────
+
     [Test]
-    public void StartCreateResponseActivity_ModeTag_Streaming()
+    public void StartCreateResponseActivity_SetsNamespacedParityTags()
     {
         var source = CreateListeningSource();
-        var request = new CreateResponse { Model = "test", Stream = true };
+        var request = new CreateResponse
+        {
+            Model = "test",
+            Stream = true,
+            Conversation = BinaryData.FromString("\"conv_abc\"")
+        };
 
         using var activity = source.StartCreateResponseActivity(
-            request, "id", EmptyHeaders());
+            request, "caresp_parity", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("streaming", activity.GetTagItem("response.mode"));
+        Assert.AreEqual("caresp_parity", activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedResponseId));
+        Assert.AreEqual("conv_abc", activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId));
+        Assert.AreEqual(true, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
     }
 
     [Test]
-    public void StartCreateResponseActivity_ModeTag_Background()
+    public void StartCreateResponseActivity_NonStreaming_SetsStreamingFalse()
     {
         var source = CreateListeningSource();
-        var request = new CreateResponse { Model = "test", Background = true };
+        var request = new CreateResponse { Model = "test" };
 
         using var activity = source.StartCreateResponseActivity(
-            request, "id", EmptyHeaders());
+            request, "caresp_ns", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("background", activity.GetTagItem("response.mode"));
+        Assert.AreEqual(false, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming));
     }
 
     [Test]
-    public void StartCreateResponseActivity_ModeTag_StreamingBackground()
-    {
-        var source = CreateListeningSource();
-        var request = new CreateResponse { Model = "test", Stream = true, Background = true };
-
-        using var activity = source.StartCreateResponseActivity(
-            request, "id", EmptyHeaders());
-
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("streaming+background", activity.GetTagItem("response.mode"));
-    }
-
-    [Test]
-    public void StartCreateResponseActivity_ModeTag_Default()
+    public void StartCreateResponseActivity_NoConversation_SetsEmptyConversationId()
     {
         var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
@@ -122,7 +124,23 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("default", activity.GetTagItem("response.mode"));
+        Assert.AreEqual(string.Empty, activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_RemovedTags_NotPresent()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test", Stream = true };
+        var headers = new HeaderDictionary { ["X-Request-Id"] = "req-123" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", headers);
+
+        Assert.IsNotNull(activity);
+        // response.mode and request.id tags were removed for parity
+        Assert.IsNull(activity.GetTagItem("response.mode"));
+        Assert.IsNull(activity.GetTagItem("request.id"));
     }
 
     [Test]
@@ -136,7 +154,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
 
         Assert.IsNotNull(activity);
         Assert.AreEqual("create_response", activity.DisplayName);
-        Assert.IsNull(activity.GetTagItem("gen_ai.request.model"));
+        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel));
     }
 
     [Test]
@@ -153,9 +171,9 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("my-agent", activity.GetTagItem("gen_ai.agent.name"));
-        Assert.AreEqual("my-agent:1.0", activity.GetTagItem("gen_ai.agent.id"));
-        Assert.AreEqual("1.0", activity.GetTagItem("gen_ai.agent.version"));
+        Assert.AreEqual("my-agent", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName));
+        Assert.AreEqual("my-agent:1.0", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
+        Assert.AreEqual("1.0", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion));
     }
 
     [Test]
@@ -172,13 +190,13 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("my-agent", activity.GetTagItem("gen_ai.agent.name"));
-        Assert.AreEqual("my-agent", activity.GetTagItem("gen_ai.agent.id"));
-        Assert.IsNull(activity.GetTagItem("gen_ai.agent.version"));
+        Assert.AreEqual("my-agent", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName));
+        Assert.AreEqual("my-agent", activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
+        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion));
     }
 
     [Test]
-    public void StartCreateResponseActivity_NoAgent_OmitsAgentTags()
+    public void StartCreateResponseActivity_NoAgent_SetsEmptyAgentId()
     {
         var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
@@ -187,13 +205,14 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.IsNull(activity.GetTagItem("gen_ai.agent.name"));
-        Assert.IsNull(activity.GetTagItem("gen_ai.agent.id"));
-        Assert.IsNull(activity.GetTagItem("gen_ai.agent.version"));
+        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName));
+        // Core parity: gen_ai.agent.id = "" when agent is null
+        Assert.AreEqual(string.Empty, activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId));
+        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion));
     }
 
     [Test]
-    public void StartCreateResponseActivity_XRequestId_FromHeaders()
+    public void StartCreateResponseActivity_XRequestId_SetsBaggageOnly()
     {
         var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
@@ -203,11 +222,13 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", headers);
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("req-abc", activity.GetTagItem("request.id"));
+        // X-Request-Id is no longer a span tag — only baggage
+        Assert.IsNull(activity.GetTagItem("request.id"));
+        Assert.AreEqual("req-abc", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
     }
 
     [Test]
-    public void StartCreateResponseActivity_NoXRequestId_OmitsTag()
+    public void StartCreateResponseActivity_NoXRequestId_OmitsRequestIdBaggage()
     {
         var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
@@ -216,11 +237,11 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.IsNull(activity.GetTagItem("request.id"));
+        Assert.IsNull(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
     }
 
     [Test]
-    public void StartCreateResponseActivity_LongXRequestId_TruncatedTo256()
+    public void StartCreateResponseActivity_LongXRequestId_BaggageTruncatedTo256()
     {
         var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
@@ -231,9 +252,9 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", headers);
 
         Assert.IsNotNull(activity);
-        var tagValue = activity.GetTagItem("request.id") as string;
-        Assert.IsNotNull(tagValue);
-        Assert.AreEqual(256, tagValue!.Length);
+        var baggageValue = activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId);
+        Assert.IsNotNull(baggageValue);
+        Assert.AreEqual(256, baggageValue!.Length);
     }
 
     [Test]
@@ -250,13 +271,51 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("conv_123", activity.GetTagItem("gen_ai.conversation.id"));
+        Assert.AreEqual("conv_123", activity.GetTagItem(ResponsesTracingConstants.Tags.ConversationId));
     }
 
     // ── StartCreateResponseActivity — baggage ────────────────────────────
 
     [Test]
-    public void StartCreateResponseActivity_SetsBaggageItems()
+    public void StartCreateResponseActivity_SetsNamespacedBaggageItems()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            Stream = true,
+            Conversation = BinaryData.FromString("\"conv_xyz\"")
+        };
+        var headers = new HeaderDictionary { ["X-Request-Id"] = "req-999" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_456", headers);
+
+        Assert.IsNotNull(activity);
+        Assert.AreEqual("caresp_456", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId));
+        Assert.AreEqual("conv_xyz", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId));
+        Assert.AreEqual("True", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
+        Assert.AreEqual("req-999", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_MinimalRequest_SetsRequiredBaggage()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_789", EmptyHeaders());
+
+        Assert.IsNotNull(activity);
+        Assert.AreEqual("caresp_789", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId));
+        Assert.AreEqual(string.Empty, activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId));
+        Assert.AreEqual("False", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
+        Assert.IsNull(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_RemovedShortKeyBaggage_NotPresent()
     {
         var source = CreateListeningSource();
         var request = new CreateResponse
@@ -269,31 +328,13 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         var headers = new HeaderDictionary { ["X-Request-Id"] = "req-999" };
 
         using var activity = source.StartCreateResponseActivity(
-            request, "caresp_456", headers);
+            request, "caresp_rm", headers);
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("caresp_456", activity.GetBaggageItem("response.id"));
-        Assert.AreEqual("true", activity.GetBaggageItem("streaming"));
-        Assert.AreEqual("azure.ai.responses", activity.GetBaggageItem("provider.name"));
-        Assert.AreEqual("conv_xyz", activity.GetBaggageItem("conversation.id"));
-        Assert.AreEqual("my-agent", activity.GetBaggageItem("agent.name"));
-        Assert.AreEqual("my-agent:2.0", activity.GetBaggageItem("agent.id"));
-        Assert.AreEqual("req-999", activity.GetBaggageItem("request.id"));
-    }
-
-    [Test]
-    public void StartCreateResponseActivity_NoBaggage_ForMissingOptionalFields()
-    {
-        var source = CreateListeningSource();
-        var request = new CreateResponse { Model = "test" };
-
-        using var activity = source.StartCreateResponseActivity(
-            request, "caresp_789", EmptyHeaders());
-
-        Assert.IsNotNull(activity);
-        Assert.AreEqual("caresp_789", activity.GetBaggageItem("response.id"));
-        Assert.AreEqual("false", activity.GetBaggageItem("streaming"));
-        Assert.AreEqual("azure.ai.responses", activity.GetBaggageItem("provider.name"));
+        // Short-key baggage items were removed for parity
+        Assert.IsNull(activity.GetBaggageItem("response.id"));
+        Assert.IsNull(activity.GetBaggageItem("streaming"));
+        Assert.IsNull(activity.GetBaggageItem("provider.name"));
         Assert.IsNull(activity.GetBaggageItem("conversation.id"));
         Assert.IsNull(activity.GetBaggageItem("agent.name"));
         Assert.IsNull(activity.GetBaggageItem("agent.id"));
@@ -312,11 +353,11 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("azure.ai.responses", activity.GetTagItem("gen_ai.provider.name"));
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
 
         // SetTag replaces existing value
-        activity.SetTag("gen_ai.provider.name", "my-custom-provider");
-        Assert.AreEqual("my-custom-provider", activity.GetTagItem("gen_ai.provider.name"));
+        activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-custom-provider");
+        Assert.AreEqual("my-custom-provider", activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
     }
 
     [Test]
@@ -329,11 +370,11 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             request, "id", EmptyHeaders());
 
         Assert.IsNotNull(activity);
-        Assert.AreEqual("azure.ai.responses", activity.GetBaggageItem("provider.name"));
+        Assert.AreEqual("False", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
 
         // AddBaggage prepends — GetBaggageItem returns most recent
-        activity.AddBaggage("provider.name", "my-custom-provider");
-        Assert.AreEqual("my-custom-provider", activity.GetBaggageItem("provider.name"));
+        activity.AddBaggage(ResponsesTracingConstants.Baggage.Streaming, "True");
+        Assert.AreEqual("True", activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming));
     }
 
     [Test]
@@ -348,7 +389,7 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         Assert.IsNotNull(activity);
         Assert.AreEqual("custom-op", activity.DisplayName);
         Assert.AreEqual("overridden", activity.GetTagItem("custom.tag"));
-        Assert.IsNull(activity.GetTagItem("gen_ai.provider.name")); // base not called
+        Assert.IsNull(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName)); // base not called
     }
 
     [Test]
@@ -365,19 +406,16 @@ public sealed class ResponsesActivitySourceTests : IDisposable
 
         // Base defaults present
         Assert.AreEqual("create_response test", activity.DisplayName);
-        Assert.AreEqual("create_response", activity.GetTagItem("gen_ai.operation.name"));
+        Assert.AreEqual("create_response", activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName));
 
         // Overridden tags
-        Assert.AreEqual("my-service", activity.GetTagItem("gen_ai.provider.name"));
-        Assert.AreEqual("my-service", activity.GetTagItem("service.name"));
-        Assert.AreEqual("my-service", activity.GetTagItem("gen_ai.system"));
+        Assert.AreEqual("my-service", activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName));
+        Assert.AreEqual("my-service", activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName));
+        Assert.AreEqual("my-service", activity.GetTagItem(ResponsesTracingConstants.Tags.System));
 
         // Extra tags from custom header
         Assert.AreEqual("hello", activity.GetTagItem("custom.header"));
         Assert.AreEqual("my.ns", activity.GetTagItem("service.namespace"));
-
-        // Overridden baggage
-        Assert.AreEqual("my-service", activity.GetBaggageItem("provider.name"));
     }
 
     [Test]
@@ -440,10 +478,9 @@ public sealed class ResponsesActivitySourceTests : IDisposable
             if (activity is null) return null;
 
             // Replace service identity
-            activity.SetTag("gen_ai.provider.name", "my-service");
-            activity.SetTag("service.name", "my-service");
-            activity.SetTag("gen_ai.system", "my-service");
-            activity.AddBaggage("provider.name", "my-service");
+            activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-service");
+            activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my-service");
+            activity.SetTag(ResponsesTracingConstants.Tags.System, "my-service");
 
             // Add extra tags
             activity.SetTag("service.namespace", "my.ns");

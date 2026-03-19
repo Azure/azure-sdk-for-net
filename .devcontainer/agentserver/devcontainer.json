@@ -58,7 +58,8 @@
           "vscode-insiders",
           "http",
           "https"
-        ]
+        ],
+        "dotnet.defaultSolution": "Azure.AI.AgentServer.sln"
       }
     }
   }

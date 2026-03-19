@@ -1,6 +1,6 @@
 {
   "private": true,
-  "description": "TypeSpec toolchain for Azure.AI.Responses.Server.Sdk model generation",
+  "description": "TypeSpec toolchain for Azure.AI.AgentServer model generation",
   "devDependencies": {
     "@azure-tools/openai-typespec": "1.11.0",
     "@azure-tools/typespec-autorest": "0.65.0",

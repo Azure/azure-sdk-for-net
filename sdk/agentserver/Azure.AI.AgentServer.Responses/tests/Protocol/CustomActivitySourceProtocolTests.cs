@@ -18,14 +18,14 @@ public sealed class CustomActivitySourceProtocolTests
     // ── Default behaviour (no override) ──────────────────────────────────
 
     [Test]
-    public async Task Default_ServiceName_IsAzureAiResponses()
+    public async Task Default_ServiceName_IsAzureAiAgentserver()
     {
         using var env = CreateEnv();
         await env.PostAsync(new { model = "test" });
 
-        Assert.AreEqual("azure.ai.responses", env.Tags["gen_ai.provider.name"]);
-        Assert.AreEqual("azure.ai.responses", env.Tags["service.name"]);
-        Assert.AreEqual("azure.ai.responses", env.Tags["gen_ai.system"]);
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, env.Tags[ResponsesTracingConstants.Tags.ServiceName]);
+        Assert.AreEqual(ResponsesTracingConstants.ServiceName, env.Tags[ResponsesTracingConstants.Tags.System]);
     }
 
     [Test]
@@ -47,12 +47,15 @@ public sealed class CustomActivitySourceProtocolTests
     }
 
     [Test]
-    public async Task Default_Baggage_ProviderName_IsAzureAiResponses()
+    public async Task Default_Baggage_HasNamespacedKeys()
     {
         using var env = CreateEnv();
         await env.PostAsync(new { model = "test" });
 
-        Assert.AreEqual("azure.ai.responses", env.Baggage["provider.name"]);
+        Assert.IsTrue(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId));
+        Assert.IsTrue(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.Streaming));
+        // Short-key baggage removed
+        Assert.IsFalse(env.Baggage.ContainsKey("provider.name"));
     }
 
     // ── Composition pattern: base + selective SetTag ─────────────────────
@@ -64,14 +67,12 @@ public sealed class CustomActivitySourceProtocolTests
         await env.PostAsync(new { model = "test" });
 
         // Overridden tags
-        Assert.AreEqual("my.custom.provider", env.Tags["gen_ai.provider.name"]);
-        Assert.AreEqual("my.custom.provider", env.Tags["service.name"]);
-        Assert.AreEqual("my.custom.provider", env.Tags["gen_ai.system"]);
-        // Overridden baggage
-        Assert.AreEqual("my.custom.provider", env.Baggage["provider.name"]);
+        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
+        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.ServiceName]);
+        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.System]);
 
         // Base defaults still present
-        Assert.AreEqual("create_response", env.Tags["gen_ai.operation.name"]);
+        Assert.AreEqual(ResponsesTracingConstants.OperationName, env.Tags[ResponsesTracingConstants.Tags.OperationName]);
     }
 
     [Test]
@@ -82,7 +83,7 @@ public sealed class CustomActivitySourceProtocolTests
 
         Assert.AreEqual("my.namespace", env.Tags["service.namespace"]);
         // Other base defaults intact
-        Assert.AreEqual("azure.ai.responses", env.Tags["gen_ai.provider.name"]);
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
     }
 
     [Test]
@@ -95,7 +96,7 @@ public sealed class CustomActivitySourceProtocolTests
 
         Assert.AreEqual("tenant-abc", env.Tags["tenant.id"]);
         // Base defaults still present
-        Assert.AreEqual("azure.ai.responses", env.Tags["gen_ai.provider.name"]);
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
     }
 
     [Test]
@@ -104,8 +105,8 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.IsTrue(env.Tags.ContainsKey("gen_ai.response.id"));
-        var responseId = env.Tags["gen_ai.response.id"] as string;
+        Assert.IsTrue(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ResponseId));
+        var responseId = env.Tags[ResponsesTracingConstants.Tags.ResponseId] as string;
         Assert.IsNotNull(responseId);
         XAssert.StartsWith("caresp_", responseId);
     }
@@ -117,7 +118,7 @@ public sealed class CustomActivitySourceProtocolTests
         await env.PostAsync(new { model = "test" });
 
         // Base defaults present
-        Assert.AreEqual("azure.ai.responses", env.Tags["gen_ai.provider.name"]);
+        Assert.AreEqual(ResponsesTracingConstants.ProviderName, env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
         // Plus the extra tag from the subclass
         Assert.AreEqual("extended-value", env.Tags["custom.extended"]);
     }
@@ -135,9 +136,9 @@ public sealed class CustomActivitySourceProtocolTests
         Assert.AreEqual("yes", env.Tags["custom.tag"]);
 
         // Default GenAI tags NOT present (base not called)
-        Assert.IsFalse(env.Tags.ContainsKey("gen_ai.provider.name"));
-        Assert.IsFalse(env.Tags.ContainsKey("service.name"));
-        Assert.IsFalse(env.Tags.ContainsKey("gen_ai.system"));
+        Assert.IsFalse(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ProviderName));
+        Assert.IsFalse(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ServiceName));
+        Assert.IsFalse(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.System));
     }
 
     [Test]
@@ -157,7 +158,7 @@ public sealed class CustomActivitySourceProtocolTests
         using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.AreEqual("my.custom.provider", env.Tags["gen_ai.provider.name"]);
+        Assert.AreEqual("my.custom.provider", env.Tags[ResponsesTracingConstants.Tags.ProviderName]);
     }
 
     // ── Custom ActivitySource subclasses ─────────────────────────────────
@@ -183,10 +184,9 @@ public sealed class CustomActivitySourceProtocolTests
             var activity = base.StartCreateResponseActivity(request, responseId, headers);
             if (activity is null) return null;
 
-            activity.SetTag("gen_ai.provider.name", "my.custom.provider");
-            activity.SetTag("service.name", "my.custom.provider");
-            activity.SetTag("gen_ai.system", "my.custom.provider");
-            activity.AddBaggage("provider.name", "my.custom.provider");
+            activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my.custom.provider");
+            activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my.custom.provider");
+            activity.SetTag(ResponsesTracingConstants.Tags.System, "my.custom.provider");
             return activity;
         }
     }
@@ -238,7 +238,7 @@ public sealed class CustomActivitySourceProtocolTests
         {
             var activity = Source.StartActivity($"HostedAgents-{responseId}");
             if (activity is null) return null;
-            activity.SetTag("gen_ai.response.id", responseId);
+            activity.SetTag(ResponsesTracingConstants.Tags.ResponseId, responseId);
             return activity;
         }
     }

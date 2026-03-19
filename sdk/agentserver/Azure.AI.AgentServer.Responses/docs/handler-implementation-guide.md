@@ -866,7 +866,7 @@ For multi-instance or durable scenarios, see [SDK Behavioural Specification — 
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `SseKeepAliveInterval` | `TimeSpan` | Disabled (`Timeout.InfiniteTimeSpan`) | Interval between SSE keep-alive comments. Opt-in via code or `AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL` env var (seconds). See [SSE Keep-Alive](#sse-keep-alive) |
+| `SseKeepAliveInterval` | `TimeSpan` | Disabled (`Timeout.InfiniteTimeSpan`) | Interval between SSE keep-alive comments. Opt-in via code or `SSE_KEEPALIVE_INTERVAL` env var (seconds). See [SSE Keep-Alive](#sse-keep-alive) |
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
 | `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `IResponsesProvider.GetHistoryItemIdsAsync` |
 
@@ -1072,7 +1072,7 @@ builder.Services.AddResponsesServer(options =>
 **Enable via environment variable**:
 
 ```bash
-export AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL=15
+export SSE_KEEPALIVE_INTERVAL=15
 ```
 
 The `X-Accel-Buffering: no` response header is automatically set on SSE streams to disable nginx buffering.

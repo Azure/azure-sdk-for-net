@@ -611,8 +611,8 @@ The prefix scheme is compatible. The new SDK uses the same general pattern (`{pr
 
 | New Env Var | Purpose |
 |------------|---------|
-| `AZURE_AI_RESPONSES_SERVER_SSE_KEEPALIVE_INTERVAL` | SSE keep-alive interval |
-| `AZURE_AI_RESPONSES_SERVER_DEFAULT_FETCH_HISTORY_ITEM_COUNT` | Max history items to fetch |
+| `SSE_KEEPALIVE_INTERVAL` | SSE keep-alive interval |
+| `DEFAULT_FETCH_HISTORY_ITEM_COUNT` | Max history items to fetch |
 
 The new SDK has far fewer configuration knobs — environment-specific concerns (ports, OTEL, identity) are owned by the consumer's ASP.NET Core host.
 
