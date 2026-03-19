@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class EventHubsPrivateLinkResourceData
     {
         /// <summary> The private link resource required member names. </summary>
-        [CodeGenMember("RequiredMembers")]
         [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers
         {
@@ -21,7 +20,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        [CodeGenMember("RequiredZoneNames")]
         [WirePath("properties.requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames
         {
