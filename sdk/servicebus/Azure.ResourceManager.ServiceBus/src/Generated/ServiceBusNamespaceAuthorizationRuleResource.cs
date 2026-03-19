@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusNamespaceAuthorizationRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _sbAuthorizationRulesClientDiagnostics;
+        private readonly SBAuthorizationRules _sbAuthorizationRulesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/AuthorizationRules";
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ServiceBus
         internal ServiceBusNamespaceAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string serviceBusNamespaceAuthorizationRuleApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceAuthorizationRuleApiVersion ?? "2025-05-01-preview");
+            _sbAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
+            _sbAuthorizationRulesRestClient = new SBAuthorizationRules(_sbAuthorizationRulesClientDiagnostics, Pipeline, Endpoint, serviceBusNamespaceAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceBusNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceBusNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Get");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Delete");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceBusAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceBusAccessKeys> response = Response.FromValue(ServiceBusAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceBusAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.GetKeys");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceBusAccessKeys> response = Response.FromValue(ServiceBusAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceBusAccessKeys> response = Response.FromValue(ServiceBusAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.RegenerateKeys");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceBusAccessKeys> response = Response.FromValue(ServiceBusAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Update");
+            using DiagnosticScope scope = _sbAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusNamespaceAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _sbAuthorizationRulesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceBusAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

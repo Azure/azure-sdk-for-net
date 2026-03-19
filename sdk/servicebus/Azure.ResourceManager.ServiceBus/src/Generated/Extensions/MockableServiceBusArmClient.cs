@@ -44,6 +44,15 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             return new ServiceBusDisasterRecoveryResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> object. </returns>
+        public virtual ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        {
+            ServiceBusNamespaceAuthorizationRuleResource.ValidateResourceId(id);
+            return new ServiceBusNamespaceAuthorizationRuleResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ServiceBusQueueAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource"/> object. </returns>
@@ -132,15 +141,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         {
             ServiceBusNetworkRuleSetResource.ValidateResourceId(id);
             return new ServiceBusNetworkRuleSetResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> object. </returns>
-        public virtual ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(ResourceIdentifier id)
-        {
-            ServiceBusNamespaceAuthorizationRuleResource.ValidateResourceId(id);
-            return new ServiceBusNamespaceAuthorizationRuleResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceBusSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
