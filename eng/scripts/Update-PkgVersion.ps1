@@ -127,11 +127,14 @@ else {
     # version is already >= the released version (e.g. hotfix scenario) the CPM
     # entry must not be downgraded.
     function Test-ShouldUpdateCpm([string]$Content, [string]$Pattern, [string]$NewVersion) {
+      $newSemVer = [AzureEngSemanticVersion]::ParseVersionString($NewVersion)
+      if ($newSemVer -and $newSemVer.IsPrerelease) {
+        return $false
+      }
       $m = [regex]::Match($Content, $Pattern)
       if (-not $m.Success) { return $true }  # no existing entry to compare — allow update attempt
       $existingVer = $m.Groups[2].Value
       $existingSemVer = [AzureEngSemanticVersion]::ParseVersionString($existingVer)
-      $newSemVer = [AzureEngSemanticVersion]::ParseVersionString($NewVersion)
       if ($existingSemVer -and $newSemVer -and $newSemVer.CompareTo($existingSemVer) -le 0) {
         return $false
       }
