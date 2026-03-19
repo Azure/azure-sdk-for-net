@@ -86,10 +86,12 @@ steps:
             } else {
               Write-Host "Repository $($repository.Name) is being initialized in $pwd"
 
+              # Use --depth=1 instead of --filter=tree:0 to download all objects for one commit
+              # upfront. This avoids slow on-demand tree/blob fetching during checkout.
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
-                Retry git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+                Retry git clone --no-checkout --depth=1 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
               } else {
-                Retry git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+                Retry git clone --no-checkout --depth=1 https://github.com/$($repository.Name) .
               }
 
               # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
@@ -121,6 +123,16 @@ steps:
 
               # use -- to prevent git from interpreting the commitish as a path
               # This will use the default branch if repo.Commitish is empty
+              if ($commitish) {
+                $result = git cat-file -t $commitish 2>&1
+                if ($LASTEXITCODE) {
+                  # Commitish not in shallow clone (e.g. not the branch tip), fetch it directly
+                  Write-Host "Commitish $commitish not found in shallow clone, fetching directly..."
+                  Retry git fetch --depth=1 origin $repository.Commitish
+                  $commitish = 'FETCH_HEAD'
+                }
+              }
+
               Retry git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
