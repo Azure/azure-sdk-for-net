@@ -385,7 +385,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(rawRangeResult, "Raw range result should not be null");
             Assert.IsNotNull(rawRangeResult.Contents, "Raw range result contents should not be null");
             DocumentContent rawRangeDoc = (DocumentContent)rawRangeResult.Contents!.First();
-            Assert.IsTrue(rawRangeDoc.Pages!.Count > 0, "Raw ContentRange should return at least one page");
+            Assert.AreEqual(6, rawRangeDoc.Pages!.Count, "Raw ContentRange('1-3,5,9-') should return exactly 6 pages");
 
             // The raw string "1-3,5,9-" should produce identical results to
             // ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
