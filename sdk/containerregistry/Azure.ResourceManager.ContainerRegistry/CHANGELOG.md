@@ -6,12 +6,6 @@
 
 - Upgraded Registry api-version to 2026-01-01-preview.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0-beta.1 (2025-12-10)
 
 ### Features Added
