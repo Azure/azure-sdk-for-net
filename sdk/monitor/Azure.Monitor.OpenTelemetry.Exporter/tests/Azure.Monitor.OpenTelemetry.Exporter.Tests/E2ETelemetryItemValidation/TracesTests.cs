@@ -387,10 +387,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
                 // Set all context tag attributes from the shim
                 activity.SetTag(SemanticConventions.AttributeMicrosoftSessionId, "session-123");
-                activity.SetTag(SemanticConventions.AttributeAiSessionIsFirst, "True");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceId, "device-456");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceModel, "Surface Pro");
-                activity.SetTag(SemanticConventions.AttributeAiDeviceOemName, "Microsoft");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceType, "PC");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceOsVersion, "Microsoft Windows NT 10.0.22621.0");
                 activity.SetTag(SemanticConventions.AttributeMicrosoftSyntheticSource, "test-bot");
@@ -407,10 +405,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // Verify context tags are mapped to envelope tags
             Assert.Equal("session-123", telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()]);
-            Assert.Equal("True", telemetryItem.Tags[ContextTagKeys.AiSessionIsFirst.ToString()]);
             Assert.Equal("device-456", telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()]);
             Assert.Equal("Surface Pro", telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()]);
-            Assert.Equal("Microsoft", telemetryItem.Tags[ContextTagKeys.AiDeviceOemName.ToString()]);
             Assert.Equal("PC", telemetryItem.Tags[ContextTagKeys.AiDeviceType.ToString()]);
             Assert.Equal("Microsoft Windows NT 10.0.22621.0", telemetryItem.Tags[ContextTagKeys.AiDeviceOsVersion.ToString()]);
             Assert.Equal("test-bot", telemetryItem.Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()]);
@@ -429,10 +425,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftSessionId));
-            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiSessionIsFirst));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceId));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceModel));
-            Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceOemName));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceType));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceOsVersion));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftSyntheticSource));

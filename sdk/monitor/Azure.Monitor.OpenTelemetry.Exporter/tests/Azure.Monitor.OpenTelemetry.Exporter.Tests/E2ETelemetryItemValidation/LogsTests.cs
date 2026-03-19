@@ -227,8 +227,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
             logger.LogInformation(
-                "{microsoft.session.id} {ai.session.isFirst} {ai.device.id} {ai.device.model} {ai.device.oemName} {ai.device.type} {ai.device.osVersion} {microsoft.synthetic_source} {microsoft.user.account_id}",
-                "session-123", "True", "device-456", "Surface Pro", "Microsoft", "PC", "Microsoft Windows NT 10.0.22621.0", "test-bot", "account-789");
+                "{microsoft.session.id} {ai.device.id} {ai.device.model} {ai.device.type} {ai.device.osVersion} {microsoft.synthetic_source} {microsoft.user.account_id}",
+                "session-123", "device-456", "Surface Pro", "PC", "Microsoft Windows NT 10.0.22621.0", "test-bot", "account-789");
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -240,10 +240,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // Verify context tags are mapped to envelope tags
             Assert.Equal("session-123", telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()]);
-            Assert.Equal("True", telemetryItem.Tags[ContextTagKeys.AiSessionIsFirst.ToString()]);
             Assert.Equal("device-456", telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()]);
             Assert.Equal("Surface Pro", telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()]);
-            Assert.Equal("Microsoft", telemetryItem.Tags[ContextTagKeys.AiDeviceOemName.ToString()]);
             Assert.Equal("PC", telemetryItem.Tags[ContextTagKeys.AiDeviceType.ToString()]);
             Assert.Equal("Microsoft Windows NT 10.0.22621.0", telemetryItem.Tags[ContextTagKeys.AiDeviceOsVersion.ToString()]);
             Assert.Equal("test-bot", telemetryItem.Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()]);
@@ -252,10 +250,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             // Verify context tags are NOT in customDimensions
             var messageData = (MessageData)telemetryItem.Data.BaseData;
             Assert.False(messageData.Properties.ContainsKey("microsoft.session.id"));
-            Assert.False(messageData.Properties.ContainsKey("ai.session.isFirst"));
             Assert.False(messageData.Properties.ContainsKey("ai.device.id"));
             Assert.False(messageData.Properties.ContainsKey("ai.device.model"));
-            Assert.False(messageData.Properties.ContainsKey("ai.device.oemName"));
             Assert.False(messageData.Properties.ContainsKey("ai.device.type"));
             Assert.False(messageData.Properties.ContainsKey("ai.device.osVersion"));
             Assert.False(messageData.Properties.ContainsKey("microsoft.synthetic_source"));
