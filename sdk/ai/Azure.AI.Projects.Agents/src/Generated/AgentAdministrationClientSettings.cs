@@ -9,9 +9,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Represents the settings used to configure a <see cref="InternalProjectsClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
+    /// <summary> Represents the settings used to configure a <see cref="AgentAdministrationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    internal partial class InternalProjectsClientSettings : ClientSettings
+    public partial class AgentAdministrationClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }

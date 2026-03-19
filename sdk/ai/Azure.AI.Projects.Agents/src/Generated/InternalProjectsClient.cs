@@ -6,7 +6,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents
@@ -49,7 +48,14 @@ namespace Azure.AI.Projects.Agents
             options ??= new AgentAdministrationClientOptions();
 
             _endpoint = endpoint;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            if (authenticationPolicy != null)
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            }
+            else
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
+            }
             _apiVersion = options.Version;
         }
 
@@ -58,13 +64,6 @@ namespace Azure.AI.Projects.Agents
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public InternalProjectsClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of InternalProjectsClient from a <see cref="InternalProjectsClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for InternalProjectsClient. </param>
-        [Experimental("SCME0002")]
-        public InternalProjectsClient(InternalProjectsClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
         {
         }
 
