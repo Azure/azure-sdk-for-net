@@ -56,8 +56,8 @@ namespace Azure.Identity
     ///     });
     ///
     /// var blobClient = new BlobClient(
-    ///     new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;),
-    ///     credential);
+    /// new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;),
+    /// credential);
     /// </code>
     /// </example>
 #pragma warning disable AZC0034 // Type moved from Azure.Identity to Azure.Core; name conflict with NuGet Azure.Identity is expected
