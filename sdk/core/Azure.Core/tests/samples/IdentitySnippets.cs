@@ -20,6 +20,18 @@ namespace Azure.Core.Tests.Samples
     {
         private const string AUTH_RECORD_PATH = "path/to/auth_record";
 
+        // Fake types so snippets compile without adding package dependencies.
+        // Only the type names appear in the generated docs (no namespaces).
+        private class BlobClient
+        {
+            public BlobClient(Uri uri, TokenCredential credential) { }
+        }
+
+        private class EventHubProducerClient
+        {
+            public EventHubProducerClient(string ns, string path, TokenCredential credential) { }
+        }
+
 #pragma warning disable CS0618 // Snippet uses obsolete ManagedIdentityCredential constructor
         [Test]
         [Ignore("Snippet only")]
@@ -31,7 +43,7 @@ namespace Azure.Core.Tests.Samples
 
             var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential());
 
-            //@@var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
+            var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 
             #endregion
         }
@@ -53,9 +65,9 @@ namespace Azure.Core.Tests.Samples
                     ManagedIdentityClientId = userAssignedClientId
                 });
 
-            //@@var blobClient = new BlobClient(
-            //@@    new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
-            //@@    credential);
+            var blobClient = new BlobClient(
+                new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+                credential);
 
             #endregion
         }
