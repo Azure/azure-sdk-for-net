@@ -6,7 +6,7 @@ This document lists the experimental feature diagnostic IDs used in Azure.Core t
 
 ### Description
 
-The Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection integration APIs are experimental features for configuring Azure SDK clients using .NET configuration patterns. These APIs are subject to change or removal in future updates as we gather feedback and refine the implementation.
+The `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInjection` integration APIs are experimental features for configuring Azure SDK clients using .NET configuration patterns. These APIs are subject to change or removal in future updates as we gather feedback and refine the implementation.
 
 ### Affected APIs
 
