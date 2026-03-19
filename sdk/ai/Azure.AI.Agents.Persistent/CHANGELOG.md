@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 - Improved error reporting during streaming response processing.
-- Fixed issue on sreaming event deserialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/55585).
+- Fixed issue on streaming event deserialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/55585).
 
 ### Other Changes
 

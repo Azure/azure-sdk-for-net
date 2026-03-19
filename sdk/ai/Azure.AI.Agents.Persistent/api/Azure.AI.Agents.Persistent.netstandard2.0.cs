@@ -769,7 +769,7 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.IncompleteRunDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeepAliveUpdate : Azure.AI.Agents.Persistent.StreamingUpdate<Azure.AI.Agents.Persistent.RunStep>
+    public partial class KeepAliveUpdate : Azure.AI.Agents.Persistent.StreamingUpdate
     {
         internal KeepAliveUpdate() { }
     }
