@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageAccountData : TrackedResourceData
     {
+        // Prior GA exposed ProvisioningState as StorageProvisioningState enum;
+        // generated code uses StorageAccountProvisioningState. This converts for backward compat.
         /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.provisioningState")]

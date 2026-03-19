@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Properties of the storage task assignment. </summary>
     public partial class StorageTaskAssignmentProperties
     {
+        // Prior GA used StorageProvisioningState type; generated code uses
+        // StorageTaskAssignmentProvisioningState. Hidden alias for backward compat.
         /// <summary> Represents the provisioning state of the storage task assignment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("provisioningState")]
@@ -26,6 +28,8 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState =>
             ProvisioningState.HasValue ? new StorageTaskAssignmentProvisioningState(ProvisioningState.Value.ToString()) : null;
 
+        // Prior GA property name was "Enabled"; generated code renamed it.
+        // Hidden alias preserves the old name for binary compat.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }

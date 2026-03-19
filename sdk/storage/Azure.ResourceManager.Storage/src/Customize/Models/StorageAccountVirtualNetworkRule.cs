@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        // Backward-compatible constructor.
+        // Prior GA had a public ctor taking only virtualNetworkResourceId; generated code
+        // only has an internal ctor with all params.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId) : this(virtualNetworkResourceId, default(StorageAccountVirtualNetworkRuleAction?), default, default)
         {
@@ -43,6 +44,8 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("id")]
         public ResourceIdentifier VirtualNetworkResourceId { get; set; }
 
+        // Prior GA used the unified StorageAccountNetworkRuleAction type; generator would
+        // produce a VNet-specific StorageAccountVirtualNetworkRuleAction type instead.
         /// <summary> The action of virtual network rule. </summary>
         [WirePath("action")]
         public StorageAccountNetworkRuleAction? Action { get; set; }

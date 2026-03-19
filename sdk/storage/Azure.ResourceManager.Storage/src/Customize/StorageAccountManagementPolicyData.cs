@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        // Prior GA had a public parameterless ctor; generated code makes it internal.
         /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
         public StorageAccountManagementPolicyData()
         {
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.Storage
         [WirePath("properties")]
         internal ManagementPolicyProperties Properties { get; set; }
 
+        // Flattened from Properties envelope to match prior GA surface.
         /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
         [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
