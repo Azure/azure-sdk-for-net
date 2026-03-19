@@ -9,7 +9,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class CognitiveServicesSpecification() :
-    Specification("CognitiveServices", typeof(CognitiveServicesExtensions))
+    Specification("CognitiveServices", typeof(CognitiveServicesExtensions), serviceDirectory: "cognitiveservices")
 {
     protected override void Customize()
     {

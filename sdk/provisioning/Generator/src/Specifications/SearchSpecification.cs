@@ -11,7 +11,7 @@ using Generator.Model;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class SearchSpecification() :
-    Specification("Search", typeof(SearchExtensions))
+    Specification("Search", typeof(SearchExtensions), serviceDirectory: "search")
 {
     protected override void Customize()
     {

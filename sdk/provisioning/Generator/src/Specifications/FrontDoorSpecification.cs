@@ -7,7 +7,7 @@ using Azure.ResourceManager.FrontDoor;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class FrontDoorSpecification() :
-    Specification("FrontDoor", typeof(FrontDoorExtensions), ignorePropertiesWithoutPath: true)
+    Specification("FrontDoor", typeof(FrontDoorExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "frontdoor")
 {
     protected override void Customize()
     {

@@ -8,7 +8,7 @@ using Azure.ResourceManager.EventHubs.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class EventHubsSpecification() :
-    Specification("EventHubs", typeof(EventHubsExtensions))
+    Specification("EventHubs", typeof(EventHubsExtensions), serviceDirectory: "eventhub")
 {
     protected override void Customize()
     {

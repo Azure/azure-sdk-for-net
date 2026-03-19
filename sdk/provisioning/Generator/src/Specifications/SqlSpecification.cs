@@ -10,7 +10,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class SqlSpecification() :
-    Specification("Sql", typeof(SqlExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Sql", typeof(SqlExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "sqlmanagement")
 {
     protected override void Customize()
     {

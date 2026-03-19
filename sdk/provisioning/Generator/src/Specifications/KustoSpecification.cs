@@ -12,7 +12,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class KustoSpecification() :
-    Specification("Kusto", typeof(KustoExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Kusto", typeof(KustoExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "kusto")
 {
     protected override void Customize()
     {

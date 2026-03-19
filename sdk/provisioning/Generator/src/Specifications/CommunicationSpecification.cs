@@ -8,7 +8,7 @@ using Azure.ResourceManager.Communication.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class CommunicationSpecification() :
-    Specification("Communication", typeof(CommunicationExtensions))
+    Specification("Communication", typeof(CommunicationExtensions), serviceDirectory: "communication")
 {
     protected override void Customize()
     {

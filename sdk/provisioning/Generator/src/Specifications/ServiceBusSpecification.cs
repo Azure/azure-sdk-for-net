@@ -8,7 +8,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class ServiceBusSpecification() :
-    Specification("ServiceBus", typeof(ServiceBusExtensions))
+    Specification("ServiceBus", typeof(ServiceBusExtensions), serviceDirectory: "servicebus")
 {
     protected override void Customize()
     {

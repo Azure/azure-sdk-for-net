@@ -7,7 +7,7 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class RedisEnterpriseSpecification() :
-    Specification("RedisEnterprise", typeof(RedisEnterpriseExtensions))
+    Specification("RedisEnterprise", typeof(RedisEnterpriseExtensions), serviceDirectory: "redisenterprise")
 {
     protected override void Customize()
     {
