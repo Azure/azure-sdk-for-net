@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryEncryption encryption = default;
             bool? dataEndpointEnabled = default;
             RegionalEndpoint? regionalEndpoints = default;
-            EndpointProtocol? endpointProtocol = default;
+            ContainerRegistryEndpointProtocol? endpointProtocol = default;
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? networkRuleBypassAllowedForTasks = default;
             bool? anonymousPullEnabled = default;
-            MetadataSearch? metadataSearch = default;
+            ContainerRegistryMetadataSearch? metadataSearch = default;
             ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            endpointProtocol = new EndpointProtocol(property0.Value.GetString());
+                            endpointProtocol = new ContainerRegistryEndpointProtocol(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            metadataSearch = new MetadataSearch(property0.Value.GetString());
+                            metadataSearch = new ContainerRegistryMetadataSearch(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("roleAssignmentMode"u8))

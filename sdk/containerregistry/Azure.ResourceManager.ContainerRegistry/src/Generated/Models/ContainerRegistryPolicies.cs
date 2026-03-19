@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="azureADAuthenticationAsArmPolicy"> The policy for using Azure Resource Manager audience token for a container registry. </param>
         /// <param name="softDeletePolicy"> The soft delete policy for a container registry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, SoftDeletePolicy softDeletePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, ContainerRegistrySoftDeletePolicy softDeletePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
@@ -122,6 +122,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The soft delete policy for a container registry. </summary>
         [WirePath("softDeletePolicy")]
-        public SoftDeletePolicy SoftDeletePolicy { get; set; }
+        public ContainerRegistrySoftDeletePolicy SoftDeletePolicy { get; set; }
     }
 }

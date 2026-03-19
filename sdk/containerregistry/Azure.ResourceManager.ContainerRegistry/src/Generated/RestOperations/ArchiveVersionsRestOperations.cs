@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ArchiveVersionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryArchiveVersionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        ArchiveVersionListResult value = default;
+                        ContainerRegistryArchiveVersionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ArchiveVersionListResult.DeserializeArchiveVersionListResult(document.RootElement);
+                        value = ContainerRegistryArchiveVersionListResult.DeserializeContainerRegistryArchiveVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ArchiveVersionListResult> List(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryArchiveVersionListResult> List(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        ArchiveVersionListResult value = default;
+                        ContainerRegistryArchiveVersionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ArchiveVersionListResult.DeserializeArchiveVersionListResult(document.RootElement);
+                        value = ContainerRegistryArchiveVersionListResult.DeserializeContainerRegistryArchiveVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/>, <paramref name="archiveName"/> or <paramref name="archiveVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/>, <paramref name="archiveName"/> or <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ArchiveVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, string archiveVersionName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryArchiveVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -217,13 +217,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        ArchiveVersionData value = default;
+                        ContainerRegistryArchiveVersionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ArchiveVersionData.DeserializeArchiveVersionData(document.RootElement);
+                        value = ContainerRegistryArchiveVersionData.DeserializeContainerRegistryArchiveVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArchiveVersionData)null, message.Response);
+                    return Response.FromValue((ContainerRegistryArchiveVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/>, <paramref name="archiveName"/> or <paramref name="archiveVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/>, <paramref name="archiveName"/> or <paramref name="archiveVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ArchiveVersionData> Get(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, string archiveVersionName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryArchiveVersionData> Get(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, string archiveVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,13 +254,13 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        ArchiveVersionData value = default;
+                        ContainerRegistryArchiveVersionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ArchiveVersionData.DeserializeArchiveVersionData(document.RootElement);
+                        value = ContainerRegistryArchiveVersionData.DeserializeContainerRegistryArchiveVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ArchiveVersionData)null, message.Response);
+                    return Response.FromValue((ContainerRegistryArchiveVersionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ArchiveVersionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryArchiveVersionListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        ArchiveVersionListResult value = default;
+                        ContainerRegistryArchiveVersionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ArchiveVersionListResult.DeserializeArchiveVersionListResult(document.RootElement);
+                        value = ContainerRegistryArchiveVersionListResult.DeserializeContainerRegistryArchiveVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ArchiveVersionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryArchiveVersionListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -564,9 +564,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case 200:
                     {
-                        ArchiveVersionListResult value = default;
+                        ContainerRegistryArchiveVersionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ArchiveVersionListResult.DeserializeArchiveVersionListResult(document.RootElement);
+                        value = ContainerRegistryArchiveVersionListResult.DeserializeContainerRegistryArchiveVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

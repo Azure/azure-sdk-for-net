@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryRetentionPolicy retentionPolicy = default;
             ContainerRegistryExportPolicy exportPolicy = default;
             AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy = default;
-            SoftDeletePolicy softDeletePolicy = default;
+            ContainerRegistrySoftDeletePolicy softDeletePolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(property.Value, options);
+                    softDeletePolicy = ContainerRegistrySoftDeletePolicy.DeserializeContainerRegistrySoftDeletePolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

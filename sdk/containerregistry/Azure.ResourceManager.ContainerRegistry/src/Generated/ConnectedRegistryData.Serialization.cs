@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails = default;
             IList<string> notificationsList = default;
             GarbageCollectionProperties garbageCollection = default;
-            RegistrySyncResult registrySyncResult = default;
+            ContainerRegistrySyncResult registrySyncResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            registrySyncResult = RegistrySyncResult.DeserializeRegistrySyncResult(property0.Value, options);
+                            registrySyncResult = ContainerRegistrySyncResult.DeserializeContainerRegistrySyncResult(property0.Value, options);
                             continue;
                         }
                     }
