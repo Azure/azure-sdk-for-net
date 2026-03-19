@@ -116,12 +116,5 @@ namespace Azure.AI.Translation.Document
                 @type,
                 additionalBinaryDataProperties: null);
         }
-
-        /// <summary> Document Translate Request Content. </summary>
-        /// <returns> A new <see cref="Document.DocumentTranslateContent"/> instance for mocking. </returns>
-        public static DocumentTranslateContent DocumentTranslateContent()
-        {
-            return new DocumentTranslateContent(additionalBinaryDataProperties: null);
-        }
     }
 }
