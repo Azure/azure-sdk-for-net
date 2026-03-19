@@ -676,12 +676,22 @@ namespace Azure.Communication.CallAutomation
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
-        /// <param name="sipDetails"></param>
-        /// <param name="q850Details"></param>
+        /// <param name="sipDetails">Contains the sip details. </param>
+        /// <param name="q850Details">Contains the q 850 details.</param>
         /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
         public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipDetails = null, SipDiagnosticInfo q850Details = null)
         {
             return new ResultInformation(code, subCode, message, sipDetails, q850Details);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
+        /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="message"> Detail message that describes the current result. </param>
+        /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        {
+            return new ResultInformation(code, subCode, message, sipDetails: null, q850Details: null);
         }
     }
 }
