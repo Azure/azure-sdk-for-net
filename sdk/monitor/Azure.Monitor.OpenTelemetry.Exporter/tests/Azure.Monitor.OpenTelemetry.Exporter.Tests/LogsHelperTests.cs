@@ -794,6 +794,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void VerifyUserAgentOriginal_ExtractedIntoLogContext()
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+            logger.LogInformation("{user_agent.original}", "Mozilla/5.0");
+
+            // Assert.
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out LogContextInfo logContext, out var availabilityInfo);
+
+            Assert.Equal("Mozilla/5.0", logContext.UserAgent);
+            Assert.False(properties.ContainsKey("user_agent.original"), "user_agent.original should not appear in customDimensions");
+        }
+
+        [Fact]
         public void VerifyOperationName_ExtractedIntoLogContext()
         {
             // Arrange.
@@ -832,8 +856,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var logger = loggerFactory.CreateLogger("Some category");
             logger.LogInformation(
-                "{microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {microsoft.operation_name}",
-                "1.2.3.4", "User123", "AuthUser123", "SampleOp");
+                "{microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {user_agent.original} {microsoft.operation_name}",
+                "1.2.3.4", "User123", "AuthUser123", "Mozilla/5.0", "SampleOp");
 
             // Assert.
             var properties = new ChangeTrackingDictionary<string, string>();
@@ -842,12 +866,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("1.2.3.4", logContext.MicrosoftClientIp);
             Assert.Equal("User123", logContext.EndUserPseudoId);
             Assert.Equal("AuthUser123", logContext.EndUserId);
+            Assert.Equal("Mozilla/5.0", logContext.UserAgent);
             Assert.Equal("SampleOp", logContext.OperationName);
 
             // None of these should leak into customDimensions
             Assert.False(properties.ContainsKey("microsoft.client.ip"));
             Assert.False(properties.ContainsKey("enduser.pseudo.id"));
             Assert.False(properties.ContainsKey("enduser.id"));
+            Assert.False(properties.ContainsKey("user_agent.original"));
             Assert.False(properties.ContainsKey("microsoft.operation_name"));
         }
 
@@ -874,6 +900,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(logContext.MicrosoftClientIp);
             Assert.Null(logContext.EndUserPseudoId);
             Assert.Null(logContext.EndUserId);
+            Assert.Null(logContext.UserAgent);
             Assert.Null(logContext.OperationName);
         }
 
@@ -903,19 +930,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "{microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {microsoft.operation_name}",
-                        "10.0.0.1", "PseudoUser", "AuthenticatedUser", "TestOperation");
+                    logger.LogError(ex, "{microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {user_agent.original} {microsoft.operation_name}",
+                        "10.0.0.1", "PseudoUser", "AuthenticatedUser", "TestAgent/1.0", "TestOperation");
                 }
             }
             else if (baseType == "EventData")
             {
-                logger.LogInformation("{microsoft.custom_event.name} {microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {microsoft.operation_name}",
-                    "TestEvent", "10.0.0.1", "PseudoUser", "AuthenticatedUser", "TestOperation");
+                logger.LogInformation("{microsoft.custom_event.name} {microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {user_agent.original} {microsoft.operation_name}",
+                    "TestEvent", "10.0.0.1", "PseudoUser", "AuthenticatedUser", "TestAgent/1.0", "TestOperation");
             }
             else
             {
-                logger.LogInformation("{microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {microsoft.operation_name}",
-                    "10.0.0.1", "PseudoUser", "AuthenticatedUser", "TestOperation");
+                logger.LogInformation("{microsoft.client.ip} {enduser.pseudo.id} {enduser.id} {user_agent.original} {microsoft.operation_name}",
+                    "10.0.0.1", "PseudoUser", "AuthenticatedUser", "TestAgent/1.0", "TestOperation");
             }
 
             var logResource = new AzureMonitorResource(
@@ -931,6 +958,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("10.0.0.1", item.Tags[ContextTagKeys.AiLocationIp.ToString()]);
             Assert.Equal("PseudoUser", item.Tags[ContextTagKeys.AiUserId.ToString()]);
             Assert.Equal("AuthenticatedUser", item.Tags[ContextTagKeys.AiUserAuthUserId.ToString()]);
+            Assert.Equal("TestAgent/1.0", item.Tags["ai.user.userAgent"]);
             Assert.Equal("TestOperation", item.Tags[ContextTagKeys.AiOperationName.ToString()]);
 
             // Verify base type
@@ -966,6 +994,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiLocationIp.ToString()));
             Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiUserId.ToString()));
             Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiUserAuthUserId.ToString()));
+            Assert.False(item.Tags.ContainsKey("ai.user.userAgent"));
             Assert.False(item.Tags.ContainsKey(ContextTagKeys.AiOperationName.ToString()));
         }
 

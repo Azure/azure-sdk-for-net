@@ -12,6 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? MicrosoftClientIp;
         public string? EndUserPseudoId;
         public string? EndUserId;
+        public string? UserAgent;
         public string? OperationName;
         public string? SessionId;
         public string? DeviceId;
@@ -28,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             MicrosoftClientIp != null ||
             EndUserPseudoId != null ||
             EndUserId != null ||
+            UserAgent != null ||
             OperationName != null ||
             SessionId != null ||
             DeviceId != null ||

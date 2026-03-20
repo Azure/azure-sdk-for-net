@@ -24,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string ClientIpAttributeName = "microsoft.client.ip";
         private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
         private const string EndUserIdAttributeName = "enduser.id";
+        private const string UserAgentOriginalAttributeName = "user_agent.original";
         private const string OperationNameAttributeName = "microsoft.operation_name";
         private const string SessionIdAttributeName = "microsoft.session.id";
         private const string DeviceIdAttributeName = "ai.device.id";
@@ -169,6 +170,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case EndUserIdAttributeName:
                         logContext.EndUserId = item.Value?.ToString();
                         break;
+                    case UserAgentOriginalAttributeName:
+                        logContext.UserAgent = item.Value?.ToString();
+                        break;
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
                         break;
@@ -304,6 +308,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         break;
                     case EndUserIdAttributeName:
                         logContext.EndUserId = item.Value?.ToString();
+                        break;
+                    case UserAgentOriginalAttributeName:
+                        logContext.UserAgent = item.Value?.ToString();
                         break;
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();

@@ -386,6 +386,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 Assert.NotNull(activity);
 
                 // Set all context tag attributes from the shim
+                activity.SetTag(SemanticConventions.AttributeUserAgentOriginal, "TestAgent/1.0");
                 activity.SetTag(SemanticConventions.AttributeMicrosoftSessionId, "session-123");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceId, "device-456");
                 activity.SetTag(SemanticConventions.AttributeAiDeviceModel, "Surface Pro");
@@ -404,6 +405,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var telemetryItem = telemetryItems.First(x => x.Name == expectedTelemetryName);
 
             // Verify context tags are mapped to envelope tags
+            Assert.Equal("TestAgent/1.0", telemetryItem.Tags["ai.user.userAgent"]);
             Assert.Equal("session-123", telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()]);
             Assert.Equal("device-456", telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()]);
             Assert.Equal("Surface Pro", telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()]);
@@ -424,6 +426,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 properties = ((RequestData)baseData).Properties;
             }
 
+            Assert.False(properties.ContainsKey(SemanticConventions.AttributeUserAgentOriginal));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeMicrosoftSessionId));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceId));
             Assert.False(properties.ContainsKey(SemanticConventions.AttributeAiDeviceModel));
