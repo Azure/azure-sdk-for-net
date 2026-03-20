@@ -47,12 +47,11 @@ public abstract partial class Specification : ModelBase
 
     /// <summary>
     /// The service directory under sdk/ where the generated library is placed.
-    /// Defaults to "provisioning". Override to place the library alongside
-    /// a service's management SDK (e.g., "apimanagement", "datafactory").
+    /// For example, "keyvault" places the library at sdk/keyvault/Azure.Provisioning.KeyVault/.
     /// </summary>
     internal string ServiceDirectory { get; }
 
-    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false, string serviceDirectory = "provisioning")
+    public Specification(string name, Type armEntryPoint, string serviceDirectory, bool ignorePropertiesWithoutPath = false)
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
