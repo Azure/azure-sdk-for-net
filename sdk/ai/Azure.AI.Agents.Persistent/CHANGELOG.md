@@ -8,8 +8,12 @@
 
 ### Bugs Fixed
 - Improved error reporting during streaming response processing.
+- Fixed issue on streaming event deserialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/55585).
 - Fix OpenAPI tool call serialization during telemetry collection [issue](https://github.com/Azure/azure-sdk-for-net/issues/57183).
-- Fix function arguments serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/53817)
+- Fix function arguments serialization [issue](https://github.com/Azure/azure-sdk-for-net/issues/53817).
+
+### Sample updates
+- Added code to show how to force tool use in Azure AI Search with streaming example. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/54056).
 
 ### Other Changes
 

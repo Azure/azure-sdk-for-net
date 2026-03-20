@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -13,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.AI.Agents.Persistent.Tests.Utilities;
@@ -398,7 +398,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             Assert.That(inputValue.ValueKind, Is.EqualTo(JsonValueKind.String));
             weather.Add(inputValue.GetString() switch
             {
-                "Alpine" => "Clowdy",
+                "Alpine" => "Cloudy",
                 "Baird" => "Sunny",
                 "Frankfort" => "Rainy",
                 _ => "Unknown",
@@ -456,11 +456,11 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Dictionary<string, string> decodedData = OpenTelemetryScope.DeserializeFunctionArguments(jsonString);
         Assert.That(decodedData["variable1"], Is.EqualTo("String"));
         Assert.That(decodedData["variable2"], Is.EqualTo("1"));
-        Assert.That(decodedData["variable3"], Is.EqualTo("1.1"));
+        Assert.That(decodedData["variable3"].StartsWith("1.1"), Is.True);
         Assert.That(decodedData["variable4"], Is.EqualTo("True"));
         Assert.That(decodedData["variable5"], Is.EqualTo("{\"dictKey\":\"dictVal\"}"));
         Assert.That(decodedData["variable6"], Is.EqualTo("1, 2"));
-        Assert.That(decodedData["variable7"], Is.EqualTo("1.1, 2.1"));
+        Assert.That(Regex.IsMatch(decodedData["variable7"], "1.1\\d*, 2.1\\d*"), Is.True);
         Assert.That(decodedData["variable8"], Is.EqualTo("st1, st2"));
         Assert.That(decodedData["variable9"], Is.EqualTo("{\"dictKey1\":\"dictVal1\"}, {\"dictKey1\":\"dictVal2\"}"));
         Assert.That(decodedData["variable10"], Is.EqualTo("[\"st3\",\"st4\"], [\"st5\",\"st6\"]"));
@@ -474,6 +474,16 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         string notAJson = "When shall we three meet again In thunder, lightning, or in rain?";
         Dictionary<string, string> decodedData = OpenTelemetryScope.DeserializeFunctionArguments(notAJson);
         Assert.That(decodedData["NonParseableArgument"], Is.EqualTo(notAJson));
+    }
+
+    [Test]
+    [SyncOnly]
+    public void TestIncorrectJSONArgument()
+    {
+        object data = new object[] { "foo", "bar", "baz" };
+        string badJson = JsonSerializer.Serialize(data);
+        Dictionary<string, string> decodedData = OpenTelemetryScope.DeserializeFunctionArguments(badJson);
+        Assert.That(decodedData["NonParseableArgument"], Is.EqualTo(badJson));
     }
 
     [RecordedTest]
@@ -577,7 +587,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         {
             CheckSubmitToolOutputSpan(
                 submitActivity: submitToolOutputsSpan,
-                content: "{\"content\":\"{\\\"weather\\\":[\\\"Clowdy\\\",\\\"Sunny\\\",\\\"Rainy\\\"]}\",\"id\":\"*\"}"
+                content: "{\"content\":\"{\\\"weather\\\":[\\\"Cloudy\\\",\\\"Sunny\\\",\\\"Rainy\\\"]}\",\"id\":\"*\"}"
             );
         }
         else

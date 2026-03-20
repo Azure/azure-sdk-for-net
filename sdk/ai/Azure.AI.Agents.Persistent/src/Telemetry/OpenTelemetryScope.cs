@@ -1109,8 +1109,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             try
             {
                 using JsonDocument argumentsJson = JsonDocument.Parse(arguments);
-                JsonElement locationArgument = argumentsJson.RootElement;
-                foreach (JsonProperty arg in locationArgument.EnumerateObject())
+                JsonElement argumentRoot = argumentsJson.RootElement;
+                if (argumentRoot.ValueKind != JsonValueKind.Object)
+                {
+                    parsedArguments["NonParseableArgument"] = arguments;
+                    return parsedArguments;
+                }
+                foreach (JsonProperty arg in argumentRoot.EnumerateObject())
                 {
                     if (arg.Value.ValueKind == JsonValueKind.String)
                     {

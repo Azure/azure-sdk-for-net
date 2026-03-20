@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Linq;
@@ -9,7 +9,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class CognitiveServicesSpecification() :
-    Specification("CognitiveServices", typeof(CognitiveServicesExtensions))
+    Specification("CognitiveServices", typeof(CognitiveServicesExtensions), serviceDirectory: "cognitiveservices")
 {
     protected override void Customize()
     {

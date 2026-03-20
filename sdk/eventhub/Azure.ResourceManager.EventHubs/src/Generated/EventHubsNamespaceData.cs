@@ -13,185 +13,319 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary>
-    /// A class representing the EventHubsNamespace data model.
-    /// Single Namespace item in List or Get Operation
-    /// </summary>
+    /// <summary> Single Namespace item in List or Get Operation. </summary>
     public partial class EventHubsNamespaceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public EventHubsNamespaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
-        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
-        /// <param name="status"> Status of the Namespace. </param>
-        /// <param name="createdOn"> The time the Namespace was created. </param>
-        /// <param name="updatedOn"> The time the Namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
-        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="isAutoInflateEnabled"> Value that indicates whether AutoInflate is enabled for eventhub namespace. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </param>
-        /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
-        /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
-        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
-        /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        /// <param name="platformCapabilities"></param>
-        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, PlatformCapabilities platformCapabilities, NamespaceGeoDataReplicationProperties geoDataReplication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, EHNamespaceProperties properties, IDictionary<string, string> tags, SystemData systemData, EventHubsSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Identity = identity;
-            MinimumTlsVersion = minimumTlsVersion;
-            ProvisioningState = provisioningState;
-            Status = status;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            ServiceBusEndpoint = serviceBusEndpoint;
-            ClusterArmId = clusterArmId;
-            MetricId = metricId;
-            IsAutoInflateEnabled = isAutoInflateEnabled;
-            PublicNetworkAccess = publicNetworkAccess;
-            MaximumThroughputUnits = maximumThroughputUnits;
-            KafkaEnabled = kafkaEnabled;
-            ZoneRedundant = zoneRedundant;
-            Encryption = encryption;
-            PrivateEndpointConnections = privateEndpointConnections;
-            DisableLocalAuth = disableLocalAuth;
-            AlternateName = alternateName;
-            PlatformCapabilities = platformCapabilities;
-            GeoDataReplication = geoDataReplication;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceData"/> for deserialization. </summary>
-        internal EventHubsNamespaceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
+        internal EHNamespaceProperties Properties { get; set; }
 
         /// <summary> Properties of sku resource. </summary>
         [WirePath("sku")]
         public EventHubsSku Sku { get; set; }
+
         /// <summary> Properties of BYOK Identity description. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
         [WirePath("properties.minimumTlsVersion")]
-        public EventHubsTlsVersion? MinimumTlsVersion { get; set; }
-        /// <summary> Provisioning state of the Namespace. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
-        /// <summary> Status of the Namespace. </summary>
-        [WirePath("properties.status")]
-        public string Status { get; }
-        /// <summary> The time the Namespace was created. </summary>
-        [WirePath("properties.createdAt")]
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The time the Namespace was updated. </summary>
-        [WirePath("properties.updatedAt")]
-        public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Endpoint you can use to perform Service Bus operations. </summary>
-        [WirePath("properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; }
-        /// <summary> Cluster ARM ID of the Namespace. </summary>
-        [WirePath("properties.clusterArmId")]
-        public ResourceIdentifier ClusterArmId { get; set; }
-        /// <summary> Identifier for Azure Insights metrics. </summary>
-        [WirePath("properties.metricId")]
-        public string MetricId { get; }
-        /// <summary> Value that indicates whether AutoInflate is enabled for eventhub namespace. </summary>
-        [WirePath("properties.isAutoInflateEnabled")]
-        public bool? IsAutoInflateEnabled { get; set; }
-        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public EventHubsPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </summary>
-        [WirePath("properties.maximumThroughputUnits")]
-        public int? MaximumThroughputUnits { get; set; }
-        /// <summary> Value that indicates whether Kafka is enabled for eventhub namespace. </summary>
-        [WirePath("properties.kafkaEnabled")]
-        public bool? KafkaEnabled { get; set; }
-        /// <summary> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </summary>
-        [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
-        /// <summary> Properties of BYOK Encryption description. </summary>
-        [WirePath("properties.encryption")]
-        public EventHubsEncryption Encryption { get; set; }
-        /// <summary> List of private endpoint connections. </summary>
-        [WirePath("properties.privateEndpointConnections")]
-        public IList<EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
-        /// <summary> Alternate name specified when alias and namespace names are same. </summary>
-        [WirePath("properties.alternateName")]
-        public string AlternateName { get; set; }
-        /// <summary> Gets or sets the platform capabilities. </summary>
-        internal PlatformCapabilities PlatformCapabilities { get; set; }
-        /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
-        [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
-        public EventHubsConfidentialComputeMode? ConfidentialComputeMode
+        public EventHubsTlsVersion? MinimumTlsVersion
         {
-            get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
             set
             {
-                if (PlatformCapabilities is null)
-                    PlatformCapabilities = new PlatformCapabilities();
-                PlatformCapabilities.ConfidentialComputeMode = value;
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
+        }
+
+        /// <summary> Provisioning state of the Namespace. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Status of the Namespace. </summary>
+        [WirePath("properties.status")]
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> The time the Namespace was created. </summary>
+        [WirePath("properties.createdAt")]
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> The time the Namespace was updated. </summary>
+        [WirePath("properties.updatedAt")]
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
+        /// <summary> Endpoint you can use to perform Service Bus operations. </summary>
+        [WirePath("properties.serviceBusEndpoint")]
+        public string ServiceBusEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceBusEndpoint;
+            }
+        }
+
+        /// <summary> Cluster ARM ID of the Namespace. </summary>
+        [WirePath("properties.clusterArmId")]
+        public ResourceIdentifier ClusterArmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterArmId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.ClusterArmId = value;
+            }
+        }
+
+        /// <summary> Identifier for Azure Insights metrics. </summary>
+        [WirePath("properties.metricId")]
+        public string MetricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricId;
+            }
+        }
+
+        /// <summary> Value that indicates whether AutoInflate is enabled for eventhub namespace. </summary>
+        [WirePath("properties.isAutoInflateEnabled")]
+        public bool? IsAutoInflateEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoInflateEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.IsAutoInflateEnabled = value.Value;
+            }
+        }
+
+        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public EventHubsPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
+        /// <summary> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </summary>
+        [WirePath("properties.maximumThroughputUnits")]
+        public int? MaximumThroughputUnits
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumThroughputUnits;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.MaximumThroughputUnits = value.Value;
+            }
+        }
+
+        /// <summary> Value that indicates whether Kafka is enabled for eventhub namespace. </summary>
+        [WirePath("properties.kafkaEnabled")]
+        public bool? KafkaEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KafkaEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.KafkaEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </summary>
+        [WirePath("properties.zoneRedundant")]
+        public bool? ZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.ZoneRedundant = value.Value;
+            }
+        }
+
+        /// <summary> Properties of BYOK Encryption description. </summary>
+        [WirePath("properties.encryption")]
+        public EventHubsEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
+        /// <summary> List of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
+        public IList<EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
+        [WirePath("properties.disableLocalAuth")]
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
+        /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        [WirePath("properties.alternateName")]
+        public string AlternateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlternateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.AlternateName = value;
             }
         }
 
         /// <summary> Geo Data Replication settings for the namespace. </summary>
         [WirePath("properties.geoDataReplication")]
-        public NamespaceGeoDataReplicationProperties GeoDataReplication { get; set; }
+        public EventHubsNamespaceGeoDataReplicationProperties GeoDataReplication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoDataReplication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.GeoDataReplication = value;
+            }
+        }
     }
 }

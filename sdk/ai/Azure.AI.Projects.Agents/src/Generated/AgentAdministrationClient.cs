@@ -3,7 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +14,15 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentAdministrationClient
     {
         private readonly Uri _endpoint;
+        /// <summary> The OAuth2 flows supported by the service. </summary>
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+            }
+        };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AgentAdministrationClient for mocking. </summary>
@@ -31,8 +43,37 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public AgentAdministrationClient(Uri endpoint) : this(endpoint, new AgentAdministrationClientOptions())
+        /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
+        public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AgentAdministrationClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AgentAdministrationClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            }
+            else
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
+            }
+        }
+
+        /// <summary> Initializes a new instance of AgentAdministrationClient from a <see cref="AgentAdministrationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for AgentAdministrationClient. </param>
+        [Experimental("SCME0002")]
+        public AgentAdministrationClient(AgentAdministrationClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
         {
         }
 

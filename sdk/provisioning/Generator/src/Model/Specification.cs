@@ -45,7 +45,13 @@ public abstract partial class Specification : ModelBase
     /// </summary>
     protected internal virtual Type? ResolveExternalGenericType(Type armType) => null;
 
-    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false)
+    /// <summary>
+    /// The service directory under sdk/ where the generated library is placed.
+    /// For example, "keyvault" places the library at sdk/keyvault/Azure.Provisioning.KeyVault/.
+    /// </summary>
+    internal string ServiceDirectory { get; }
+
+    public Specification(string name, Type armEntryPoint, string serviceDirectory, bool ignorePropertiesWithoutPath = false)
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
@@ -55,6 +61,7 @@ public abstract partial class Specification : ModelBase
         DocComments = new XmlDocCommentReader(armEntryPoint.Assembly);
         TypeRegistry.Register(this);
         IgnorePropertiesWithoutPath = ignorePropertiesWithoutPath;
+        ServiceDirectory = serviceDirectory;
     }
 
     public override string ToString() => $"<Specification {Name}>";
