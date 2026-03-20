@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="metadataSearch"> Determines whether registry artifacts are indexed for metadata search. </param>
         /// <param name="roleAssignmentMode"> Determines registry role assignment mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPropertiesUpdateParameters(bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, RegionalEndpoints? regionalEndpoints, EndpointProtocol? endpointProtocol, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, MetadataSearch? metadataSearch, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistryPropertiesUpdateParameters(bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, RegionalEndpoint? regionalEndpoints, ContainerRegistryEndpointProtocol? endpointProtocol, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, ContainerRegistryMetadataSearch? metadataSearch, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAdminUserEnabled = isAdminUserEnabled;
             NetworkRuleSet = networkRuleSet;
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Enable per-region endpoints for accessing registry. </summary>
         [WirePath("regionalEndpoints")]
-        public RegionalEndpoints? RegionalEndpoints { get; set; }
+        public RegionalEndpoint? RegionalEndpoints { get; set; }
 
         /// <summary> The connectivity protocol for the registry, such as IPv4 or dual stack (IPv4 and IPv6). </summary>
         [WirePath("endpointProtocol")]
-        public EndpointProtocol? EndpointProtocol { get; set; }
+        public ContainerRegistryEndpointProtocol? EndpointProtocol { get; set; }
 
         /// <summary> Whether or not public network access is allowed for the container registry. </summary>
         [WirePath("publicNetworkAccess")]
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Determines whether registry artifacts are indexed for metadata search. </summary>
         [WirePath("metadataSearch")]
-        public MetadataSearch? MetadataSearch { get; set; }
+        public ContainerRegistryMetadataSearch? MetadataSearch { get; set; }
 
         /// <summary> Determines registry role assignment mode. </summary>
         [WirePath("roleAssignmentMode")]

@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails = default;
             IList<string> notificationsList = default;
             GarbageCollectionProperties garbageCollection = default;
-            RegistrySyncResult registrySyncResult = default;
+            ContainerRegistrySyncResult registrySyncResult = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    registrySyncResult = RegistrySyncResult.DeserializeRegistrySyncResult(prop.Value, options);
+                    registrySyncResult = ContainerRegistrySyncResult.DeserializeContainerRegistrySyncResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

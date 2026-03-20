@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartArray();
-                foreach (PipelineOptions item in Options)
+                foreach (PipelineOption item in Options)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            ExportPipelineTargetProperties target = default;
-            IList<PipelineOptions> options0 = default;
+            ContainerRegistryExportPipelineTargetProperties target = default;
+            IList<PipelineOption> options0 = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("target"u8))
                 {
-                    target = ExportPipelineTargetProperties.DeserializeExportPipelineTargetProperties(prop.Value, options);
+                    target = ContainerRegistryExportPipelineTargetProperties.DeserializeContainerRegistryExportPipelineTargetProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("options"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<PipelineOptions> array = new List<PipelineOptions>();
+                    List<PipelineOption> array = new List<PipelineOption>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new PipelineOptions(item.GetString()));
+                        array.Add(new PipelineOption(item.GetString()));
                     }
                     options0 = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExportPipelineProperties(target, options0 ?? new ChangeTrackingList<PipelineOptions>(), provisioningState, additionalBinaryDataProperties);
+            return new ExportPipelineProperties(target, options0 ?? new ChangeTrackingList<PipelineOption>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

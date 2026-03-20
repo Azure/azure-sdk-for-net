@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArchiveVersionProperties"/>. </summary>
-        internal ArchiveVersionProperties()
+        public ArchiveVersionProperties()
         {
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The detailed error message for the archive version in the case of failure. </summary>
         [WirePath("archiveVersionErrorMessage")]
-        public string ArchiveVersionErrorMessage { get; }
+        public string ArchiveVersionErrorMessage { get; set; }
     }
 }

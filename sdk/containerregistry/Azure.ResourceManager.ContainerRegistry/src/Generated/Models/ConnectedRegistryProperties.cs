@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
         /// <param name="registrySyncResult"> The result of the connected registry's most recent sync with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryProperties(ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ActivationProperties activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, RegistrySyncResult registrySyncResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistryProperties(ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryMode mode, string version, ConnectedRegistryConnectionState? connectionState, DateTimeOffset? lastActivityOn, ActivationProperties activation, ConnectedRegistryParent parent, IList<ResourceIdentifier> clientTokenIds, ConnectedRegistryLoginServer loginServer, ConnectedRegistryLogging logging, IReadOnlyList<ConnectedRegistryStatusDetail> statusDetails, IList<string> notificationsList, GarbageCollectionProperties garbageCollection, ContainerRegistrySyncResult registrySyncResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Mode = mode;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The result of the connected registry's most recent sync with its parent. </summary>
         [WirePath("registrySyncResult")]
-        public RegistrySyncResult RegistrySyncResult { get; set; }
+        public ContainerRegistrySyncResult RegistrySyncResult { get; set; }
 
         /// <summary> The activation status of the connected registry. </summary>
         [WirePath("activation.status")]

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryRetentionPolicy retentionPolicy = default;
             ExportPolicy exportPolicy = default;
             AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy = default;
-            SoftDeletePolicy softDeletePolicy = default;
+            ContainerRegistrySoftDeletePolicy softDeletePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    softDeletePolicy = SoftDeletePolicy.DeserializeSoftDeletePolicy(prop.Value, options);
+                    softDeletePolicy = ContainerRegistrySoftDeletePolicy.DeserializeContainerRegistrySoftDeletePolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

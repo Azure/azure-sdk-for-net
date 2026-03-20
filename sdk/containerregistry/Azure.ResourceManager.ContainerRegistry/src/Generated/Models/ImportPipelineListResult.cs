@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ImportPipelineListResult"/>. </summary>
         internal ImportPipelineListResult()
         {
-            Value = new ChangeTrackingList<ImportPipelineData>();
+            Value = new ChangeTrackingList<ContainerRegistryImportPipelineData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportPipelineListResult"/>. </summary>
         /// <param name="value"> The list of import pipelines. Since this list may be incomplete, the nextLink field should be used to request the next list of import pipelines. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of import pipelines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportPipelineListResult(IList<ImportPipelineData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportPipelineListResult(IList<ContainerRegistryImportPipelineData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of import pipelines. Since this list may be incomplete, the nextLink field should be used to request the next list of import pipelines. </summary>
         [WirePath("value")]
-        public IList<ImportPipelineData> Value { get; }
+        public IList<ContainerRegistryImportPipelineData> Value { get; }
 
         /// <summary> The URI that can be used to request the next list of import pipelines. </summary>
         [WirePath("nextLink")]

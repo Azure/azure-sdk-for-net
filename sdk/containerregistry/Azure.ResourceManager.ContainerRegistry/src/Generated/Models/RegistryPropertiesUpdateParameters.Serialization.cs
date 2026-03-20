@@ -186,13 +186,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPolicies policies = default;
             ContainerRegistryEncryption encryption = default;
             bool? isDataEndpointEnabled = default;
-            RegionalEndpoints? regionalEndpoints = default;
-            EndpointProtocol? endpointProtocol = default;
+            RegionalEndpoint? regionalEndpoints = default;
+            ContainerRegistryEndpointProtocol? endpointProtocol = default;
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? isNetworkRuleBypassAllowedForTasks = default;
             bool? isAnonymousPullEnabled = default;
-            MetadataSearch? metadataSearch = default;
+            ContainerRegistryMetadataSearch? metadataSearch = default;
             ContainerRegistryRoleAssignmentMode? roleAssignmentMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    regionalEndpoints = new RegionalEndpoints(prop.Value.GetString());
+                    regionalEndpoints = new RegionalEndpoint(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointProtocol"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    endpointProtocol = new EndpointProtocol(prop.Value.GetString());
+                    endpointProtocol = new ContainerRegistryEndpointProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    metadataSearch = new MetadataSearch(prop.Value.GetString());
+                    metadataSearch = new ContainerRegistryMetadataSearch(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("roleAssignmentMode"u8))

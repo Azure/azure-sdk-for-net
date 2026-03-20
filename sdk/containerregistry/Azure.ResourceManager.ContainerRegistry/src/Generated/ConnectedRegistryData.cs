@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> The result of the connected registry's most recent sync with its parent. </summary>
         [WirePath("properties.registrySyncResult")]
-        public RegistrySyncResult RegistrySyncResult
+        public ContainerRegistrySyncResult RegistrySyncResult
         {
             get
             {

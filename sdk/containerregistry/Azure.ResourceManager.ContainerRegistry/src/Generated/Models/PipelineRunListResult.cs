@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="PipelineRunListResult"/>. </summary>
         internal PipelineRunListResult()
         {
-            Value = new ChangeTrackingList<PipelineRunData>();
+            Value = new ChangeTrackingList<ContainerRegistryPipelineRunData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineRunListResult"/>. </summary>
         /// <param name="value"> The list of pipeline runs. Since this list may be incomplete, the nextLink field should be used to request the next list of pipeline runs. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of pipeline runs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineRunListResult(IList<PipelineRunData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PipelineRunListResult(IList<ContainerRegistryPipelineRunData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of pipeline runs. Since this list may be incomplete, the nextLink field should be used to request the next list of pipeline runs. </summary>
         [WirePath("value")]
-        public IList<PipelineRunData> Value { get; }
+        public IList<ContainerRegistryPipelineRunData> Value { get; }
 
         /// <summary> The URI that can be used to request the next list of pipeline runs. </summary>
         [WirePath("nextLink")]

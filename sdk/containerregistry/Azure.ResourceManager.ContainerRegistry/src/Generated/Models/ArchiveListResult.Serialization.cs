@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ArchiveData item in Value)
+                foreach (ContainerRegistryArchiveData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IList<ArchiveData> value = default;
+            IList<ContainerRegistryArchiveData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ArchiveData> array = new List<ArchiveData>();
+                    List<ContainerRegistryArchiveData> array = new List<ContainerRegistryArchiveData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ArchiveData.DeserializeArchiveData(item, options));
+                        array.Add(ContainerRegistryArchiveData.DeserializeContainerRegistryArchiveData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArchiveListResult(value ?? new ChangeTrackingList<ArchiveData>(), nextLink, additionalBinaryDataProperties);
+            return new ArchiveListResult(value ?? new ChangeTrackingList<ContainerRegistryArchiveData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            ArchivePackageSourceProperties packageSource = default;
+            ContainerRegistryArchivePackageSourceProperties packageSource = default;
             string publishedVersion = default;
             string repositoryEndpointPrefix = default;
             string repositoryEndpoint = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    packageSource = ArchivePackageSourceProperties.DeserializeArchivePackageSourceProperties(prop.Value, options);
+                    packageSource = ContainerRegistryArchivePackageSourceProperties.DeserializeContainerRegistryArchivePackageSourceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publishedVersion"u8))

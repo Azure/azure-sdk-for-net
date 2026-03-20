@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryProvisioningState? provisioningState = default;
-            PipelineRunRequest request = default;
-            PipelineRunResponse response = default;
+            ContainerRegistryPipelineRunContent request = default;
+            ContainerRegistryPipelineRunResult response = default;
             string forceUpdateTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    request = PipelineRunRequest.DeserializePipelineRunRequest(prop.Value, options);
+                    request = ContainerRegistryPipelineRunContent.DeserializeContainerRegistryPipelineRunContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    response = PipelineRunResponse.DeserializePipelineRunResponse(prop.Value, options);
+                    response = ContainerRegistryPipelineRunResult.DeserializeContainerRegistryPipelineRunResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("forceUpdateTag"u8))

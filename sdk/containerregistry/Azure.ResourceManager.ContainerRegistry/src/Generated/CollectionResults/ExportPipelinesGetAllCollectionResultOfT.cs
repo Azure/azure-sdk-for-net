@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal partial class ExportPipelinesGetAllCollectionResultOfT : Pageable<ExportPipelineData>
+    internal partial class ExportPipelinesGetAllCollectionResultOfT : Pageable<ContainerRegistryExportPipelineData>
     {
         private readonly ExportPipelines _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ExportPipelinesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ExportPipelineData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ContainerRegistryExportPipelineData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     yield break;
                 }
                 ExportPipelineListResult result = ExportPipelineListResult.FromResponse(response);
-                yield return Page<ExportPipelineData>.FromValues((IReadOnlyList<ExportPipelineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerRegistryExportPipelineData>.FromValues((IReadOnlyList<ContainerRegistryExportPipelineData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _registryName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ExportPipelineCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerRegistryExportPipelineCollection.GetAll");
             scope.Start();
             try
             {

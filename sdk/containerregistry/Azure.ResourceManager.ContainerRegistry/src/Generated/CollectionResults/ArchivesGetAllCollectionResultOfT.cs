@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal partial class ArchivesGetAllCollectionResultOfT : Pageable<ArchiveData>
+    internal partial class ArchivesGetAllCollectionResultOfT : Pageable<ContainerRegistryArchiveData>
     {
         private readonly Archives _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ArchivesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ArchiveData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ContainerRegistryArchiveData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     yield break;
                 }
                 ArchiveListResult result = ArchiveListResult.FromResponse(response);
-                yield return Page<ArchiveData>.FromValues((IReadOnlyList<ArchiveData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerRegistryArchiveData>.FromValues((IReadOnlyList<ContainerRegistryArchiveData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _packageType, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _registryName, _packageType, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ArchiveCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.GetAll");
             scope.Start();
             try
             {

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ArchiveListResult"/>. </summary>
         internal ArchiveListResult()
         {
-            Value = new ChangeTrackingList<ArchiveData>();
+            Value = new ChangeTrackingList<ContainerRegistryArchiveData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArchiveListResult"/>. </summary>
         /// <param name="value"> The list of archives. Since this list may be incomplete, the nextLink field should be used to request the next list of archives. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of archives. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArchiveListResult(IList<ArchiveData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArchiveListResult(IList<ContainerRegistryArchiveData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of archives. Since this list may be incomplete, the nextLink field should be used to request the next list of archives. </summary>
         [WirePath("value")]
-        public IList<ArchiveData> Value { get; }
+        public IList<ContainerRegistryArchiveData> Value { get; }
 
         /// <summary> The URI that can be used to request the next list of archives. </summary>
         [WirePath("nextLink")]

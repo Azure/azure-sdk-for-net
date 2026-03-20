@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ArchiveVersionListResult"/>. </summary>
         internal ArchiveVersionListResult()
         {
-            Value = new ChangeTrackingList<ArchiveVersionData>();
+            Value = new ChangeTrackingList<ContainerRegistryArchiveVersionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArchiveVersionListResult"/>. </summary>
         /// <param name="value"> The list of archive versions. Since this list may be incomplete, the nextLink field should be used to request the next list of archive versions. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of archive versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArchiveVersionListResult(IList<ArchiveVersionData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArchiveVersionListResult(IList<ContainerRegistryArchiveVersionData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of archive versions. Since this list may be incomplete, the nextLink field should be used to request the next list of archive versions. </summary>
         [WirePath("value")]
-        public IList<ArchiveVersionData> Value { get; }
+        public IList<ContainerRegistryArchiveVersionData> Value { get; }
 
         /// <summary> The URI that can be used to request the next list of archive versions. </summary>
         [WirePath("nextLink")]

@@ -1135,20 +1135,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public override string ToString() => _value;
     }
 
-    [Obsolete("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public readonly partial struct ContainerRegistryTriggerStatus : IEquatable<ContainerRegistryTriggerStatus>
+    // ContainerRegistryTriggerStatus is now generated from the spec (via @@clientName on TriggerStatus).
+    // The generated partial struct only has operators and constants. This partial provides the remaining
+    // members (field, constructor, static properties, Equals, GetHashCode, ToString).
+    public readonly partial struct ContainerRegistryTriggerStatus
     {
         private readonly string _value;
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerStatus"/>. </summary>
         public ContainerRegistryTriggerStatus(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
+        /// <summary> Enabled. </summary>
         public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus("Disabled");
+        /// <summary> Disabled. </summary>
         public static ContainerRegistryTriggerStatus Enabled { get; } = new ContainerRegistryTriggerStatus("Enabled");
-        public static bool operator ==(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => left.Equals(right);
-        public static bool operator !=(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => !left.Equals(right);
-        public static implicit operator ContainerRegistryTriggerStatus(string value) => new ContainerRegistryTriggerStatus(value);
+        /// <inheritdoc />
         public override bool Equals(object obj) => obj is ContainerRegistryTriggerStatus other && Equals(other);
+        /// <inheritdoc />
         public bool Equals(ContainerRegistryTriggerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        /// <inheritdoc />
         public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (PipelineRunData item in Value)
+                foreach (ContainerRegistryPipelineRunData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IList<PipelineRunData> value = default;
+            IList<ContainerRegistryPipelineRunData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<PipelineRunData> array = new List<PipelineRunData>();
+                    List<ContainerRegistryPipelineRunData> array = new List<ContainerRegistryPipelineRunData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PipelineRunData.DeserializePipelineRunData(item, options));
+                        array.Add(ContainerRegistryPipelineRunData.DeserializeContainerRegistryPipelineRunData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PipelineRunListResult(value ?? new ChangeTrackingList<PipelineRunData>(), nextLink, additionalBinaryDataProperties);
+            return new PipelineRunListResult(value ?? new ChangeTrackingList<ContainerRegistryPipelineRunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ExportPipelineProperties"/>. </summary>
         /// <param name="target"> The target properties of the export pipeline. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> is null. </exception>
-        public ExportPipelineProperties(ExportPipelineTargetProperties target)
+        public ExportPipelineProperties(ContainerRegistryExportPipelineTargetProperties target)
         {
             Argument.AssertNotNull(target, nameof(target));
 
             Target = target;
-            Options = new ChangeTrackingList<PipelineOptions>();
+            Options = new ChangeTrackingList<PipelineOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportPipelineProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The list of all options configured for the pipeline. </param>
         /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportPipelineProperties(ExportPipelineTargetProperties target, IList<PipelineOptions> options, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportPipelineProperties(ContainerRegistryExportPipelineTargetProperties target, IList<PipelineOption> options, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Target = target;
             Options = options;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The target properties of the export pipeline. </summary>
         [WirePath("target")]
-        public ExportPipelineTargetProperties Target { get; set; }
+        public ContainerRegistryExportPipelineTargetProperties Target { get; set; }
 
         /// <summary> The list of all options configured for the pipeline. </summary>
         [WirePath("options")]
-        public IList<PipelineOptions> Options { get; } = new ChangeTrackingList<PipelineOptions>();
+        public IList<PipelineOption> Options { get; } = new ChangeTrackingList<PipelineOption>();
 
         /// <summary> The provisioning state of the pipeline at the time the operation was called. </summary>
         [WirePath("provisioningState")]

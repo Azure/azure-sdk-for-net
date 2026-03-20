@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            TriggerStatus status = default;
+            ContainerRegistryTriggerStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new TriggerStatus(prop.Value.GetString());
+                    status = new ContainerRegistryTriggerStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

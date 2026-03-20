@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ImportPipelineData item in Value)
+                foreach (ContainerRegistryImportPipelineData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IList<ImportPipelineData> value = default;
+            IList<ContainerRegistryImportPipelineData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ImportPipelineData> array = new List<ImportPipelineData>();
+                    List<ContainerRegistryImportPipelineData> array = new List<ContainerRegistryImportPipelineData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImportPipelineData.DeserializeImportPipelineData(item, options));
+                        array.Add(ContainerRegistryImportPipelineData.DeserializeContainerRegistryImportPipelineData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImportPipelineListResult(value ?? new ChangeTrackingList<ImportPipelineData>(), nextLink, additionalBinaryDataProperties);
+            return new ImportPipelineListResult(value ?? new ChangeTrackingList<ContainerRegistryImportPipelineData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

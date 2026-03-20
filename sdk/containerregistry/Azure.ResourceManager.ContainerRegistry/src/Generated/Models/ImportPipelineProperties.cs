@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ImportPipelineProperties"/>. </summary>
         /// <param name="source"> The source properties of the import pipeline. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public ImportPipelineProperties(ImportPipelineSourceProperties source)
+        public ImportPipelineProperties(ContainerRegistryImportPipelineSourceProperties source)
         {
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
-            Options = new ChangeTrackingList<PipelineOptions>();
+            Options = new ChangeTrackingList<PipelineOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportPipelineProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The list of all options configured for the pipeline. </param>
         /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportPipelineProperties(ImportPipelineSourceProperties source, PipelineTriggerProperties trigger, IList<PipelineOptions> options, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportPipelineProperties(ContainerRegistryImportPipelineSourceProperties source, PipelineTriggerProperties trigger, IList<PipelineOption> options, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Trigger = trigger;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The source properties of the import pipeline. </summary>
         [WirePath("source")]
-        public ImportPipelineSourceProperties Source { get; set; }
+        public ContainerRegistryImportPipelineSourceProperties Source { get; set; }
 
         /// <summary> The properties that describe the trigger of the import pipeline. </summary>
         [WirePath("trigger")]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The list of all options configured for the pipeline. </summary>
         [WirePath("options")]
-        public IList<PipelineOptions> Options { get; } = new ChangeTrackingList<PipelineOptions>();
+        public IList<PipelineOption> Options { get; } = new ChangeTrackingList<PipelineOption>();
 
         /// <summary> The provisioning state of the pipeline at the time the operation was called. </summary>
         [WirePath("provisioningState")]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The current status of the source trigger. </summary>
         [WirePath("trigger.sourceTrigger.status")]
-        public TriggerStatus? SourceTriggerStatus
+        public ContainerRegistryTriggerStatus? SourceTriggerStatus
         {
             get
             {

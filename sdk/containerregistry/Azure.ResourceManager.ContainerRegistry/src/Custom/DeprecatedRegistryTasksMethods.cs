@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ContainerRegistryRunResource> GetContainerRegistryRun(string runName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryRunResource> GetContainerRegistryRun(string runId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("RegistryTasks operations have been moved to Azure.ResourceManager.ContainerRegistryTasks.");
 
         [ForwardsClientCalls]
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<ContainerRegistryRunResource>> GetContainerRegistryRunAsync(string runName, CancellationToken cancellationToken = default)
+        public virtual Task<Response<ContainerRegistryRunResource>> GetContainerRegistryRunAsync(string runId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("RegistryTasks operations have been moved to Azure.ResourceManager.ContainerRegistryTasks.");
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<ContainerRegistryRunResource>> ScheduleRunAsync(WaitUntil waitUntil, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("RegistryTasks operations have been moved to Azure.ResourceManager.ContainerRegistryTasks.");
+
+        [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ContainerRegistryRunResource> ScheduleRun(ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("RegistryTasks operations have been moved to Azure.ResourceManager.ContainerRegistryTasks.");
+
+        [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("RegistryTasks operations have been moved to Azure.ResourceManager.ContainerRegistryTasks.");
 
         [Obsolete("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]

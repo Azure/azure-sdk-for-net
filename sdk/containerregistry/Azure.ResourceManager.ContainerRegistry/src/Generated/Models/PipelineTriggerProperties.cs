@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The current status of the source trigger. </summary>
         [WirePath("sourceTrigger.status")]
-        public TriggerStatus? SourceTriggerStatus
+        public ContainerRegistryTriggerStatus? SourceTriggerStatus
         {
             get
             {

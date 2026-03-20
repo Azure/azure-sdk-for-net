@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> Extensible union for ContainerRegistryResourceType to maintain backward compatibility. </summary>
+    /// <summary></summary>
     public readonly partial struct ContainerRegistryResourceType : IEquatable<ContainerRegistryResourceType>
     {
         private readonly string _value;

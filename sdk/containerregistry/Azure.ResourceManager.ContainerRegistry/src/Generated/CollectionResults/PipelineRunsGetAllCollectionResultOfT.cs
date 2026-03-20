@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal partial class PipelineRunsGetAllCollectionResultOfT : Pageable<PipelineRunData>
+    internal partial class PipelineRunsGetAllCollectionResultOfT : Pageable<ContainerRegistryPipelineRunData>
     {
         private readonly PipelineRuns _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PipelineRunsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PipelineRunData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ContainerRegistryPipelineRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     yield break;
                 }
                 PipelineRunListResult result = PipelineRunListResult.FromResponse(response);
-                yield return Page<PipelineRunData>.FromValues((IReadOnlyList<PipelineRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerRegistryPipelineRunData>.FromValues((IReadOnlyList<ContainerRegistryPipelineRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _registryName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _registryName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PipelineRunCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ContainerRegistryPipelineRunCollection.GetAll");
             scope.Start();
             try
             {

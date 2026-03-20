@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Enable per-region endpoints for accessing registry. </summary>
         [WirePath("properties.regionalEndpoints")]
-        public RegionalEndpoints? RegionalEndpoints
+        public RegionalEndpoint? RegionalEndpoints
         {
             get
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> The connectivity protocol for the registry, such as IPv4 or dual stack (IPv4 and IPv6). </summary>
         [WirePath("properties.endpointProtocol")]
-        public EndpointProtocol? EndpointProtocol
+        public ContainerRegistryEndpointProtocol? EndpointProtocol
         {
             get
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Determines whether registry artifacts are indexed for metadata search. </summary>
         [WirePath("properties.metadataSearch")]
-        public MetadataSearch? MetadataSearch
+        public ContainerRegistryMetadataSearch? MetadataSearch
         {
             get
             {

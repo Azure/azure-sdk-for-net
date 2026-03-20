@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ArchiveVersionData item in Value)
+                foreach (ContainerRegistryArchiveVersionData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IList<ArchiveVersionData> value = default;
+            IList<ContainerRegistryArchiveVersionData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ArchiveVersionData> array = new List<ArchiveVersionData>();
+                    List<ContainerRegistryArchiveVersionData> array = new List<ContainerRegistryArchiveVersionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ArchiveVersionData.DeserializeArchiveVersionData(item, options));
+                        array.Add(ContainerRegistryArchiveVersionData.DeserializeContainerRegistryArchiveVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArchiveVersionListResult(value ?? new ChangeTrackingList<ArchiveVersionData>(), nextLink, additionalBinaryDataProperties);
+            return new ArchiveVersionListResult(value ?? new ChangeTrackingList<ContainerRegistryArchiveVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
