@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConnectedRegistryGet()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/ConnectedRegistryGet.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/examples/ConnectedRegistryGet.json
             // this example is just showing the usage of "ConnectedRegistries_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConnectedRegistryDelete()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/ConnectedRegistryDelete.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/examples/ConnectedRegistryDelete.json
             // this example is just showing the usage of "ConnectedRegistries_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConnectedRegistryUpdate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/ConnectedRegistryUpdate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/examples/ConnectedRegistryUpdate.json
             // this example is just showing the usage of "ConnectedRegistries_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Deactivate_ConnectedRegistryDeactivate()
         {
-            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/stable/2025-11-01/examples/ConnectedRegistryDeactivate.json
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/examples/ConnectedRegistryDeactivate.json
             // this example is just showing the usage of "ConnectedRegistries_Deactivate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,6 +153,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             await connectedRegistry.DeactivateAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Resync_ConnectedRegistryResync()
+        {
+            // Generated from example definition: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry/preview/2026-01-01-preview/examples/ConnectedRegistryResync.json
+            // this example is just showing the usage of "ConnectedRegistries_Resync" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ConnectedRegistryResource created on azure
+            // for more information of creating ConnectedRegistryResource, please refer to the document of ConnectedRegistryResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string registryName = "myRegistry";
+            string connectedRegistryName = "myConnectedRegistry";
+            ResourceIdentifier connectedRegistryResourceId = ConnectedRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, connectedRegistryName);
+            ConnectedRegistryResource connectedRegistry = client.GetConnectedRegistryResource(connectedRegistryResourceId);
+
+            // invoke the operation
+            ConnectedRegistryResource result = await connectedRegistry.ResyncAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ConnectedRegistryData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

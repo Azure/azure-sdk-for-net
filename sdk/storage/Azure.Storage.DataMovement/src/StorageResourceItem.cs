@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -208,6 +209,15 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Gets the SAS URI for the storage resource if available.
+        /// </summary>
+        /// <returns>
+        /// Gets the SAS URI for the storage resource if available.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Uri GetSasWithUri() => Uri;
 
         /// <summary>
         /// If the operation requires any ending transfers (e.g. Committing a block list, flushing crypto streams)

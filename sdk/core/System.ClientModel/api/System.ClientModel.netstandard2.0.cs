@@ -337,6 +337,7 @@ namespace System.ClientModel.Primitives
         public void AppendNull(System.ReadOnlySpan<byte> arrayPath) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool Contains(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
+        public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator EnumerateArray(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public byte GetByte(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.DateTime GetDateTime(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
@@ -381,6 +382,8 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
+        public System.BinaryData ToBinaryData() { throw null; }
+        public System.BinaryData ToBinaryData(string format) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
         public bool TryGetEncodedValue(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value) { throw null; }
@@ -405,6 +408,15 @@ namespace System.ClientModel.Primitives
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ulong value) { throw null; }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public ref partial struct ArrayEnumerator
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public System.ReadOnlyMemory<byte> Current { get { throw null; } }
+            public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator GetEnumerator() { throw null; }
+            public bool MoveNext() { throw null; }
+        }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct EncodedValue
         {

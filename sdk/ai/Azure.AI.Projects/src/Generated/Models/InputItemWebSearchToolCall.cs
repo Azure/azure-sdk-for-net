@@ -17,7 +17,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
-        ///   Includes details on how the model used the web (search, open_page, find).
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
         public InputItemWebSearchToolCall(string id, InputItemWebSearchToolCallStatus status, BinaryData action) : base(InputItemType.WebSearchCall)
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
-        ///   Includes details on how the model used the web (search, open_page, find).
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
         internal InputItemWebSearchToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, InputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, additionalBinaryDataProperties)
         {
@@ -54,7 +54,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
-        ///   Includes details on how the model used the web (search, open_page, find).
+        ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

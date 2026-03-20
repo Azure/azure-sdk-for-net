@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
 
         private ClientDiagnostics NginxDeploymentsClientDiagnostics => _nginxDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Nginx.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NginxDeployments NginxDeploymentsRestClient => _nginxDeploymentsRestClient ??= new NginxDeployments(NginxDeploymentsClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private NginxDeployments NginxDeploymentsRestClient => _nginxDeploymentsRestClient ??= new NginxDeployments(NginxDeploymentsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
 
         /// <summary>
         /// List the NGINX deployments resources
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>

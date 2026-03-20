@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(lambdaTestHyperExecuteOrganizationPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(lambdaTestHyperExecuteOrganizationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

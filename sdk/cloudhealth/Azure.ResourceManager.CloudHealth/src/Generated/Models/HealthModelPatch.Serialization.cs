@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(healthModelPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(healthModelPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

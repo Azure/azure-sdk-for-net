@@ -190,5 +190,13 @@ namespace Azure.Storage.DataMovement
             builder.Query = string.Empty;
             return builder.Uri.AbsoluteUri;
         }
+
+        internal static void ValidateOffsetsAndLength(int offset, int length, long streamLength)
+        {
+            if ((long)offset + length > streamLength)
+            {
+                throw Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);
+            }
+        }
     }
 }

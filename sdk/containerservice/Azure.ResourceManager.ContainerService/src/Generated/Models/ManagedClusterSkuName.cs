@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ManagedClusterSkuName : IEquatable<ManagedClusterSkuName>
     {
         private readonly string _value;
+        /// <summary> Base option for the AKS control plane. </summary>
+        private const string BaseValue = "Base";
+        /// <summary> Automatic clusters are optimized to run most production workloads with configuration that follows AKS best practices and recommendations for cluster and workload setup, scalability, and security. For more details about Automatic clusters see aka.ms/aks/automatic. </summary>
+        private const string AutomaticValue = "Automatic";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BaseValue = "Base";
-        private const string AutomaticValue = "Automatic";
+            _value = value;
+        }
 
         /// <summary> Base option for the AKS control plane. </summary>
         public static ManagedClusterSkuName Base { get; } = new ManagedClusterSkuName(BaseValue);
+
         /// <summary> Automatic clusters are optimized to run most production workloads with configuration that follows AKS best practices and recommendations for cluster and workload setup, scalability, and security. For more details about Automatic clusters see aka.ms/aks/automatic. </summary>
         public static ManagedClusterSkuName Automatic { get; } = new ManagedClusterSkuName(AutomaticValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterSkuName left, ManagedClusterSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterSkuName left, ManagedClusterSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterSkuName(string value) => new ManagedClusterSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterSkuName?(string value) => value == null ? null : new ManagedClusterSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,1 @@
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource.Delete(Azure.WaitUntil, System.Threading.CancellationToken)' in the contract but not the implementation.

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService
@@ -25,72 +26,79 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class MeshRevisionProfileCollection : ArmCollection, IEnumerable<MeshRevisionProfileResource>, IAsyncEnumerable<MeshRevisionProfileResource>
     {
-        private readonly ClientDiagnostics _meshRevisionProfileManagedClustersClientDiagnostics;
-        private readonly ManagedClustersRestOperations _meshRevisionProfileManagedClustersRestClient;
+        private readonly ClientDiagnostics _meshRevisionProfilesClientDiagnostics;
+        private readonly MeshRevisionProfiles _meshRevisionProfilesRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="MeshRevisionProfileCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MeshRevisionProfileCollection for mocking. </summary>
         protected MeshRevisionProfileCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MeshRevisionProfileCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MeshRevisionProfileCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal MeshRevisionProfileCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(MeshRevisionProfileResource.ResourceType, out string meshRevisionProfileApiVersion);
             _location = location;
-            _meshRevisionProfileManagedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", MeshRevisionProfileResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MeshRevisionProfileResource.ResourceType, out string meshRevisionProfileManagedClustersApiVersion);
-            _meshRevisionProfileManagedClustersRestClient = new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, meshRevisionProfileManagedClustersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _meshRevisionProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", MeshRevisionProfileResource.ResourceType.Namespace, Diagnostics);
+            _meshRevisionProfilesRestClient = new MeshRevisionProfiles(_meshRevisionProfilesClientDiagnostics, Pipeline, Endpoint, meshRevisionProfileApiVersion ?? "2026-01-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Contains extra metadata on the revision, including supported revisions, cluster compatibility and available upgrades
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_GetMeshRevisionProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MeshRevisionProfileResource>> GetAsync(string mode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
-            using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Get");
+            using DiagnosticScope scope = _meshRevisionProfilesClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = await _meshRevisionProfileManagedClustersRestClient.GetMeshRevisionProfileAsync(Id.SubscriptionId, new AzureLocation(_location), mode, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MeshRevisionProfileData> response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MeshRevisionProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,38 +112,42 @@ namespace Azure.ResourceManager.ContainerService
         /// Contains extra metadata on the revision, including supported revisions, cluster compatibility and available upgrades
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_GetMeshRevisionProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MeshRevisionProfileResource> Get(string mode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
-            using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Get");
+            using DiagnosticScope scope = _meshRevisionProfilesClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Get");
             scope.Start();
             try
             {
-                var response = _meshRevisionProfileManagedClustersRestClient.GetMeshRevisionProfile(Id.SubscriptionId, new AzureLocation(_location), mode, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MeshRevisionProfileData> response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MeshRevisionProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,50 +161,44 @@ namespace Azure.ResourceManager.ContainerService
         /// Contains extra metadata on each revision, including supported revisions, cluster compatibility and available upgrades
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ListMeshRevisionProfiles</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_ListMeshRevisionProfiles. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MeshRevisionProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MeshRevisionProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MeshRevisionProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _meshRevisionProfileManagedClustersRestClient.CreateListMeshRevisionProfilesRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _meshRevisionProfileManagedClustersRestClient.CreateListMeshRevisionProfilesNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MeshRevisionProfileResource(Client, MeshRevisionProfileData.DeserializeMeshRevisionProfileData(e)), _meshRevisionProfileManagedClustersClientDiagnostics, Pipeline, "MeshRevisionProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesAsyncCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new MeshRevisionProfileResource(Client, data));
         }
 
         /// <summary>
         /// Contains extra metadata on each revision, including supported revisions, cluster compatibility and available upgrades
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_ListMeshRevisionProfiles</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_ListMeshRevisionProfiles. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,45 +206,61 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="MeshRevisionProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MeshRevisionProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _meshRevisionProfileManagedClustersRestClient.CreateListMeshRevisionProfilesRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _meshRevisionProfileManagedClustersRestClient.CreateListMeshRevisionProfilesNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MeshRevisionProfileResource(Client, MeshRevisionProfileData.DeserializeMeshRevisionProfileData(e)), _meshRevisionProfileManagedClustersClientDiagnostics, Pipeline, "MeshRevisionProfileCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MeshRevisionProfileData, MeshRevisionProfileResource>(new MeshRevisionProfilesGetMeshRevisionProfilesCollectionResultOfT(_meshRevisionProfilesRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new MeshRevisionProfileResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_GetMeshRevisionProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
-            using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Exists");
+            using DiagnosticScope scope = _meshRevisionProfilesClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _meshRevisionProfileManagedClustersRestClient.GetMeshRevisionProfileAsync(Id.SubscriptionId, new AzureLocation(_location), mode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MeshRevisionProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MeshRevisionProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,36 +274,50 @@ namespace Azure.ResourceManager.ContainerService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_GetMeshRevisionProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string mode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
-            using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Exists");
+            using DiagnosticScope scope = _meshRevisionProfilesClientDiagnostics.CreateScope("MeshRevisionProfileCollection.Exists");
             scope.Start();
             try
             {
-                var response = _meshRevisionProfileManagedClustersRestClient.GetMeshRevisionProfile(Id.SubscriptionId, new AzureLocation(_location), mode, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MeshRevisionProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MeshRevisionProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,38 +331,54 @@ namespace Azure.ResourceManager.ContainerService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_GetMeshRevisionProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MeshRevisionProfileResource>> GetIfExistsAsync(string mode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
-            using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _meshRevisionProfilesClientDiagnostics.CreateScope("MeshRevisionProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _meshRevisionProfileManagedClustersRestClient.GetMeshRevisionProfileAsync(Id.SubscriptionId, new AzureLocation(_location), mode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MeshRevisionProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MeshRevisionProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MeshRevisionProfileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MeshRevisionProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,38 +392,54 @@ namespace Azure.ResourceManager.ContainerService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/meshRevisionProfiles/{mode}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_GetMeshRevisionProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> MeshRevisionProfiles_GetMeshRevisionProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mode"> The mode of the mesh. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MeshRevisionProfileResource> GetIfExists(string mode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mode, nameof(mode));
 
-            using var scope = _meshRevisionProfileManagedClustersClientDiagnostics.CreateScope("MeshRevisionProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _meshRevisionProfilesClientDiagnostics.CreateScope("MeshRevisionProfileCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _meshRevisionProfileManagedClustersRestClient.GetMeshRevisionProfile(Id.SubscriptionId, new AzureLocation(_location), mode, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MeshRevisionProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MeshRevisionProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MeshRevisionProfileResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MeshRevisionProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +459,7 @@ namespace Azure.ResourceManager.ContainerService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MeshRevisionProfileResource> IAsyncEnumerable<MeshRevisionProfileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

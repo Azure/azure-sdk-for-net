@@ -1178,7 +1178,18 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                                 )
                             );
                             break;
-
+                        case RunStepOpenAPIToolCall openAPIToolCall:
+                            toolCallObj = ToJsonElement(
+                                JsonSerializer.Serialize(
+                                    new GenericToolCallEvent(
+                                        id: toolCall.Id,
+                                        type: toolCall.Type,
+                                        details: openAPIToolCall.OpenAPI
+                                    ),
+                                    EventsContext.Default.GenericToolCallEvent
+                                )
+                            );
+                            break;
                         default:
                             IReadOnlyDictionary<string, string> toolCallAttributeDetails = GetToolCallAttributes(toolCall);
                             toolCallObj = ToJsonElement(

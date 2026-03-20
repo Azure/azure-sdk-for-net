@@ -456,7 +456,7 @@ namespace Azure.Storage.DataMovement
         /// Disposes TransferManager and all its resources.
         /// </summary>
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
-        async ValueTask IAsyncDisposable.DisposeAsync()
+        public async ValueTask DisposeAsync()
         {
             if (_jobsProcessor != default)
             {
@@ -470,6 +470,12 @@ namespace Azure.Storage.DataMovement
             {
                 await _chunksProcessor.CleanUpAsync().ConfigureAwait(false);
             }
+
+            if (_checkpointer is IDisposable disposableCheckpointer)
+            {
+                disposableCheckpointer.Dispose();
+            }
+
             _transfers.Clear();
             GC.SuppressFinalize(this);
         }
