@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(ResourceRegion))
             {
                 writer.WritePropertyName("resourceRegion"u8);
-                writer.WriteStringValue(ResourceRegion);
+                writer.WriteStringValue(ResourceRegion.Value);
             }
             if (Optional.IsDefined(Status))
             {
@@ -146,10 +147,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string privateLinkResourceId = default;
+            ResourceIdentifier privateLinkResourceId = default;
             string groupId = default;
             string requestMessage = default;
-            string resourceRegion = default;
+            AzureLocation? resourceRegion = default;
             SearchServiceSharedPrivateLinkResourceStatus? status = default;
             SearchServiceSharedPrivateLinkResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,7 +158,11 @@ namespace Azure.ResourceManager.Search.Models
             {
                 if (prop.NameEquals("privateLinkResourceId"u8))
                 {
-                    privateLinkResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateLinkResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("groupId"u8))
@@ -172,7 +177,11 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (prop.NameEquals("resourceRegion"u8))
                 {
-                    resourceRegion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

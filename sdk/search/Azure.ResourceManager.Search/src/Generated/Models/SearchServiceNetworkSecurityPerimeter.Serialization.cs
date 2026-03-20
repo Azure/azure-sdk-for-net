@@ -14,52 +14,52 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The AccessRulePropertiesSubscription. </summary>
-    public partial class AccessRulePropertiesSubscription : IJsonModel<AccessRulePropertiesSubscription>
+    /// <summary> Information about a network security perimeter (NSP). </summary>
+    public partial class SearchServiceNetworkSecurityPerimeter : IJsonModel<SearchServiceNetworkSecurityPerimeter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRulePropertiesSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchServiceNetworkSecurityPerimeter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccessRulePropertiesSubscription(document.RootElement, options);
+                        return DeserializeSearchServiceNetworkSecurityPerimeter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessRulePropertiesSubscription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchServiceNetworkSecurityPerimeter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRulePropertiesSubscription IPersistableModel<AccessRulePropertiesSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchServiceNetworkSecurityPerimeter IPersistableModel<SearchServiceNetworkSecurityPerimeter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessRulePropertiesSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceNetworkSecurityPerimeter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccessRulePropertiesSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceNetworkSecurityPerimeter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,15 +70,25 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeter)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(PerimeterGuid))
+            {
+                writer.WritePropertyName("perimeterGuid"u8);
+                writer.WriteStringValue(PerimeterGuid.Value);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -99,30 +109,32 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRulePropertiesSubscription IJsonModel<AccessRulePropertiesSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchServiceNetworkSecurityPerimeter IJsonModel<SearchServiceNetworkSecurityPerimeter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRulePropertiesSubscription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchServiceNetworkSecurityPerimeter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeter)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessRulePropertiesSubscription(document.RootElement, options);
+            return DeserializeSearchServiceNetworkSecurityPerimeter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessRulePropertiesSubscription DeserializeAccessRulePropertiesSubscription(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchServiceNetworkSecurityPerimeter DeserializeSearchServiceNetworkSecurityPerimeter(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
+            Guid? perimeterGuid = default;
+            string location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,12 +147,26 @@ namespace Azure.ResourceManager.Search.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("perimeterGuid"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perimeterGuid = new Guid(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties);
+            return new SearchServiceNetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties);
         }
     }
 }

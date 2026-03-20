@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string unit = default;
             int? currentValue = default;
             int? limit = default;
@@ -159,7 +160,11 @@ namespace Azure.ResourceManager.Search.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("unit"u8))

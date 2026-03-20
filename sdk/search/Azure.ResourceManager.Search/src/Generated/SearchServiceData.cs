@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Search.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="properties"> Properties of the search service. </param>
         /// <param name="sku"> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SearchServiceProperties properties, SearchSku sku, Identity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SearchServiceProperties properties, SearchSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
         [WirePath("properties.replicaCount")]
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </summary>
         [WirePath("properties.eTag")]
-        public string ETag
+        public ETag? ETag
         {
             get
             {

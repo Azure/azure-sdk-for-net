@@ -12,21 +12,21 @@ using Azure.ResourceManager.Search;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
-    public partial class ProvisioningIssue
+    public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        internal ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceNetworkSecurityPerimeterProvisioningIssue(string name, SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Gets the Properties. </summary>
         [WirePath("properties")]
-        public ProvisioningIssueProperties Properties { get; }
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
     }
 }

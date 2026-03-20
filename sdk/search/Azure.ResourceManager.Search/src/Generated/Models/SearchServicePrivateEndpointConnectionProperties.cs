@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
@@ -24,14 +25,14 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint resource from Microsoft.Network provider. </param>
-        /// <param name="privateLinkServiceConnectionState"> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </param>
+        /// <param name="connectionState"> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </param>
         /// <param name="groupId"> The group ID of the Azure resource for which the private link service is for. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service connection. Valid values are Updating, Deleting, Failed, Succeeded, Incomplete, or Canceled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServicePrivateEndpointConnectionProperties(PrivateEndpointConnectionPropertiesPrivateEndpoint privateEndpoint, SearchServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState, string groupId, SearchPrivateLinkServiceConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServicePrivateEndpointConnectionProperties(PrivateEndpointConnectionPropertiesPrivateEndpoint privateEndpoint, SearchServicePrivateLinkServiceConnectionState connectionState, string groupId, SearchPrivateLinkServiceConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             GroupId = groupId;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public SearchServicePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public SearchServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The group ID of the Azure resource for which the private link service is for. </summary>
         [WirePath("groupId")]
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The resource ID of the private endpoint resource from Microsoft.Network provider. </summary>
         [WirePath("privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

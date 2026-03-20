@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);
             }
             if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string @type = default;
+            string shareablePrivateLinkResourcePropertiesType = default;
             string groupId = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    shareablePrivateLinkResourcePropertiesType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("groupId"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Search.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ShareableSearchServicePrivateLinkResourceProperties(@type, groupId, description, additionalBinaryDataProperties);
+            return new ShareableSearchServicePrivateLinkResourceProperties(shareablePrivateLinkResourcePropertiesType, groupId, description, additionalBinaryDataProperties);
         }
     }
 }

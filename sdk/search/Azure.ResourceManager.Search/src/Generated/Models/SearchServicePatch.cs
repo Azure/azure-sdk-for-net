@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Search;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="location"> The geographic location of the resource. This must be one of the supported and registered Azure geo regions (for example, West US, East US, Southeast Asia, and so forth). This property is required when creating a new resource. </param>
         /// <param name="tags"> Tags to help categorize the resource in the Azure portal. </param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
-        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchServiceProperties properties, SearchSku sku, string location, IDictionary<string, string> tags, Identity identity) : base(id, name, resourceType, systemData)
+        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchServiceProperties properties, SearchSku sku, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Details about the search service identity. A null value indicates that the search service has no identity assigned. </summary>
         [WirePath("identity")]
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </summary>
         [WirePath("properties.replicaCount")]
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </summary>
         [WirePath("properties.eTag")]
-        public string ETag
+        public ETag? ETag
         {
             get
             {

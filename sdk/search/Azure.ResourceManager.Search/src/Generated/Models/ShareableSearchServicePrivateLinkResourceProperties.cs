@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceProperties"/>. </summary>
-        /// <param name="type"> The resource provider type for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
+        /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShareableSearchServicePrivateLinkResourceProperties(string @type, string groupId, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType, string groupId, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ShareablePrivateLinkResourcePropertiesType = shareablePrivateLinkResourcePropertiesType;
             GroupId = groupId;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The resource provider type for the resource that has been onboarded to private link service, supported by Azure AI Search. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string ShareablePrivateLinkResourcePropertiesType { get; }
 
         /// <summary> The resource provider group id for the resource that has been onboarded to private link service, supported by Azure AI Search. </summary>
         [WirePath("groupId")]

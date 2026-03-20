@@ -15,51 +15,51 @@ using Azure.ResourceManager.Search;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-    public partial class ProvisioningIssueProperties : IJsonModel<ProvisioningIssueProperties>
+    public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties : IJsonModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningIssueProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProvisioningIssueProperties(document.RootElement, options);
+                        return DeserializeSearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProvisioningIssueProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningIssueProperties IPersistableModel<ProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(IssueType))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 writer.WritePropertyName("suggestedAccessRules"u8);
                 writer.WriteStartArray();
-                foreach (AccessRule item in SuggestedAccessRules)
+                foreach (SearchServiceNetworkSecurityPerimeterAccessRule item in SuggestedAccessRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,34 +134,34 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProvisioningIssueProperties IJsonModel<ProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties IJsonModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProvisioningIssueProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisioningIssueProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProvisioningIssueProperties(document.RootElement, options);
+            return DeserializeSearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProvisioningIssueProperties DeserializeProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties DeserializeSearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IssueType? issueType = default;
-            Severity? severity = default;
+            SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = default;
+            SearchServiceNetworkSecurityPerimeterSeverity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
-            IReadOnlyList<AccessRule> suggestedAccessRules = default;
+            IReadOnlyList<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    issueType = new IssueType(prop.Value.GetString());
+                    issueType = new SearchServiceNetworkSecurityPerimeterProvisioningIssueType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("severity"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    severity = new Severity(prop.Value.GetString());
+                    severity = new SearchServiceNetworkSecurityPerimeterSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<AccessRule> array = new List<AccessRule>();
+                    List<SearchServiceNetworkSecurityPerimeterAccessRule> array = new List<SearchServiceNetworkSecurityPerimeterAccessRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessRule.DeserializeAccessRule(item, options));
+                        array.Add(SearchServiceNetworkSecurityPerimeterAccessRule.DeserializeSearchServiceNetworkSecurityPerimeterAccessRule(item, options));
                     }
                     suggestedAccessRules = array;
                     continue;
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Search.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProvisioningIssueProperties(
+            return new SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
                 suggestedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                suggestedAccessRules ?? new ChangeTrackingList<AccessRule>(),
+                suggestedAccessRules ?? new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterAccessRule>(),
                 additionalBinaryDataProperties);
         }
     }

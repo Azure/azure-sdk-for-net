@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.Search.Models
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(IsUpgradeAvailable))
             {
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Search.Models
             SearchSemanticSearch? semanticSearch = default;
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
-            string eTag = default;
+            ETag? eTag = default;
             SearchServiceUpgradeAvailable? isUpgradeAvailable = default;
             DateTimeOffset? serviceUpgradedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -422,7 +423,11 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("upgradeAvailable"u8))

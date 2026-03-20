@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Search
     {
         private readonly Usages _client;
         private readonly Guid _subscriptionId;
-        private readonly ResourceIdentifier _location;
+        private readonly AzureLocation _location;
         private readonly string _clientRequestId;
         private readonly RequestContext _context;
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="location"> The location name. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT(Usages client, Guid subscriptionId, ResourceIdentifier location, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT(Usages client, Guid subscriptionId, AzureLocation location, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

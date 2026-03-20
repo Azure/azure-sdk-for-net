@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="limit"> The quota limit for the particular search SKU. </param>
         /// <param name="name"> The name of the SKU supported by Azure AI Search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaUsageResult(string id, string unit, int? currentValue, int? limit, QuotaUsageResultName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaUsageResult(ResourceIdentifier id, string unit, int? currentValue, int? limit, QuotaUsageResultName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Unit = unit;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> The resource ID of the quota usage SKU endpoint for Microsoft.Search provider. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The unit of measurement for the search SKU. </summary>
         [WirePath("unit")]

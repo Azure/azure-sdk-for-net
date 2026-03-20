@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (Optional.IsDefined(GroupId))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             PrivateEndpointConnectionPropertiesPrivateEndpoint privateEndpoint = default;
-            SearchServicePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            SearchServicePrivateLinkServiceConnectionState connectionState = default;
             string groupId = default;
             SearchPrivateLinkServiceConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("groupId"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Search.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, groupId, provisioningState, additionalBinaryDataProperties);
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, connectionState, groupId, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

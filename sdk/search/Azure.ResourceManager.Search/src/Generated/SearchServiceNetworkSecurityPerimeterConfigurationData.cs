@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Search
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationData"/>. </summary>
-        internal SearchServiceNetworkSecurityPerimeterConfigurationData()
+        public SearchServiceNetworkSecurityPerimeterConfigurationData()
         {
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Network security configuration properties. </param>
-        internal SearchServiceNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
+        internal SearchServiceNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchServiceNetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Network security configuration properties. </summary>
         [WirePath("properties")]
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        public SearchServiceNetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

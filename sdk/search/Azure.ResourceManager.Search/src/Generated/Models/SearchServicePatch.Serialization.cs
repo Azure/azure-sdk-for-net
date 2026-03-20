@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Search.Models
             SearchSku sku = default;
             string location = default;
             IDictionary<string, string> tags = default;
-            Identity identity = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

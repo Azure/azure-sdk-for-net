@@ -12,21 +12,21 @@ using Azure.ResourceManager.Search;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class AccessRule
+    public partial class SearchServiceNetworkSecurityPerimeterAccessRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        internal AccessRule()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterAccessRule"/>. </summary>
+        public SearchServiceNetworkSecurityPerimeterAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceNetworkSecurityPerimeterAccessRule(string name, SearchServiceNetworkSecurityPerimeterAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Name of the access rule. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
-        public AccessRuleProperties Properties { get; }
+        public SearchServiceNetworkSecurityPerimeterAccessRuleProperties Properties { get; set; }
     }
 }

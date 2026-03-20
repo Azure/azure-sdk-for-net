@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Search
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            NetworkSecurityPerimeterConfigurationProperties properties = default;
+            SearchServiceNetworkSecurityPerimeterConfigurationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Search
                     {
                         continue;
                     }
-                    properties = NetworkSecurityPerimeterConfigurationProperties.DeserializeNetworkSecurityPerimeterConfigurationProperties(prop.Value, options);
+                    properties = SearchServiceNetworkSecurityPerimeterConfigurationProperties.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
