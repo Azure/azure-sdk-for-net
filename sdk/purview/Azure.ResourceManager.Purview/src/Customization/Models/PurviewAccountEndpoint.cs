@@ -10,6 +10,11 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The account endpoints. </summary>
     public partial class PurviewAccountEndpoint
     {
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
+        internal PurviewAccountEndpoint()
+        {
+        }
+
         /// <summary> Gets the guardian endpoint. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Guardian { get; }

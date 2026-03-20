@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
-        public PurviewManagedResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
         /// <param name="eventHubNamespace"> Gets the managed event hub namespace resource identifier. </param>
         /// <param name="resourceGroup"> Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account. </param>
         /// <param name="storageAccount"> Gets the managed storage account resource identifier. </param>

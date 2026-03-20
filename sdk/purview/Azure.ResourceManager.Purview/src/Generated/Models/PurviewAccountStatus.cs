@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -17,18 +18,13 @@ namespace Azure.ResourceManager.Purview.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
-        public PurviewAccountStatus()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
-        /// <param name="errorDetails"> Gets the account error details. </param>
+        /// <param name="error"> Gets the account error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, PurviewAccountStatusErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountProvisioningState = accountProvisioningState;
-            ErrorDetails = errorDetails;
+            Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +32,15 @@ namespace Azure.ResourceManager.Purview.Models
         public PurviewAccountProvisioningState? AccountProvisioningState { get; }
 
         /// <summary> Gets the account error details. </summary>
-        public PurviewAccountStatusErrorDetails ErrorDetails { get; }
+        internal ErrorResponse Error { get; }
+
+        /// <summary> The error object. </summary>
+        public ResponseError ErrorDetails
+        {
+            get
+            {
+                return Error.ErrorDetails;
+            }
+        }
     }
 }

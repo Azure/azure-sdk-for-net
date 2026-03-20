@@ -20,32 +20,6 @@ namespace Azure.ResourceManager.Purview.Models
     public static partial class ArmPurviewModelFactory
     {
 
-        /// <summary> Gets or sets the error. </summary>
-        /// <param name="code"> Gets or sets the code. </param>
-        /// <param name="details"> Gets or sets the details. </param>
-        /// <param name="message"> Gets or sets the messages. </param>
-        /// <param name="target"> Gets or sets the target. </param>
-        /// <returns> A new <see cref="Models.ErrorResponseModelError"/> instance for mocking. </returns>
-        public static ErrorResponseModelError ErrorResponseModelError(string code = default, IEnumerable<ErrorModel> details = default, string message = default, string target = default)
-        {
-            details ??= new ChangeTrackingList<ErrorModel>();
-
-            return new ErrorResponseModelError(code, details.ToList(), message, target, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Default error model. </summary>
-        /// <param name="code"> Gets or sets the code. </param>
-        /// <param name="details"> Gets or sets the details. </param>
-        /// <param name="message"> Gets or sets the messages. </param>
-        /// <param name="target"> Gets or sets the target. </param>
-        /// <returns> A new <see cref="Models.ErrorModel"/> instance for mocking. </returns>
-        public static ErrorModel ErrorModel(string code = default, IEnumerable<ErrorModel> details = default, string message = default, string target = default)
-        {
-            details ??= new ChangeTrackingList<ErrorModel>();
-
-            return new ErrorModel(code, details.ToList(), message, target, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -160,26 +134,12 @@ namespace Azure.ResourceManager.Purview.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The account status. </summary>
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
-        /// <param name="errorDetails"> Gets the account error details. </param>
+        /// <param name="errorDetails"> The error object. </param>
         /// <returns> A new <see cref="Models.PurviewAccountStatus"/> instance for mocking. </returns>
-        public static PurviewAccountStatus PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState = default, PurviewAccountStatusErrorDetails errorDetails = default)
+        public static PurviewAccountStatus PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState = default, ResponseError errorDetails = default)
         {
-            return new PurviewAccountStatus(accountProvisioningState, errorDetails, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Gets the account error details. </summary>
-        /// <param name="code"> Gets or sets the code. </param>
-        /// <param name="details"> Gets or sets the details. </param>
-        /// <param name="message"> Gets or sets the messages. </param>
-        /// <param name="target"> Gets or sets the target. </param>
-        /// <returns> A new <see cref="Models.PurviewAccountStatusErrorDetails"/> instance for mocking. </returns>
-        public static PurviewAccountStatusErrorDetails PurviewAccountStatusErrorDetails(string code = default, IEnumerable<ErrorModel> details = default, string message = default, string target = default)
-        {
-            details ??= new ChangeTrackingList<ErrorModel>();
-
-            return new PurviewAccountStatusErrorDetails(code, details.ToList(), message, target, additionalBinaryDataProperties: null);
+            return new PurviewAccountStatus(accountProvisioningState, errorDetails is null ? default : new ErrorResponse(errorDetails, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The account endpoints. </summary>
@@ -234,6 +194,15 @@ namespace Azure.ResourceManager.Purview.Models
                 mergeStatus,
                 typeOfAccount,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Sku. </summary>
+        /// <param name="capacity"> Gets or sets the sku capacity. </param>
+        /// <param name="name"> Gets or sets the sku name. </param>
+        /// <returns> A new <see cref="Models.PurviewAccountSku"/> instance for mocking. </returns>
+        public static PurviewAccountSku PurviewAccountSku(int? capacity = default, PurviewAccountSkuName? name = default)
+        {
+            return new PurviewAccountSku(capacity, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The account update properties. </summary>
@@ -440,16 +409,6 @@ namespace Azure.ResourceManager.Purview.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountSku"/>. </summary>
-        /// <param name="capacity"> Gets or sets the sku capacity. </param>
-        /// <param name="name"> Gets or sets the sku name. </param>
-        /// <returns> A new <see cref="Models.PurviewAccountSku"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountSku PurviewAccountSku(int? capacity, PurviewAccountSkuName? name)
-        {
-            return new PurviewAccountSku(capacity, name, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Purview
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Gets or sets the Sku. </summary>
-        public PurviewAccountSku Sku { get; set; }
+        public PurviewAccountSku Sku { get; }
 
         /// <summary> Gets or sets the status of the account. </summary>
         public PurviewAccountStatus AccountStatus
