@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Provisioning.Expressions;
 
-public class ResourceStatement(string name, BicepExpression type, BicepExpression body) : BicepStatement
+public partial class ResourceStatement(string name, BicepExpression type, BicepExpression body) : BicepStatement
 {
     public string Name { get; } = name;
     public BicepExpression Type { get; } = type;

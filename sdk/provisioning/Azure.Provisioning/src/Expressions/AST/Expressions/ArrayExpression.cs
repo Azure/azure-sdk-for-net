@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class ArrayExpression(params BicepExpression[] values) : BicepExpression
+public partial class ArrayExpression(params BicepExpression[] values) : BicepExpression
 {
     public BicepExpression[] Values { get; } = values;
     internal override BicepWriter Write(BicepWriter writer)

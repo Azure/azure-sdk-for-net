@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class FunctionCallExpression(BicepExpression function, params BicepExpression[] arguments) : BicepExpression
+public partial class FunctionCallExpression(BicepExpression function, params BicepExpression[] arguments) : BicepExpression
 {
     public BicepExpression Function { get; } = function;
     public BicepExpression[] Arguments { get; } = arguments;

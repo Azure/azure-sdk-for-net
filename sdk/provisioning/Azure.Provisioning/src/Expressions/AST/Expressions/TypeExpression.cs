@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Provisioning.Expressions;
 
-public class TypeExpression(Type type) : BicepExpression
+public partial class TypeExpression(Type type) : BicepExpression
 {
     public Type Type { get; } = type;
     internal override BicepWriter Write(BicepWriter writer) =>

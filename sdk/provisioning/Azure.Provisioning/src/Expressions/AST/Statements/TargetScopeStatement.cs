@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class TargetScopeStatement(BicepExpression scope) : BicepStatement
+public partial class TargetScopeStatement(BicepExpression scope) : BicepStatement
 {
     public BicepExpression Scope { get; } = scope;
     internal override BicepWriter Write(BicepWriter writer) =>

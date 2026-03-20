@@ -60,6 +60,11 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     private bool _isExisting = false;
 
     /// <summary>
+    /// Sets the existing resource flag during deserialization hydration.
+    /// </summary>
+    internal void SetExistingInternal() => IsExistingResource = true;
+
+    /// <summary>
     /// Declares explicit dependencies on other resources.
     /// </summary>
     /// <remarks>

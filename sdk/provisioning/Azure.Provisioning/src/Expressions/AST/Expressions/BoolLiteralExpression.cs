@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class BoolLiteralExpression(bool value) : LiteralExpression(value)
+public partial class BoolLiteralExpression(bool value) : LiteralExpression(value)
 {
     public new bool Value { get => (bool)base.Value!; }
     internal override BicepWriter Write(BicepWriter writer) => writer.Append(Value ? "true" : "false");

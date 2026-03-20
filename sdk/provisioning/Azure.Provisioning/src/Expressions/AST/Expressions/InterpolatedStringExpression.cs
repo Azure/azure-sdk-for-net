@@ -1,9 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Provisioning.Expressions;
 
-public class InterpolatedStringExpression(BicepExpression[] values) : BicepExpression
+public partial class InterpolatedStringExpression(BicepExpression[] values) : BicepExpression
 {
     public BicepExpression[] Values { get; } = values;
     internal override BicepWriter Write(BicepWriter writer)

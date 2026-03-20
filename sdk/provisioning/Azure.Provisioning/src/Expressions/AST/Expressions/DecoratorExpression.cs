@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class DecoratorExpression(BicepExpression value) : BicepExpression
+public partial class DecoratorExpression(BicepExpression value) : BicepExpression
 {
     public BicepExpression Value { get; } = value;
     internal override BicepWriter Write(BicepWriter writer) => writer.Append('@').Append(Value);

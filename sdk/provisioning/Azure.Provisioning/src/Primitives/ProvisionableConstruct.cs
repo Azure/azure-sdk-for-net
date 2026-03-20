@@ -279,6 +279,12 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     }
 
     /// <summary>
+    /// Ensures the construct is initialized (properties are defined).
+    /// Used internally by the deserialization path.
+    /// </summary>
+    internal void EnsureInitialized() => Initialize();
+
+    /// <summary>
     /// Define the provisionable properties for this construct.
     /// </summary>
     protected virtual void DefineProvisionableProperties() { }
