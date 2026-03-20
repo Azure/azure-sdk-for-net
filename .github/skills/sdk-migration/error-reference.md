@@ -31,6 +31,7 @@ ApiCompat errors surface via `dotnet pack --no-restore` (not `dotnet build`). **
 | **MembersMustExist** (changed return type) | `[CodeGenSuppress("Method", typeof(...))]` + custom implementation with old return type delegating to new method |
 | **MembersMustExist** (missing extension method) | Add custom extension method delegating to collection Get |
 | **MembersMustExist** (missing setter) | `[CodeGenSuppress("Property")]` + re-declare with `{ get; set; }` in custom code |
+| **CannotRemoveAttribute** (missing `WirePathAttribute`) | See `mitigate-breaking-changes` skill |
 | **TypesMustExist** (missing type) | `@@clientName` to restore old name, or create type in custom code with matching public API |
 
 After fixing all ApiCompat errors: `pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>`

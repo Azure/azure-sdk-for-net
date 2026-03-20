@@ -44,15 +44,16 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Generate(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult Generate(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGenerateRequest(content, options);
+            using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -65,41 +66,44 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GenerateAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> GenerateAsync(BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateGenerateRequest(content, options);
+            using PipelineMessage message = CreateGenerateRequest(content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Generate Insights. </summary>
         /// <param name="insight"> Complete evaluation configuration including data source, evaluators, and result settings. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="insight"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<Insight> Generate(Insight insight, CancellationToken cancellationToken = default)
+        public virtual ClientResult<Insight> Generate(Insight insight, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
-            ClientResult result = Generate(insight, cancellationToken.ToRequestOptions());
+            ClientResult result = Generate(insight, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
         /// <summary> Generate Insights. </summary>
         /// <param name="insight"> Complete evaluation configuration including data source, evaluators, and result settings. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="insight"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<Insight>> GenerateAsync(Insight insight, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<Insight>> GenerateAsync(Insight insight, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(insight, nameof(insight));
 
-            ClientResult result = await GenerateAsync(insight, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GenerateAsync(insight, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
@@ -112,17 +116,18 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string id, bool? includeCoordinates, RequestOptions options)
+        public virtual ClientResult Get(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, includeCoordinates, options);
+            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -135,47 +140,50 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string id, bool? includeCoordinates, RequestOptions options)
+        public virtual async Task<ClientResult> GetAsync(string id, string foundryFeatures, bool? includeCoordinates, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using PipelineMessage message = CreateGetRequest(id, includeCoordinates, options);
+            using PipelineMessage message = CreateGetRequest(id, foundryFeatures, includeCoordinates, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Get a specific insight by Id. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<Insight> Get(string id, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<Insight> Get(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = Get(id, includeCoordinates, cancellationToken.ToRequestOptions());
+            ClientResult result = Get(id, foundryFeatures?.ToSerialString(), includeCoordinates, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
         /// <summary> Get a specific insight by Id. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<Insight>> GetAsync(string id, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<Insight>> GetAsync(string id, FoundryFeaturesOptInKeys? foundryFeatures = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            ClientResult result = await GetAsync(id, includeCoordinates, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetAsync(id, foundryFeatures?.ToSerialString(), includeCoordinates, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((Insight)result, result.GetRawResponse());
         }
 
@@ -187,6 +195,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
         /// <param name="runId"> Filter by the evaluation run ID. </param>
@@ -195,10 +204,11 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult GetAll(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public virtual CollectionResult GetAll(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             return new InsightsGetAllCollectionResult(
                 this,
+                foundryFeatures,
                 @type,
                 evalId,
                 runId,
@@ -215,6 +225,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
         /// <param name="runId"> Filter by the evaluation run ID. </param>
@@ -223,10 +234,11 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAllAsync(string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string foundryFeatures, string @type, string evalId, string runId, string agentName, bool? includeCoordinates, RequestOptions options)
         {
             return new InsightsGetAllAsyncCollectionResult(
                 this,
+                foundryFeatures,
                 @type,
                 evalId,
                 runId,
@@ -236,6 +248,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> List all insights in reverse chronological order (newest first). </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
         /// <param name="runId"> Filter by the evaluation run ID. </param>
@@ -243,10 +256,11 @@ namespace Azure.AI.Projects
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<Insight> GetAll(InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Insight> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             return new InsightsGetAllCollectionResultOfT(
                 this,
+                foundryFeatures?.ToSerialString(),
                 @type?.ToString(),
                 evalId,
                 runId,
@@ -256,6 +270,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> List all insights in reverse chronological order (newest first). </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
         /// <param name="runId"> Filter by the evaluation run ID. </param>
@@ -263,10 +278,11 @@ namespace Azure.AI.Projects
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<Insight> GetAllAsync(InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Insight> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, InsightType? @type = default, string evalId = default, string runId = default, string agentName = default, bool? includeCoordinates = default, CancellationToken cancellationToken = default)
         {
             return new InsightsGetAllAsyncCollectionResultOfT(
                 this,
+                foundryFeatures?.ToSerialString(),
                 @type?.ToString(),
                 evalId,
                 runId,

@@ -12,8 +12,8 @@ public abstract partial class AgentDefinition
     [CodeGenMember("RaiConfig")]
     public ContentFilterConfiguration ContentFilterConfiguration { get; set; }
 
-    public static PromptAgentDefinition CreatePromptAgentDefinition(string model)
-        => new PromptAgentDefinition(model);
+    public static DeclarativeAgentDefinition CreatePromptAgentDefinition(string model)
+        => new DeclarativeAgentDefinition(model);
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
     public static HostedAgentDefinition CreateHostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpuConfiguration, string memoryConfiguration)

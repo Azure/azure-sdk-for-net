@@ -7,6 +7,11 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Improved error reporting during streaming response processing.
+- Fix OpenAPI tool call serialization during telemetry collection [issue](https://github.com/Azure/azure-sdk-for-net/issues/57183).
+
+### Sample updates
+- Added code to show how to force tool use in Azure AI Search with streaming example. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/54056).
 
 ### Other Changes
 

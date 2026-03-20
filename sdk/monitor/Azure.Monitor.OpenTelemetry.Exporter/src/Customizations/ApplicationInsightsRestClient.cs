@@ -17,7 +17,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal partial class ApplicationInsightsRestClient
     {
-        private RawRequestUriBuilder _rawRequestUriBuilder;
+        private RawRequestUriBuilder? _rawRequestUriBuilder;
+
+        /// <summary> Initializes a new instance of ApplicationInsightsRestClient with pre-built pipeline. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="host"> Breeze endpoint. </param>
+        internal ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            Pipeline = pipeline;
+            _endpoint = new Uri(host);
+            _apiVersion = "v2.1";
+        }
 
         /// <summary>
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
@@ -37,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 RedirectPolicy.SetAllowAutoRedirect(message, false);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -65,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 RedirectPolicy.SetAllowAutoRedirect(message, false);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -108,16 +120,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private HttpMessage CreateRequest(RequestContent requestContent)
         {
-            var message = _pipeline.CreateMessage();
+            var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             request.Uri = LazyInitializer.EnsureInitialized(ref _rawRequestUriBuilder, () =>
             {
                 var uri = new RawRequestUriBuilder();
-                uri.AppendRaw(_host, false);
-                uri.AppendRaw("/v2.1/track", false);
+                uri.Reset(_endpoint);
+                uri.AppendPath("/", false);
+                uri.AppendPath(_apiVersion, true);
+                uri.AppendPath("/track", false);
                 return uri;
-            });
+            })!;
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             request.Content = requestContent;

@@ -66,7 +66,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         ResponseResult response = await client.CreateResponseAsync("What is 2+2?");
@@ -97,7 +97,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         ResponseResult response = await client.CreateResponseAsync("What is 2+2?");
@@ -129,7 +129,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
 
         ResponseResult response = await client.CreateResponseAsync("What is 2+2?");
@@ -149,9 +149,9 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         ReinitializeResponseScopeConfiguration();
 
         AIProjectClient projectClient = GetTestProjectClient();
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant."
         };
