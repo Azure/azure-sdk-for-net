@@ -81,14 +81,14 @@ foreach ($section in $Sections) {
   $afterSection  = Join-Path $TempDirectory "after.${safeName}.txt"
 
   Write-Host "Exporting section '$section' from before file..."
-  & $AzsdkCliPath config codeowners export-section --codeowners-path $BeforeFile --section $section > $beforeSection 2>&1
+  & $AzsdkCliPath config codeowners export-section --codeowners-path $BeforeFile --section $section --output-file $beforeSection
   if ($LASTEXITCODE -ne 0) {
     Write-Host "##vso[task.LogIssue type=warning;]Failed to export section '$section' from before file (exit code $LASTEXITCODE). Skipping this section."
     continue
   }
 
   Write-Host "Exporting section '$section' from after file..."
-  & $AzsdkCliPath config codeowners export-section --codeowners-path $AfterFile --section $section > $afterSection 2>&1
+  & $AzsdkCliPath config codeowners export-section --codeowners-path $AfterFile --section $section --output-file $afterSection
   if ($LASTEXITCODE -ne 0) {
     Write-Host "##vso[task.LogIssue type=warning;]Failed to export section '$section' from after file (exit code $LASTEXITCODE). Skipping this section."
     continue
