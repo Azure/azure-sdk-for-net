@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial struct StorageMinimumTlsVersion
+    public readonly partial struct StorageMinimumTlsVersion
     {
         // Backward-compatible alias for Tls10.
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -5,7 +5,9 @@
 
 // Structural fix: Adds string-id constructor bridge needed by generated code and restores
 // old report-listing method names (GetStorageTaskAssignmentsInstancesReports -> GetAll).
-// TODO: Generator bug - should generate appropriate constructor for resource types.
+// StorageTaskAssignmentData extends a local Resource model with string Id, so the
+// generated constructor `(ArmClient, StorageTaskAssignmentData data) : this(client, data.Id)`
+// needs this string-accepting overload to bridge to the ResourceIdentifier constructor.
 
 using System.ComponentModel;
 using System.Threading;

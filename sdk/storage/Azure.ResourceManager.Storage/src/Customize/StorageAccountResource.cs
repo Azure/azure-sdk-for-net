@@ -24,6 +24,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Storage
 {
+    // Justification: @@markAsPageable(StorageAccounts.regenerateKey) is set in client.tsp but the
+    // generator does not emit resource-level RegenerateKey methods (only REST-layer ops). Suppress
+    // and reimplement manually to return Pageable<StorageAccountKey> matching prior GA surface.
     [CodeGenSuppress("RegenerateKeyAsync", typeof(StorageAccountRegenerateKeyContent), typeof(CancellationToken))]
     [CodeGenSuppress("RegenerateKey", typeof(StorageAccountRegenerateKeyContent), typeof(CancellationToken))]
     public partial class StorageAccountResource

@@ -5,7 +5,8 @@
 
 // Structural fix: Provides missing additionalBinaryDataProperties0 field that the generated
 // serialization code references but the generated model doesn't define.
-// TODO: Generator bug - generated serialization references nonexistent field.
+// Generator bug: https://github.com/Azure/azure-sdk-for-net/issues/57281
+// TODO: Clean up after the generator bug is resolved.
 
 using System;
 using System.Collections.Generic;

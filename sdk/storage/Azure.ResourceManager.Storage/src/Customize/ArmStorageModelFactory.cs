@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Storage.Models
         {
             return new StorageTaskAssignmentPatchProperties(
                 taskId,
-                default,
+                isEnabled,
                 description,
                 executionContext,
-                default,
+                reportPrefix != null ? new StorageTaskAssignmentUpdateReport { Prefix = reportPrefix } : null,
                 provisioningState,
                 runStatus,
                 additionalBinaryDataProperties: null);

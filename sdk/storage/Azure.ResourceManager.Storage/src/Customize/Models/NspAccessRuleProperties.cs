@@ -5,7 +5,8 @@
 
 // Structural fix: Custom deserialization hook so Subscriptions is read correctly as
 // List<SubResource>. Generator deserializes this incorrectly.
-// TODO: Generator bug - incorrect deserialization of SubResource collections.
+// Generator bug: https://github.com/Azure/azure-sdk-for-net/issues/57282
+// TODO: Clean up after the generator bug is resolved.
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
