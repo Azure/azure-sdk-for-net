@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-- Upgraded dependent Azure.Core from 1.51.1.
+- Upgraded dependent Azure.Core to 1.51.1.
 - Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.1.0-beta.4 (2025-12-16)
