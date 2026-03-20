@@ -81,7 +81,7 @@ namespace Azure.Storage
         /// </summary>
         /// <param name="host">Host.</param>
         /// <param name="serviceSubDomain">The service subdomain used to validate that the
-        /// domain is in the expected format. This should be "blob" for blobs, "file" for files,
+        /// host is in the expected format. This should be "blob" for blobs, "file" for files,
         /// "queue" for queues, "blob" and "dfs" for datalake.</param>
         /// <returns>Account name or null if not able to be parsed.</returns>
         public static string GetAccountNameFromHost(string host, string serviceSubDomain)
