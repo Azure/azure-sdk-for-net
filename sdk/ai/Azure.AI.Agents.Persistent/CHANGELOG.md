@@ -1,10 +1,6 @@
 # Release History
 
-## 1.2.0-beta.10 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0-beta.10 (2026-03-20)
 
 ### Bugs Fixed
 - Improved error reporting during streaming response processing.
@@ -16,8 +12,6 @@
 - Added code to show how to force tool use in Azure AI Search with streaming example. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/54056).
 - Added sample, demonstrating the logging of network requests.
 - Added sample for generation of structured outputs. Related to [issue](https://github.com/Azure/azure-sdk-for-net/issues/53390)
-
-### Other Changes
 
 ## 1.2.0-beta.9 (2026-02-23)
 
