@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.Search
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
         /// <param name="data"> The definition of the shared private link resource to create or update. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/>, <paramref name="data"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/>, <paramref name="data"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
             Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.Search
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
         /// <param name="data"> The definition of the shared private link resource to create or update. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/>, <paramref name="data"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/>, <paramref name="data"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SharedSearchServicePrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SharedSearchServicePrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
             Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SharedSearchServicePrivateLinkResource> Get(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Response<SharedSearchServicePrivateLinkResource> Get(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -292,13 +292,13 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SharedSearchServicePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SharedSearchServicePrivateLinkResource> GetAllAsync(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SharedSearchServicePrivateLinkResource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -330,13 +330,13 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SharedSearchServicePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SharedSearchServicePrivateLinkResource> GetAll(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Pageable<SharedSearchServicePrivateLinkResource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -428,14 +428,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -487,14 +487,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SharedSearchServicePrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SharedSearchServicePrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -550,14 +550,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SharedSearchServicePrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SharedSearchServicePrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.GetIfExists");
             scope.Start();

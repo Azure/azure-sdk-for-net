@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceResource>> GetAsync(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<Response<SearchServiceResource>> GetAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceResource.Get");
             scope.Start();
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual Response<SearchServiceResource> Get(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual Response<SearchServiceResource> Get(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceResource.Get");
             scope.Start();
@@ -231,13 +231,13 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="patch"> The definition of the search service to update. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> or <paramref name="params"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceResource>> UpdateAsync(SearchServicePatch patch, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<Response<SearchServiceResource>> UpdateAsync(SearchServicePatch patch, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceResource.Update");
             scope.Start();
@@ -285,13 +285,13 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="patch"> The definition of the search service to update. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> or <paramref name="params"/> is null. </exception>
-        public virtual Response<SearchServiceResource> Update(SearchServicePatch patch, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual Response<SearchServiceResource> Update(SearchServicePatch patch, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceResource.Update");
             scope.Start();
@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceResource.Delete");
             scope.Start();
@@ -394,12 +394,12 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("SearchServiceResource.Delete");
             scope.Start();
@@ -448,12 +448,12 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceAdminKeyResult>> GetAdminKeyAsync(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> GetAdminKeyAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.GetAdminKey");
             scope.Start();
@@ -500,12 +500,12 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual Response<SearchServiceAdminKeyResult> GetAdminKey(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual Response<SearchServiceAdminKeyResult> GetAdminKey(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.GetAdminKey");
             scope.Start();
@@ -553,14 +553,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the new query API key. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SearchServiceQueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceQueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.CreateQueryKey");
             scope.Start();
@@ -608,14 +608,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the new query API key. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SearchServiceQueryKey> CreateQueryKey(string name, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceQueryKey> CreateQueryKey(string name, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.CreateQueryKey");
             scope.Start();
@@ -662,13 +662,13 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SearchServiceQueryKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchServiceQueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchServiceQueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -704,13 +704,13 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SearchServiceQueryKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchServiceQueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchServiceQueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -746,13 +746,13 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SearchPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResourcesAsync(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResourcesAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -788,13 +788,13 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SearchPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResources(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResources(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -831,14 +831,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="key"> The query key to be deleted. Query keys are identified by value, not by name. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteQueryKeyAsync(string key, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteQueryKeyAsync(string key, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.DeleteQueryKey");
             scope.Start();
@@ -881,14 +881,14 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="key"> The query key to be deleted. Query keys are identified by value, not by name. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response DeleteQueryKey(string key, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Response DeleteQueryKey(string key, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.DeleteQueryKey");
             scope.Start();
@@ -931,12 +931,12 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceAdminKeyResult>> RegenerateAdminKeyAsync(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> RegenerateAdminKeyAsync(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
             scope.Start();
@@ -984,12 +984,12 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual Response<SearchServiceAdminKeyResult> RegenerateAdminKey(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual Response<SearchServiceAdminKeyResult> RegenerateAdminKey(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
             scope.Start();
@@ -1408,32 +1408,32 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets the details of the private endpoint connection to the search service in the given resource group. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure AI Search service with the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetSearchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetSearchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
-            return await GetSearchPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, @params, cancellationToken).ConfigureAwait(false);
+            return await GetSearchPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the private endpoint connection to the search service in the given resource group. </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure AI Search service with the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SearchPrivateEndpointConnectionResource> GetSearchPrivateEndpointConnection(string privateEndpointConnectionName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Response<SearchPrivateEndpointConnectionResource> GetSearchPrivateEndpointConnection(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
-            return GetSearchPrivateEndpointConnections().Get(privateEndpointConnectionName, @params, cancellationToken);
+            return GetSearchPrivateEndpointConnections().Get(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary> Gets a collection of SharedSearchServicePrivateLinkResources in the <see cref="SearchServiceResource"/>. </summary>
@@ -1445,32 +1445,32 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets the details of the shared private link resource managed by the search service in the given resource group. </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetSharedSearchServicePrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetSharedSearchServicePrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
-            return await GetSharedSearchServicePrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, @params, cancellationToken).ConfigureAwait(false);
+            return await GetSharedSearchServicePrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the shared private link resource managed by the search service in the given resource group. </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure AI Search service within the specified resource group. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="params"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SharedSearchServicePrivateLinkResource> GetSharedSearchServicePrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        public virtual Response<SharedSearchServicePrivateLinkResource> GetSharedSearchServicePrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
-            return GetSharedSearchServicePrivateLinkResources().Get(sharedPrivateLinkResourceName, @params, cancellationToken);
+            return GetSharedSearchServicePrivateLinkResources().Get(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary> Gets a collection of SearchServiceNetworkSecurityPerimeterConfigurations in the <see cref="SearchServiceResource"/>. </summary>

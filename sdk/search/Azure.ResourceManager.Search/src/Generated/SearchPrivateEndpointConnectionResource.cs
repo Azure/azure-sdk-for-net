@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetAsync(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Get");
             scope.Start();
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual Response<SearchPrivateEndpointConnectionResource> Get(SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual Response<SearchPrivateEndpointConnectionResource> Get(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Get");
             scope.Start();
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Delete");
             scope.Start();
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="params"/> is null. </exception>
-        public virtual ArmOperation<SearchPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual ArmOperation<SearchPrivateEndpointConnectionResource> Delete(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Delete");
             scope.Start();
@@ -331,13 +331,13 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The definition of the private endpoint connection to update. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="params"/> is null. </exception>
-        public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -389,13 +389,13 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The definition of the private endpoint connection to update. </param>
-        /// <param name="params"></param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="params"/> is null. </exception>
-        public virtual ArmOperation<SearchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions @params, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        public virtual ArmOperation<SearchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            Argument.AssertNotNull(@params, nameof(@params));
+            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Update");
             scope.Start();

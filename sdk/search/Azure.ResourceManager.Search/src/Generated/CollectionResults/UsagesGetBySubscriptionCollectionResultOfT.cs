@@ -14,7 +14,7 @@ using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
-    internal partial class UsagesGetSearchServiceUsagesBySubscriptionCollectionResultOfT : Pageable<QuotaUsageResult>
+    internal partial class UsagesGetBySubscriptionCollectionResultOfT : Pageable<QuotaUsageResult>
     {
         private readonly Usages _client;
         private readonly Guid _subscriptionId;
@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Search
         private readonly string _clientRequestId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of UsagesGetSearchServiceUsagesBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of UsagesGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Usages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UsagesGetSearchServiceUsagesBySubscriptionCollectionResultOfT(Usages client, Guid subscriptionId, string location, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public UsagesGetBySubscriptionCollectionResultOfT(Usages client, Guid subscriptionId, string location, string clientRequestId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Search
             _context = context;
         }
 
-        /// <summary> Gets the pages of UsagesGetSearchServiceUsagesBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UsagesGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UsagesGetSearchServiceUsagesBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of UsagesGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<QuotaUsageResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSearchServiceUsagesBySubscriptionRequest(nextLink, _subscriptionId, _location, _clientRequestId, _context) : _client.CreateGetSearchServiceUsagesBySubscriptionRequest(_subscriptionId, _location, _clientRequestId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.GetSearchServiceUsagesBySubscription");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _location, _clientRequestId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _location, _clientRequestId, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.GetBySubscription");
             scope.Start();
             try
             {
