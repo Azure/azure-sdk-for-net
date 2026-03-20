@@ -15,7 +15,6 @@
 - Added `AzureMachineLearningVectorizer` and `AzureMachineLearningParameters` for AML-based vectorization.
 - Added `SearchAlias` for index alias management.
 - Added `SearchIndexResponse` model returned by index operations.
-- Added `SearchIndexerCache` for indexer caching configuration.
 - Added `NativeBlobSoftDeleteDeletionDetectionPolicy` for native blob soft delete detection.
 - Added `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery` for image-based vector search.
 - Added `DebugInfo` property to `SearchResults<T>` and `SearchResultsPage<T>` for enhanced search debugging.
