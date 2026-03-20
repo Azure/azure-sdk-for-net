@@ -71,12 +71,9 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </summary>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -103,12 +100,9 @@ namespace Azure.ResourceManager.Search.Mocking
         /// </summary>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchManagementRequestOptions"/> is null. </exception>
         /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -137,12 +131,11 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = SearchClientClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();
@@ -189,12 +182,11 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             using DiagnosticScope scope = SearchClientClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();
@@ -240,13 +232,12 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaUsageResult> GetBySubscriptionAsync(string location, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuotaUsageResult> GetBySubscriptionAsync(string location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {
@@ -275,13 +266,12 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaUsageResult> GetBySubscription(string location, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual Pageable<QuotaUsageResult> GetBySubscription(string location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             RequestContext context = new RequestContext
             {

@@ -59,13 +59,12 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SearchServiceResource>> GetSearchServiceAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceResource>> GetSearchServiceAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             return await GetSearchServices().GetAsync(searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
@@ -90,13 +89,12 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> or <paramref name="searchManagementRequestOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SearchServiceResource> GetSearchService(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceResource> GetSearchService(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
-            Argument.AssertNotNull(searchManagementRequestOptions, nameof(searchManagementRequestOptions));
 
             return GetSearchServices().Get(searchServiceName, searchManagementRequestOptions, cancellationToken);
         }
