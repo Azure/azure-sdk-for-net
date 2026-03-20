@@ -299,6 +299,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
         }
 
+        [LiveOnly]
         [RecordedTest]
         public async Task AnalyzeVideoUrlWithTimeContentRangesAsync()
         {
@@ -568,6 +569,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
         }
 
+        [LiveOnly]
         [RecordedTest]
         public async Task AnalyzeAudioUrlWithTimeContentRangesAsync()
         {
