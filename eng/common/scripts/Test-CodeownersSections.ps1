@@ -63,15 +63,7 @@ if (-not (Test-Path $AzsdkCliPath)) {
 }
 
 # ---------------------------------------------------------------------------
-# 2. Prepare scratch directory
-# ---------------------------------------------------------------------------
-if (Test-Path $TempDirectory) {
-  Remove-Item -Recurse -Force $TempDirectory
-}
-New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
-
-# ---------------------------------------------------------------------------
-# 3. Export and compare each section
+# 2. Export and compare each section
 # ---------------------------------------------------------------------------
 $failed = $false
 
