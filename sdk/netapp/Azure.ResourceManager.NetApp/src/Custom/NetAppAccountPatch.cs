@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> Patch model for NetApp accounts. </summary>
     public partial class NetAppAccountPatch : TrackedResourceData
     {
         /// <summary> Azure lifecycle management. </summary>
