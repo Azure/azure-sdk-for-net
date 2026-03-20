@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("resourceRegion"u8);
                 writer.WriteStringValue(ResourceRegion.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(SharedPrivateLinkResourceStatus))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WriteStringValue(SharedPrivateLinkResourceStatus.Value.ToString());
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(SharedPrivateLinkResourceProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Search.Models
             string groupId = default;
             string requestMessage = default;
             AzureLocation? resourceRegion = default;
-            SearchServiceSharedPrivateLinkResourceStatus? status = default;
-            SearchServiceSharedPrivateLinkResourceProvisioningState? provisioningState = default;
+            SearchServiceSharedPrivateLinkResourceStatus? sharedPrivateLinkResourceStatus = default;
+            SearchServiceSharedPrivateLinkResourceProvisioningState? sharedPrivateLinkResourceProvisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    status = new SearchServiceSharedPrivateLinkResourceStatus(prop.Value.GetString());
+                    sharedPrivateLinkResourceStatus = new SearchServiceSharedPrivateLinkResourceStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    provisioningState = new SearchServiceSharedPrivateLinkResourceProvisioningState(prop.Value.GetString());
+                    sharedPrivateLinkResourceProvisioningState = new SearchServiceSharedPrivateLinkResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.Search.Models
                 groupId,
                 requestMessage,
                 resourceRegion,
-                status,
-                provisioningState,
+                sharedPrivateLinkResourceStatus,
+                sharedPrivateLinkResourceProvisioningState,
                 additionalBinaryDataProperties);
         }
     }

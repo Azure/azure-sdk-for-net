@@ -1152,10 +1152,12 @@ namespace Azure.ResourceManager.Search.Models
         public SharedSearchServicePrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateLinkResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.Core.AzureLocation? ResourceRegion { get { throw null; } set { } }
-        public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceProvisioningState? SharedPrivateLinkResourceProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SearchServiceSharedPrivateLinkResourceStatus? SharedPrivateLinkResourceStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceStatus? Status { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
