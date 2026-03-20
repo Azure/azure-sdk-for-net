@@ -4,8 +4,8 @@ In this example we are demonstrating how to use the local functions with the Age
 
 1. First, we need to create project client and read in the environment variables that will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_Function
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -132,7 +132,7 @@ private static FunctionCallOutputResponseItem GetResolvedToolOutput(FunctionCall
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_Function_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
@@ -146,7 +146,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_Function_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "

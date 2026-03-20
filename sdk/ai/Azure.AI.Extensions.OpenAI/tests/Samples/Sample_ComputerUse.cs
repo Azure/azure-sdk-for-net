@@ -109,10 +109,10 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
         #region Snippet:Sample_CreateAgentClient_ComputerUse
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -126,7 +126,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Async
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
@@ -213,10 +213,10 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
     {
         IgnoreSampleMayBe();
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
@@ -229,7 +229,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Sync
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     internal static partial class EventHubsDisasterRecoveryRoleExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EventHubsDisasterRecoveryRole value) => value switch
         {
             EventHubsDisasterRecoveryRole.Primary => "Primary",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.EventHubs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsDisasterRecoveryRole value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static EventHubsDisasterRecoveryRole ToEventHubsDisasterRecoveryRole(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return EventHubsDisasterRecoveryRole.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryNotReplicating")) return EventHubsDisasterRecoveryRole.PrimaryNotReplicating;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return EventHubsDisasterRecoveryRole.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
+            {
+                return EventHubsDisasterRecoveryRole.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryNotReplicating"))
+            {
+                return EventHubsDisasterRecoveryRole.PrimaryNotReplicating;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
+            {
+                return EventHubsDisasterRecoveryRole.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsDisasterRecoveryRole value.");
         }
     }

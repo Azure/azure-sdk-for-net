@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
@@ -13,10 +12,8 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential provider used to authenticate to the service. </summary>
-        private readonly AuthenticationTokenProvider _tokenProvider;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
             {

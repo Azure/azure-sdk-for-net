@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class CaptureDescription : IUtf8JsonSerializable, IJsonModel<CaptureDescription>
+    /// <summary> Properties to configure capture description for eventhub. </summary>
+    public partial class CaptureDescription : IJsonModel<CaptureDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaptureDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CaptureDescription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCaptureDescription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CaptureDescription IPersistableModel<CaptureDescription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CaptureDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CaptureDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -65,15 +104,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("skipEmptyArchives"u8);
                 writer.WriteBooleanValue(SkipEmptyArchives.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +121,27 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
         }
 
-        CaptureDescription IJsonModel<CaptureDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CaptureDescription IJsonModel<CaptureDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CaptureDescription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCaptureDescription(document.RootElement, options);
         }
 
-        internal static CaptureDescription DeserializeCaptureDescription(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CaptureDescription DeserializeCaptureDescription(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,70 +152,68 @@ namespace Azure.ResourceManager.EventHubs.Models
             int? sizeLimitInBytes = default;
             EventHubDestination destination = default;
             bool? skipEmptyArchives = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = property.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encoding"u8))
+                if (prop.NameEquals("encoding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encoding = property.Value.GetString().ToEncodingCaptureDescription();
+                    encoding = prop.Value.GetString().ToEncodingCaptureDescription();
                     continue;
                 }
-                if (property.NameEquals("intervalInSeconds"u8))
+                if (prop.NameEquals("intervalInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    intervalInSeconds = property.Value.GetInt32();
+                    intervalInSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sizeLimitInBytes"u8))
+                if (prop.NameEquals("sizeLimitInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sizeLimitInBytes = property.Value.GetInt32();
+                    sizeLimitInBytes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("destination"u8))
+                if (prop.NameEquals("destination"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    destination = EventHubDestination.DeserializeEventHubDestination(property.Value, options);
+                    destination = EventHubDestination.DeserializeEventHubDestination(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("skipEmptyArchives"u8))
+                if (prop.NameEquals("skipEmptyArchives"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    skipEmptyArchives = property.Value.GetBoolean();
+                    skipEmptyArchives = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CaptureDescription(
                 enabled,
                 encoding,
@@ -179,147 +221,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 sizeLimitInBytes,
                 destination,
                 skipEmptyArchives,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Enabled))
-                {
-                    builder.Append("  enabled: ");
-                    var boolValue = Enabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Encoding), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  encoding: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Encoding))
-                {
-                    builder.Append("  encoding: ");
-                    builder.AppendLine($"'{Encoding.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalInSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  intervalInSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IntervalInSeconds))
-                {
-                    builder.Append("  intervalInSeconds: ");
-                    builder.AppendLine($"{IntervalInSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SizeLimitInBytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sizeLimitInBytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SizeLimitInBytes))
-                {
-                    builder.Append("  sizeLimitInBytes: ");
-                    builder.AppendLine($"{SizeLimitInBytes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  destination: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Destination))
-                {
-                    builder.Append("  destination: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Destination, options, 2, false, "  destination: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipEmptyArchives), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  skipEmptyArchives: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SkipEmptyArchives))
-                {
-                    builder.Append("  skipEmptyArchives: ");
-                    var boolValue = SkipEmptyArchives.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CaptureDescription IPersistableModel<CaptureDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCaptureDescription(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CaptureDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

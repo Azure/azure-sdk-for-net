@@ -88,20 +88,20 @@ public class LoggingPolicy : PipelinePolicy
 2. To apply the policy to the pipeline, we create `AIProjectClientOptions` object containing `LoggingPolicy`, inform the pipeline to execute this policy by call and set the option while instantiating `AIProjectClient` that we will consequently use.
 
 ```C# Snippet:Sample_CreateClient_AgentsLogging
-string RAW_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT")
-    ?? throw new InvalidOperationException("Missing environment variable 'PROJECT_ENDPOINT'");
-string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME")
-    ?? throw new InvalidOperationException("Missing environment variable 'MODEL_DEPLOYMENT_NAME'");
+string RAW_FOUNDRY_PROJECT_ENDPOINT = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_PROJECT_ENDPOINT'");
+string MODEL_DEPLOYMENT = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME")
+    ?? throw new InvalidOperationException("Missing environment variable 'FOUNDRY_MODEL_NAME'");
 AIProjectClientOptions options = new();
 options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
-AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
+AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
 ```
 
 3. Use the client to create the `AgentVersion` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentsLogging_Sync
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
@@ -113,7 +113,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentsLogging_Async
-PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
+DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };

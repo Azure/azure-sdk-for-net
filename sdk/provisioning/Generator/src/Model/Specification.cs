@@ -31,7 +31,28 @@ public abstract partial class Specification : ModelBase
 
     internal bool IgnorePropertiesWithoutPath { get; }
 
-    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false)
+    /// <summary>
+    /// Additional assemblies whose types are allowed to be generated as models.
+    /// Override in derived specifications when the ARM library depends on types
+    /// from external assemblies (e.g., Azure.Core.Expressions.DataFactory).
+    /// </summary>
+    protected virtual IReadOnlyList<Assembly> AdditionalAllowedAssemblies { get; } = [];
+
+    /// <summary>
+    /// Resolves a generic type from an external assembly to its inner type.
+    /// For example, <c>DataFactoryElement&lt;T&gt;</c> should be resolved to <c>T</c>.
+    /// Return null if the type should not be unwrapped.
+    /// </summary>
+    protected internal virtual Type? ResolveExternalGenericType(Type armType) => null;
+
+    /// <summary>
+    /// The service directory under sdk/ where the generated library is placed.
+    /// Defaults to "provisioning". Override to place the library alongside
+    /// a service's management SDK (e.g., "apimanagement", "datafactory").
+    /// </summary>
+    internal string ServiceDirectory { get; }
+
+    public Specification(string name, Type armEntryPoint, bool ignorePropertiesWithoutPath = false, string serviceDirectory = "provisioning")
         : base(
             name: name,
             ns: $"Azure.Provisioning.{name}",
@@ -41,6 +62,7 @@ public abstract partial class Specification : ModelBase
         DocComments = new XmlDocCommentReader(armEntryPoint.Assembly);
         TypeRegistry.Register(this);
         IgnorePropertiesWithoutPath = ignorePropertiesWithoutPath;
+        ServiceDirectory = serviceDirectory;
     }
 
     public override string ToString() => $"<Specification {Name}>";

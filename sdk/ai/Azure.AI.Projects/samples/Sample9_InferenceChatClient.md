@@ -12,8 +12,8 @@ This sample demonstrates how to use the synchronous and asynchronous `GetChatCom
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_ChatClientSync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
@@ -39,8 +39,8 @@ Console.WriteLine(response.Value.Content);
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_ChatClientAsync
-var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT"));
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
 AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();

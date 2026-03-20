@@ -382,8 +382,13 @@ public abstract partial class Specification
     private static ModelBase GetOrCreateModelType(Type armType, Resource resource, bool ignorePropertiesWithoutPath)
     {
         ModelBase? type = TypeRegistry.Get(armType);
+        if (type is not null) { return type; }
+
+        // Allow specifications to unwrap external generic types (e.g., DataFactoryElement<T> → T)
+        Type? resolved = resource.Spec!.ResolveExternalGenericType(armType);
+        if (resolved is not null) { return GetOrCreateModelType(resolved, resource, ignorePropertiesWithoutPath); }
+
         return
-            type is not null ? type :
             armType.IsNullableOf(_ => true) ? GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath) :
             armType == typeof(byte[]) ? TypeRegistry.Get<BinaryData>()! : // do byte[] before IList<T>
             armType.IsListOf(_ => true) ? new ListModel(GetOrCreateModelType(armType.GetGenericArguments()[0], resource, ignorePropertiesWithoutPath)) :
@@ -394,9 +399,11 @@ public abstract partial class Specification
         ModelBase CreateEnum(Type armType)
         {
             // Fail if we're trying to generate a type from a different assembly
-            // (unless we're crossing boundaries in the combined base package)
+            // (unless we're crossing boundaries in the combined base package
+            // or in an explicitly allowed additional assembly)
             if (armType.Assembly != resource.Spec!.ArmAssembly &&
-                armType.Assembly != typeof(ArmClient).Assembly)
+                armType.Assembly != typeof(ArmClient).Assembly &&
+                !resource.Spec.AdditionalAllowedAssemblies.Contains(armType.Assembly))
             {
                 throw new InvalidOperationException($"Could not find enum {armType.FullName} while building {resource.Spec.Namespace}.");
             }
@@ -445,9 +452,11 @@ public abstract partial class Specification
         ModelBase CreateSimpleModel(Type armType)
         {
             // Fail if we're trying to generate a type from a different assembly
-            // (unless we're crossing boundaries in the combined base package)
+            // (unless we're crossing boundaries in the combined base package
+            // or in an explicitly allowed additional assembly)
             if (armType.Assembly != resource.Spec!.ArmAssembly &&
-                armType.Assembly != typeof(ArmClient).Assembly)
+                armType.Assembly != typeof(ArmClient).Assembly &&
+                !resource.Spec.AdditionalAllowedAssemblies.Contains(armType.Assembly))
             {
                 throw new InvalidOperationException($"Could not find model {armType.FullName} while building {resource.Spec.Namespace}.");
             }

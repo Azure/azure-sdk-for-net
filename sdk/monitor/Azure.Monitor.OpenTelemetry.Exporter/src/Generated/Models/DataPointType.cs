@@ -10,42 +10,57 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    /// <summary> Type of the metric data measurement. </summary>
     internal readonly partial struct DataPointType : IEquatable<DataPointType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataPointType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataPointType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Single measurement. </summary>
         private const string MeasurementValue = "Measurement";
+        /// <summary> Aggregated value. </summary>
         private const string AggregationValue = "Aggregation";
 
-        /// <summary> Measurement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public DataPointType(string value)
+        {
+            _value = value;
+        }
+
+        /// <summary> Single measurement. </summary>
         public static DataPointType Measurement { get; } = new DataPointType(MeasurementValue);
-        /// <summary> Aggregation. </summary>
+
+        /// <summary> Aggregated value. </summary>
         public static DataPointType Aggregation { get; } = new DataPointType(AggregationValue);
+
         /// <summary> Determines if two <see cref="DataPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataPointType left, DataPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataPointType left, DataPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataPointType(string value) => new DataPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataPointType?(string value) => value == null ? null : new DataPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

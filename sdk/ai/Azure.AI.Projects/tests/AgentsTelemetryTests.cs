@@ -79,9 +79,9 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
     private string GetModelDeploymentName()
     {
-        //string modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        //string modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         //return modelDeploymentName;
-        return TestEnvironment.MODELDEPLOYMENTNAME;
+        return TestEnvironment.FOUNDRY_MODEL_NAME;
     }
 
     [RecordedTest]
@@ -95,7 +95,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests1";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -125,7 +125,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests1b";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -154,7 +154,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests2";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -184,7 +184,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests3";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -214,7 +214,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests4";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -223,7 +223,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             agentName: agentName,
             options: new(agentDefinition));
 
-        PromptAgentDefinition updateAgentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition updateAgentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful prompt agent."
         };
@@ -276,7 +276,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests5";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -285,7 +285,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
             agentName: agentName,
             options: new(agentDefinition));
 
-        PromptAgentDefinition updateAgentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition updateAgentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful prompt agent."
         };
@@ -334,7 +334,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests6";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -364,7 +364,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTests7";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -385,7 +385,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
     private static void ReinitializeOpenTelemetryScopeConfiguration()
     {
-        Assembly assembly = typeof(AgentsClient).Assembly;
+        Assembly assembly = typeof(AgentAdministrationClient).Assembly;
         Assert.That(assembly, Is.Not.Null);
         Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Agents.Telemetry.OpenTelemetryScope");
         Assert.That(openTelemetryScopeType, Is.Not.Null);
@@ -584,7 +584,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTestsEvents1";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -615,7 +615,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTestsEvents2";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -646,7 +646,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTestsEvents3";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };
@@ -677,7 +677,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         var modelDeploymentName = GetModelDeploymentName();
         var agentName = "agentsTelemetryTestsEvents4";
 
-        PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a prompt agent."
         };

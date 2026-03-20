@@ -11,8 +11,8 @@ private static string GetFile([CallerFilePath] string pth = "")
 
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateProjectClient_OpenAPI
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -29,7 +29,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = { openapiTool }
@@ -50,7 +50,7 @@ OpenApiFunctionDefinition toolDefinition = new(
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
     Tools = {openapiTool}
