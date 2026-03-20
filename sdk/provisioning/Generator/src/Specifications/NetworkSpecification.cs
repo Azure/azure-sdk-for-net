@@ -61,65 +61,11 @@ public class NetworkSpecification() :
         //Roles.Add(new Role("NetworkContributor", "4d97b98b-1d4f-4787-a291-c67834d212e7", "Lets you manage networks, but not access to them."));
     }
 
-    // NRP is such a large RP, we are using this hash set to only generate those critical resources for now.
-    // More resources could be added later
-    private readonly HashSet<Type> _generatedResources = new()
-    {
-        typeof(VirtualNetworkResource),
-        typeof(BackendAddressPoolResource),
-        typeof(ApplicationSecurityGroupResource),
-        typeof(NetworkInterfaceIPConfigurationResource), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
-        typeof(NetworkInterfaceTapConfigurationResource),
-        typeof(NetworkWatcherCollection),
-        typeof(NetworkWatcherResource),
-        typeof(FlowLogResource),
-        typeof(SubnetResource),
-        typeof(FrontendIPConfigurationResource),
-        typeof(InboundNatRuleResource),
-        typeof(NatGatewayResource),
-        typeof(NetworkInterfaceResource),
-        typeof(PublicIPAddressResource),
-        typeof(PublicIPPrefixResource),
-        typeof(NetworkSecurityGroupResource),
-        typeof(NetworkSecurityPerimeterResource),
-        typeof(NetworkSecurityPerimeterAccessRuleResource),
-        typeof(NetworkSecurityPerimeterAssociationResource),
-        typeof(NetworkSecurityPerimeterLinkResource),
-        // NetworkSecurityPerimeterLinkReferenceResource is read-only (no PUT operation)
-        typeof(NetworkSecurityPerimeterLoggingConfigurationResource),
-        typeof(NetworkSecurityPerimeterProfileResource),
-        typeof(RouteResource),
-        typeof(RouteTableResource),
-        typeof(PrivateLinkServiceResource),
-        typeof(NetworkPrivateEndpointConnectionResource),
-        typeof(VirtualNetworkTapResource),
-        typeof(VirtualNetworkPeeringResource),
-        typeof(ServiceEndpointPolicyResource),
-        typeof(ServiceEndpointPolicyDefinitionResource),
-        typeof(SecurityRuleResource),
-        typeof(PrivateEndpointResource),
-        typeof(FirewallPolicyResource),
-        typeof(LoadBalancerResource),
-        typeof(LoadBalancingRuleResource),
-        typeof(ProbeResource),
-        typeof(OutboundRuleResource),
-        typeof(PrivateDnsZoneGroupResource)
-    };
-
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
-        var allResources = base.FindConstructibleResources();
+        var resources = base.FindConstructibleResources();
 
-        var resources = new Dictionary<Type, MethodInfo>();
-        foreach (var (type, creator) in allResources)
-        {
-            if (_generatedResources.Contains(type))
-            {
-                resources.Add(type, creator);
-            }
-        }
-
-        // NetworkInterfaceIPConfigurationResource does not have a creator method, we need to add it here manually.
+        // These resources do not have a createOrUpdate method, we need to add them here manually.
         resources.Add(typeof(NetworkInterfaceIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkInterfaceIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(FrontendIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateFrontendIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
         resources.Add(typeof(ProbeResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateProbeResource), BindingFlags.NonPublic | BindingFlags.Static)!);
