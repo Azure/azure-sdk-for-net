@@ -8,178 +8,92 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WebPubSub;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableWebPubSubSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _webPubSubClientDiagnostics;
-        private WebPubSubRestOperations _webPubSubRestClient;
-        private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
+        private ClientDiagnostics _webPubSubResourcesClientDiagnostics;
+        private WebPubSubResources _webPubSubResourcesRestClient;
+        private ClientDiagnostics _webPubSubOperationGroupClientDiagnostics;
+        private WebPubSubOperationGroup _webPubSubOperationGroupRestClient;
+        private ClientDiagnostics _usagesOperationGroupClientDiagnostics;
+        private UsagesOperationGroup _usagesOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWebPubSubSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableWebPubSubSubscriptionResource for mocking. </summary>
         protected MockableWebPubSubSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWebPubSubSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableWebPubSubSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWebPubSubSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics WebPubSubClientDiagnostics => _webPubSubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
-        private WebPubSubRestOperations WebPubSubRestClient => _webPubSubRestClient ??= new WebPubSubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebPubSubResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics WebPubSubResourcesClientDiagnostics => _webPubSubResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private WebPubSubResources WebPubSubResourcesRestClient => _webPubSubResourcesRestClient ??= new WebPubSubResources(WebPubSubResourcesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
-        /// <summary>
-        /// Checks that the resource name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebPubSub_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebPubSubResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> the region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
+        private ClientDiagnostics WebPubSubOperationGroupClientDiagnostics => _webPubSubOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-            using var scope = WebPubSubClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await WebPubSubRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private WebPubSubOperationGroup WebPubSubOperationGroupRestClient => _webPubSubOperationGroupRestClient ??= new WebPubSubOperationGroup(WebPubSubOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
-        /// <summary>
-        /// Checks that the resource name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebPubSub_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebPubSubResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> the region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
+        private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-            using var scope = WebPubSubClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = WebPubSubRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebPubSub_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebPubSubResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebPubSubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WebPubSubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebPubSubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), WebPubSubClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetWebPubSubs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionAsyncCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WebPubSubResource(Client, data));
         }
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/webPubSub. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebPubSub_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebPubSubResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebPubSubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,63 +101,167 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <returns> A collection of <see cref="WebPubSubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubResource> GetWebPubSubs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WebPubSubRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebPubSubRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubResource(Client, WebPubSubData.DeserializeWebPubSubData(e)), WebPubSubClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetWebPubSubs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WebPubSubData, WebPubSubResource>(new WebPubSubResourcesGetBySubscriptionCollectionResultOfT(WebPubSubResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new WebPubSubResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WebPubSubOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = WebPubSubOperationGroupClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WebPubSubNameAvailability> response = Response.FromValue(WebPubSubNameAvailability.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WebPubSubOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = WebPubSubOperationGroupClientDiagnostics.CreateScope("MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WebPubSubNameAvailability> response = Response.FromValue(WebPubSubNameAvailability.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// List resource usage quotas by location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SignalRServiceUsage.DeserializeSignalRServiceUsage(e), UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
         /// List resource usage quotas by location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRServiceUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SignalRServiceUsage.DeserializeSignalRServiceUsage(e), UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesOperationGroupGetUsagesCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
     }
 }
