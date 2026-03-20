@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Search.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            SearchServiceResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new SearchServiceResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Search.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchServiceNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new SearchServiceNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

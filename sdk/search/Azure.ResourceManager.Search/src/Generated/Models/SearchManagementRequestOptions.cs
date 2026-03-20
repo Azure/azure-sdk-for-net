@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="SearchManagementRequestOptions"/>. </summary>
         /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchManagementRequestOptions(string clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchManagementRequestOptions(Guid? clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientRequestId = clientRequestId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </summary>
         [WirePath("clientRequestId")]
-        public string ClientRequestId { get; set; }
+        public Guid? ClientRequestId { get; set; }
     }
 }

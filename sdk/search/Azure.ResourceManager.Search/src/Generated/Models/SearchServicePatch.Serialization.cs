@@ -17,8 +17,13 @@ using Azure.ResourceManager.Search;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The parameters used to update an Azure AI Search service. </summary>
-    public partial class SearchServicePatch : ResourceData, IJsonModel<SearchServicePatch>
+    public partial class SearchServicePatch : TrackedResourceData, IJsonModel<SearchServicePatch>
     {
+        /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/> for deserialization. </summary>
+        internal SearchServicePatch()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -98,27 +103,6 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -156,9 +140,9 @@ namespace Azure.ResourceManager.Search.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             SearchServiceProperties properties = default;
             SearchSku sku = default;
-            string location = default;
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
@@ -195,6 +179,11 @@ namespace Azure.ResourceManager.Search.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -211,11 +200,6 @@ namespace Azure.ResourceManager.Search.Models
                         continue;
                     }
                     sku = SearchSku.DeserializeSearchSku(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -259,9 +243,9 @@ namespace Azure.ResourceManager.Search.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                location,
                 properties,
                 sku,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity);
         }

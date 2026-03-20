@@ -15,15 +15,15 @@ using Azure.ResourceManager.Search;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The parameters used to update an Azure AI Search service. </summary>
-    public partial class SearchServicePatch : ResourceData
+    public partial class SearchServicePatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/>. </summary>
-        public SearchServicePatch()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public SearchServicePatch(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/>. </summary>
@@ -32,18 +32,16 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the search service. </param>
         /// <param name="sku"> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </param>
-        /// <param name="location"> The geographic location of the resource. This must be one of the supported and registered Azure geo regions (for example, West US, East US, Southeast Asia, and so forth). This property is required when creating a new resource. </param>
         /// <param name="tags"> Tags to help categorize the resource in the Azure portal. </param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
-        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SearchServiceProperties properties, SearchSku sku, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal SearchServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, SearchServiceProperties properties, SearchSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
-            Location = location;
-            Tags = tags;
             Identity = identity;
         }
 
@@ -54,14 +52,6 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The SKU of the search service, which determines price tier and capacity limits. This property is required when creating a new search service. </summary>
         [WirePath("sku")]
         internal SearchSku Sku { get; set; }
-
-        /// <summary> The geographic location of the resource. This must be one of the supported and registered Azure geo regions (for example, West US, East US, Southeast Asia, and so forth). This property is required when creating a new resource. </summary>
-        [WirePath("location")]
-        public string Location { get; set; }
-
-        /// <summary> Tags to help categorize the resource in the Azure portal. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Details about the search service identity. A null value indicates that the search service has no identity assigned. </summary>
         [WirePath("identity")]

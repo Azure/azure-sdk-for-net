@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            string clientRequestId = default;
+            Guid? clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

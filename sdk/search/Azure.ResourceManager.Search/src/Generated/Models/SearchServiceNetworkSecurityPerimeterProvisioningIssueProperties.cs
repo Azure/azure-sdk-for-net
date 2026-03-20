@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType, SearchServiceNetworkSecurityPerimeterSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType, SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Severity of the issue. </summary>
         [WirePath("severity")]
-        public SearchServiceNetworkSecurityPerimeterSeverity? Severity { get; }
+        public SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
         [WirePath("description")]

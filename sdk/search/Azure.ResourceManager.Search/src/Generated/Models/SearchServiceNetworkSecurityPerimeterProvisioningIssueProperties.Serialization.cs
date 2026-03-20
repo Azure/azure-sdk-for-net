@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = default;
-            SearchServiceNetworkSecurityPerimeterSeverity? severity = default;
+            SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity = default;
             string description = default;
             IReadOnlyList<ResourceIdentifier> suggestedResourceIds = default;
             IReadOnlyList<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    severity = new SearchServiceNetworkSecurityPerimeterSeverity(prop.Value.GetString());
+                    severity = new SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

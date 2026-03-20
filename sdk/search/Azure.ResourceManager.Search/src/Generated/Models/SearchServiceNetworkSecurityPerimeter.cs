@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceNetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchServiceNetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Location of the network security perimeter. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
     }
 }

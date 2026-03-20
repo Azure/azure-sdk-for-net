@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <returns> A new <see cref="Models.SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = default, SearchServiceNetworkSecurityPerimeterSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = default)
+        public static SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties(SearchServiceNetworkSecurityPerimeterProvisioningIssueType? issueType = default, SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<SearchServiceNetworkSecurityPerimeterAccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
             suggestedAccessRules ??= new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterAccessRule>();
@@ -203,10 +203,11 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Input of check name availability API. </summary>
         /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
         /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
-        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = default)
+        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name = default, SearchServiceResourceType resourceType = default)
         {
-            return new SearchServiceNameAvailabilityContent(name, "searchServices", additionalBinaryDataProperties: null);
+            return new SearchServiceNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Output of check name availability API. </summary>
@@ -310,6 +311,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
         /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
         /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
@@ -331,11 +333,10 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="isUpgradeAvailable"> Indicates if the search service has an upgrade available. </param>
         /// <param name="serviceUpgradedOn"> The date and time the search service was last upgraded. This field will be null until the service gets upgraded for the first time. </param>
         /// <param name="searchSkuName"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </param>
-        /// <param name="location"> The geographic location of the resource. This must be one of the supported and registered Azure geo regions (for example, West US, East US, Southeast Asia, and so forth). This property is required when creating a new resource. </param>
         /// <param name="tags"> Tags to help categorize the resource in the Azure portal. </param>
         /// <param name="identity"> Details about the search service identity. A null value indicates that the search service has no identity assigned. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? replicaCount = default, int? partitionCount = default, Uri endpoint = default, SearchServiceHostingMode? hostingMode = default, SearchServiceComputeType? computeType = default, SearchServicePublicInternetAccess? publicInternetAccess = default, SearchServiceStatus? status = default, string statusDetails = default, SearchServiceProvisioningState? provisioningState = default, SearchServiceNetworkRuleSet networkRuleSet = default, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = default, SearchEncryptionWithCmk encryptionWithCmk = default, bool? isLocalAuthDisabled = default, SearchAadAuthDataPlaneAuthOptions authOptions = default, SearchSemanticSearch? semanticSearch = default, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default, ETag? etag = default, SearchServiceUpgradeAvailable? isUpgradeAvailable = default, DateTimeOffset? serviceUpgradedOn = default, SearchServiceSkuName? searchSkuName = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, int? replicaCount = default, int? partitionCount = default, Uri endpoint = default, SearchServiceHostingMode? hostingMode = default, SearchServiceComputeType? computeType = default, SearchServicePublicInternetAccess? publicInternetAccess = default, SearchServiceStatus? status = default, string statusDetails = default, SearchServiceProvisioningState? provisioningState = default, SearchServiceNetworkRuleSet networkRuleSet = default, IEnumerable<SearchDataExfiltrationProtection> dataExfiltrationProtections = default, SearchEncryptionWithCmk encryptionWithCmk = default, bool? isLocalAuthDisabled = default, SearchAadAuthDataPlaneAuthOptions authOptions = default, SearchSemanticSearch? semanticSearch = default, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default, ETag? etag = default, SearchServiceUpgradeAvailable? isUpgradeAvailable = default, DateTimeOffset? serviceUpgradedOn = default, SearchServiceSkuName? searchSkuName = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -345,6 +346,7 @@ namespace Azure.ResourceManager.Search.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                location,
                 replicaCount is null && partitionCount is null && endpoint is null && hostingMode is null && computeType is null && publicInternetAccess is null && status is null && statusDetails is null && provisioningState is null && networkRuleSet is null && dataExfiltrationProtections is null && encryptionWithCmk is null && isLocalAuthDisabled is null && authOptions is null && semanticSearch is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && etag is null && isUpgradeAvailable is null && serviceUpgradedOn is null ? default : new SearchServiceProperties(
                     replicaCount,
                     partitionCount,
@@ -368,7 +370,6 @@ namespace Azure.ResourceManager.Search.Models
                     serviceUpgradedOn,
                     null),
                 searchSkuName is null ? default : new SearchSku(searchSkuName, null),
-                location,
                 tags,
                 identity);
         }
@@ -582,9 +583,9 @@ namespace Azure.ResourceManager.Search.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
                 location,
+                default,
+                default,
                 tags,
                 identity);
         }
@@ -627,9 +628,9 @@ namespace Azure.ResourceManager.Search.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
                 location,
+                default,
+                default,
                 tags,
                 identity);
         }
@@ -729,21 +730,11 @@ namespace Azure.ResourceManager.Search.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                default,
                 location,
+                default,
+                default,
                 tags,
                 identity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SearchServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
-        /// <param name="resourceType"> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </param>
-        /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
-        {
-            return new SearchServiceNameAvailabilityContent(name, "searchServices", additionalBinaryDataProperties: null);
         }
     }
 }

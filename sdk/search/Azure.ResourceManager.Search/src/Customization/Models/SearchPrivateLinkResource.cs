@@ -3,12 +3,16 @@
 
 #nullable disable
 
-using System.ComponentModel;
+using Azure.ResourceManager.Models;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SharedSearchServicePrivateLinkResourceProperties
+    public partial class SearchPrivateLinkResource : ResourceData
     {
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResource"/>. </summary>
+        public SearchPrivateLinkResource()
+        {
+        }
     }
 }

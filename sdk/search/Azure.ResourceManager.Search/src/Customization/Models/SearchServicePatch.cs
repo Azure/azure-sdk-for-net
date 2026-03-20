@@ -5,8 +5,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The parameters used to update a search service. </summary>

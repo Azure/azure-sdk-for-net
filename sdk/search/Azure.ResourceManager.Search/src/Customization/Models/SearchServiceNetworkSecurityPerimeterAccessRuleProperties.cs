@@ -12,6 +12,7 @@ using System.Text.Json;
 using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.ResourceManager.Resources.Models;
 
+// NOTE: customize the deserialization of the "subscriptions" property.
 namespace Azure.ResourceManager.Search.Models
 {
     [CodeGenSerialization(nameof(Subscriptions), DeserializationValueHook = nameof(DeserializeIsSubscriptions))]
