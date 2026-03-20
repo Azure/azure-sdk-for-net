@@ -11,7 +11,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class NetworkSpecification() :
-    Specification("Network", typeof(NetworkExtensions), ignorePropertiesWithoutPath: true)
+    Specification("Network", typeof(NetworkExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "network")
 {
     protected override void Customize()
     {
