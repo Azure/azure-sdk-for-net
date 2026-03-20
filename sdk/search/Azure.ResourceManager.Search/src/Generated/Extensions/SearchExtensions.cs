@@ -246,30 +246,48 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Get a list of all Azure AI Search quota usages across the subscription.
+        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetBySubscriptionAsync(string, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.CheckSearchServiceNameAvailabilityAsync(SearchServiceNameAvailabilityContent, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<QuotaUsageResult> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, string location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSearchSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(location, searchManagementRequestOptions, cancellationToken);
+            return await GetMockableSearchSubscriptionResource(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The resource name and type to check. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSearchSubscriptionResource(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all Azure AI Search quota usages across the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetBySubscription(string, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetUsagesBySubscriptionAsync(ResourceIdentifier, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -278,11 +296,31 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<QuotaUsageResult> GetBySubscription(this SubscriptionResource subscriptionResource, string location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<QuotaUsageResult> GetUsagesBySubscriptionAsync(this SubscriptionResource subscriptionResource, ResourceIdentifier location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSearchSubscriptionResource(subscriptionResource).GetBySubscription(location, searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetUsagesBySubscriptionAsync(location, searchManagementRequestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of all Azure AI Search quota usages across the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetUsagesBySubscription(ResourceIdentifier, SearchManagementRequestOptions, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuotaUsageResult> GetUsagesBySubscription(this SubscriptionResource subscriptionResource, ResourceIdentifier location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetUsagesBySubscription(location, searchManagementRequestOptions, cancellationToken);
         }
     }
 }
