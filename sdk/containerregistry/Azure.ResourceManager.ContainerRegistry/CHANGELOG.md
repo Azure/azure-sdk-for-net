@@ -4,9 +4,15 @@
 
 ### Features Added
 
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
+- Updated API version to 2025-11-01 (Registry).
+- Added support for Archive and ArchiveVersion resources.
+- Added support for ExportPipeline, ImportPipeline and PipelineRun resources.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- RegistryTasks types (AgentPool, Run, Task, TaskRun and related models) have been removed from this package. These will be available in a separate `Azure.ResourceManager.ContainerRegistryTasks` package.
+- `RegistryAddress` property on `ContainerRegistryImportSource` has been deprecated in favor of `RegistryUri`.
 
 ### Other Changes
 

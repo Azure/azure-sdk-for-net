@@ -296,6 +296,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
             await registry.DeleteAsync(WaitUntil.Completed);
         }
 
+        // This test references deprecated task types that have been moved to Azure.ResourceManager.ContainerRegistryTasks
+        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryTask()
@@ -427,7 +429,10 @@ key2: value2
             // Delete the registry
             await registry.DeleteAsync(WaitUntil.Completed);
         }
+        */
 
+        // This test references deprecated agent pool types that have been moved to Azure.ResourceManager.ContainerRegistryTasks
+        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryAgentPool()
@@ -488,7 +493,10 @@ steps:
             // Delete the registry
             await registry.DeleteAsync(WaitUntil.Completed);
         }
+        */
 
+        // This test references deprecated task run types that have been moved to Azure.ResourceManager.ContainerRegistryTasks
+        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryTaskRun()
@@ -551,7 +559,10 @@ steps:
             // Delete the registry
             await registry.DeleteAsync(WaitUntil.Completed);
         }
+        */
 
+        // PrivateLinkResource is no longer a separate ARM resource - it's now returned as a model from GetPrivateLinkResources()
+        /*
         [TestCase]
         [RecordedTest]
         public async Task ContainerRegistryPrivateLinkResources()
@@ -576,6 +587,7 @@ steps:
             ContainerRegistryPrivateLinkResource privateLink = await privateLinkCollection.GetAsync(privateLinkName);
             Assert.AreEqual(privateLinkName, privateLink.Data.Name);
         }
+        */
 
         [TestCase]
         [RecordedTest]
