@@ -4,15 +4,6 @@
 
 `Azure.Search.Documents` is the .NET client library for [Azure AI Search](https://learn.microsoft.com/azure/search/) (formerly Azure Cognitive Search). It supports querying search indexes, uploading/managing documents, managing indexes, indexers, skillsets, and knowledge bases.
 
-- **Package**: `Azure.Search.Documents`  
-- **Current version**: `11.8.0-beta.2` (API compat baseline: `11.7.0`)  
-- **Target frameworks**: `$(RequiredTargetFrameworks)` — `netstandard2.0`, `net8.0`, `net10.0`  
-- **Project file**: [src/Azure.Search.Documents.csproj](../../../src/Azure.Search.Documents.csproj)
-
-Operational knowledge references:
-- [troubleshooting.md](./troubleshooting.md) — main issue diagnosis and fix playbook
-- [journal/](./journal/) — versioned run logs keyed by API version (`<api-version>.md`)
-
 ---
 
 ## Repository Layout

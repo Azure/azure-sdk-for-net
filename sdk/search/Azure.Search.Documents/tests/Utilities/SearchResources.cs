@@ -619,7 +619,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random knowledge agent Name
                 KnowledgeBaseName = Random.GetName(8);
                 KnowledgeSourceName = Random.GetName(8);
-                string deploymentName = "gpt-4.1";
+                string deploymentName = "gpt-5-mini";
 
                 SearchIndexKnowledgeSource indexKnowledgeSource = new(KnowledgeSourceName, new(IndexName));
                 KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
@@ -633,11 +633,7 @@ namespace Azure.Search.Documents.Tests
                         new KnowledgeSourceReference(knowledgeSource.Name)
                     })
                 {
-                    RetrievalReasoningEffort = new KnowledgeRetrievalLowReasoningEffort(),
-                    OutputMode = KnowledgeRetrievalOutputMode.AnswerSynthesis,
-                    Description = "Description of the Knowledge Base",
-                    RetrievalInstructions = "Instructions for the retrieval and answering behavior of the Knowledge Base",
-                    AnswerInstructions = "Instructions for the answer"
+                    Description = "Description of the Knowledge Base"
                 };
                 knowledgeAgent.Models.Add(
                     new KnowledgeBaseAzureOpenAIModel(
@@ -646,7 +642,7 @@ namespace Azure.Search.Documents.Tests
                             ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
                             ApiKey = TestFixture.TestEnvironment.OpenAIKey,
                             DeploymentName = deploymentName,
-                            ModelName = AzureOpenAIModelName.Gpt41
+                            ModelName = AzureOpenAIModelName.Gpt5Mini
                         }));
 
                 await client.CreateKnowledgeBaseAsync(knowledgeAgent);

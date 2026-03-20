@@ -1,10 +1,36 @@
 # Release History
 
-## 11.8.0-beta.2 (Unreleased)
+## 12.0.0 (2026-04-14)
 
 ### Features Added
 
+- Added support for `2026-04-01` service version.
+- Added `KnowledgeBaseRetrievalClient` for agentic retrieval operations against knowledge bases.
+- Added knowledge base management types: `KnowledgeBase`, `KnowledgeBaseModel`, `KnowledgeBaseAzureOpenAIModel`, and `KnowledgeSourceReference`.
+- Added knowledge source types: `AzureBlobKnowledgeSource`, `SearchIndexKnowledgeSource`, `IndexedOneLakeKnowledgeSource`, and `WebKnowledgeSource` with associated parameters.
+- Added knowledge base retrieval models: `KnowledgeBaseRetrievalRequest`, `KnowledgeBaseRetrievalResponse`, `KnowledgeBaseMessage`, `KnowledgeBaseMessageContent`, and `KnowledgeBaseReference` with typed variants (`KnowledgeBaseAzureBlobReference`, `KnowledgeBaseSearchIndexReference`, `KnowledgeBaseIndexedOneLakeReference`, `KnowledgeBaseWebReference`).
+- Added knowledge base activity tracking: `KnowledgeBaseActivityRecord` and `KnowledgeBaseAgenticReasoningActivityRecord`.
+- Added knowledge source ingestion and status models: `KnowledgeSourceIngestionParameters`, `KnowledgeSourceStatus`, `KnowledgeSourceStatistics`, and `SynchronizationState`.
+- Added AI skill types: `ChatCompletionSkill`, `ContentUnderstandingSkill`, and `DocumentIntelligenceLayoutSkill` with associated configuration models.
+- Added `AzureMachineLearningVectorizer` and `AzureMachineLearningParameters` for AML-based vectorization.
+- Added `SearchAlias` for index alias management.
+- Added `SearchIndexResponse` model returned by index operations.
+- Added `SearchIndexerCache` for indexer caching configuration.
+- Added `NativeBlobSoftDeleteDeletionDetectionPolicy` for native blob soft delete detection.
+- Added `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery` for image-based vector search.
+- Added `DebugInfo` property to `SearchResults<T>` and `SearchResultsPage<T>` for enhanced search debugging.
+- Added `VectorFilterMode.StrictPostFilter` option for strict post-filtering in vector search.
+- Added `SearchServiceCounters.AliasCounter` for alias resource tracking.
+- Added `SearchServiceLimits.MaxCumulativeIndexerRuntimeSeconds` for runtime constraints.
+- Added `IndexerChangeTrackingState` for indexer change tracking status.
+- Added `LookupDocument` model for document lookup responses.
+- Added nullable implicit conversion operators for `SemanticErrorMode`, `SemanticErrorReason`, `SemanticSearchResultsType`, and `VectorFilterMode`.
+- Added `AIServicesAccountIdentity` and `AIServicesAccountKey` for AI services authentication.
+
 ### Breaking Changes
+- Deprecated `EntityRecognitionSkill.SkillVersion.V1` is now obsolete. Use V3 instead. 
+- Deprecated `EntityRecognitionSkill.IncludeTypelessEntities` is now obsolete. Use V3 instead. 
+- Deprecated `SentimentSkill.SkillVersion.V1` is now obsolete. Use V3 instead. 
 
 ### Bugs Fixed
 
