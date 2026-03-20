@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The type of the pattern for an alias path. </summary>
-    public partial class AliasPattern
+    public partial class PolicyAliasPattern
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AliasPattern"/>. </summary>
-        internal AliasPattern()
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPattern"/>. </summary>
+        internal PolicyAliasPattern()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AliasPattern"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPattern"/>. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
         /// <param name="type"> The pattern for an alias path. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AliasPattern(string phrase, string variable, AliasPatternType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAliasPattern(string phrase, string variable, PolicyAliasPatternType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Phrase = phrase;
             Variable = variable;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public string Variable { get; }
 
         /// <summary> The pattern for an alias path. </summary>
-        public AliasPatternType? Type { get; }
+        public PolicyAliasPatternType? Type { get; }
     }
 }

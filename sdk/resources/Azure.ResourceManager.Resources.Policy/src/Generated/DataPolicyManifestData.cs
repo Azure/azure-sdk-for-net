@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> An array of resource type aliases. </summary>
-        public IList<ResourceTypeAliases> ResourceTypeAliases
+        public IList<PolicyResourceTypeAliases> ResourceTypeAliases
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The effect definition. </summary>
-        public IList<DataEffect> Effects
+        public IList<PolicyDataEffect> Effects
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> An array of data manifest custom resource definitions. </summary>
-        public IList<DataManifestCustomResourceFunctionDetail> Custom
+        public IList<PolicyDataManifestCustomResourceFunctionDetail> Custom
         {
             get
             {

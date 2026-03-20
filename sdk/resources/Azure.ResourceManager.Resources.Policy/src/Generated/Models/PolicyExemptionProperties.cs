@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="policyAssignmentId"> The ID of the policy assignment that is being exempted. </param>
         /// <param name="exemptionCategory"> The policy exemption category. Possible values are Waiver and Mitigated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        public PolicyExemptionProperties(string policyAssignmentId, ExemptionCategory exemptionCategory)
+        public PolicyExemptionProperties(string policyAssignmentId, PolicyExemptionCategory exemptionCategory)
         {
             Argument.AssertNotNull(policyAssignmentId, nameof(policyAssignmentId));
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="assignmentScopeValidation"> The option whether validate the exemption is at or under the assignment scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyExemptionProperties(string policyAssignmentId, IList<string> policyDefinitionReferenceIds, ExemptionCategory exemptionCategory, DateTimeOffset? expiresOn, string displayName, string description, BinaryData metadata, IList<PolicyResourceSelector> resourceSelectors, AssignmentScopeValidation? assignmentScopeValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyExemptionProperties(string policyAssignmentId, IList<string> policyDefinitionReferenceIds, PolicyExemptionCategory exemptionCategory, DateTimeOffset? expiresOn, string displayName, string description, BinaryData metadata, IList<PolicyResourceSelector> resourceSelectors, PolicyAssignmentScopeValidation? assignmentScopeValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceIds = policyDefinitionReferenceIds;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public IList<string> PolicyDefinitionReferenceIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The policy exemption category. Possible values are Waiver and Mitigated. </summary>
-        public ExemptionCategory ExemptionCategory { get; set; }
+        public PolicyExemptionCategory ExemptionCategory { get; set; }
 
         /// <summary> The expiration date and time (in UTC ISO 8601 format yyyy-MM-ddTHH:mm:ssZ) of the policy exemption. </summary>
         public DateTimeOffset? ExpiresOn { get; set; }
@@ -107,6 +107,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public IList<PolicyResourceSelector> ResourceSelectors { get; } = new ChangeTrackingList<PolicyResourceSelector>();
 
         /// <summary> The option whether validate the exemption is at or under the assignment scope. </summary>
-        public AssignmentScopeValidation? AssignmentScopeValidation { get; set; }
+        public PolicyAssignmentScopeValidation? AssignmentScopeValidation { get; set; }
     }
 }

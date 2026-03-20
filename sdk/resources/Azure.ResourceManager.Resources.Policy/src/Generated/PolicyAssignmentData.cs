@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="properties"> Properties for the policy assignment. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="identity"> The managed identity associated with the policy assignment. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyAssignmentProperties properties, string location, PolicyAssignmentIdentity identity) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PolicyAssignmentProperties properties, AzureLocation? location, PolicyAssignmentIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Policy
         internal PolicyAssignmentProperties Properties { get; set; }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The managed identity associated with the policy assignment. </summary>
         public PolicyAssignmentIdentity Identity { get; set; }

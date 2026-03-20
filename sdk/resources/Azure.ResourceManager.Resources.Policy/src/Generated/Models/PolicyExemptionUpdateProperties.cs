@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="assignmentScopeValidation"> The option whether validate the exemption is at or under the assignment scope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyExemptionUpdateProperties(IList<PolicyResourceSelector> resourceSelectors, AssignmentScopeValidation? assignmentScopeValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyExemptionUpdateProperties(IList<PolicyResourceSelector> resourceSelectors, PolicyAssignmentScopeValidation? assignmentScopeValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceSelectors = resourceSelectors;
             AssignmentScopeValidation = assignmentScopeValidation;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public IList<PolicyResourceSelector> ResourceSelectors { get; } = new ChangeTrackingList<PolicyResourceSelector>();
 
         /// <summary> The option whether validate the exemption is at or under the assignment scope. </summary>
-        public AssignmentScopeValidation? AssignmentScopeValidation { get; set; }
+        public PolicyAssignmentScopeValidation? AssignmentScopeValidation { get; set; }
     }
 }

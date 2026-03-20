@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="identity"> The managed identity associated with the policy assignment. </param>
         /// <returns> A new <see cref="Policy.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string policyDefinitionId = default, string definitionVersion = default, string latestDefinitionVersion = default, string effectiveDefinitionVersion = default, string scope = default, IEnumerable<string> notScopes = default, IDictionary<string, PolicyParameterValue> parameters = default, string description = default, BinaryData metadata = default, PolicyEnforcementMode? enforcementMode = default, IEnumerable<PolicyNonComplianceMessage> nonComplianceMessages = default, IEnumerable<PolicyResourceSelector> resourceSelectors = default, IEnumerable<PolicyOverride> overrides = default, PolicyAssignmentType? assignmentType = default, string instanceId = default, PolicySelfServeExemptionSettings selfServeExemptionSettings = default, string location = default, PolicyAssignmentIdentity identity = default)
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string policyDefinitionId = default, string definitionVersion = default, string latestDefinitionVersion = default, string effectiveDefinitionVersion = default, string scope = default, IEnumerable<string> notScopes = default, IDictionary<string, PolicyParameterValue> parameters = default, string description = default, BinaryData metadata = default, PolicyEnforcementMode? enforcementMode = default, IEnumerable<PolicyNonComplianceMessage> nonComplianceMessages = default, IEnumerable<PolicyResourceSelector> resourceSelectors = default, IEnumerable<PolicyOverride> overrides = default, PolicyAssignmentType? assignmentType = default, string instanceId = default, PolicySelfServeExemptionSettings selfServeExemptionSettings = default, AzureLocation? location = default, PolicyAssignmentIdentity identity = default)
         {
             return new PolicyAssignmentData(
                 id,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="type"> The identity type. This is the only required field when adding a system or user assigned identity to a resource. </param>
         /// <param name="userAssignedIdentities"> The user identity associated with the policy. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentIdentity"/> instance for mocking. </returns>
-        public static PolicyAssignmentIdentity PolicyAssignmentIdentity(string principalId = default, string tenantId = default, PolicyIdentityType? @type = default, IDictionary<string, PolicyUserAssignedIdentity> userAssignedIdentities = default)
+        public static PolicyAssignmentIdentity PolicyAssignmentIdentity(Guid? principalId = default, Guid? tenantId = default, PolicyIdentityType? @type = default, IDictionary<string, PolicyUserAssignedIdentity> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, PolicyUserAssignedIdentity>();
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="clientId"> The client id of user assigned identity. </param>
         /// <returns> A new <see cref="Models.PolicyUserAssignedIdentity"/> instance for mocking. </returns>
-        public static PolicyUserAssignedIdentity PolicyUserAssignedIdentity(string principalId = default, string clientId = default)
+        public static PolicyUserAssignedIdentity PolicyUserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
         {
             return new PolicyUserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
         }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
         /// <param name="custom"> An array of data manifest custom resource definitions. </param>
         /// <returns> A new <see cref="Policy.DataPolicyManifestData"/> instance for mocking. </returns>
-        public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> namespaces = default, string policyMode = default, bool? isBuiltInOnly = default, IEnumerable<ResourceTypeAliases> resourceTypeAliases = default, IEnumerable<DataEffect> effects = default, IEnumerable<string> fieldValues = default, IEnumerable<string> standard = default, IEnumerable<DataManifestCustomResourceFunctionDetail> custom = default)
+        public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> namespaces = default, string policyMode = default, bool? isBuiltInOnly = default, IEnumerable<PolicyResourceTypeAliases> resourceTypeAliases = default, IEnumerable<PolicyDataEffect> effects = default, IEnumerable<string> fieldValues = default, IEnumerable<string> standard = default, IEnumerable<PolicyDataManifestCustomResourceFunctionDetail> custom = default)
         {
             return new DataPolicyManifestData(
                 id,
@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     (namespaces ?? new ChangeTrackingList<string>()).ToList(),
                     policyMode,
                     isBuiltInOnly,
-                    (resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>()).ToList(),
-                    (effects ?? new ChangeTrackingList<DataEffect>()).ToList(),
+                    (resourceTypeAliases ?? new ChangeTrackingList<PolicyResourceTypeAliases>()).ToList(),
+                    (effects ?? new ChangeTrackingList<PolicyDataEffect>()).ToList(),
                     (fieldValues ?? new ChangeTrackingList<string>()).ToList(),
-                    new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<DataManifestCustomResourceFunctionDetail>()).ToList(), null),
+                    new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), null),
                     null));
         }
 
         /// <summary> The resource type aliases definition. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
-        /// <returns> A new <see cref="Models.ResourceTypeAliases"/> instance for mocking. </returns>
-        public static ResourceTypeAliases ResourceTypeAliases(string resourceType = default, IEnumerable<Alias> aliases = default)
+        /// <returns> A new <see cref="Models.PolicyResourceTypeAliases"/> instance for mocking. </returns>
+        public static PolicyResourceTypeAliases PolicyResourceTypeAliases(string resourceType = default, IEnumerable<PolicyAlias> aliases = default)
         {
-            aliases ??= new ChangeTrackingList<Alias>();
+            aliases ??= new ChangeTrackingList<PolicyAlias>();
 
-            return new ResourceTypeAliases(resourceType, aliases.ToList(), additionalBinaryDataProperties: null);
+            return new PolicyResourceTypeAliases(resourceType, aliases.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The alias type. </summary>
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="defaultPath"> The default path for an alias. </param>
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
         /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
-        /// <returns> A new <see cref="Models.Alias"/> instance for mocking. </returns>
-        public static Alias Alias(string name = default, IEnumerable<AliasPath> paths = default, AliasType? @type = default, string defaultPath = default, AliasPattern defaultPattern = default, AliasPathMetadata defaultMetadata = default)
+        /// <returns> A new <see cref="Models.PolicyAlias"/> instance for mocking. </returns>
+        public static PolicyAlias PolicyAlias(string name = default, IEnumerable<PolicyAliasPath> paths = default, PolicyAliasType? @type = default, string defaultPath = default, PolicyAliasPattern defaultPattern = default, PolicyAliasPathMetadata defaultMetadata = default)
         {
-            paths ??= new ChangeTrackingList<AliasPath>();
+            paths ??= new ChangeTrackingList<PolicyAliasPath>();
 
-            return new Alias(
+            return new PolicyAlias(
                 name,
                 paths.ToList(),
                 @type,
@@ -212,53 +212,53 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="apiVersions"> The API versions. </param>
         /// <param name="pattern"> The pattern for an alias path. </param>
         /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
-        /// <returns> A new <see cref="Models.AliasPath"/> instance for mocking. </returns>
-        public static AliasPath AliasPath(string path = default, IEnumerable<string> apiVersions = default, AliasPattern pattern = default, AliasPathMetadata metadata = default)
+        /// <returns> A new <see cref="Models.PolicyAliasPath"/> instance for mocking. </returns>
+        public static PolicyAliasPath PolicyAliasPath(string path = default, IEnumerable<string> apiVersions = default, PolicyAliasPattern pattern = default, PolicyAliasPathMetadata metadata = default)
         {
             apiVersions ??= new ChangeTrackingList<string>();
 
-            return new AliasPath(path, apiVersions.ToList(), pattern, metadata, additionalBinaryDataProperties: null);
+            return new PolicyAliasPath(path, apiVersions.ToList(), pattern, metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type of the pattern for an alias path. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
         /// <param name="type"> The pattern for an alias path. </param>
-        /// <returns> A new <see cref="Models.AliasPattern"/> instance for mocking. </returns>
-        public static AliasPattern AliasPattern(string phrase = default, string variable = default, AliasPatternType? @type = default)
+        /// <returns> A new <see cref="Models.PolicyAliasPattern"/> instance for mocking. </returns>
+        public static PolicyAliasPattern PolicyAliasPattern(string phrase = default, string variable = default, PolicyAliasPatternType? @type = default)
         {
-            return new AliasPattern(phrase, variable, @type, additionalBinaryDataProperties: null);
+            return new PolicyAliasPattern(phrase, variable, @type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The alias path metadata. </summary>
         /// <param name="type"> The type of the token that the alias path is referring to. </param>
         /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
-        /// <returns> A new <see cref="Models.AliasPathMetadata"/> instance for mocking. </returns>
-        public static AliasPathMetadata AliasPathMetadata(AliasPathTokenType? @type = default, AliasPathAttributes? attributes = default)
+        /// <returns> A new <see cref="Models.PolicyAliasPathMetadata"/> instance for mocking. </returns>
+        public static PolicyAliasPathMetadata PolicyAliasPathMetadata(PolicyAliasPathTokenType? @type = default, PolicyAliasPathAttributes? attributes = default)
         {
-            return new AliasPathMetadata(@type, attributes, additionalBinaryDataProperties: null);
+            return new PolicyAliasPathMetadata(@type, attributes, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The data effect definition. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
-        /// <returns> A new <see cref="Models.DataEffect"/> instance for mocking. </returns>
-        public static DataEffect DataEffect(string name = default, BinaryData detailsSchema = default)
+        /// <returns> A new <see cref="Models.PolicyDataEffect"/> instance for mocking. </returns>
+        public static PolicyDataEffect PolicyDataEffect(string name = default, BinaryData detailsSchema = default)
         {
-            return new DataEffect(name, detailsSchema, additionalBinaryDataProperties: null);
+            return new PolicyDataEffect(name, detailsSchema, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The custom resource function definition. </summary>
         /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
         /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
         /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ \"name\", \"location\" ] if vault().name and vault().location are supported. </param>
-        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
-        /// <returns> A new <see cref="Models.DataManifestCustomResourceFunctionDetail"/> instance for mocking. </returns>
-        public static DataManifestCustomResourceFunctionDetail DataManifestCustomResourceFunctionDetail(string name = default, string fullyQualifiedResourceType = default, IEnumerable<string> defaultProperties = default, bool? allowCustomProperties = default)
+        /// <param name="isCustomPropertiesAllowed"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
+        /// <returns> A new <see cref="Models.PolicyDataManifestCustomResourceFunctionDetail"/> instance for mocking. </returns>
+        public static PolicyDataManifestCustomResourceFunctionDetail PolicyDataManifestCustomResourceFunctionDetail(string name = default, string fullyQualifiedResourceType = default, IEnumerable<string> defaultProperties = default, bool? isCustomPropertiesAllowed = default)
         {
             defaultProperties ??= new ChangeTrackingList<string>();
 
-            return new DataManifestCustomResourceFunctionDetail(name, fullyQualifiedResourceType, defaultProperties.ToList(), allowCustomProperties, additionalBinaryDataProperties: null);
+            return new PolicyDataManifestCustomResourceFunctionDetail(name, fullyQualifiedResourceType, defaultProperties.ToList(), isCustomPropertiesAllowed, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -322,14 +322,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="displayName"> The display name for the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
-        /// <param name="assignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
+        /// <param name="shouldAssignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.PolicyParameterMetadataProperties"/> instance for mocking. </returns>
-        public static PolicyParameterMetadataProperties PolicyParameterMetadataProperties(string displayName = default, string description = default, string strongType = default, bool? assignPermissions = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static PolicyParameterMetadataProperties PolicyParameterMetadataProperties(string displayName = default, string description = default, string strongType = default, bool? shouldAssignPermissions = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new PolicyParameterMetadataProperties(displayName, description, strongType, assignPermissions, additionalProperties);
+            return new PolicyParameterMetadataProperties(displayName, description, strongType, shouldAssignPermissions, additionalProperties);
         }
 
         /// <summary> The details of the source of external evaluation results required by the policy during enforcement evaluation. </summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="assignmentScopeValidation"> The option whether validate the exemption is at or under the assignment scope. </param>
         /// <returns> A new <see cref="Policy.PolicyExemptionData"/> instance for mocking. </returns>
-        public static PolicyExemptionData PolicyExemptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string policyAssignmentId = default, IEnumerable<string> policyDefinitionReferenceIds = default, ExemptionCategory? exemptionCategory = default, DateTimeOffset? expiresOn = default, string displayName = default, string description = default, BinaryData metadata = default, IEnumerable<PolicyResourceSelector> resourceSelectors = default, AssignmentScopeValidation? assignmentScopeValidation = default)
+        public static PolicyExemptionData PolicyExemptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string policyAssignmentId = default, IEnumerable<string> policyDefinitionReferenceIds = default, PolicyExemptionCategory? exemptionCategory = default, DateTimeOffset? expiresOn = default, string displayName = default, string description = default, BinaryData metadata = default, IEnumerable<PolicyResourceSelector> resourceSelectors = default, PolicyAssignmentScopeValidation? assignmentScopeValidation = default)
         {
             return new PolicyExemptionData(
                 id,
@@ -593,12 +593,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="token"> The issued policy token. </param>
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
         /// <param name="expiresOn"> The expiration of the policy token. </param>
-        /// <returns> A new <see cref="Models.PolicyTokenResponseResult"/> instance for mocking. </returns>
-        public static PolicyTokenResponseResult PolicyTokenResponseResult(PolicyTokenResult? result = default, PolicyTokenEvaluatedRequestDetails requestDetails = default, string message = default, DateTimeOffset? retryAfter = default, IEnumerable<ExternalEvaluationEndpointInvocationResult> results = default, string changeReference = default, string token = default, string tokenId = default, DateTimeOffset? expiresOn = default)
+        /// <returns> A new <see cref="Models.PolicyTokenAcquisitionResult"/> instance for mocking. </returns>
+        public static PolicyTokenAcquisitionResult PolicyTokenAcquisitionResult(PolicyTokenResult? result = default, PolicyTokenEvaluatedRequestDetails requestDetails = default, string message = default, DateTimeOffset? retryAfter = default, IEnumerable<PolicyExternalEvaluationEndpointInvocationResult> results = default, string changeReference = default, string token = default, string tokenId = default, DateTimeOffset? expiresOn = default)
         {
-            results ??= new ChangeTrackingList<ExternalEvaluationEndpointInvocationResult>();
+            results ??= new ChangeTrackingList<PolicyExternalEvaluationEndpointInvocationResult>();
 
-            return new PolicyTokenResponseResult(
+            return new PolicyTokenAcquisitionResult(
                 result,
                 requestDetails,
                 message,
@@ -642,10 +642,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="policyEvaluationDetails"> The evaluation details returned by the policy evaluation engine. </param>
         /// <param name="additionalInfo"> The endpoint specific metadata. </param>
         /// <param name="expiresOn"> The expiration of the results. </param>
-        /// <returns> A new <see cref="Models.ExternalEvaluationEndpointInvocationResult"/> instance for mocking. </returns>
-        public static ExternalEvaluationEndpointInvocationResult ExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo = default, PolicyExternalEndpointResult? result = default, string endpointKind = default, string message = default, DateTimeOffset? retryAfter = default, BinaryData claims = default, PolicyAction? policyAction = default, BinaryData policyEvaluationDetails = default, BinaryData additionalInfo = default, DateTimeOffset? expiresOn = default)
+        /// <returns> A new <see cref="Models.PolicyExternalEvaluationEndpointInvocationResult"/> instance for mocking. </returns>
+        public static PolicyExternalEvaluationEndpointInvocationResult PolicyExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo = default, PolicyExternalEndpointResult? result = default, string endpointKind = default, string message = default, DateTimeOffset? retryAfter = default, BinaryData claims = default, PolicyAction? policyAction = default, BinaryData policyEvaluationDetails = default, BinaryData additionalInfo = default, DateTimeOffset? expiresOn = default)
         {
-            return new ExternalEvaluationEndpointInvocationResult(
+            return new PolicyExternalEvaluationEndpointInvocationResult(
                 policyInfo,
                 result,
                 endpointKind,

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The alias path metadata. </summary>
-    public partial class AliasPathMetadata
+    public partial class PolicyAliasPathMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AliasPathMetadata"/>. </summary>
-        internal AliasPathMetadata()
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPathMetadata"/>. </summary>
+        internal PolicyAliasPathMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AliasPathMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPathMetadata"/>. </summary>
         /// <param name="type"> The type of the token that the alias path is referring to. </param>
         /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AliasPathMetadata(AliasPathTokenType? @type, AliasPathAttributes? attributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAliasPathMetadata(PolicyAliasPathTokenType? @type, PolicyAliasPathAttributes? attributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Attributes = attributes;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The type of the token that the alias path is referring to. </summary>
-        public AliasPathTokenType? Type { get; }
+        public PolicyAliasPathTokenType? Type { get; }
 
         /// <summary> The attributes of the token that the alias path is referring to. </summary>
-        public AliasPathAttributes? Attributes { get; }
+        public PolicyAliasPathAttributes? Attributes { get; }
     }
 }

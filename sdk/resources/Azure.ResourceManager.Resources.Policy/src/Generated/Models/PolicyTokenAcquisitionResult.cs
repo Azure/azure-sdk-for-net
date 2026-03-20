@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The policy token response properties. </summary>
-    public partial class PolicyTokenResponseResult
+    public partial class PolicyTokenAcquisitionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponseResult"/>. </summary>
-        internal PolicyTokenResponseResult()
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenAcquisitionResult"/>. </summary>
+        internal PolicyTokenAcquisitionResult()
         {
-            Results = new ChangeTrackingList<ExternalEvaluationEndpointInvocationResult>();
+            Results = new ChangeTrackingList<PolicyExternalEvaluationEndpointInvocationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyTokenResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTokenAcquisitionResult"/>. </summary>
         /// <param name="result"> The result of the completed token acquisition operation. Possible values are Succeeded and Failed. </param>
         /// <param name="requestDetails"> The external evaluation request details. </param>
         /// <param name="message"> Status message with additional details about the token acquisition operation result. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="tokenId"> The unique Id assigned to the policy token. </param>
         /// <param name="expiresOn"> The expiration of the policy token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyTokenResponseResult(PolicyTokenResult? result, PolicyTokenEvaluatedRequestDetails requestDetails, string message, DateTimeOffset? retryAfter, IList<ExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyTokenAcquisitionResult(PolicyTokenResult? result, PolicyTokenEvaluatedRequestDetails requestDetails, string message, DateTimeOffset? retryAfter, IList<PolicyExternalEvaluationEndpointInvocationResult> results, string changeReference, string token, string tokenId, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Result = result;
             RequestDetails = requestDetails;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public DateTimeOffset? RetryAfter { get; }
 
         /// <summary> An array of external evaluation endpoint invocation results. </summary>
-        public IList<ExternalEvaluationEndpointInvocationResult> Results { get; }
+        public IList<PolicyExternalEvaluationEndpointInvocationResult> Results { get; }
 
         /// <summary> The change reference associated with the operation for which the token is acquired. </summary>
         public string ChangeReference { get; }

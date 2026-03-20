@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,19 +126,27 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 return null;
             }
-            string principalId = default;
-            string clientId = default;
+            Guid? principalId = default;
+            Guid? clientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("principalId"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

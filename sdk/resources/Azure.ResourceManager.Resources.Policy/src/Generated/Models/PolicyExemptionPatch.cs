@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The option whether validate the exemption is at or under the assignment scope. </summary>
-        public AssignmentScopeValidation? AssignmentScopeValidation
+        public PolicyAssignmentScopeValidation? AssignmentScopeValidation
         {
             get
             {

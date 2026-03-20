@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         internal DataManifestResourceFunctionsDefinition()
         {
             Standard = new ChangeTrackingList<string>();
-            Custom = new ChangeTrackingList<DataManifestCustomResourceFunctionDetail>();
+            Custom = new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataManifestResourceFunctionsDefinition"/>. </summary>
         /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
         /// <param name="custom"> An array of data manifest custom resource definitions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataManifestResourceFunctionsDefinition(IList<string> standard, IList<DataManifestCustomResourceFunctionDetail> custom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataManifestResourceFunctionsDefinition(IList<string> standard, IList<PolicyDataManifestCustomResourceFunctionDetail> custom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Standard = standard;
             Custom = custom;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public IList<string> Standard { get; } = new ChangeTrackingList<string>();
 
         /// <summary> An array of data manifest custom resource definitions. </summary>
-        public IList<DataManifestCustomResourceFunctionDetail> Custom { get; } = new ChangeTrackingList<DataManifestCustomResourceFunctionDetail>();
+        public IList<PolicyDataManifestCustomResourceFunctionDetail> Custom { get; } = new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>();
     }
 }

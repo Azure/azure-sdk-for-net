@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources.Policy
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Policy
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PolicyAssignmentProperties properties = default;
-            string location = default;
+            AzureLocation? location = default;
             PolicyAssignmentIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,7 +191,11 @@ namespace Azure.ResourceManager.Resources.Policy
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

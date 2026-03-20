@@ -12,24 +12,24 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The type of the paths for alias. </summary>
-    public partial class AliasPath
+    public partial class PolicyAliasPath
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AliasPath"/>. </summary>
-        internal AliasPath()
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPath"/>. </summary>
+        internal PolicyAliasPath()
         {
             ApiVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AliasPath"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPath"/>. </summary>
         /// <param name="path"> The path of an alias. </param>
         /// <param name="apiVersions"> The API versions. </param>
         /// <param name="pattern"> The pattern for an alias path. </param>
         /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AliasPath(string path, IList<string> apiVersions, AliasPattern pattern, AliasPathMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAliasPath(string path, IList<string> apiVersions, PolicyAliasPattern pattern, PolicyAliasPathMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             ApiVersions = apiVersions;
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public IList<string> ApiVersions { get; }
 
         /// <summary> The pattern for an alias path. </summary>
-        public AliasPattern Pattern { get; }
+        public PolicyAliasPattern Pattern { get; }
 
         /// <summary> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </summary>
-        public AliasPathMetadata Metadata { get; }
+        public PolicyAliasPathMetadata Metadata { get; }
     }
 }

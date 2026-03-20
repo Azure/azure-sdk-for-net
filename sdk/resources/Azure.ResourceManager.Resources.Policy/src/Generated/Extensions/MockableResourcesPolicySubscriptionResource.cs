@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PolicyTokenResponseResult>> AcquireAsync(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyTokenAcquisitionResult>> AcquireAsync(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 };
                 HttpMessage message = PolicyTokensRestClient.CreateAcquireRequest(Guid.Parse(Id.SubscriptionId), PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyTokenResponseResult> response = Response.FromValue(PolicyTokenResponseResult.FromResponse(result), result);
+                Response<PolicyTokenAcquisitionResult> response = Response.FromValue(PolicyTokenAcquisitionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PolicyTokenResponseResult> Acquire(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyTokenAcquisitionResult> Acquire(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 };
                 HttpMessage message = PolicyTokensRestClient.CreateAcquireRequest(Guid.Parse(Id.SubscriptionId), PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyTokenResponseResult> response = Response.FromValue(PolicyTokenResponseResult.FromResponse(result), result);
+                Response<PolicyTokenAcquisitionResult> response = Response.FromValue(PolicyTokenAcquisitionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

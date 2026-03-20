@@ -12,21 +12,21 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The data effect definition. </summary>
-    public partial class DataEffect
+    public partial class PolicyDataEffect
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataEffect"/>. </summary>
-        internal DataEffect()
+        /// <summary> Initializes a new instance of <see cref="PolicyDataEffect"/>. </summary>
+        internal PolicyDataEffect()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataEffect"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDataEffect"/>. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataEffect(string name, BinaryData detailsSchema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyDataEffect(string name, BinaryData detailsSchema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DetailsSchema = detailsSchema;

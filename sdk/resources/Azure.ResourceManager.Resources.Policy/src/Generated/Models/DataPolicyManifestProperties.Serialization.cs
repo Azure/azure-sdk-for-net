@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("resourceTypeAliases"u8);
                 writer.WriteStartArray();
-                foreach (ResourceTypeAliases item in ResourceTypeAliases)
+                foreach (PolicyResourceTypeAliases item in ResourceTypeAliases)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("effects"u8);
                 writer.WriteStartArray();
-                foreach (DataEffect item in Effects)
+                foreach (PolicyDataEffect item in Effects)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             IList<string> namespaces = default;
             string policyMode = default;
             bool? isBuiltInOnly = default;
-            IList<ResourceTypeAliases> resourceTypeAliases = default;
-            IList<DataEffect> effects = default;
+            IList<PolicyResourceTypeAliases> resourceTypeAliases = default;
+            IList<PolicyDataEffect> effects = default;
             IList<string> fieldValues = default;
             DataManifestResourceFunctionsDefinition resourceFunctions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<ResourceTypeAliases> array = new List<ResourceTypeAliases>();
+                    List<PolicyResourceTypeAliases> array = new List<PolicyResourceTypeAliases>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceTypeAliases.DeserializeResourceTypeAliases(item, options));
+                        array.Add(PolicyResourceTypeAliases.DeserializePolicyResourceTypeAliases(item, options));
                     }
                     resourceTypeAliases = array;
                     continue;
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<DataEffect> array = new List<DataEffect>();
+                    List<PolicyDataEffect> array = new List<PolicyDataEffect>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataEffect.DeserializeDataEffect(item, options));
+                        array.Add(PolicyDataEffect.DeserializePolicyDataEffect(item, options));
                     }
                     effects = array;
                     continue;
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 namespaces ?? new ChangeTrackingList<string>(),
                 policyMode,
                 isBuiltInOnly,
-                resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(),
-                effects ?? new ChangeTrackingList<DataEffect>(),
+                resourceTypeAliases ?? new ChangeTrackingList<PolicyResourceTypeAliases>(),
+                effects ?? new ChangeTrackingList<PolicyDataEffect>(),
                 fieldValues ?? new ChangeTrackingList<string>(),
                 resourceFunctions,
                 additionalBinaryDataProperties);

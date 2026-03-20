@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The alias type. </summary>
-    public partial class Alias
+    public partial class PolicyAlias
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Alias"/>. </summary>
-        internal Alias()
+        /// <summary> Initializes a new instance of <see cref="PolicyAlias"/>. </summary>
+        internal PolicyAlias()
         {
-            Paths = new ChangeTrackingList<AliasPath>();
+            Paths = new ChangeTrackingList<PolicyAliasPath>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Alias"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAlias"/>. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
         /// <param name="type"> The type of the alias. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
         /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Alias(string name, IList<AliasPath> paths, AliasType? @type, string defaultPath, AliasPattern defaultPattern, AliasPathMetadata defaultMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAlias(string name, IList<PolicyAliasPath> paths, PolicyAliasType? @type, string defaultPath, PolicyAliasPattern defaultPattern, PolicyAliasPathMetadata defaultMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Paths = paths;
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public string Name { get; }
 
         /// <summary> The paths for an alias. </summary>
-        public IList<AliasPath> Paths { get; }
+        public IList<PolicyAliasPath> Paths { get; }
 
         /// <summary> The type of the alias. </summary>
-        public AliasType? Type { get; }
+        public PolicyAliasType? Type { get; }
 
         /// <summary> The default path for an alias. </summary>
         public string DefaultPath { get; }
 
         /// <summary> The default pattern for an alias. </summary>
-        public AliasPattern DefaultPattern { get; }
+        public PolicyAliasPattern DefaultPattern { get; }
 
         /// <summary> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </summary>
-        public AliasPathMetadata DefaultMetadata { get; }
+        public PolicyAliasPathMetadata DefaultMetadata { get; }
     }
 }

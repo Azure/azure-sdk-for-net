@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(Type))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 return null;
             }
-            string principalId = default;
-            string tenantId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
             PolicyIdentityType? @type = default;
             IDictionary<string, PolicyUserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,12 +151,20 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 if (prop.NameEquals("principalId"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

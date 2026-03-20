@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The policy exemption category. Possible values are Waiver and Mitigated. </summary>
-        public ExemptionCategory ExemptionCategory
+        public PolicyExemptionCategory ExemptionCategory
         {
             get
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The option whether validate the exemption is at or under the assignment scope. </summary>
-        public AssignmentScopeValidation? AssignmentScopeValidation
+        public PolicyAssignmentScopeValidation? AssignmentScopeValidation
         {
             get
             {

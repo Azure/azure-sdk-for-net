@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="displayName"> The display name for the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="strongType"> Used when assigning the policy definition through the portal. Provides a context aware list of values for the user to choose from. </param>
-        /// <param name="assignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
+        /// <param name="shouldAssignPermissions"> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </param>
         /// <param name="additionalProperties"></param>
-        internal PolicyParameterMetadataProperties(string displayName, string description, string strongType, bool? assignPermissions, IDictionary<string, BinaryData> additionalProperties)
+        internal PolicyParameterMetadataProperties(string displayName, string description, string strongType, bool? shouldAssignPermissions, IDictionary<string, BinaryData> additionalProperties)
         {
             DisplayName = displayName;
             Description = description;
             StrongType = strongType;
-            AssignPermissions = assignPermissions;
+            ShouldAssignPermissions = shouldAssignPermissions;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public string StrongType { get; set; }
 
         /// <summary> Set to true to have Azure portal create role assignments on the resource ID or resource scope value of this parameter during policy assignment. This property is useful in case you wish to assign permissions outside the assignment scope. </summary>
-        public bool? AssignPermissions { get; set; }
+        public bool? ShouldAssignPermissions { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         internal DataPolicyManifestProperties()
         {
             Namespaces = new ChangeTrackingList<string>();
-            ResourceTypeAliases = new ChangeTrackingList<ResourceTypeAliases>();
-            Effects = new ChangeTrackingList<DataEffect>();
+            ResourceTypeAliases = new ChangeTrackingList<PolicyResourceTypeAliases>();
+            Effects = new ChangeTrackingList<PolicyDataEffect>();
             FieldValues = new ChangeTrackingList<string>();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
         /// <param name="resourceFunctions"> The resource functions definition specified in the data manifest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataPolicyManifestProperties(IList<string> namespaces, string policyMode, bool? isBuiltInOnly, IList<ResourceTypeAliases> resourceTypeAliases, IList<DataEffect> effects, IList<string> fieldValues, DataManifestResourceFunctionsDefinition resourceFunctions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataPolicyManifestProperties(IList<string> namespaces, string policyMode, bool? isBuiltInOnly, IList<PolicyResourceTypeAliases> resourceTypeAliases, IList<PolicyDataEffect> effects, IList<string> fieldValues, DataManifestResourceFunctionsDefinition resourceFunctions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Namespaces = namespaces;
             PolicyMode = policyMode;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public bool? IsBuiltInOnly { get; }
 
         /// <summary> An array of resource type aliases. </summary>
-        public IList<ResourceTypeAliases> ResourceTypeAliases { get; } = new ChangeTrackingList<ResourceTypeAliases>();
+        public IList<PolicyResourceTypeAliases> ResourceTypeAliases { get; } = new ChangeTrackingList<PolicyResourceTypeAliases>();
 
         /// <summary> The effect definition. </summary>
-        public IList<DataEffect> Effects { get; } = new ChangeTrackingList<DataEffect>();
+        public IList<PolicyDataEffect> Effects { get; } = new ChangeTrackingList<PolicyDataEffect>();
 
         /// <summary> The non-alias field accessor values that can be used in the policy rule. </summary>
         public IList<string> FieldValues { get; } = new ChangeTrackingList<string>();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> An array of data manifest custom resource definitions. </summary>
-        public IList<DataManifestCustomResourceFunctionDetail> Custom
+        public IList<PolicyDataManifestCustomResourceFunctionDetail> Custom
         {
             get
             {

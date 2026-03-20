@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="type"> The identity type. This is the only required field when adding a system or user assigned identity to a resource. </param>
         /// <param name="userAssignedIdentities"> The user identity associated with the policy. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentIdentity(string principalId, string tenantId, PolicyIdentityType? @type, IDictionary<string, PolicyUserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyAssignmentIdentity(Guid? principalId, Guid? tenantId, PolicyIdentityType? @type, IDictionary<string, PolicyUserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The principal ID of the resource identity.  This property will only be provided for a system assigned identity. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
 
         /// <summary> The tenant ID of the resource identity.  This property will only be provided for a system assigned identity. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> The identity type. This is the only required field when adding a system or user assigned identity to a resource. </summary>
         public PolicyIdentityType? Type { get; set; }

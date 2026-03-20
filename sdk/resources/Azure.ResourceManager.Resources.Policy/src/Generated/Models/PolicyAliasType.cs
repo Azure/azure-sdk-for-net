@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The type of the alias. </summary>
-    public enum AliasType
+    public enum PolicyAliasType
     {
         /// <summary> Alias type is unknown (same as not providing alias type). </summary>
         NotSpecified,

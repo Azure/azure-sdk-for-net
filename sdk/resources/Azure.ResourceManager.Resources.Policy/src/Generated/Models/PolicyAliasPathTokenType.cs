@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The type of the token that the alias path is referring to. </summary>
-    public readonly partial struct AliasPathTokenType : IEquatable<AliasPathTokenType>
+    public readonly partial struct PolicyAliasPathTokenType : IEquatable<PolicyAliasPathTokenType>
     {
         private readonly string _value;
         /// <summary> The token type is not specified. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> The token type is boolean. </summary>
         private const string BooleanValue = "Boolean";
 
-        /// <summary> Initializes a new instance of <see cref="AliasPathTokenType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPathTokenType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AliasPathTokenType(string value)
+        public PolicyAliasPathTokenType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The token type is not specified. </summary>
-        public static AliasPathTokenType NotSpecified { get; } = new AliasPathTokenType(NotSpecifiedValue);
+        public static PolicyAliasPathTokenType NotSpecified { get; } = new PolicyAliasPathTokenType(NotSpecifiedValue);
 
         /// <summary> The token type can be anything. </summary>
-        public static AliasPathTokenType Any { get; } = new AliasPathTokenType(AnyValue);
+        public static PolicyAliasPathTokenType Any { get; } = new PolicyAliasPathTokenType(AnyValue);
 
         /// <summary> The token type is string. </summary>
-        public static AliasPathTokenType String { get; } = new AliasPathTokenType(StringValue);
+        public static PolicyAliasPathTokenType String { get; } = new PolicyAliasPathTokenType(StringValue);
 
         /// <summary> The token type is object. </summary>
-        public static AliasPathTokenType Object { get; } = new AliasPathTokenType(ObjectValue);
+        public static PolicyAliasPathTokenType Object { get; } = new PolicyAliasPathTokenType(ObjectValue);
 
         /// <summary> The token type is array. </summary>
-        public static AliasPathTokenType Array { get; } = new AliasPathTokenType(ArrayValue);
+        public static PolicyAliasPathTokenType Array { get; } = new PolicyAliasPathTokenType(ArrayValue);
 
         /// <summary> The token type is integer. </summary>
-        public static AliasPathTokenType Integer { get; } = new AliasPathTokenType(IntegerValue);
+        public static PolicyAliasPathTokenType Integer { get; } = new PolicyAliasPathTokenType(IntegerValue);
 
         /// <summary> The token type is number. </summary>
-        public static AliasPathTokenType Number { get; } = new AliasPathTokenType(NumberValue);
+        public static PolicyAliasPathTokenType Number { get; } = new PolicyAliasPathTokenType(NumberValue);
 
         /// <summary> The token type is boolean. </summary>
-        public static AliasPathTokenType Boolean { get; } = new AliasPathTokenType(BooleanValue);
+        public static PolicyAliasPathTokenType Boolean { get; } = new PolicyAliasPathTokenType(BooleanValue);
 
-        /// <summary> Determines if two <see cref="AliasPathTokenType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyAliasPathTokenType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AliasPathTokenType left, AliasPathTokenType right) => left.Equals(right);
+        public static bool operator ==(PolicyAliasPathTokenType left, PolicyAliasPathTokenType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AliasPathTokenType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyAliasPathTokenType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AliasPathTokenType left, AliasPathTokenType right) => !left.Equals(right);
+        public static bool operator !=(PolicyAliasPathTokenType left, PolicyAliasPathTokenType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AliasPathTokenType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PolicyAliasPathTokenType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AliasPathTokenType(string value) => new AliasPathTokenType(value);
+        public static implicit operator PolicyAliasPathTokenType(string value) => new PolicyAliasPathTokenType(value);
 
-        /// <summary> Converts a string to a <see cref="AliasPathTokenType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PolicyAliasPathTokenType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AliasPathTokenType?(string value) => value == null ? null : new AliasPathTokenType(value);
+        public static implicit operator PolicyAliasPathTokenType?(string value) => value == null ? null : new PolicyAliasPathTokenType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AliasPathTokenType other && Equals(other);
+        public override bool Equals(object obj) => obj is PolicyAliasPathTokenType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AliasPathTokenType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PolicyAliasPathTokenType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

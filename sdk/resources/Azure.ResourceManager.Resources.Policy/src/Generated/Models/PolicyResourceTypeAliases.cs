@@ -12,22 +12,22 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The resource type aliases definition. </summary>
-    public partial class ResourceTypeAliases
+    public partial class PolicyResourceTypeAliases
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
-        internal ResourceTypeAliases()
+        /// <summary> Initializes a new instance of <see cref="PolicyResourceTypeAliases"/>. </summary>
+        internal PolicyResourceTypeAliases()
         {
-            Aliases = new ChangeTrackingList<Alias>();
+            Aliases = new ChangeTrackingList<PolicyAlias>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyResourceTypeAliases"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeAliases(string resourceType, IList<Alias> aliases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyResourceTypeAliases(string resourceType, IList<PolicyAlias> aliases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Aliases = aliases;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public string ResourceType { get; }
 
         /// <summary> The aliases for property names. </summary>
-        public IList<Alias> Aliases { get; }
+        public IList<PolicyAlias> Aliases { get; }
     }
 }

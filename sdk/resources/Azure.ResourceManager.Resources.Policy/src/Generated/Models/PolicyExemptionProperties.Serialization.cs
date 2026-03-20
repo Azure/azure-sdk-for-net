@@ -184,13 +184,13 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             }
             string policyAssignmentId = default;
             IList<string> policyDefinitionReferenceIds = default;
-            ExemptionCategory exemptionCategory = default;
+            PolicyExemptionCategory exemptionCategory = default;
             DateTimeOffset? expiresOn = default;
             string displayName = default;
             string description = default;
             BinaryData metadata = default;
             IList<PolicyResourceSelector> resourceSelectors = default;
-            AssignmentScopeValidation? assignmentScopeValidation = default;
+            PolicyAssignmentScopeValidation? assignmentScopeValidation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (prop.NameEquals("exemptionCategory"u8))
                 {
-                    exemptionCategory = new ExemptionCategory(prop.Value.GetString());
+                    exemptionCategory = new PolicyExemptionCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("expiresOn"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    assignmentScopeValidation = new AssignmentScopeValidation(prop.Value.GetString());
+                    assignmentScopeValidation = new PolicyAssignmentScopeValidation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

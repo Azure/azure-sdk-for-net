@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="clientId"> The client id of user assigned identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyUserAssignedIdentity(string principalId, string clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyUserAssignedIdentity(Guid? principalId, Guid? clientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             ClientId = clientId;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The principal id of user assigned identity. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
 
         /// <summary> The client id of user assigned identity. </summary>
-        public string ClientId { get; }
+        public Guid? ClientId { get; }
     }
 }

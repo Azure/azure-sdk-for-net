@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<PolicyTokenResponseResult>> AcquireAsync(this SubscriptionResource subscriptionResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PolicyTokenAcquisitionResult>> AcquireAsync(this SubscriptionResource subscriptionResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<PolicyTokenResponseResult> Acquire(this SubscriptionResource subscriptionResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public static Response<PolicyTokenAcquisitionResult> Acquire(this SubscriptionResource subscriptionResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1210,42 +1210,6 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
-        /// This operation retrieves the list of all variables applicable to the management group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyManagementGroupResource.GetVariablesAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VariableResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VariableResource> GetVariablesAsync(this ManagementGroupResource managementGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
-
-            return GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetVariablesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// This operation retrieves the list of all variables applicable to the management group.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyManagementGroupResource.GetVariables(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="VariableResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VariableResource> GetVariables(this ManagementGroupResource managementGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
-
-            return GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetVariables(cancellationToken);
-        }
-
-        /// <summary>
         /// This operation acquires a policy token in the given management group for the given request body.
         /// <item>
         /// <term> Mocking. </term>
@@ -1256,7 +1220,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="content"> The policy token properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        public static async Task<Response<PolicyTokenResponseResult>> AcquireAtManagementGroupAsync(this ManagementGroupResource managementGroupResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PolicyTokenAcquisitionResult>> AcquireAtManagementGroupAsync(this ManagementGroupResource managementGroupResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
@@ -1274,7 +1238,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// <param name="content"> The policy token properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
-        public static Response<PolicyTokenResponseResult> AcquireAtManagementGroup(this ManagementGroupResource managementGroupResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public static Response<PolicyTokenAcquisitionResult> AcquireAtManagementGroup(this ManagementGroupResource managementGroupResource, PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 

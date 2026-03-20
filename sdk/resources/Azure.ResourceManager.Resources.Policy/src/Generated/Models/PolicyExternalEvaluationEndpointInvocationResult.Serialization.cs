@@ -14,51 +14,51 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The external evaluation endpoint invocation results. </summary>
-    public partial class ExternalEvaluationEndpointInvocationResult : IJsonModel<ExternalEvaluationEndpointInvocationResult>
+    public partial class PolicyExternalEvaluationEndpointInvocationResult : IJsonModel<PolicyExternalEvaluationEndpointInvocationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalEvaluationEndpointInvocationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PolicyExternalEvaluationEndpointInvocationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExternalEvaluationEndpointInvocationResult(document.RootElement, options);
+                        return DeserializePolicyExternalEvaluationEndpointInvocationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalEvaluationEndpointInvocationResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyExternalEvaluationEndpointInvocationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalEvaluationEndpointInvocationResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyExternalEvaluationEndpointInvocationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExternalEvaluationEndpointInvocationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalEvaluationEndpointInvocationResult IPersistableModel<ExternalEvaluationEndpointInvocationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PolicyExternalEvaluationEndpointInvocationResult IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExternalEvaluationEndpointInvocationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExternalEvaluationEndpointInvocationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyExternalEvaluationEndpointInvocationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalEvaluationEndpointInvocationResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyExternalEvaluationEndpointInvocationResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PolicyInfo))
             {
@@ -164,24 +164,24 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalEvaluationEndpointInvocationResult IJsonModel<ExternalEvaluationEndpointInvocationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PolicyExternalEvaluationEndpointInvocationResult IJsonModel<PolicyExternalEvaluationEndpointInvocationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalEvaluationEndpointInvocationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PolicyExternalEvaluationEndpointInvocationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyExternalEvaluationEndpointInvocationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalEvaluationEndpointInvocationResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyExternalEvaluationEndpointInvocationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExternalEvaluationEndpointInvocationResult(document.RootElement, options);
+            return DeserializePolicyExternalEvaluationEndpointInvocationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExternalEvaluationEndpointInvocationResult DeserializeExternalEvaluationEndpointInvocationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicyExternalEvaluationEndpointInvocationResult DeserializePolicyExternalEvaluationEndpointInvocationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExternalEvaluationEndpointInvocationResult(
+            return new PolicyExternalEvaluationEndpointInvocationResult(
                 policyInfo,
                 result,
                 endpointKind,

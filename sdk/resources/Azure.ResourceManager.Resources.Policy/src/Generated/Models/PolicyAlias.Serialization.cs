@@ -14,51 +14,51 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The alias type. </summary>
-    public partial class Alias : IJsonModel<Alias>
+    public partial class PolicyAlias : IJsonModel<PolicyAlias>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Alias PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PolicyAlias PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Alias>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAlias>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlias(document.RootElement, options);
+                        return DeserializePolicyAlias(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Alias)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAlias)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Alias>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAlias>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Alias)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAlias)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Alias>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicyAlias>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Alias IPersistableModel<Alias>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PolicyAlias IPersistableModel<PolicyAlias>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Alias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Alias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Alias>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Alias)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAlias)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
-                foreach (AliasPath item in Paths)
+                foreach (PolicyAliasPath item in Paths)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,35 +128,35 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Alias IJsonModel<Alias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PolicyAlias IJsonModel<PolicyAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Alias JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PolicyAlias JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Alias>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Alias)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAlias)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlias(document.RootElement, options);
+            return DeserializePolicyAlias(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Alias DeserializeAlias(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicyAlias DeserializePolicyAlias(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            IList<AliasPath> paths = default;
-            AliasType? @type = default;
+            IList<PolicyAliasPath> paths = default;
+            PolicyAliasType? @type = default;
             string defaultPath = default;
-            AliasPattern defaultPattern = default;
-            AliasPathMetadata defaultMetadata = default;
+            PolicyAliasPattern defaultPattern = default;
+            PolicyAliasPathMetadata defaultMetadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<AliasPath> array = new List<AliasPath>();
+                    List<PolicyAliasPath> array = new List<PolicyAliasPath>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AliasPath.DeserializeAliasPath(item, options));
+                        array.Add(PolicyAliasPath.DeserializePolicyAliasPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToAliasType();
+                    @type = prop.Value.GetString().ToPolicyAliasType();
                     continue;
                 }
                 if (prop.NameEquals("defaultPath"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    defaultPattern = AliasPattern.DeserializeAliasPattern(prop.Value, options);
+                    defaultPattern = PolicyAliasPattern.DeserializePolicyAliasPattern(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("defaultMetadata"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    defaultMetadata = AliasPathMetadata.DeserializeAliasPathMetadata(prop.Value, options);
+                    defaultMetadata = PolicyAliasPathMetadata.DeserializePolicyAliasPathMetadata(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Alias(
+            return new PolicyAlias(
                 name,
-                paths ?? new ChangeTrackingList<AliasPath>(),
+                paths ?? new ChangeTrackingList<PolicyAliasPath>(),
                 @type,
                 defaultPath,
                 defaultPattern,

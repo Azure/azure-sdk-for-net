@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteStartArray();
-                foreach (DataManifestCustomResourceFunctionDetail item in Custom)
+                foreach (PolicyDataManifestCustomResourceFunctionDetail item in Custom)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 return null;
             }
             IList<string> standard = default;
-            IList<DataManifestCustomResourceFunctionDetail> custom = default;
+            IList<PolicyDataManifestCustomResourceFunctionDetail> custom = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    List<DataManifestCustomResourceFunctionDetail> array = new List<DataManifestCustomResourceFunctionDetail>();
+                    List<PolicyDataManifestCustomResourceFunctionDetail> array = new List<PolicyDataManifestCustomResourceFunctionDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataManifestCustomResourceFunctionDetail.DeserializeDataManifestCustomResourceFunctionDetail(item, options));
+                        array.Add(PolicyDataManifestCustomResourceFunctionDetail.DeserializePolicyDataManifestCustomResourceFunctionDetail(item, options));
                     }
                     custom = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataManifestResourceFunctionsDefinition(standard ?? new ChangeTrackingList<string>(), custom ?? new ChangeTrackingList<DataManifestCustomResourceFunctionDetail>(), additionalBinaryDataProperties);
+            return new DataManifestResourceFunctionsDefinition(standard ?? new ChangeTrackingList<string>(), custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>(), additionalBinaryDataProperties);
         }
     }
 }

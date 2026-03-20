@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         private PolicyExemptions _policyExemptionsRestClient;
         private ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
         private PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
-        private ClientDiagnostics _variablesClientDiagnostics;
-        private Variables _variablesRestClient;
         private ClientDiagnostics _policyTokensClientDiagnostics;
         private PolicyTokens _policyTokensRestClient;
 
@@ -61,10 +59,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         private ClientDiagnostics PolicySetDefinitionVersionsClientDiagnostics => _policySetDefinitionVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicySetDefinitionVersions PolicySetDefinitionVersionsRestClient => _policySetDefinitionVersionsRestClient ??= new PolicySetDefinitionVersions(PolicySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics VariablesClientDiagnostics => _variablesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Variables VariablesRestClient => _variablesRestClient ??= new Variables(VariablesClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics PolicyTokensClientDiagnostics => _policyTokensClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -379,62 +373,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         }
 
         /// <summary>
-        /// This operation retrieves the list of all variables applicable to the management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/variables. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Variables_ListForManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VariableResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VariableResource> GetVariablesAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<VariableData, VariableResource>(new VariablesGetForManagementGroupAsyncCollectionResultOfT(VariablesRestClient, Id.Name, context), data => new VariableResource(Client, data));
-        }
-
-        /// <summary>
-        /// This operation retrieves the list of all variables applicable to the management group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/variables. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Variables_ListForManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VariableResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VariableResource> GetVariables(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<VariableData, VariableResource>(new VariablesGetForManagementGroupCollectionResultOfT(VariablesRestClient, Id.Name, context), data => new VariableResource(Client, data));
-        }
-
-        /// <summary>
         /// This operation acquires a policy token in the given management group for the given request body.
         /// <list type="bullet">
         /// <item>
@@ -454,7 +392,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <param name="content"> The policy token properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PolicyTokenResponseResult>> AcquireAtManagementGroupAsync(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyTokenAcquisitionResult>> AcquireAtManagementGroupAsync(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -468,7 +406,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 };
                 HttpMessage message = PolicyTokensRestClient.CreateAcquireAtManagementGroupRequest(Id.Name, PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyTokenResponseResult> response = Response.FromValue(PolicyTokenResponseResult.FromResponse(result), result);
+                Response<PolicyTokenAcquisitionResult> response = Response.FromValue(PolicyTokenAcquisitionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -502,7 +440,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// <param name="content"> The policy token properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PolicyTokenResponseResult> AcquireAtManagementGroup(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyTokenAcquisitionResult> AcquireAtManagementGroup(PolicyTokenRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -516,7 +454,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 };
                 HttpMessage message = PolicyTokensRestClient.CreateAcquireAtManagementGroupRequest(Id.Name, PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyTokenResponseResult> response = Response.FromValue(PolicyTokenResponseResult.FromResponse(result), result);
+                Response<PolicyTokenAcquisitionResult> response = Response.FromValue(PolicyTokenAcquisitionResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

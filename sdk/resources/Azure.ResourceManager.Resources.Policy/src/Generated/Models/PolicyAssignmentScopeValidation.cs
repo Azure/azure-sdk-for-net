@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The option whether validate the exemption is at or under the assignment scope. </summary>
-    public readonly partial struct AssignmentScopeValidation : IEquatable<AssignmentScopeValidation>
+    public readonly partial struct PolicyAssignmentScopeValidation : IEquatable<PolicyAssignmentScopeValidation>
     {
         private readonly string _value;
         /// <summary> This option will validate the exemption is at or under the assignment scope. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> This option will bypass the validation the exemption scope is at or under the policy assignment scope. </summary>
         private const string DoNotValidateValue = "DoNotValidate";
 
-        /// <summary> Initializes a new instance of <see cref="AssignmentScopeValidation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentScopeValidation"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AssignmentScopeValidation(string value)
+        public PolicyAssignmentScopeValidation(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> This option will validate the exemption is at or under the assignment scope. </summary>
-        public static AssignmentScopeValidation Default { get; } = new AssignmentScopeValidation(DefaultValue);
+        public static PolicyAssignmentScopeValidation Default { get; } = new PolicyAssignmentScopeValidation(DefaultValue);
 
         /// <summary> This option will bypass the validation the exemption scope is at or under the policy assignment scope. </summary>
-        public static AssignmentScopeValidation DoNotValidate { get; } = new AssignmentScopeValidation(DoNotValidateValue);
+        public static PolicyAssignmentScopeValidation DoNotValidate { get; } = new PolicyAssignmentScopeValidation(DoNotValidateValue);
 
-        /// <summary> Determines if two <see cref="AssignmentScopeValidation"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyAssignmentScopeValidation"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AssignmentScopeValidation left, AssignmentScopeValidation right) => left.Equals(right);
+        public static bool operator ==(PolicyAssignmentScopeValidation left, PolicyAssignmentScopeValidation right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AssignmentScopeValidation"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyAssignmentScopeValidation"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AssignmentScopeValidation left, AssignmentScopeValidation right) => !left.Equals(right);
+        public static bool operator !=(PolicyAssignmentScopeValidation left, PolicyAssignmentScopeValidation right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AssignmentScopeValidation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PolicyAssignmentScopeValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssignmentScopeValidation(string value) => new AssignmentScopeValidation(value);
+        public static implicit operator PolicyAssignmentScopeValidation(string value) => new PolicyAssignmentScopeValidation(value);
 
-        /// <summary> Converts a string to a <see cref="AssignmentScopeValidation"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PolicyAssignmentScopeValidation"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AssignmentScopeValidation?(string value) => value == null ? null : new AssignmentScopeValidation(value);
+        public static implicit operator PolicyAssignmentScopeValidation?(string value) => value == null ? null : new PolicyAssignmentScopeValidation(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AssignmentScopeValidation other && Equals(other);
+        public override bool Equals(object obj) => obj is PolicyAssignmentScopeValidation other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AssignmentScopeValidation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PolicyAssignmentScopeValidation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

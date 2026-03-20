@@ -12,17 +12,17 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The external evaluation endpoint invocation results. </summary>
-    public partial class ExternalEvaluationEndpointInvocationResult
+    public partial class PolicyExternalEvaluationEndpointInvocationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExternalEvaluationEndpointInvocationResult"/>. </summary>
-        internal ExternalEvaluationEndpointInvocationResult()
+        /// <summary> Initializes a new instance of <see cref="PolicyExternalEvaluationEndpointInvocationResult"/>. </summary>
+        internal PolicyExternalEvaluationEndpointInvocationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalEvaluationEndpointInvocationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyExternalEvaluationEndpointInvocationResult"/>. </summary>
         /// <param name="policyInfo"> The details of the policy requiring the external endpoint invocation. </param>
         /// <param name="result"> The result of the external endpoint. Possible values are Succeeded and Failed. </param>
         /// <param name="endpointKind"> The external evaluation endpoint kind. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="additionalInfo"> The endpoint specific metadata. </param>
         /// <param name="expiresOn"> The expiration of the results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo, PolicyExternalEndpointResult? result, string endpointKind, string message, DateTimeOffset? retryAfter, BinaryData claims, PolicyAction? policyAction, BinaryData policyEvaluationDetails, BinaryData additionalInfo, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo, PolicyExternalEndpointResult? result, string endpointKind, string message, DateTimeOffset? retryAfter, BinaryData claims, PolicyAction? policyAction, BinaryData policyEvaluationDetails, BinaryData additionalInfo, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyInfo = policyInfo;
             Result = result;

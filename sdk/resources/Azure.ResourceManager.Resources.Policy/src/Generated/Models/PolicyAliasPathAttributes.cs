@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The attributes of the token that the alias path is referring to. </summary>
-    public readonly partial struct AliasPathAttributes : IEquatable<AliasPathAttributes>
+    public readonly partial struct PolicyAliasPathAttributes : IEquatable<PolicyAliasPathAttributes>
     {
         private readonly string _value;
         /// <summary> The token that the alias path is referring to has no attributes. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <summary> The token that the alias path is referring to is modifiable by policies with 'modify' effect. </summary>
         private const string ModifiableValue = "Modifiable";
 
-        /// <summary> Initializes a new instance of <see cref="AliasPathAttributes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAliasPathAttributes"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AliasPathAttributes(string value)
+        public PolicyAliasPathAttributes(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         }
 
         /// <summary> The token that the alias path is referring to has no attributes. </summary>
-        public static AliasPathAttributes None { get; } = new AliasPathAttributes(NoneValue);
+        public static PolicyAliasPathAttributes None { get; } = new PolicyAliasPathAttributes(NoneValue);
 
         /// <summary> The token that the alias path is referring to is modifiable by policies with 'modify' effect. </summary>
-        public static AliasPathAttributes Modifiable { get; } = new AliasPathAttributes(ModifiableValue);
+        public static PolicyAliasPathAttributes Modifiable { get; } = new PolicyAliasPathAttributes(ModifiableValue);
 
-        /// <summary> Determines if two <see cref="AliasPathAttributes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyAliasPathAttributes"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AliasPathAttributes left, AliasPathAttributes right) => left.Equals(right);
+        public static bool operator ==(PolicyAliasPathAttributes left, PolicyAliasPathAttributes right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AliasPathAttributes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="PolicyAliasPathAttributes"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AliasPathAttributes left, AliasPathAttributes right) => !left.Equals(right);
+        public static bool operator !=(PolicyAliasPathAttributes left, PolicyAliasPathAttributes right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AliasPathAttributes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PolicyAliasPathAttributes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AliasPathAttributes(string value) => new AliasPathAttributes(value);
+        public static implicit operator PolicyAliasPathAttributes(string value) => new PolicyAliasPathAttributes(value);
 
-        /// <summary> Converts a string to a <see cref="AliasPathAttributes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="PolicyAliasPathAttributes"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AliasPathAttributes?(string value) => value == null ? null : new AliasPathAttributes(value);
+        public static implicit operator PolicyAliasPathAttributes?(string value) => value == null ? null : new PolicyAliasPathAttributes(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AliasPathAttributes other && Equals(other);
+        public override bool Equals(object obj) => obj is PolicyAliasPathAttributes other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AliasPathAttributes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PolicyAliasPathAttributes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

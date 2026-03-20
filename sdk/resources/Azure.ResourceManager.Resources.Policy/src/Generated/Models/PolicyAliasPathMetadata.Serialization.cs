@@ -13,52 +13,52 @@ using Azure.ResourceManager.Resources.Policy;
 
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
-    /// <summary> The data effect definition. </summary>
-    public partial class DataEffect : IJsonModel<DataEffect>
+    /// <summary> The alias path metadata. </summary>
+    public partial class PolicyAliasPathMetadata : IJsonModel<PolicyAliasPathMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataEffect PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PolicyAliasPathMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataEffect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataEffect(document.RootElement, options);
+                        return DeserializePolicyAliasPathMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataEffect)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAliasPathMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataEffect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesPolicyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataEffect)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAliasPathMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataEffect>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicyAliasPathMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataEffect IPersistableModel<DataEffect>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PolicyAliasPathMetadata IPersistableModel<PolicyAliasPathMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataEffect>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyAliasPathMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataEffect>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyAliasPathMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,27 +69,20 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataEffect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataEffect)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAliasPathMetadata)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(DetailsSchema))
+            if (Optional.IsDefined(Attributes))
             {
-                writer.WritePropertyName("detailsSchema"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(DetailsSchema);
-#else
-                using (JsonDocument document = JsonDocument.Parse(DetailsSchema))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteStringValue(Attributes.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -110,46 +103,50 @@ namespace Azure.ResourceManager.Resources.Policy.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataEffect IJsonModel<DataEffect>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PolicyAliasPathMetadata IJsonModel<PolicyAliasPathMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataEffect JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PolicyAliasPathMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataEffect>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataEffect)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAliasPathMetadata)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataEffect(document.RootElement, options);
+            return DeserializePolicyAliasPathMetadata(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataEffect DeserializeDataEffect(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicyAliasPathMetadata DeserializePolicyAliasPathMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            BinaryData detailsSchema = default;
+            PolicyAliasPathTokenType? @type = default;
+            PolicyAliasPathAttributes? attributes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("detailsSchema"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    detailsSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    @type = new PolicyAliasPathTokenType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("attributes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attributes = new PolicyAliasPathAttributes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +154,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataEffect(name, detailsSchema, additionalBinaryDataProperties);
+            return new PolicyAliasPathMetadata(@type, attributes, additionalBinaryDataProperties);
         }
     }
 }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
             }
-            if (Optional.IsDefined(AssignPermissions))
+            if (Optional.IsDefined(ShouldAssignPermissions))
             {
                 writer.WritePropertyName("assignPermissions"u8);
-                writer.WriteBooleanValue(AssignPermissions.Value);
+                writer.WriteBooleanValue(ShouldAssignPermissions.Value);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string displayName = default;
             string description = default;
             string strongType = default;
-            bool? assignPermissions = default;
+            bool? shouldAssignPermissions = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    assignPermissions = prop.Value.GetBoolean();
+                    shouldAssignPermissions = prop.Value.GetBoolean();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new PolicyParameterMetadataProperties(displayName, description, strongType, assignPermissions, additionalProperties);
+            return new PolicyParameterMetadataProperties(displayName, description, strongType, shouldAssignPermissions, additionalProperties);
         }
     }
 }
